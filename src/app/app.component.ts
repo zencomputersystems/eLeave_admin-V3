@@ -1,44 +1,90 @@
 import { Component } from '@angular/core';
-
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
+
 })
 export class AppComponent {
+  public showFullMenu: boolean = true;
+  public showIconMenu: boolean = false;
+
+
   public appPages = [
     {
-      title: 'Home',
+      title: 'Dashboard',
       url: '/home',
-      icon: 'home'
+      icon: 'desktop'
     },
     {
-      title: 'Master Setup',
+      title: 'Inbox',
       url: '/tabs',
-      icon: 'list'
+      icon: 'mail-unread'
     },
     {
-      title: 'Userform',
+      title: 'Plan My Leave',
       url: '/user-setup',
-      icon: 'list'
+      icon: 'calendar'
+    },
+    {
+      title: 'Employee',
+      url: '/employee-setup',
+      icon: 'people'
     }
   ];
 
-  constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
-  ) {
-    this.initializeApp();
+  get displayFullMenu(): boolean {
+    return this.showFullMenu;
+  }
+  get displayIconMenu(): boolean {
+    return this.showIconMenu;
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
+  constructor(
+    private menu: MenuController
+  ) {
   }
+
+  ngOnInit() {
+    this.openAtBeginning();
+  }
+
+  openAtBeginning() {
+    if (this.displayFullMenu === true) {
+      this.menu.open('first');
+    }
+  }
+
+  collapseMenu() {
+    this.showFullMenu = false;
+    this.showIconMenu = true;
+    this.menu.enable(false, 'first');
+    this.menu.close('first');
+    this.menu.enable(true, 'custom');
+    setTimeout(() => {
+      this.menu.open('custom');
+    }, 10);
+  }
+
+  expandMenu() {
+    this.showFullMenu = true;
+    this.showIconMenu = false;
+    this.menu.enable(true, 'first');
+    this.menu.enable(false, 'custom');
+    this.menu.close('custom');
+    setTimeout(() => {
+      this.menu.open('first');
+    }, 10);
+  }
+
+  fullMenuClosedHandler() {
+    this.menu.open('first');
+  }
+
+  iconMenuClosedHandler() {
+    this.menu.open('custom');
+  }
+
 }

@@ -82,6 +82,24 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'employee-setup',
+        children: [
+          {
+            path: '',
+            loadChildren: '../employee-setup/employee-setup.module#EmployeeSetupPageModule'
+          },
+          // {
+          //   path: 'section-setup-edit',
+          //   children: [
+          //     {
+          //       path: '',
+          //       loadChildren: '../section-setup/form/section-setup-form.module#SectionSetupFormPageModule'
+          //     }
+          //   ]
+          // },
+        ]
+      },
+      {
         path: '',
         component: CostCentreSetupPage,
       }

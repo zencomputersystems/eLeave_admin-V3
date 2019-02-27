@@ -1,0 +1,82 @@
+<ion-header>
+    <ion-toolbar class="toolbar1">
+        <div style="font-size:24px; display: inline;">
+            <!-- <avatar name="ruoli" [displayType]="'circle'" size="24"></avatar> -->
+            <ion-avatar style=" width: 24px; height: 24px;">
+                <img src="assets/icon/logo.PNG">
+            </ion-avatar>
+            <ion-icon name="notifications-outline" style="float:right;"></ion-icon>
+            <ion-icon name="search" style="float:right;"></ion-icon>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-header class="header2">
+    <ion-toolbar class="toolbar2">
+        <ion-title style="display: inline-block;">
+            My Profile
+        </ion-title>
+        <!-- <ion-buttons slot="end" [routerLink]="['branch-setup-edit']">
+            <mat-chip-list>
+                <mat-chip>Edit Profile</mat-chip>
+            </mat-chip-list>
+
+        </ion-buttons> -->
+        <div style="font-size:24px; display: inline;">
+            <ion-buttons slot="end" style="float:right">
+                <!-- <ion-icon name="more"></ion-icon> -->
+                <ion-icon name="logo-instagram" style="float:right;"></ion-icon>
+                <ion-icon name="logo-linkedin" style="float:right;"></ion-icon>
+                <ion-icon name="logo-facebook" style="float:right;"></ion-icon>
+            </ion-buttons>
+
+        </div>
+
+        <!-- <ion-buttons slot="end" [routerLink]="['branch-setup-edit']">
+            <ion-icon name="more"></ion-icon>
+        </ion-buttons> -->
+
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list lines="none">
+        <ion-item (click)="openPersonalDetails()">
+            <ion-label [ngStyle]="{'color': text1Color}">Personal Details</ion-label>
+            <div *ngIf="ArrowOfPersonal">
+                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
+            </div>
+        </ion-item>
+        <ion-item (click)="openEmploymentDetails()">
+            <ion-label [ngStyle]="{'color': text2Color}">Employment Details</ion-label>
+            <div *ngIf="ArrowOfEmployment">
+                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
+            </div>
+        </ion-item>
+        <ion-item (click)="openLeaveEntitlement()">
+            <ion-label [ngStyle]="{'color': text3Color}">Leave Entitlement</ion-label>
+            <div *ngIf="ArrowOfLeave">
+                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
+            </div>
+        </ion-item>
+        <ion-item (click)="openAwards()">
+            <ion-label [ngStyle]="{'color': text4Color}">Awards & Certification</ion-label>
+            <div *ngIf="ArrowOfAwards">
+                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
+            </div>
+        </ion-item>
+        <ion-item (click)="openMyConnections()">
+            <ion-label [ngStyle]="{'color': text5Color}">My Connections</ion-label>
+            <div *ngIf="ArrowOfConnection" [ngStyle]="{'color': text4Color}">
+                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
+            </div>
+        </ion-item>
+        <ion-item (click)="openAccount()">
+            <ion-label [ngStyle]="{'color': text6Color}">Account</ion-label>
+            <div *ngIf="ArrowOfAccount">
+                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>

@@ -1,25 +1,62 @@
-<ion-app>
-  <ion-split-pane>
-    <ion-menu>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Menu</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
-                <!-- {{p.title}} -->
-                test menu
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-list>
-      </ion-content>
-    </ion-menu>
-    <ion-router-outlet main></ion-router-outlet>
-  </ion-split-pane>
+<ion-app *ngIf="displayFullMenu">
+  <!-- <ion-split-pane> -->
+  <ion-menu class="fullMenu" side="start" type="reveal" menuId="first" (ionDidClose)="fullMenuClosedHandler()">
+    <ion-header style="background-color:#2d3037; color: #f9fafc;">
+      <ion-icon class="collapse" slot="start" color="medium" name="arrow-dropleft"
+        style="position: absolute; margin: 56px; margin-left: 17px; font-size: 24px" (click)="collapseMenu()">
+      </ion-icon>
+    </ion-header>
+
+    <ion-content>
+      <!-- <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons> -->
+      <!-- <avatar name="Zen" [displayType]="'circle'" size="70"></avatar> -->
+      <ion-avatar style="width: 70px; height: 70px; margin: 74px; margin-bottom: 0; margin-top: 31px;">
+        <img src="assets/icon/logo.PNG">
+      </ion-avatar>
+
+      <p style="display:flex; justify-content: center; color: #f9fafc;">ZeN</p>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+          <ion-item lines="none" [routerLink]="[p.url]">
+            <ion-icon slot="start" [name]="p.icon"></ion-icon>
+            <ion-label style="color: #f9fafc">
+              {{p.title}}
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet main class="fullRouterOutlet"></ion-router-outlet>
+</ion-app>
+
+<ion-app *ngIf="displayIconMenu">
+  <ion-menu side="start" menuId="custom" type="reveal" class="iconMenu" (ionDidClose)="iconMenuClosedHandler()"
+    style="max-width: 3%; min-width: 35px;">
+    <ion-header style="background-color:#2d3037; color: #f9fafc;">
+      <ion-buttons slot="start" (click)="expandMenu()">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-header>
+    <ion-content>
+      <!-- <avatar name="Zen" [displayType]="'circle'" size="24" style="margin: 6px;
+      margin-top: 16px; margin-bottom: 0;"></avatar> -->
+      <ion-avatar style=" width: 24px; height: 24px; margin: 7px; margin-bottom: 0; margin-top: 10px;">
+        <img src="assets/icon/logo.PNG">
+      </ion-avatar>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+          <ion-item lines="none" [routerLink]="[p.url]">
+            <ion-icon slot="start" [name]="p.icon" style="margin-left: -9px"></ion-icon>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet main class="iconRouterOutlet"></ion-router-outlet>
+  <!-- </ion-split-pane> -->
 </ion-app>

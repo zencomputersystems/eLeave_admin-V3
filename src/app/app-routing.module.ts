@@ -23,6 +23,11 @@ const routes: Routes = [
     path: 'user-setup-edit',
     loadChildren: '../pages/admin/user-setup/form/user-setup-form.module#UserSetupFormPageModule'
   },
+  {
+    path: 'employee-setup',
+    loadChildren: '../pages/admin/employee-setup/employee-setup.module#EmployeeSetupPageModule'
+  },
+
 
 ];
 

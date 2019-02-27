@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-toolbar class="toolbar1">
+        <div style="font-size:24px; display: inline;">
+            <ion-icon name="notifications-outline" style="float:right;"></ion-icon>
+            <ion-icon name="search" style="float:right;"></ion-icon>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-header class="header2">
+    <ion-toolbar class="toolbar2">
+        <ion-title>
+            My Profile
+        </ion-title>
+        <ion-buttons slot="end" [routerLink]="['branch-setup-edit']">
+            <!-- <button type="button" mat-flat-button color="primary">Add</button> -->
+            <mat-chip-list>
+                <mat-chip>Edit Profile</mat-chip>
+            </mat-chip-list>
+
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-icon name="more"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list lines="none">
+        <ion-item (click)="openPersonalDetails()">
+            <ion-label [ngStyle]="{'color': text1Color}">Personal Details</ion-label>
+            <div *ngIf="ArrowOfPersonal">
+                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
+            </div>
+        </ion-item>
+        <ion-item (click)="openEmploymentDetails()">
+            <ion-label [ngStyle]="{'color': text2Color}">Employment Details</ion-label>
+            <div *ngIf="ArrowOfEmployment">
+                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
+            </div>
+        </ion-item>
+        <ion-item (click)="openLeaveEntitlement()">
+            <ion-label [ngStyle]="{'color': text3Color}">Leave Entitlement</ion-label>
+            <div *ngIf="ArrowOfLeave">
+                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
+            </div>
+        </ion-item>
+        <ion-item (click)="openMyConnections()">
+            <ion-label [ngStyle]="{'color': text4Color}">My Connections</ion-label>
+            <div *ngIf="ArrowOfConnection" [ngStyle]="{'color': text4Color}">
+                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
+            </div>
+        </ion-item>
+        <ion-item (click)="openAccount()">
+            <ion-label [ngStyle]="{'color': text5Color}">Account</ion-label>
+            <div *ngIf="ArrowOfAccount">
+                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>
