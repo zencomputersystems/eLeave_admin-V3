@@ -1,6 +1,6 @@
-<ion-app *ngIf="displayFullMenu">
+<ion-app>
   <!-- Full menu -->
-  <ion-split-pane contentId="fullSideMenuContent">
+  <ion-split-pane contentId="fullSideMenuContent" when="xs" *ngIf="displayFullMenu">
     <ion-menu class="fullMenu" contentId="fullSideMenuContent" side="start" type="reveal" menuId="first"
       (ionDidClose)="fullMenuClosedHandler()">
       <ion-header style="background-color:#2d3037; color: #f9fafc;">
@@ -38,7 +38,7 @@
 
 <!-- Icon Menu -->
 <ion-app *ngIf="displayIconMenu">
-  <ion-split-pane contentId="iconSideMenuContent">
+  <ion-split-pane contentId="iconSideMenuContent" when="xs">
     <ion-menu side="start" contentId="iconSideMenuContent" menuId="custom" type="reveal" class="iconMenu"
       (ionDidClose)="iconMenuClosedHandler()" style="max-width: 3%; min-width: 35px;">
       <ion-header style="background-color:#2d3037; color: #f9fafc;">
