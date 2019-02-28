@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployeeSetupService } from 'src/services/employee-setup/employee-setup.service';
 
 @Component({
   selector: 'app-employee-setup',
   templateUrl: './employee-setup.page.html',
   styleUrls: ['./employee-setup.page.scss'],
-  providers: [EmployeeSetupService]
 })
 export class EmployeeSetupPage implements OnInit {
-  employeeList: any;
-  displayedColumns: string[] = ['EMPLOYEE_NAME', 'Option'];
   displayArrowOfPersonal: boolean = false;
   displayArrowOfEmployment: boolean = false;
   displayArrowOfLeave: boolean = false;
@@ -42,18 +38,10 @@ export class EmployeeSetupPage implements OnInit {
     return this.displayArrowOfAccount;
   }
 
-  constructor(private _employeeDataService: EmployeeSetupService) { }
-
+  constructor() { }
   ngOnInit() {
   }
 
-
-  ionViewWillEnter() {
-    this._employeeDataService.getBranchList()
-      .subscribe(() => {
-        this.employeeList = this._employeeDataService.branchData;
-      });
-  }
 
   openPersonalDetails() {
     this.displayArrowOfPersonal = true;

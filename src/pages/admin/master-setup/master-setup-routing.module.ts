@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MasterSetupPage } from './master-setup.page';
-import { CostCentreSetupPage } from '../cost-centre-setup/cost-centre-setup.page';
 
 const routes: Routes = [
   {
@@ -13,14 +12,14 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../cost-centre-setup/cost-centre-setup.module#CostCentreSetupPageModule'
+            loadChildren: './home/home.module#HomePageModule'
           },
           {
             path: 'cost-centre-setup-edit',
             children: [
               {
                 path: '',
-                loadChildren: '../cost-centre-setup/form/cost-centre-setup-form.module#CostCentreSetupFormPageModule'
+                loadChildren: './home/home.module#HomePageModule'
               }
             ]
           }
@@ -31,14 +30,14 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../leave-type-setup/leave-type-setup.module#LeaveTypeSetupPageModule'
+            loadChildren: './home/home.module#HomePageModule'
           },
           {
             path: 'leave-type-edit',
             children: [
               {
                 path: '',
-                loadChildren: '../leave-type-setup/form/leave-type-setup-form.module#LeaveTypeSetupFormModule'
+                loadChildren: './home/home.module#HomePageModule'
               }
             ]
           }
@@ -49,14 +48,14 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../branch-setup/branch-setup.module#BranchSetupPageModule'
+            loadChildren: './home/home.module#HomePageModule'
           },
           {
             path: 'branch-setup-edit',
             children: [
               {
                 path: '',
-                loadChildren: '../branch-setup/form/branch-setup-form.module#BranchSetupFormPageModule'
+                loadChildren: './home/home.module#HomePageModule'
 
               }
             ]
@@ -68,40 +67,22 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../section-setup/section-setup.module#SectionSetupPageModule'
+            loadChildren: './home/home.module#HomePageModule'
           },
           {
             path: 'section-setup-edit',
             children: [
               {
                 path: '',
-                loadChildren: '../section-setup/form/section-setup-form.module#SectionSetupFormPageModule'
+                loadChildren: './home/home.module#HomePageModule'
               }
             ]
           },
         ]
       },
       {
-        path: 'employee-setup',
-        children: [
-          {
-            path: '',
-            loadChildren: '../employee-setup/employee-setup.module#EmployeeSetupPageModule'
-          },
-          // {
-          //   path: 'section-setup-edit',
-          //   children: [
-          //     {
-          //       path: '',
-          //       loadChildren: '../section-setup/form/section-setup-form.module#SectionSetupFormPageModule'
-          //     }
-          //   ]
-          // },
-        ]
-      },
-      {
         path: '',
-        component: CostCentreSetupPage,
+        component: MasterSetupPage,
       }
     ]
    }

@@ -15,17 +15,17 @@ export class AppComponent {
   public appPages = [
     {
       title: 'Dashboard',
-      url: '/home',
+      url: '/dashboard',
       icon: 'desktop'
     },
     {
       title: 'Inbox',
-      url: '/tabs',
+      url: '/inbox',
       icon: 'mail-unread'
     },
     {
       title: 'Plan My Leave',
-      url: '/user-setup',
+      url: '/plan-my-leave',
       icon: 'calendar'
     },
     {

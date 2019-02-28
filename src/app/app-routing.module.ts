@@ -4,24 +4,24 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
   {
-    path: 'home',
+    path: 'dashboard',
     loadChildren: './home/home.module#HomePageModule'
   },
   {
-    path: 'tabs',
-    loadChildren: '../pages/admin/master-setup/master-setup.module#MasterSetupPageModule'
+    path: 'inbox',
+    loadChildren: './home/home.module#HomePageModule'
   },
   {
-    path: 'user-setup',
-    loadChildren: '../pages/admin/user-setup/user-setup.module#UserSetupPageModule'
+    path: 'plan-my-leave',
+    loadChildren: './home/home.module#HomePageModule'
   },
   {
     path: 'user-setup-edit',
-    loadChildren: '../pages/admin/user-setup/form/user-setup-form.module#UserSetupFormPageModule'
+    loadChildren: './home/home.module#HomePageModule'
   },
   {
     path: 'employee-setup',

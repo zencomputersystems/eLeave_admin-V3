@@ -3,34 +3,20 @@
         height: 0px;
         background-image: none;
     }
-    ion-toolbar.toolbar1.hydrated{
+    .toolbar2{
         --min-height: 35px;
         border: 1px solid var(--ion-item-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.13))))
 
     }
-    ion-toolbar.toolbar2.hydrated{
-        --min-height: 35px;
-        border: 1px solid var(--ion-item-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.13))))
-
-    }
-    ion-title.title-md.hydrated{
-        --min-height: 35px;
-    }
-    ion-content.hydrated{
+    .contentMenu{
         width: 250px;
         border-right: 1px solid var(--ion-item-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.13))))
     }
-    .mat-chip.mat-standard-chip{
-        background-color: transparent;
-        border: 1px solid #e0e0e0;
-    }
-    ion-item{
-        cursor: pointer;
-    }
-    ion-label:hover{
+    .labels:hover{
         color: var(--ion-color-primary-shade);
     }
-    ion-avatar{
-        float: right;
+    .items{
+        cursor: pointer;
+        color: #7a8589;
     }
 }

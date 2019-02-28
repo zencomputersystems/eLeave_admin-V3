@@ -1,82 +1,69 @@
 <ion-header>
     <ion-toolbar class="toolbar1">
-        <div style="font-size:24px; display: inline;">
-            <!-- <avatar name="ruoli" [displayType]="'circle'" size="24"></avatar> -->
-            <ion-avatar style=" width: 24px; height: 24px;">
-                <img src="assets/icon/logo.PNG">
+        <div style="font-size:32px">
+            <ion-avatar style=" width: 32px; height: 32px; float: right">
+                <img src="assets/icon/favicon.png">
             </ion-avatar>
+            <!-- <avatar name="ruoli" [displayType]="'circle'" size="24"></avatar> -->
             <ion-icon name="notifications-outline" style="float:right;"></ion-icon>
             <ion-icon name="search" style="float:right;"></ion-icon>
         </div>
     </ion-toolbar>
-</ion-header>
 
-<ion-header class="header2">
     <ion-toolbar class="toolbar2">
         <ion-title style="display: inline-block;">
             My Profile
         </ion-title>
-        <!-- <ion-buttons slot="end" [routerLink]="['branch-setup-edit']">
-            <mat-chip-list>
-                <mat-chip>Edit Profile</mat-chip>
-            </mat-chip-list>
-
-        </ion-buttons> -->
-        <div style="font-size:24px; display: inline;">
-            <ion-buttons slot="end" style="float:right">
-                <!-- <ion-icon name="more"></ion-icon> -->
-                <ion-icon name="logo-instagram" style="float:right;"></ion-icon>
-                <ion-icon name="logo-linkedin" style="float:right;"></ion-icon>
-                <ion-icon name="logo-facebook" style="float:right;"></ion-icon>
-            </ion-buttons>
-
+        <div style="font-size:24px; float: right">
+            <ion-icon name="logo-facebook" style="color:#3b5998;"></ion-icon>
+            <ion-icon name="logo-linkedin" style="color:#007bb6;"></ion-icon>
+            <ion-icon name="logo-instagram"
+                style="border-radius: 30%; color:white; background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)">
+            </ion-icon>
         </div>
-
-        <!-- <ion-buttons slot="end" [routerLink]="['branch-setup-edit']">
-            <ion-icon name="more"></ion-icon>
-        </ion-buttons> -->
-
-
     </ion-toolbar>
 </ion-header>
-
-<ion-content>
+<!-- <ion-menu contentId="content" type="reveal"> -->
+<ion-content class="contentMenu">
     <ion-list lines="none">
-        <ion-item (click)="openPersonalDetails()">
-            <ion-label [ngStyle]="{'color': text1Color}">Personal Details</ion-label>
+        <ion-item (click)="openPersonalDetails()" class="items">
+            <ion-label class="labels" [ngStyle]="{'color': text1Color}">Personal Details</ion-label>
             <div *ngIf="ArrowOfPersonal">
                 <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
             </div>
         </ion-item>
-        <ion-item (click)="openEmploymentDetails()">
-            <ion-label [ngStyle]="{'color': text2Color}">Employment Details</ion-label>
+        <ion-item (click)="openEmploymentDetails()" class="items">
+            <ion-label class="labels" [ngStyle]="{'color': text2Color}">Employment Details</ion-label>
             <div *ngIf="ArrowOfEmployment">
                 <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
             </div>
         </ion-item>
-        <ion-item (click)="openLeaveEntitlement()">
-            <ion-label [ngStyle]="{'color': text3Color}">Leave Entitlement</ion-label>
+        <ion-item (click)="openLeaveEntitlement()" class="items">
+            <ion-label class="labels" [ngStyle]="{'color': text3Color}">Leave Entitlement</ion-label>
             <div *ngIf="ArrowOfLeave">
                 <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
             </div>
         </ion-item>
-        <ion-item (click)="openAwards()">
-            <ion-label [ngStyle]="{'color': text4Color}">Awards & Certification</ion-label>
+        <ion-item (click)="openAwards()" class="items">
+            <ion-label class="labels" [ngStyle]="{'color': text4Color}">Awards & Certification</ion-label>
             <div *ngIf="ArrowOfAwards">
                 <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
             </div>
         </ion-item>
-        <ion-item (click)="openMyConnections()">
-            <ion-label [ngStyle]="{'color': text5Color}">My Connections</ion-label>
+        <ion-item (click)="openMyConnections()" class="items">
+            <ion-label class="labels" [ngStyle]="{'color': text5Color}">My Connections</ion-label>
             <div *ngIf="ArrowOfConnection" [ngStyle]="{'color': text4Color}">
                 <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
             </div>
         </ion-item>
-        <ion-item (click)="openAccount()">
-            <ion-label [ngStyle]="{'color': text6Color}">Account</ion-label>
+        <ion-item (click)="openAccount()" class="items">
+            <ion-label class="labels" [ngStyle]="{'color': text6Color}">Account</ion-label>
             <div *ngIf="ArrowOfAccount">
                 <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
             </div>
         </ion-item>
     </ion-list>
 </ion-content>
+<!-- </ion-menu> -->
+<!-- <ion-router-outlet id="content"></ion-router-outlet> -->
+<!-- <div class="router-outlet">a</div> -->

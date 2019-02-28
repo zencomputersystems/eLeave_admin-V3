@@ -7,10 +7,6 @@
         max-width: 3%;
         min-width: 35px;
     }
-    ion-content{
-        --ion-background-color: #2d3037;
-        width: 218px;
-    }
     ion-label{
         color: #abacaf;
     }
@@ -20,14 +16,13 @@
     .collapse{
         cursor: pointer;
     }
-    .fullRouterOutlet{
-        transform: translateX(218px) !important;
-        width: calc( 100% - 218px );
-        min-width: 200px;
+    .fullMenuContent{
+        --ion-background-color: #2d3037;
+        --width: 218px;
+        width: 218px;
     }
-    .iconRouterOutlet{
-        transform: translateX(35px) !important;
-        width: calc( 100% - 35px );
-        min-width: 200px;
+    .iconMenuContent{
+        --ion-background-color: #2d3037;
+        --width: 35px;
     }
 }
