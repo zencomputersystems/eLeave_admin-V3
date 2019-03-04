@@ -17,4 +17,20 @@ export class PersonalDetailsModel {
     public ADDRESS: string;
     public FIRST_EMERGENCY_CONTACT: string;
     public SECOND_EMERGENCY_CONTACT: string;
+    // new added
+    public EMPLOYEE_NUMBER: number;
+    public NRIC: string;
+    public REPORTING_TO: string;
+    public WORK_LOCATION: string;
+    public DATE_OF_JOIN: string;
+    public CONFIRMATION_DATE: string;
+    public RESIGNATION_DATE: string;
+    public YEARS_OF_SERVICE: string;
+    public EMPLOYMENT_TYPE: string;
+    public STATUS: string;
+    public USER_ROLE: string;
+    public BANK_ACCOUNT_NAME: string;
+    public BANK_ACCOUNT_NO: number;
+    public EPF_NO: number;
+    public INCOME_TAX_NO: string;
 }

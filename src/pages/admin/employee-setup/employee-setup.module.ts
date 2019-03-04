@@ -11,6 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
 import { EmployeeSetupRoutingModule } from './employee-setup-routing.module';
 import { PersonalDetailsModule } from './personal-details/personal-details.module';
+import { EmploymentDetailsModule } from './employment-details/employment-details.module';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
     MatMenuModule,
     MatChipsModule,
     PersonalDetailsModule,
+    EmploymentDetailsModule,
     EmployeeSetupRoutingModule,
     RouterModule.forChild(routes),
   ],
