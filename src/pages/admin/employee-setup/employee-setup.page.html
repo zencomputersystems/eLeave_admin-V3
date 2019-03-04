@@ -1,17 +1,16 @@
-<ion-header>
+<ion-header style="min-width:250px">
     <ion-toolbar class="toolbar1">
         <div style="font-size:32px">
             <ion-avatar style=" width: 32px; height: 32px; float: right">
                 <img src="assets/icon/favicon.png">
             </ion-avatar>
-            <!-- <avatar name="ruoli" [displayType]="'circle'" size="24"></avatar> -->
             <ion-icon name="notifications-outline" style="float:right;"></ion-icon>
             <ion-icon name="search" style="float:right;"></ion-icon>
         </div>
     </ion-toolbar>
 
     <ion-toolbar class="toolbar2">
-        <ion-title style="display: inline-block;">
+        <ion-title style="display: inline-block;color: #20291f">
             My Profile
         </ion-title>
         <div style="font-size:24px; float: right">
@@ -23,47 +22,19 @@
         </div>
     </ion-toolbar>
 </ion-header>
-<!-- <ion-menu contentId="content" type="reveal"> -->
-<ion-content class="contentMenu">
+<ion-content class="contentMenu" contentId="content">
+
     <ion-list lines="none">
-        <ion-item (click)="openPersonalDetails()" class="items">
-            <ion-label class="labels" [ngStyle]="{'color': text1Color}">Personal Details</ion-label>
-            <div *ngIf="ArrowOfPersonal">
-                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
-            </div>
-        </ion-item>
-        <ion-item (click)="openEmploymentDetails()" class="items">
-            <ion-label class="labels" [ngStyle]="{'color': text2Color}">Employment Details</ion-label>
-            <div *ngIf="ArrowOfEmployment">
-                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
-            </div>
-        </ion-item>
-        <ion-item (click)="openLeaveEntitlement()" class="items">
-            <ion-label class="labels" [ngStyle]="{'color': text3Color}">Leave Entitlement</ion-label>
-            <div *ngIf="ArrowOfLeave">
-                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
-            </div>
-        </ion-item>
-        <ion-item (click)="openAwards()" class="items">
-            <ion-label class="labels" [ngStyle]="{'color': text4Color}">Awards & Certification</ion-label>
-            <div *ngIf="ArrowOfAwards">
-                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
-            </div>
-        </ion-item>
-        <ion-item (click)="openMyConnections()" class="items">
-            <ion-label class="labels" [ngStyle]="{'color': text5Color}">My Connections</ion-label>
-            <div *ngIf="ArrowOfConnection" [ngStyle]="{'color': text4Color}">
-                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
-            </div>
-        </ion-item>
-        <ion-item (click)="openAccount()" class="items">
-            <ion-label class="labels" [ngStyle]="{'color': text6Color}">Account</ion-label>
-            <div *ngIf="ArrowOfAccount">
-                <ion-icon slot="end" color="medium" name="arrow-dropright"></ion-icon>
-            </div>
-        </ion-item>
+        <ion-menu-toggle auto-hide="false" *ngFor="let p of employeeSetupPage; let i=index">
+            <ion-item class="items" lines="none" [routerLink]="[p.url]" (click)="getIndexToShowArrow(i)">
+                <ion-label [style.color]="numOfArray === i ? '#057dcd' : ''">
+                    {{p.title}}
+                </ion-label>
+                <div *ngIf="numOfArray === i">
+                    <ion-icon slot="end" color="primary" name="arrow-dropright"></ion-icon>
+                </div>
+            </ion-item>
+        </ion-menu-toggle>
     </ion-list>
 </ion-content>
-<!-- </ion-menu> -->
-<!-- <ion-router-outlet id="content"></ion-router-outlet> -->
-<!-- <div class="router-outlet">a</div> -->
+<ion-router-outlet name="newContent" class="content2"></ion-router-outlet>

@@ -1,30 +1,51 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MasterSetupPage } from './master-setup.page';
+import { PersonalDetailsPage } from '../employee-setup/personal-details/personal-details.page';
+import { EmployeeSetupPage } from '../employee-setup/employee-setup.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: MasterSetupPage,
+    component: EmployeeSetupPage,
     children: [
       {
-        path: 'cost-centre-setup',
+        path: 'employee-setup',
+        outlet: 'newContent',
         children: [
           {
             path: '',
-            loadChildren: './home/home.module#HomePageModule'
+            loadChildren: '../pages/admin/employee-setup/employee-setup.module#EmployeeSetupModule'
           },
           {
-            path: 'cost-centre-setup-edit',
+            path: 'personal-details',
             children: [
               {
                 path: '',
-                loadChildren: './home/home.module#HomePageModule'
+                loadChildren: '../pages/admin/employee-setup/personal-details/personal-details.module#PersonalDetailsModule'
               }
             ]
           }
         ]
       },
+      // {
+      //   path: 'personal-details',
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadChildren: '../employee-setup/personal-details/personal-details.module#PersonalDetailsModule'
+      //     },
+      //     {
+      //       path: 'cost-centre-setup-edit',
+      //       children: [
+      //         {
+      //           path: '',
+      //           loadChildren: './home/home.module#HomePageModule'
+      //         }
+      //       ]
+      //     }
+      //   ]
+      // },
       {
         path: 'leave-type-setup',
         children: [
@@ -80,12 +101,31 @@ const routes: Routes = [
           },
         ]
       },
+      // {
+      //   path: 'personal-details',
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadChildren: '../pages/admin/employee-setup/personal-details/personal-details.module#PersonalDetailsModule'
+      //     },
+      // {
+      //   path: 'personal-details-setup',
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadChildren: '../employee-setup/personal-details/personal-details.module#PersonalDetailsModule'
+      //     }
+      //   ]
+      // },
+      //   ]
+      // },
       {
         path: '',
-        component: MasterSetupPage,
+        redirectTo: '/personal-details/(newContent:newContent)',
+        // component: PersonalDetailsPage,
       }
     ]
-   }
+  }
 ];
 
 @NgModule({
@@ -94,4 +134,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class MasterSetupRoutingModule {}
+export class MasterSetupRoutingModule { }

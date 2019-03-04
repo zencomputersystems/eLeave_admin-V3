@@ -9,6 +9,8 @@ import { EmployeeSetupPage } from './employee-setup.page';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
+import { EmployeeSetupRoutingModule } from './employee-setup-routing.module';
+import { PersonalDetailsModule } from './personal-details/personal-details.module';
 
 const routes: Routes = [
   {
@@ -17,6 +19,8 @@ const routes: Routes = [
   }
 ];
 
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -24,8 +28,10 @@ const routes: Routes = [
     MatButtonModule,
     MatMenuModule,
     MatChipsModule,
-    RouterModule.forChild(routes)
+    PersonalDetailsModule,
+    EmployeeSetupRoutingModule,
+    RouterModule.forChild(routes),
   ],
   declarations: [EmployeeSetupPage]
 })
-export class EmployeeSetupPageModule { }
+export class EmployeeSetupModule { }

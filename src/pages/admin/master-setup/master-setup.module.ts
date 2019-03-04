@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { MasterSetupPage } from './master-setup.page';
 import { MasterSetupRoutingModule } from './master-setup-routing.module';
+import { EmployeeSetupModule } from '../employee-setup/employee-setup.module';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { MasterSetupRoutingModule } from './master-setup-routing.module';
     CommonModule,
     FormsModule,
     IonicModule,
+    EmployeeSetupModule,
     MasterSetupRoutingModule,
   ],
   declarations: [MasterSetupPage]

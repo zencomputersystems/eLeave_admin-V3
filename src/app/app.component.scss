@@ -1,11 +1,13 @@
 :host{
     .fullMenu{
-        max-width: 17%;
+        max-width: 0%;
         min-width: 218px;
+        --width: none;
     }
     .iconMenu{
-        max-width: 3%;
+        max-width: 0%;
         min-width: 35px;
+        --width: none;
     }
     ion-label{
         color: #abacaf;
@@ -24,5 +26,11 @@
     .iconMenuContent{
         --ion-background-color: #2d3037;
         --width: 35px;
+    }
+    .fullSideMenuContent{
+        transform: translateX(0) !important;
+    }
+    .iconSideMenuContent{
+        transform: translateX(0) !important;
     }
 }

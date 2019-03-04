@@ -29,16 +29,14 @@
     </ion-menu>
     <ion-router-outlet id="fullSideMenuContent" class="fullRouterOutlet"></ion-router-outlet>
   </ion-split-pane>
-</ion-app>
-<!-- <ion-content>
+  <!-- <ion-content>
     <ion-router-outlet class="fullRouterOutlet" *ngIf="displayFullMenu"></ion-router-outlet>
   </ion-content> -->
-<!-- <ion-router-outlet main class="fullRouterOutlet" *ngIf="displayFullMenu"></ion-router-outlet> -->
+  <!-- <ion-router-outlet main class="fullRouterOutlet" *ngIf="displayFullMenu"></ion-router-outlet> -->
 
 
-<!-- Icon Menu -->
-<ion-app *ngIf="displayIconMenu">
-  <ion-split-pane contentId="iconSideMenuContent" when="xs">
+  <!-- Icon Menu -->
+  <ion-split-pane contentId="iconSideMenuContent" when="xs" *ngIf="displayIconMenu">
     <ion-menu side="start" contentId="iconSideMenuContent" menuId="custom" type="reveal" class="iconMenu"
       (ionDidClose)="iconMenuClosedHandler()" style="max-width: 3%; min-width: 35px;">
       <ion-header style="background-color:#2d3037; color: #f9fafc;">
@@ -66,7 +64,3 @@
   <!-- <ion-router-outlet main></ion-router-outlet> -->
 
 </ion-app>
-
-
-
-<!-- <ion-router-outlet main class="iconRouterOutlet"></ion-router-outlet> -->

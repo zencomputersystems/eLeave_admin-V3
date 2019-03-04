@@ -1,7 +1,113 @@
-<ion-header>
-    <ion-toolbar class="toolbar1">
-        <div >
-           hello
+<div class="header" *ngIf="showHeader">
+    Your profile completeness is {{progressPercentage}}%
+    <ion-progress-bar [value]="progressPercentage/100" color="success"
+        style="display:inline-block; width:10%; margin-left: 3%"></ion-progress-bar>
+    <ion-icon class="crossIcon" name="close" (click)="clickToHideHeader()"></ion-icon>
+</div>
+<ion-card>
+    <ion-card-header>
+        <div class="fullContainer">
+            <div class="left">
+                <ion-avatar class="avatar">
+                    <img src="assets/icon/picture.png">
+                </ion-avatar>
+                <ion-badge>
+                    <ion-icon name="image"></ion-icon>
+                </ion-badge>
+            </div>
+            <div class="right" *ngFor="let item of personalDataList">
+                <ion-card-title>{{item.NAME}}</ion-card-title>
+                <div style="display:inline-block; padding-top: 10px;">
+                    <ion-card-subtitle class="subtitle">
+                        {{item.DESIGNATION}}</ion-card-subtitle>
+                    <i class="fas fa-circle"></i>
+                    <ion-card-subtitle class="subtitle">Research & Development
+                    </ion-card-subtitle>
+                </div>
+                <div style="padding-top: 10px;">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <ion-card-subtitle class="subtitle">Kuala Lumpur, Malaysia
+                    </ion-card-subtitle>
+                </div>
+            </div>
         </div>
-    </ion-toolbar>
-</ion-header>
+    </ion-card-header>
+    <ion-item lines="full" class="mainDivider"></ion-item>
+    <ion-card-content style="background-color: #f9fafc">
+        <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+            <ion-col>
+                <ion-label>BIRTHDATE</ion-label>
+                <p>{{item.BIRTHDATE}}</p>
+            </ion-col>
+            <ion-col>
+                <ion-label>GENDER</ion-label>
+                <p>{{item.GENDER}}</p>
+            </ion-col>
+            <ion-col>
+                <ion-label>MARITAL STATUS</ion-label>
+                <p>{{item.MARITAL_STATUS}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+            <ion-col>
+                <ion-label>RACE</ion-label>
+                <p>{{item.RACE}}</p>
+
+            </ion-col>
+            <ion-col>
+                <ion-label>RELIGION</ion-label>
+                <p>{{item.RELIGION}}</p>
+            </ion-col>
+            <ion-col>
+                <ion-label>NATIONALITY</ion-label>
+                <p>{{item.NATIONALITY}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+            <ion-col>
+                <ion-label>PERSONAL PHONE NUMBER</ion-label>
+                <p>{{item.PERSONAL_PHONE_NUMBER}}</p>
+
+            </ion-col>
+            <ion-col>
+                <ion-label>WORK PHONE NUMBER</ion-label>
+                <p>{{item.WORK_PHONE_NUMBER}}</p>
+            </ion-col>
+            <ion-col>
+            </ion-col>
+        </ion-row>
+        <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+            <ion-col>
+                <ion-label>PERSONAL EMAIL ADDRESS</ion-label>
+                <p>{{item.PERSONAL_EMAIL}}</p>
+            </ion-col>
+            <ion-col>
+                <ion-label>WORK EMAIL ADDRESS</ion-label>
+                <p>{{item.WORK_EMAIL}}</p>
+            </ion-col>
+            <ion-col>
+            </ion-col>
+        </ion-row>
+        <ion-item class="divider"></ion-item>
+        <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+            <ion-col>
+                <ion-label>RESIDENTIAL ADDRESS</ion-label>
+                <p>{{item.ADDRESS}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-item class="divider"></ion-item>
+        <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+            <ion-col>
+                <ion-label>EMERGENCY CONTACT 1</ion-label>
+                <p>{{item.FIRST_EMERGENCY_CONTACT}}</p>
+            </ion-col>
+            <ion-col>
+                <ion-label>EMERGENCY CONTACT 2</ion-label>
+                <p>{{item.SECOND_EMERGENCY_CONTACT}}</p>
+            </ion-col>
+            <ion-col>
+            </ion-col>
+        </ion-row>
+    </ion-card-content>
+
+</ion-card>

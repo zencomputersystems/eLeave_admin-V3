@@ -10,7 +10,8 @@
     }
     .contentMenu{
         width: 250px;
-        border-right: 1px solid var(--ion-item-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.13))))
+        border-right: 1px solid var(--ion-item-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.13))));
+        border-left : 1px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
     }
     .labels:hover{
         color: var(--ion-color-primary-shade);
@@ -18,5 +19,13 @@
     .items{
         cursor: pointer;
         color: #7a8589;
+    }
+    .content2{
+        position: absolute;
+        top: 96px;
+        width: calc( 100% - 250px);
+        right: 0;
+        height: calc( 100% - 96px);
+        left: 250px;
     }
 }
