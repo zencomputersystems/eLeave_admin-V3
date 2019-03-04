@@ -34,4 +34,4 @@ const routes: Routes = [
   ],
   declarations: [EmployeeSetupPage]
 })
-export class EmployeeSetupModule { }
+export class EmployeeSetupPageModule { }
