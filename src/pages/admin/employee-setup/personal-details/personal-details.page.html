@@ -33,81 +33,83 @@
         </div>
     </ion-card-header>
     <ion-item lines="full" class="mainDivider"></ion-item>
-    <ion-card-content style="background-color: #f9fafc">
-        <ion-row class="detailsRow" *ngFor="let item of personalDataList">
-            <ion-col>
-                <ion-label>BIRTHDATE</ion-label>
-                <p>{{item.BIRTHDATE}}</p>
-            </ion-col>
-            <ion-col>
-                <ion-label>GENDER</ion-label>
-                <p>{{item.GENDER}}</p>
-            </ion-col>
-            <ion-col>
-                <ion-label>MARITAL STATUS</ion-label>
-                <p>{{item.MARITAL_STATUS}}</p>
-            </ion-col>
-        </ion-row>
-        <ion-row class="detailsRow" *ngFor="let item of personalDataList">
-            <ion-col>
-                <ion-label>RACE</ion-label>
-                <p>{{item.RACE}}</p>
+    <div class="cardContent">
+        <ion-card-content>
+            <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+                <ion-col>
+                    <ion-label>BIRTHDATE</ion-label>
+                    <p>{{item.BIRTHDATE}}</p>
+                </ion-col>
+                <ion-col>
+                    <ion-label>GENDER</ion-label>
+                    <p>{{item.GENDER}}</p>
+                </ion-col>
+                <ion-col>
+                    <ion-label>MARITAL STATUS</ion-label>
+                    <p>{{item.MARITAL_STATUS}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+                <ion-col>
+                    <ion-label>RACE</ion-label>
+                    <p>{{item.RACE}}</p>
 
-            </ion-col>
-            <ion-col>
-                <ion-label>RELIGION</ion-label>
-                <p>{{item.RELIGION}}</p>
-            </ion-col>
-            <ion-col>
-                <ion-label>NATIONALITY</ion-label>
-                <p>{{item.NATIONALITY}}</p>
-            </ion-col>
-        </ion-row>
-        <ion-row class="detailsRow" *ngFor="let item of personalDataList">
-            <ion-col>
-                <ion-label>PERSONAL PHONE NUMBER</ion-label>
-                <p>{{item.PERSONAL_PHONE_NUMBER}}</p>
+                </ion-col>
+                <ion-col>
+                    <ion-label>RELIGION</ion-label>
+                    <p>{{item.RELIGION}}</p>
+                </ion-col>
+                <ion-col>
+                    <ion-label>NATIONALITY</ion-label>
+                    <p>{{item.NATIONALITY}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+                <ion-col>
+                    <ion-label>PERSONAL PHONE NUMBER</ion-label>
+                    <p>{{item.PERSONAL_PHONE_NUMBER}}</p>
 
-            </ion-col>
-            <ion-col>
-                <ion-label>WORK PHONE NUMBER</ion-label>
-                <p>{{item.WORK_PHONE_NUMBER}}</p>
-            </ion-col>
-            <ion-col>
-            </ion-col>
-        </ion-row>
-        <ion-row class="detailsRow" *ngFor="let item of personalDataList">
-            <ion-col>
-                <ion-label>PERSONAL EMAIL ADDRESS</ion-label>
-                <p>{{item.PERSONAL_EMAIL}}</p>
-            </ion-col>
-            <ion-col>
-                <ion-label>WORK EMAIL ADDRESS</ion-label>
-                <p>{{item.WORK_EMAIL}}</p>
-            </ion-col>
-            <ion-col>
-            </ion-col>
-        </ion-row>
-        <ion-item class="divider"></ion-item>
-        <ion-row class="detailsRow" *ngFor="let item of personalDataList">
-            <ion-col>
-                <ion-label>RESIDENTIAL ADDRESS</ion-label>
-                <p>{{item.ADDRESS}}</p>
-            </ion-col>
-        </ion-row>
-        <ion-item class="divider"></ion-item>
-        <ion-row class="detailsRow" *ngFor="let item of personalDataList">
-            <ion-col>
-                <ion-label>EMERGENCY CONTACT 1</ion-label>
-                <p>{{item.FIRST_EMERGENCY_CONTACT}}</p>
-            </ion-col>
-            <ion-col>
-                <ion-label>EMERGENCY CONTACT 2</ion-label>
-                <p>{{item.SECOND_EMERGENCY_CONTACT}}</p>
-            </ion-col>
-            <ion-col>
-            </ion-col>
-        </ion-row>
-    </ion-card-content>
+                </ion-col>
+                <ion-col>
+                    <ion-label>WORK PHONE NUMBER</ion-label>
+                    <p>{{item.WORK_PHONE_NUMBER}}</p>
+                </ion-col>
+                <ion-col>
+                </ion-col>
+            </ion-row>
+            <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+                <ion-col>
+                    <ion-label>PERSONAL EMAIL ADDRESS</ion-label>
+                    <p>{{item.PERSONAL_EMAIL}}</p>
+                </ion-col>
+                <ion-col>
+                    <ion-label>WORK EMAIL ADDRESS</ion-label>
+                    <p>{{item.WORK_EMAIL}}</p>
+                </ion-col>
+                <ion-col>
+                </ion-col>
+            </ion-row>
+            <ion-item class="divider"></ion-item>
+            <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+                <ion-col>
+                    <ion-label>RESIDENTIAL ADDRESS</ion-label>
+                    <p>{{item.ADDRESS}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-item class="divider"></ion-item>
+            <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+                <ion-col>
+                    <ion-label>EMERGENCY CONTACT 1</ion-label>
+                    <p>{{item.FIRST_EMERGENCY_CONTACT}}</p>
+                </ion-col>
+                <ion-col>
+                    <ion-label>EMERGENCY CONTACT 2</ion-label>
+                    <p>{{item.SECOND_EMERGENCY_CONTACT}}</p>
+                </ion-col>
+                <ion-col>
+                </ion-col>
+            </ion-row>
+        </ion-card-content>
+    </div>
 
 </ion-card>

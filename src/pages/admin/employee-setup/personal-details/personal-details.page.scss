@@ -26,6 +26,11 @@
     ion-card{
         height: 100%;
     }
+    .cardContent{
+        background-color: #f9fafc; 
+        overflow: auto; 
+        height: calc( 100% - 133px)
+    }
     .detailsRow{
         padding-left: 10%;
         padding-top: 5px;
