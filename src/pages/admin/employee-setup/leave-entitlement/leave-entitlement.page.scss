@@ -1,0 +1,89 @@
+:host{
+    .fullContainer{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .subtitle{
+        display: inline;
+    }
+    .fa-circle{
+        font-size: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        vertical-align: middle;
+    }
+    .fa-map-marker-alt{
+        padding-right: 10px;
+    }
+    .mainDivider{
+        --min-height: none;
+    }
+    .divider{
+        --min-height: none;
+        padding-top: 1%;
+        padding-bottom: 2%; 
+        width: 100%;
+    }
+    ion-card{
+        height: 100%;
+    }
+    .cardContent{
+        background-color: #f9fafc; 
+        overflow: auto; 
+        height: calc( 100% - 133px)
+    }
+    .titleRow{
+        padding-left: 2%;
+        padding-top: 5px;
+        padding-bottom: 2%;
+    }
+    .detailsRow{
+        padding-left: 2%;
+        padding-top: 5px;
+        // flex-wrap: nowrap;
+    }
+    ion-badge{
+        position: absolute;
+        top: 26px;
+        left: 120px;
+        border-radius: 50%
+    }
+    .crossIcon{
+        cursor: pointer;
+        float: right;
+    }
+    .header{
+        padding: 10px; 
+        background-color: #057dcd; 
+        color: white;
+        padding-left: 50px;
+        display: inline-block;
+    }
+    .right{
+        padding-top: 1%;
+    }
+    .avatar{
+        width: 100px; 
+        height: 100px; 
+        margin-left: 20px; 
+        margin-right: 30px;
+    }
+    .leaveHistoryContainer{
+        position: absolute; 
+        right: 30px; 
+        color: #057dcd; 
+        cursor: pointer;
+    }
+    .colOfLeave{
+        text-align: center;
+    }
+    .button-round{
+        --padding-start: 18px;
+        --padding-end: 18px;
+    }
+    .arrow{
+        font-size: 18px; 
+        padding-left: 10px; 
+        cursor: pointer;
+    }
+}
