@@ -6,13 +6,18 @@
 </div>
 <ion-card>
     <ion-card-header>
+        <div style="right: 25px; position: absolute;">
+            <i style="color: #057dcd; padding-right: 10px" class="far fa-edit"></i>
+            <p style="color: #057dcd; display: inline;">Edit Profile</p>
+        </div>
         <div class="fullContainer">
+
             <div class="left">
                 <ion-avatar class="avatar">
                     <img src="assets/icon/picture.png">
                 </ion-avatar>
-                <ion-badge>
-                    <ion-icon name="image"></ion-icon>
+                <ion-badge style="background-color: white;border: 1px solid#bebebe;">
+                    <i style="color: #bebebe; padding-top: 1px;" class="far fa-image"></i>
                 </ion-badge>
             </div>
             <div class="right" *ngFor="let item of personalDataList">
@@ -99,14 +104,11 @@
             <ion-item class="divider"></ion-item>
             <ion-row class="detailsRow" *ngFor="let item of personalDataList">
                 <ion-col>
-                    <ion-label>EMERGENCY CONTACT 1</ion-label>
-                    <p>{{item.FIRST_EMERGENCY_CONTACT}}</p>
-                </ion-col>
-                <ion-col>
-                    <ion-label>EMERGENCY CONTACT 2</ion-label>
-                    <p>{{item.SECOND_EMERGENCY_CONTACT}}</p>
-                </ion-col>
-                <ion-col>
+                    <ion-label style="display: block">EMERGENCY CONTACT(S)</ion-label>
+                    <p style="display: inline; padding-right: 30%;">Father</p>
+                    <p style="display: inline;">{{item.FIRST_EMERGENCY_CONTACT}}</p>
+                    <i style="padding-left: 8%;" class="fas fa-pencil-alt"></i>
+                    <i style="padding-left: 1%;" class="far fa-trash-alt"></i>
                 </ion-col>
             </ion-row>
         </ion-card-content>

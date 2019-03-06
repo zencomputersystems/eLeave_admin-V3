@@ -16,7 +16,9 @@ export class PersonalDetailsModel {
     public WORK_EMAIL: string;
     public ADDRESS: string;
     public FIRST_EMERGENCY_CONTACT: string;
+    public FIRST_EMERGENCY_NAME: string;
     public SECOND_EMERGENCY_CONTACT: string;
+    public SECOND_EMERGENCY_NAME: string;
     // new added
     public EMPLOYEE_NUMBER: number;
     public NRIC: string;
