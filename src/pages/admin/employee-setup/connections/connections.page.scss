@@ -1,0 +1,52 @@
+// ion-searchbar > .searchbar-input.sc-ion-searchbar-md{
+    :host{
+        ion-label{
+            color:#20291f;
+            font-weight: 500;
+        }
+        .arrow{
+            font-size: 18px; 
+            padding-left: 10px; 
+            cursor: pointer;
+        }
+        .detailsRow{
+            height: 55px;
+        }
+        .divider{
+            --min-height: none;
+            padding-top: 1%;
+            padding-bottom: 1%; 
+            width: 100%;
+        }
+        .avatar{
+            width: 30px;
+            height: 30px;
+            margin-top: -7px;
+        }
+        .topPaginator{
+            display: inline-block;
+            right: 0;
+            position: absolute;
+            padding-top: 12px;
+            background-color: #f9fafc;
+        }
+        .bottomPaginator{
+            right: 0;
+            position: absolute;
+            background-color: #f9fafc;
+        }
+        .button-outline{
+            --border-width: 1px;
+        }
+        .checkboxOnAvatar{
+            display: none;
+            padding-left: 5px;
+            padding-top: 5px;
+        }
+        .avatar:hover > img {
+            display: none;
+        }
+        .avatar:hover > .checkboxOnAvatar {
+            display: inline-block;
+        }
+   }

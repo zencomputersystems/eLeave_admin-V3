@@ -40,9 +40,9 @@
                 <ion-row class="titleRow">
                     <ion-col size="2.5" style="display: inline-flex">
                         <ion-label>LEAVE TYPES</ion-label>
-                        <ion-icon class="arrow" name="arrow-dropdown" (click)="sortDesLeaveType()" *ngIf="arrowDown">
+                        <ion-icon class="arrow" name="arrow-dropdown" (click)="sortDesLeaveType()" *ngIf="sortDirectionArrowDown">
                         </ion-icon>
-                        <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDown" (click)="sortAscLeaveType()">
+                        <ion-icon class="arrow" name="arrow-dropup" *ngIf="!sortDirectionArrowDown" (click)="sortAscLeaveType()">
                         </ion-icon>
                     </ion-col>
                     <ion-col size="2.4">

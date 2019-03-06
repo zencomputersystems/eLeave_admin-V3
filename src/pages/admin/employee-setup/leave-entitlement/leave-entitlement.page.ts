@@ -48,7 +48,6 @@ export class LeaveEntitlementPage implements OnInit {
         this._data.getLeaveTypeData()
             .subscribe(() => {
                 this.leaves = this._data.leaveData;
-                console.log(this.leaves);
             });
     }
 

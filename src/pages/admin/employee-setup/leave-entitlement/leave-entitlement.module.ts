@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { MatCardModule } from '@angular/material/card';
 import { LeaveEntitlementPage } from './leave-entitlement.page';
 
 
@@ -20,7 +19,6 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    MatCardModule,
     RouterModule.forChild(routes)
   ],
   declarations: [LeaveEntitlementPage]
