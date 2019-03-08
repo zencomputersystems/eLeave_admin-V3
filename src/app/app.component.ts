@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { MenuController } from '@ionic/angular';
 export class AppComponent {
   public showFullMenu: boolean = true;
   public showIconMenu: boolean = false;
-
+  public activeRoute: any;
 
   public appPages = [
     {
@@ -43,12 +44,23 @@ export class AppComponent {
   }
 
   constructor(
-    private menu: MenuController
+    private menu: MenuController,
+    private route: Router,
   ) {
   }
 
   ngOnInit() {
     this.openAtBeginning();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      for (let i = 0; i < this.appPages.length; i++) {
+        if (this.route.url === this.appPages[i].url) {
+          this.activeRoute = this.appPages[i].url;
+        }
+      }
+    }, 500);
   }
 
   openAtBeginning() {

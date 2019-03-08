@@ -15,6 +15,14 @@
     ion-icon{
         color: #abacaf;
     }
+    .item:hover {
+        --background: #363942;
+        border-left: 2px solid #057dcd; 
+    }
+    .background-highlight{
+        --background: #363942;
+        border-left: 2px solid #057dcd; 
+    }
     .collapse{
         cursor: pointer;
     }

@@ -1,29 +1,27 @@
-<ion-header style="min-width:250px">
+<ion-header>
     <ion-toolbar class="toolbar1">
-        <div style="font-size:32px">
-            <ion-avatar style=" width: 32px; height: 32px; float: right">
-                <img src="assets/icon/favicon.png">
-            </ion-avatar>
-            <ion-icon name="notifications-outline" style="float:right;"></ion-icon>
-            <ion-icon name="search" style="float:right;"></ion-icon>
-        </div>
+        <ion-avatar style=" width: 32px; height: 32px; float: right">
+            <img src="assets/icon/picture.png">
+        </ion-avatar>
+        <ion-label class="labelName">Qiqi
+            Abaziz</ion-label>
+        <div class="verticalLine"></div>
+        <i class="far fa-bell"></i>
+        <i class="far fa-edit"></i>
+        <ion-icon class="search" name="search"></ion-icon>
     </ion-toolbar>
 
     <ion-toolbar class="toolbar2">
         <ion-title style="display: inline-block;color: #20291f">
             My Profile
         </ion-title>
-        <div style="font-size:24px; float: right">
-            <ion-icon name="logo-facebook" style="color:#3b5998;"></ion-icon>
-            <ion-icon name="logo-linkedin" style="color:#007bb6;"></ion-icon>
-            <ion-icon name="logo-instagram"
-                style="border-radius: 30%; color:white; background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)">
-            </ion-icon>
+        <div style="float: right; padding-right: 20px;">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-instagram"></i>
         </div>
     </ion-toolbar>
 </ion-header>
 <ion-content class="contentMenu" contentId="content">
-
     <ion-list lines="none">
         <ion-menu-toggle auto-hide="false" *ngFor="let p of employeeSetupPage; let i=index">
             <ion-item class="items" lines="none" [routerLink]="[p.url]" (click)="getIndexToShowArrow(i)">
@@ -37,4 +35,7 @@
         </ion-menu-toggle>
     </ion-list>
 </ion-content>
-<ion-router-outlet name="newContent" class="content2"></ion-router-outlet>
+
+<ion-content class="content2">
+    <ion-router-outlet></ion-router-outlet>
+</ion-content>

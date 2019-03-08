@@ -8,18 +8,7 @@ import { Router } from '@angular/router';
 })
 export class EmployeeSetupPage implements OnInit {
 
-  displayArrow: boolean = false;
-  numOfArray: number;
-  text1Color: string;
-  text2Color: string;
-  text3Color: string;
-  text4Color: string;
-  text5Color: string;
-  text6Color: string;
-
-  get showArrow(): boolean {
-    return this.displayArrow;
-  }
+  public numOfArray: number;
 
   public employeeSetupPage = [
     {
@@ -29,34 +18,39 @@ export class EmployeeSetupPage implements OnInit {
     },
     {
       title: 'Employment Details',
-      url: '/inbox',
+      url: '/employee-setup/employment-details',
       icon: 'mail-unread',
     },
     {
       title: 'Leave Entitlement',
-      url: '/plan-my-leave',
+      url: '/employee-setup/leave-entitlement',
       icon: 'calendar',
     },
     {
       title: 'Awards & Certification',
-      url: '/employee-setup',
+      url: '/employee-setup/awards-certification',
       icon: 'people',
     },
     {
       title: 'My Connections',
-      url: '/employee-setup',
+      url: '/employee-setup/connection',
       icon: 'people',
     },
     {
       title: 'Account',
-      url: 'personal-details',
+      url: 'account',
       icon: 'people',
     }
   ];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+    for (let i = 0; i < this.employeeSetupPage.length; i++) {
+      if (this.router.url === this.employeeSetupPage[i].url) {
+        this.getIndexToShowArrow(i);
+      }
+    }
   }
 
   getIndexToShowArrow(index) {

@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { ConnectionsPage } from './connections.page';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
         MatPaginatorModule,
         MatInputModule,
         MatSelectModule,
+        MatFormFieldModule,
         MatIconModule,
         RouterModule.forChild(routes)
     ],

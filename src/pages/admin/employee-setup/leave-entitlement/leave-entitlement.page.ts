@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonalDetailsService } from 'src/services/employee-setup/personal-details.service.';
 import { LeaveTypeService } from 'src/services/leave-type-setup/leave-type.service';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-leave-entitlement',

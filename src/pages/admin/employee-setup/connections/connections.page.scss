@@ -11,6 +11,7 @@
         }
         .detailsRow{
             height: 55px;
+            background-color: #f9fafc;
         }
         .divider{
             --min-height: none;
@@ -48,5 +49,8 @@
         }
         .avatar:hover > .checkboxOnAvatar {
             display: inline-block;
+        }
+        .titleRow{
+            background-color: #f9fafc;
         }
    }

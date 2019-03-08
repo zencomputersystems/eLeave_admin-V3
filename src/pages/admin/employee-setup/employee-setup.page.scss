@@ -3,13 +3,17 @@
         height: 0px;
         background-image: none;
     }
+    .toolbar1{
+        height: 48px; 
+        padding-right: 20px;
+    }
     .toolbar2{
         --min-height: 35px;
         border: 1px solid var(--ion-item-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.13))))
 
     }
     .contentMenu{
-        width: 250px;
+        width: 230px;
         border-right: 1px solid var(--ion-item-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.13))));
         border-left : 1px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
     }
@@ -19,13 +23,57 @@
     .items{
         cursor: pointer;
         color: #7a8589;
+        font-size: 14px;
     }
     .content2{
         position: absolute;
-        top: 96px;
-        width: calc( 100% - 250px);
+        top: 85px;
+        width: calc( 100% - 230px);
         right: 0;
         height: calc( 100% - 96px);
-        left: 250px;
+        left: 230px;
+    }
+    .fa-instagram{
+        font-size: 18px;color: transparent;
+        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        -webkit-background-clip: text; 
+        background-clip: text;
+    }
+    .fa-facebook-f{
+        color:#3b5998;
+        padding-right: 10px;
+        font-size: 18px;
+        padding-top: 5px;
+    }
+    .fa-bell{
+        float:right; 
+        font-size: 22px; 
+        color: #7a8589;
+        padding-right: 20px;
+    }
+    .fa-edit{
+        float:right; 
+        font-size: 22px; 
+        color: #7a8589; 
+        padding-right: 10px;
+    }
+    .search{
+        float:left; 
+        font-size: 25px; 
+        color: #7a8589; 
+        padding-left: 7px;
+    }
+    .verticalLine{
+        border-left: 1px solid #dfe3e6;
+        height: 28px;
+        float:right; 
+        padding-right: 20px;
+    }
+    .labelName{
+        float:right; 
+        font-size: 14px; 
+        color: #7a8589;
+        padding-right: 10px;
+        padding-top: 8px;
     }
 }

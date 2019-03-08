@@ -13,6 +13,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { XmlJson } from 'src/services/shared-service/xml-json.service';
 import { AlertService } from 'src/services/shared-service/alert.service';
+import { EmployeeSetupPageModule } from 'src/pages/admin/employee-setup/employee-setup.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,8 @@ import { AlertService } from 'src/services/shared-service/alert.service';
     BrowserAnimationsModule,
     HttpModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    EmployeeSetupPageModule,
   ],
   providers: [
     StatusBar,
@@ -33,4 +35,4 @@ import { AlertService } from 'src/services/shared-service/alert.service';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

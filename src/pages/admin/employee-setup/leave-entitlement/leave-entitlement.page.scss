@@ -26,6 +26,7 @@
     }
     ion-card{
         height: 100%;
+        margin: 0;
     }
     .cardContent{
         background-color: #f9fafc; 
@@ -58,6 +59,7 @@
         color: white;
         padding-left: 50px;
         display: inline-block;
+        width: 100%
     }
     .right{
         padding-top: 1%;

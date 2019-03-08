@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { EmployeeSetupPage } from 'src/pages/admin/employee-setup/employee-setup.page';
+import { PersonalDetailsPage } from 'src/pages/admin/employee-setup/personal-details/personal-details.page';
+import { EmploymentDetailsPage } from 'src/pages/admin/employee-setup/employment-details/employment-details.page';
+import { LeaveEntitlementPage } from 'src/pages/admin/employee-setup/leave-entitlement/leave-entitlement.page';
+import { ConnectionsPage } from 'src/pages/admin/employee-setup/connections/connections.page';
 
 const routes: Routes = [
   {
@@ -23,16 +28,22 @@ const routes: Routes = [
     path: 'user-setup-edit',
     loadChildren: './home/home.module#HomePageModule'
   },
+
   {
-    path: 'employee-setup',
-    loadChildren: '../pages/admin/employee-setup/employee-setup.module#EmployeeSetupPageModule'
+    path: 'employee-setup', component: EmployeeSetupPage, children: [
+      { path: 'personal-details', component: PersonalDetailsPage },
+      { path: 'employment-details', component: EmploymentDetailsPage },
+      { path: 'leave-entitlement', component: LeaveEntitlementPage },
+      { path: 'connection', component: ConnectionsPage },
+      { path: '', redirectTo: 'personal-details', pathMatch: 'full' },
+    ]
   },
-
-
 ];
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
