@@ -15,18 +15,18 @@
                     <ion-icon name="image"></ion-icon>
                 </ion-badge>
             </div>
-            <div class="right" *ngFor="let item of personalDataList">
-                <ion-card-title>{{item.NAME}}</ion-card-title>
+            <div class="right">
+                <ion-card-title>{{personalList.employeeName}}</ion-card-title>
                 <div style="display:inline-block; padding-top: 10px;">
                     <ion-card-subtitle class="subtitle">
-                        {{item.DESIGNATION}}</ion-card-subtitle>
+                        {{personalList.employeeDesignation}}</ion-card-subtitle>
                     <i class="fas fa-circle"></i>
-                    <ion-card-subtitle class="subtitle">Research & Development
+                    <ion-card-subtitle class="subtitle">{{personalList.employmentDetail.department}}
                     </ion-card-subtitle>
                 </div>
                 <div style="padding-top: 10px;">
                     <i class="fas fa-map-marker-alt"></i>
-                    <ion-card-subtitle class="subtitle">Kuala Lumpur, Malaysia
+                    <ion-card-subtitle class="subtitle">{{personalList.employmentDetail.workLocation}}
                     </ion-card-subtitle>
                 </div>
             </div>
@@ -35,55 +35,55 @@
     <ion-item lines="full" class="mainDivider"></ion-item>
     <div class="cardContent">
         <ion-card-content>
-            <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+            <ion-row class="detailsRow">
                 <ion-col>
                     <ion-label>EMPLOYEE NUMBER</ion-label>
-                    <p>{{item.EMPLOYEE_NUMBER}}</p>
+                    <p>{{personalList.employmentDetail.employeeNumber}}</p>
                 </ion-col>
                 <ion-col>
                     <ion-label>DESIGNATION</ion-label>
-                    <p>{{item.DESIGNATION}}</p>
+                    <p>{{personalList.employmentDetail.designation}}</p>
                 </ion-col>
                 <ion-col>
                     <ion-label>NRIC</ion-label>
-                    <p>{{item.NRIC}}</p>
+                    <p>{{personalList.employmentDetail.nric}}</p>
                 </ion-col>
 
             </ion-row>
-            <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+            <ion-row class="detailsRow">
                 <ion-col>
                     <ion-label>REPORITNG TO</ion-label>
-                    <p>{{item.REPORITNG_TO}}</p>
+                    <p>{{personalList.employmentDetail.reportingTo}}</p>
                 </ion-col>
                 <ion-col>
                     <ion-label>DEPARTMENT</ion-label>
-                    <p>{{item.DEPARTMENT}}</p>
+                    <p>{{personalList.employmentDetail.department}}</p>
                 </ion-col>
                 <ion-col>
                     <ion-label>WORK LOCATION</ion-label>
-                    <p>{{item.WORK_LOCATION}}</p>
+                    <p>{{personalList.employmentDetail.workLocation}}</p>
                 </ion-col>
 
             </ion-row>
-            <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+            <ion-row class="detailsRow">
                 <ion-col>
                     <ion-label>DATE OF JOIN</ion-label>
-                    <p>{{item.DATE_OF_JOIN}}</p>
+                    <p>{{personalList.employmentDetail.dateOfJoin}}</p>
 
                 </ion-col>
                 <ion-col>
                     <ion-label>CONFIRMATION DATE</ion-label>
-                    <p>{{item.CONFIRMATION_DATE}}</p>
+                    <p>{{personalList.employmentDetail.dateOfConfirmation}}</p> 
                 </ion-col>
                 <ion-col>
                     <ion-label>RESIGNATION DATE</ion-label>
-                    <p>{{item.RESIGNATION_DATE}}</p>
+                    <p>{{personalList.employmentDetail.dateOfResign}}</p> 
                 </ion-col>
             </ion-row>
-            <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+            <ion-row class="detailsRow">
                 <ion-col>
                     <ion-label>YEARS OF SERVICE</ion-label>
-                    <p>{{item.YEARS_OF_SERVICE}}</p>
+                    <p>{{personalList.employmentDetail.yearOfService}}</p>
                 </ion-col>
                 <ion-col>
                 </ion-col>
@@ -91,39 +91,39 @@
                 </ion-col>
             </ion-row>
             <ion-item class="divider"></ion-item>
-            <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+            <ion-row class="detailsRow">
                 <ion-col>
                     <ion-label>EMPLOYMENT TYPE</ion-label>
-                    <p>{{item.EMPLOYMENT_TYPE}}</p>
+                    <p>{{personalList.employmentDetail.employmentType}}</p>
                 </ion-col>
                 <ion-col>
                     <ion-label>STATUS</ion-label>
-                    <p>{{item.STATUS}}</p>
+                    <p>{{personalList.employmentDetail.employmentStatus}}</p>
                 </ion-col>
                 <ion-col>
                     <ion-label>USER ROLE</ion-label>
-                    <p>{{item.USER_ROLE}}</p>
+                    <p>{{personalList.employmentDetail.userRole}}</p>
                 </ion-col>
             </ion-row>
             <ion-item class="divider"></ion-item>
-            <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+            <ion-row class="detailsRow">
                 <ion-col>
                     <ion-label>BANK ACCOUNT NAME</ion-label>
-                    <p>{{item.BANK_ACCOUNT_NAME}}</p>
+                    <p>{{personalList.employmentDetail.bankAccountName}}</p>
                 </ion-col>
                 <ion-col>
                     <ion-label>BANK ACCOUNT NO</ion-label>
-                    <p>{{item.BANK_ACCOUNT_NO}}</p>
+                    <p>{{personalList.employmentDetail.bankAccountNumber}}</p>
                 </ion-col>
                 <ion-col>
                     <ion-label>EPF NO</ion-label>
-                    <p>{{item.EPF_NO}}</p>
+                    <p>{{personalList.employmentDetail.epfNumber}}</p>
                 </ion-col>
             </ion-row>
-            <ion-row class="detailsRow" *ngFor="let item of personalDataList">
+            <ion-row class="detailsRow">
                 <ion-col>
                     <ion-label>INCOME TAX NO</ion-label>
-                    <p>{{item.INCOME_TAX_NO}}</p>
+                    <p>{{personalList.employmentDetail.incomeTaxNumber}}</p>
                 </ion-col>
                 <ion-col>
                 </ion-col>

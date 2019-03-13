@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { PersonalDetailsPage } from './personal-details.page';
 import { MatCardModule } from '@angular/material/card';
+import { JwtService } from 'src/app/jwt.service';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
     MatCardModule,
     RouterModule.forChild(routes)
   ],
+  providers: [JwtService],
   declarations: [PersonalDetailsPage]
 })
 export class PersonalDetailsModule { }

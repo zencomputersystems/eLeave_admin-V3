@@ -5,6 +5,7 @@ import { PersonalDetailsPage } from 'src/pages/admin/employee-setup/personal-det
 import { EmploymentDetailsPage } from 'src/pages/admin/employee-setup/employment-details/employment-details.page';
 import { LeaveEntitlementPage } from 'src/pages/admin/employee-setup/leave-entitlement/leave-entitlement.page';
 import { ConnectionsPage } from 'src/pages/admin/employee-setup/connections/connections.page';
+import { LoginComponent } from 'src/pages/login/login.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,9 @@ const routes: Routes = [
       { path: 'connection', component: ConnectionsPage },
       { path: '', redirectTo: 'personal-details', pathMatch: 'full' },
     ]
+  },
+  {
+    path: 'login', component: LoginComponent
   },
 ];
 

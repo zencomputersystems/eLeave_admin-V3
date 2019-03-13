@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PersonalDetailsService } from 'src/services/employee-setup/personal-details.service.';
-import { LeaveTypeService } from 'src/services/leave-type-setup/leave-type.service';
+import { APIService } from 'src/services/shared-service/api.service';
 
 @Component({
     selector: 'app-leave-entitlement',
@@ -10,12 +9,11 @@ import { LeaveTypeService } from 'src/services/leave-type-setup/leave-type.servi
 export class LeaveEntitlementPage implements OnInit {
 
     public leaves: any;
-    public list: any;
-    public personalDataList: any;
+    public personalDataList: any = '';
     public showHeader: boolean = true;
     public progressPercentage: number = 80;
     public arrowDown: boolean = true;
-    leaveTypeValue: any;
+    private leaveTypeValue: any;
 
     public get sortDirectionArrowDown(): boolean {
         return this.arrowDown;
@@ -25,29 +23,16 @@ export class LeaveEntitlementPage implements OnInit {
         return this.leaveTypeValue;
     }
 
-    constructor(private _personalDetailsService: PersonalDetailsService,
-        private _data: LeaveTypeService
+    public get personalList() {
+        return this.personalDataList;
+    }
+    constructor(private apiService: APIService
     ) { }
 
     ngOnInit() {
-
-    }
-
-    ionViewWillEnter() {
-        this._personalDetailsService.getPersonalDetailsList()
-            .subscribe(() => {
-                this.list = this._personalDetailsService.personalData;
-                // this.personalDataList = this._personalDetailsService.personalData;
-                this.personalDataList = this.list.source.value;
-                for (let i = 0; i < this.personalDataList.length; i++) {
-                    const a = this.personalDataList[i];
-                }
-            });
-
-        this._data.getLeaveTypeData()
-            .subscribe(() => {
-                this.leaves = this._data.leaveData;
-            });
+        this.apiService.get_user_profile_me().subscribe(
+            response => this.personalDataList = response.json()
+        );
     }
 
     clickToHideHeader() {

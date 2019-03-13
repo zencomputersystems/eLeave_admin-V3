@@ -45,7 +45,7 @@
             <ion-col size="2">
             </ion-col>
         </ion-row>
-        <ion-row class="detailsRow" *ngFor="let item of data | async">
+        <ion-row class="detailsRow" *ngFor="let item of personalList ">
             <ion-col size="1">
                 <ion-avatar class="avatar">
                     <img src="assets/icon/picture.png">
@@ -56,11 +56,11 @@
                 </ion-avatar>
             </ion-col>
             <ion-col size="1">
-                <ion-label style="color:#7a8589; font-size: 13px;">{{item.ID}}</ion-label>
+                <ion-label style="color:#7a8589; font-size: 13px;">{{personalDataList.employmentDetail.employeeNumber}}</ion-label>
             </ion-col>
-            <ion-col class="colOfLeave" size="5" style="color: #057dcd; font-size: 13px;">{{item.EMPLOYEE_NAME}}
+            <ion-col class="colOfLeave" size="5" style="color: #057dcd; font-size: 13px;">{{item.employeeName}}
             </ion-col>
-            <ion-col class="colOfLeave" size="4" style="color:#7a8589; font-size: 13px;">{{item.DESIGNATION}}
+            <ion-col class="colOfLeave" size="4" style="color:#7a8589; font-size: 13px;">{{item.designation}}
             </ion-col>
             <ion-col align-self-end>
                 <i class="far fa-comment" style="color: #057dcd"></i>

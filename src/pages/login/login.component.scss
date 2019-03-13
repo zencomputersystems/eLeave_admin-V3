@@ -1,0 +1,25 @@
+:host{
+    mat-form-field{
+        width: 100%;
+    }
+    ion-card{
+        width: 40%;
+    }
+    .example-container{
+        padding: 10%;
+        padding-top: 15%;
+    }
+    .showHidePassword{
+        cursor: pointer;
+    }
+    .avatar{
+        width: 100px;
+        height: 100px;
+        border: solid 0.5px #dfe3e6;
+        background-color: #fafafa;
+        border-radius: 100%;
+        margin: 0 auto;
+        padding-top: 20px;
+        padding-left: 23px;
+    }
+}

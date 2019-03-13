@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PersonalDetailsService } from 'src/services/employee-setup/personal-details.service.';
+import { APIService } from 'src/services/shared-service/api.service';
 
 @Component({
     selector: 'app-personal-details',
@@ -8,26 +8,27 @@ import { PersonalDetailsService } from 'src/services/employee-setup/personal-det
 })
 export class PersonalDetailsPage implements OnInit {
 
-    public list: any;
-    public personalDataList: any;
-    showHeader: boolean = true;
-    progressPercentage: number = 80;
-    constructor(private _personalDetailsService: PersonalDetailsService) { }
+    public personalDataList: any = {};
+    public showHeader: boolean = true;
+    public progressPercentage: number = 80;
+    public accessToken: any;
+
+
+    get personalList() {
+        return this.personalDataList;
+    }
+
+    constructor(private apiService: APIService) {
+    }
 
     ngOnInit() {
 
-    }
+        // this.apiService.get_login('tarmimi@zen.com.my', 'P@ss1234').subscribe(
+        //     token => this.accessToken = (token));
 
-    ionViewWillEnter() {
-        this._personalDetailsService.getPersonalDetailsList()
-            .subscribe(() => {
-                this.list = this._personalDetailsService.personalData;
-                // this.personalDataList = this._personalDetailsService.personalData;
-                this.personalDataList = this.list.source.value;
-                for (let i = 0; i < this.personalDataList.length; i++) {
-                    const a = this.personalDataList[i];
-                }
-            });
+        this.apiService.get_user_profile_me().subscribe(
+            response => this.personalDataList = response.json()
+        );
     }
 
     clickToHideHeader() {

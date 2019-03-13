@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConnectionsService } from 'src/services/employee-setup/connections.service';
+import { APIService } from 'src/services/shared-service/api.service';
 
 @Component({
     selector: 'app-connections',
@@ -8,11 +8,18 @@ import { ConnectionsService } from 'src/services/employee-setup/connections.serv
 })
 export class ConnectionsPage implements OnInit {
 
-    public data: any;
+    public data: any = '';
+    public personalData: any;
     public arrowDownName: boolean = true;
     public arrowDownId: boolean = true;
     private _dataValue: any;
 
+    public get personalList() {
+        return this.data;
+    }
+    public get personalDataList() {
+        return this.personalData;
+    }
     public get sortDirectionArrowDownName(): boolean {
         return this.arrowDownName;
     }
@@ -20,17 +27,16 @@ export class ConnectionsPage implements OnInit {
         return this.arrowDownId;
     }
 
-    constructor(private _data: ConnectionsService) { }
+    constructor(private apiService: APIService) { }
 
     ngOnInit() {
+        this.apiService.get_user_profile_list().subscribe(
+            response => this.data = response.json()
+        );
 
-    }
-
-    ionViewWillEnter() {
-        this._data.getConnectionsList()
-            .subscribe(() => {
-                this.data = this._data.personalData;
-            });
+        this.apiService.get_user_profile_me().subscribe(
+            response => this.personalData = response.json()
+        );
     }
 
     sortAscName() {

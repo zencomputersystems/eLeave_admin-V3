@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PersonalDetailsService } from 'src/services/employee-setup/personal-details.service.';
+import { APIService } from 'src/services/shared-service/api.service';
 
 @Component({
     selector: 'app-employment-details',
@@ -7,27 +7,25 @@ import { PersonalDetailsService } from 'src/services/employee-setup/personal-det
     styleUrls: ['./employment-details.page.scss'],
 })
 export class EmploymentDetailsPage implements OnInit {
-    public list: any;
-    public personalDataList: any;
+    public personalDataList: any = '';
     showHeader: boolean = true;
     progressPercentage: number = 80;
 
-    constructor(private _personalDetailsService: PersonalDetailsService) { }
+    get personalList() {
+        return this.personalDataList;
+    }
+
+    constructor(private apiService: APIService) {
+    }
+
 
     ngOnInit() {
-
+        this.apiService.get_user_profile_me().subscribe(
+            response => this.personalDataList = response.json()
+        );
     }
 
     ionViewWillEnter() {
-        this._personalDetailsService.getPersonalDetailsList()
-            .subscribe(() => {
-                this.list = this._personalDetailsService.personalData;
-                // this.personalDataList = this._personalDetailsService.personalData;
-                this.personalDataList = this.list.source.value;
-                for (let i = 0; i < this.personalDataList.length; i++) {
-                    const a = this.personalDataList[i];
-                }
-            });
     }
 
     clickToHideHeader() {
