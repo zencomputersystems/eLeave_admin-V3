@@ -38,4 +38,5 @@ const routes: Routes = [
   ],
   declarations: [EmployeeSetupPage]
 })
-export class EmployeeSetupPageModule { }
+export class EmployeeSetupPageModule {
+}

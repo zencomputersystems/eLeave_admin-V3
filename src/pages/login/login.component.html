@@ -4,32 +4,33 @@
   </div>
   <div style="margin-top: -120px; padding-bottom: 10px">
     <ion-card style="margin: 0 auto; margin-top: 80px;">
-      <!-- <ion-avatar class="avatar"> -->
-      <!-- <img src="assets/icon/picture.png"> -->
-
-      <!-- </ion-avatar> -->
       <div class="example-container">
-        <span>EMAIL ADDRESS</span><br>
-        <mat-form-field appearance="outline">
-          <input matInput placeholder="Email address">
-        </mat-form-field>
-        <br>
-        <br>
-        <span>PASSWORD</span><br>
-        <mat-form-field appearance="outline">
-          <input matInput placeholder="Password" [type]="showPassword ? 'text' : 'password'">
-          <mat-icon class="showHidePassword" matSuffix>
-            <ion-icon name="eye-off" (click)="showPasswordKey()" *ngIf="!showPassword"></ion-icon>
-            <ion-icon name="eye" (click)="hidePasswordKey()" *ngIf="showPassword"></ion-icon>
-          </mat-icon>
-        </mat-form-field>
-        <br>
-        <br>
-        <ion-checkbox style="display: inline-flex;--size: 14px;"></ion-checkbox>
-        <span style="padding-left: 10px; color:#7a8589">Remember me</span>
-        <ion-button shape="round" fill="solid" float-right style="margin-right: 7%; margin-top: -0.2%;font-size: 10px;
-      height: 27px;">Sign In</ion-button>
-
+        <form [formGroup]="formGroupValidation">
+          <span>EMAIL ADDRESS</span><br>
+          <mat-form-field appearance="outline">
+            <input matInput #emailInput placeholder="Email address" formControlName="email" required>
+            <mat-error *ngIf="formGroupValidation.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+          <br>
+          <br>
+          <span>PASSWORD</span><br>
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="Password" #passwordInput [type]="showPassword ? 'text' : 'password'"
+              formControlName="pass" required>
+            <mat-error *ngIf="formGroupValidation.controls['pass'].invalid">{{getPassErrorMessage()}}</mat-error>
+            <mat-icon class="showHidePassword" matSuffix>
+              <ion-icon name="eye-off" (click)="showPasswordKey()" *ngIf="!showPassword"></ion-icon>
+              <ion-icon name="eye" (click)="hidePasswordKey()" *ngIf="showPassword"></ion-icon>
+            </mat-icon>
+          </mat-form-field>
+          <br>
+          <br>
+          <ion-checkbox style="display: inline-flex;--size: 14px;"></ion-checkbox>
+          <span style="padding-left: 10px; color:#7a8589">Remember me</span>
+          <ion-button shape="round" fill="solid" float-right style="margin-right: 7%; margin-top: -0.2%;font-size: 10px;
+      height: 27px;" (click)="signIn(emailInput.value, passwordInput.value)" [disabled]="!formGroupValidation.valid">
+            Sign In</ion-button>
+        </form>
       </div>
     </ion-card>
 

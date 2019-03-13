@@ -1,4 +1,5 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -6,7 +7,21 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
   public showPassword: boolean = false;
+  public formGroupValidation = new FormGroup({
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    pass: new FormControl(null, [Validators.required]),
+  });
+
+  getErrorMessage() {
+    return this.formGroupValidation.controls['email'].hasError('required') ? 'Please enter your email address' :
+      this.formGroupValidation.controls['email'].hasError('email') ? 'Not a valid email' : '';
+  }
+
+  getPassErrorMessage() {
+    return this.formGroupValidation.controls['pass'].hasError('required') ? 'Please enter your password' : '';
+  }
 
   constructor() { }
 
@@ -18,6 +33,10 @@ export class LoginComponent implements OnInit {
   }
   hidePasswordKey() {
     this.showPassword = false;
+  }
+
+  signIn(email: string, pass: string) {
+    console.log(email, pass)
   }
 
 
