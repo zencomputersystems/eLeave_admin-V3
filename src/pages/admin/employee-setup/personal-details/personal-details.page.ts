@@ -22,10 +22,6 @@ export class PersonalDetailsPage implements OnInit {
     }
 
     ngOnInit() {
-
-        // this.apiService.get_login('tarmimi@zen.com.my', 'P@ss1234').subscribe(
-        //     token => this.accessToken = (token));
-
         this.apiService.get_user_profile_me().subscribe(
             response => this.personalDataList = response.json()
         );
@@ -33,6 +29,10 @@ export class PersonalDetailsPage implements OnInit {
 
     clickToHideHeader() {
         this.showHeader = false;
+    }
+
+    removeContact(index: number) {
+        this.personalDataList.personalDetail.emergencyContactNumber.contacts.splice(index, 1);
     }
 
 

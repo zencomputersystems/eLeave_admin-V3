@@ -7,8 +7,8 @@
 <ion-card>
     <ion-card-header>
         <div style="right: 25px; position: absolute;">
-            <i style="color: #057dcd; padding-right: 10px" class="far fa-edit"></i>
-            <p style="color: #057dcd; display: inline;">Edit Profile</p>
+            <i style="color: #057dcd; padding-right: 10px;cursor: pointer;" class="far fa-edit"></i>
+            <p style="color: #057dcd; display: inline;cursor: pointer;">Edit Profile</p>
         </div>
         <div class="fullContainer">
 
@@ -110,8 +110,8 @@
                         {{item.contactName}}</p>
                     <p style="display: inline;">
                         {{item.contactNumber}}</p>
-                    <i style="padding-left: 8%;" class="fas fa-pencil-alt"></i>
-                    <i style="padding-left: 1%;" class="far fa-trash-alt"></i>
+                    <i style="padding-left: 8%;cursor: pointer;" class="fas fa-pencil-alt"></i>
+                    <i style="padding-left: 1%;cursor: pointer;" class="far fa-trash-alt" (click)="removeContact(i)"></i>
                 </ion-col>
             </ion-row>
         </ion-card-content>

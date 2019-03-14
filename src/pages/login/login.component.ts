@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { APIService } from 'src/services/shared-service/api.service';
 
 @Component({
   selector: 'app-login',
@@ -23,9 +24,10 @@ export class LoginComponent implements OnInit {
     return this.formGroupValidation.controls['pass'].hasError('required') ? 'Please enter your password' : '';
   }
 
-  constructor() { }
+  constructor(private apiService: APIService) { }
 
   ngOnInit() {
+    this.apiService.logout();
   }
 
   showPasswordKey() {
@@ -36,8 +38,7 @@ export class LoginComponent implements OnInit {
   }
 
   signIn(email: string, pass: string) {
-    console.log(email, pass)
+    this.apiService.login(email, pass).subscribe(data => console.log(data));
   }
-
 
 }
