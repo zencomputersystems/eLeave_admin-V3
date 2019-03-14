@@ -22,7 +22,7 @@ export class PersonalDetailsPage implements OnInit {
     }
 
     ngOnInit() {
-        this.apiService.get_user_profile_me().subscribe(
+        this.apiService.get_personal_details().subscribe(
             response => this.personalDataList = response.json()
         );
     }

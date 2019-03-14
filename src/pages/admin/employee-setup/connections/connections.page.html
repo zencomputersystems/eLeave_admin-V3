@@ -1,4 +1,4 @@
-<div style="background-color:#f9fafc; height: 100%;">
+<div style="background-color:#f9fafc; height: 100%;padding-left: 20px; padding-right: 20px">
     <div style="width: 55%; background-color:#f9fafc; display: inline-block;padding-top: 20px;
     padding-bottom: 20px;
     margin-left: 9%;">
@@ -41,7 +41,7 @@
                 <ion-icon class="arrow" name="arrow-dropup" *ngIf="!sortDirectionArrowDownId" (click)="sortAscId()">
                 </ion-icon>
             </ion-col>
-            <ion-col size="5" style="display: inline-flex">
+            <ion-col size="4" style="display: inline-flex">
                 <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
                 <ion-icon class="arrow" name="arrow-dropdown" (click)="sortDesName()"
                     *ngIf="sortDirectionArrowDownName">
@@ -49,10 +49,11 @@
                 <ion-icon class="arrow" name="arrow-dropup" *ngIf="!sortDirectionArrowDownName" (click)="sortAscName()">
                 </ion-icon>
             </ion-col>
-            <ion-col size="4">
+            <ion-col size="3">
                 <ion-label style="font-size: 12px;">DESIGNATION</ion-label>
             </ion-col>
-            <ion-col size="2">
+            <ion-col>
+                    <ion-label style="font-size: 12px;">EMAIL ADDRESS</ion-label>
             </ion-col>
         </ion-row>
         <ion-row class="detailsRow" *ngFor="let item of personalList; let i=index">
@@ -68,13 +69,15 @@
             <ion-col size="1">
                 <ion-label style="color:#7a8589; font-size: 13px;">{{item.staffNumber}}</ion-label>
             </ion-col>
-            <ion-col class="colOfLeave" size="5" style="color: #057dcd; font-size: 13px;">{{item.employeeName}}
+            <ion-col class="colOfLeave" size="4" style="color: #057dcd; font-size: 13px;">{{item.employeeName}}
             </ion-col>
-            <ion-col class="colOfLeave" size="4" style="color:#7a8589; font-size: 13px;">{{item.designation}}
+            <ion-col class="colOfLeave" size="3" style="color:#7a8589; font-size: 13px;">{{item.designation}}
             </ion-col>
-            <ion-col align-self-end>
+            <!-- <ion-col align-self-end>
                 <i class="far fa-comment" style="color: #057dcd"></i>
-            </ion-col>
+            </ion-col> -->
+            <ion-col class="colOfLeave" style="color:#7a8589; font-size: 13px;">{{item.email}}
+                </ion-col>
             <ion-item class="divider" lines="full"></ion-item>
         </ion-row>
     </ion-content>

@@ -84,19 +84,26 @@ export class APIService {
         localStorage.removeItem('access_token');
     }
 
-    get_user_profile_me() {
+    get_personal_details() {
+        if (this.headers["_headers"].size != 1) {
+            this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
+        }
+        return this.http.get(this.baseUrl + '/api/userprofile/personal-detail', { headers: this.headers });
+    }
+    get_user_profile() {
         if (this.headers["_headers"].size != 1) {
             this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
         }
         return this.http.get(this.baseUrl + '/api/userprofile', { headers: this.headers });
     }
-
     get_user_profile_list() {
         if (this.headers["_headers"].size != 1) {
             this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
         }
         return this.http.get(this.baseUrl + '/api/users', { headers: this.headers });
     }
+
+
 
 
 

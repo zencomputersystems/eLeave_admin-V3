@@ -1,4 +1,3 @@
-// ion-searchbar > .searchbar-input.sc-ion-searchbar-md{
     :host{
         ion-label{
             color:#20291f;
@@ -8,6 +7,7 @@
             font-size: 18px; 
             padding-left: 10px; 
             cursor: pointer;
+            margin-top: -2px;
         }
         .detailsRow{
             height: 55px;

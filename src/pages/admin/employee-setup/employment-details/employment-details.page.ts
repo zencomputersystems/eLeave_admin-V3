@@ -20,7 +20,7 @@ export class EmploymentDetailsPage implements OnInit {
 
 
     ngOnInit() {
-        this.apiService.get_user_profile_me().subscribe(
+        this.apiService.get_user_profile().subscribe(
             response => this.personalDataList = response.json()
         );
     }
