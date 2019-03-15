@@ -15,8 +15,6 @@ import { XmlJson } from 'src/services/shared-service/xml-json.service';
 import { AlertService } from 'src/services/shared-service/alert.service';
 import { EmployeeSetupPageModule } from 'src/pages/admin/employee-setup/employee-setup.module';
 import { HttpClientModule } from '@angular/common/http';
-import { JwtModule } from '@auth0/angular-jwt';
-import { JwtService } from './jwt.service';
 import { LoginModule } from 'src/pages/login/login.module';
 
 @NgModule({
@@ -31,22 +29,12 @@ import { LoginModule } from 'src/pages/login/login.module';
     EmployeeSetupPageModule,
     LoginModule,
     HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: function tokenGetter() {
-          return localStorage.getItem('access_token');
-        },
-        whitelistedDomains: ['localhost:8100', 'localhost:3000'],
-        blacklistedRoutes: ['http://localhost:3000/auth/login']
-      }
-    })
   ],
   providers: [
     StatusBar,
     SplashScreen,
     XmlJson,
     AlertService,
-    JwtService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
