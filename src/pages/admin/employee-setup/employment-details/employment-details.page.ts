@@ -7,9 +7,9 @@ import { APIService } from 'src/services/shared-service/api.service';
     styleUrls: ['./employment-details.page.scss'],
 })
 export class EmploymentDetailsPage implements OnInit {
-    public personalDataList: any = '';
-    showHeader: boolean = true;
-    progressPercentage: number = 80;
+    public personalDataList: any;
+    public showHeader: boolean = true;
+    public progressPercentage: number = 80;
 
     get personalList() {
         return this.personalDataList;
@@ -21,7 +21,9 @@ export class EmploymentDetailsPage implements OnInit {
 
     ngOnInit() {
         this.apiService.get_user_profile().subscribe(
-            response => this.personalDataList = response.json()
+            (data: any[]) => {
+                this.personalDataList = data;
+            }
         );
     }
 

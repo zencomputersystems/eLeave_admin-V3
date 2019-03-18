@@ -15,7 +15,7 @@
                         <i style="color: #bebebe; padding-top: 1px;" class="far fa-image"></i>
                     </ion-badge>
             </div>
-            <div class="right">
+            <div class="right" *ngIf="personalList">
                 <ion-card-title>{{personalList.employeeName}}</ion-card-title>
                 <div style="display:inline-block; padding-top: 10px;">
                     <ion-card-subtitle class="subtitle">
@@ -33,7 +33,7 @@
         </div>
     </ion-card-header>
     <ion-item lines="full" class="mainDivider"></ion-item>
-    <div class="cardContent">
+    <div class="cardContent" *ngIf="personalList">
         <ion-card-content>
             <ion-row class="detailsRow">
                 <ion-col>

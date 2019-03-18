@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, RequestOptions } from '@angular/http';
+import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import * as constants from '../../config/constant';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -84,23 +84,29 @@ export class APIService {
         localStorage.removeItem('access_token');
     }
 
-    get_personal_details() {
+
+    get_personal_details(): Observable<any> {
         if (this.headers["_headers"].size != 1) {
             this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
         }
-        return this.http.get(this.baseUrl + '/api/userprofile/personal-detail', { headers: this.headers });
+        return this.http.get(this.baseUrl + '/api/userprofile/personal-detail', { headers: this.headers })
+            .pipe(map((res: Response) => res.json()))
+
     }
-    get_user_profile() {
+    get_user_profile(): Observable<any> {
         if (this.headers["_headers"].size != 1) {
             this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
         }
-        return this.http.get(this.baseUrl + '/api/userprofile', { headers: this.headers });
+        return this.http.get(this.baseUrl + '/api/userprofile', { headers: this.headers })
+            .pipe(map((res: Response) => res.json()));
     }
+
     get_user_profile_list() {
         if (this.headers["_headers"].size != 1) {
             this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
         }
-        return this.http.get(this.baseUrl + '/api/users', { headers: this.headers });
+        return this.http.get(this.baseUrl + '/api/users', { headers: this.headers })
+            .pipe(map((res: Response) => res.json()));;
     }
 
 

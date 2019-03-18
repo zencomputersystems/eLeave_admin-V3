@@ -11,3 +11,19 @@
 @import '~@ionic/angular/css/flex-utils.css';
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+    app-connections > div.connectionsContainer > div.topHeader > ion-searchbar.searchbar > div.searchbar-input-container > input.searchbar-input{
+        background: transparent;
+        border-radius: 30px;
+        border: 0.5px solid #bebebe;
+        height: 31px;
+    }
+    app-connections > div.connectionsContainer > div.topHeader > ion-searchbar.searchbar > div.searchbar-input-container > ion-icon.searchbar-search-icon.sc-ion-searchbar-ios{
+        height: 88%;
+    }
+    app-connections > div.connectionsContainer > div.topHeader > ion-searchbar.searchbar > div.searchbar-input-container > button > ion-icon.searchbar-clear-icon.sc-ion-searchbar-ios{
+        height: 80%;
+        margin-top: -3px;
+    }
+

@@ -8,30 +8,28 @@ import { APIService } from 'src/services/shared-service/api.service';
 })
 export class LeaveEntitlementPage implements OnInit {
 
-    public leaves: any;
-    public personalDataList: any = '';
+    public personalDataList: any;
     public showHeader: boolean = true;
     public progressPercentage: number = 80;
     public arrowDown: boolean = true;
-    private leaveTypeValue: any;
+    public entitlement: any;
 
     public get sortDirectionArrowDown(): boolean {
         return this.arrowDown;
     }
-
-    public get leaveData() {
-        return this.leaveTypeValue;
-    }
-
     public get personalList() {
         return this.personalDataList;
     }
+
     constructor(private apiService: APIService
     ) { }
 
     ngOnInit() {
         this.apiService.get_user_profile().subscribe(
-            response => this.personalDataList = response.json()
+            (data: any[]) => {
+                this.personalDataList = data;
+                this.entitlement = this.personalDataList.entitlementDetail;
+            }
         );
     }
 
@@ -42,30 +40,22 @@ export class LeaveEntitlementPage implements OnInit {
 
     sortAscLeaveType() {
         this.arrowDown = true;
-        this.leaveTypeValue = this.leaves.source.value.slice(0);
-        this.leaveTypeValue.sort(function (a, b) {
-            var x = a.leave_type.toLowerCase();
-            var y = b.leave_type.toLowerCase();
+        this.entitlement = this.entitlement.slice(0);
+        this.entitlement.sort(function (a, b) {
+            var x = a.leaveTypeName.toLowerCase();
+            var y = b.leaveTypeName.toLowerCase();
             return x < y ? -1 : x > y ? 1 : 0;
         });
-
-        console.log('byTypeASc', this.leaveTypeValue);
-        // need to update the sorted list in html
-
     }
 
     sortDesLeaveType() {
         this.arrowDown = false;
-        this.leaveTypeValue = this.leaves.source.value.slice(0);
-        this.leaveTypeValue.sort(function (a, b) {
-            var x = a.leave_type.toLowerCase();
-            var y = b.leave_type.toLowerCase();
+        this.entitlement = this.entitlement.slice(0);
+        this.entitlement.sort(function (a, b) {
+            var x = a.leaveTypeName.toLowerCase();
+            var y = b.leaveTypeName.toLowerCase();
             return x < y ? 1 : x > y ? -1 : 0;
         });
-
-        console.log('byTypeDes', this.leaveTypeValue);
-        // need to update the sorted list in html
-
     }
 }
 

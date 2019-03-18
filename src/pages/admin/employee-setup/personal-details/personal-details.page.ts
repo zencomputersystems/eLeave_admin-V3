@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-personal-details',
@@ -8,11 +9,11 @@ import { APIService } from 'src/services/shared-service/api.service';
 })
 export class PersonalDetailsPage implements OnInit {
 
-    public personalDataList: any = {};
+    public personalDataList: any;
+    public removeList: any;
     public showHeader: boolean = true;
     public progressPercentage: number = 80;
     public accessToken: any;
-
 
     get personalList() {
         return this.personalDataList;
@@ -23,7 +24,10 @@ export class PersonalDetailsPage implements OnInit {
 
     ngOnInit() {
         this.apiService.get_personal_details().subscribe(
-            response => this.personalDataList = response.json()
+            (data: any[]) => {
+                this.personalDataList = data;
+                this.removeList = this.personalDataList.personalDetail.emergencyContactNumber.contacts;
+            }
         );
     }
 

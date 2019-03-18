@@ -8,7 +8,7 @@ import { APIService } from 'src/services/shared-service/api.service';
 })
 export class ConnectionsPage implements OnInit {
 
-    public data: any = '';
+    public employeeList: any;
     public arrowDownName: boolean = true;
     public arrowDownId: boolean = true;
     public totalItem: number;
@@ -38,28 +38,24 @@ export class ConnectionsPage implements OnInit {
 
     ngOnInit() {
         this.apiService.get_user_profile_list().subscribe(
-            response => this.data = response.json()
+            (data: any[]) => {
+                this.employeeList = data;
+                this.pageIndex = 1;
+                this.loopItemsPerPage(this.pageIndex, this.employeeList);
+            }
         );
-
     }
 
-    ngAfterViewInit() {
-        setTimeout(() => {
-            this.pageIndex = 1;
-            this.totalItem = this.data.length;
-            this.totalPageIndex = this.totalItem / this.itemsPerPage;
-            this.totalPageIndex = Math.ceil(this.totalPageIndex);
-            this.loopItemsPerPage(this.pageIndex);
-        }, 1000);
-    }
-
-    loopItemsPerPage(index: number) {
+    loopItemsPerPage(index: number, data: any) {
         this.pageIndex = index;
+        this.totalItem = this.employeeList.length;
+        this.totalPageIndex = this.totalItem / this.itemsPerPage;
+        this.totalPageIndex = Math.ceil(this.totalPageIndex);
         const startNum = (this.pageIndex * 6) - 5;
         const endNum = this.pageIndex * 6;
         const currentPageItems = [];
         for (let j = startNum - 1; j < endNum; j++) {
-            const itemNum = this.data[j];
+            const itemNum = data[j];
             if (itemNum !== undefined) {
                 currentPageItems.push(itemNum);
             }
@@ -93,70 +89,108 @@ export class ConnectionsPage implements OnInit {
 
     clickToNextPage(index: number) {
         if (!(index > this.totalPageIndex)) {
-            this.loopItemsPerPage(index);
+            this.loopItemsPerPage(index, this.employeeList);
         }
         this.enableDisableNextButton();
     }
 
     clickToPrevPage(index: number) {
         if (!(index < 1)) {
-            this.loopItemsPerPage(index);
+            this.loopItemsPerPage(index, this.employeeList);
         }
         this.enableDisablePrevButton();
     }
 
     sortAscName() {
         this.arrowDownName = true;
-        this.data = this.data.slice(0);
-        this.data.sort(function (a, b) {
+        this.employeeList = this.employeeList.slice(0);
+        this.employeeList.sort(function (a, b) {
             var x = a.employeeName.toLowerCase();
             var y = b.employeeName.toLowerCase();
             return x < y ? -1 : x > y ? 1 : 0;
         });
-        this.loopItemsPerPage(1);
+        this.loopItemsPerPage(1, this.employeeList);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
 
     sortDesName() {
         this.arrowDownName = false;
-        this.data = this.data.slice(0);
-        this.data.sort(function (a, b) {
+        this.employeeList = this.employeeList.slice(0);
+        this.employeeList.sort(function (a, b) {
             var x = a.employeeName.toLowerCase();
             var y = b.employeeName.toLowerCase();
             return x < y ? 1 : x > y ? -1 : 0;
         });
-        this.loopItemsPerPage(1);
+        this.loopItemsPerPage(1, this.employeeList);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
 
     sortAscId() {
         this.arrowDownId = true;
-        this.data = this.data.slice(0);
-        this.data.sort(function (a, b) {
+        this.employeeList = this.employeeList.slice(0);
+        this.employeeList.sort(function (a, b) {
             var x = a.staffNumber;
             var y = b.staffNumber;
             return x < y ? -1 : x > y ? 1 : 0;
         });
-        this.loopItemsPerPage(1);
+        this.loopItemsPerPage(1, this.employeeList);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
 
     sortDesId() {
         this.arrowDownId = false;
-        this.data = this.data.slice(0);
-        this.data.sort(function (a, b) {
+        this.employeeList = this.employeeList.slice(0);
+        this.employeeList.sort(function (a, b) {
             var x = a.staffNumber;
             var y = b.staffNumber;
             return x < y ? 1 : x > y ? -1 : 0;
         });
-        this.loopItemsPerPage(1);
+        this.loopItemsPerPage(1, this.employeeList);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
 
+    filterDetails(text: any) {
+        if (text && text.trim() != '') {
+            this.employeeList = this.employeeList.filter((item: any) => {
+                return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
+            })
 
+            this.pageIndex = 1;
+            this.loopItemsPerPage(this.pageIndex, this.employeeList);
+            this.enableDisableNextButton();
+            this.enableDisablePrevButton();
+        }
+    }
 
+    clearDetails() {
+        this.apiService.get_user_profile_list().subscribe(
+            (data: any[]) => {
+                this.employeeList = data;
+                this.pageIndex = 1;
+                this.loopItemsPerPage(this.pageIndex, this.employeeList);
+            }
+        );
+        this.disableNextButton = false;
+        this.disablePrevButton = true;
+    }
+
+    changeDetails(text: any) {
+        if (text.srcElement.value === '') {
+            this.apiService.get_user_profile_list().subscribe(
+                (data: any[]) => {
+                    this.employeeList = data;
+                    this.pageIndex = 1;
+                    this.loopItemsPerPage(this.pageIndex, this.employeeList);
+                }
+            );
+            this.disableNextButton = false;
+            this.disablePrevButton = true;
+        } else {
+            this.filterDetails(text.srcElement.value);
+        }
+    }
 }

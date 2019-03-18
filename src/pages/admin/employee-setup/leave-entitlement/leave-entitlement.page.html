@@ -15,7 +15,7 @@
                     <ion-icon name="image"></ion-icon>
                 </ion-badge>
             </div>
-            <div class="right">
+            <div class="right" *ngIf="personalList">
                 <ion-card-title>{{personalList.employeeName}}</ion-card-title>
                 <div style="display:inline-block; padding-top: 10px;">
                     <ion-card-subtitle class="subtitle">
@@ -63,7 +63,7 @@
                     </ion-col>
                 </ion-row>
 
-                <ion-row class="detailsRow" *ngFor="let leaveDetail of personalList.entitlementDetail">
+                <ion-row class="detailsRow" *ngFor="let leaveDetail of entitlement">
                     <ion-col size="2">
                         <ion-label style="color: #057dcd">{{leaveDetail.leaveTypeName}}</ion-label>
                     </ion-col>
