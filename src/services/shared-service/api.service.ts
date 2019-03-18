@@ -14,7 +14,7 @@ export class APIService {
     public queryHeaders = new Headers();
     public headers = new Headers();
     public loginHeaders = new Headers();
-    public baseUrl: string = "http://localhost:3000";
+    public baseUrl: string = "http://zencore.southeastasia.cloudapp.azure.com:3000";
 
     constructor(public http: Http, private httpClient: HttpClient) {
         this.queryHeaders.append('Content-Type', 'application/json');
