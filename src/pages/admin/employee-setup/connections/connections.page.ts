@@ -13,11 +13,15 @@ export class ConnectionsPage implements OnInit {
     public arrowDownId: boolean = true;
     public totalItem: number;
     public itemsPerPage: number = 6;
+    public startEndNumber: number = 5;
     public pageIndex: number;
     public totalPageIndex: number;
     public currentPageItems: any;
     public disableNextButton: boolean;
     public disablePrevButton: boolean = true;
+    public listView: boolean = true;
+    public gridView: boolean = false;
+    public setAsFavourite = [];
 
     public get personalList() {
         return this.currentPageItems;
@@ -41,18 +45,34 @@ export class ConnectionsPage implements OnInit {
             (data: any[]) => {
                 this.employeeList = data;
                 this.pageIndex = 1;
-                this.loopItemsPerPage(this.pageIndex, this.employeeList);
+                this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
             }
         );
     }
 
-    loopItemsPerPage(index: number, data: any) {
+    viewOnList() {
+        this.listView = true;
+        this.gridView = false;
+        this.itemsPerPage = 6;
+        this.startEndNumber = 5;
+        this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);
+    }
+
+    viewOnGrid() {
+        this.listView = false;
+        this.gridView = true;
+        this.itemsPerPage = 8;
+        this.startEndNumber = 7;
+        this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);
+    }
+
+    loopItemsPerPage(index: number, data: any, itemEachPage: number, startEndNumber) {
         this.pageIndex = index;
         this.totalItem = this.employeeList.length;
-        this.totalPageIndex = this.totalItem / this.itemsPerPage;
+        this.totalPageIndex = this.totalItem / itemEachPage;
         this.totalPageIndex = Math.ceil(this.totalPageIndex);
-        const startNum = (this.pageIndex * 6) - 5;
-        const endNum = this.pageIndex * 6;
+        const startNum = (this.pageIndex * itemEachPage) - startEndNumber;
+        const endNum = this.pageIndex * itemEachPage;
         const currentPageItems = [];
         for (let j = startNum - 1; j < endNum; j++) {
             const itemNum = data[j];
@@ -89,14 +109,14 @@ export class ConnectionsPage implements OnInit {
 
     clickToNextPage(index: number) {
         if (!(index > this.totalPageIndex)) {
-            this.loopItemsPerPage(index, this.employeeList);
+            this.loopItemsPerPage(index, this.employeeList, this.itemsPerPage, this.startEndNumber);
         }
         this.enableDisableNextButton();
     }
 
     clickToPrevPage(index: number) {
         if (!(index < 1)) {
-            this.loopItemsPerPage(index, this.employeeList);
+            this.loopItemsPerPage(index, this.employeeList, this.itemsPerPage, this.startEndNumber);
         }
         this.enableDisablePrevButton();
     }
@@ -109,7 +129,7 @@ export class ConnectionsPage implements OnInit {
             var y = b.employeeName.toLowerCase();
             return x < y ? -1 : x > y ? 1 : 0;
         });
-        this.loopItemsPerPage(1, this.employeeList);
+        this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
@@ -122,7 +142,7 @@ export class ConnectionsPage implements OnInit {
             var y = b.employeeName.toLowerCase();
             return x < y ? 1 : x > y ? -1 : 0;
         });
-        this.loopItemsPerPage(1, this.employeeList);
+        this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
@@ -135,7 +155,7 @@ export class ConnectionsPage implements OnInit {
             var y = b.staffNumber;
             return x < y ? -1 : x > y ? 1 : 0;
         });
-        this.loopItemsPerPage(1, this.employeeList);
+        this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
@@ -148,7 +168,7 @@ export class ConnectionsPage implements OnInit {
             var y = b.staffNumber;
             return x < y ? 1 : x > y ? -1 : 0;
         });
-        this.loopItemsPerPage(1, this.employeeList);
+        this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
@@ -160,7 +180,7 @@ export class ConnectionsPage implements OnInit {
             })
 
             this.pageIndex = 1;
-            this.loopItemsPerPage(this.pageIndex, this.employeeList);
+            this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
             this.enableDisableNextButton();
             this.enableDisablePrevButton();
         }
@@ -171,7 +191,7 @@ export class ConnectionsPage implements OnInit {
             (data: any[]) => {
                 this.employeeList = data;
                 this.pageIndex = 1;
-                this.loopItemsPerPage(this.pageIndex, this.employeeList);
+                this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
             }
         );
         this.disableNextButton = false;
@@ -184,7 +204,7 @@ export class ConnectionsPage implements OnInit {
                 (data: any[]) => {
                     this.employeeList = data;
                     this.pageIndex = 1;
-                    this.loopItemsPerPage(this.pageIndex, this.employeeList);
+                    this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
                 }
             );
             this.disableNextButton = false;
@@ -193,4 +213,31 @@ export class ConnectionsPage implements OnInit {
             this.filterDetails(text.srcElement.value);
         }
     }
+
+    userIDExists(ID: string) {
+        return this.setAsFavourite.some(function (el) {
+            return el.itemId === ID;
+        });
+    }
+
+
+    clickAsFavourite(index: number, item: any) {
+        const objects = { index: index, itemId: item.id };
+        const a = objects;
+        if (this.setAsFavourite.length < 1) {
+            this.setAsFavourite.push(a);
+        } else {
+            if (this.userIDExists(item.id)) {
+                for (let i = 0; i < this.setAsFavourite.length; i++) {
+                    if (this.setAsFavourite[i].index == index && this.setAsFavourite[i].itemId == item.id) {
+                        this.setAsFavourite.splice(i, 1);
+                    }
+                }
+            } else {
+                this.setAsFavourite.push(a);
+            }
+        }
+    };
+
+
 }

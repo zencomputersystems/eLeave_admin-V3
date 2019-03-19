@@ -10,6 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { ConnectionsPage } from './connections.page';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 
 
 const routes: Routes = [
@@ -29,6 +31,8 @@ const routes: Routes = [
         MatSelectModule,
         MatFormFieldModule,
         MatIconModule,
+        MatGridListModule,
+        MatCardModule,
         RouterModule.forChild(routes)
     ],
     declarations: [ConnectionsPage]

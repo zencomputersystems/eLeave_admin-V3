@@ -65,7 +65,7 @@
             display: inline-block;
             padding-top: 15px;
             padding-bottom: 15px;
-            margin-left: 9%;
+            margin-left: 15%;
         }
         .searchbar{
             width: 34%; 
@@ -74,16 +74,58 @@
             float: left;
         }
         .fa-bars{    
-            color: #7a8589;
+            cursor: pointer;
         }
         .fa-th{
-            color: #bebebe;
             padding-left: 10px;
+            cursor: pointer;
         }
         .formField{
             width: 70%; 
             font-size: 12px
         }
+        .numOfPeople{
+            position: absolute;
+            left: 24px;
+            top: 32px;
+            color: #20291f;
+        }
+        mat-card-subtitle{
+            margin-bottom: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .mat-card-header {
+            justify-content: center;
+            text-align: center;
+            padding-top: 10px;
+        }
+        .mat-card-footer{
+            text-align: center;
+            background: #f9fafc;
+            padding-top: 5px; 
+            padding-bottom: 5px;
+            position: absolute;
+            bottom: 15px;
+            width: 100%;
+            border: solid 0.5px #dfe3e6;
+            border-radius: 4px;
+        }
+        .fa-star{
+            position: absolute;
+            cursor: pointer;
+        }
+        .fa-comment{
+            padding-right: 10px
+        }
+        .moreIcon{
+            color: #dfe3e6;
+            float: right;
+            cursor: pointer;
+        }
+        .footerButton{
+            color: #057dcd;
+            background: transparent}
     }
         
   
