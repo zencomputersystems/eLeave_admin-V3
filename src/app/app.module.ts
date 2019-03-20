@@ -16,9 +16,10 @@ import { AlertService } from 'src/services/shared-service/alert.service';
 import { EmployeeSetupPageModule } from 'src/pages/admin/employee-setup/employee-setup.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginModule } from 'src/pages/login/login.module';
+import { PageNotFoundComponent } from './page-not-found.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PageNotFoundComponent],
   entryComponents: [],
   imports: [
     BrowserModule,

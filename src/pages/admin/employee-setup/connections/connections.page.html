@@ -1,5 +1,27 @@
 <!-------------------------------------------LIST VIEW------------------------------------------>
+<ion-header>
+    <ion-toolbar class="toolbar1">
+        <ion-avatar style=" width: 32px; height: 32px; float: right">
+            <img src="assets/icon/picture.png">
+        </ion-avatar>
+        <ion-label class="labelName">Qiqi
+            Abaziz</ion-label>
+        <div class="verticalLine"></div>
+        <i class="far fa-bell"></i>
+        <i class="far fa-edit"></i>
+        <ion-icon class="search" name="search"></ion-icon>
+    </ion-toolbar>
 
+    <ion-toolbar class="toolbar2">
+        <ion-title style="display: inline-block;color: #20291f">
+            Employee directory
+        </ion-title>
+        <div style="float: right; padding-right: 20px;">
+            <!-- <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-instagram"></i> -->
+            <i class="fas fa-sliders-h"></i> </div>
+    </ion-toolbar>
+</ion-header>
 <div class="connectionsContainer" *ngIf="listView">
     <div class="topHeader">
         <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>

@@ -13,14 +13,8 @@ import { PersonalDetailsModule } from './personal-details/personal-details.modul
 import { EmploymentDetailsModule } from './employment-details/employment-details.module';
 import { LeaveEntitlementModule } from './leave-entitlement/leave-entitlement.module';
 import { ConnectionsModule } from './connections/connections.module';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: EmployeeSetupPage
-  }
-];
-
+import { employeeSetupRoutes } from './employee-setup.routes';
+import { AuthGuard } from 'src/services/shared-service/guards/auth-guard.service';
 
 
 @NgModule({
@@ -34,8 +28,9 @@ const routes: Routes = [
     EmploymentDetailsModule,
     LeaveEntitlementModule,
     ConnectionsModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(employeeSetupRoutes)
   ],
+  providers: [AuthGuard],
   declarations: [EmployeeSetupPage]
 })
 export class EmployeeSetupPageModule {

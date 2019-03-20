@@ -53,6 +53,8 @@ export class ConnectionsPage implements OnInit {
     viewOnList() {
         this.listView = true;
         this.gridView = false;
+        this.disableNextButton = false;
+        this.disablePrevButton = true;
         this.itemsPerPage = 6;
         this.startEndNumber = 5;
         this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);
@@ -61,6 +63,8 @@ export class ConnectionsPage implements OnInit {
     viewOnGrid() {
         this.listView = false;
         this.gridView = true;
+        this.disableNextButton = false;
+        this.disablePrevButton = true;
         this.itemsPerPage = 8;
         this.startEndNumber = 7;
         this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { APIService } from 'src/services/shared-service/api.service';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/services/shared-service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -24,10 +25,11 @@ export class LoginComponent implements OnInit {
     return this.formGroupValidation.controls['pass'].hasError('required') ? 'Please enter your password' : '';
   }
 
-  constructor(private apiService: APIService) { }
+  constructor(private _auth: AuthService,
+    private router: Router) { }
 
   ngOnInit() {
-    this.apiService.logout();
+    this._auth.logout();
   }
 
   showPasswordKey() {
@@ -38,7 +40,12 @@ export class LoginComponent implements OnInit {
   }
 
   signIn(email: string, pass: string) {
-    this.apiService.login(email, pass).subscribe(data => console.log(data));
+    this._auth.login(email, pass)
+      .subscribe(data => {
+        console.log(data);
+        this.router.navigate(['employee-setup'])
+      },
+      );
   }
 
 }

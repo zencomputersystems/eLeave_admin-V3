@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-employee-setup',
@@ -13,27 +13,27 @@ export class EmployeeSetupPage implements OnInit {
   public employeeSetupPage = [
     {
       title: 'Personal Details',
-      url: '/employee-setup/personal-details',
+      url: 'personal-details',
       icon: 'desktop',
     },
     {
       title: 'Employment Details',
-      url: '/employee-setup/employment-details',
+      url: 'employment-details',
       icon: 'mail-unread',
     },
     {
       title: 'Leave Entitlement',
-      url: '/employee-setup/leave-entitlement',
+      url: 'leave-entitlement',
       icon: 'calendar',
     },
     {
       title: 'Awards & Certification',
-      url: '/employee-setup/awards-certification',
+      url: 'awards-certification',
       icon: 'people',
     },
     {
       title: 'My Connections',
-      url: '/employee-setup/connection',
+      url: 'connection',
       icon: 'people',
     },
     {
@@ -43,17 +43,17 @@ export class EmployeeSetupPage implements OnInit {
     }
   ];
 
-  constructor(private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     for (let i = 0; i < this.employeeSetupPage.length; i++) {
-      if (this.router.url === this.employeeSetupPage[i].url) {
+      if (this.employeeSetupPage[i].url === this.activatedRoute.firstChild.snapshot.routeConfig.path) {
         this.getIndexToShowArrow(i);
       }
     }
   }
 
-  getIndexToShowArrow(index) {
+  getIndexToShowArrow(index: number) {
     this.numOfArray = index;
   }
 
