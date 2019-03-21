@@ -10,6 +10,7 @@ export enum maritalStatus {
 
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-personal-details',
@@ -28,15 +29,17 @@ export class PersonalDetailsPage implements OnInit {
         return this.list;
     }
 
-    constructor(private apiService: APIService) {
+    constructor(private apiService: APIService, private router: Router) {
     }
 
     ngOnInit() {
         this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
-                console.log(this.list);
                 this.removeList = this.list.personalDetail.emergencyContactNumber.contacts;
+            },
+            response => {
+                this.router.navigate(['login']);
             }
         );
     }
@@ -49,7 +52,7 @@ export class PersonalDetailsPage implements OnInit {
         this.list.personalDetail.emergencyContactNumber.contacts.splice(index, 1);
     }
 
-    // will implement after edit profile UI ready 21/03/19
+    /** will implement after edit profile UI ready */
     editProfileData() {
         this.datatoUpdate = {
             "id": this.list.id,

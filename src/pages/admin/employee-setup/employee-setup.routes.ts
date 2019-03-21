@@ -18,7 +18,7 @@ export const employeeSetupRoutes: Routes = [
                 path: 'personal-details', component: PersonalDetailsPage,
                 // canActivate: [RoleGuard], data: {role: 'Admin'},
             },
-            { path: 'employment-details', component: EmploymentDetailsPage },
+            { path: 'employment-details/:id', component: EmploymentDetailsPage },
             { path: 'leave-entitlement', component: LeaveEntitlementPage },
             { path: 'awards-certification', component: PageNotFoundComponent },
             { path: 'connection', component: PageNotFoundComponent },

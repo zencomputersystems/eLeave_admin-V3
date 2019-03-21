@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-connections',
@@ -38,7 +39,7 @@ export class ConnectionsPage implements OnInit {
     public get disabledPreviousButton() {
         return this.disablePrevButton;
     }
-    constructor(private apiService: APIService) { }
+    constructor(private apiService: APIService, private router: Router) { }
 
     ngOnInit() {
         this.apiService.get_user_profile_list().subscribe(
@@ -46,6 +47,9 @@ export class ConnectionsPage implements OnInit {
                 this.employeeList = data;
                 this.pageIndex = 1;
                 this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
+            },
+            response => {
+                this.router.navigate(['login']);
             }
         );
     }

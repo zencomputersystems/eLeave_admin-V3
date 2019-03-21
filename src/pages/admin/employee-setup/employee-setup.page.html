@@ -24,7 +24,7 @@
 <ion-content class="contentMenu" contentId="content">
     <ion-list lines="none">
         <ion-menu-toggle auto-hide="false" *ngFor="let p of employeeSetupPage; let i=index">
-            <ion-item class="items" lines="none" [routerLink]="[p.url]" (click)="getIndexToShowArrow(i)">
+            <ion-item class="items" lines="none" [routerLink]="p.url" (click)="getIndexToShowArrow(i)">
                 <ion-label [style.color]="numOfArray === i ? '#057dcd' : ''">
                     {{p.title}}
                 </ion-label>

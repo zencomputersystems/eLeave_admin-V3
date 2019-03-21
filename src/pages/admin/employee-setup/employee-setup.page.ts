@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { APIService } from 'src/services/shared-service/api.service';
 
 @Component({
   selector: 'app-employee-setup',
@@ -9,45 +10,52 @@ import { ActivatedRoute } from '@angular/router';
 export class EmployeeSetupPage implements OnInit {
 
   public numOfArray: number;
+  public userId: string;
 
-  public employeeSetupPage = [
+  public employeeSetupPage: any[] = [
     {
       title: 'Personal Details',
-      url: 'personal-details',
+      url: ['personal-details'],
       icon: 'desktop',
     },
     {
       title: 'Employment Details',
-      url: 'employment-details',
+      url: ['employment-details', this.userId],
       icon: 'mail-unread',
     },
     {
       title: 'Leave Entitlement',
-      url: 'leave-entitlement',
+      url: ['leave-entitlement'],
       icon: 'calendar',
     },
     {
       title: 'Awards & Certification',
-      url: 'awards-certification',
+      url: ['awards-certification'],
       icon: 'people',
     },
     {
       title: 'My Connections',
-      url: 'connection',
+      url: ['connection'],
       icon: 'people',
     },
     {
       title: 'Account',
-      url: 'account',
+      url: ['account'],
       icon: 'people',
     }
-  ];
+  ];;
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private apiService: APIService) {
+  }
 
   ngOnInit() {
+    this.apiService.get_personal_details().subscribe(data => {
+      this.userId = data.id;
+      this.employeeSetupPage[1].url = ['employment-details', this.userId];
+    });
+
     for (let i = 0; i < this.employeeSetupPage.length; i++) {
-      if (this.employeeSetupPage[i].url === this.activatedRoute.firstChild.snapshot.routeConfig.path) {
+      if (this.employeeSetupPage[i].url.includes(this.route.firstChild.snapshot.routeConfig.path)) {
         this.getIndexToShowArrow(i);
       }
     }

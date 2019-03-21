@@ -12,7 +12,7 @@ export class APIService {
 
     public queryHeaders = new Headers();
     public headers = new Headers();
-    public loginHeaders = new Headers();
+    // public loginHeaders = new Headers();
     public baseUrl: string = "http://zencore.southeastasia.cloudapp.azure.com:3000";
 
     constructor(public http: Http) {
@@ -69,8 +69,8 @@ export class APIService {
         }
         return this.http.get(this.baseUrl + '/api/userprofile/personal-detail', { headers: this.headers })
             .pipe(map((res: Response) => res.json()))
-
     }
+
     patch_personal_details(updateData): Observable<any[]> {
         if (this.headers["_headers"].size != 1) {
             this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
@@ -78,6 +78,22 @@ export class APIService {
         return this.http.patch(this.baseUrl + '/api/userprofile/personal-detail', updateData, { headers: this.headers })
             .pipe(map((res: Response) => res.json()))
 
+    }
+
+    get_employment_details(userId): Observable<any> {
+        if (this.headers["_headers"].size != 1) {
+            this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
+        }
+        return this.http.get(this.baseUrl + '/api/userprofile/employment-detail/' + userId, { headers: this.headers })
+            .pipe(map((res: Response) => res.json()))
+    }
+
+    patch_employment_details(updateData: any): Observable<any> {
+        if (this.headers["_headers"].size != 1) {
+            this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
+        }
+        return this.http.patch(this.baseUrl + '/api/userprofile/employment-detail', updateData, { headers: this.headers })
+            .pipe(map((res: Response) => res.json()))
     }
 
     get_user_profile(): Observable<any> {

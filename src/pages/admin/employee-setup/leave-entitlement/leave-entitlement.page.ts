@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-leave-entitlement',
@@ -21,7 +22,7 @@ export class LeaveEntitlementPage implements OnInit {
         return this.personalDataList;
     }
 
-    constructor(private apiService: APIService
+    constructor(private apiService: APIService, private router: Router
     ) { }
 
     ngOnInit() {
@@ -29,6 +30,9 @@ export class LeaveEntitlementPage implements OnInit {
             (data: any[]) => {
                 this.personalDataList = data;
                 this.entitlement = this.personalDataList.entitlementDetail;
+            },
+            response => {
+                this.router.navigate(['login']);
             }
         );
     }
