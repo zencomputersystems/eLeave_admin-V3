@@ -1,4 +1,3 @@
-<!-------------------------------------------LIST VIEW------------------------------------------>
 <ion-header>
     <ion-toolbar class="toolbar1">
         <ion-avatar style=" width: 32px; height: 32px; float: right">
@@ -14,14 +13,17 @@
 
     <ion-toolbar class="toolbar2">
         <ion-title style="display: inline-block;color: #20291f">
-            Employee directory
+            Employee Directory
         </ion-title>
         <div style="float: right; padding-right: 20px;">
             <!-- <i class="fab fa-facebook-f"></i>
                 <i class="fab fa-instagram"></i> -->
-            <i class="fas fa-sliders-h"></i> </div>
+            <i class="fas fa-sliders-h" (click)="moreFilter()"></i> </div>
     </ion-toolbar>
 </ion-header>
+
+<!-------------------------------------------LIST VIEW------------------------------------------>
+
 <div class="connectionsContainer" *ngIf="listView">
     <div class="topHeader">
         <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>
@@ -49,7 +51,7 @@
     </div>
 
 
-    <ion-content style="padding: 20px;height: calc( 100% - 130px); --background: #f9fafc;">
+    <ion-content style="padding: 20px;height: calc( 100% - 130px);">
         <ion-row class="titleRow">
             <ion-col size="0.7" style="padding-left: 10px;">
                 <ion-checkbox mode="ios" style="width: 20px; height: 20px;"></ion-checkbox>
@@ -158,7 +160,7 @@
     </div>
 
 
-    <ion-content style="padding: 20px;height: calc( 100% - 130px); --background: #f9fafc;">
+    <ion-content style="padding: 20px;height: calc( 100% - 130px);">
         <mat-grid-list cols="4" rowHeight="230px" style="height: 111%">
             <mat-grid-tile *ngFor="let item of personalList; let i=index">
                 <mat-card class="example-card" style="width: 98%;height: 98%;border-radius: 4px;
@@ -209,5 +211,41 @@
             <i class="fas fa-angle-right" title="Next page" style="cursor:pointer; font-size: 15px;padding-left: 10px"
                 (click)="clickToNextPage(pageIndex+1)"></i>
         </div>
+    </div>
+</div>
+
+<!-------------------------------------------Filter Options-------------------------------------->
+
+<div class="filerContainer" *ngIf="viewMoreFilter">
+    <ion-icon name="close" style="color:#dfe3e6;padding: 10px;font-size: 25px;cursor: pointer;" (click)="moreFilter()"></ion-icon>
+    <p style="color: #20291f;padding-left: 15px;font-size: 14px;">FILTER BY</p>
+
+    <p style="color: #7a8589;font-size: 14px;padding-left: 15px;padding-top: 10px;">Office location</p>
+    <mat-select class="locationSelect" placeholder="All locations" disableOptionCentering panelClass="myPanelClass">
+        <mat-option style="color:#7a8589" class="select" *ngFor="let food of foods" [value]="food.value">
+            {{food.viewValue}}
+        </mat-option>
+    </mat-select>
+
+    <p style="color: #7a8589;font-size: 14px;padding-left: 15px;padding-top: 67px;">Divisions</p>
+    <mat-select class="divisionSelect" placeholder="All divisions" disableOptionCentering panelClass="myPanelClass">
+        <mat-option style="color:#7a8589" class="select" *ngFor="let food of foods" [value]="food.value">
+            {{food.viewValue}}
+        </mat-option>
+    </mat-select>
+
+    <p style="color: #7a8589;font-size: 14px;padding-left: 15px;padding-top: 57px;">Departments</p>
+    <mat-select class="departmentSelect" placeholder="All departments" disableOptionCentering panelClass="myPanelClass">
+        <mat-option style="color:#7a8589" class="select" *ngFor="let food of foods" [value]="food.value">
+            {{food.viewValue}}
+        </mat-option>
+    </mat-select>
+    <p style="color: #057dcd;font-size: 14px;padding-left: 15px;padding-top: 40px;cursor: pointer;">Add more filter</p>
+    <div style="position: absolute;bottom: 31px;left: 52px;">
+        <ion-button shape="round" fill="none" style="height: 27px; font-size: 12px;text-transform: none">Clear
+        </ion-button>
+        <ion-button shape="round" fill="outline" style="height: 27px;font-size: 12px;width: 115px;text-transform: none">
+            Apply filter
+        </ion-button>
     </div>
 </div>

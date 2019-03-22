@@ -23,7 +23,13 @@ export class ConnectionsPage implements OnInit {
     public listView: boolean = true;
     public gridView: boolean = false;
     public setAsFavourite = [];
+    public viewMoreFilter: boolean = false;
 
+    foods = [
+        { value: 'steak-0', viewValue: 'Steak' },
+        { value: 'pizza-1', viewValue: 'Pizza' },
+        { value: 'tacos-2', viewValue: 'Tacos' }
+    ];
     public get personalList() {
         return this.currentPageItems;
     }
@@ -246,6 +252,14 @@ export class ConnectionsPage implements OnInit {
             }
         }
     };
+
+    moreFilter() {
+        if (this.viewMoreFilter) {
+            this.viewMoreFilter = false;
+        } else {
+            this.viewMoreFilter = true;
+        }
+    }
 
 
 }
