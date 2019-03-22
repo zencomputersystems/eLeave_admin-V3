@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     this._auth.login(email, pass)
       .subscribe(data => {
         console.log(data);
-        this.router.navigate(['employee-setup'])
+        this.router.navigate(['main'])
       },
       );
   }

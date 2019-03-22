@@ -1,0 +1,44 @@
+:host{
+    .fullMenu{
+        max-width: 0%;
+        min-width: 218px;
+        --width: none;
+    }
+    .iconMenu{
+        max-width: 0%;
+        min-width: 35px;
+        --width: none;
+    }
+    ion-label{
+        color: #abacaf;
+    }
+    ion-icon{
+        color: #abacaf;
+    }
+    .item:hover {
+        --background: #363942;
+        border-left: 2px solid #057dcd; 
+    }
+    .background-highlight{
+        --background: #363942;
+        border-left: 2px solid #057dcd; 
+    }
+    .collapse{
+        cursor: pointer;
+    }
+    .fullMenuContent{
+        --ion-background-color: #2d3037;
+        --width: 218px;
+        width: 218px;
+    }
+    .iconMenuContent{
+        --ion-background-color: #2d3037;
+        --width: 35px;
+    }
+    .fullSideMenuContent{
+        transform: translateX(0) !important;
+    }
+    .iconSideMenuContent{
+        transform: translateX(0) !important;
+    }
+}

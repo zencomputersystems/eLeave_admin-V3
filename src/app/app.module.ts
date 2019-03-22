@@ -17,6 +17,7 @@ import { EmployeeSetupPageModule } from 'src/pages/admin/employee-setup/employee
 import { HttpClientModule } from '@angular/common/http';
 import { LoginModule } from 'src/pages/login/login.module';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { SideMenuNavigationModule } from './side-menu-navigation/side-menu-navigation.module';
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
@@ -27,8 +28,9 @@ import { PageNotFoundComponent } from './page-not-found.component';
     HttpModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    EmployeeSetupPageModule,
     LoginModule,
+    SideMenuNavigationModule,
+    EmployeeSetupPageModule,
     HttpClientModule,
   ],
   providers: [
