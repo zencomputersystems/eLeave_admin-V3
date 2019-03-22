@@ -8,6 +8,7 @@ import { PersonalDetailsPage } from 'src/pages/admin/employee-setup/personal-det
 import { EmploymentDetailsPage } from 'src/pages/admin/employee-setup/employment-details/employment-details.page';
 import { LeaveEntitlementPage } from 'src/pages/admin/employee-setup/leave-entitlement/leave-entitlement.page';
 import { PageNotFoundComponent } from '../page-not-found.component';
+import { PublicPersonalDetailsPage } from 'src/pages/admin/employee-setup/public-personal-details/public-personal-details.page';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -19,6 +20,7 @@ export const sideMenuNavigationRoutes: Routes = [
             { path: 'dashboard', component: HomePage },
             // { path: 'employee-directory', component: ConnectionsPage },
             { path: 'inbox', component: ConnectionsPage },
+            { path: 'plan-my-leave', component: PublicPersonalDetailsPage},
             {
                 path: 'employee-setup', component: EmployeeSetupPage,
                 children: [

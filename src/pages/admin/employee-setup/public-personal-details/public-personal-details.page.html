@@ -1,0 +1,165 @@
+<ion-header>
+    <ion-toolbar class="toolbar1">
+        <ion-avatar style=" width: 32px; height: 32px; float: right">
+            <img src="assets/icon/picture.png">
+        </ion-avatar>
+        <ion-label class="labelName" *ngIf="personalList"> {{personalList.employeeName}}</ion-label>
+        <div class="verticalLine"></div>
+        <i class="far fa-bell"></i>
+        <i class="far fa-edit"></i>
+        <ion-icon class="search" name="search"></ion-icon>
+    </ion-toolbar>
+
+    <ion-toolbar class="toolbar2">
+        <ion-icon name="arrow-back" style="cursor: pointer; font-size: 22px"></ion-icon>
+        <ion-title style="display: inline-block;color: #20291f" *ngIf="personalList">
+            {{personalList.employeeName}}'s Profile
+        </ion-title>
+        <div style="float: right; padding-right: 20px;">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-linkedin-in"></i>
+            <i class="fab fa-instagram"></i>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-card class="leftCard">
+    <ion-card-content *ngIf="employmentPersonalList">
+        <ion-row class="detailsRow">
+            <ion-col>
+                <ion-label>FULL NAME</ion-label>
+                <p>{{employmentPersonalList.employeeName}}</p>
+            </ion-col>
+            <ion-col>
+                <ion-label>DESIGNATION</ion-label>
+                <p>{{employmentPersonalList.employeeDesignation}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row class="detailsRow">
+            <ion-col>
+                <ion-label>DEPARTMENT</ion-label>
+                <p style="color: #057dcd">{{employmentPersonalList.employeeDepartment}}</p>
+            </ion-col>
+            <ion-col>
+                <ion-label>WORK LOCATION</ion-label>
+                <p>{{employmentPersonalList.employmentDetail.workLocation}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row class="detailsRow">
+            <ion-col>
+                <ion-label style="display: block;">REPORTING TO</ion-label>
+                <ion-avatar style="width: 24px; height: 24px; display: inline-block; margin-top: 3px">
+                    <img src="assets/icon/picture.png">
+                </ion-avatar>
+                <p style="color: #057dcd; display: inline;position: absolute;top: 31px;left: 37px;">
+                    {{employmentPersonalList.employmentDetail.reportingTo}}
+                </p>
+            </ion-col>
+            <ion-col>
+                <ion-label>YEAR OF SERVICE</ion-label>
+                <p>{{employmentPersonalList.employmentDetail.yearOfService}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-item class="divider"></ion-item>
+        <ion-row class="detailsRow">
+            <ion-col>
+                <ion-label>BIRTHDATE</ion-label>
+                <p>{{personalList.personalDetail.dob}}</p>
+            </ion-col>
+            <ion-col>
+                <ion-label>GENDER</ion-label>
+                <p>{{personalList.personalDetail.gender}}</p>
+            </ion-col>
+            <ion-col>
+                <ion-label>MARITAL STATUS</ion-label>
+                <p>{{personalList.personalDetail.maritalStatus}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row class="detailsRow">
+            <ion-col>
+                <ion-label>RACE</ion-label>
+                <p>{{personalList.personalDetail.race}}</p>
+
+            </ion-col>
+            <ion-col>
+                <ion-label>RELIGION</ion-label>
+                <p>{{personalList.personalDetail.religion}}</p>
+            </ion-col>
+            <ion-col>
+                <ion-label>NATIONALITY</ion-label>
+                <p>{{personalList.personalDetail.nationality}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row class="detailsRow">
+            <ion-col>
+                <ion-label>RESIDENTIAL ADDRESS</ion-label>
+                <p>{{personalList.personalDetail.residentialAddress}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-item class="divider"></ion-item>
+        <ion-row class="detailsRow">
+            <ion-col>
+                <ion-label>WORK PHONE NUMBER</ion-label>
+                <p>{{personalList.personalDetail.workPhoneNumber}}</p>
+            </ion-col>
+            <ion-col>
+                <ion-label>WORK EMAIL ADDRESS</ion-label>
+                <p>{{personalList.personalDetail.workEmailAddress}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row class="detailsRow">
+            <ion-col>
+                <ion-label>PERSONAL PHONE NUMBER</ion-label>
+                <p>{{personalList.personalDetail.phoneNumber}}</p>
+
+            </ion-col>
+            <ion-col>
+                <ion-label>PERSONAL EMAIL ADDRESS</ion-label>
+                <p>{{personalList.personalDetail.emailAddress}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-item class="divider"></ion-item>
+        <ion-label style="display: block; padding-left: 10.6%;padding-top: 5px;">PROFESSIONAL AWARDS &
+            CERTIFICATES
+        </ion-label>
+        <ion-row class="detailsRow">
+            <ion-col>
+                <div class="iconDiv">
+                    <i class="fas fa-trophy" style="font-size: 20px;color: #7a8589;"></i>
+                </div>
+                <div class="text">
+                    <p style="line-height: 1.2;"> Best employee of the month - January 2019</p>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-card-content>
+</ion-card>
+
+<mat-card class="rightCard" *ngIf="personalList">
+    <i class="fas fa-star" (click)="clickAsFavourite()" [style.color]="numOfArray ? '#ffbb00' : '#dfe3e6'"></i>
+    <ion-avatar style="margin: 0 auto;">
+        <img src="assets/icon/picture.png">
+    </ion-avatar>
+    <mat-card-header>
+        <mat-card-subtitle style="color: #057dcd;white-space: nowrap; font-size: 24px;">
+            {{personalList.employeeName}}
+        </mat-card-subtitle>
+        <mat-card-subtitle style="white-space: nowrap;font-size: 12px;font-weight: 500;color: #20291f;">
+            {{personalList.employeeDesignation | uppercase}}
+        </mat-card-subtitle>
+        <mat-card-subtitle *ngIf="employmentPersonalList" style="white-space: nowrap;font-size: 12px;color: #7a8589;">
+            {{employmentPersonalList.employmentDetail.employmentStatus}}
+        </mat-card-subtitle>
+        <mat-card-subtitle style="white-space: nowrap;color: #7a8589;padding-top: 12px;">
+            <i class="far fa-envelope"></i>{{personalList.personalDetail.emailAddress}}
+        </mat-card-subtitle>
+        <mat-card-subtitle style="white-space: nowrap; color:#7a8589;padding-top: 5px;">
+            <i class="fas fa-map-marker-alt"></i>{{personalList.employeeLocation}}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <div class="footer">
+        <ion-button class="footerButton" shape="round" fill="outline">
+            <i class="far fa-comment"></i>Send a message
+        </ion-button>
+    </div>
+</mat-card>

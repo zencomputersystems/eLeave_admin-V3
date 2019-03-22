@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,6 +13,13 @@ import { ConnectionsModule } from './connections/connections.module';
 import { AuthGuard } from 'src/services/shared-service/guards/auth-guard.service';
 import { EmployeeSetupPage } from './employee-setup.page';
 
+const routes: Routes = [
+  {
+    path: '',
+    component: EmployeeSetupPage,
+  }
+];
+
 @NgModule({
   imports: [
     CommonModule,
@@ -24,7 +31,7 @@ import { EmployeeSetupPage } from './employee-setup.page';
     EmploymentDetailsModule,
     LeaveEntitlementModule,
     ConnectionsModule,
-    RouterModule
+    RouterModule.forChild(routes)
   ],
   providers: [AuthGuard],
   declarations: [EmployeeSetupPage]

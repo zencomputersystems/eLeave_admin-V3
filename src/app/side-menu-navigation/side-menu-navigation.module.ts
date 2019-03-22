@@ -9,6 +9,7 @@ import { AuthGuard } from 'src/services/shared-service/guards/auth-guard.service
 import { sideMenuNavigationRoutes } from './side-menu-navigation.routes';
 import { EmployeeSetupPageModule } from 'src/pages/admin/employee-setup/employee-setup.module';
 import { HomePageModule } from '../home/home.module';
+import { PublicPersonalDetailsModule } from 'src/pages/admin/employee-setup/public-personal-details/public-personal-details.module';
 
 @NgModule({
     imports: [
@@ -17,6 +18,7 @@ import { HomePageModule } from '../home/home.module';
         IonicModule,
         HomePageModule,
         EmployeeSetupPageModule,
+        PublicPersonalDetailsModule,
         RouterModule.forChild(sideMenuNavigationRoutes)
     ],
     providers: [AuthGuard],

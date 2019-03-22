@@ -86,40 +86,40 @@ export class PersonalDetailsPage implements OnInit {
                     }
                 ]
             },
-            // "education": {
-            //     "educationDetail": [
-            //         {
-            //             "qualificationLevel": "Matriculation",
-            //             "major": "Life Science",
-            //             "university": "KMNS",
-            //             "year": "2007-2008"
-            //         },
-            //         {
-            //             "qualificationLevel": "Bachelor Degree",
-            //             "major": "Biotechnology",
-            //             "university": "UKM",
-            //             "year": "2008-2011"
-            //         }
-            //     ]
-            // },
-            // "family": {
-            //     "spouse": [
-            //         {
-            //             "spouseName": "My Spouse Name",
-            //             "spouseIdentificationNumber": "kjhgf876543hgf"
-            //         }
-            //     ],
-            //     "child": [
-            //         {
-            //             "childName": "this is child Name",
-            //             "childIdentificationNumber": "HGF654GHJ"
-            //         },
-            //         {
-            //             "childName": "this is child 2 name",
-            //             "childIdentificationNumber": "789GBNM789"
-            //         }
-            //     ]
-            // }
+            "education": {
+                "educationDetail": [
+                    {
+                        "qualificationLevel": "Matriculation",
+                        "major": "Life Science",
+                        "university": "KMNS",
+                        "year": "2007-2008"
+                    },
+                    {
+                        "qualificationLevel": "Bachelor Degree",
+                        "major": "Biotechnology",
+                        "university": "UKM",
+                        "year": "2008-2011"
+                    }
+                ]
+            },
+            "family": {
+                "spouse": [
+                    {
+                        "spouseName": "My Spouse Name",
+                        "spouseIdentificationNumber": "kjhgf876543hgf"
+                    }
+                ],
+                "child": [
+                    {
+                        "childName": "this is child Name",
+                        "childIdentificationNumber": "HGF654GHJ"
+                    },
+                    {
+                        "childName": "this is child 2 name",
+                        "childIdentificationNumber": "789GBNM789"
+                    }
+                ]
+            }
         };
 
         this.apiService.patch_personal_details(this.datatoUpdate).subscribe(
