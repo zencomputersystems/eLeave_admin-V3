@@ -1,4 +1,8 @@
 :host{
+    .menu-content-open{
+        pointer-events: auto;
+        cursor: auto;
+    }
     .fullMenu{
         max-width: 0%;
         min-width: 218px;

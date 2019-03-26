@@ -10,6 +10,7 @@ import { sideMenuNavigationRoutes } from './side-menu-navigation.routes';
 import { EmployeeSetupPageModule } from 'src/pages/admin/employee-setup/employee-setup.module';
 import { HomePageModule } from '../home/home.module';
 import { PublicPersonalDetailsModule } from 'src/pages/admin/employee-setup/public-personal-details/public-personal-details.module';
+import { AdminInvitesModule } from 'src/pages/admin/admin-setup/admin-invites.module';
 
 @NgModule({
     imports: [
@@ -19,6 +20,7 @@ import { PublicPersonalDetailsModule } from 'src/pages/admin/employee-setup/publ
         HomePageModule,
         EmployeeSetupPageModule,
         PublicPersonalDetailsModule,
+        AdminInvitesModule,
         RouterModule.forChild(sideMenuNavigationRoutes)
     ],
     providers: [AuthGuard],

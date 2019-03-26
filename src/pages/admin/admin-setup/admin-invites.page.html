@@ -13,12 +13,15 @@
 
     <ion-toolbar class="toolbar2">
         <ion-title style="display: inline-block;color: #20291f">
-            Employee Directory
+            Invites
         </ion-title>
         <div style="float: right; padding-right: 20px;">
-            <!-- <i class="fab fa-facebook-f"></i>
-                <i class="fab fa-instagram"></i> -->
-            <i class="fas fa-sliders-h" (click)="moreFilter()"></i> </div>
+            <i class="material-icons" style="padding-right: 5px; color: #057dcd; cursor: pointer;">add</i>
+            <i class="material-icons"
+                style="padding-left: 10px; color: #7a8589; float: right;cursor: pointer">more_horiz</i>
+            <ion-label class="label" style="font-size: 14px; color: #057dcd;float: right;
+            margin-top: 5px;padding-right: 10px;cursor: pointer">Invite more</ion-label>
+        </div>
     </ion-toolbar>
 </ion-header>
 
@@ -75,7 +78,7 @@
                 <ion-label style="font-size: 12px;">DESIGNATION</ion-label>
             </ion-col>
             <ion-col size="3">
-                <ion-label style="font-size: 12px;">EMAIL ADDRESS</ion-label>
+                <ion-label style="font-size: 12px;">STATUS</ion-label>
             </ion-col>
             <ion-col>
             </ion-col>
@@ -97,9 +100,12 @@
             </ion-col>
             <ion-col class="colOfLeave" size="3" style="color:#7a8589; font-size: 13px;">{{item.designation}}
             </ion-col>
-            <ion-col class="colOfLeave" size="3" style="color:#7a8589; font-size: 13px;">{{item.email}}
+            <ion-col class="colOfLeave" size="3" style="color:#7a8589; font-size: 13px;">item.status
             </ion-col>
             <ion-col>
+                <ion-icon name="refresh" style="color: #dfe3e6; cursor: pointer;"></ion-icon>
+                <i class="far fa-trash-alt" style="position: relative; top: -3.3px; cursor: pointer; ;font-size: 12px;color: #dfe3e6;padding-left: 10px;
+                padding-right: 10px;"></i>
                 <ion-icon name="more" style="color: #dfe3e6; cursor: pointer"></ion-icon>
             </ion-col>
             <ion-item class="divider" lines="full"></ion-item>
@@ -211,44 +217,5 @@
             <i class="fas fa-angle-right" title="Next page" style="cursor:pointer; font-size: 15px;padding-left: 10px"
                 (click)="clickToNextPage(pageIndex+1)"></i>
         </div>
-    </div>
-</div>
-
-<!-------------------------------------------Filter Options-------------------------------------->
-
-<div class="filerContainer" *ngIf="viewMoreFilter">
-    <ion-icon name="close" style="color:#dfe3e6;padding: 10px;font-size: 25px;cursor: pointer;" (click)="moreFilter()">
-    </ion-icon>
-    <p style="color: #20291f;padding-left: 15px;font-size: 14px;">FILTER BY</p>
-
-    <p style="color: #7a8589;font-size: 14px;padding-left: 15px;padding-top: 10px;">Office location</p>
-    <mat-select class="locationSelect" placeholder="All locations" [(value)]="selectedLocation">
-        <mat-option style="color:#7a8589" class="select" *ngFor="let food of foods" [value]="food.value">
-            {{food.viewValue}}
-        </mat-option>
-    </mat-select>
-
-    <p style="color: #7a8589;font-size: 14px;padding-left: 15px;padding-top: 67px;">Divisions</p>
-    <mat-select class="divisionSelect" placeholder="All divisions" [(value)]="selectedDivision">
-        <mat-option style="color:#7a8589" class="select" *ngFor="let food of foods" [value]="food.value">
-            {{food.viewValue}}
-        </mat-option>
-    </mat-select>
-
-    <p style="color: #7a8589;font-size: 14px;padding-left: 15px;padding-top: 57px;">Departments</p>
-    <mat-select class="departmentSelect" placeholder="All departments" [(value)]="selectedDepartment">
-        <mat-option style="color:#7a8589" class="select" *ngFor="let food of foods" [value]="food.value">
-            {{food.viewValue}}
-        </mat-option>
-    </mat-select>
-    <p style="color: #057dcd;font-size: 14px;padding-left: 15px;padding-top: 40px;cursor: pointer;">Add more filter</p>
-    <div style="position: absolute;bottom: 31px;left: 52px;">
-        <ion-button shape="round" fill="none"
-            (click)="selectedLocation=undefined;selectedDivision=undefined;selectedDepartment=undefined; $event.stopPropagation()"
-            style="height: 27px; font-size: 12px;text-transform: none">Clear
-        </ion-button>
-        <ion-button shape="round" fill="outline" style="height: 27px;font-size: 12px;width: 115px;text-transform: none">
-            Apply filter
-        </ion-button>
     </div>
 </div>

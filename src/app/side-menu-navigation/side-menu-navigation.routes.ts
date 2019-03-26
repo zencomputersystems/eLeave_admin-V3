@@ -9,6 +9,7 @@ import { EmploymentDetailsPage } from 'src/pages/admin/employee-setup/employment
 import { LeaveEntitlementPage } from 'src/pages/admin/employee-setup/leave-entitlement/leave-entitlement.page';
 import { PageNotFoundComponent } from '../page-not-found.component';
 import { PublicPersonalDetailsPage } from 'src/pages/admin/employee-setup/public-personal-details/public-personal-details.page';
+import { AdminInvitesPage } from 'src/pages/admin/admin-setup/admin-invites.page';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -17,7 +18,7 @@ export const sideMenuNavigationRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-            { path: 'dashboard', component: HomePage },
+            { path: 'dashboard', component: AdminInvitesPage },
             // { path: 'employee-directory', component: ConnectionsPage },
             { path: 'inbox', component: ConnectionsPage },
             { path: 'plan-my-leave', component: PublicPersonalDetailsPage},
