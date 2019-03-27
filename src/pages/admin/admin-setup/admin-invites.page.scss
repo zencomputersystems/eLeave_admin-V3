@@ -1,229 +1,231 @@
-:host{
+:host {
+  background: #f9fafc;
+  .header-md:after {
+    height: 0px;
+    background-image: none;
+  }
+  .toolbar1 {
+    height: 48px;
+    padding-right: 20px;
+  }
+  .toolbar2 {
+    --min-height: 35px;
+    border: 1px solid
+      var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
+  }
+  .fa-sliders-h {
+    color: #7a8589;
+    padding-right: 10px;
+    font-size: 18px;
+    padding-top: 15px;
+    cursor: pointer;
+  }
+  .bell-icon {
+    float: right;
+    fill: #7a8589;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  .edit-icon {
+    float: right;
+    fill: #7a8589;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  .search-icon {
+    float: left;
+    width: 20px;
+    height: 20px;
+    fill: #7a8589;
+    cursor: pointer;
+  }
+  .verticalLine {
+    border-left: 1px solid #dfe3e6;
+    height: 28px;
+    float: right;
+    padding-right: 20px;
+  }
+  .labelName {
+    float: right;
+    font-size: 14px;
+    color: #7a8589;
+    padding-right: 10px;
+    padding-top: 8px;
+  }
+  ion-label {
+    color: #20291f;
+    font-weight: 500;
+  }
+  .arrow {
+    font-size: 18px;
+    padding-left: 10px;
+    cursor: pointer;
+    margin-top: -2px;
+  }
+  .detailsRow {
+    height: 55px;
+  }
+  .divider {
+    --min-height: none;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    width: 100%;
+  }
+  .avatar {
+    width: 30px;
+    height: 30px;
+    margin-top: -7px;
+  }
+  .topPaginator {
+    display: inline-block;
+    right: 0;
+    position: absolute;
+    padding-top: 12px;
+    background-color: #f9fafc;
+  }
+  .bottomPaginator {
+    right: 0;
+    position: absolute;
+    background-color: #f9fafc;
+  }
+  .button-outline {
+    --border-width: 1px;
+  }
+  .checkboxOnAvatar {
+    display: none;
+    padding-left: 5px;
+    padding-top: 5px;
+  }
+  .avatar:hover > img {
+    display: none;
+  }
+  .avatar:hover > .checkboxOnAvatar {
+    display: inline-block;
+  }
+  .connectionsContainer {
+    // background-color:#f9fafc;
+    // height: calc( 100% - 84px);
+    background: white;
+    height: calc(100% - 110px);
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 95%;
+    margin: 0 auto;
+  }
+  .topHeader {
+    width: 93%;
+    display: inline-block;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 15%;
+  }
+  .searchbar {
+    width: 34%;
+    color: #7a8589;
+    font-size: 12px;
+    float: left;
+  }
+  .fa-bars {
+    cursor: pointer;
+  }
+  .fa-th {
+    padding-left: 10px;
+    cursor: pointer;
+  }
+  .formField {
+    width: 70%;
+    font-size: 12px;
+  }
+  .numOfPeople {
+    position: absolute;
+    left: 55px;
+    top: 141px;
+    color: #20291f;
+  }
+  mat-card-subtitle {
+    margin-bottom: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mat-card-header {
+    justify-content: center;
+    text-align: center;
+    padding-top: 10px;
+  }
+  .mat-card-footer {
+    text-align: center;
     background: #f9fafc;
-    .header-md:after{
-        height: 0px;
-        background-image: none;
-    }
-    .toolbar1{
-        height: 48px; 
-        padding-right: 20px;
-    }
-    .toolbar2{
-        --min-height: 35px;
-        border: 1px solid var(--ion-item-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.13))))
-    }
-    .fa-sliders-h{
-        color:#7a8589;
-        padding-right: 10px;
-        font-size: 18px;
-        padding-top: 15px;
-        cursor: pointer;
-    }
-    .fa-bell{
-        float:right; 
-        font-size: 22px; 
-        color: #7a8589;
-        padding-right: 20px;
-    }
-    .fa-edit{
-        float:right; 
-        font-size: 22px; 
-        color: #7a8589; 
-        padding-right: 10px;
-    }
-    .search{
-        float:left; 
-        font-size: 25px; 
-        color: #7a8589; 
-        padding-left: 7px;
-    }
-    .verticalLine{
-        border-left: 1px solid #dfe3e6;
-        height: 28px;
-        float:right; 
-        padding-right: 20px;
-    }
-    .labelName{
-        float:right; 
-        font-size: 14px; 
-        color: #7a8589;
-        padding-right: 10px;
-        padding-top: 8px;
-    }
-    ion-label{
-        color:#20291f;
-        font-weight: 500;
-    }
-    .arrow{
-        font-size: 18px; 
-        padding-left: 10px; 
-        cursor: pointer;
-        margin-top: -2px;
-    }
-    .detailsRow{
-        height: 55px;
-    }
-    .divider{
-        --min-height: none;
-        padding-top: 1%;
-        padding-bottom: 1%; 
-        width: 100%;
-    }
-    .avatar{
-        width: 30px;
-        height: 30px;
-        margin-top: -7px;
-    }
-    .topPaginator{
-        display: inline-block;
-        right: 0;
-        position: absolute;
-        padding-top: 12px;
-        background-color: #f9fafc;
-    }
-    .bottomPaginator{
-        right: 0;
-        position: absolute;
-        background-color: #f9fafc;
-    }
-    .button-outline{
-        --border-width: 1px;
-    }
-    .checkboxOnAvatar{
-        display: none;
-        padding-left: 5px;
-        padding-top: 5px;
-    }
-    .avatar:hover > img {
-        display: none;
-    }
-    .avatar:hover > .checkboxOnAvatar {
-        display: inline-block;
-    }
-    .connectionsContainer{
-        // background-color:#f9fafc; 
-        // height: calc( 100% - 84px);
-        background: white;
-        height: calc( 100% - 110px);
-        padding-left: 20px; 
-        padding-right: 20px;
-        width: 95%;
-        margin: 0 auto;
-    }
-    .topHeader{
-        width: 93%; 
-        display: inline-block;
-        padding-top: 15px;
-        padding-bottom: 15px;
-        margin-left: 15%;
-    }
-    .searchbar{
-        width: 34%; 
-        color: #7a8589; 
-        font-size: 12px;
-        float: left;
-    }
-    .fa-bars{    
-        cursor: pointer;
-    }
-    .fa-th{
-        padding-left: 10px;
-        cursor: pointer;
-    }
-    .formField{
-        width: 70%; 
-        font-size: 12px
-    }
-    .numOfPeople{
-        position: absolute;
-        left: 55px;
-        top: 141px;
-        color: #20291f;
-    }
-    mat-card-subtitle{
-        margin-bottom: 12px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .mat-card-header {
-        justify-content: center;
-        text-align: center;
-        padding-top: 10px;
-    }
-    .mat-card-footer{
-        text-align: center;
-        background: #f9fafc;
-        padding-top: 5px; 
-        padding-bottom: 5px;
-        position: absolute;
-        bottom: 15px;
-        width: 100%;
-        border: solid 0.5px #dfe3e6;
-        border-radius: 4px;
-    }
-    .fa-star{
-        position: absolute;
-        cursor: pointer;
-    }
-    .fa-comment{
-        padding-right: 10px
-    }
-    .moreIcon{
-        color: #dfe3e6;
-        float: right;
-        cursor: pointer;
-    }
-    .footerButton{
-        color: #057dcd;
-        background: transparent
-    }
-    .filerContainer{
-        width: 300px;
-        height: calc( 100% - 84px);
-        position: absolute;
-        top: 84px;
-        right: 0;
-        border: solid 0.5px #dfe3e6;
-        background-color: #ffffff;
-    }
-    .locationSelect{
-        width: 80%;
-        border-radius: 2.5px;
-        border: solid 0.5px #dfe3e6;
-        position: absolute;
-        left: 15px;
-        padding: 10px;
-        padding-left: 17px;
-        font-size: 14px;
-    }
-    .divisionSelect{
-        width: 80%;
-        border-radius: 2.5px;
-        border: solid 0.5px #dfe3e6;
-        position: absolute;
-        left: 15px;
-        padding: 10px;
-        top: 222px;
-        padding-left: 17px;
-        font-size: 14px;
-    }
-    .departmentSelect{
-        width: 80%;
-        border-radius: 2.5px;
-        border: solid 0.5px #dfe3e6;
-        position: absolute;
-        left: 15px;
-        padding: 10px;
-        top: 311px;
-        padding-left: 17px;
-        font-size: 14px;
-    }
-    ::ng-deep .mat-select-value-text{
-        color: #7a8589;
-    }
-    ::ng-deep .mat-select-arrow{
-        color: #7a8589;
-
-    }
+    padding-top: 5px;
+    padding-bottom: 5px;
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+    border: solid 0.5px #dfe3e6;
+    border-radius: 4px;
+  }
+  .fa-star {
+    position: absolute;
+    cursor: pointer;
+  }
+  .fa-comment {
+    padding-right: 10px;
+  }
+  .moreIcon {
+    color: #dfe3e6;
+    float: right;
+    cursor: pointer;
+  }
+  .footerButton {
+    color: #057dcd;
+    background: transparent;
+  }
+  .filerContainer {
+    width: 300px;
+    height: calc(100% - 84px);
+    position: absolute;
+    top: 84px;
+    right: 0;
+    border: solid 0.5px #dfe3e6;
+    background-color: #ffffff;
+  }
+  .locationSelect {
+    width: 80%;
+    border-radius: 2.5px;
+    border: solid 0.5px #dfe3e6;
+    position: absolute;
+    left: 15px;
+    padding: 10px;
+    padding-left: 17px;
+    font-size: 14px;
+  }
+  .divisionSelect {
+    width: 80%;
+    border-radius: 2.5px;
+    border: solid 0.5px #dfe3e6;
+    position: absolute;
+    left: 15px;
+    padding: 10px;
+    top: 222px;
+    padding-left: 17px;
+    font-size: 14px;
+  }
+  .departmentSelect {
+    width: 80%;
+    border-radius: 2.5px;
+    border: solid 0.5px #dfe3e6;
+    position: absolute;
+    left: 15px;
+    padding: 10px;
+    top: 311px;
+    padding-left: 17px;
+    font-size: 14px;
+  }
+  ::ng-deep .mat-select-value-text {
+    color: #7a8589;
+  }
+  ::ng-deep .mat-select-arrow {
+    color: #7a8589;
+  }
 }
-    

@@ -12,6 +12,7 @@ import { LeaveEntitlementModule } from './leave-entitlement/leave-entitlement.mo
 import { ConnectionsModule } from './connections/connections.module';
 import { AuthGuard } from 'src/services/shared-service/guards/auth-guard.service';
 import { EmployeeSetupPage } from './employee-setup.page';
+import { InlineSVGModule } from 'ng-inline-svg';
 
 const routes: Routes = [
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
     EmploymentDetailsModule,
     LeaveEntitlementModule,
     ConnectionsModule,
+    InlineSVGModule,
     RouterModule.forChild(routes)
   ],
   providers: [AuthGuard],

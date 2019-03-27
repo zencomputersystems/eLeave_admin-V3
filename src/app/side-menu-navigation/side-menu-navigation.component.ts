@@ -12,27 +12,26 @@ export class SideMenuNavigationComponent implements OnInit {
   public showFullMenu: boolean = true;
   public showIconMenu: boolean = false;
   public activeRoute: any;
-
   public appPages = [
     {
       title: 'Dashboard',
       url: '/main/dashboard',
-      icon: 'desktop'
+      icon: 'dashboard.svg'
     },
     {
       title: 'Inbox',
       url: '/main/inbox',
-      icon: 'mail-unread'
+      icon: 'inbox.svg'
     },
     {
       title: 'Plan My Leave',
       url: '/main/plan-my-leave',
-      icon: 'calendar'
+      icon: 'my_leave.svg'
     },
     {
       title: 'Employee',
       url: '/main/employee-setup',
-      icon: 'people'
+      icon: 'employee.svg'
     }
   ];
 

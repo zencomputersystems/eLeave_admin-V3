@@ -1,0 +1,140 @@
+:host {
+  overflow: auto;
+  // ------------------- header ----------------//
+  .header-md:after {
+    height: 0px;
+    background-image: none;
+  }
+  .toolbar1 {
+    height: 48px;
+    padding-right: 20px;
+  }
+  .toolbar2 {
+    --min-height: 35px;
+    border: 1px solid
+      var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
+  }
+  .fa-instagram {
+    font-size: 18px;
+    color: transparent;
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .fa-linkedin-in {
+    color: #007bb6;
+    padding-right: 10px;
+  }
+  .fa-facebook-f {
+    color: #3b5998;
+    padding-right: 10px;
+    font-size: 18px;
+    padding-top: 5px;
+  }
+  .bell-icon {
+    float: right;
+    fill: #7a8589;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  .edit-icon {
+    float: right;
+    fill: #7a8589;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  .search-icon {
+    float: left;
+    width: 20px;
+    height: 20px;
+    fill: #7a8589;
+    cursor: pointer;
+  }
+  .verticalLine {
+    border-left: 1px solid #dfe3e6;
+    height: 28px;
+    float: right;
+    padding-right: 20px;
+  }
+  .labelName {
+    float: right;
+    font-size: 14px;
+    color: #7a8589;
+    padding-right: 10px;
+    padding-top: 8px;
+    color: #20291f;
+    font-weight: 500;
+  }
+  .card-content-md p {
+    font-size: 13px;
+  }
+  .fa-map-marker-alt {
+    padding-right: 10px;
+  }
+  .leftCard {
+    width: 62%;
+    position: absolute;
+    top: 100px;
+    left: 60px;
+  }
+  ////////////////////////// mat card ///////////////////
+  .rightCard {
+    width: 24%;
+    position: absolute;
+    right: 60px;
+    top: 110px;
+    height: 57%;
+  }
+  .fa-star {
+    position: absolute;
+    cursor: pointer;
+  }
+  .fa-comment {
+    padding-right: 5px;
+  }
+  .fa-envelope {
+    padding-right: 10px;
+  }
+  .mat-card-header {
+    justify-content: center;
+    text-align: center;
+    padding-top: 20px;
+  }
+  mat-card-subtitle {
+    margin-bottom: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .footer {
+    text-align: center;
+    padding-top: 10px;
+  }
+  .footerButton {
+    color: #057dcd;
+    width: 65%;
+    font-size: 12px;
+    text-transform: none;
+  }
+  .button-outline {
+    --border-width: 1px;
+  }
+  ::ng-deep .mat-tab-header {
+    background-color: #f2f2f2 !important;
+    margin-top: -13px;
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+  ::ng-deep .mat-tab-label {
+    height: 35px !important;
+    color: #7a8589;
+  }
+  ::ng-deep .mat-tab-label.mat-tab-label-active {
+    color: #057dcd;
+  }
+  ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
+  .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #057dcd;
+  }
+}

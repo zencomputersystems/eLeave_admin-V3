@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { AdminInvitesPage } from './admin-invites.page';
+import { InlineSVGModule } from 'ng-inline-svg';
 
 
 const routes: Routes = [
@@ -33,6 +34,7 @@ const routes: Routes = [
         MatIconModule,
         MatGridListModule,
         MatCardModule,
+        InlineSVGModule,
         RouterModule.forChild(routes)
     ],
     declarations: [AdminInvitesPage]

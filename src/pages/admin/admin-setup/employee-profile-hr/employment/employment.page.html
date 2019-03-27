@@ -1,0 +1,124 @@
+<div *ngIf="employmentPersonalList">
+    <div style="color: #057dcd; text-align: right;padding-top: 15px;padding-bottom: 15px;">
+        <i class="far fa-edit personal"></i>
+        <span style="padding-right: 10px;cursor: pointer;">Edit</span>
+    </div>
+    <ion-row class="detailsRow">
+        <ion-col>
+            <ion-label>EMPLOYEE ID NO</ion-label>
+            <p>{{employmentPersonalList.employmentDetail.employeeNumber}}</p>
+        </ion-col>
+        <ion-col>
+            <ion-label>NRIC</ion-label>
+            <p>{{personalList.employeeName}}</p>
+        </ion-col>
+    </ion-row>
+    <ion-row class="detailsRow">
+        <ion-col>
+            <ion-label>DESIGNATION</ion-label>
+            <p>{{employmentPersonalList.employeeDesignation}}</p>
+        </ion-col>
+        <ion-col>
+            <ion-label>GRADE</ion-label>
+            <p>{{personalList.personalDetail.emailAddress}}</p>
+        </ion-col>
+    </ion-row>
+    <ion-row class="detailsRow">
+        <ion-col>
+            <ion-label>DEPARTMENT</ion-label>
+            <p>{{employmentPersonalList.employeeDepartment}}</p>
+        </ion-col>
+        <ion-col>
+            <ion-label>WORK LOCATION</ion-label>
+            <p>{{employmentPersonalList.employmentDetail.workLocation}}</p>
+        </ion-col>
+    </ion-row>
+    <ion-row class="detailsRow">
+        <ion-col>
+            <ion-label style="display: block;">REPORTING TO</ion-label>
+            <ion-avatar style="width: 24px; height: 24px; display: inline-block; margin-top: 3px">
+                <img src="assets/icon/picture.png">
+            </ion-avatar>
+            <p style="color: #057dcd; display: inline;position: absolute;top: 31px;left: 37px;">
+                {{employmentPersonalList.employmentDetail.reportingTo}}
+            </p>
+        </ion-col>
+        <ion-col>
+
+        </ion-col>
+    </ion-row>
+    <ion-item class="divider"></ion-item>
+
+    <ion-row class="detailsRow">
+        <ion-col>
+            <ion-label>WORK PHONE NUMBER</ion-label>
+            <p>{{personalList.personalDetail.workPhoneNumber}}</p>
+        </ion-col>
+        <ion-col>
+            <ion-label>WORK EMAIL ADDRESS</ion-label>
+            <p>{{personalList.personalDetail.workEmailAddress}}</p>
+        </ion-col>
+    </ion-row>
+    <ion-item class="divider"></ion-item>
+
+    <ion-row class="detailsRow">
+        <ion-col>
+            <ion-label>EMPLOYMENT TYPE</ion-label>
+            <p>{{employmentPersonalList.employmentDetail.employmentType}}</p>
+        </ion-col>
+        <ion-col>
+            <ion-label>EMPLOYMENT STATUS</ion-label>
+            <p>{{employmentPersonalList.employmentDetail.employmentStatus}}</p>
+        </ion-col>
+    </ion-row>
+    <ion-row class="detailsRow">
+        <ion-col>
+            <ion-label>DATE OF HIRE</ion-label>
+            <p>{{employmentPersonalList.employmentDetail.dateOfJoin}}</p>
+        </ion-col>
+        <ion-col>
+            <ion-label>DATE OF CONFIRMATION</ion-label>
+            <p>{{employmentPersonalList.employmentDetail.dateOfConfirmation}}</p>
+        </ion-col>
+    </ion-row>
+    <ion-row class="detailsRow">
+        <ion-col>
+            <ion-label>DATE OF TERMINATION</ion-label>
+            <p>{{employmentPersonalList.employmentDetail.dateOfResign}}</p>
+        </ion-col>
+        <ion-col>
+            <ion-label>YEARS OF SERVICE</ion-label>
+            <p>{{employmentPersonalList.employmentDetail.yearOfService}}</p>
+        </ion-col>
+    </ion-row>
+    <ion-item class="divider"></ion-item>
+    <ion-row class="detailsRow">
+        <ion-col>
+            <ion-label>BANK NAME</ion-label>
+            <p>{{employmentPersonalList.employmentDetail.bankAccountName}}</p>
+        </ion-col>
+        <ion-col>
+            <ion-label>BANK ACCOUNT NO</ion-label>
+            <p>{{employmentPersonalList.employmentDetail.bankAccountNumber}}</p>
+        </ion-col>
+    </ion-row>
+    <ion-row class="detailsRow">
+        <ion-col>
+            <ion-label>EPF NO</ion-label>
+            <p>{{employmentPersonalList.employmentDetail.epfNumber}}</p>
+        </ion-col>
+        <ion-col>
+            <ion-label>INCOME TAX NO</ion-label>
+            <p>{{employmentPersonalList.employmentDetail.incomeTaxNumber}}</p>
+        </ion-col>
+    </ion-row>
+    <ion-row class="detailsRow">
+        <ion-col>
+            <ion-label>COST CENTRE</ion-label>
+            <p>{{personalList.personalDetail.residentialAddress}}</p>
+        </ion-col>
+        <ion-col>
+
+        </ion-col>
+    </ion-row>
+</div>

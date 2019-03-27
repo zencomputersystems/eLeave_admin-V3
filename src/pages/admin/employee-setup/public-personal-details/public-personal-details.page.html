@@ -5,9 +5,12 @@
         </ion-avatar>
         <ion-label class="labelName" *ngIf="personalList"> {{personalList.employeeName}}</ion-label>
         <div class="verticalLine"></div>
-        <i class="far fa-bell"></i>
-        <i class="far fa-edit"></i>
-        <ion-icon class="search" name="search"></ion-icon>
+        <div style="width:15px; float: right; height: 20px"></div>
+        <div class="bell-icon" [inlineSVG]="'assets/icon/Top_header/notifications.svg'"></div>
+        <div style="width: 12px; float:right; height: 20px"></div>
+        <div class="edit-icon" [inlineSVG]="'assets/icon/Top_header/action.svg'"></div>
+        <div style="width:15px; float: left; height: 20px"></div>
+        <div class="search-icon" [inlineSVG]="'assets/icon/Top_header/search.svg'"></div>
     </ion-toolbar>
 
     <ion-toolbar class="toolbar2">
@@ -154,7 +157,7 @@
             <i class="far fa-envelope"></i>{{personalList.personalDetail.emailAddress}}
         </mat-card-subtitle>
         <mat-card-subtitle style="white-space: nowrap; color:#7a8589;padding-top: 5px;">
-            <i class="fas fa-map-marker-alt"></i>{{personalList.employeeLocation}}
+            <i class="fas fa-map-marker-alt"></i>{{employmentPersonalList.employmentDetail.workLocation}}
         </mat-card-subtitle>
     </mat-card-header>
     <div class="footer">

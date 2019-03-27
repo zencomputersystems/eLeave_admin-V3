@@ -29,24 +29,42 @@
         font-size: 18px;
         padding-top: 5px;
     }
-    .fa-bell{
-        float:right; 
-        font-size: 22px; 
-        color: #7a8589;
-        padding-right: 20px;
-    }
-    .fa-edit{
-        float:right; 
-        font-size: 22px; 
-        color: #7a8589; 
-        padding-right: 10px;
-    }
-    .search{
-        float:left; 
-        font-size: 25px; 
-        color: #7a8589; 
-        padding-left: 7px;
-    }
+    // .fa-bell{
+    //     float:right; 
+    //     font-size: 22px; 
+    //     color: #7a8589;
+    //     padding-right: 20px;
+    // }
+    // .fa-edit{
+    //     float:right; 
+    //     font-size: 22px; 
+    //     color: #7a8589; 
+    //     padding-right: 10px;
+    // }
+    // .search{
+    //     float:left; 
+    //     font-size: 25px; 
+    //     color: #7a8589; 
+    //     padding-left: 7px;
+    // }
+    .bell-icon {
+        float: right;
+        fill: #7a8589;
+        width: 20px;
+        height: 20px;
+      }
+      .edit-icon {
+        float: right;
+        fill: #7a8589;
+        width: 20px;
+        height: 20px;
+      }
+      .search-icon {
+        float: left;
+        width: 20px;
+        height: 20px;
+        fill: #7a8589;
+      }
     .verticalLine{
         border-left: 1px solid #dfe3e6;
         height: 28px;
@@ -109,7 +127,7 @@
         position: absolute;
         right: 60px;
         top: 110px;
-        height: 60%;
+        height: 57%;
     }
     .fa-star{
         position: absolute;

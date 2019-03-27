@@ -1,0 +1,74 @@
+<ion-header>
+    <ion-toolbar class="toolbar1">
+        <ion-avatar style=" width: 32px; height: 32px; float: right">
+            <img src="assets/icon/picture.png">
+        </ion-avatar>
+        <ion-label class="labelName" *ngIf="personalList"> {{personalList.employeeName}}</ion-label>
+        <div class="verticalLine"></div>
+        <div style="width:15px; float: right; height: 20px"></div>
+        <div class="bell-icon" [inlineSVG]="'assets/icon/Top_header/notifications.svg'"></div>
+        <div style="width: 12px; float:right; height: 20px"></div>
+        <div class="edit-icon" [inlineSVG]="'assets/icon/Top_header/action.svg'"></div>
+        <div style="width:15px; float: left; height: 20px"></div>
+        <div class="search-icon" [inlineSVG]="'assets/icon/Top_header/search.svg'"></div>
+    </ion-toolbar>
+
+    <ion-toolbar class="toolbar2">
+        <ion-icon name="arrow-back" style="cursor: pointer; font-size: 22px"></ion-icon>
+        <ion-title style="display: inline-block;color: #20291f" *ngIf="personalList">
+            {{personalList.employeeName}}'s Profile
+        </ion-title>
+        <div style="float: right; padding-right: 20px;">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-linkedin-in"></i>
+            <i class="fab fa-instagram"></i>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-card class="leftCard">
+    <ion-card-content>
+        <mat-tab-group>
+            <mat-tab label="Personal">
+                <app-personal></app-personal>
+            </mat-tab>
+            <mat-tab label="Employment">
+                <app-employment></app-employment>
+            </mat-tab>
+            <mat-tab label="Leave entitlement">
+                <!-- content leave entitlement -->
+            </mat-tab>
+        </mat-tab-group>
+
+    </ion-card-content>
+</ion-card>
+
+<mat-card class="rightCard" *ngIf="personalList">
+    <i class="fas fa-star" (click)="clickAsFavourite()" [style.color]="numOfArray ? '#ffbb00' : '#dfe3e6'"></i>
+    <ion-avatar style="margin: 0 auto;">
+        <img src="assets/icon/picture.png">
+    </ion-avatar>
+    <mat-card-header *ngIf="employmentPersonalList">
+        <mat-card-subtitle style="color: #057dcd;white-space: nowrap; font-size: 24px;">
+            {{personalList.employeeName}}
+        </mat-card-subtitle>
+        <mat-card-subtitle style="white-space: nowrap;font-size: 12px;font-weight: 500;color: #20291f;">
+            {{personalList.employeeDesignation | uppercase}}
+        </mat-card-subtitle>
+        <mat-card-subtitle *ngIf="employmentPersonalList" style="white-space: nowrap;font-size: 12px;color: #7a8589;">
+            {{employmentPersonalList.employmentDetail.employmentStatus}}
+        </mat-card-subtitle>
+        <mat-card-subtitle style="white-space: nowrap;color: #7a8589;padding-top: 12px;">
+            <i class="far fa-envelope"></i>{{personalList.personalDetail.emailAddress}}
+        </mat-card-subtitle>
+        <mat-card-subtitle style="white-space: nowrap; color:#7a8589;padding-top: 5px;">
+            <i class="fas fa-map-marker-alt"></i>
+            {{employmentPersonalList.employmentDetail.workLocation}}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <div class="footer">
+        <ion-button class="footerButton" shape="round" fill="outline">
+            <i class="far fa-comment"></i>Send a message
+        </ion-button>
+    </div>
+</mat-card>

@@ -1,0 +1,93 @@
+<div style="color: #057dcd; text-align: right;padding-top: 15px;padding-bottom: 15px;">
+    <i class="far fa-edit personal"></i>
+    <span style="padding-right: 10px;cursor: pointer;">Edit</span>
+</div>
+<ion-row class="detailsRow" *ngIf="personalList">
+    <ion-col>
+        <ion-label>FULL NAME</ion-label>
+        <p>{{personalList.employeeName}}</p>
+    </ion-col>
+    <ion-col>
+        <ion-label>DISPLAY NAME</ion-label>
+        <p>{{personalList.employeeName}}</p>
+    </ion-col>
+</ion-row>
+<ion-row class="detailsRow" *ngIf="personalList">
+    <ion-col>
+        <ion-label>PERSONAL PHONE NUMBER</ion-label>
+        <p>{{personalList.personalDetail.phoneNumber}}</p>
+    </ion-col>
+    <ion-col>
+        <ion-label>PERSONAL EMAIL ADDRESS</ion-label>
+        <p>{{personalList.personalDetail.emailAddress}}</p>
+    </ion-col>
+</ion-row>
+<ion-row class="detailsRow" *ngIf="personalList">
+    <ion-col>
+        <ion-label>BIRTHDATE</ion-label>
+        <p>{{personalList.personalDetail.dob}}</p>
+    </ion-col>
+    <ion-col>
+        <ion-label>GENDER</ion-label>
+        <p>{{personalList.personalDetail.gender}}</p>
+    </ion-col>
+</ion-row>
+<ion-row class="detailsRow" *ngIf="personalList">
+    <ion-col>
+        <ion-label>MARITAL STATUS</ion-label>
+        <p>{{personalList.personalDetail.maritalStatus}}</p>
+    </ion-col>
+    <ion-col>
+        <ion-label>RELIGION</ion-label>
+        <p>{{personalList.personalDetail.religion}}</p>
+    </ion-col>
+</ion-row>
+<ion-row class="detailsRow" *ngIf="personalList">
+    <ion-col>
+        <ion-label>RACE</ion-label>
+        <p>{{personalList.personalDetail.race}}</p>
+    </ion-col>
+    <ion-col>
+        <ion-label>NATIONALITY</ion-label>
+        <p>{{personalList.personalDetail.nationality}}</p>
+    </ion-col>
+</ion-row>
+<ion-row class="detailsRow" *ngIf="personalList">
+    <ion-col>
+        <ion-label>RESIDENTIAL ADDRESS</ion-label>
+        <p>{{personalList.personalDetail.residentialAddress}}</p>
+    </ion-col>
+</ion-row>
+<ion-item class="divider"></ion-item>
+<ion-label style="display: block; padding-left: 10.6%;padding-top: 5px;">EMERGENCY CONTACT(S)
+</ion-label>
+<ion-row class="detailsRow" *ngFor="let item of removeList; let i = index">
+    <ion-col>
+        <p style="display: inline; padding-right: 30%;">
+            {{item.contactName}}</p>
+        <p style="display: inline;">
+            {{item.contactNumber}}</p>
+        <i style="padding-left: 3%;cursor: pointer;float: right; padding-right: 8%;" class="far fa-trash-alt"
+            (click)="removeContact(i)"></i>
+        <i style="cursor: pointer;float:right" class="fas fa-pencil-alt"></i>
+    </ion-col>
+</ion-row>
+<ion-row class="detailsRow">
+    <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
+        padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
+    <span style="color:#057dcd; cursor: pointer;">Add more</span>
+</ion-row>
+<ion-item class="divider"></ion-item>
+<ion-row class="detailsRow">
+    <ion-col style="background: #006994; border-radius: 3px;">
+        <span style="color: white">Add family </span>
+        <br>
+        <span style="color: white">information</span>
+    </ion-col>
+    <div style="width: 20px"></div>
+    <ion-col style="background: #5f4180; border-radius: 3px;">
+        <span style="color: white">Add education </span>
+        <br>
+        <span style="color: white">qualification</span>
+    </ion-col>
+</ion-row>
