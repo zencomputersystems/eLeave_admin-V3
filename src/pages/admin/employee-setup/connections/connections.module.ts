@@ -12,6 +12,7 @@ import { ConnectionsPage } from './connections.page';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
 import { InlineSVGModule } from 'ng-inline-svg';
 
 
@@ -34,6 +35,7 @@ const routes: Routes = [
         MatIconModule,
         MatGridListModule,
         MatCardModule,
+        MatMenuModule,
         InlineSVGModule,
         RouterModule.forChild(routes)
     ],

@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { LeaveEntitlementPage } from './leave-entitlement.page';
+import { InlineSVGModule } from 'ng-inline-svg';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    InlineSVGModule,
     RouterModule.forChild(routes)
   ],
   declarations: [LeaveEntitlementPage]

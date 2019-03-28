@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-connections',
@@ -24,6 +24,7 @@ export class ConnectionsPage implements OnInit {
     public gridView: boolean = false;
     public setAsFavourite = [];
     public viewMoreFilter: boolean = false;
+    public connectionRoute: boolean;
 
     foods = [
         { value: 'steak-0', viewValue: 'Steak' },
@@ -45,9 +46,13 @@ export class ConnectionsPage implements OnInit {
     public get disabledPreviousButton() {
         return this.disablePrevButton;
     }
-    constructor(private apiService: APIService, private router: Router) { }
+    constructor(private apiService: APIService, private router: Router,
+        private route: ActivatedRoute) { }
 
     ngOnInit() {
+        if (this.route.routeConfig.path.includes('connection')) {
+            this.connectionRoute = true;
+        }
         this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.employeeList = data;
@@ -58,6 +63,7 @@ export class ConnectionsPage implements OnInit {
                 this.router.navigate(['login']);
             }
         );
+
     }
 
     viewOnList() {

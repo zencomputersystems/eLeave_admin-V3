@@ -9,7 +9,8 @@ import { EmploymentDetailsPage } from 'src/pages/admin/employee-setup/employment
 import { LeaveEntitlementPage } from 'src/pages/admin/employee-setup/leave-entitlement/leave-entitlement.page';
 import { PageNotFoundComponent } from '../page-not-found.component';
 import { PublicPersonalDetailsPage } from 'src/pages/admin/employee-setup/public-personal-details/public-personal-details.page';
-import { AdminInvitesPage } from 'src/pages/admin/admin-setup/admin-invites.page';
+import { EmployeeProfilePage } from 'src/pages/admin/admin-setup/employee-profile-hr/employee-profile.page';
+import { InviteMorePage } from 'src/pages/admin/admin-setup/invites/inivite-more/invite-more.page';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -18,10 +19,10 @@ export const sideMenuNavigationRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-            { path: 'dashboard', component: AdminInvitesPage },
-            // { path: 'employee-directory', component: ConnectionsPage },
+            { path: 'dashboard', component: InviteMorePage },
             { path: 'inbox', component: ConnectionsPage },
-            { path: 'plan-my-leave', component: PublicPersonalDetailsPage},
+            { path: 'plan-my-leave', component: PublicPersonalDetailsPage },
+            { path: 'employee-directory', component: ConnectionsPage },
             {
                 path: 'employee-setup', component: EmployeeSetupPage,
                 children: [
@@ -30,7 +31,7 @@ export const sideMenuNavigationRoutes: Routes = [
                     { path: 'employment-details/:id', component: EmploymentDetailsPage },
                     { path: 'leave-entitlement', component: LeaveEntitlementPage },
                     { path: 'awards-certification', component: PageNotFoundComponent },
-                    { path: 'connection', component: PageNotFoundComponent },
+                    { path: 'connection', component: ConnectionsPage },
                     { path: 'account', component: PageNotFoundComponent }
                 ]
             }

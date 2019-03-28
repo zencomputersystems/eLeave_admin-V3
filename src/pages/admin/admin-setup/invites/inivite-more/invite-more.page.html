@@ -1,0 +1,120 @@
+<ion-header>
+    <ion-toolbar class="toolbar1">
+        <ion-avatar style=" width: 32px; height: 32px; float: right">
+            <img src="assets/icon/picture.png">
+        </ion-avatar>
+        <ion-label class="labelName">Qiqi
+            Abaziz</ion-label>
+        <div class="verticalLine"></div>
+        <div style="width:15px; float: right; height: 20px"></div>
+        <div class="bell-icon" [inlineSVG]="'assets/icon/Top_header/notifications.svg'"></div>
+        <div style="width: 12px; float:right; height: 20px"></div>
+        <div class="edit-icon" [inlineSVG]="'assets/icon/Top_header/action.svg'"></div>
+        <div style="width:15px; float: left; height: 20px"></div>
+        <div class="search-icon" [inlineSVG]="'assets/icon/Top_header/search.svg'"></div>
+    </ion-toolbar>
+
+    <ion-toolbar class="toolbar2">
+        <ion-title style="display: inline-block;color: #20291f">
+            Invites
+        </ion-title>
+        <div style="float: right; padding-right: 20px;">
+            <!-- <i class="material-icons" style="padding-right: 5px; color: #057dcd; cursor: pointer;">add</i> -->
+            <i class="material-icons"
+                style="padding-left: 10px; color: #7a8589; float: right;cursor: pointer">more_horiz</i>
+            <!-- <ion-label class="label" style="font-size: 14px; color: #057dcd;float: right;
+            margin-top: 5px;padding-right: 10px;cursor: pointer">Invite more</ion-label> -->
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<div class="connectionsContainer">
+    <div class="topHeader">
+        <!-- <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span> -->
+        <ion-searchbar mode="ios" class="searchbar" placeholder="Start typing name or email address"
+            (ionClear)="clearDetails()" (ionChange)="changeDetails($event)" searchIcon="arrow-round-back">
+            <ion-icon name="close-circle-outline" style="position: absolute;color: #bebebe;
+            right: 120px;font-size: 16px;cursor: pointer;"></ion-icon>
+            <ion-button fill="outline" style="cursor: pointer;position: absolute;font-size: 10px;height: 23px;width: 62px;
+            right: 35px;top: 15px;">Add</ion-button>
+        </ion-searchbar>
+        <!-- <mat-form-field class="example-form-field" style="width: 100%">
+            <input matInput type="text" placeholder="Start typing name or email address" [(ngModel)]="value">
+            <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field> -->
+        <div style="display: inline-block;white-space: nowrap;width: 66%;">
+            <!-- <div style="padding-top: 18px;display: inline-block;padding-left: 46%">
+                <i class="fas fa-bars" (click)="viewOnList()" [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
+                <i class="fas fa-th" (click)="viewOnGrid()" [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
+            </div> -->
+            <!-- <div style="color: #7a8589;font-size: 12px;display: inline;
+            padding-left: 3%;">
+                <span style="padding-right: 10px;">Page</span>
+                <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
+                padding-right: 7px;">{{pageIndex}}</span>
+                <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageIndex}}
+                <i class="fas fa-angle-left" title="Previous page"
+                    style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
+                    (click)="clickToPrevPage(pageIndex-1)"></i>
+                <i class="fas fa-angle-right" title="Next page"
+                    style="cursor:pointer; font-size: 15px;padding-left: 10px"
+                    (click)="clickToNextPage(pageIndex+1)"></i>
+            </div> -->
+        </div>
+    </div>
+
+
+    <ion-content style="padding: 20px;height: calc( 100% - 130px);--background: #f9f9f9;">
+        <div>
+            <ion-row class="detailsRow" *ngFor="let item of personalList; let i=index">
+                <ion-col size="0.7">
+                    <ion-avatar class="avatar">
+                        <img src="assets/icon/picture.png">
+                        <div class="checkboxOnAvatar">
+                            <ion-checkbox mode="ios" style="width: 20px; height: 20px;"></ion-checkbox>
+                        </div>
+                    </ion-avatar>
+                </ion-col>
+                <ion-col size="1">
+                    <ion-label style="color:#7a8589; font-size: 13px;">{{item.staffNumber}}</ion-label>
+                </ion-col>
+                <ion-col class="colOfLeave" size="3" style="color: #057dcd; font-size: 13px;">{{item.employeeName}}
+                </ion-col>
+                <ion-col class="colOfLeave" size="3" style="color:#7a8589; font-size: 13px;">{{item.designation}}
+                </ion-col>
+                <ion-col class="colOfLeave" size="3" style="color:#7a8589; font-size: 13px;">{{item.email}}
+                </ion-col>
+                <ion-col>
+                    <!-- <ion-icon name="refresh" style="color: #dfe3e6; cursor: pointer;"></ion-icon> -->
+                    <i class="far fa-trash-alt"></i>
+                    <!-- <ion-icon name="more" style="color: #dfe3e6; cursor: pointer"></ion-icon> -->
+                </ion-col>
+                <ion-item class="divider" lines="full"></ion-item>
+            </ion-row>
+        </div>
+    </ion-content>
+    <!--<div style="padding-left: 17px; display: inline-flex">
+         <ion-button [disabled]="disabledPreviousButton" fill="outline" (click)="clickToPrevPage(pageIndex-1)"
+            style="font-size: 12px;height: 30px;width: 90px;" color="primary">
+            <ion-icon name="arrow-back"></ion-icon>Prev
+        </ion-button> 
+        <div style="padding-left: 10px"></div>
+        <ion-button [disabled]="disabledNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
+            (click)="clickToNextPage(pageIndex+1)">Next<ion-icon name="arrow-forward">
+            </ion-icon>
+        </ion-button>
+        <div style="position: absolute;right: 73px;bottom: 11px;color: #7a8589; font-size: 12px;">
+            <span style="padding-right: 10px;">Page</span>
+            <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
+            padding-right: 7px;">{{pageIndex}}</span>
+            <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageIndex}}
+            <i class="fas fa-angle-left" title="Previous page"
+                style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
+                (click)="clickToPrevPage(pageIndex-1)"></i>
+            <i class="fas fa-angle-right" title="Next page" style="cursor:pointer; font-size: 15px;padding-left: 10px"
+                (click)="clickToNextPage(pageIndex+1)"></i>
+        </div> 
+    </div>-->
+</div>

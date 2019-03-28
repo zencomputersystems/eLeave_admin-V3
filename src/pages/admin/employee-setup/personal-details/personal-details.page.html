@@ -7,8 +7,9 @@
 <ion-card>
     <ion-card-header>
         <div style="right: 25px; position: absolute;" (click)="editProfileData()">
-            <i style="color: #057dcd; padding-right: 10px;cursor: pointer;" class="far fa-edit"></i>
-            <p style="color: #057dcd; display: inline;cursor: pointer;">Edit Profile</p>
+            <!-- <i style="color: #057dcd; padding-right: 10px;cursor: pointer;" class="far fa-edit"></i> -->
+            <div class="edit-profile-icon" [inlineSVG]="'assets/icon/Option/edit.svg'"></div>
+            <p style="color: #057dcd; display: inline;cursor: pointer;padding-left: 10px">Edit Profile</p>
         </div>
         <div class="fullContainer">
 
@@ -17,7 +18,9 @@
                     <img src="assets/icon/picture.png">
                 </ion-avatar>
                 <ion-badge style="background-color: white;border: 1px solid#bebebe;">
-                    <i style="color: #bebebe; padding-top: 1px;" class="far fa-image"></i>
+                    <!-- <i style="color: #bebebe; padding-top: 1px;" class="far fa-image"></i> -->
+                    <div class="pic-icon" [inlineSVG]="'assets/icon/Option/picture.svg'"></div>
+
                 </ion-badge>
             </div>
             <div class="right" *ngIf="personalList">
@@ -30,8 +33,9 @@
                     </ion-card-subtitle>
                 </div>
                 <div style="padding-top: 10px;">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <ion-card-subtitle class="subtitle">{{personalList.employeeLocation}}
+                    <!-- <i class="fas fa-map-marker-alt"></i> -->
+                    <div class="marker-icon" [inlineSVG]="'assets/icon/User_profile/pin.svg'"></div>
+                    <ion-card-subtitle class="subtitle" style="padding-left:8px">{{personalList.employeeLocation}}
                     </ion-card-subtitle>
                 </div>
             </div>
@@ -109,9 +113,13 @@
                         {{item.contactName}}</p>
                     <p style="display: inline;">
                         {{item.contactNumber}}</p>
-                    <i style="padding-left: 3%;cursor: pointer;float: right; padding-right: 8%;"
-                        class="far fa-trash-alt" (click)="removeContact(i)"></i>
-                    <i style="cursor: pointer;float:right" class="fas fa-pencil-alt"></i>
+                    <!-- <i style="padding-left: 3%;cursor: pointer;float: right; padding-right: 8%;"
+                        class="far fa-trash-alt" (click)="removeContact(i)"></i> -->
+                    <div class="delete-icon" [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeContact(i)">
+                    </div>
+                    <div class="edit-pencil-icon" [inlineSVG]="'assets/icon/Option/pencil.svg'"></div>
+
+                    <!-- <i style="cursor: pointer;float:right" class="fas fa-pencil-alt"></i> -->
                 </ion-col>
             </ion-row>
         </ion-card-content>

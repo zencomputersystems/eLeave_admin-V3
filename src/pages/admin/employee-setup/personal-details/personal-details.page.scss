@@ -8,6 +8,7 @@
   }
   .subtitle {
     display: inline;
+    padding-left: 2px;
   }
   .fa-circle {
     font-size: 5px;
@@ -52,6 +53,42 @@
   .crossIcon {
     cursor: pointer;
     float: right;
+  }
+  .edit-profile-icon {
+    width: 15px;
+    height: 15px;
+    fill: #057dcd;
+    cursor: pointer;
+    float: left;
+  }
+  .marker-icon {
+    width: 17px;
+    height: 16px;
+    fill: #7a8589;
+    float: left;
+  }
+  .pic-icon {
+    width: 11px;
+    height: 12px;
+    fill: #bebebe;
+    float: left;
+    cursor: pointer;
+  }
+  .edit-pencil-icon {
+    width: 13px;
+    height: 13px;
+    fill: #dfe3e6;
+    float: right;
+    cursor: pointer;
+  }
+  .delete-icon {
+    width: 13px;
+    height: 13px;
+    fill: #dfe3e6;
+    cursor: pointer;
+    margin-left: 1%;
+    float: right;
+    margin-right: 8%;
   }
   .header {
     padding: 10px;

@@ -11,7 +11,7 @@ import { sideMenuNavigationRoutes } from './side-menu-navigation.routes';
 import { EmployeeSetupPageModule } from 'src/pages/admin/employee-setup/employee-setup.module';
 import { HomePageModule } from '../home/home.module';
 import { PublicPersonalDetailsModule } from 'src/pages/admin/employee-setup/public-personal-details/public-personal-details.module';
-import { AdminInvitesModule } from 'src/pages/admin/admin-setup/admin-invites.module';
+import { AdminInvitesModule } from 'src/pages/admin/admin-setup/invites/admin-invites.module';
 import { EmployeeProfileModule } from 'src/pages/admin/admin-setup/employee-profile-hr/employee-profile.module';
 import { HttpClientModule } from '@angular/common/http';
 

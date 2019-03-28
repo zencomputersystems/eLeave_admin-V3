@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="!connectionRoute">
     <ion-toolbar class="toolbar1">
         <ion-avatar style=" width: 32px; height: 32px; float: right">
             <img src="assets/icon/picture.png">
@@ -18,19 +18,22 @@
     </ion-toolbar>
 
     <ion-toolbar class="toolbar2">
-        <ion-title style="display: inline-block;color: #20291f">
+        <ion-title style="display: inline-block;color: #20291f; font-size: 16px;">
             Employee Directory
         </ion-title>
         <div style="float: right; padding-right: 20px;">
             <!-- <i class="fab fa-facebook-f"></i>
                 <i class="fab fa-instagram"></i> -->
-            <i class="fas fa-sliders-h" (click)="moreFilter()"></i> </div>
+            <!-- <i class="fas fa-sliders-h" (click)="moreFilter()"></i> -->
+            <div class="filter-icon" [inlineSVG]="'assets/icon/Option/filter.svg'" (click)="moreFilter()"></div>
+        </div>
     </ion-toolbar>
 </ion-header>
 
 <!-------------------------------------------LIST VIEW------------------------------------------>
 
-<div class="connectionsContainer" *ngIf="listView">
+<div class="connectionsContainer" *ngIf="listView" [style.height]="connectionRoute ? '100%' : 'calc(100% - 110px)'"
+    [style.width.%]="connectionRoute ? '100' : '95'">
     <div class="topHeader">
         <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>
         <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="clearDetails()"
@@ -60,7 +63,7 @@
     <ion-content style="padding: 20px;height: calc( 100% - 130px);">
         <ion-row class="titleRow">
             <ion-col size="0.7" style="padding-left: 10px;">
-                <ion-checkbox mode="ios" style="width: 20px; height: 20px;"></ion-checkbox>
+                <!-- <ion-checkbox mode="ios" style="width: 20px; height: 20px;"></ion-checkbox> -->
             </ion-col>
             <ion-col size="1" style="display: inline-flex">
                 <ion-label style="font-size: 12px;">ID</ion-label>
@@ -90,10 +93,10 @@
             <ion-col size="0.7">
                 <ion-avatar class="avatar">
                     <img src="assets/icon/picture.png">
-                    <div class="checkboxOnAvatar">
+                    <!-- <div class="checkboxOnAvatar">
                         <ion-checkbox mode="ios" style="width: 20px; height: 20px;">
                         </ion-checkbox>
-                    </div>
+                    </div> -->
                 </ion-avatar>
             </ion-col>
             <ion-col size="1">
@@ -106,7 +109,12 @@
             <ion-col class="colOfLeave" size="3" style="color:#7a8589; font-size: 13px;">{{item.email}}
             </ion-col>
             <ion-col>
-                <ion-icon name="more" style="color: #dfe3e6; cursor: pointer"></ion-icon>
+                <!-- <ion-icon name="more" style="color: #dfe3e6; cursor: pointer"></ion-icon> -->
+                <ion-icon name="more" class="iconMore" [matMenuTriggerFor]="menu" style="cursor:pointer"></ion-icon>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>Add to my connection</button>
+                    <button mat-menu-item>Send a message</button>
+                </mat-menu>
             </ion-col>
             <ion-item class="divider" lines="full"></ion-item>
         </ion-row>
@@ -137,7 +145,8 @@
 
 <!-------------------------------------------GRID VIEW------------------------------------------>
 
-<div class="connectionsContainer" *ngIf="gridView">
+<div class="connectionsContainer" *ngIf="gridView" [style.height]="connectionRoute ? '100%' : 'calc(100% - 110px)'"
+[style.width.%]="connectionRoute ? '100' : '95'">
     <div class="topHeader">
         <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>
         <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="clearDetails()"

@@ -11,8 +11,9 @@
                 <ion-avatar class="avatar">
                     <img src="assets/icon/picture.png">
                 </ion-avatar>
-                <ion-badge>
-                    <ion-icon name="image"></ion-icon>
+                <ion-badge style="background-color: white;border: 1px solid#bebebe;">
+                    <!-- <ion-icon name="image"></ion-icon> -->
+                    <div class="pic-icon" [inlineSVG]="'assets/icon/Option/picture.svg'"></div>
                 </ion-badge>
             </div>
             <div class="right" *ngIf="personalList">
@@ -25,8 +26,10 @@
                     </ion-card-subtitle>
                 </div>
                 <div style="padding-top: 10px;">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <ion-card-subtitle class="subtitle">{{personalList.employmentDetail.workLocation}}
+                    <!-- <i class="fas fa-map-marker-alt"></i> -->
+                    <div class="marker-icon" [inlineSVG]="'assets/icon/User_profile/pin.svg'"></div>
+                    <ion-card-subtitle class="subtitle" style="padding-left:8px">
+                        {{personalList.employmentDetail.workLocation}}
                     </ion-card-subtitle>
                 </div>
             </div>

@@ -14,8 +14,9 @@
     </ion-toolbar>
 
     <ion-toolbar class="toolbar2">
-        <ion-icon name="arrow-back" style="cursor: pointer; font-size: 22px"></ion-icon>
-        <ion-title style="display: inline-block;color: #20291f" *ngIf="personalList">
+        <!-- <ion-icon name="arrow-back" style="cursor: pointer; font-size: 22px"></ion-icon> -->
+        <div class="back-icon" [inlineSVG]="'assets/icon/Option/arrow-pointing-to-left.svg'"></div>
+        <ion-title style="display: inline-block;color: #20291f;font-size: 16px;" *ngIf="personalList">
             {{personalList.employeeName}}'s Profile
         </ion-title>
         <div style="float: right; padding-right: 20px;">
@@ -41,7 +42,7 @@
         <ion-row class="detailsRow">
             <ion-col>
                 <ion-label>DEPARTMENT</ion-label>
-                <p style="color: #057dcd">{{employmentPersonalList.employeeDepartment}}</p>
+                <p>{{employmentPersonalList.employeeDepartment}}</p>
             </ion-col>
             <ion-col>
                 <ion-label>WORK LOCATION</ion-label>
@@ -54,7 +55,7 @@
                 <ion-avatar style="width: 24px; height: 24px; display: inline-block; margin-top: 3px">
                     <img src="assets/icon/picture.png">
                 </ion-avatar>
-                <p style="color: #057dcd; display: inline;position: absolute;top: 31px;left: 37px;">
+                <p style="color: #057dcd; display: inline;position: absolute;top: 31px;left: 37px;cursor: pointer;">
                     {{employmentPersonalList.employmentDetail.reportingTo}}
                 </p>
             </ion-col>
@@ -127,18 +128,29 @@
         </ion-label>
         <ion-row class="detailsRow">
             <ion-col>
-                <div class="iconDiv">
-                    <i class="fas fa-trophy" style="font-size: 20px;color: #7a8589;"></i>
-                </div>
+                <!-- <div class="iconDiv"> -->
+                <!-- <i class="fas fa-trophy" style="font-size: 20px;color: #7a8589;"></i> -->
+                <!-- </div> -->
                 <div class="text">
-                    <p style="line-height: 1.2;"> Best employee of the month - January 2019</p>
+                    <div class="certificate-icon" [inlineSVG]="'assets/icon/User_profile/certificate.svg'"></div>
+                    <p style="line-height: 1.2;padding-left: 35px;"> Microsoft Certified Professional (MCP)</p>
                 </div>
+                <!-- <div class="iconDiv"> -->
+                <!-- <i class="fas fa-trophy" style="font-size: 20px;color: #7a8589;"></i> -->
+
+                <!-- </div> -->
+                <div style="width: 10px;display: inline-block;"></div>
+                <div class="text">
+                    <div class="trophy-icon" [inlineSVG]="'assets/icon/User_profile/trophy.svg'"></div>
+                    <p style="line-height: 1.2; padding-left: 35px;"> Best employee of the month - January 2019</p>
+                </div>
+                <div class="next-icon" [inlineSVG]="'assets/icon/User_profile/next.svg'"></div>
             </ion-col>
         </ion-row>
     </ion-card-content>
 </ion-card>
 
-<mat-card class="rightCard" *ngIf="personalList">
+<mat-card class="rightCard" *ngIf="personalList && employmentPersonalList">
     <i class="fas fa-star" (click)="clickAsFavourite()" [style.color]="numOfArray ? '#ffbb00' : '#dfe3e6'"></i>
     <ion-avatar style="margin: 0 auto;">
         <img src="assets/icon/picture.png">
@@ -150,19 +162,27 @@
         <mat-card-subtitle style="white-space: nowrap;font-size: 12px;font-weight: 500;color: #20291f;">
             {{personalList.employeeDesignation | uppercase}}
         </mat-card-subtitle>
-        <mat-card-subtitle *ngIf="employmentPersonalList" style="white-space: nowrap;font-size: 12px;color: #7a8589;">
+        <mat-card-subtitle style="white-space: nowrap;font-size: 12px;color: #7a8589;">
             {{employmentPersonalList.employmentDetail.employmentStatus}}
         </mat-card-subtitle>
         <mat-card-subtitle style="white-space: nowrap;color: #7a8589;padding-top: 12px;">
-            <i class="far fa-envelope"></i>{{personalList.personalDetail.emailAddress}}
+            <!-- <i class="far fa-envelope"></i> -->
+            <div class="mail-icon" [inlineSVG]="'assets/icon/User_profile/mail.svg'"></div>
+            <span style="padding-left:10px">
+                {{personalList.personalDetail.emailAddress}}</span>
         </mat-card-subtitle>
         <mat-card-subtitle style="white-space: nowrap; color:#7a8589;padding-top: 5px;">
-            <i class="fas fa-map-marker-alt"></i>{{employmentPersonalList.employmentDetail.workLocation}}
+            <!-- <i class="fas fa-map-marker-alt"></i> -->
+            <div class="marker-icon" [inlineSVG]="'assets/icon/User_profile/pin.svg'"></div>
+            <span style="padding-left:8px">
+                {{employmentPersonalList.employmentDetail.workLocation}}</span>
         </mat-card-subtitle>
     </mat-card-header>
     <div class="footer">
         <ion-button class="footerButton" shape="round" fill="outline">
-            <i class="far fa-comment"></i>Send a message
+            <div class="message-icon" [inlineSVG]="'assets/icon/Option/message.svg'"></div>
+            <!-- <i class="far fa-comment"></i> -->
+            <span style="padding-left: 5px">Send a message</span>
         </ion-button>
     </div>
 </mat-card>
