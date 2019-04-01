@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Router } from '@angular/router';
 
@@ -10,22 +10,28 @@ import { Router } from '@angular/router';
 export class InviteMorePage implements OnInit {
 
     public employeeList: any;
-    public totalItem: number;
-
+    public filterList: any;
+    public inputValue: string;
+    public chipValue: any = [];
+    public showDropDown: boolean;
+    public showChips: boolean;
+    public dataList: any = [];
+    public dataSelected: any = [];
+    @ViewChild('searchbar') searchbar: any;
 
     public get personalList() {
         return this.employeeList;
     }
 
-    constructor(private apiService: APIService, private router: Router) { }
+    constructor(private apiService: APIService, private router: Router,
+    ) { }
 
     ngOnInit() {
+        this.searchbar.setFocus();
         this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.employeeList = data;
-                console.log(this.employeeList)
-                // this.pageIndex = 1;
-                // this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
+                this.filterList = data;
             },
             response => {
                 this.router.navigate(['login']);
@@ -35,43 +41,64 @@ export class InviteMorePage implements OnInit {
 
     filterDetails(text: any) {
         if (text && text.trim() != '') {
-            this.employeeList = this.employeeList.filter((item: any) => {
+            this.filterList = this.employeeList.filter((item: any) => {
                 return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
-
-            // this.pageIndex = 1;
-            // this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
-            // this.enableDisableNextButton();
-            // this.enableDisablePrevButton();
         }
     }
 
-    clearDetails() {
+    getInputValue(text: any) {
+        this.inputValue = text.srcElement.value;
+        if (text.srcElement.value.length > 0) {
+            this.showDropDown = true;
+            this.filterDetails(this.inputValue);
+        } else {
+            this.reset();
+        }
+    }
+
+    deleteSearchText() {
+        this.inputValue = null;
+        this.showDropDown = false;
+        this.filterList = this.filterList;
+    }
+
+    reset(): void {
+        this.showDropDown = false;
         this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
-                this.employeeList = data;
-                // this.pageIndex = 1;
-                // this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
+                this.filterList = data;
             }
         );
-        // this.disableNextButton = false;
-        // this.disablePrevButton = true;
     }
 
-    changeDetails(text: any) {
-        if (text.srcElement.value === '') {
-            this.apiService.get_user_profile_list().subscribe(
-                (data: any[]) => {
-                    this.employeeList = data;
-                    // this.pageIndex = 1;
-                    // this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
-                }
-            );
-            // this.disableNextButton = false;
-            // this.disablePrevButton = true;
-        } else {
-            this.filterDetails(text.srcElement.value);
-        }
+    updateTextBox(valueSelected: any) {
+        this.showChips = true;
+        this.dataSelected.push(valueSelected);
+        this.showDropDown = false;
+        this.inputValue = null;
+        const removeIndex = this.employeeList.map(function (item) {
+            return item.employeeName;
+        }).indexOf(valueSelected.employeeName);
+        this.employeeList.splice(removeIndex, 1);
+        this.filterList = this.employeeList;
     }
+
+    removeContact(index: number, data: any) {
+        this.dataList.splice(index, 1);
+        this.filterList = this.employeeList.splice(1, 0, data);
+    }
+
+    deleteChip(index: number, data: any) {
+        this.dataSelected.splice(index, 1);
+        this.filterList = this.employeeList.splice(1, 0, data);
+    }
+
+    addSelectedContact() {
+        this.showChips = false;
+        this.dataList = this.dataList.concat(this.dataSelected);
+        this.dataSelected = [];
+    }
+
 
 }

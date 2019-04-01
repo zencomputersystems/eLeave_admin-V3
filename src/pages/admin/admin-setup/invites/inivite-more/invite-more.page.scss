@@ -13,13 +13,6 @@
     border: 1px solid
       var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
   }
-  .fa-sliders-h {
-    color: #7a8589;
-    padding-right: 10px;
-    font-size: 18px;
-    padding-top: 15px;
-    cursor: pointer;
-  }
   .bell-icon {
     float: right;
     fill: #7a8589;
@@ -78,31 +71,8 @@
     height: 30px;
     margin-top: -7px;
   }
-  .topPaginator {
-    display: inline-block;
-    right: 0;
-    position: absolute;
-    padding-top: 12px;
-    background-color: #f9fafc;
-  }
-  .bottomPaginator {
-    right: 0;
-    position: absolute;
-    background-color: #f9fafc;
-  }
   .button-outline {
     --border-width: 1px;
-  }
-  .checkboxOnAvatar {
-    display: none;
-    padding-left: 5px;
-    padding-top: 5px;
-  }
-  .avatar:hover > img {
-    display: none;
-  }
-  .avatar:hover > .checkboxOnAvatar {
-    display: inline-block;
   }
   .connectionsContainer {
     // background-color:#f9fafc;
@@ -125,7 +95,7 @@
     //   width: 34%;
     color: #7a8589;
     font-size: 12px;
-    float: left;
+    // float: left;
   }
   ::ng-deep .searchbar-clear-icon {
     display: none;
@@ -139,6 +109,9 @@
     width: 29px;
     left: 0;
   }
+  .chipList {
+    display: inline;
+  }
   .fa-trash-alt {
     position: relative;
     top: -3.3px;
@@ -151,105 +124,27 @@
   .fa-trash-alt:hover {
     color: #f04141;
   }
-  .fa-bars {
-    cursor: pointer;
+  .data-container {
+    width: 81%;
+    margin-left: 3%;
+    background: white;
+    display: block;
+    position: absolute;
+    border: solid 0.5px #dfe3e6;
+    height: 200px;
+    overflow-y: auto;
+    top: 173px;
+    z-index: 1;
   }
-  .fa-th {
+  .data-list {
+    font-size: 14px;
+    font-weight: 400;
+    color: #7a8589;
     padding-left: 10px;
     cursor: pointer;
   }
-  .formField {
-    width: 70%;
-    font-size: 12px;
-  }
   .numOfPeople {
-    position: absolute;
-    left: 55px;
-    top: 141px;
+    padding-bottom: 20px;
     color: #20291f;
-  }
-  mat-card-subtitle {
-    margin-bottom: 12px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .mat-card-header {
-    justify-content: center;
-    text-align: center;
-    padding-top: 10px;
-  }
-  .mat-card-footer {
-    text-align: center;
-    background: #f9fafc;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    position: absolute;
-    bottom: 15px;
-    width: 100%;
-    border: solid 0.5px #dfe3e6;
-    border-radius: 4px;
-  }
-  .fa-star {
-    position: absolute;
-    cursor: pointer;
-  }
-  .fa-comment {
-    padding-right: 10px;
-  }
-  .moreIcon {
-    color: #dfe3e6;
-    float: right;
-    cursor: pointer;
-  }
-  .footerButton {
-    color: #057dcd;
-    background: transparent;
-  }
-  .filerContainer {
-    width: 300px;
-    height: calc(100% - 84px);
-    position: absolute;
-    top: 84px;
-    right: 0;
-    border: solid 0.5px #dfe3e6;
-    background-color: #ffffff;
-  }
-  .locationSelect {
-    width: 80%;
-    border-radius: 2.5px;
-    border: solid 0.5px #dfe3e6;
-    position: absolute;
-    left: 15px;
-    padding: 10px;
-    padding-left: 17px;
-    font-size: 14px;
-  }
-  .divisionSelect {
-    width: 80%;
-    border-radius: 2.5px;
-    border: solid 0.5px #dfe3e6;
-    position: absolute;
-    left: 15px;
-    padding: 10px;
-    top: 222px;
-    padding-left: 17px;
-    font-size: 14px;
-  }
-  .departmentSelect {
-    width: 80%;
-    border-radius: 2.5px;
-    border: solid 0.5px #dfe3e6;
-    position: absolute;
-    left: 15px;
-    padding: 10px;
-    top: 311px;
-    padding-left: 17px;
-    font-size: 14px;
-  }
-  ::ng-deep .mat-select-value-text {
-    color: #7a8589;
-  }
-  ::ng-deep .mat-select-arrow {
-    color: #7a8589;
   }
 }
