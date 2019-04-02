@@ -6,10 +6,10 @@
 </div>
 <ion-card>
     <ion-card-header>
-        <div style="right: 25px; position: absolute;" (click)="editProfileData()">
-            <!-- <i style="color: #057dcd; padding-right: 10px;cursor: pointer;" class="far fa-edit"></i> -->
+        <div *ngIf="!showEditProfile" style="right: 25px; position: absolute;" (click)="showEditProfile = true;">
             <div class="edit-profile-icon" [inlineSVG]="'assets/icon/Option/edit.svg'"></div>
-            <p style="color: #057dcd; display: inline;cursor: pointer;padding-left: 10px">Edit Profile</p>
+            <p style="color: #057dcd; display: inline;cursor: pointer;padding-left: 10px">Edit
+                Profile</p>
         </div>
         <div class="fullContainer">
 
@@ -18,9 +18,7 @@
                     <img src="assets/icon/picture.png">
                 </ion-avatar>
                 <ion-badge style="background-color: white;border: 1px solid#bebebe;">
-                    <!-- <i style="color: #bebebe; padding-top: 1px;" class="far fa-image"></i> -->
                     <div class="pic-icon" [inlineSVG]="'assets/icon/Option/picture.svg'"></div>
-
                 </ion-badge>
             </div>
             <div class="right" *ngIf="personalList">
@@ -33,12 +31,22 @@
                     </ion-card-subtitle>
                 </div>
                 <div style="padding-top: 10px;">
-                    <!-- <i class="fas fa-map-marker-alt"></i> -->
                     <div class="marker-icon" [inlineSVG]="'assets/icon/User_profile/pin.svg'"></div>
                     <ion-card-subtitle class="subtitle" style="padding-left:8px">{{personalList.employeeLocation}}
                     </ion-card-subtitle>
                 </div>
             </div>
+        </div>
+        <div style="text-align: right;" *ngIf="showEditProfile">
+            <ion-button fill="clear" (click)="showEditProfile = false"
+                style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
+                cancel
+            </ion-button>
+            <div style="display: inline-block"></div>
+            <ion-button shape="round" fill="outline" (click)="patchData()"
+                style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary">
+                save
+            </ion-button>
         </div>
     </ion-card-header>
     <ion-item lines="full" class="mainDivider"></ion-item>
@@ -47,53 +55,98 @@
             <ion-row class="detailsRow">
                 <ion-col>
                     <ion-label>BIRTHDATE</ion-label>
-                    <p>{{personalList.personalDetail.dob}}</p>
+                    <p *ngIf="!showEditProfile">{{personalList.personalDetail.dob}}</p>
+                    <form [formGroup]="dateForm">
+                        <mat-form-field *ngIf="showEditProfile" style="width:80%">
+                            <input matInput [matDatepicker]="picker1" formControlName="firstPicker" required
+                                (dateChange)="onDateChange()">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                    </form>
                 </ion-col>
                 <ion-col>
                     <ion-label>GENDER</ion-label>
-                    <p>{{personalList.personalDetail.gender}}</p>
+                    <p *ngIf="!showEditProfile">{{personalList.personalDetail.gender}}</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <mat-select [(value)]="selectedGender" (selectionChange)="genderChanged($event)">
+                            <mat-option value="Female">Female</mat-option>
+                            <mat-option value="Male">Male</mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </ion-col>
                 <ion-col>
                     <ion-label>MARITAL STATUS</ion-label>
-                    <p>{{personalList.personalDetail.maritalStatus}}</p>
+                    <p *ngIf="!showEditProfile">{{personalList.personalDetail.maritalStatus}}</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <mat-select [(value)]="selectedMaritalStatus" (selectionChange)="maritalStatusChanged($event)">
+                            <mat-option value="Single">Single</mat-option>
+                            <mat-option value="Married">Married</mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </ion-col>
             </ion-row>
             <ion-row class="detailsRow">
                 <ion-col>
                     <ion-label>RACE</ion-label>
-                    <p>{{personalList.personalDetail.race}}</p>
-
+                    <p *ngIf="!showEditProfile">{{personalList.personalDetail.race}}</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput [(ngModel)]="raceValue">
+                    </mat-form-field>
                 </ion-col>
                 <ion-col>
                     <ion-label>RELIGION</ion-label>
-                    <p>{{personalList.personalDetail.religion}}</p>
+                    <p *ngIf="!showEditProfile">{{personalList.personalDetail.religion}}</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput [(ngModel)]="religionValue">
+                    </mat-form-field>
                 </ion-col>
                 <ion-col>
                     <ion-label>NATIONALITY</ion-label>
-                    <p>{{personalList.personalDetail.nationality}}</p>
+                    <p *ngIf="!showEditProfile">{{personalList.personalDetail.nationality}}</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput [(ngModel)]="nationalityValue">
+                    </mat-form-field>
                 </ion-col>
             </ion-row>
             <ion-row class="detailsRow">
                 <ion-col>
                     <ion-label>PERSONAL PHONE NUMBER</ion-label>
-                    <p>{{personalList.personalDetail.phoneNumber}}</p>
-
+                    <p *ngIf="!showEditProfile">{{personalList.personalDetail.phoneNumber}}</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput [(ngModel)]="phoneNum">
+                    </mat-form-field>
                 </ion-col>
                 <ion-col>
                     <ion-label>WORK PHONE NUMBER</ion-label>
-                    <p>{{personalList.personalDetail.workPhoneNumber}}</p>
+                    <p *ngIf="!showEditProfile">{{personalList.personalDetail.workPhoneNumber}}</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput [(ngModel)]="workPhoneNum">
+                    </mat-form-field>
                 </ion-col>
                 <ion-col>
+                    <ion-label>NRIC</ion-label>
+                    <p *ngIf="!showEditProfile">{{personalList.personalDetail.nric}}</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput [(ngModel)]="nric">
+                    </mat-form-field>
                 </ion-col>
             </ion-row>
             <ion-row class="detailsRow">
                 <ion-col>
                     <ion-label>PERSONAL EMAIL ADDRESS</ion-label>
-                    <p>{{personalList.personalDetail.emailAddress}}</p>
+                    <p *ngIf="!showEditProfile">{{personalList.personalDetail.emailAddress}}</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput [(ngModel)]="firstEmailAdd"
+                            value="{{personalList.personalDetail.emailAddress}}">
+                    </mat-form-field>
                 </ion-col>
                 <ion-col>
                     <ion-label>WORK EMAIL ADDRESS</ion-label>
-                    <p>{{personalList.personalDetail.workEmailAddress}}</p>
+                    <p *ngIf="!showEditProfile">{{personalList.personalDetail.workEmailAddress}}</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput [(ngModel)]="secondEmailAdd">
+                    </mat-form-field>
                 </ion-col>
                 <ion-col>
                 </ion-col>
@@ -102,24 +155,91 @@
             <ion-row class="detailsRow">
                 <ion-col>
                     <ion-label>RESIDENTIAL ADDRESS</ion-label>
-                    <p>{{personalList.personalDetail.residentialAddress}}</p>
+                    <p *ngIf="!showEditProfile" style="display: inline">
+                        {{personalList.personalDetail.residentialAddress1}},</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput placeholder="Address line 1" [(ngModel)]="addLine1">
+                    </mat-form-field>
+                    &nbsp;
+                    <p *ngIf="!showEditProfile" style="display: inline">
+                        {{personalList.personalDetail.residentialAddress2}},</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput placeholder="Address line 2" [(ngModel)]="addLine2">
+                    </mat-form-field>
+                    &nbsp;
+                    <p *ngIf="!showEditProfile" style="display: inline">{{personalList.personalDetail.postcode}},</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput placeholder="Postcode" [(ngModel)]="postcode">
+                    </mat-form-field>
+                    &nbsp;
+                    <p *ngIf="!showEditProfile" style="display: inline">{{personalList.personalDetail.city}},</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput placeholder="City" [(ngModel)]="city">
+                    </mat-form-field>
+                    &nbsp;
+                    <p *ngIf="!showEditProfile" style="display: inline">{{personalList.personalDetail.state}},</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput placeholder="State" [(ngModel)]="state">
+                    </mat-form-field>
+                    &nbsp;
+                    <p *ngIf="!showEditProfile" style="display: inline">{{personalList.personalDetail.country}}.</p>
+                    <mat-form-field *ngIf="showEditProfile">
+                        <input matInput placeholder="Country" [(ngModel)]="country">
+                    </mat-form-field>
                 </ion-col>
             </ion-row>
             <ion-item class="divider"></ion-item>
             <ion-label style="display: block; padding-left: 10.6%;padding-top: 5px;">EMERGENCY CONTACT(S)</ion-label>
-            <ion-row class="detailsRow" *ngFor="let item of removeList; let i = index">
+            <ion-row class="detailsRow" *ngFor="let item of removeList; let index = index">
                 <ion-col>
-                    <p style="display: inline; padding-right: 30%;">
+                    <p *ngIf="!showEditContact" style="display: inline">
                         {{item.contactName}}</p>
-                    <p style="display: inline;">
+                    <mat-form-field *ngIf="showEditContact">
+                        <input matInput [(ngModel)]="removeList[index].contactName">
+                    </mat-form-field>
+                    &nbsp;
+                    <p *ngIf="!showEditContact" style="display: inline;position: absolute; right: 50%;">
                         {{item.contactNumber}}</p>
-                    <!-- <i style="padding-left: 3%;cursor: pointer;float: right; padding-right: 8%;"
-                        class="far fa-trash-alt" (click)="removeContact(i)"></i> -->
+                    <mat-form-field *ngIf="showEditContact">
+                        <input matInput [(ngModel)]="removeList[index].contactNumber">
+                    </mat-form-field>
                     <div class="delete-icon" [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeContact(i)">
                     </div>
-                    <div class="edit-pencil-icon" [inlineSVG]="'assets/icon/Option/pencil.svg'"></div>
+                    <div class="edit-pencil-icon" [inlineSVG]="'assets/icon/Option/pencil.svg'"
+                        (click)="showEditContact = true">
+                    </div>
+                    <div style="text-align: right;" *ngIf="showEditContact">
+                        <ion-button fill="clear" (click)="showEditContact = false"
+                            style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
+                            cancel
+                        </ion-button>
+                        <div style="display: inline-block"></div>
+                        <ion-button shape="round" fill="outline" (click)="patchData()"
+                            style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;"
+                            color="primary">
+                            save
+                        </ion-button>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-item class="divider"></ion-item>
+            <ion-row class="detailsRow">
+                <p style="width: 100%">Your profile missing these details</p>
+                <br>
+                <br>
+                <ion-col style="background: #006994; border-radius: 3px;padding: 20px;height: 100px;">
+                    <span style="color: white; font-size: 18px;">Add family </span>
+                    <br>
+                    <span style="color: white; font-size: 18px;">information</span>
+                    <div class="family-icon" [inlineSVG]="'assets/icon/User_profile/family.svg'"></div>
 
-                    <!-- <i style="cursor: pointer;float:right" class="fas fa-pencil-alt"></i> -->
+                </ion-col>
+                <div style="width: 20px"></div>
+                <ion-col style="background: #5f4180; border-radius: 3px;padding: 20px;height: 100px;">
+                    <span style="color: white; font-size: 18px;">Add education </span>
+                    <br>
+                    <span style="color: white; font-size: 18px;">qualification</span>
+                    <div class="education-icon" [inlineSVG]="'assets/icon/User_profile/education.svg'"></div>
                 </ion-col>
             </ion-row>
         </ion-card-content>

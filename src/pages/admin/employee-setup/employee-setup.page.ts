@@ -11,7 +11,7 @@ export class EmployeeSetupPage implements OnInit {
 
   public numOfArray: number;
   public userId: string;
-
+  public list: any;
   public employeeSetupPage: any[] = [
     {
       title: 'Personal Details',
@@ -45,12 +45,16 @@ export class EmployeeSetupPage implements OnInit {
     }
   ];;
 
+  get personalList() {
+    return this.list;
+  }
   constructor(private route: ActivatedRoute, private apiService: APIService) {
   }
 
   ngOnInit() {
     this.apiService.get_personal_details().subscribe(data => {
       this.userId = data.id;
+      this.list = data;
       this.employeeSetupPage[1].url = ['employment-details', this.userId];
     });
 

@@ -3,8 +3,7 @@
         <ion-avatar style=" width: 32px; height: 32px; float: right">
             <img src="assets/icon/picture.png">
         </ion-avatar>
-        <ion-label class="labelName">Qiqi
-            Abaziz</ion-label>
+        <ion-label class="labelName" *ngIf="personalList">{{personalList.employeeName}}</ion-label>
         <div class="verticalLine"></div>
         <!-- <i class="far fa-bell"></i>
         <i class="far fa-edit"></i>
