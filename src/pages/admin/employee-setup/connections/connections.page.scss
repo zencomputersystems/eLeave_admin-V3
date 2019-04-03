@@ -154,6 +154,9 @@
     // width: 95%;
     margin: 0 auto;
   }
+  .titleRow{
+    padding-bottom: 10px;
+  }
   .topHeader {
     width: 93%;
     // background-color:#f9fafc;
@@ -182,7 +185,7 @@
   .numOfPeople {
     position: absolute;
     left: 55px;
-    top: 141px;
+    top: 91px;
     color: #20291f;
   }
   .iconMore {
@@ -231,9 +234,9 @@
   }
   .filerContainer {
     width: 300px;
-    height: calc(100% - 84px);
+    height: calc(100% - 38px);
     position: absolute;
-    top: 84px;
+    top: 37px;
     right: 0;
     border: solid 0.5px #dfe3e6;
     background-color: #ffffff;

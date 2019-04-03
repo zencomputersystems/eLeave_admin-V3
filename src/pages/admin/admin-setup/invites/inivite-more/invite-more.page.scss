@@ -1,12 +1,9 @@
 :host {
+  top: 48px;
   background: #f9fafc;
   .header-md:after {
     height: 0px;
     background-image: none;
-  }
-  .toolbar1 {
-    height: 48px;
-    padding-right: 20px;
   }
   .toolbar2 {
     --min-height: 35px;
@@ -78,7 +75,7 @@
     // background-color:#f9fafc;
     // height: calc( 100% - 84px);
     background: white;
-    height: calc(100% - 110px);
+    height: calc(100% - 58px);
     padding-left: 20px;
     padding-right: 20px;
     width: 95%;

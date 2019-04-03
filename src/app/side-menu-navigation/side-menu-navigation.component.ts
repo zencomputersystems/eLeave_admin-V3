@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { APIService } from 'src/services/shared-service/api.service';
 
 @Component({
   selector: 'app-side-menu-navigation',
@@ -12,6 +13,7 @@ export class SideMenuNavigationComponent implements OnInit {
   public showFullMenu: boolean = true;
   public showIconMenu: boolean = false;
   public activeRoute: any;
+  public list: any;
   public appPages = [
     {
       title: 'Dashboard',
@@ -30,11 +32,14 @@ export class SideMenuNavigationComponent implements OnInit {
     },
     {
       title: 'Employee',
-      url: '/main/employee-setup',
+      url: '/main/employee-directory',
       icon: 'employee.svg'
     }
   ];
 
+  get personalList() {
+    return this.list;
+  }
   get displayFullMenu(): boolean {
     return this.showFullMenu;
   }
@@ -43,11 +48,16 @@ export class SideMenuNavigationComponent implements OnInit {
   }
 
   constructor(private menu: MenuController, private route: Router,
+    private apiService: APIService
   ) {
   }
 
   ngOnInit() {
     this.openAtBeginning();
+    this.apiService.get_personal_details().subscribe(data => {
+      // this.userId = data.id;
+      this.list = data;
+    });
   }
 
   ngAfterViewInit() {

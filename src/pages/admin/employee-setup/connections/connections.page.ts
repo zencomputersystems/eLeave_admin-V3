@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -47,11 +47,13 @@ export class ConnectionsPage implements OnInit {
         return this.disablePrevButton;
     }
     constructor(private apiService: APIService, private router: Router,
-        private route: ActivatedRoute) { }
+        private route: ActivatedRoute, private elRef: ElementRef, private renderer: Renderer) { }
 
     ngOnInit() {
         if (this.route.routeConfig.path.includes('connection')) {
             this.connectionRoute = true;
+        } else {
+            this.renderer.setElementStyle(this.elRef.nativeElement, 'top', '48px');
         }
         this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {

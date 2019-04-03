@@ -1,12 +1,9 @@
 :host {
+  top: 48px;
   background: #f9fafc;
   .header-md:after {
     height: 0px;
     background-image: none;
-  }
-  .toolbar1 {
-    height: 48px;
-    padding-right: 20px;
   }
   .toolbar2 {
     --min-height: 35px;
@@ -93,22 +90,12 @@
   .button-outline {
     --border-width: 1px;
   }
-  .checkboxOnAvatar {
-    display: none;
-    padding-left: 5px;
-    padding-top: 5px;
-  }
-  .avatar:hover > img {
-    display: none;
-  }
-  .avatar:hover > .checkboxOnAvatar {
-    display: inline-block;
+  .titleRow {
+    padding-bottom: 10px;
   }
   .connectionsContainer {
-    // background-color:#f9fafc;
-    // height: calc( 100% - 84px);
     background: white;
-    height: calc(100% - 110px);
+    height: calc(100% - 58px);
     padding-left: 20px;
     padding-right: 20px;
     width: 95%;
@@ -141,7 +128,7 @@
   .numOfPeople {
     position: absolute;
     left: 55px;
-    top: 141px;
+    top: 91px;
     color: #20291f;
   }
   mat-card-subtitle {

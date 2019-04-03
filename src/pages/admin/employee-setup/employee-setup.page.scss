@@ -1,4 +1,5 @@
 :host {
+  top: 48px;
   .header-md:after {
     height: 0px;
     background-image: none;
@@ -29,10 +30,10 @@
   }
   .content2 {
     position: absolute;
-    top: 85px;
+    top: 37px;
     width: calc(100% - 230px);
     right: 0;
-    height: calc(100% - 96px);
+    height: calc(100% - 38px);
     left: 230px;
   }
   .fa-instagram {
@@ -96,5 +97,9 @@
     color: #7a8589;
     padding-right: 10px;
     padding-top: 8px;
+    cursor: pointer;
+  }
+  .labelName:hover{
+    color: #057dcd;
   }
 }

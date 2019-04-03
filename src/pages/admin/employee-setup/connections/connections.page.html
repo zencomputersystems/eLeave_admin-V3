@@ -1,22 +1,4 @@
 <ion-header *ngIf="!connectionRoute">
-    <ion-toolbar class="toolbar1">
-        <ion-avatar style=" width: 32px; height: 32px; float: right">
-            <img src="assets/icon/picture.png">
-        </ion-avatar>
-        <ion-label class="labelName">Qiqi
-            Abaziz</ion-label>
-        <div class="verticalLine"></div>
-        <div style="width:15px; float: right; height: 20px"></div>
-        <div class="bell-icon" [inlineSVG]="'assets/icon/Top_header/notifications.svg'"></div>
-        <div style="width: 12px; float:right; height: 20px"></div>
-        <div class="edit-icon" [inlineSVG]="'assets/icon/Top_header/action.svg'"></div>
-        <div style="width:15px; float: left; height: 20px"></div>
-        <div class="search-icon" [inlineSVG]="'assets/icon/Top_header/search.svg'"></div>
-        <!-- <i class="far fa-bell"></i>
-        <i class="far fa-edit"></i>
-        <ion-icon class="search" name="search"></ion-icon> -->
-    </ion-toolbar>
-
     <ion-toolbar class="toolbar2">
         <ion-title style="display: inline-block;color: #20291f; font-size: 16px;">
             Employee Directory
@@ -32,7 +14,7 @@
 
 <!-------------------------------------------LIST VIEW------------------------------------------>
 
-<div class="connectionsContainer" *ngIf="listView" [style.height]="connectionRoute ? '100%' : 'calc(100% - 110px)'"
+<div class="connectionsContainer" *ngIf="listView" [style.height]="connectionRoute ? '100%' : 'calc(100% - 58px)'"
     [style.width.%]="connectionRoute ? '100' : '95'">
     <div class="topHeader">
         <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>
@@ -145,8 +127,8 @@
 
 <!-------------------------------------------GRID VIEW------------------------------------------>
 
-<div class="connectionsContainer" *ngIf="gridView" [style.height]="connectionRoute ? '100%' : 'calc(100% - 110px)'"
-[style.width.%]="connectionRoute ? '100' : '95'">
+<div class="connectionsContainer" *ngIf="gridView" [style.height]="connectionRoute ? '100%' : 'calc(100% - 58px)'"
+    [style.width.%]="connectionRoute ? '100' : '95'">
     <div class="topHeader">
         <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>
         <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="clearDetails()"
@@ -256,7 +238,8 @@
             {{food.viewValue}}
         </mat-option>
     </mat-select>
-    <p style="color: #057dcd;font-size: 14px;padding-left: 15px;padding-top: 40px;cursor: pointer;">Add more filter</p>
+    <p style="color: #057dcd;font-size: 14px;padding-left: 15px;padding-top: 40px;cursor: pointer;">Add more filter
+    </p>
     <div style="position: absolute;bottom: 31px;left: 52px;">
         <ion-button shape="round" fill="none"
             (click)="selectedLocation=undefined;selectedDivision=undefined;selectedDepartment=undefined; $event.stopPropagation()"
