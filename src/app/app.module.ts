@@ -13,11 +13,11 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { XmlJson } from 'src/services/shared-service/xml-json.service';
 import { AlertService } from 'src/services/shared-service/alert.service';
-import { EmployeeSetupPageModule } from 'src/pages/admin/employee-setup/employee-setup.module';
+import { EmployeeSetupPageModule } from 'src/pages/employee/employee-setup.module';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginModule } from 'src/pages/login/login.module';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SideMenuNavigationModule } from './side-menu-navigation/side-menu-navigation.module';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],

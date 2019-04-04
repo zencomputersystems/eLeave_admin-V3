@@ -8,13 +8,12 @@ import { IonicModule } from '@ionic/angular';
 import { SideMenuNavigationComponent } from './side-menu-navigation.component';
 import { AuthGuard } from 'src/services/shared-service/guards/auth-guard.service';
 import { sideMenuNavigationRoutes } from './side-menu-navigation.routes';
-import { EmployeeSetupPageModule } from 'src/pages/admin/employee-setup/employee-setup.module';
-import { HomePageModule } from '../home/home.module';
-import { PublicPersonalDetailsModule } from 'src/pages/admin/employee-setup/public-personal-details/public-personal-details.module';
+import { EmployeeSetupPageModule } from 'src/pages/employee/employee-setup.module';
 import { AdminInvitesModule } from 'src/pages/admin/admin-setup/invites/admin-invites.module';
 import { EmployeeProfileModule } from 'src/pages/admin/admin-setup/employee-profile-hr/employee-profile.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
+import { PublicPersonalDetailsModule } from 'src/pages/employee/public-personal-details/public-personal-details.module';
 
 @NgModule({
     imports: [
@@ -23,7 +22,6 @@ import { MatMenuModule } from '@angular/material/menu';
         IonicModule,
         InlineSVGModule.forRoot(),
         HttpClientModule,
-        HomePageModule,
         EmployeeSetupPageModule,
         PublicPersonalDetailsModule,
         AdminInvitesModule,
