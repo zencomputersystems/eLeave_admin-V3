@@ -25,6 +25,7 @@ export class ConnectionsPage implements OnInit {
     public setAsFavourite = [];
     public viewMoreFilter: boolean = false;
     public connectionRoute: boolean;
+    public showHeader: boolean = true;
 
     foods = [
         { value: 'steak-0', viewValue: 'Steak' },

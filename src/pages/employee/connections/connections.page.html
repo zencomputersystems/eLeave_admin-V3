@@ -12,12 +12,21 @@
     </ion-toolbar>
 </ion-header>
 
+<div class="advertiseTop" *ngIf="showHeader" style="width: 95%;height: 150px;background: #01a0d7;
+margin: 0 auto;margin-top: 3%;">
+    <div class="objects-icon" [inlineSVG]="'assets/icon/User_profile/OBJECTS.svg'"></div>
+    <div class="close-icon" [inlineSVG]="'assets/icon/Option/close.svg'" (click)="showHeader=false"></div>
+    <p class="pText">Find staff across the business, access their profiles and get connected by adding them to your
+        connections</p>
+</div>
+
 <!-------------------------------------------LIST VIEW------------------------------------------>
 
 <div class="connectionsContainer" *ngIf="listView" [style.height]="connectionRoute ? '100%' : 'calc(100% - 58px)'"
     [style.width.%]="connectionRoute ? '100' : '95'">
     <div class="topHeader">
-        <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>
+        <p class="numOfPeople" [style.left.%]="connectionRoute ? '3' : '5'" *ngIf="employeeList">{{employeeList.length}}
+            people</p>
         <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="clearDetails()"
             (ionChange)="changeDetails($event)"></ion-searchbar>
         <div style="display: inline-block;white-space: nowrap;width: 66%;">
@@ -42,7 +51,7 @@
     </div>
 
 
-    <ion-content style="padding: 20px;height: calc( 100% - 130px);">
+    <ion-content class="listContent">
         <ion-row class="titleRow">
             <ion-col size="0.7" style="padding-left: 10px;">
                 <!-- <ion-checkbox mode="ios" style="width: 20px; height: 20px;"></ion-checkbox> -->
@@ -100,6 +109,7 @@
             </ion-col>
             <ion-item class="divider" lines="full"></ion-item>
         </ion-row>
+
     </ion-content>
     <div style="padding-left: 17px; display: inline-flex">
         <ion-button [disabled]="disabledPreviousButton" fill="outline" (click)="clickToPrevPage(pageIndex-1)"
@@ -111,7 +121,8 @@
             (click)="clickToNextPage(pageIndex+1)">Next<ion-icon name="arrow-forward">
             </ion-icon>
         </ion-button>
-        <div style="position: absolute;right: 73px;bottom: 11px;color: #7a8589; font-size: 12px;">
+        <div [style.padding-right.%]="connectionRoute ? '3' : '8'"
+            style="position: absolute;color: #7a8589;font-size: 12px;right: 0;padding-top: 1%;">
             <span style="padding-right: 10px;">Page</span>
             <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
             padding-right: 7px;">{{pageIndex}}</span>
@@ -130,7 +141,8 @@
 <div class="connectionsContainer" *ngIf="gridView" [style.height]="connectionRoute ? '100%' : 'calc(100% - 58px)'"
     [style.width.%]="connectionRoute ? '100' : '95'">
     <div class="topHeader">
-        <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>
+        <p class="numOfPeople" [style.left.%]="connectionRoute ? '3' : '5'" *ngIf="employeeList">{{employeeList.length}}
+            people</p>
         <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="clearDetails()"
             (ionChange)="changeDetails($event)"></ion-searchbar>
         <div style="display: inline-block;
@@ -140,8 +152,7 @@
                 <i class="fas fa-bars" (click)="viewOnList()" [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
                 <i class="fas fa-th" (click)="viewOnGrid()" [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
             </div>
-            <div style="color: #7a8589;font-size: 12px;display: inline;
-                    padding-left: 3%;">
+            <div style="color: #7a8589;font-size: 12px;display: inline;padding-left: 3%;">
                 <span style="padding-right: 10px;">Page</span>
                 <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
                         padding-right: 7px;">{{pageIndex}}</span>
@@ -157,7 +168,7 @@
     </div>
 
 
-    <ion-content style="padding: 20px;height: calc( 100% - 130px);">
+    <ion-content class="gridContent">
         <mat-grid-list cols="4" rowHeight="230px" style="height: 111%">
             <mat-grid-tile *ngFor="let item of personalList; let i=index">
                 <mat-card class="example-card" style="width: 98%;height: 98%;border-radius: 4px;
@@ -185,8 +196,8 @@
                 </mat-card>
             </mat-grid-tile>
         </mat-grid-list>
-    </ion-content>
 
+    </ion-content>
     <div style="padding-left: 17px; display: inline-flex">
         <ion-button [disabled]="disabledPreviousButton" fill="outline" (click)="clickToPrevPage(pageIndex-1)"
             style="font-size: 12px;height: 30px;width: 90px;" color="primary">
@@ -197,7 +208,8 @@
             (click)="clickToNextPage(pageIndex+1)">Next<ion-icon name="arrow-forward">
             </ion-icon>
         </ion-button>
-        <div style="position: absolute;right: 73px;bottom: 11px;color: #7a8589; font-size: 12px;">
+        <div [style.padding-right.%]="connectionRoute ? '3' : '8'"
+            style="position: absolute;color: #7a8589;font-size: 12px;right: 0;padding-top:1%">
             <span style="padding-right: 10px;">Page</span>
             <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
                 padding-right: 7px;">{{pageIndex}}</span>
@@ -209,6 +221,7 @@
                 (click)="clickToNextPage(pageIndex+1)"></i>
         </div>
     </div>
+
 </div>
 
 <!-------------------------------------------Filter Options-------------------------------------->

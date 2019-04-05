@@ -1,5 +1,6 @@
 :host {
   background: #f9fafc;
+  overflow-y: auto;
   .header-md:after {
     height: 0px;
     background-image: none;
@@ -12,6 +13,29 @@
     --min-height: 35px;
     border: 1px solid
       var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
+  }
+  .objects-icon {
+    float: left;
+    width: 200px;
+    height: 150px;
+    margin-left: 4%;
+    margin-top: 1%;
+  }
+  .close-icon {
+    width: 12px;
+    height: 12px;
+    fill: rgba(32, 41, 31, 0.5);
+    float: right;
+    margin: 1%;
+    cursor: pointer;
+  }
+  .pText {
+    color: white;
+    width: 42%;
+    margin-left: 30%;
+    margin-top: 4%;
+    line-height: 1.6;
+    letter-spacing: 1px;
   }
   // .fa-instagram{
   //     font-size: 18px;color: transparent;
@@ -93,6 +117,18 @@
     padding-right: 10px;
     padding-top: 8px;
   }
+  .listContent {
+    padding: 20px;
+    // height: 75%;
+    height: calc(100% - 130px);
+    // --overflow: hidden ;
+  }
+  .gridContent {
+    padding: 20px;
+    // height: 100%;
+    height: calc(100% - 130px);
+    // --overflow: hidden !important;
+  }
   ion-label {
     color: #20291f;
     font-weight: 500;
@@ -154,7 +190,7 @@
     // width: 95%;
     margin: 0 auto;
   }
-  .titleRow{
+  .titleRow {
     padding-bottom: 10px;
   }
   .topHeader {
@@ -184,9 +220,12 @@
   }
   .numOfPeople {
     position: absolute;
-    left: 55px;
-    top: 91px;
+    // left: 3%;
     color: #20291f;
+  }
+  .crossIcon {
+    cursor: pointer;
+    float: right;
   }
   .iconMore {
     color: #dfe3e6;
