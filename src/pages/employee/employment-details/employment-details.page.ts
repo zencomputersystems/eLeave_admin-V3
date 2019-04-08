@@ -30,6 +30,12 @@ export class EmploymentDetailsPage implements OnInit {
         this.apiService.get_employment_details(this.userId).subscribe(
             data => {
                 this.list = data;
+            },
+            error => {
+                if (error) {
+                    location.reload;
+                    this.router.navigate(['/login']);
+                }
             }
         )
     }
