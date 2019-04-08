@@ -26,8 +26,11 @@ export class PersonalPage implements OnInit {
                 this.list = data;
                 this.removeList = this.list.personalDetail.emergencyContactNumber.contacts;
             },
-            response => {
-                this.router.navigate(['login']);
+            error => {
+                if (error) {
+                    location.reload;
+                    this.router.navigate(['/login']);
+                }
             }
         );
     }

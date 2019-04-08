@@ -27,9 +27,15 @@ export class EmploymentPage implements OnInit {
             (data: any[]) => {
                 this.list = data;
             },
-            response => {
-                this.router.navigate(['login']);
+            error => {
+                if (error) {
+                    location.reload;
+                    this.router.navigate(['/login']);
+                }
             }
+            // response => {
+            //     this.router.navigate(['login']);
+            // }
         );
         setTimeout(() => {
             const userId = this.list.id;

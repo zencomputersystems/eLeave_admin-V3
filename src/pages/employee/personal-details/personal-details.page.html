@@ -195,13 +195,13 @@
                     <p *ngIf="!showEditContact" style="display: inline">
                         {{item.contactName}}</p>
                     <mat-form-field *ngIf="showEditContact">
-                        <input matInput [(ngModel)]="removeList[index].contactName">
+                        <input matInput placeholder="Contact Name" [(ngModel)]="removeList[index].contactName">
                     </mat-form-field>
                     &nbsp;
                     <p *ngIf="!showEditContact" style="display: inline;position: absolute; right: 50%;">
                         {{item.contactNumber}}</p>
                     <mat-form-field *ngIf="showEditContact">
-                        <input matInput [(ngModel)]="removeList[index].contactNumber">
+                        <input matInput placeholder="Contact Number" [(ngModel)]="removeList[index].contactNumber">
                     </mat-form-field>
                     <div class="delete-icon" [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeContact(i)">
                     </div>
@@ -227,7 +227,7 @@
                 <p style="width: 100%">Your profile missing these details</p>
                 <br>
                 <br>
-                <ion-col style="background: #006994; border-radius: 3px;padding: 20px;height: 100px;">
+                <ion-col style="cursor: pointer;background: #006994; border-radius: 3px;padding: 20px;height: 100px;">
                     <span style="color: white; font-size: 18px;">Add family </span>
                     <br>
                     <span style="color: white; font-size: 18px;">information</span>
@@ -235,7 +235,7 @@
 
                 </ion-col>
                 <div style="width: 20px"></div>
-                <ion-col style="background: #5f4180; border-radius: 3px;padding: 20px;height: 100px;">
+                <ion-col style="cursor: pointer;background: #5f4180; border-radius: 3px;padding: 20px;height: 100px;">
                     <span style="color: white; font-size: 18px;">Add education </span>
                     <br>
                     <span style="color: white; font-size: 18px;">qualification</span>

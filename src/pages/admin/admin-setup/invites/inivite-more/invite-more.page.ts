@@ -33,8 +33,11 @@ export class InviteMorePage implements OnInit {
                 this.employeeList = data;
                 this.filterList = data;
             },
-            response => {
-                this.router.navigate(['login']);
+            error => {
+                if (error) {
+                    location.reload;
+                    this.router.navigate(['/login']);
+                }
             }
         );
     }

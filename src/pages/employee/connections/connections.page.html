@@ -226,7 +226,7 @@ margin: 0 auto;margin-top: 3%;">
 
 <!-------------------------------------------Filter Options-------------------------------------->
 
-<div class="filerContainer" *ngIf="viewMoreFilter">
+<div class="filerContainer" *ngIf="viewMoreFilter" [style.bottom.px]="showHeader ? '-181' : '0'">
     <ion-icon name="close" style="color:#dfe3e6;padding: 10px;font-size: 25px;cursor: pointer;" (click)="moreFilter()">
     </ion-icon>
     <p style="color: #20291f;padding-left: 15px;font-size: 14px;">FILTER BY</p>
@@ -247,8 +247,9 @@ margin: 0 auto;margin-top: 3%;">
 
     <p style="color: #7a8589;font-size: 14px;padding-left: 15px;padding-top: 57px;">Departments</p>
     <mat-select class="departmentSelect" placeholder="All departments" [(value)]="selectedDepartment">
-        <mat-option style="color:#7a8589" class="select" *ngFor="let food of foods" [value]="food.value">
-            {{food.viewValue}}
+        <mat-option style="color:#7a8589" class="select" *ngFor="let department of departmentList; let i= index"
+            [value]="department.DEPARTMENT">
+            {{department.DEPARTMENT}}
         </mat-option>
     </mat-select>
     <p style="color: #057dcd;font-size: 14px;padding-left: 15px;padding-top: 40px;cursor: pointer;">Add more filter

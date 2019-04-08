@@ -1,6 +1,13 @@
+export class ISubSideMenu {
+  title: string;
+  url: string[];
+  icon: string;
+}
+
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { APIService } from 'src/services/shared-service/api.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-employee-setup',
@@ -12,7 +19,7 @@ export class EmployeeSetupPage implements OnInit {
   public numOfArray: number;
   public userId: string;
   public list: any;
-  public employeeSetupPage: any[] = [
+  public employeeSetupPage: ISubSideMenu[] = [
     {
       title: 'Personal Details',
       url: ['personal-details'],
@@ -39,7 +46,7 @@ export class EmployeeSetupPage implements OnInit {
       icon: 'people',
     },
     {
-      title: 'Account',
+      title: 'Account Settings',
       url: ['account'],
       icon: 'people',
     }
@@ -48,7 +55,8 @@ export class EmployeeSetupPage implements OnInit {
   get personalList() {
     return this.list;
   }
-  constructor(private route: ActivatedRoute, private apiService: APIService) {
+  constructor(private route: ActivatedRoute, private apiService: APIService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -67,6 +75,10 @@ export class EmployeeSetupPage implements OnInit {
 
   getIndexToShowArrow(index: number) {
     this.numOfArray = index;
+    // this.router.navigate(this.employeeSetupPage[index].url);
+    this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(r => {
+      // console.log(r);
+    });
   }
 
 }

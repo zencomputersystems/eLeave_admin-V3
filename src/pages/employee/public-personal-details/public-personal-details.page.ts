@@ -35,8 +35,11 @@ export class PublicPersonalDetailsPage implements OnInit {
                 console.log(this.list);
                 // this.removeList = this.list.personalDetail.emergencyContactNumber.contacts;
             },
-            response => {
-                this.router.navigate(['login']);
+            error => {
+                if (error) {
+                    location.reload;
+                    this.router.navigate(['/login']);
+                }
             }
         );
         setTimeout(() => {

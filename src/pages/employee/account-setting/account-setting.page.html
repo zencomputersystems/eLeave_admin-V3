@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="header">
+        <p style="color: #7a8589;margin-bottom: 0;">Profile photo</p>
+        <p style="color: #bebebe;font-size: 12px;width: 28%;line-height: 1.3em;float: left;">
+            This profile photo will be displayed on
+            your photo. Recommended to
+            upload a photo with
+            size below 1.2MB</p>
+        <div class="fullContainer" style="display: inline-block;margin-left: 13%;">
+            <ion-avatar class="avatar">
+                <img src="assets/icon/picture.png">
+            </ion-avatar>
+        </div>
+        <div style="display: inline-block; padding-left: 30%">
+            <ion-button shape="round" fill="outline" style="font-size: 12px;cursor: pointer;height: 30px;
+            width: 85px;float:right;clear: both;text-transform: none;color: #7a8589">
+                Change
+            </ion-button>
+            <p style="color:#057dcd; font-size: 10px;float:right;clear: both;padding-right: 10px;
+        margin-top: 0; cursor: pointer;">Remove photo</p>
+        </div>
+    </div>
+    <ion-item lines="full" class="mainDivider"></ion-item>
+
+    <div class="header" style="padding-top: 3%;">
+        <p style="color: #7a8589;margin-bottom: 0;">Password</p>
+        <p style="color: #bebebe;font-size: 12px;width: 28%;line-height: 1.3em;float: left;">
+            Your password last update on</p>
+        <div style="display: inline-block; padding-left: 45%">
+            <ion-button shape="round" fill="outline" style="font-size: 12px;cursor: pointer;height: 30px;
+            width: 140px;float:right;clear: both;text-transform: none;color: #7a8589">
+                Change password
+            </ion-button>
+        </div>
+    </div>
+
+    <ion-item lines="full" class="mainDivider"></ion-item>
+
+    <div class="header" style="padding-top: 3%;">
+        <p style="color: #7a8589;margin-bottom: 0;">Activity notifications</p>
+        <p style="color: #bebebe;font-size: 12px;width: 28%;line-height: 1.3em;margin-bottom: 0;">
+            Send me notifications when:</p>
+        <ion-list lines="none" style="background: #f9fafc">
+            <ion-item class="item">
+                <ion-toggle mode="ios" color="success" [(ngModel)]="message"></ion-toggle>
+                <p class="text">receive new message</p>
+            </ion-item>
+
+            <ion-item class="item">
+                <ion-toggle mode="ios" color="success" [(ngModel)]="announcement"></ion-toggle>
+                <p class="text">company posted new announcement</p>
+            </ion-item>
+
+            <ion-item class="item">
+                <ion-toggle mode="ios" color="success" [(ngModel)]="status"></ion-toggle>
+                <p class="text">my leave request status (approved/rejected/etc)</p>
+            </ion-item>
+
+            <ion-item class="item">
+                <ion-toggle mode="ios" color="success" [(ngModel)]="profile"></ion-toggle>
+                <p class="text">my profile updates</p>
+            </ion-item>
+
+            <ion-item class="item">
+                <ion-toggle mode="ios" color="success" [(ngModel)]="connection"></ion-toggle>
+                <p class="text">someone add me to their connections</p>
+            </ion-item>
+        </ion-list>
+    </div>
+</div>

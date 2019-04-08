@@ -13,7 +13,8 @@ export class APIService {
     public queryHeaders = new Headers();
     public headers = new Headers();
     // public loginHeaders = new Headers();
-    public baseUrl: string = "http://zencore.southeastasia.cloudapp.azure.com:3000";
+    // public baseUrl: string = "http://zencore.southeastasia.cloudapp.azure.com:3000";
+    public baseUrl: string = "http://zencore.zen.com.my:3000";
 
     constructor(public http: Http) {
         this.queryHeaders.append('Content-Type', 'application/json');
@@ -109,6 +110,14 @@ export class APIService {
             this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
         }
         return this.http.get(this.baseUrl + '/api/users', { headers: this.headers })
+            .pipe(map((res: Response) => res.json()));;
+    }
+
+    get_department() {
+        if (this.headers["_headers"].size != 1) {
+            this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
+        }
+        return this.http.get(this.baseUrl + '/api/department', { headers: this.headers })
             .pipe(map((res: Response) => res.json()));;
     }
 

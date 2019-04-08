@@ -30,9 +30,15 @@ export class EmployeeProfilePage implements OnInit {
                 this.list = data;
                 console.log(this.list);
             },
-            response => {
-                this.router.navigate(['login']);
+            error => {
+                if (error) {
+                    location.reload;
+                    this.router.navigate(['/login']);
+                }
             }
+            // response => {
+            //     this.router.navigate(['login']);
+            // }
         );
         setTimeout(() => {
             const userId = this.list.id;

@@ -31,8 +31,11 @@ export class LeaveEntitlementPage implements OnInit {
                 this.personalDataList = data;
                 this.entitlement = this.personalDataList.entitlementDetail;
             },
-            response => {
-                this.router.navigate(['login']);
+            error => {
+                if (error) {
+                    location.reload;
+                    this.router.navigate(['/login']);
+                }
             }
         );
     }

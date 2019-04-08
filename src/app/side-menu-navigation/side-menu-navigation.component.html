@@ -85,7 +85,7 @@
         <button mat-menu-item (click)="route.navigate(['/main/employee-setup']);">My Profile</button>
         <button mat-menu-item (click)="route.navigate(['/login']);">Logout</button>
       </mat-menu>
-      <ion-label class="labelName" *ngIf="personalList" (click)="route.navigate(['/main/employee-setup']);">
+      <ion-label class="labelName" *ngIf="personalList" [matMenuTriggerFor]="menu">
         {{personalList.employeeName}}
       </ion-label>
       <div class="verticalLine"></div>

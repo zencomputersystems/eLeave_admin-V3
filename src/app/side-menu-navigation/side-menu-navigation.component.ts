@@ -1,3 +1,9 @@
+export class ISideMenu {
+  title: string;
+  url: string;
+  icon: string;
+}
+
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -14,7 +20,7 @@ export class SideMenuNavigationComponent implements OnInit {
   public showIconMenu: boolean = false;
   public activeRoute: any;
   public list: any;
-  public appPages = [
+  public appPages: ISideMenu[] = [
     {
       title: 'Dashboard',
       url: '/main/dashboard',
@@ -37,7 +43,7 @@ export class SideMenuNavigationComponent implements OnInit {
     }
   ];
 
-  get personalList() {
+  get personalList(): any {
     return this.list;
   }
   get displayFullMenu(): boolean {

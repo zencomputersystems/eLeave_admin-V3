@@ -13,6 +13,7 @@ import { APIService } from 'src/services/shared-service/api.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as _moment from 'moment';
+import { AuthService } from 'src/services/shared-service/auth.service';
 const moment = _moment;
 
 @Component({
@@ -49,7 +50,7 @@ export class PersonalDetailsPage implements OnInit {
     private _datatoUpdate: any;
     private _date: FormGroup;
     private _reformatDate: string;
-    private date = new Date((new Date().getTime() - 3888000000));
+    // private date = new Date((new Date().getTime() - 3888000000));
     get personalList() {
         return this.list;
     }
@@ -58,7 +59,7 @@ export class PersonalDetailsPage implements OnInit {
     }
 
     constructor(private apiService: APIService, private router: Router,
-        private _formBuilder: FormBuilder) {
+        private _formBuilder: FormBuilder, private auth: AuthService) {
     }
 
     ngOnInit() {
@@ -90,10 +91,20 @@ export class PersonalDetailsPage implements OnInit {
                 this.country = this.list.personalDetail.country;
                 this.nric = this.list.personalDetail.nric;
             },
-            response => {
-                this.router.navigate(['login']);
+            error => {
+                if (error) {
+                    location.reload;
+                    this.router.navigate(['/login']);
+                }
             }
+            // response => {
+            //     this.router.navigate(['/login']);
+            // }
         );
+        // if (!this.auth.isAuthenticated) {
+        //     location.reload;
+        //     this.router.navigate(['/login']);
+        // }
     }
 
     clickToHideHeader() {

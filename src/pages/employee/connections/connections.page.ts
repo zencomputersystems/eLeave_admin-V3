@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ConnectionsPage implements OnInit {
 
     public employeeList: any;
+    public departmentList: any;
     public arrowDownName: boolean = true;
     public arrowDownId: boolean = true;
     public totalItem: number;
@@ -62,10 +63,18 @@ export class ConnectionsPage implements OnInit {
                 this.pageIndex = 1;
                 this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
             },
-            response => {
-                this.router.navigate(['login']);
+            error => {
+                if (error) {
+                    location.reload;
+                    this.router.navigate(['/login']);
+                }
             }
         );
+
+        this.departmentList = this.apiService.get_department().subscribe((data) => {
+            this.departmentList = data;
+        });
+
 
     }
 

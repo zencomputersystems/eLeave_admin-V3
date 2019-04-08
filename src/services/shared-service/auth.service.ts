@@ -8,7 +8,8 @@ import { HttpClient } from '@angular/common/http';
     providedIn: 'root'
 })
 export class AuthService {
-    public baseUrl: string = "http://zencore.southeastasia.cloudapp.azure.com:3000";
+    // public baseUrl: string = "http://zencore.southeastasia.cloudapp.azure.com:3000";
+    public baseUrl: string = "http://zencore.zen.com.my:3000";
 
     constructor(private _router: Router,
         private httpClient: HttpClient) { }
