@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class EmployeeProfilePage implements OnInit {
 
     public list: any;
+    public userId: string;
     public employmentlist: any;
     public setAsFavourite = [];
     public numOfArray: boolean = false;
@@ -28,6 +29,7 @@ export class EmployeeProfilePage implements OnInit {
         this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
+                this.userId = this.list.id;
                 console.log(this.list);
             },
             error => {
@@ -41,8 +43,8 @@ export class EmployeeProfilePage implements OnInit {
             // }
         );
         setTimeout(() => {
-            const userId = this.list.id;
-            this.apiService.get_employment_details(userId).subscribe(
+            // const userId = this.list.id;
+            this.apiService.get_employment_details(this.userId).subscribe(
                 data => {
                     this.employmentlist = data;
                     console.log('employ:', this.employmentlist);

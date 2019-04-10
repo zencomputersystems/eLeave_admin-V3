@@ -44,6 +44,10 @@ export class LeaveEntitlementPage implements OnInit {
         this.showHeader = false;
     }
 
+    toPlanLeave(leaveType: string, leaveBalance: string) {
+        this.router.navigate(['/main/plan-my-leave']);
+        console.log(leaveType, leaveBalance);
+    }
 
     sortAscLeaveType() {
         this.arrowDown = true;

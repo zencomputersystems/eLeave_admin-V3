@@ -58,6 +58,16 @@ export class AdminInvitesPage implements OnInit {
         );
     }
 
+    endPoint() {
+        this.apiService.get_user_profile_list().subscribe(
+            (data: any[]) => {
+                this.employeeList = data;
+                this.pageIndex = 1;
+                this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
+            }
+        );
+    }
+
     viewOnList() {
         this.listView = true;
         this.gridView = false;
@@ -199,26 +209,14 @@ export class AdminInvitesPage implements OnInit {
     }
 
     clearDetails() {
-        this.apiService.get_user_profile_list().subscribe(
-            (data: any[]) => {
-                this.employeeList = data;
-                this.pageIndex = 1;
-                this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
-            }
-        );
+        this.endPoint();
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
 
     changeDetails(text: any) {
         if (text.srcElement.value === '') {
-            this.apiService.get_user_profile_list().subscribe(
-                (data: any[]) => {
-                    this.employeeList = data;
-                    this.pageIndex = 1;
-                    this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
-                }
-            );
+            this.endPoint();
             this.disableNextButton = false;
             this.disablePrevButton = true;
         } else {

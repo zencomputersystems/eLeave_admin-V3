@@ -1,56 +1,117 @@
 // http://ionicframework.com/docs/theming/
-@import '~@ionic/angular/css/core.css';
-@import '~@ionic/angular/css/normalize.css';
-@import '~@ionic/angular/css/structure.css';
-@import '~@ionic/angular/css/typography.css';
+@import "~@ionic/angular/css/core.css";
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
 
-@import '~@ionic/angular/css/padding.css';
-@import '~@ionic/angular/css/float-elements.css';
-@import '~@ionic/angular/css/text-alignment.css';
-@import '~@ionic/angular/css/text-transformation.css';
-@import '~@ionic/angular/css/flex-utils.css';
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+@import "~@fullcalendar/core/main.css";
+@import "~@fullcalendar/daygrid/main.css";
+// @import '~@fullcalendar/timegrid/main.css';
 
-    app-connections > div.connectionsContainer > div.topHeader > ion-searchbar.searchbar > div.searchbar-input-container > input.searchbar-input{
-        background: transparent;
-        border-radius: 30px;
-        border: 0.5px solid #bebebe;
-        height: 31px;
-    }
-    app-connections > div.connectionsContainer > div.topHeader > ion-searchbar.searchbar > div.searchbar-input-container > ion-icon.searchbar-search-icon.sc-ion-searchbar-ios{
-        height: 88%;
-    }
-    app-connections > div.connectionsContainer > div.topHeader > ion-searchbar.searchbar > div.searchbar-input-container > button > ion-icon.searchbar-clear-icon.sc-ion-searchbar-ios{
-        height: 80%;
-        margin-top: -3px;
-    }
-    app-connections > div.connectionsContainer > ion-content > .mat-grid-list > div > .mat-grid-tile > figure > .mat-card > .mat-card-header > div.mat-card-header-text{
-        overflow: hidden;
-    }
-    app-public-personal-details > mat-card > .mat-card-header > div.mat-card-header-text{
-        overflow: hidden;
-    }
-    app-admin-invites > div.connectionsContainer > div.topHeader > ion-searchbar.searchbar > div.searchbar-input-container > input.searchbar-input{
-        background: transparent;
-        border-radius: 30px;
-        border: 0.5px solid #bebebe;
-        height: 31px;
-    }
-    app-admin-invites > div.connectionsContainer > div.topHeader > ion-searchbar.searchbar > div.searchbar-input-container > ion-icon.searchbar-search-icon.sc-ion-searchbar-ios{
-        height: 88%;
-    }
-    app-admin-invites > div.connectionsContainer > div.topHeader > ion-searchbar.searchbar > div.searchbar-input-container > button > ion-icon.searchbar-clear-icon.sc-ion-searchbar-ios{
-        height: 80%;
-        margin-top: -3px;
-    }
-    app-admin-invites > div.connectionsContainer > ion-content > .mat-grid-list > div > .mat-grid-tile > figure > .mat-card > .mat-card-header > div.mat-card-header-text{
-        overflow: hidden;
-    }
-    app-employee-profile > mat-card > .mat-card-header > div.mat-card-header-text{
-        overflow: hidden;
-    }
-    app-employee-profile > ion-card > ion-card-content > .mat-tab-group > .mat-tab-header > .mat-tab-label-container > .mat-tab-list > .mat-tab-lables > .mat-tab-label{
-        height: 35px;
-    }
+app-connections
+  > div.connectionsContainer
+  > div.topHeader
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > input.searchbar-input {
+  background: transparent;
+  border-radius: 30px;
+  border: 0.5px solid #bebebe;
+  height: 31px;
+}
+app-connections
+  > div.connectionsContainer
+  > div.topHeader
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > ion-icon.searchbar-search-icon.sc-ion-searchbar-ios {
+  height: 88%;
+}
+app-connections
+  > div.connectionsContainer
+  > div.topHeader
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > button
+  > ion-icon.searchbar-clear-icon.sc-ion-searchbar-ios {
+  height: 80%;
+  margin-top: -3px;
+}
+app-connections
+  > div.connectionsContainer
+  > ion-content
+  > .mat-grid-list
+  > div
+  > .mat-grid-tile
+  > figure
+  > .mat-card
+  > .mat-card-header
+  > div.mat-card-header-text {
+  overflow: hidden;
+}
+app-public-personal-details > mat-card > .mat-card-header > div.mat-card-header-text {
+  overflow: hidden;
+}
+app-admin-invites
+  > div.connectionsContainer
+  > div.topHeader
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > input.searchbar-input {
+  background: transparent;
+  border-radius: 30px;
+  border: 0.5px solid #bebebe;
+  height: 31px;
+}
+app-admin-invites
+  > div.connectionsContainer
+  > div.topHeader
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > ion-icon.searchbar-search-icon.sc-ion-searchbar-ios {
+  height: 88%;
+}
+app-admin-invites
+  > div.connectionsContainer
+  > div.topHeader
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > button
+  > ion-icon.searchbar-clear-icon.sc-ion-searchbar-ios {
+  height: 80%;
+  margin-top: -3px;
+}
+app-admin-invites
+  > div.connectionsContainer
+  > ion-content
+  > .mat-grid-list
+  > div
+  > .mat-grid-tile
+  > figure
+  > .mat-card
+  > .mat-card-header
+  > div.mat-card-header-text {
+  overflow: hidden;
+}
+app-employee-profile > mat-card > .mat-card-header > div.mat-card-header-text {
+  overflow: hidden;
+}
+app-employee-profile
+  > ion-card
+  > ion-card-content
+  > .mat-tab-group
+  > .mat-tab-header
+  > .mat-tab-label-container
+  > .mat-tab-list
+  > .mat-tab-lables
+  > .mat-tab-label {
+  height: 35px;
+}

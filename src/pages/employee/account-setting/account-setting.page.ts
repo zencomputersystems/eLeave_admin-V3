@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, Renderer } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-account-setting',
@@ -9,8 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AccountSettingPage implements OnInit {
 
-    constructor(private apiService: APIService, private router: Router,
-        private route: ActivatedRoute, private elRef: ElementRef, private renderer: Renderer) { }
+    constructor(private apiService: APIService, private router: Router) { }
 
     ngOnInit() {
         this.apiService.get_user_profile_list().subscribe(

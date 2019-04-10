@@ -59,21 +59,16 @@ export class SideMenuNavigationComponent implements OnInit {
   }
 
   ngOnInit() {
+    for (let i = 0; i < this.appPages.length; i++) {
+      if (this.route.url === this.appPages[i].url) {
+        this.activeRoute = this.appPages[i].url;
+      }
+    }
     this.openAtBeginning();
     this.apiService.get_personal_details().subscribe(data => {
       // this.userId = data.id;
       this.list = data;
     });
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      for (let i = 0; i < this.appPages.length; i++) {
-        if (this.route.url === this.appPages[i].url) {
-          this.activeRoute = this.appPages[i].url;
-        }
-      }
-    }, 500);
   }
 
   openAtBeginning() {

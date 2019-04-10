@@ -12,15 +12,12 @@ export class APIService {
 
     public queryHeaders = new Headers();
     public headers = new Headers();
-    // public loginHeaders = new Headers();
     // public baseUrl: string = "http://zencore.southeastasia.cloudapp.azure.com:3000";
     public baseUrl: string = "http://zencore.zen.com.my:3000";
 
     constructor(public http: Http) {
-        this.queryHeaders.append('Content-Type', 'application/json');
-        this.queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
-        // this.loginHeaders.append('Authorization', 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJzaGFmdWFuIiwidGVuYW50SWQiOiJkZGRkZCJ9LCJpYXQiOjE1NDk4Njc1NDB9.4Ww0-45TubOFUANfCsMRtPRKFJLZ8nbUFOjVmf4gTxM');
-        // this.loginHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+        // this.queryHeaders.append('Content-Type', 'application/json');
+        // this.queryHeaders.append('X-Dreamfactory-API-Key', constants.DREAMFACTORY_API_KEY);
     }
 
     private handleError(error: any) {
@@ -63,60 +60,51 @@ export class APIService {
         // return moment.utc(new Date()).zone(localStorage.getItem("cs_timestamp")).format('YYYY-MM-DDTHH:mm');
     }
 
-
-    get_personal_details(): Observable<any> {
+    headerAuthorization() {
         if (this.headers["_headers"].size != 1) {
             this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
         }
+    }
+
+    get_personal_details(): Observable<any> {
+        this.headerAuthorization();
         return this.http.get(this.baseUrl + '/api/userprofile/personal-detail', { headers: this.headers })
             .pipe(map((res: Response) => res.json()))
     }
 
     patch_personal_details(updateData): Observable<any[]> {
-        if (this.headers["_headers"].size != 1) {
-            this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
-        }
+        this.headerAuthorization();
         return this.http.patch(this.baseUrl + '/api/userprofile/personal-detail', updateData, { headers: this.headers })
             .pipe(map((res: Response) => res.json()))
 
     }
 
     get_employment_details(userId): Observable<any> {
-        if (this.headers["_headers"].size != 1) {
-            this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
-        }
+        this.headerAuthorization();
         return this.http.get(this.baseUrl + '/api/userprofile/employment-detail/' + userId, { headers: this.headers })
             .pipe(map((res: Response) => res.json()))
     }
 
     patch_employment_details(updateData: any): Observable<any> {
-        if (this.headers["_headers"].size != 1) {
-            this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
-        }
+        this.headerAuthorization();
         return this.http.patch(this.baseUrl + '/api/userprofile/employment-detail', updateData, { headers: this.headers })
             .pipe(map((res: Response) => res.json()))
     }
 
     get_user_profile(): Observable<any> {
-        if (this.headers["_headers"].size != 1) {
-            this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
-        }
+        this.headerAuthorization();
         return this.http.get(this.baseUrl + '/api/userprofile', { headers: this.headers })
             .pipe(map((res: Response) => res.json()));
     }
 
     get_user_profile_list() {
-        if (this.headers["_headers"].size != 1) {
-            this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
-        }
+        this.headerAuthorization();
         return this.http.get(this.baseUrl + '/api/users', { headers: this.headers })
             .pipe(map((res: Response) => res.json()));;
     }
 
     get_department() {
-        if (this.headers["_headers"].size != 1) {
-            this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
-        }
+        this.headerAuthorization();
         return this.http.get(this.baseUrl + '/api/department', { headers: this.headers })
             .pipe(map((res: Response) => res.json()));;
     }
