@@ -103,6 +103,12 @@ export class APIService {
             .pipe(map((res: Response) => res.json()));;
     }
 
+    post_user_apply_leave(leaveData: any) {
+        this.headerAuthorization();
+        return this.http.post(this.baseUrl + '/api/leave/apply', leaveData, { headers: this.headers })
+            .pipe(map((res: Response) => res.json()));;
+    }
+
     get_department() {
         this.headerAuthorization();
         return this.http.get(this.baseUrl + '/api/department', { headers: this.headers })

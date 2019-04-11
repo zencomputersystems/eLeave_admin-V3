@@ -14,6 +14,8 @@ export class LeaveEntitlementPage implements OnInit {
     public progressPercentage: number = 80;
     public arrowDown: boolean = true;
     public entitlement: any;
+    public leaveType: string;
+    public leaveBalance: string;
 
     public get sortDirectionArrowDown(): boolean {
         return this.arrowDown;
@@ -33,7 +35,6 @@ export class LeaveEntitlementPage implements OnInit {
             },
             error => {
                 if (error) {
-                    location.reload;
                     this.router.navigate(['/login']);
                 }
             }
@@ -45,8 +46,9 @@ export class LeaveEntitlementPage implements OnInit {
     }
 
     toPlanLeave(leaveType: string, leaveBalance: string) {
-        this.router.navigate(['/main/plan-my-leave']);
-        console.log(leaveType, leaveBalance);
+        this.router.navigate(['/main/plan-my-leave'], { queryParams: { type: leaveType, balance: leaveBalance } });
+        this.leaveType = leaveType;
+        this.leaveBalance = leaveBalance;
     }
 
     sortAscLeaveType() {

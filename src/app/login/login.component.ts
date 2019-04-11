@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    // this._auth.logout();
     if ((localStorage.getItem('user_email') !== null) && (localStorage.getItem('user_pass') !== null)) {
       this.valueOfCheck = true;
       this.emailValue = localStorage.getItem('user_email');

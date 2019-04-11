@@ -18,7 +18,6 @@ export class AccountSettingPage implements OnInit {
             },
             error => {
                 if (error) {
-                    location.reload;
                     this.router.navigate(['/login']);
                 }
             }

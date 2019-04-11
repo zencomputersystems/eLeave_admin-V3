@@ -28,7 +28,6 @@ export class PersonalPage implements OnInit {
             },
             error => {
                 if (error) {
-                    location.reload;
                     this.router.navigate(['/login']);
                 }
             }

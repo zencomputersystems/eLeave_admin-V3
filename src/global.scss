@@ -10,11 +10,85 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@import "~@angular/material/theming";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 @import "~@fullcalendar/core/main.css";
 @import "~@fullcalendar/daygrid/main.css";
 // @import '~@fullcalendar/timegrid/main.css';
+
+$mat-myapp-primary: (
+  50: #e1eff9,
+  100: #b4d8f0,
+  200: #82bee6,
+  300: #50a4dc,
+  400: #2b91d5,
+  500: #057dcd,
+  600: #0475c8,
+  700: #046ac1,
+  800: #0360ba,
+  900: #014dae,
+  A100: #d8e6ff,
+  A200: #a5c6ff,
+  A400: #72a6ff,
+  A700: #5896ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
+);
+
+$mat-myapp-accent: (
+  50: #eff0f1,
+  100: #d7dadc,
+  200: #bdc2c4,
+  300: #a2aaac,
+  400: #8e979b,
+  500: #7a8589,
+  600: #727d81,
+  700: #677276,
+  800: #5d686c,
+  900: #4a5559,
+  A100: #bfecfc,
+  A200: #8eddfa,
+  A400: #56d2ff,
+  A700: #3ccbff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
+);
+
+$primary: mat-palette($mat-myapp-primary); //$#057dcd
+$accent: mat-palette($mat-myapp-accent); //#7a8589
+
+$theme: mat-light-theme($primary, $accent);
+
+@include angular-material-theme($theme);
 
 app-connections
   > div.connectionsContainer

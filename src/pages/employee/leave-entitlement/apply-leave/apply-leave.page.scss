@@ -79,11 +79,6 @@
     float: right;
     width: 45%;
   }
-  //   .selectLeave {
-  //     border-radius: 2.5px;
-  //     border: solid 0.5px #dfe3e6;
-  //     padding: 10px;
-  //   }
   ::ng-deep .mat-select-value-text {
     color: #7a8589;
   }
@@ -112,12 +107,22 @@
     --border-color: rgba(122, 102, 102, 0.12);
     margin: 0;
   }
-  mat-radio-button{
+  mat-radio-button {
     top: -5.5px;
     position: relative;
   }
+  ::ng-deep .mat-radio-container {
+    height: 16px;
+    width: 16px;
+  }
   ::ng-deep .mat-radio-outer-circle {
     border-width: 1px;
+    height: 16px;
+    width: 16px;
+  }
+  ::ng-deep .mat-radio-inner-circle {
+    height: 16px;
+    width: 16px;
   }
   ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
     border-color: #057dcd;
@@ -125,26 +130,24 @@
   ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
     background-color: #057dcd;
   }
-  ::ng-deep .mat-radio-button.mat-radio-disabled .mat-radio-outer-circle{
-    border-color: rgba(0, 0, 0, 0.20);
+  ::ng-deep .mat-radio-button.mat-radio-disabled .mat-radio-outer-circle {
+    border-color: rgba(0, 0, 0, 0.2);
   }
-  ::ng-deep .mat-radio-button .mat-radio-ripple{
+  ::ng-deep .mat-radio-button .mat-radio-ripple {
     display: none;
   }
-  ::ng-deep .halfday > .mat-form-field-wrapper{
-    padding-bottom: 0;
+  .divider {
+    --min-height: none;
+    padding-bottom: 5%;
+    width: 100%;
   }
-  //   .dateInput {
-  //     border-radius: 2.5px;
-  //     border: solid 0.5px #dfe3e6;
-  //     padding: 10px;
-  //   }
-  //   ::ng-deep .mat-form-field-suffix {
-  //     position: absolute;
-  //     right: 5px;
-  //     top: 26px;
-  //   }
-  //   ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
-  //     display: none;
-  //   }
+  ::ng-deep .mat-form-field > .mat-form-field-wrapper {
+    padding-bottom: 10px;
+  }
+  .addIcon {
+    display: block;
+    color: #057dcd;
+    font-size: 22px;
+    cursor: pointer;
+  }
 }

@@ -29,13 +29,9 @@ export class EmploymentPage implements OnInit {
             },
             error => {
                 if (error) {
-                    location.reload;
                     this.router.navigate(['/login']);
                 }
             }
-            // response => {
-            //     this.router.navigate(['login']);
-            // }
         );
         setTimeout(() => {
             const userId = this.list.id;
@@ -44,7 +40,7 @@ export class EmploymentPage implements OnInit {
                     this.employmentlist = data;
                 }
             )
-        }, 1000);
+        }, 2000);
 
     }
 

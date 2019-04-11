@@ -26,23 +26,22 @@
                 </div>
                 <div class="selection">
                     <div style="display:block; white-space: nowrap;">
-                        <mat-form-field appearance="outline" style="width: 74%;">
+                        <mat-form-field appearance="outline" style="width: 70%;">
                             <mat-label>Leave types</mat-label>
-                            <mat-select class="selectLeave" [(value)]="types" placeholder="Leave Type">
-                                <mat-option value="option1">Annual Leave</mat-option>
-                                <mat-option value="option2">Emergency Leave</mat-option>
-                                <mat-option value="option3">Medical Leave</mat-option>
-                                <mat-option value="option4">Unpaid Leave</mat-option>
+                            <mat-select class="selectLeave" [(value)]="types" name="leave">
+                                <mat-option *ngFor="let leave of entitlement; let i=index" [value]="leave.leaveTypeName"
+                                    (click)="getIndex(leave)">
+                                    {{leave.leaveTypeName}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                         &nbsp;&nbsp;
-                        <mat-form-field style="width: 20%" appearance="outline">
-                            <mat-label>{{days}} Days available</mat-label>
-                            <input matInput [(value)]="days">
+                        <mat-form-field style="width: 24%" appearance="outline">
+                            <mat-label>Days available</mat-label>
+                            <input matInput [(value)]="daysAvailable" disabled>
                         </mat-form-field>
                     </div>
                     <div style="display:block; white-space: nowrap;">
-                        <form [formGroup]="dateFromForm" class="dateForm">
+                        <form [formGroup]="dateForm" class="dateForm">
                             <mat-form-field class="date" appearance="outline">
                                 <mat-label>Start date</mat-label>
                                 <input class="dateInput" matInput [matDatepicker]="picker1"
@@ -52,9 +51,9 @@
                                 <mat-datepicker #picker1></mat-datepicker>
                                 <mat-error *ngIf="picker1.invalid">Please select end date</mat-error>
                             </mat-form-field>
-                        </form>
-                        &nbsp;&nbsp;
-                        <form [formGroup]="dateToForm" class="dateForm">
+                            <!-- </form> -->
+                            &nbsp;&nbsp;
+                            <!-- <form [formGroup]="dateToForm" class="dateForm"> -->
                             <mat-form-field class="date" appearance="outline">
                                 <mat-label>End date</mat-label>
                                 <input class="dateInput" matInput [matDatepicker]="picker2"
@@ -69,45 +68,58 @@
                         &nbsp;&nbsp;
                         <mat-form-field style="width: 20%" appearance="outline">
                             <mat-label>No of days</mat-label>
-                            <input matInput [(value)]="days">
+                            <input matInput [(value)]="daysCount" disabled>
                         </mat-form-field>
                     </div>
-                    <div style="padding-bottom: 15px; display: block; white-space: nowrap;">
-                        <!-- <mat-radio-button value="halfDay" (change)="halfDaySelected($event)">Half
-                            day
-                        </mat-radio-button> -->
-                        <ion-item lines="none">
+
+                    <ion-item class="divider" lines="full"></ion-item>
+                    <div style="display: block; white-space: nowrap;">
+                        <!-- <ion-item lines="none">
                             <ion-checkbox class="ionCheckbox" (ionChange)="halfDaySelected($event)" mode="ios">
                             </ion-checkbox>
                             <ion-label style="color: #7a8589;font-size: 14px;margin: 0;
                             padding-left: 8px;">Half day</ion-label>
-                        </ion-item>
-                        <mat-radio-group class="example-radio-group" style="width: 24%"
-                            [(ngModel)]="timeSlot" [disabled]="!halfDayButtonSelected">
-                            <mat-radio-button value="AM">AM
-                            </mat-radio-button>
-                            <mat-radio-button style="padding-left: 15px;" value="PM">PM
-                            </mat-radio-button>
-                        </mat-radio-group>
-                        &nbsp;&nbsp;
-                        <mat-form-field class="halfday" appearance="outline" style="width: 42%;">
-                            <mat-label>Half day dates</mat-label>
-                            <mat-select class="selectLeave" [(value)]="types" [disabled]="disabledHalfDayDate" placeholder="Leave Type">
-                                <mat-option value="option1">Annual Leave</mat-option>
-                                <mat-option value="option2">Emergency Leave</mat-option>
-                                <mat-option value="option3">Medical Leave</mat-option>
-                                <mat-option value="option4">Unpaid Leave</mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                        </ion-item> -->
+                        <div style="display: block; white-space: nowrap;" *ngFor="let dayType of dayTypes; let i=index">
+                            <mat-form-field appearance="outline" style="width: 30%;">
+                                <mat-label>Day types</mat-label>
+                                <mat-select class="selectLeave" [(value)]="dayTypes[i]"
+                                    (selectionChange)="dayTypesChanged($event)">
+                                    <mat-option value="0"> Full Day</mat-option>
+                                    <mat-option value="1"> Half Day</mat-option>
+                                    <mat-option value="2"> Quarter Day</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            &nbsp;&nbsp;
+                            <mat-form-field appearance="outline" style="width: 32%;" *ngIf="dayTypes[i] == '1'">
+                                <mat-label>Half day dates</mat-label>
+                                <mat-select class="selectLeave" [(value)]="dayTypes[i].halfDaydates"
+                                    [disabled]="disabledHalfDayDate" [multiple]="true">
+                                    <mat-option value="option1">Annual Leave</mat-option>
+                                    <mat-option value="option2">Emergency Leave</mat-option>
+                                    <mat-option value="option3">Medical Leave</mat-option>
+                                    <mat-option value="option4">Unpaid Leave</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            &nbsp;&nbsp;
+                            <mat-radio-group class="example-radio-group" style="width: 24%" *ngIf="dayTypes[i] == '1'"
+                                [(ngModel)]="dayTypes[i].timeSlot" [disabled]="!halfDayOptionSelected">
+                                <mat-radio-button value="AM">AM
+                                </mat-radio-button>
+                                <mat-radio-button style="padding-left: 10px;" value="PM">PM
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <ion-icon class="addIcon" name="add" *ngIf="showAddIcon" (click)="addFormField()">
+                        </ion-icon>
                         <mat-hint style="font-size: 75%;display: block;padding: 5px;padding-top: 0;">
-                            Please ignore this selection if not considered</mat-hint>
+                            Please ignore day types selection if not considered other options (half/quarter)</mat-hint>
                     </div>
+                    <ion-item class="divider" lines="full"></ion-item>
                     <form [formGroup]="reasons">
                         <mat-form-field appearance="outline">
                             <mat-label>Reason</mat-label>
                             <input matInput [(value)]="reason" formControlName="inputReason" required>
-                            <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
-                            <!-- <mat-hint>Please insert the reason</mat-hint> -->
                         </mat-form-field>
                     </form>
 
@@ -116,8 +128,8 @@
                             (click)="types=undefined;days='';reason=''; $event.stopPropagation()"
                             style="height: 27px; font-size: 12px;text-transform: none">Clear
                         </ion-button>
-                        <ion-button shape="round"
-                            style="height: 27px;font-size: 12px;width: 115px;text-transform: none">
+                        <ion-button shape="round" style="height: 27px;font-size: 12px;width: 115px;text-transform: none"
+                            (click)="postData()">
                             Apply for days
                         </ion-button>
                     </div>
