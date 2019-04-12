@@ -45,8 +45,8 @@ export class LeaveEntitlementPage implements OnInit {
         this.showHeader = false;
     }
 
-    toPlanLeave(leaveType: string, leaveBalance: string) {
-        this.router.navigate(['/main/plan-my-leave'], { queryParams: { type: leaveType, balance: leaveBalance } });
+    toPlanLeave(leaveType: string, leaveBalance: string, leaveId: string) {
+        this.router.navigate(['/main/plan-my-leave'], { queryParams: { type: leaveType, balance: leaveBalance, id: leaveId } });
         this.leaveType = leaveType;
         this.leaveBalance = leaveBalance;
     }

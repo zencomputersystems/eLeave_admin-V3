@@ -32,8 +32,8 @@
         <img src="assets/icon/picture.png">
       </ion-avatar>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="route.navigate(['/main/employee-setup']);">My Profile</button>
-        <button mat-menu-item (click)="route.navigate(['/login']);">Logout</button>
+        <button mat-menu-item (click)="router.navigate(['/main/employee-setup']);">My Profile</button>
+        <button mat-menu-item (click)="router.navigate(['/login']);">Logout</button>
       </mat-menu>
       <ion-label class="labelName" *ngIf="personalList">
         {{personalList.employeeName}}
@@ -68,7 +68,7 @@
         <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
           <ion-item no-padding lines="none" [routerLink]="[p.url]" style="float: left; padding-left: 8px"
             [class.background-highlight]="activeRoute === appPages[i].url "
-            [class.first-highlight]="route.url === this.appPages[i].url" (click)="activeRoute = appPages[i].url ">
+            [class.first-highlight]="router.url === this.appPages[i].url" (click)="activeRoute = appPages[i].url ">
             <div class="my-icon-menu" aria-label="My icon" [inlineSVG]="'assets/icon/Sidebar_menus/' + p.icon"></div>
           </ion-item>
         </ion-menu-toggle>
@@ -82,8 +82,8 @@
         <img src="assets/icon/picture.png">
       </ion-avatar>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="route.navigate(['/main/employee-setup']);">My Profile</button>
-        <button mat-menu-item (click)="route.navigate(['/login']);">Logout</button>
+        <button mat-menu-item (click)="router.navigate(['/main/employee-setup']);">My Profile</button>
+        <button mat-menu-item (click)="router.navigate(['/login']);">Logout</button>
       </mat-menu>
       <ion-label class="labelName" *ngIf="personalList" [matMenuTriggerFor]="menu">
         {{personalList.employeeName}}

@@ -53,17 +53,28 @@ export class SideMenuNavigationComponent implements OnInit {
     return this.showIconMenu;
   }
 
-  constructor(private menu: MenuController, private route: Router,
+  constructor(private menu: MenuController, private router: Router,
     private apiService: APIService
   ) {
   }
 
   ngOnInit() {
+    if (this.router.url.includes('?')) {
+      const url = this.router.url.split('?');
+      const lastSegment = url.pop();
+      if (url[0] === this.appPages[2].url) {
+        this.activeRoute = this.appPages[2].url;
+      }
+    }
+
     for (let i = 0; i < this.appPages.length; i++) {
-      if (this.route.url === this.appPages[i].url) {
+      if (this.router.url === this.appPages[i].url) {
         this.activeRoute = this.appPages[i].url;
       }
     }
+
+
+
     this.openAtBeginning();
     this.apiService.get_personal_details().subscribe(data => {
       // this.userId = data.id;

@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-toolbar class="toolbar2">
+        <ion-icon name="arrow-back" style="cursor: pointer; font-size: 22px" (click)="backToProfile()"></ion-icon>
+        <ion-title style="display: inline-block;color: #20291f" *ngIf="personalList">
+            {{personalList.employeeName}}'s Profile
+        </ion-title>
+        <div style="float: right; padding-right: 20px;">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-linkedin-in"></i>
+            <i class="fab fa-instagram"></i>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-card class="leftCard">
+    <ion-card-content>
+        <mat-tab-group selectedIndex="0">
+            <mat-tab label="Apply Leave">
+                <app-apply-leave></app-apply-leave>
+            </mat-tab>
+            <mat-tab label="Calendar">
+            </mat-tab>
+        </mat-tab-group>
+
+    </ion-card-content>
+</ion-card>

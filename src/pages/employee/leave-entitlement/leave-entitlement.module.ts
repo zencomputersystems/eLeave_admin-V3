@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { LeaveEntitlementPage } from './leave-entitlement.page';
 import { InlineSVGModule } from 'ng-inline-svg';
-import { ApplyLeavePage } from './apply-leave/apply-leave.page';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,6 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
+import { LeavePlanningPage } from './leave-planning/leave-planning.page';
+import { ApplyLeavePage } from './leave-planning/apply-leave/apply-leave.page';
 
 
 const routes: Routes = [
@@ -43,6 +44,6 @@ const routes: Routes = [
     MatRadioModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [LeaveEntitlementPage, ApplyLeavePage]
+  declarations: [LeaveEntitlementPage, LeavePlanningPage, ApplyLeavePage]
 })
 export class LeaveEntitlementModule { }

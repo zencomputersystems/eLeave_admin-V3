@@ -12,7 +12,7 @@ import { PersonalDetailsPage } from 'src/pages/employee/personal-details/persona
 import { EmploymentDetailsPage } from 'src/pages/employee/employment-details/employment-details.page';
 import { LeaveEntitlementPage } from 'src/pages/employee/leave-entitlement/leave-entitlement.page';
 import { AccountSettingPage } from 'src/pages/employee/account-setting/account-setting.page';
-import { ApplyLeavePage } from 'src/pages/employee/leave-entitlement/apply-leave/apply-leave.page';
+import { LeavePlanningPage } from 'src/pages/employee/leave-entitlement/leave-planning/leave-planning.page';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -23,7 +23,7 @@ export const sideMenuNavigationRoutes: Routes = [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: AdminInvitesPage },
             { path: 'inbox', component: EmployeeProfilePage },
-            { path: 'plan-my-leave', component: ApplyLeavePage },
+            { path: 'plan-my-leave', component: LeavePlanningPage },
             { path: 'employee-directory', component: ConnectionsPage },
             {
                 path: 'employee-setup', component: EmployeeSetupPage,
