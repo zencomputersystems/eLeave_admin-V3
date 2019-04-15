@@ -5,6 +5,9 @@
     margin-top: 4%;
     display: inline-block;
   }
+  ::ng-deep.fc-content-skeleton {
+    min-height: 20px;
+  }
   .holidayView {
     padding-left: 3%;
     margin-top: 4%;

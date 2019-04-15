@@ -83,6 +83,10 @@ export class ApplyLeavePage implements OnInit {
                 console.log('entitlement', this.entitlement);
             }
         );
+        setTimeout(() => {
+            let calendarApi = this.calendarComponent.getApi();
+            calendarApi.render();
+        }, 100);
     }
 
     postData() {
