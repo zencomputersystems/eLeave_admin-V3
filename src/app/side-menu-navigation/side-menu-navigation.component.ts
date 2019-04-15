@@ -1,4 +1,4 @@
-export class ISideMenu {
+export interface ISideMenu {
   title: string;
   url: string;
   icon: string;

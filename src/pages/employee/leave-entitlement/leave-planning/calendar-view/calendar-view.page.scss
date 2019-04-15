@@ -1,0 +1,31 @@
+:host {
+  .app-calendar {
+    max-width: 900px;
+    width: 55%;
+    margin-top: 4%;
+    display: inline-block;
+  }
+  .holidayView {
+    padding-left: 3%;
+    margin-top: 4%;
+    float: right;
+    width: 45%;
+    overflow: auto;
+    max-height: 410px;
+  }
+  .titleRow {
+    padding-left: 2%;
+    padding-top: 5px;
+    padding-bottom: 2%;
+  }
+  .detailsRow {
+    padding-left: 2%;
+    padding-top: 5px;
+  }
+  .divider {
+    --min-height: none;
+    padding-top: 1%;
+    padding-bottom: 2%;
+    width: 100%;
+  }
+}

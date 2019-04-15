@@ -17,6 +17,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { LeavePlanningPage } from './leave-planning/leave-planning.page';
 import { ApplyLeavePage } from './leave-planning/apply-leave/apply-leave.page';
+import { CalendarViewPage } from './leave-planning/calendar-view/calendar-view.page';
 
 
 const routes: Routes = [
@@ -44,6 +45,6 @@ const routes: Routes = [
     MatRadioModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [LeaveEntitlementPage, LeavePlanningPage, ApplyLeavePage]
+  declarations: [LeaveEntitlementPage, LeavePlanningPage, ApplyLeavePage, CalendarViewPage]
 })
 export class LeaveEntitlementModule { }

@@ -31,14 +31,14 @@ export class ApplyLeavePage implements OnInit {
     public daysAvailable: string = '';
     public daysCount: number = 0;
     public fullDay: boolean = true;
-    public showAddIcon: boolean = false;
+    public showAddIcon: boolean = true;
     public halfDayOptionSelected: boolean;
     public disabledHalfDayDate: boolean = true;
     public timeSlot: string;
     public halfDaydates: string;
     public calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
     public calendarEvents: EventInput[] = [
-        { title: 'Event Now', start: new Date() }
+        { title: 'Event today', start: new Date(), allDay: true }
     ];
     public minDate: string;
     public maxDate: string;
