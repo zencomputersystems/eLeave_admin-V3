@@ -62,8 +62,7 @@ export class AuthService {
      * this is used to clear local storage and also the route to login
      */
     logout(): void {
-        this.clear();
-        this._router.navigate(['/login']);
+        localStorage.removeItem('access_token');
     }
 
     decode() {

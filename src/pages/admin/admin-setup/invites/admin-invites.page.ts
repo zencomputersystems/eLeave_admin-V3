@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-admin-invites',
@@ -40,7 +39,7 @@ export class AdminInvitesPage implements OnInit {
     public get disabledPreviousButton() {
         return this.disablePrevButton;
     }
-    constructor(private apiService: APIService, private router: Router) { }
+    constructor(private apiService: APIService) { }
 
     ngOnInit() {
         this.apiService.get_user_profile_list().subscribe(
@@ -51,7 +50,7 @@ export class AdminInvitesPage implements OnInit {
             },
             error => {
                 if (error) {
-                    this.router.navigate(['/login']);
+                    window.location.href = '/login';
                 }
             }
         );

@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
       this.formGroupValidation.get('email').setValue(this.emailValue);
       this.formGroupValidation.get('pass').setValue(this.passValue);
     }
+    this._auth.logout();
   }
 
   showPasswordKey() {

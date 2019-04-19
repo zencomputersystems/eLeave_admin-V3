@@ -1,9 +1,10 @@
 <div class='app-calendar'>
-    <full-calendar #calendar defaultView="dayGridMonth" [header]="{
+    <full-calendar #calendar defaultView="dayGridMonth" selectable="true" [header]="{
                           left: 'prev,next today',
                           center: 'title',
                           right: 'dayGridMonth,timeGridWeek'
-                        }" [plugins]="calendarPlugins" [events]="calendarEvents" (dateClick)="handleDateClick($event)">
+                        }" [plugins]="calendarPlugins" [events]="calendarEvents">
+        <!-- (dateClick)="handleDateClick($event) (select)="select($event)"-->
     </full-calendar>
 </div>
 <div class="selection">
@@ -16,6 +17,8 @@
                         (click)="getIndex(leave)">
                         {{leave.leaveTypeName}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="!applyLeaveForm.leaveTypes" style="padding: 5px;padding-left: 0;">
+                    Please select one leave type</mat-error>
             </mat-form-field>
             &nbsp;&nbsp;
             <mat-form-field style="width: 24%" appearance="outline">
@@ -52,36 +55,31 @@
 
         <ion-item class="divider" lines="full"></ion-item>
         <div style="display: block; white-space: nowrap;" formArrayName="dayTypes">
-            <!-- <ion-item lines="none">
-                            <ion-checkbox class="ionCheckbox" (ionChange)="halfDaySelected($event)" mode="ios">
-                            </ion-checkbox>
-                            <ion-label style="color: #7a8589;font-size: 14px;margin: 0;
-                            padding-left: 8px;">Half day</ion-label>
-                        </ion-item> -->
-            <div style="display: block; white-space: nowrap;" *ngFor="let dayType of dayTypes.controls; let i=index">
+            <div style="display: block; white-space: nowrap;" *ngFor="let dayType of dayTypes.controls; let i=index"
+                [formGroupName]="i">
                 <mat-form-field appearance="outline" style="width: 30%;">
                     <mat-label>Day types</mat-label>
-                    <!--  -->
-                    <mat-select class="selectLeave" [formControlName]="i" [(value)]="dayTypes[i]"
-                        (selectionChange)="dayTypesChanged($event)">
+                    <mat-select class="selectLeave" formControlName="name"
+                        (selectionChange)="dayTypesChanged($event, i)">
                         <mat-option value="0"> Full Day</mat-option>
                         <mat-option value="1"> Half Day</mat-option>
-                        <mat-option value="2"> Quarter Day</mat-option>
+                        <mat-option value="2" *ngIf="daysCount === 1"> Quarter Day</mat-option>
                     </mat-select>
                 </mat-form-field>
                 &nbsp;&nbsp;
-                <mat-form-field appearance="outline" style="width: 32%;" *ngIf="dayTypes[i] == '1'">
-                    <mat-label>Half day dates</mat-label>
-                    <mat-select class="selectLeave" [(value)]="dayTypes[i].halfDaydates"
-                        (selectionChange)="halfDaySelectionChanged($event,i)" [disabled]="disabledHalfDayDate" multiple>
-                        <mat-option *ngFor="let date of dateArray; let i=index" [value]="date">
-                            {{date | date:'M/d/y'}}</mat-option>
+                <mat-form-field appearance="outline" style="width: 32%;" *ngIf="dayTypes.value[i].name == '1' ">
+                    <mat-label>Half day dates </mat-label>
+                    <mat-select class="selectLeave" (selectionChange)="halfDaySelectionChanged($event,i)"
+                        (openedChange)="open(i)" multiple>
+                        <mat-option *ngFor="let selectArray of dayTypes.controls[i].value.selectArray[0]; let j=index"
+                            [value]="selectArray" [disabled]="dayTypes.controls[i].value.status[0][j]"
+                            (click)="valueSelected(dayTypes.controls[i].value.selectArray[0], selectArray,i, j)">
+                            {{selectArray | date:'M/d/y'}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 &nbsp;&nbsp;
                 <mat-radio-group class="example-radio-group" (change)="timeSlotChanged($event,i)" style="width: 24%"
-                    *ngIf="dayTypes[i] == '1'" [(ngModel)]="dayTypes[i].timeSlot" [disabled]="!halfDayOptionSelected"
-                    [ngModelOptions]="{standalone: true}">
+                    *ngIf="dayTypes.value[i].name == '1' " [value]="dayTypes.controls[i].value.selectArray[1]">
                     <mat-radio-button value="AM">AM
                     </mat-radio-button>
                     <mat-radio-button style="padding-left: 10px;" value="PM">PM
@@ -103,12 +101,13 @@
         </mat-form-field>
 
         <div style="text-align: center;">
-            <ion-button shape="round" fill="outline" (click)="applyLeaveForm.reset(); daysAvailable='';daysCount='0'"
+            <ion-button shape="round" fill="outline"
+                (click)="applyLeaveForm.reset(); daysAvailable='';daysCount='0';minDate='';maxDate='';clearArrayList()"
                 style="height: 27px; font-size: 12px;text-transform: none">Clear
             </ion-button>
             <ion-button shape="round" style="height: 27px;font-size: 12px;width: 115px;text-transform: none"
                 [disabled]="!applyLeaveForm.valid"
-                (click)="postData(); applyLeaveForm.reset(); daysAvailable='';daysCount='0'">
+                (click)="postData(); applyLeaveForm.reset();daysAvailable='';daysCount='0';minDate='';maxDate='';">
                 Apply for {{daysCount}} days
             </ion-button>
         </div>

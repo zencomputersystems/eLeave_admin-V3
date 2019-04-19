@@ -117,5 +117,8 @@ export class SideMenuNavigationComponent implements OnInit {
   iconMenuClosedHandler() {
     this.menu.open('custom');
   }
+  logout(event){
+    window.location.href = '/login';
+  }
 
 }

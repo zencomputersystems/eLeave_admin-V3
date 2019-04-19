@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-invite-more',
@@ -23,8 +22,8 @@ export class InviteMorePage implements OnInit {
         return this.employeeList;
     }
 
-    constructor(private apiService: APIService, private router: Router,
-    ) { }
+    constructor(private apiService: APIService) {
+    }
 
     ngOnInit() {
         this.searchbar.setFocus();
@@ -35,7 +34,7 @@ export class InviteMorePage implements OnInit {
             },
             error => {
                 if (error) {
-                    this.router.navigate(['/login']);
+                    window.location.href = '/login';
                 }
             }
         );

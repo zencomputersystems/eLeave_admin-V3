@@ -1,6 +1,5 @@
 import { Component, OnInit, ElementRef, Renderer } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-account-setting',
@@ -9,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class AccountSettingPage implements OnInit {
 
-    constructor(private apiService: APIService, private router: Router) { }
+    constructor(private apiService: APIService) { }
 
     ngOnInit() {
         this.apiService.get_user_profile_list().subscribe(
@@ -18,7 +17,7 @@ export class AccountSettingPage implements OnInit {
             },
             error => {
                 if (error) {
-                    this.router.navigate(['/login']);
+                    window.location.href = '/login';
                 }
             }
         );

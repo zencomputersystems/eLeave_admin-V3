@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-personal',
@@ -17,7 +16,7 @@ export class PersonalPage implements OnInit {
         return this.list;
     }
 
-    constructor(private apiService: APIService, private router: Router) {
+    constructor(private apiService: APIService) {
     }
 
     ngOnInit() {
@@ -28,7 +27,7 @@ export class PersonalPage implements OnInit {
             },
             error => {
                 if (error) {
-                    this.router.navigate(['/login']);
+                    window.location.href = '/login';
                 }
             }
         );

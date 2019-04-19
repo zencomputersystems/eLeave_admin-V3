@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-employment-details',
@@ -17,7 +17,7 @@ export class EmploymentDetailsPage implements OnInit {
         return this.list;
     }
 
-    constructor(private apiService: APIService, private router: Router,
+    constructor(private apiService: APIService,
         private route: ActivatedRoute) {
     }
 
@@ -33,7 +33,7 @@ export class EmploymentDetailsPage implements OnInit {
             },
             error => {
                 if (error) {
-                    this.router.navigate(['/login']);
+                    window.location.href = '/login';
                 }
             }
         )

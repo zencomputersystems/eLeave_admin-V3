@@ -35,7 +35,7 @@ export class LeaveEntitlementPage implements OnInit {
             },
             error => {
                 if (error) {
-                    this.router.navigate(['/login']);
+                    window.location.href = '/login';
                 }
             }
         );

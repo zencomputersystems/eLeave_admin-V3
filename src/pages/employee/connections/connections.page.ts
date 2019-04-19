@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, Renderer } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-connections',
@@ -48,8 +48,8 @@ export class ConnectionsPage implements OnInit {
     public get disabledPreviousButton() {
         return this.disablePrevButton;
     }
-    constructor(private apiService: APIService, private router: Router,
-        private route: ActivatedRoute, private elRef: ElementRef, private renderer: Renderer) { }
+    constructor(private apiService: APIService, private route: ActivatedRoute,
+        private elRef: ElementRef, private renderer: Renderer) { }
 
     ngOnInit() {
         if (this.route.routeConfig.path.includes('connection')) {
@@ -65,7 +65,7 @@ export class ConnectionsPage implements OnInit {
             },
             error => {
                 if (error) {
-                    this.router.navigate(['/login']);
+                    window.location.href = '/login';
                 }
             }
         );

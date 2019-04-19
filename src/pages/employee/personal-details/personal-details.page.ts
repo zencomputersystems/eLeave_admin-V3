@@ -10,10 +10,8 @@ export enum maritalStatus {
 
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as _moment from 'moment';
-import { AuthService } from 'src/services/shared-service/auth.service';
 const moment = _moment;
 
 @Component({
@@ -58,8 +56,8 @@ export class PersonalDetailsPage implements OnInit {
         return this._date;
     }
 
-    constructor(private apiService: APIService, private router: Router,
-        private _formBuilder: FormBuilder, private auth: AuthService) {
+    constructor(private apiService: APIService,
+        private _formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
@@ -93,17 +91,10 @@ export class PersonalDetailsPage implements OnInit {
             },
             error => {
                 if (error) {
-                    this.router.navigate(['/login']);
+                    window.location.href = '/login';
                 }
             }
-            // response => {
-            //     this.router.navigate(['/login']);
-            // }
         );
-        // if (!this.auth.isAuthenticated) {
-        //     location.reload;
-        //     this.router.navigate(['/login']);
-        // }
     }
 
     clickToHideHeader() {
