@@ -29,23 +29,21 @@ export class EmployeeProfilePage implements OnInit {
             (data: any[]) => {
                 this.list = data;
                 this.userId = this.list.id;
-                console.log(this.list);
             },
             error => {
                 if (error) {
                     window.location.href = '/login';
                 }
+            },
+            () => {
+                const userId = this.list.id;
+                this.apiService.get_employment_details(userId).subscribe(
+                    data => {
+                        this.employmentlist = data;
+                    }
+                )
             }
         );
-        setTimeout(() => {
-            // const userId = this.list.id;
-            this.apiService.get_employment_details(this.userId).subscribe(
-                data => {
-                    this.employmentlist = data;
-                    console.log('employ:', this.employmentlist);
-                }
-            )
-        }, 1000);
     }
 
     clickAsFavourite() {
