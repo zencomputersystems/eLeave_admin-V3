@@ -14,6 +14,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { InlineSVGModule } from 'ng-inline-svg';
+import { SpinnerModule } from 'src/library/spinner/spinner.module';
 
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
         MatCardModule,
         MatMenuModule,
         InlineSVGModule,
+        SpinnerModule,
         RouterModule.forChild(routes)
     ],
     declarations: [ConnectionsPage]

@@ -5,6 +5,9 @@
     <ion-icon class="crossIcon" name="close" (click)="clickToHideHeader()"></ion-icon>
 </div>
 <ion-card>
+    <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
     <ion-card-header>
         <div *ngIf="!showEditProfile" style="right: 25px; position: absolute;" (click)="showEditProfile = true;">
             <div class="edit-profile-icon" [inlineSVG]="'assets/icon/Option/edit.svg'"></div>
@@ -244,5 +247,4 @@
             </ion-row>
         </ion-card-content>
     </div>
-
 </ion-card>

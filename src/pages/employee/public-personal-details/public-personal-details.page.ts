@@ -12,6 +12,7 @@ export class PublicPersonalDetailsPage implements OnInit {
     public employmentlist: any;
     public setAsFavourite = [];
     public numOfArray: boolean = false;
+    public showSpinner: boolean = true;
 
     // public removeList: any;
     // public showHeader: boolean = true;
@@ -27,30 +28,33 @@ export class PublicPersonalDetailsPage implements OnInit {
     constructor(private apiService: APIService) {
     }
 
+
     ngOnInit() {
         this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
-                console.log(this.list);
                 // this.removeList = this.list.personalDetail.emergencyContactNumber.contacts;
             },
             error => {
                 if (error) {
                     window.location.href = '/login';
                 }
+            },
+            () => {
+                const userId = this.list.id;
+                this.apiService.get_employment_details(userId).subscribe(
+                    data => {
+                        this.showSpinner = false;
+                        this.employmentlist = data;
+                    }
+                )
+
             }
         );
-        setTimeout(() => {
-            const userId = this.list.id;
-            this.apiService.get_employment_details(userId).subscribe(
-                data => {
-                    this.employmentlist = data;
-                    console.log('employ:', this.employmentlist);
-                }
-            )
-        }, 1000);
+
 
     }
+
 
     clickAsFavourite() {
         if (this.numOfArray) {

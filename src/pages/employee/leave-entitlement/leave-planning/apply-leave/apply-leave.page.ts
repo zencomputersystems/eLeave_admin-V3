@@ -34,6 +34,7 @@ export class ApplyLeavePage implements OnInit {
     ];
     public minDate: string;
     public maxDate: string;
+    public applyLeaveForm: FormGroup;
     private _userList: any;
     private _leaveTypeName: string;
     private _dateArray: any;
@@ -54,26 +55,9 @@ export class ApplyLeavePage implements OnInit {
         return this.applyLeaveForm.get('dayTypes') as FormArray;
     }
 
-    applyLeaveForm = new FormGroup({
-        dayTypes: new FormArray([
-            new FormGroup({
-                name: new FormControl('0'),
-                selectArray: new FormArray([
-                    new FormControl(['0']),
-                    new FormControl(''),
-                ]),
-                status: new FormControl([false])
-            })
-        ]),
-        leaveTypes: new FormControl('', Validators.required),
-        firstPicker: new FormControl('', Validators.required),
-        secondPicker: new FormControl('', Validators.required),
-        inputReason: new FormControl('', Validators.required),
-    });
-
-
     constructor(private apiService: APIService,
         private route: ActivatedRoute) {
+        this.applyLeaveForm = this.formGroup();
     }
 
     ngOnInit() {
@@ -84,7 +68,6 @@ export class ApplyLeavePage implements OnInit {
                 });
                 this.daysAvailable = params.balance;
                 this._leaveTypeId = params.id;
-                console.log(params, this.applyLeaveForm);
             });
 
 
@@ -92,7 +75,6 @@ export class ApplyLeavePage implements OnInit {
             (data: any[]) => {
                 this._userList = data;
                 this.entitlement = this._userList.entitlementDetail;
-                console.log('entitlement', this.entitlement);
             },
             error => {
                 if (error) {
@@ -104,6 +86,25 @@ export class ApplyLeavePage implements OnInit {
             let calendarApi = this.calendarComponent.getApi();
             calendarApi.render();
         }, 100);
+    }
+
+    formGroup() {
+        return new FormGroup({
+            dayTypes: new FormArray([
+                new FormGroup({
+                    name: new FormControl('0'),
+                    selectArray: new FormArray([
+                        new FormControl(['0']),
+                        new FormControl(''),
+                    ]),
+                    status: new FormControl([false])
+                })
+            ]),
+            leaveTypes: new FormControl('', Validators.required),
+            firstPicker: new FormControl('', Validators.required),
+            secondPicker: new FormControl('', Validators.required),
+            inputReason: new FormControl('', Validators.required),
+        });
     }
 
     postData() {
@@ -130,22 +131,7 @@ export class ApplyLeavePage implements OnInit {
     }
 
     clearArrayList() {
-        this.applyLeaveForm = new FormGroup({
-            dayTypes: new FormArray([
-                new FormGroup({
-                    name: new FormControl('0'),
-                    selectArray: new FormArray([
-                        new FormControl(['0']),
-                        new FormControl(''),
-                    ]),
-                    status: new FormControl([false])
-                })
-            ]),
-            leaveTypes: new FormControl('', Validators.required),
-            firstPicker: new FormControl('', Validators.required),
-            secondPicker: new FormControl('', Validators.required),
-            inputReason: new FormControl('', Validators.required),
-        });
+        this.applyLeaveForm = this.formGroup();
         this._arrayList = [];
         this._firstForm = [];
         this._secondForm = [];
@@ -205,6 +191,11 @@ export class ApplyLeavePage implements OnInit {
         }
     }
 
+    patchValueFunction(i: number, value: any, disabled: boolean, ) {
+        const valueFirst = (this.dayTypes.controls[i].value.status[0]).splice(value, 1, disabled);
+        return this.dayTypes.controls[0].patchValue([{ status: valueFirst }]);
+    }
+
     dayTypesChanged(event, index) {
         this._index = index;
         this.showAddIcon = true;
@@ -222,58 +213,96 @@ export class ApplyLeavePage implements OnInit {
         const selected = (this.dayTypes.controls[index].value.status).splice(0, 1, this._arrayList);
         this.dayTypes.controls[index].patchValue([{ status: selected }]);
         if (index == 0) {
+            for (let j = 0; j < this._firstFormIndex.length; j++) {
+                this.patchValueFunction(index, this._firstFormIndex[j], false)
+            }
             for (let j = 0; j < this._secondFormIndex.length; j++) {
-                const selected = (this.dayTypes.controls[0].value.status[0]).splice(this._secondFormIndex[j], 1, true);
-                this.dayTypes.controls[0].patchValue([{ status: selected }]);
+                this.patchValueFunction(index, this._secondFormIndex[j], true);
             }
             for (let j = 0; j < this._thirdFormIndex.length; j++) {
-                const selected1 = (this.dayTypes.controls[0].value.status[0]).splice(this._thirdFormIndex[j], 1, true);
-                this.dayTypes.controls[0].patchValue([{ status: selected1 }]);
+                this.patchValueFunction(index, this._thirdFormIndex[j], true);
             }
         } if (index == 1) {
             for (let j = 0; j < this._firstFormIndex.length; j++) {
-                const selected = (this.dayTypes.controls[1].value.status[0]).splice(this._firstFormIndex[j], 1, true);
-                this.dayTypes.controls[1].patchValue([{ status: selected }]);
+                this.patchValueFunction(index, this._firstFormIndex[j], true);
+            }
+            for (let j = 0; j < this._secondFormIndex.length; j++) {
+                this.patchValueFunction(index, this._secondFormIndex[j], false);
             }
             for (let j = 0; j < this._thirdFormIndex.length; j++) {
-                const selected1 = (this.dayTypes.controls[1].value.status[0]).splice(this._thirdFormIndex[j], 1, true);
-                this.dayTypes.controls[1].patchValue([{ status: selected1 }]);
+                this.patchValueFunction(index, this._thirdFormIndex[j], true);
             }
         } if (index == 2) {
             for (let j = 0; j < this._firstFormIndex.length; j++) {
-                const selected = (this.dayTypes.controls[2].value.status[0]).splice(this._firstFormIndex[j], 1, true);
-                this.dayTypes.controls[2].patchValue([{ status: selected }]);
+                this.patchValueFunction(index, this._firstFormIndex[j], true);
             }
             for (let j = 0; j < this._secondFormIndex.length; j++) {
-                const selected1 = (this.dayTypes.controls[2].value.status[0]).splice(this._secondFormIndex[j], 1, true);
-                this.dayTypes.controls[2].patchValue([{ status: selected1 }]);
+                this.patchValueFunction(index, this._secondFormIndex[j], true);
+            }
+            for (let j = 0; j < this._thirdFormIndex.length; j++) {
+                this.patchValueFunction(index, this._thirdFormIndex[j], false);
             }
         }
     }
 
     halfDaySelectionChanged(selectedDate, index) {
-        if (index) {
-            const list = this._dateArray;
-            const value = this.daysCount - (selectedDate.value.length * 0.5);
-            console.log('half Day selected1', selectedDate.value);
-            console.log('index1:', index);
-        } else {
-            const list2 = this._dateArray;
-            const value = this.daysCount - (selectedDate.value.length * 0.5);
-            console.log('half Day selected2', selectedDate.value);
-            console.log('index2:', index);
+        if (index == 0) {
+            let missing = null;
+            for (let i = 0; i < this._firstForm.length; i++) {
+                if (selectedDate.indexOf(this._firstForm[i]) == -1) {
+                    missing = this._firstForm[i];
+                    this.daysCount = this.daysCount + 0.5;
+                }
+            }
+            if (!missing) { this.daysCount = this.daysCount - 0.5; }
+            this._firstForm = selectedDate;
+        }
+        if (index == 1) {
+            let missing = null;
+            for (let i = 0; i < this._secondForm.length; i++) {
+                if (selectedDate.indexOf(this._secondForm[i]) == -1) {
+                    missing = this._secondForm[i];
+                    this.daysCount = this.daysCount + 0.5;
+                }
+            }
+            if (!missing) { this.daysCount = this.daysCount - 0.5; }
+            this._secondForm = selectedDate;
+        }
+        if (index == 2) {
+            let missing = null;
+            for (let i = 0; i < this._thirdForm.length; i++) {
+                if (selectedDate.indexOf(this._thirdForm[i]) == -1) {
+                    missing = this._thirdForm[i];
+                    this.daysCount = this.daysCount + 0.5;
+                }
+            }
+            if (!missing) { this.daysCount = this.daysCount - 0.5; }
+            this._thirdForm = selectedDate;
         }
     }
 
-    valueSelected(selectArrayList, selectArray, i, indexj) {
+    valueSelected(i, indexj) {
         if (i == 0) {
-            this._firstForm.push(selectArray);
-            this._firstFormIndex.push(indexj);
+            const index = this._firstFormIndex.findIndex(item => item === indexj);
+            if (index > -1) {
+                this._firstFormIndex.splice(index, 1);
+            } else {
+                this._firstFormIndex.push(indexj);
+            }
         } if (i == 1) {
-            this._secondForm.push(selectArray);
-            this._secondFormIndex.push(indexj);
+            const index = this._secondFormIndex.findIndex(item => item === indexj);
+            if (index > -1) {
+                this._secondFormIndex.splice(index, 1);
+            } else {
+                this._secondFormIndex.push(indexj);
+            }
         } if (i == 2) {
-            this._thirdForm.push(selectArray);
+            const index = this._thirdFormIndex.findIndex(item => item === indexj);
+            if (index > -1) {
+                this._thirdFormIndex.splice(index, 1);
+            } else {
+                this._thirdFormIndex.push(indexj);
+            }
             this._thirdFormIndex.push(indexj);
         }
     }

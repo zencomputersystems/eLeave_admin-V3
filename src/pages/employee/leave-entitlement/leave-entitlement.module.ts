@@ -18,6 +18,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { LeavePlanningPage } from './leave-planning/leave-planning.page';
 import { ApplyLeavePage } from './leave-planning/apply-leave/apply-leave.page';
 import { CalendarViewPage } from './leave-planning/calendar-view/calendar-view.page';
+import { SpinnerModule } from 'src/library/spinner/spinner.module';
 
 
 const routes: Routes = [
@@ -43,6 +44,7 @@ const routes: Routes = [
     MatNativeDateModule,
     ReactiveFormsModule,
     MatRadioModule,
+    SpinnerModule,
     RouterModule.forChild(routes)
   ],
   declarations: [LeaveEntitlementPage, LeavePlanningPage, ApplyLeavePage, CalendarViewPage]

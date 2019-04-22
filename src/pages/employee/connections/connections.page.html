@@ -25,7 +25,8 @@ margin: 0 auto;margin-top: 3%;">
 <div class="connectionsContainer" *ngIf="listView" [style.height]="connectionRoute ? '100%' : 'calc(100% - 58px)'"
     [style.width.%]="connectionRoute ? '100' : '95'">
     <div class="topHeader">
-        <p class="numOfPeople" [style.left.%]="connectionRoute ? '3' : '5'" *ngIf="employeeList">{{employeeList.length}}
+        <p class="numOfPeople" [style.left.%]="connectionRoute ? '3' : '5'" *ngIf="employeeList">
+            {{employeeList.length}}
             people</p>
         <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="clearDetails()"
             (ionChange)="changeDetails($event)"></ion-searchbar>
@@ -141,7 +142,8 @@ margin: 0 auto;margin-top: 3%;">
 <div class="connectionsContainer" *ngIf="gridView" [style.height]="connectionRoute ? '100%' : 'calc(100% - 58px)'"
     [style.width.%]="connectionRoute ? '100' : '95'">
     <div class="topHeader">
-        <p class="numOfPeople" [style.left.%]="connectionRoute ? '3' : '5'" *ngIf="employeeList">{{employeeList.length}}
+        <p class="numOfPeople" [style.left.%]="connectionRoute ? '3' : '5'" *ngIf="employeeList">
+            {{employeeList.length}}
             people</p>
         <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="clearDetails()"
             (ionChange)="changeDetails($event)"></ion-searchbar>
@@ -221,7 +223,6 @@ margin: 0 auto;margin-top: 3%;">
                 (click)="clickToNextPage(pageIndex+1)"></i>
         </div>
     </div>
-
 </div>
 
 <!-------------------------------------------Filter Options-------------------------------------->
@@ -263,4 +264,9 @@ margin: 0 auto;margin-top: 3%;">
             Apply filter
         </ion-button>
     </div>
+</div>
+
+<div style="width: 100%; height:100%; text-align: center;" [style.margin-top.%]="connectionRoute ? '-60' : '-30'"
+    *ngIf="showSpinner">
+    <app-spinner></app-spinner>
 </div>

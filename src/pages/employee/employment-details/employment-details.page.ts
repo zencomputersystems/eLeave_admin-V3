@@ -12,6 +12,7 @@ export class EmploymentDetailsPage implements OnInit {
     public showHeader: boolean = true;
     public progressPercentage: number = 80;
     public userId: string;
+    public showSpinner: boolean = true;
 
     get personalList() {
         return this.list;
@@ -30,6 +31,7 @@ export class EmploymentDetailsPage implements OnInit {
         this.apiService.get_employment_details(this.userId).subscribe(
             data => {
                 this.list = data;
+                this.showSpinner = false;
             },
             error => {
                 if (error) {

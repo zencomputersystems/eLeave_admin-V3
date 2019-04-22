@@ -26,6 +26,7 @@ export class PersonalDetailsPage implements OnInit {
     public showHeader: boolean = true;
     public progressPercentage: number = 80;
     public accessToken: any;
+    public showSpinner: boolean = true;
     public showEditProfile: boolean = false;
     public showEditContact: boolean = false;
     public selectedGender: string;
@@ -64,6 +65,7 @@ export class PersonalDetailsPage implements OnInit {
         this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
+                this.showSpinner = false;
                 this.removeList = this.list.personalDetail.emergencyContactNumber.contacts;
                 this._date = this._formBuilder.group({
                     firstPicker: ['', Validators.required]

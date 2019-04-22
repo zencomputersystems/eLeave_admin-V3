@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { SpinnerModule } from 'src/library/spinner/spinner.module';
 
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
     MatInputModule,
     MatSelectModule,
     ReactiveFormsModule,
+    SpinnerModule,
     RouterModule.forChild(routes)
   ],
   providers: [],

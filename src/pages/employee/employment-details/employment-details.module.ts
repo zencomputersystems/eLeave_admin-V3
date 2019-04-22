@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MatCardModule } from '@angular/material/card';
 import { EmploymentDetailsPage } from './employment-details.page';
 import { InlineSVGModule } from 'ng-inline-svg';
+import { SpinnerModule } from 'src/library/spinner/spinner.module';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
         IonicModule,
         MatCardModule,
         InlineSVGModule,
+        SpinnerModule,
         RouterModule.forChild(routes)
     ],
     declarations: [EmploymentDetailsPage]

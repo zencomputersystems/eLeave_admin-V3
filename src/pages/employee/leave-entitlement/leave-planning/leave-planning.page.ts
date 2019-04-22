@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class LeavePlanningPage implements OnInit {
 
     public list: any;
-
+    public showSpinner: boolean = true;
     get personalList() {
         return this.list;
     }
@@ -22,7 +22,7 @@ export class LeavePlanningPage implements OnInit {
         this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
-                console.log(this.list);
+                this.showSpinner = false;
             },
             error => {
                 if (error) {
