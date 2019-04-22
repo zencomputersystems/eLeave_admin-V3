@@ -191,16 +191,18 @@ export class ApplyLeavePage implements OnInit {
         }
     }
 
-    patchValueFunction(i: number, value: any, disabled: boolean, ) {
-        const valueFirst = (this.dayTypes.controls[i].value.status[0]).splice(value, 1, disabled);
-        return this.dayTypes.controls[0].patchValue([{ status: valueFirst }]);
-    }
-
     dayTypesChanged(event, index) {
         this._index = index;
         this.showAddIcon = true;
         if (event.value == '1') {
             this.open(index);
+        }
+    }
+
+    patchValueFunction(i: number, value: any, disabled: boolean) {
+        for (let j = 0; j < value.length; j++) {
+            const valueFirst = (this.dayTypes.controls[i].value.status[0]).splice(value[j], 1, disabled);
+            this.dayTypes.controls[0].patchValue([{ status: valueFirst }]);
         }
     }
 
@@ -213,70 +215,42 @@ export class ApplyLeavePage implements OnInit {
         const selected = (this.dayTypes.controls[index].value.status).splice(0, 1, this._arrayList);
         this.dayTypes.controls[index].patchValue([{ status: selected }]);
         if (index == 0) {
-            for (let j = 0; j < this._firstFormIndex.length; j++) {
-                this.patchValueFunction(index, this._firstFormIndex[j], false)
-            }
-            for (let j = 0; j < this._secondFormIndex.length; j++) {
-                this.patchValueFunction(index, this._secondFormIndex[j], true);
-            }
-            for (let j = 0; j < this._thirdFormIndex.length; j++) {
-                this.patchValueFunction(index, this._thirdFormIndex[j], true);
-            }
+            this.patchValueFunction(index, this._firstFormIndex, false)
+            this.patchValueFunction(index, this._secondFormIndex, true);
+            this.patchValueFunction(index, this._thirdFormIndex, true);
         } if (index == 1) {
-            for (let j = 0; j < this._firstFormIndex.length; j++) {
-                this.patchValueFunction(index, this._firstFormIndex[j], true);
-            }
-            for (let j = 0; j < this._secondFormIndex.length; j++) {
-                this.patchValueFunction(index, this._secondFormIndex[j], false);
-            }
-            for (let j = 0; j < this._thirdFormIndex.length; j++) {
-                this.patchValueFunction(index, this._thirdFormIndex[j], true);
-            }
+            this.patchValueFunction(index, this._firstFormIndex, true);
+            this.patchValueFunction(index, this._secondFormIndex, false);
+            this.patchValueFunction(index, this._thirdFormIndex, true);
         } if (index == 2) {
-            for (let j = 0; j < this._firstFormIndex.length; j++) {
-                this.patchValueFunction(index, this._firstFormIndex[j], true);
-            }
-            for (let j = 0; j < this._secondFormIndex.length; j++) {
-                this.patchValueFunction(index, this._secondFormIndex[j], true);
-            }
-            for (let j = 0; j < this._thirdFormIndex.length; j++) {
-                this.patchValueFunction(index, this._thirdFormIndex[j], false);
+            this.patchValueFunction(index, this._firstFormIndex, true);
+            this.patchValueFunction(index, this._secondFormIndex, true);
+            this.patchValueFunction(index, this._thirdFormIndex, false);
+        }
+    }
+
+    calculate(date, form) {
+        let missing = null;
+        for (let i = 0; i < form.length; i++) {
+            if (date.indexOf(form[i]) == -1) {
+                missing = form[i];
+                this.daysCount = this.daysCount + 0.5;
             }
         }
+        if (!missing) { this.daysCount = this.daysCount - 0.5; }
     }
 
     halfDaySelectionChanged(selectedDate, index) {
         if (index == 0) {
-            let missing = null;
-            for (let i = 0; i < this._firstForm.length; i++) {
-                if (selectedDate.indexOf(this._firstForm[i]) == -1) {
-                    missing = this._firstForm[i];
-                    this.daysCount = this.daysCount + 0.5;
-                }
-            }
-            if (!missing) { this.daysCount = this.daysCount - 0.5; }
+            this.calculate(selectedDate, this._firstForm);
             this._firstForm = selectedDate;
         }
         if (index == 1) {
-            let missing = null;
-            for (let i = 0; i < this._secondForm.length; i++) {
-                if (selectedDate.indexOf(this._secondForm[i]) == -1) {
-                    missing = this._secondForm[i];
-                    this.daysCount = this.daysCount + 0.5;
-                }
-            }
-            if (!missing) { this.daysCount = this.daysCount - 0.5; }
+            this.calculate(selectedDate, this._secondForm);
             this._secondForm = selectedDate;
         }
         if (index == 2) {
-            let missing = null;
-            for (let i = 0; i < this._thirdForm.length; i++) {
-                if (selectedDate.indexOf(this._thirdForm[i]) == -1) {
-                    missing = this._thirdForm[i];
-                    this.daysCount = this.daysCount + 0.5;
-                }
-            }
-            if (!missing) { this.daysCount = this.daysCount - 0.5; }
+            this.calculate(selectedDate, this._thirdForm);
             this._thirdForm = selectedDate;
         }
     }
