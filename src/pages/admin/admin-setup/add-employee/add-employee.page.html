@@ -1,0 +1,42 @@
+<div class="container">
+    <p class="p1">Uh Oh! You haven't create employee profile yet.</p>
+    <p class="p2">Start creating your employee profile to fully use our amazing features! Choose one from the options
+        below which close to your heart</p>
+    <div style="display:inline-block;width: 100%;padding-bottom: 10px;">
+        <div style="float: left;padding-left: 23%;padding-top: 6%;width: 50%;">
+            <mat-card class="matCard1">
+                <div style="text-align: center;padding: 10px;">
+                    <img src="assets/icon/Add_employee/person_icon.png" style="width:24px; height: 50px">
+                </div>
+                <mat-card-header>
+                    <mat-card-title style="color: #7a8589;font-size: 16px;text-align: center;">
+                        Add an employee
+                    </mat-card-title>
+                    <mat-card-subtitle style="color: #7a8589;font-size: 12px;text-align: center;padding-top: 10px;">
+                        Choose this option if you would like to add an employee one by one</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+        </div>
+        <div style="float: right;padding-top: 6%;width: 50%;">
+            <mat-card class="matCard2">
+                <div style="text-align: center;padding: 10px;">
+                    <img src="assets/icon/Add_employee/group_icon.png" style="width:41px; height: 50px">
+                </div>
+                <mat-card-header>
+                    <mat-card-title style="color: #7a8589;font-size: 16px;text-align: center;">
+                        Import them all at once
+                    </mat-card-title>
+                    <mat-card-subtitle style="color: #7a8589;font-size: 12px;text-align: center;padding-top: 10px;">
+                        Download our CSV template below and upload it to us when your're done filling it out
+                    </mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+        </div>
+    </div>
+    <div style="float: right; padding-right: 33%">
+        <div style="color:#057dcd; padding-right: 5px; display: inline-block; font-size: 12px; cursor: pointer;">
+            Download the template
+        </div>
+        <div class="proceed-icon" [inlineSVG]="'assets/icon/Option/arrow-pointing-to-right.svg'"></div>
+    </div>
+</div>

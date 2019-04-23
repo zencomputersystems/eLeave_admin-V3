@@ -8,7 +8,7 @@ import { APIService } from 'src/services/shared-service/api.service';
 })
 export class AdminInvitesPage implements OnInit {
 
-    public employeeList: any;
+    public list: any;
     public arrowDownName: boolean = true;
     public arrowDownId: boolean = true;
     public totalItem: number;
@@ -21,7 +21,7 @@ export class AdminInvitesPage implements OnInit {
     public disablePrevButton: boolean = true;
     public listView: boolean = true;
     public gridView: boolean = false;
-    public setAsFavourite = [];
+    public favouriteList = [];
 
 
     public get personalList() {
@@ -44,9 +44,9 @@ export class AdminInvitesPage implements OnInit {
     ngOnInit() {
         this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
-                this.employeeList = data;
+                this.list = data;
                 this.pageIndex = 1;
-                this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
+                this.loopItemsPerPage(this.pageIndex, this.list, this.itemsPerPage, this.startEndNumber);
             },
             error => {
                 if (error) {
@@ -59,9 +59,9 @@ export class AdminInvitesPage implements OnInit {
     endPoint() {
         this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
-                this.employeeList = data;
+                this.list = data;
                 this.pageIndex = 1;
-                this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
+                this.loopItemsPerPage(this.pageIndex, this.list, this.itemsPerPage, this.startEndNumber);
             }
         );
     }
@@ -73,7 +73,7 @@ export class AdminInvitesPage implements OnInit {
         this.disablePrevButton = true;
         this.itemsPerPage = 6;
         this.startEndNumber = 5;
-        this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);
+        this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
     }
 
     viewOnGrid() {
@@ -83,12 +83,12 @@ export class AdminInvitesPage implements OnInit {
         this.disablePrevButton = true;
         this.itemsPerPage = 8;
         this.startEndNumber = 7;
-        this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);
+        this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
     }
 
     loopItemsPerPage(index: number, data: any, itemEachPage: number, startEndNumber) {
         this.pageIndex = index;
-        this.totalItem = this.employeeList.length;
+        this.totalItem = this.list.length;
         this.totalPageIndex = this.totalItem / itemEachPage;
         this.totalPageIndex = Math.ceil(this.totalPageIndex);
         const startNum = (this.pageIndex * itemEachPage) - startEndNumber;
@@ -129,78 +129,78 @@ export class AdminInvitesPage implements OnInit {
 
     clickToNextPage(index: number) {
         if (!(index > this.totalPageIndex)) {
-            this.loopItemsPerPage(index, this.employeeList, this.itemsPerPage, this.startEndNumber);
+            this.loopItemsPerPage(index, this.list, this.itemsPerPage, this.startEndNumber);
         }
         this.enableDisableNextButton();
     }
 
     clickToPrevPage(index: number) {
         if (!(index < 1)) {
-            this.loopItemsPerPage(index, this.employeeList, this.itemsPerPage, this.startEndNumber);
+            this.loopItemsPerPage(index, this.list, this.itemsPerPage, this.startEndNumber);
         }
         this.enableDisablePrevButton();
     }
 
     sortAscName() {
         this.arrowDownName = true;
-        this.employeeList = this.employeeList.slice(0);
-        this.employeeList.sort(function (a, b) {
+        this.list = this.list.slice(0);
+        this.list.sort(function (a, b) {
             var x = a.employeeName.toLowerCase();
             var y = b.employeeName.toLowerCase();
             return x < y ? -1 : x > y ? 1 : 0;
         });
-        this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);
+        this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
 
     sortDesName() {
         this.arrowDownName = false;
-        this.employeeList = this.employeeList.slice(0);
-        this.employeeList.sort(function (a, b) {
+        this.list = this.list.slice(0);
+        this.list.sort(function (a, b) {
             var x = a.employeeName.toLowerCase();
             var y = b.employeeName.toLowerCase();
             return x < y ? 1 : x > y ? -1 : 0;
         });
-        this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);
+        this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
 
     sortAscId() {
         this.arrowDownId = true;
-        this.employeeList = this.employeeList.slice(0);
-        this.employeeList.sort(function (a, b) {
+        this.list = this.list.slice(0);
+        this.list.sort(function (a, b) {
             var x = a.staffNumber;
             var y = b.staffNumber;
             return x < y ? -1 : x > y ? 1 : 0;
         });
-        this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);
+        this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
 
-    sortDesId() {
+    sortDescId() {
         this.arrowDownId = false;
-        this.employeeList = this.employeeList.slice(0);
-        this.employeeList.sort(function (a, b) {
+        this.list = this.list.slice(0);
+        this.list.sort(function (a, b) {
             var x = a.staffNumber;
             var y = b.staffNumber;
             return x < y ? 1 : x > y ? -1 : 0;
         });
-        this.loopItemsPerPage(1, this.employeeList, this.itemsPerPage, this.startEndNumber);
+        this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
 
-    filterDetails(text: any) {
+    filter(text: any) {
         if (text && text.trim() != '') {
-            this.employeeList = this.employeeList.filter((item: any) => {
+            this.list = this.list.filter((item: any) => {
                 return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
 
             this.pageIndex = 1;
-            this.loopItemsPerPage(this.pageIndex, this.employeeList, this.itemsPerPage, this.startEndNumber);
+            this.loopItemsPerPage(this.pageIndex, this.list, this.itemsPerPage, this.startEndNumber);
             this.enableDisableNextButton();
             this.enableDisablePrevButton();
         }
@@ -218,32 +218,32 @@ export class AdminInvitesPage implements OnInit {
             this.disableNextButton = false;
             this.disablePrevButton = true;
         } else {
-            this.filterDetails(text.srcElement.value);
+            this.filter(text.srcElement.value);
         }
     }
 
-    userIDExists(ID: string) {
-        return this.setAsFavourite.some(function (el) {
+    checkUserID(ID: string) {
+        return this.favouriteList.some(function (el) {
             return el.itemId === ID;
         });
     }
 
 
-    clickAsFavourite(index: number, item: any) {
-        const objects = { index: index, itemId: item.id };
-        const a = objects;
-        if (this.setAsFavourite.length < 1) {
-            this.setAsFavourite.push(a);
-        } else {
-            if (this.userIDExists(item.id)) {
-                for (let i = 0; i < this.setAsFavourite.length; i++) {
-                    if (this.setAsFavourite[i].index == index && this.setAsFavourite[i].itemId == item.id) {
-                        this.setAsFavourite.splice(i, 1);
+    saveAsFavourite(index: number, item: any) {
+        const create = { index: index, itemId: item.id };
+        const items = create;
+        if (this.favouriteList.length > 0) {
+            if (this.checkUserID(item.id)) {
+                for (let i = 0; i < this.favouriteList.length; i++) {
+                    if (this.favouriteList[i].index == index && this.favouriteList[i].itemId == item.id) {
+                        this.favouriteList.splice(i, 1);
                     }
                 }
             } else {
-                this.setAsFavourite.push(a);
+                this.favouriteList.push(items);
             }
+        } else {
+            this.favouriteList.push(items);
         }
     };
 }

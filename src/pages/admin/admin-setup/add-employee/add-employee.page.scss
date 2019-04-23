@@ -1,0 +1,52 @@
+:host {
+  top: 48px;
+  overflow: auto;
+  .container {
+    padding-top: 45px;
+  }
+  .p1 {
+    color: #20291f;
+    text-align: center;
+    font-weight: 500;
+  }
+  .p2 {
+    color: #7a8589;
+    font-size: 14px;
+    text-align: center;
+    width: 45%;
+    margin: 0 auto;
+  }
+  .matCard1 {
+    width: 88%;
+    border-radius: 3px;
+    border: solid 0.5px #dfe3e6;
+    background-color: #ffffff;
+    min-width: 150px;
+    max-height: 260px;
+    cursor: pointer;
+  }
+  .matCard1:hover {
+    border: solid 1px #057dcd;
+  }
+  .matCard2 {
+    width: 48%;
+    border-radius: 3px;
+    border: solid 0.5px #dfe3e6;
+    background-color: #ffffff;
+    min-width: 150px;
+    max-height: 260px;
+    cursor: pointer;
+  }
+  .matCard2:hover {
+    border: solid 1px #057dcd;
+  }
+  .proceed-icon {
+    width: 30px;
+    height: 16px;
+    fill: #057dcd;
+    display: inline-block;
+    position: absolute;
+    margin-top: 3px;
+    cursor: pointer;
+  }
+}
