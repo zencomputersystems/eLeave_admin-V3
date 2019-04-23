@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { AddEmployeePage } from './add-employee.page';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
+import { BulkImportPage } from './bulk-import/bulk-import.page';
 
 
 const routes: Routes = [
@@ -27,6 +28,6 @@ const routes: Routes = [
         SpinnerModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [AddEmployeePage]
+    declarations: [AddEmployeePage, BulkImportPage]
 })
 export class AddEmployeeModule { }

@@ -1,0 +1,24 @@
+:host {
+  top: 48px;
+  .outerBox {
+    border-radius: 4px;
+    box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.16);
+    background-color: #ffffff;
+    width: 60%;
+    height: 60%;
+    margin: 0 auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+  }
+  .upload-icon {
+    width: 80px;
+    height: 60px;
+    fill: #057dcd;
+    cursor: pointer;
+    margin: 0 auto;
+  }
+}
