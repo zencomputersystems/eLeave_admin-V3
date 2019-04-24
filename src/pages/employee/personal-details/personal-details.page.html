@@ -195,29 +195,30 @@
             <ion-label style="display: block; padding-left: 10.6%;padding-top: 5px;">EMERGENCY CONTACT(S)</ion-label>
             <ion-row class="detailsRow" *ngFor="let item of removeList; let index = index">
                 <ion-col>
-                    <p *ngIf="!showEditContact" style="display: inline">
+                    <p *ngIf="!showEditContact[index]" style="display: inline">
                         {{item.contactName}}</p>
-                    <mat-form-field *ngIf="showEditContact">
+                    <mat-form-field *ngIf="showEditContact[index]">
                         <input matInput placeholder="Contact Name" [(ngModel)]="removeList[index].contactName">
                     </mat-form-field>
                     &nbsp;
-                    <p *ngIf="!showEditContact" style="display: inline;position: absolute; right: 50%;">
+                    <p *ngIf="!showEditContact[index]" style="display: inline;position: absolute; right: 50%;">
                         {{item.contactNumber}}</p>
-                    <mat-form-field *ngIf="showEditContact">
+                    <mat-form-field *ngIf="showEditContact[index]">
                         <input matInput placeholder="Contact Number" [(ngModel)]="removeList[index].contactNumber">
                     </mat-form-field>
-                    <div class="delete-icon" [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeContact(i)">
+                    <div class="delete-icon" *ngIf="!showEditContact[index]"
+                        [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeContact(index)">
                     </div>
-                    <div class="edit-pencil-icon" [inlineSVG]="'assets/icon/Option/pencil.svg'"
-                        (click)="showEditContact = true">
+                    <div class="edit-pencil-icon" *ngIf="!showEditContact[index]"
+                        [inlineSVG]="'assets/icon/Option/pencil.svg'" (click)="editContact(index)">
                     </div>
-                    <div style="text-align: right;" *ngIf="showEditContact">
-                        <ion-button fill="clear" (click)="showEditContact = false"
+                    <div style="float: right;" *ngIf="showEditContact[index]">
+                        <ion-button fill="clear" (click)="cancel(index)"
                             style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
                             cancel
                         </ion-button>
                         <div style="display: inline-block"></div>
-                        <ion-button shape="round" fill="outline" (click)="patchData()"
+                        <ion-button shape="round" fill="outline" (click)="patchData(); cancel(index)"
                             style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;"
                             color="primary">
                             save

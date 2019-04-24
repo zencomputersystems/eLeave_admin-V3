@@ -28,7 +28,7 @@ export class PersonalDetailsPage implements OnInit {
     public accessToken: any;
     public showSpinner: boolean = true;
     public showEditProfile: boolean = false;
-    public showEditContact: boolean = false;
+    public showEditContact: boolean[] = [];
     public selectedGender: string;
     public selectedMaritalStatus: string;
     public selectedAddress: string;
@@ -67,6 +67,11 @@ export class PersonalDetailsPage implements OnInit {
                 this.list = data;
                 this.showSpinner = false;
                 this.removeList = this.list.personalDetail.emergencyContactNumber.contacts;
+                console.log(this.removeList);
+                for (let i = 0; i < this.removeList.length; i++) {
+                    this.showEditContact.push(false);
+                }
+                console.log(this.showEditContact);
                 this._date = this._formBuilder.group({
                     firstPicker: ['', Validators.required]
                 });
@@ -107,6 +112,16 @@ export class PersonalDetailsPage implements OnInit {
         this.removeList.splice(index, 1);
         this.patchData();
     }
+    editContact(index) {
+        for (let i = 0; i < this.removeList.length; i++) {
+            this.showEditContact.splice(index, 1, true);
+        }
+    }
+    cancel(index){
+        for (let i = 0; i < this.removeList.length; i++) {
+            this.showEditContact.splice(index, 1, false);
+        }
+    }
     genderChanged(event) {
         this.selectedGender = event.value;
     }
@@ -121,7 +136,8 @@ export class PersonalDetailsPage implements OnInit {
     }
     patchData() {
         this.showEditProfile = false;
-        this.showEditContact = false;
+        // this.showEditContact = false;
+        // this.cancel(index);
         this._datatoUpdate = {
             "id": this.list.id,
             "nickname": 'wantan',
