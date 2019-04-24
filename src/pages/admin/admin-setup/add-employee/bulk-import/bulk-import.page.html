@@ -1,13 +1,13 @@
-<div class="outerBox" *ngIf="open">
-    <ion-icon name="close" style="color:#bebebe;padding: 10px;font-size: 25px;cursor: pointer;" (click)="open = false;">
+<div class="outerBox">
+    <ion-icon name="close" style="color:#bebebe;padding: 10px;font-size: 25px;cursor: pointer;" (click)="onCloseClick()">
     </ion-icon>
     <div style="border-radius: 3px;border: dashed 1.5px #bebebe;background-color: #f2f2f2;
-    width: 35%;margin: 0 auto;padding: 5%;">
+    width: 35%;margin: 0 auto;padding: 5%;min-width: 150px;">
         <div class="upload-icon" [inlineSVG]="'assets/icon/Add_employee/upload-file.svg'"></div>
         <p style="color:#7a8589;text-align: center;font-size: 14px;">Drag and drop document here to upload</p>
         <p style="color:#7a8589;text-align: center;font-size: 14px;font-weight: 600;">OR</p>
         <div style="text-align: center;">
-            <ion-button style="font-size: 12px;height: 35px;width: 140px;text-transform: none;" color="primary">Browse
+            <ion-button style="font-size: 12px;height: 35px;width: 60%;text-transform: none;" color="primary">Browse
                 file
             </ion-button>
         </div>

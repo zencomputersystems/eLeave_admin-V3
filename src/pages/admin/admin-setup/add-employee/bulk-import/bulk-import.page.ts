@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-bulk-import',
@@ -7,13 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BulkImportPage implements OnInit {
 
-    public open: boolean = true;
-
-    constructor() {
+    constructor(public dialogRef: MatDialogRef<BulkImportPage>,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
     ngOnInit() {
 
     }
+
+    onCloseClick(): void {
+        this.dialogRef.close();
+    }
+
+
 
 }

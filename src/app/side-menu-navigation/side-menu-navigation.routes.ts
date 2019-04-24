@@ -13,6 +13,8 @@ import { EmploymentDetailsPage } from 'src/pages/employee/employment-details/emp
 import { LeaveEntitlementPage } from 'src/pages/employee/leave-entitlement/leave-entitlement.page';
 import { AccountSettingPage } from 'src/pages/employee/account-setting/account-setting.page';
 import { LeavePlanningPage } from 'src/pages/employee/leave-entitlement/leave-planning/leave-planning.page';
+import { AddEmployeePage } from 'src/pages/admin/admin-setup/add-employee/add-employee.page';
+import { BulkImportPage } from 'src/pages/admin/admin-setup/add-employee/bulk-import/bulk-import.page';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -22,7 +24,7 @@ export const sideMenuNavigationRoutes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: AdminInvitesPage },
-            { path: 'inbox', component: EmployeeProfilePage },
+            { path: 'inbox', component: AddEmployeePage }, //EmployeeProfilePage
             { path: 'plan-my-leave', component: LeavePlanningPage },
             { path: 'employee-directory', component: ConnectionsPage },
             {

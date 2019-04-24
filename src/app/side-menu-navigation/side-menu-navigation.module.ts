@@ -14,6 +14,7 @@ import { EmployeeProfileModule } from 'src/pages/admin/admin-setup/employee-prof
 import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
 import { PublicPersonalDetailsModule } from 'src/pages/employee/public-personal-details/public-personal-details.module';
+import { AddEmployeeModule } from 'src/pages/admin/admin-setup/add-employee/add-employee.module';
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import { PublicPersonalDetailsModule } from 'src/pages/employee/public-personal-
         AdminInvitesModule,
         EmployeeProfileModule,
         MatMenuModule,
+        AddEmployeeModule,
         RouterModule.forChild(sideMenuNavigationRoutes)
     ],
     providers: [AuthGuard],
