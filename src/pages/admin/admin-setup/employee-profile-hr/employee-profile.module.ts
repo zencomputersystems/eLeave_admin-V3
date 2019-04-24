@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { PersonalPage } from './personal/personal.page';
 import { EmploymentPage } from './employment/employment.page';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 const routes: Routes = [
@@ -41,6 +42,8 @@ const routes: Routes = [
         MatTabsModule,
         InlineSVGModule.forRoot(),
         HttpClientModule,
+        MatDatepickerModule,
+        ReactiveFormsModule,
         RouterModule.forChild(routes)
     ],
     declarations: [EmployeeProfilePage, PersonalPage, EmploymentPage]

@@ -67,11 +67,11 @@ export class PersonalDetailsPage implements OnInit {
                 this.list = data;
                 this.showSpinner = false;
                 this.removeList = this.list.personalDetail.emergencyContactNumber.contacts;
-                console.log(this.removeList);
-                for (let i = 0; i < this.removeList.length; i++) {
-                    this.showEditContact.push(false);
+                if (this.removeList !== undefined) {
+                    for (let i = 0; i < this.removeList.length; i++) {
+                        this.showEditContact.push(false);
+                    }
                 }
-                console.log(this.showEditContact);
                 this._date = this._formBuilder.group({
                     firstPicker: ['', Validators.required]
                 });
@@ -112,16 +112,12 @@ export class PersonalDetailsPage implements OnInit {
         this.removeList.splice(index, 1);
         this.patchData();
     }
-    editContact(index) {
+    editContact(index, booValue) {
         for (let i = 0; i < this.removeList.length; i++) {
-            this.showEditContact.splice(index, 1, true);
+            this.showEditContact.splice(index, 1, booValue);
         }
     }
-    cancel(index){
-        for (let i = 0; i < this.removeList.length; i++) {
-            this.showEditContact.splice(index, 1, false);
-        }
-    }
+
     genderChanged(event) {
         this.selectedGender = event.value;
     }
@@ -136,8 +132,6 @@ export class PersonalDetailsPage implements OnInit {
     }
     patchData() {
         this.showEditProfile = false;
-        // this.showEditContact = false;
-        // this.cancel(index);
         this._datatoUpdate = {
             "id": this.list.id,
             "nickname": 'wantan',

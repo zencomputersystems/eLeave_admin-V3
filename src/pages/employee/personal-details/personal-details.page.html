@@ -210,15 +210,15 @@
                         [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeContact(index)">
                     </div>
                     <div class="edit-pencil-icon" *ngIf="!showEditContact[index]"
-                        [inlineSVG]="'assets/icon/Option/pencil.svg'" (click)="editContact(index)">
+                        [inlineSVG]="'assets/icon/Option/pencil.svg'" (click)="editContact(index, true)">
                     </div>
                     <div style="float: right;" *ngIf="showEditContact[index]">
-                        <ion-button fill="clear" (click)="cancel(index)"
+                        <ion-button fill="clear" (click)="editContact(index, false)"
                             style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
                             cancel
                         </ion-button>
                         <div style="display: inline-block"></div>
-                        <ion-button shape="round" fill="outline" (click)="patchData(); cancel(index)"
+                        <ion-button shape="round" fill="outline" (click)="patchData(); editContact(index, false)"
                             style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;"
                             color="primary">
                             save

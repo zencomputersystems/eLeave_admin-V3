@@ -16,6 +16,23 @@
   ion-label {
     color: #20291f;
     font-weight: 500;
+    display: block;
+  }
+  .edit-pencil-icon {
+    width: 13px;
+    height: 13px;
+    fill: #dfe3e6;
+    float: right;
+    cursor: pointer;
+  }
+  .delete-icon {
+    width: 13px;
+    height: 13px;
+    fill: #dfe3e6;
+    cursor: pointer;
+    margin-left: 1%;
+    float: right;
+    margin-right: 8%;
   }
   .family-icon {
     width: 80px;
