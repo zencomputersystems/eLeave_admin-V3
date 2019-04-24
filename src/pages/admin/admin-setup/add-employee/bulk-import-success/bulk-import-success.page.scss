@@ -1,0 +1,20 @@
+:host {
+  .tick-icon {
+    width: 100px;
+    height: 100px;
+    fill: #20291f;
+    position: absolute;
+    top: -17%;
+    left: -8%;
+  }
+  .outerBox {
+    border-radius: 4px;
+    box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.16);
+    background-color: #ffffff;
+    width: 50%;
+    height: 60%;
+    margin: auto;
+    padding: 7%;
+    min-width: 260px;
+  }
+}

@@ -10,6 +10,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { BulkImportPage } from './bulk-import/bulk-import.page';
 import { MatDialogModule } from '@angular/material/dialog';
+import { BulkImportSuccessPage } from './bulk-import-success/bulk-import-success.page';
 
 
 const routes: Routes = [
@@ -30,7 +31,7 @@ const routes: Routes = [
         MatDialogModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [AddEmployeePage, BulkImportPage],
+    declarations: [AddEmployeePage, BulkImportPage, BulkImportSuccessPage],
     entryComponents: [BulkImportPage]
 })
 export class AddEmployeeModule { }

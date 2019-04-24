@@ -7,6 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SpinnerComponent implements OnInit {
 
+    @Input() width = '40';
+    @Input() height = '100';
     @Input() name = 'lines';
     @Input() color = 'primary';
 

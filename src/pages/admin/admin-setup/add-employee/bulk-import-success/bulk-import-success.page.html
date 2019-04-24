@@ -1,0 +1,13 @@
+<div class="outerBox">
+    <div style="position: relative;display: inline-block;left: 39%;">
+        <img src="assets/icon/Add_employee/background.png" style="width: 85px;">
+        <div class="tick-icon" [inlineSVG]="'assets/icon/Add_employee/tick.svg'"></div>
+    </div>
+    <p style="color: #20291f; font-size:18px;text-align: center">
+        You have uploaded successfully!</p>
+    <p style="color: #7a8589;font-size:14px;text-align: center">
+        Please wait while we are directing you to the employees list</p>
+    <div style="text-align: center;" *ngIf="showSpinner">
+        <app-spinner [name]="spinnerName" [width]="widthValue" [height]="heightValue"></app-spinner>
+    </div>
+</div>
