@@ -176,6 +176,7 @@ export class PersonalPage implements OnInit {
 
     removeContact(index: number) {
         this.removeList.splice(index, 1);
+        this.patchAllData();
     }
 
     editContact(index, value) {

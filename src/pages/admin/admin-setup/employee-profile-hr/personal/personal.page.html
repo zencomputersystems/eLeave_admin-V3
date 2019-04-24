@@ -67,7 +67,7 @@
         <ion-label>BIRTHDATE</ion-label>
         <p *ngIf="!editProfile">{{personalList.personalDetail.dob}}</p>
         <form [formGroup]="dateForm">
-            <mat-form-field *ngIf="editProfile" style="width:80%">
+            <mat-form-field *ngIf="editProfile" style="width:67%">
                 <input matInput [matDatepicker]="datePicker" formControlName="datepicker" required
                     (dateChange)="dateChange()">
                 <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
