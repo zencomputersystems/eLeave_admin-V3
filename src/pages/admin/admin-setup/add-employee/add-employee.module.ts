@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
@@ -11,6 +11,9 @@ import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { BulkImportPage } from './bulk-import/bulk-import.page';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BulkImportSuccessPage } from './bulk-import-success/bulk-import-success.page';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FileDropModule } from 'ngx-file-drop';
 
 
 const routes: Routes = [
@@ -29,9 +32,13 @@ const routes: Routes = [
         InlineSVGModule,
         SpinnerModule,
         MatDialogModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        FileDropModule,
         RouterModule.forChild(routes)
     ],
     declarations: [AddEmployeePage, BulkImportPage, BulkImportSuccessPage],
-    entryComponents: [BulkImportPage]
+    entryComponents: [BulkImportPage, BulkImportSuccessPage]
 })
 export class AddEmployeeModule { }

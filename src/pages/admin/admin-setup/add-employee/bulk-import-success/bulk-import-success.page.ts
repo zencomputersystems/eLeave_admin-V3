@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-bulk-import-success',
@@ -10,11 +11,14 @@ export class BulkImportSuccessPage implements OnInit {
     public spinnerName = "dots";
     public showSpinner = true;
 
-    constructor() {
+    constructor(public dialogRef: MatDialogRef<BulkImportSuccessPage>,
+    ) {
     }
 
     ngOnInit() {
-
+        setTimeout(() => {
+            this.dialogRef.close();
+        }, 3000);
     }
 
 }
