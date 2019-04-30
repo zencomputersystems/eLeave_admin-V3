@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as _moment from 'moment';
+import { employeeStatus, employeeType } from '../employee-profile.service';
 const moment = _moment;
 
 @Component({
@@ -16,12 +17,11 @@ export class EmploymentPage implements OnInit {
     public edit: boolean = false;
     public numID: string;
     public designation: string;
-    public grade: string;
     public department: string;
     public workLocation: string;
     public reportingTo: string;
-    public type: any;  // ask KN
-    public status: number; //ask KN
+    public type: any;
+    public status: any;
     public dateJoinForm: FormGroup;
     public dateConfirmForm: FormGroup;
     public dateResignForm: FormGroup;
@@ -81,11 +81,14 @@ export class EmploymentPage implements OnInit {
                         this.dateResignForm = new FormGroup({
                             dateResign: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfResign)),
                         })
+                        this._dateJoin = moment(this.dateJoinForm.value.dateJoin).format('YYYY-MM-DD');
+                        this._dateConfirm = moment(this.dateConfirmForm.value.dateConfirm).format('YYYY-MM-DD');
+                        this._dateResign = moment(this.dateResignForm.value.dateResign).format('YYYY-MM-DD');
                         this.department = this.employmentlist.employeeDepartment;
                         this.workLocation = this.employmentlist.employmentDetail.workLocation;
                         this.reportingTo = this.employmentlist.employmentDetail.reportingTo;
                         this.type = this.employmentlist.employmentDetail.employmentType;
-                        this.status = this.employmentlist.employmentDetail.employmentStatus;
+                        this.status = employeeStatus[this.employmentlist.employmentDetail.employmentStatus];
                         this.yearService = this.employmentlist.employmentDetail.yearOfService;
                         this.accName = this.employmentlist.employmentDetail.bankAccountName;
                         this.accNum = this.employmentlist.employmentDetail.bankAccountNumber;
@@ -108,7 +111,13 @@ export class EmploymentPage implements OnInit {
             this._dateResign = moment(this.dateResignForm.value.dateResign).format('YYYY-MM-DD');
         }
     }
-
+    statusChanged(event) {
+        this.status = event.value;
+        console.log('status', this.status);
+    }
+    typeChanged(event) {
+        this.type = event.value;
+    }
     patchEmploymentData() {
         this.edit = false;
         const data = {
@@ -120,16 +129,15 @@ export class EmploymentPage implements OnInit {
             "division": "",
             "workLocation": this.workLocation,  //nt able to patch this data
             "reportingTo": this.reportingTo,
-            "employmentType": this.type, // enum number
-            "employmentStatus": 1, // this.status, //enum number
-            "dateOfJoin": '2019-02-02', //this._dateJoin, //change to date
-            "dateOfConfirmation": '2019-03-03',//this._dateConfirm, //change to date
-            "dateOfResign": '2019-04-04', // this._dateResign, //change to date
+            "employmentType": this.type,
+            "employmentStatus": employeeStatus[this.status],
+            "dateOfJoin": this._dateJoin,
+            "dateOfConfirmation": this._dateConfirm,
+            "dateOfResign": this._dateResign,
             "bankAccountName": this.accName,
             "bankAccountNumber": this.accNum,
             "epfNumber": this.epf,
             "incomeTaxNumber": this.incomeTax,
-            "yearOfService": this.yearService
         };
         this.apiService.patch_employment_details(data).subscribe((val) => {
             console.log("PATCH call successful value returned in body", val);
@@ -140,12 +148,11 @@ export class EmploymentPage implements OnInit {
             () => {
                 console.log("The PATCH observable is now completed.");
                 const userId = this.list.id;
-                this.apiService.get_user_profile().subscribe(
+                this.apiService.get_employment_details(userId).subscribe(
                     data => {
                         this.employmentlist = data;
                         console.log('get back', this.employmentlist);
-                    }
-                )
+                    })
             });
     }
 

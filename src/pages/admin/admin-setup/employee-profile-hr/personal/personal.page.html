@@ -19,12 +19,12 @@
         <ion-label>FULL NAME</ion-label>
         <p *ngIf="!editProfile">{{personalList.employeeName}}</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput [(ngModel)]="name">
+            <input matInput [(ngModel)]="name" disabled>
         </mat-form-field>
     </ion-col>
     <ion-col>
         <ion-label>DISPLAY NAME</ion-label>
-        <p *ngIf="!editProfile">{{personalList.employeeName}}</p>
+        <p *ngIf="!editProfile">{{personalList.personalDetail.nickname}}</p>
         <mat-form-field *ngIf="editProfile">
             <input matInput [(ngModel)]="nickname">
         </mat-form-field>
@@ -204,7 +204,8 @@
 <ion-row class="detailsRow">
     <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
         padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
-    <span style="color:#057dcd; cursor: pointer;" (click)="addInput();editContact(removeList.length-1, true)">Add more</span>
+    <span style="color:#057dcd; cursor: pointer;" (click)="addInput();editContact(removeList.length-1, true)">Add
+        more</span>
 </ion-row>
 <ion-item class="divider"></ion-item>
 <ion-row class="detailsRow">

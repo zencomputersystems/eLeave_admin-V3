@@ -11,6 +11,13 @@
     border: 1px solid
       var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
   }
+  .back-icon {
+    width: 30px;
+    height: 19px;
+    fill: #20291f;
+    float: left;
+    cursor: pointer;
+  }
   .fa-instagram {
     font-size: 18px;
     color: transparent;
@@ -88,11 +95,22 @@
     position: absolute;
     cursor: pointer;
   }
-  .fa-comment {
-    padding-right: 5px;
+  .message-icon {
+    width: 15px;
+    height: 15px;
+    fill: #057dcd;
   }
-  .fa-envelope {
-    padding-right: 10px;
+  .mail-icon {
+    width: 15px;
+    height: 15px;
+    fill: #7a8589;
+    float: left;
+  }
+  .marker-icon {
+    width: 17px;
+    height: 16px;
+    fill: #7a8589;
+    float: left;
   }
   .mat-card-header {
     justify-content: center;
@@ -110,7 +128,7 @@
   }
   .footerButton {
     color: #057dcd;
-    width: 65%;
+    width: 80%;
     font-size: 12px;
     text-transform: none;
   }

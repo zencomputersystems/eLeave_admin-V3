@@ -37,7 +37,6 @@ export class PersonalPage implements OnInit {
     public country: string;
     private _date: FormGroup;
     private _reformatDate: string;
-
     get dateForm(): FormGroup {
         return this._date;
     }
@@ -95,10 +94,8 @@ export class PersonalPage implements OnInit {
 
     patchAllData() {
         this.editProfile = false;
-        // this.showEditContact = false;
         const toPatchData = {
             "id": this.list.id,
-            "employeeName": this.name,
             "nickname": this.nickname,
             "nric": this.nric.toString(),
             "dob": this._reformatDate,
@@ -162,7 +159,7 @@ export class PersonalPage implements OnInit {
                 this.apiService.get_personal_details().subscribe(
                     (data: any[]) => {
                         this.list = data;
-                        console.log(this.list);
+                        console.log('list',this.list);
                     }
                 );
             },

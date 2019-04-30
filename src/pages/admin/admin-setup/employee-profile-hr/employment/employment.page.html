@@ -32,27 +32,18 @@
         </ion-col>
     </ion-row>
     <ion-row class="detailsRow">
-        <ion-col>
+        <!-- <ion-col>
             <ion-label>GRADE</ion-label>
             <p *ngIf="!edit">{{personalList.personalDetail.emailAddress}}</p>
             <mat-form-field *ngIf="edit">
                 <input matInput [(ngModel)]="grade">
             </mat-form-field>
-        </ion-col>
+        </ion-col> -->
         <ion-col>
             <ion-label>DEPARTMENT</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employeeDepartment}}</p>
             <mat-form-field *ngIf="edit">
                 <input matInput [(ngModel)]="department">
-            </mat-form-field>
-        </ion-col>
-    </ion-row>
-    <ion-row class="detailsRow">
-        <ion-col>
-            <ion-label>WORK LOCATION</ion-label>
-            <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.workLocation}}</p>
-            <mat-form-field *ngIf="edit">
-                <input matInput [(ngModel)]="workLocation">
             </mat-form-field>
         </ion-col>
         <ion-col>
@@ -68,20 +59,37 @@
             </mat-form-field>
         </ion-col>
     </ion-row>
+    <ion-row class="detailsRow">
+        <ion-col>
+            <ion-label>WORK LOCATION</ion-label>
+            <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.workLocation}}</p>
+            <mat-form-field *ngIf="edit">
+                <input matInput [(ngModel)]="workLocation">
+            </mat-form-field>
+        </ion-col>
+    </ion-row>
     <ion-item class="divider"></ion-item>
     <ion-row class="detailsRow">
         <ion-col>
             <ion-label>EMPLOYMENT TYPE</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.employmentType}}</p>
             <mat-form-field *ngIf="edit">
-                <input matInput [(ngModel)]="type">
+                <mat-select [(value)]="type" (selectionChange)="typeChanged($event)">
+                    <mat-option value="Permanent">Permanent</mat-option>
+                    <mat-option value="Contract">Contract</mat-option>
+                    <mat-option value="Temporary">Temporary</mat-option>
+                </mat-select>
             </mat-form-field>
         </ion-col>
         <ion-col>
             <ion-label>EMPLOYMENT STATUS</ion-label>
-            <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.employmentStatus}}</p>
+            <p *ngIf="!edit">{{status}}</p>
             <mat-form-field *ngIf="edit">
-                <input matInput [(ngModel)]="status">
+                <mat-select [(value)]="status" (selectionChange)="statusChanged($event)">
+                    <mat-option value="Probation">Probation</mat-option>
+                    <mat-option value="Confirmed">Confirmed</mat-option>
+                    <mat-option value="Terminated">Terminated</mat-option>
+                </mat-select>
             </mat-form-field>
         </ion-col>
     </ion-row>
