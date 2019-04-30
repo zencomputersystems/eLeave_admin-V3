@@ -16,6 +16,7 @@ export class InviteMorePage implements OnInit {
     public showChips: boolean;
     public dataList: any = [];
     public dataSelected: any = [];
+    private _inviteList: any = [];
     @ViewChild('searchbar') searchbar: any;
 
     public get personalList() {
@@ -99,6 +100,24 @@ export class InviteMorePage implements OnInit {
         this.showChips = false;
         this.dataList = this.dataList.concat(this.dataSelected);
         this.dataSelected = [];
+    }
+
+    // post body will have changing
+    sendInvitation() {
+        for (let i = 0; i < this.dataList.length; i++) {
+            this._inviteList.push({ "id": this.dataList[i].id });
+        }
+        this.apiService.post_user_invite(this._inviteList).subscribe(
+            (val) => {
+                console.log("PATCH call successful value returned in body", val);
+            },
+            response => {
+                console.log("PATCH call in error", response);
+            },
+            () => {
+                console.log("The PATCH observable is now completed.");
+            }
+        );
     }
 
 

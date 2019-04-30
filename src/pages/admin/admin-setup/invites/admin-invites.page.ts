@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-admin-invites',
@@ -39,7 +40,7 @@ export class AdminInvitesPage implements OnInit {
     public get disabledPreviousButton() {
         return this.disablePrevButton;
     }
-    constructor(private apiService: APIService) { }
+    constructor(private apiService: APIService, private router: Router) { }
 
     ngOnInit() {
         this.apiService.get_user_profile_list().subscribe(
@@ -246,4 +247,8 @@ export class AdminInvitesPage implements OnInit {
             this.favouriteList.push(items);
         }
     };
+
+    routeToInvitePage() {
+        this.router.navigate(['/main/invite-more']);
+    }
 }
