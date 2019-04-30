@@ -1,3 +1,9 @@
+export enum employeeStatus {
+    "Probation",
+    "Confirmed",
+    "Terminated"
+}
+
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { ActivatedRoute } from '@angular/router';
@@ -9,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EmploymentDetailsPage implements OnInit {
     public list: any;
+    public status: string;
     public showHeader: boolean = true;
     public progressPercentage: number = 80;
     public userId: string;
@@ -31,6 +38,7 @@ export class EmploymentDetailsPage implements OnInit {
         this.apiService.get_employment_details(this.userId).subscribe(
             data => {
                 this.list = data;
+                this.status = employeeStatus[this.list.employmentDetail.employmentStatus];
                 this.showSpinner = false;
             },
             error => {
@@ -43,46 +51,6 @@ export class EmploymentDetailsPage implements OnInit {
 
     clickToHideHeader() {
         this.showHeader = false;
-    }
-
-    /** will implement after edit profile UI ready */
-    editDetails() {
-        const data = {
-            "id": this.list.id,
-            "employeeNumber": this.list.employmentDetail.employeeNumber,
-            "designation": this.list.employmentDetail.designation,
-            "workLocation": this.list.employmentDetail.workLocation,
-            "department": this.list.employmentDetail.department,
-            "branch": "zz",
-            "division": "xx",
-            "reportingTo": this.list.employmentDetail.reportingTo,
-            "employmentType": this.list.employmentDetail.employmentType,
-            "employmentStatus": 0,
-            "dateOfJoin": this.list.employmentDetail.dateOfJoin,
-            "dateOfConfirmation": this.list.employmentDetail.dateOfConfirmation,
-            "dateOfResign": this.list.employmentDetail.dateOfResign,
-            "bankAccountName": this.list.employmentDetail.bankAccountName,
-            "bankAccountNumber": this.list.employmentDetail.bankAccountNumber,
-            "epfNumber": this.list.employmentDetail.epfNumber.toString(),
-            "incomeTaxNumber": this.list.employmentDetail.incomeTaxNumber
-        }
-
-        this.apiService.patch_employment_details(data).subscribe(
-            (val) => {
-                console.log("PATCH call successful value returned in body", val);
-                this.apiService.get_employment_details(this.userId).subscribe(
-                    data => {
-                        this.list = data;
-                        console.log(this.list);
-                    }
-                )
-            },
-            response => {
-                console.log("PATCH call in error", response);
-            },
-            () => {
-                console.log("The PATCH observable is now completed.");
-            });
     }
 
 }
