@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, Renderer } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-connections',
@@ -50,7 +50,7 @@ export class ConnectionsPage implements OnInit {
         return this.disablePrevButton;
     }
     constructor(private apiService: APIService, private route: ActivatedRoute,
-        private elRef: ElementRef, private renderer: Renderer) { }
+        private elRef: ElementRef, private renderer: Renderer, private router: Router) { }
 
     ngOnInit() {
         if (this.route.routeConfig.path.includes('connection')) {
@@ -278,6 +278,10 @@ export class ConnectionsPage implements OnInit {
         } else {
             this.viewMoreFilter = true;
         }
+    }
+
+    routeToPublicProfile(id, name) {
+        this.router.navigate(['/main/user-public-profile'], { queryParams: { GUID: id, name: name } });
     }
 
 

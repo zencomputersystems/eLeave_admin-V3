@@ -1,8 +1,9 @@
 <ion-header>
     <ion-toolbar class="toolbar2">
-        <div class="back-icon" [inlineSVG]="'assets/icon/Option/arrow-pointing-to-left.svg'"></div>
-        <ion-title style="display: inline-block;color: #20291f;font-size: 16px;" *ngIf="personalList">
-            {{personalList.employeeName}}'s Profile
+        <div class="back-icon" [inlineSVG]="'assets/icon/Option/arrow-pointing-to-left.svg'"
+            (click)="router.navigate(['/main/employee-setup']);"></div>
+        <ion-title style="display: inline-block;color: #20291f;font-size: 16px;" *ngIf="personalName">
+            {{personalName}}'s Profile
         </ion-title>
         <div style="float: right; padding-right: 20px;">
             <i class="fab fa-facebook-f"></i>
@@ -13,25 +14,25 @@
 </ion-header>
 
 <ion-card class="leftCard">
-    <ion-card-content *ngIf="employmentPersonalList">
+    <ion-card-content *ngIf="personalList">
         <ion-row class="detailsRow">
             <ion-col>
                 <ion-label>FULL NAME</ion-label>
-                <p>{{employmentPersonalList.employeeName}}</p>
+                <p>{{personalList.employeeName}}</p>
             </ion-col>
             <ion-col>
                 <ion-label>DESIGNATION</ion-label>
-                <p>{{employmentPersonalList.employeeDesignation}}</p>
+                <p>{{personalList.employeeDesignation}}</p>
             </ion-col>
         </ion-row>
         <ion-row class="detailsRow">
             <ion-col>
                 <ion-label>DEPARTMENT</ion-label>
-                <p>{{employmentPersonalList.employeeDepartment}}</p>
+                <p>{{personalList.employeeDepartment}}</p>
             </ion-col>
             <ion-col>
                 <ion-label>WORK LOCATION</ion-label>
-                <p>{{employmentPersonalList.employmentDetail.workLocation}}</p>
+                <p>{{personalList.employmentDetail.workLocation}}</p>
             </ion-col>
         </ion-row>
         <ion-row class="detailsRow">
@@ -40,13 +41,14 @@
                 <ion-avatar style="width: 24px; height: 24px; display: inline-block; margin-top: 3px">
                     <img src="assets/icon/picture.png">
                 </ion-avatar>
-                <p style="color: #057dcd; display: inline;position: absolute;top: 31px;left: 37px;cursor: pointer;">
-                    {{employmentPersonalList.employmentDetail.reportingTo}}
+                <p style="color: #057dcd; display: inline;position: absolute;top: 31px;left: 37px;cursor: pointer;"
+                    (click)="routeToPublicProfile(personalList.employmentDetail.reportingTo, personalList.employeeName)">
+                    {{personalList.employmentDetail.reportingTo}}
                 </p>
             </ion-col>
             <ion-col>
                 <ion-label>YEAR OF SERVICE</ion-label>
-                <p>{{employmentPersonalList.employmentDetail.yearOfService}}</p>
+                <p>{{personalList.employmentDetail.yearOfService}}</p>
             </ion-col>
         </ion-row>
         <ion-item class="divider"></ion-item>
@@ -79,10 +81,28 @@
                 <p>{{personalList.personalDetail.nationality}}</p>
             </ion-col>
         </ion-row>
-        <ion-row class="detailsRow">
+        <!-- <ion-row class="detailsRow">
             <ion-col>
                 <ion-label>RESIDENTIAL ADDRESS</ion-label>
                 <p>{{personalList.personalDetail.residentialAddress}}</p>
+            </ion-col>
+        </ion-row> -->
+        <ion-row class="detailsRow">
+            <ion-col>
+                <ion-label style="display:block">RESIDENTIAL ADDRESS</ion-label>
+                <p style="display: inline">
+                    {{personalList.personalDetail.residentialAddress1}},</p>
+                &nbsp;
+                <p style="display: inline">
+                    {{personalList.personalDetail.residentialAddress2}},</p>
+                &nbsp;
+                <p style="display: inline">{{personalList.personalDetail.postcode}},</p>
+                &nbsp;
+                <p style="display: inline">{{personalList.personalDetail.city}},</p>
+                &nbsp;
+                <p style="display: inline">{{personalList.personalDetail.state}},</p>
+                &nbsp;
+                <p style="display: inline">{{personalList.personalDetail.country}}</p>
             </ion-col>
         </ion-row>
         <ion-item class="divider"></ion-item>
@@ -135,7 +155,7 @@
     </ion-card-content>
 </ion-card>
 
-<mat-card class="rightCard" *ngIf="personalList && employmentPersonalList">
+<mat-card class="rightCard" *ngIf="personalList">
     <i class="fas fa-star" (click)="clickAsFavourite()" [style.color]="numOfArray ? '#ffbb00' : '#dfe3e6'"></i>
     <ion-avatar style="margin: 0 auto;">
         <img src="assets/icon/picture.png">
@@ -148,7 +168,7 @@
             {{personalList.employeeDesignation | uppercase}}
         </mat-card-subtitle>
         <mat-card-subtitle style="white-space: nowrap;font-size: 12px;color: #7a8589;">
-            {{employmentPersonalList.employmentDetail.employmentStatus}}
+            {{personalList.employmentDetail.employmentStatus}}
         </mat-card-subtitle>
         <mat-card-subtitle style="white-space: nowrap;color: #7a8589;padding-top: 12px;">
             <!-- <i class="far fa-envelope"></i> -->
@@ -160,7 +180,7 @@
             <!-- <i class="fas fa-map-marker-alt"></i> -->
             <div class="marker-icon" [inlineSVG]="'assets/icon/User_profile/pin.svg'"></div>
             <span style="padding-left:8px">
-                {{employmentPersonalList.employmentDetail.workLocation}}</span>
+                {{personalList.employmentDetail.workLocation}}</span>
         </mat-card-subtitle>
     </mat-card-header>
     <div class="footer">

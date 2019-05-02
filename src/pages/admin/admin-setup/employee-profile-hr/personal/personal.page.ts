@@ -156,18 +156,18 @@ export class PersonalPage implements OnInit {
         this.apiService.patch_personal_details(toPatchData).subscribe(
             (val) => {
                 console.log("PATCH call successful value returned in body", val);
-                this.apiService.get_personal_details().subscribe(
-                    (data: any[]) => {
-                        this.list = data;
-                        console.log('list',this.list);
-                    }
-                );
             },
             response => {
                 console.log("PATCH call in error", response);
             },
             () => {
                 console.log("The PATCH observable is now completed.");
+                this.apiService.get_personal_details().subscribe(
+                    (data: any[]) => {
+                        this.list = data;
+                        console.log('list', this.list);
+                    }
+                );
             });
     }
 

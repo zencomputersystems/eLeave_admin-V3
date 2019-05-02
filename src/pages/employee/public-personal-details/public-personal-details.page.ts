@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-public-personal-details',
@@ -9,50 +11,54 @@ import { APIService } from 'src/services/shared-service/api.service';
 export class PublicPersonalDetailsPage implements OnInit {
 
     public list: any;
-    public employmentlist: any;
+    public personalItem: any;
+    public personalName: string;
     public setAsFavourite = [];
     public numOfArray: boolean = false;
     public showSpinner: boolean = true;
-
-    // public removeList: any;
-    // public showHeader: boolean = true;
-    // public progressPercentage: number = 80;
+    private _guid: string;
+    private _subscription: Subscription = new Subscription();
 
     get personalList() {
         return this.list;
     }
-    get employmentPersonalList() {
-        return this.employmentlist;
-    }
 
-    constructor(private apiService: APIService) {
+    constructor(private apiService: APIService, private route: ActivatedRoute,
+        private router: Router) {
+        route.queryParams
+            .subscribe((params) => {
+                this._guid = params.GUID;
+                this._subscription = this.apiService.get_user_profile_details(this._guid).subscribe(
+                    (data: any[]) => {
+                        this.showSpinner = false;
+                        this.list = data;
+                    },
+                    error => {
+                        if (error) {
+                            window.location.href = '/login';
+                        }
+                    },
+                );
+            });
     }
 
 
     ngOnInit() {
-        this.apiService.get_personal_details().subscribe(
+        this._subscription = this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
-                this.list = data;
-                // this.removeList = this.list.personalDetail.emergencyContactNumber.contacts;
+                this.personalItem = data;
+                this.personalName = this.personalItem.employeeName;
             },
             error => {
                 if (error) {
                     window.location.href = '/login';
                 }
-            },
-            () => {
-                const userId = this.list.id;
-                this.apiService.get_employment_details(userId).subscribe(
-                    data => {
-                        this.showSpinner = false;
-                        this.employmentlist = data;
-                    }
-                )
-
             }
         );
+    }
 
-
+    ngOnDestroy() {
+        this._subscription.unsubscribe();
     }
 
 
@@ -62,6 +68,10 @@ export class PublicPersonalDetailsPage implements OnInit {
         } else { this.numOfArray = true; }
         // this.numOfArray = true;
     };
+
+    routeToPublicProfile(id, name) {
+        this.router.navigate(['/main/user-public-profile'], { queryParams: { GUID: id, name: name } });
+    }
 
 
 }

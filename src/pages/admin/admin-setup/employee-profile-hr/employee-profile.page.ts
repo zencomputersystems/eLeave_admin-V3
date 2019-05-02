@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-employee-profile',
@@ -13,6 +14,7 @@ export class EmployeeProfilePage implements OnInit {
     public employmentlist: any;
     public setAsFavourite = [];
     public numOfArray: boolean = false;
+    private subscription: Subscription = new Subscription();
 
     get personalList() {
         return this.list;
@@ -25,7 +27,7 @@ export class EmployeeProfilePage implements OnInit {
     }
 
     ngOnInit() {
-        this.apiService.get_personal_details().subscribe(
+        this.subscription = this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
                 this.userId = this.list.id;
@@ -37,13 +39,17 @@ export class EmployeeProfilePage implements OnInit {
             },
             () => {
                 const userId = this.list.id;
-                this.apiService.get_employment_details(userId).subscribe(
+                this.subscription = this.apiService.get_employment_details(userId).subscribe(
                     data => {
                         this.employmentlist = data;
                     }
                 )
             }
         );
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     clickAsFavourite() {

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, RequestOptions, Response } from '@angular/http';
-import * as constants from '../../config/constant';
+import { Headers, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -45,13 +44,17 @@ export class APIService {
         return this.getApi('/userprofile/personal-detail');
     }
 
+    get_user_personal_details(guid): Observable<any> {
+        return this.http.get(this.baseUrl + '/userprofile/personal-detail/' + guid, { headers: this.headers })
+            .pipe(map((res: Response) => res.json()))
+    }
+
     patch_personal_details(updateData): Observable<any[]> {
         this.headerAuthorization();
         return this.patchApi(updateData, '/userprofile/personal-detail');
     }
 
     get_employment_details(userId): Observable<any> {
-        this.headerAuthorization();
         return this.http.get(this.baseUrl + '/userprofile/employment-detail/' + userId, { headers: this.headers })
             .pipe(map((res: Response) => res.json()))
     }
@@ -69,6 +72,12 @@ export class APIService {
     get_user_profile_list(): Observable<any> {
         this.headerAuthorization();
         return this.getApi('/users');
+    }
+
+    get_user_profile_details(guid): Observable<any> {
+        this.headerAuthorization();
+        return this.http.get(this.baseUrl + '/userprofile/' + guid, { headers: this.headers })
+            .pipe(map((res: Response) => res.json()));
     }
 
     post_user_apply_leave(leaveData: any): Observable<any> {

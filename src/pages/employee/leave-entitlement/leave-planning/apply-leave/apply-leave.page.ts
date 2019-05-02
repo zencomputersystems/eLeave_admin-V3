@@ -58,10 +58,7 @@ export class ApplyLeavePage implements OnInit {
     constructor(private apiService: APIService,
         private route: ActivatedRoute) {
         this.applyLeaveForm = this.formGroup();
-    }
-
-    ngOnInit() {
-        this.route.queryParams
+        route.queryParams
             .subscribe(params => {
                 this.applyLeaveForm.patchValue({
                     leaveTypes: params.type,
@@ -69,7 +66,9 @@ export class ApplyLeavePage implements OnInit {
                 this.daysAvailable = params.balance;
                 this._leaveTypeId = params.id;
             });
+    }
 
+    ngOnInit() {
 
         this.apiService.get_user_profile().subscribe(
             (data: any[]) => {

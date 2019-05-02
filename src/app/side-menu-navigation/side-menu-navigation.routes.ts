@@ -25,10 +25,11 @@ export const sideMenuNavigationRoutes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: AdminInvitesPage },
-            { path: 'inbox', component: AddEmployeePage }, //EmployeeProfilePage
+            { path: 'inbox', component: EmployeeProfilePage }, // AddEmployeePage
             { path: 'plan-my-leave', component: LeavePlanningPage },
             { path: 'employee-directory', component: ConnectionsPage },
             { path: 'invite-more', component: InviteMorePage },
+            { path: 'user-public-profile', component: PublicPersonalDetailsPage },
             {
                 path: 'employee-setup', component: EmployeeSetupPage,
                 children: [
