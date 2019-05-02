@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-invite-more',
@@ -17,6 +18,7 @@ export class InviteMorePage implements OnInit {
     public dataList: any = [];
     public dataSelected: any = [];
     private _inviteList: any = [];
+    private _subscription: Subscription = new Subscription();
     @ViewChild('searchbar') searchbar: any;
 
     public get personalList() {
@@ -28,7 +30,7 @@ export class InviteMorePage implements OnInit {
 
     ngOnInit() {
         this.searchbar.setFocus();
-        this.apiService.get_user_profile_list().subscribe(
+        this._subscription = this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.employeeList = data;
                 this.filterList = data;
@@ -39,6 +41,10 @@ export class InviteMorePage implements OnInit {
                 }
             }
         );
+    }
+
+    ngOnDestroy() {
+        this._subscription.unsubscribe();
     }
 
     filterDetails(text: any) {
@@ -67,7 +73,7 @@ export class InviteMorePage implements OnInit {
 
     reset(): void {
         this.showDropDown = false;
-        this.apiService.get_user_profile_list().subscribe(
+        this._subscription = this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.filterList = data;
             }
@@ -107,7 +113,7 @@ export class InviteMorePage implements OnInit {
         for (let i = 0; i < this.dataList.length; i++) {
             this._inviteList.push({ "id": this.dataList[i].id });
         }
-        this.apiService.post_user_invite(this._inviteList).subscribe(
+        this._subscription = this.apiService.post_user_invite(this._inviteList).subscribe(
             (val) => {
                 console.log("PATCH call successful value returned in body", val);
             },

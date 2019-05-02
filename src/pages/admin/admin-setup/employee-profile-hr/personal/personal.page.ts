@@ -3,6 +3,7 @@ import { APIService } from 'src/services/shared-service/api.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import * as _moment from 'moment';
 import { genderStatus, maritalStatus } from '../employee-profile.service';
+import { Subscription } from 'rxjs';
 const moment = _moment;
 
 @Component({
@@ -37,6 +38,8 @@ export class PersonalPage implements OnInit {
     public country: string;
     private _date: FormGroup;
     private _reformatDate: string;
+    private _subscription: Subscription = new Subscription();
+
     get dateForm(): FormGroup {
         return this._date;
     }
@@ -48,7 +51,7 @@ export class PersonalPage implements OnInit {
     }
 
     ngOnInit() {
-        this.apiService.get_personal_details().subscribe(
+        this._subscription = this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
                 console.log(this.list);
@@ -90,6 +93,10 @@ export class PersonalPage implements OnInit {
                 }
             }
         );
+    }
+
+    ngOnDestroy() {
+        this._subscription.unsubscribe();
     }
 
     patchAllData() {
@@ -153,7 +160,7 @@ export class PersonalPage implements OnInit {
             // }
         };
 
-        this.apiService.patch_personal_details(toPatchData).subscribe(
+        this._subscription = this.apiService.patch_personal_details(toPatchData).subscribe(
             (val) => {
                 console.log("PATCH call successful value returned in body", val);
             },
@@ -162,7 +169,7 @@ export class PersonalPage implements OnInit {
             },
             () => {
                 console.log("The PATCH observable is now completed.");
-                this.apiService.get_personal_details().subscribe(
+                this._subscription = this.apiService.get_personal_details().subscribe(
                     (data: any[]) => {
                         this.list = data;
                         console.log('list', this.list);

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-admin-invites',
@@ -23,7 +24,7 @@ export class AdminInvitesPage implements OnInit {
     public listView: boolean = true;
     public gridView: boolean = false;
     public favouriteList = [];
-
+    private _subscription: Subscription = new Subscription();
 
     public get personalList() {
         return this.currentPageItems;
@@ -43,7 +44,7 @@ export class AdminInvitesPage implements OnInit {
     constructor(private apiService: APIService, private router: Router) { }
 
     ngOnInit() {
-        this.apiService.get_user_profile_list().subscribe(
+        this._subscription = this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.list = data;
                 this.pageIndex = 1;
@@ -57,8 +58,12 @@ export class AdminInvitesPage implements OnInit {
         );
     }
 
+    ngOnDestroy(){
+        this._subscription.unsubscribe();
+    }
+
     endPoint() {
-        this.apiService.get_user_profile_list().subscribe(
+        this._subscription = this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.list = data;
                 this.pageIndex = 1;

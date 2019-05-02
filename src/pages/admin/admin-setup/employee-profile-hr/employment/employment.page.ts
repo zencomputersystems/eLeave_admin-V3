@@ -3,6 +3,7 @@ import { APIService } from 'src/services/shared-service/api.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as _moment from 'moment';
 import { employeeStatus, employeeType } from '../employee-profile.service';
+import { Subscription } from 'rxjs';
 const moment = _moment;
 
 @Component({
@@ -34,6 +35,7 @@ export class EmploymentPage implements OnInit {
     private _dateJoin;
     private _dateConfirm;
     private _dateResign;
+    private _subscription: Subscription = new Subscription();
 
     get personalList() {
         return this.list;
@@ -55,7 +57,7 @@ export class EmploymentPage implements OnInit {
         this.dateResignForm = this._formBuilder.group({
             dateResign: ['', Validators.required]
         });
-        this.apiService.get_personal_details().subscribe(
+        this._subscription = this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
             },
@@ -66,7 +68,7 @@ export class EmploymentPage implements OnInit {
             },
             () => {
                 const userId = this.list.id;
-                this.apiService.get_employment_details(userId).subscribe(
+                this._subscription = this.apiService.get_employment_details(userId).subscribe(
                     data => {
                         this.employmentlist = data;
                         console.log('employ', this.employmentlist);
@@ -98,6 +100,10 @@ export class EmploymentPage implements OnInit {
                 )
             }
         );
+    }
+
+    ngOnDestroy() {
+        this._subscription.unsubscribe();
     }
 
     dateChange() {
@@ -139,7 +145,7 @@ export class EmploymentPage implements OnInit {
             "epfNumber": this.epf,
             "incomeTaxNumber": this.incomeTax,
         };
-        this.apiService.patch_employment_details(data).subscribe((val) => {
+        this._subscription = this.apiService.patch_employment_details(data).subscribe((val) => {
             console.log("PATCH call successful value returned in body", val);
         },
             response => {
@@ -148,7 +154,7 @@ export class EmploymentPage implements OnInit {
             () => {
                 console.log("The PATCH observable is now completed.");
                 const userId = this.list.id;
-                this.apiService.get_employment_details(userId).subscribe(
+                this._subscription = this.apiService.get_employment_details(userId).subscribe(
                     data => {
                         this.employmentlist = data;
                         console.log('get back', this.employmentlist);
