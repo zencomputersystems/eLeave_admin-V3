@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar class="toolbar2">
-        <div class="back-icon" [inlineSVG]="'assets/icon/Option/arrow-pointing-to-left.svg'"></div>
+        <div class="back-icon" [inlineSVG]="'assets/icon/Option/arrow-pointing-to-left.svg'" (click)="toMyProfile()"></div>
         <ion-title style="display: inline-block;color: #20291f;font-size: 16px;" *ngIf="personalList">
             {{personalList.employeeName}}'s Profile
         </ion-title>

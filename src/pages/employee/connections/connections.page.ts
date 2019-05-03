@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, Renderer } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-connections',
@@ -28,6 +29,7 @@ export class ConnectionsPage implements OnInit {
     public connectionRoute: boolean;
     public showHeader: boolean = true;
     public showSpinner: boolean = true;
+    private subscription: Subscription = new Subscription();
 
     foods = [
         { value: 'steak-0', viewValue: 'Steak' },
@@ -58,7 +60,7 @@ export class ConnectionsPage implements OnInit {
         } else {
             this.renderer.setElementStyle(this.elRef.nativeElement, 'top', '48px');
         }
-        this.apiService.get_user_profile_list().subscribe(
+        this.subscription = this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.employeeList = data;
                 this.pageIndex = 1;
@@ -72,11 +74,15 @@ export class ConnectionsPage implements OnInit {
             }
         );
 
-        this.departmentList = this.apiService.get_department().subscribe((data) => {
+        this.subscription = this.apiService.get_department().subscribe((data) => {
             this.departmentList = data;
         });
 
 
+    }
+
+    ngOnDestroy(){
+        this.subscription.unsubscribe();
     }
 
     viewOnList() {
@@ -220,7 +226,7 @@ export class ConnectionsPage implements OnInit {
     }
 
     clearDetails() {
-        this.apiService.get_user_profile_list().subscribe(
+        this.subscription = this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.employeeList = data;
                 this.pageIndex = 1;
@@ -233,7 +239,7 @@ export class ConnectionsPage implements OnInit {
 
     changeDetails(text: any) {
         if (text.srcElement.value === '') {
-            this.apiService.get_user_profile_list().subscribe(
+            this.subscription = this.apiService.get_user_profile_list().subscribe(
                 (data: any[]) => {
                     this.employeeList = data;
                     this.pageIndex = 1;

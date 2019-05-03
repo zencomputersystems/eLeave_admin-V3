@@ -7,6 +7,7 @@ export enum employeeStatus {
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-employment-details',
@@ -20,6 +21,7 @@ export class EmploymentDetailsPage implements OnInit {
     public progressPercentage: number = 80;
     public userId: string;
     public showSpinner: boolean = true;
+    private subscription: Subscription = new Subscription();
 
     get personalList() {
         return this.list;
@@ -35,7 +37,7 @@ export class EmploymentDetailsPage implements OnInit {
             this.userId = params.id;
         });
 
-        this.apiService.get_employment_details(this.userId).subscribe(
+        this.subscription = this.apiService.get_employment_details(this.userId).subscribe(
             data => {
                 this.list = data;
                 this.status = employeeStatus[this.list.employmentDetail.employmentStatus];
@@ -47,6 +49,10 @@ export class EmploymentDetailsPage implements OnInit {
                 }
             }
         )
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     clickToHideHeader() {

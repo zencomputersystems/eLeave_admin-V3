@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-employee-profile',
@@ -23,7 +24,7 @@ export class EmployeeProfilePage implements OnInit {
         return this.employmentlist;
     }
 
-    constructor(private apiService: APIService) {
+    constructor(private apiService: APIService, private router: Router) {
     }
 
     ngOnInit() {
@@ -59,5 +60,9 @@ export class EmployeeProfilePage implements OnInit {
             this.numOfArray = true;
         }
     };
+
+    toMyProfile() {
+        this.router.navigate(['/main/employee-setup']);
+    }
 
 }

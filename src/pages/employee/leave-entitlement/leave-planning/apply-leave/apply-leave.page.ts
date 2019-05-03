@@ -15,6 +15,7 @@ import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import * as _moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Subscription } from 'rxjs';
 const moment = _moment;
 
 @Component({
@@ -49,6 +50,7 @@ export class ApplyLeavePage implements OnInit {
     private _secondFormIndex = [];
     private _thirdFormIndex = [];
     private _arrayList = [];
+    private subscription: Subscription = new Subscription();
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
     get dayTypes(): FormArray {
@@ -70,7 +72,7 @@ export class ApplyLeavePage implements OnInit {
 
     ngOnInit() {
 
-        this.apiService.get_user_profile().subscribe(
+        this.subscription = this.apiService.get_user_profile().subscribe(
             (data: any[]) => {
                 this._userList = data;
                 this.entitlement = this._userList.entitlementDetail;
@@ -85,6 +87,10 @@ export class ApplyLeavePage implements OnInit {
             let calendarApi = this.calendarComponent.getApi();
             calendarApi.render();
         }, 100);
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     formGroup() {
@@ -118,7 +124,7 @@ export class ApplyLeavePage implements OnInit {
         }
         console.log(applyLeaveData);
 
-        this.apiService.post_user_apply_leave(applyLeaveData).subscribe(
+        this.subscription = this.apiService.post_user_apply_leave(applyLeaveData).subscribe(
             (val) => {
                 console.log("PATCH call successful value returned in body", val);
                 this.clearArrayList();

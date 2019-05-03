@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-leave-entitlement',
@@ -17,6 +18,7 @@ export class LeaveEntitlementPage implements OnInit {
     public leaveType: string;
     public leaveBalance: string;
     public showSpinner: boolean = true;
+    private subscription: Subscription = new Subscription();
 
     public get sortDirectionArrowDown(): boolean {
         return this.arrowDown;
@@ -29,7 +31,7 @@ export class LeaveEntitlementPage implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.apiService.get_user_profile().subscribe(
+        this.subscription = this.apiService.get_user_profile().subscribe(
             (data: any[]) => {
                 this.personalDataList = data;
                 this.entitlement = this.personalDataList.entitlementDetail;
@@ -41,6 +43,10 @@ export class LeaveEntitlementPage implements OnInit {
                 }
             }
         );
+    }
+
+    ngOnDestroy(){
+        this.subscription.unsubscribe();
     }
 
     clickToHideHeader() {

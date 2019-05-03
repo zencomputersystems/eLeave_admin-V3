@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { APIService } from 'src/services/shared-service/api.service';
 import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-employee-setup',
@@ -52,7 +53,9 @@ export class EmployeeSetupPage implements OnInit {
       url: ['/main/employee-setup/account'],
       icon: 'people',
     }
-  ];;
+  ];
+  private subscription: Subscription = new Subscription();
+
 
   get personalList() {
     return this.list;
@@ -69,12 +72,16 @@ export class EmployeeSetupPage implements OnInit {
         this.checkUrl(this.url);
       });
 
-    this.apiService.get_personal_details().subscribe(data => {
+    this.subscription = this.apiService.get_personal_details().subscribe(data => {
       this.userId = data.id;
       this.list = data;
       this.employeeSetupPage[1].url = ['/main/employee-setup/employment-details', this.userId];
     });
     this.checkUrl(this.router.url);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   checkUrl(url: string) {

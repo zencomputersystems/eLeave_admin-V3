@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-leave-planning',
@@ -11,6 +12,8 @@ export class LeavePlanningPage implements OnInit {
 
     public list: any;
     public showSpinner: boolean = true;
+    private subscription: Subscription = new Subscription();
+
     get personalList() {
         return this.list;
     }
@@ -19,7 +22,7 @@ export class LeavePlanningPage implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.apiService.get_personal_details().subscribe(
+        this.subscription = this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
                 this.showSpinner = false;
@@ -30,6 +33,10 @@ export class LeavePlanningPage implements OnInit {
                 }
             }
         );
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     backToProfile() {

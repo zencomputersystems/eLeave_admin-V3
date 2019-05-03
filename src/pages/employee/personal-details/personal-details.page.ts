@@ -12,6 +12,7 @@ import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as _moment from 'moment';
+import { Subscription } from 'rxjs';
 const moment = _moment;
 
 @Component({
@@ -49,7 +50,8 @@ export class PersonalDetailsPage implements OnInit {
     private _datatoUpdate: any;
     private _date: FormGroup;
     private _reformatDate: string;
-    // private date = new Date((new Date().getTime() - 3888000000));
+    private subscription: Subscription = new Subscription();
+
     get personalList() {
         return this.list;
     }
@@ -62,7 +64,7 @@ export class PersonalDetailsPage implements OnInit {
     }
 
     ngOnInit() {
-        this.apiService.get_personal_details().subscribe(
+        this.subscription = this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
                 this.showSpinner = false;
@@ -102,6 +104,10 @@ export class PersonalDetailsPage implements OnInit {
                 }
             }
         );
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     clickToHideHeader() {
@@ -191,10 +197,10 @@ export class PersonalDetailsPage implements OnInit {
             // }
         };
 
-        this.apiService.patch_personal_details(this._datatoUpdate).subscribe(
+        this.subscription = this.apiService.patch_personal_details(this._datatoUpdate).subscribe(
             (val) => {
                 console.log("PATCH call successful value returned in body", val);
-                this.apiService.get_personal_details().subscribe(
+                this.subscription = this.apiService.get_personal_details().subscribe(
                     (data: any[]) => {
                         this.list = data;
                         console.log(this.list);
