@@ -24,7 +24,7 @@ export class PublicPersonalDetailsPage implements OnInit {
     }
 
     constructor(private apiService: APIService, private route: ActivatedRoute,
-        private router: Router) {
+        public router: Router) {
         route.queryParams
             .subscribe((params) => {
                 this._guid = params.GUID;
@@ -68,10 +68,5 @@ export class PublicPersonalDetailsPage implements OnInit {
         } else { this.numOfArray = true; }
         // this.numOfArray = true;
     };
-
-    routeToPublicProfile(id, name) {
-        this.router.navigate(['/main/user-public-profile'], { queryParams: { GUID: id, name: name } });
-    }
-
 
 }

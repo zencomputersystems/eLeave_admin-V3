@@ -167,20 +167,20 @@
     </ion-col>
 </ion-row>
 <ion-item class="divider"></ion-item>
-<ion-label style="display: block; padding-left: 10.6%;padding-top: 5px;">EMERGENCY CONTACT(S)
+<ion-label style="display: block; padding-left: 5.6%;padding-top: 5px;">EMERGENCY CONTACT(S)
 </ion-label>
-<ion-row class="detailsRow" *ngFor="let item of removeList; let index = index">
+<ion-row class="detailsRow" *ngFor="let item of contactList; let index = index">
     <ion-col>
         <p *ngIf="!showEditContact[index]" style="display: inline">
             {{item.contactName}}</p>
         <mat-form-field *ngIf="showEditContact[index]">
-            <input matInput placeholder="Contact Name" [(ngModel)]="removeList[index].contactName">
+            <input matInput placeholder="Contact Name" [(ngModel)]="contactList[index].contactName">
         </mat-form-field>
         &nbsp;
-        <p *ngIf="!showEditContact[index]" style="display: inline;position: absolute; right: 50%;">
+        <p *ngIf="!showEditContact[index]" style="display: inline;position: absolute; right: 40%;">
             {{item.contactNumber}}</p>
         <mat-form-field *ngIf="showEditContact[index]">
-            <input matInput placeholder="Contact Number" [(ngModel)]="removeList[index].contactNumber">
+            <input matInput placeholder="Contact Number" [(ngModel)]="contactList[index].contactNumber">
         </mat-form-field>
         <div class="delete-icon" *ngIf="!showEditContact[index]" [inlineSVG]="'assets/icon/Option/trash.svg'"
             (click)="removeContact(index)">
@@ -204,19 +204,196 @@
 <ion-row class="detailsRow">
     <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
         padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
-    <span style="color:#057dcd; cursor: pointer;" (click)="addInput();editContact(removeList.length-1, true)">Add
+    <span style="color:#057dcd; cursor: pointer;" (click)="addInput();editContact(contactList.length-1, true)">Add
         more</span>
 </ion-row>
 <ion-item class="divider"></ion-item>
-<ion-row class="detailsRow">
-    <ion-col style="background: #006994; border-radius: 3px;padding: 20px;height: 100px;">
+<!------------------------------------- Add family info ------------------------------------------>
+<div *ngIf="displayFamily">
+    <!-- spouse -->
+    <ion-label style="display: block; padding-left: 5.6%;padding-top: 5px;">FAMILY INFORMATION(S)
+    </ion-label>
+    <ion-label style="display: block; padding-left: 5.6%;padding-top: 5px;">SPOUSE
+    </ion-label>
+    <ion-row class="detailsRow" *ngFor="let item of spouseList; let index = index">
+        <ion-col>
+            <p *ngIf="!showEditSpouse[index]" style="display: inline">
+                {{item.spouseName}}</p>
+            <mat-form-field *ngIf="showEditSpouse[index]">
+                <input matInput placeholder="Spouse Name" [(ngModel)]="spouseList[index].spouseName">
+            </mat-form-field>
+            &nbsp;
+            <p *ngIf="!showEditSpouse[index]" style="display: inline;position: absolute; right: 40%;">
+                {{item.spouseIdentificationNumber}}</p>
+            <mat-form-field *ngIf="showEditSpouse[index]">
+                <input matInput placeholder="Identity card Number"
+                    [(ngModel)]="spouseList[index].spouseIdentificationNumber">
+            </mat-form-field>
+            <div class="delete-icon" *ngIf="!showEditSpouse[index]" [inlineSVG]="'assets/icon/Option/trash.svg'"
+                (click)="removeSpouse(index)">
+            </div>
+            <div class="edit-pencil-icon" *ngIf="!showEditSpouse[index]" [inlineSVG]="'assets/icon/Option/pencil.svg'"
+                (click)="editSpouse(index, true)">
+            </div>
+            <div style="float: right;" *ngIf="showEditSpouse[index]">
+                <ion-button fill="clear" (click)="editSpouse(index, false)"
+                    style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
+                    cancel
+                </ion-button>
+                <div style="display: inline-block"></div>
+                <ion-button shape="round" fill="outline" (click)="patchAllData(); editSpouse(index, false)"
+                    style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;"
+                    color="primary">
+                    save
+                </ion-button>
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-row class="detailsRow">
+        <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
+        padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
+        <span style="color:#057dcd; cursor: pointer;" (click)="addSpouse();editSpouse(spouseList.length-1, true)">Add
+            spouse</span>
+    </ion-row>
+    <!-- child -->
+    <ion-label style="display: block; padding-left: 5.6%;padding-top: 10px;">CHILD
+    </ion-label>
+    <ion-row class="detailsRow" *ngFor="let item of childList; let index = index">
+        <ion-col>
+            <p *ngIf="!showEditChild[index]" style="display: inline">
+                {{item.childName}}</p>
+            <mat-form-field *ngIf="showEditChild[index]">
+                <input matInput placeholder="Child Name" [(ngModel)]="childList[index].childName">
+            </mat-form-field>
+            &nbsp;
+            <p *ngIf="!showEditChild[index]" style="display: inline;position: absolute; right: 40%;">
+                {{item.childIdentificationNumber}}</p>
+            <mat-form-field *ngIf="showEditChild[index]">
+                <input matInput placeholder="Identity card Number"
+                    [(ngModel)]="childList[index].childIdentificationNumber">
+            </mat-form-field>
+            <div class="delete-icon" *ngIf="!showEditChild[index]" [inlineSVG]="'assets/icon/Option/trash.svg'"
+                (click)="removeChild(index)">
+            </div>
+            <div class="edit-pencil-icon" *ngIf="!showEditChild[index]" [inlineSVG]="'assets/icon/Option/pencil.svg'"
+                (click)="editChild(index, true)">
+            </div>
+            <div style="float: right;" *ngIf="showEditChild[index]">
+                <ion-button fill="clear" (click)="editChild(index, false)"
+                    style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
+                    cancel
+                </ion-button>
+                <div style="display: inline-block"></div>
+                <ion-button shape="round" fill="outline" (click)="patchAllData(); editChild(index, false)"
+                    style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;"
+                    color="primary">
+                    save
+                </ion-button>
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-row class="detailsRow">
+        <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
+            padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
+        <span style="color:#057dcd; cursor: pointer;" (click)="addChild();editChild(childList.length-1, true)">Add
+            child</span>
+    </ion-row>
+    <ion-item class="divider"></ion-item>
+</div>
+
+<!------------------------------------- Add education qualification ------------------------------>
+<div *ngIf="displayEducation">
+    <ion-label style="display: block; padding-left: 5.6%;padding-top: 5px;">EDUCATION QUALIFICATION(S)
+    </ion-label>
+    <ion-row class="detailsRow">
+        <ion-col size="3">
+            <ion-label>LEVEL</ion-label>
+        </ion-col>
+        <ion-col size="3">
+            <ion-label>MAJOR</ion-label>
+        </ion-col>
+        <ion-col size="3">
+            <ion-label>UNIVERSITY</ion-label>
+        </ion-col>
+        <ion-col size="2">
+            <ion-label>YEAR</ion-label>
+        </ion-col>
+        <ion-col size="1"></ion-col>
+    </ion-row>
+    <ion-row class="detailsRow" *ngFor="let item of educationList; let index = index">
+        <ion-col size="3">
+            <p *ngIf="!showEditEducation[index]">
+                {{item.qualificationLevel}}</p>
+            <mat-form-field *ngIf="showEditEducation[index]" style="width: 100%;">
+                <input matInput placeholder="Education Level" [(ngModel)]="educationList[index].qualificationLevel">
+            </mat-form-field>
+        </ion-col>
+        <ion-col size="3">
+            <p *ngIf="!showEditEducation[index]">
+                {{item.major}}</p>
+            <mat-form-field *ngIf="showEditEducation[index]" style="width: 100%;">
+                <input matInput placeholder="Major" [(ngModel)]="educationList[index].major">
+            </mat-form-field>
+        </ion-col>
+        <ion-col size="3">
+            <p *ngIf="!showEditEducation[index]">
+                {{item.university}}</p>
+            <mat-form-field *ngIf="showEditEducation[index]" style="width: 100%;">
+                <input matInput placeholder="University" [(ngModel)]="educationList[index].university">
+            </mat-form-field>
+        </ion-col>
+        <ion-col size="2">
+            <p *ngIf="!showEditEducation[index]">
+                {{item.year}}</p>
+            <mat-form-field *ngIf="showEditEducation[index]" style="width: 100%;">
+                <input matInput placeholder="Year" [(ngModel)]="educationList[index].year">
+            </mat-form-field>
+        </ion-col>
+        <ion-col size="1">
+            <div class="education-delete-icon" *ngIf="!showEditEducation[index]"
+                [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeEducation(index)">
+            </div>
+            <div class="education-edit-pencil-icon" *ngIf="!showEditEducation[index]"
+                [inlineSVG]="'assets/icon/Option/pencil.svg'" (click)="editEducation(index, true)">
+            </div>
+        </ion-col>
+        <div *ngIf="showEditEducation[index]" style="display: block;width: 99.1%;text-align: right;">
+            <ion-button fill="clear" (click)="editEducation(index, false)"
+                style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
+                cancel
+            </ion-button>
+            <div style="display: inline-block"></div>
+            <ion-button shape="round" fill="outline" (click)="patchAllData(); editEducation(index, false)"
+                style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary">
+                save
+            </ion-button>
+        </div>
+    </ion-row>
+    <ion-row class="detailsRow">
+        <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
+        padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
+        <span style="color:#057dcd; cursor: pointer;"
+            (click)="addEducation();editEducation(educationList.length-1, true)">
+            Add eduation qualification</span>
+    </ion-row>
+    <ion-item class="divider"></ion-item>
+</div>
+
+<!---------------------------------------- Add details ----------------------------------------------->
+
+<ion-row class="detailsRow"
+    *ngIf="(spouseList === undefined || childList === undefined || educationList === undefined)">
+    <ion-col [style.cursor]="(spouseList === undefined || childList === undefined) ? 'pointer' : ''"
+        style="background: #006994; border-radius: 3px;padding: 20px;height: 100px;" (click)="displayFamily = true;">
         <span style="color: white; font-size: 18px;">Add family </span>
         <br>
         <span style="color: white; font-size: 18px;">information</span>
         <div class="family-icon" [inlineSVG]="'assets/icon/User_profile/family.svg'"></div>
     </ion-col>
     <div style="width: 20px"></div>
-    <ion-col style="background: #5f4180; border-radius: 3px;padding: 20px;height: 100px;">
+    <ion-col [style.cursor]="(educationList === undefined) ? 'pointer' : ''"
+        style="background: #5f4180; border-radius: 3px;padding: 20px;height: 100px;cursor: pointer;"
+        (click)="displayEducation = true;">
         <span style="color: white; font-size: 18px;">Add education </span>
         <br>
         <span style="color: white; font-size: 18px;">qualification</span>
