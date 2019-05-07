@@ -23,13 +23,21 @@ const moment = _moment;
 export class PersonalDetailsPage implements OnInit {
 
     public list: any;
-    public removeList: any;
+    public removeList: any = [];
+    public spouseList: any = [];
+    public childList: any = [];
+    public educationList: any = [];
     public showHeader: boolean = true;
     public progressPercentage: number = 80;
     public accessToken: any;
     public showSpinner: boolean = true;
     public showEditProfile: boolean = false;
     public showEditContact: boolean[] = [];
+    public displayFamily: boolean = false;
+    public displayEducation: boolean = false;
+    public showEditSpouse: boolean[] = [];
+    public showEditChild: boolean[] = [];
+    public showEditEducation: boolean[] = [];
     public selectedGender: string;
     public selectedMaritalStatus: string;
     public selectedAddress: string;
@@ -68,12 +76,10 @@ export class PersonalDetailsPage implements OnInit {
             (data: any[]) => {
                 this.list = data;
                 this.showSpinner = false;
-                this.removeList = this.list.personalDetail.emergencyContactNumber.contacts;
-                if (this.removeList !== undefined) {
-                    for (let i = 0; i < this.removeList.length; i++) {
-                        this.showEditContact.push(false);
-                    }
-                }
+                this.initContact();
+                this.initSpouse();
+                this.initChild();
+                this.initEducation();
                 this._date = this._formBuilder.group({
                     firstPicker: ['', Validators.required]
                 });
@@ -110,6 +116,90 @@ export class PersonalDetailsPage implements OnInit {
         this.subscription.unsubscribe();
     }
 
+    initContact() {
+        if (this.list.personalDetail.emergencyContactNumber !== undefined) {
+            if (this.list.personalDetail.emergencyContactNumber.contacts !== undefined && (typeof (this.removeList) == "object")) {
+                if (!(this.list.personalDetail.emergencyContactNumber.contacts instanceof Array)) {
+                    this.removeList.push(this.list.personalDetail.emergencyContactNumber.contacts);
+                    for (let i = 0; i < this.removeList.length; i++) {
+                        this.showEditContact.push(false);
+                    }
+                } else {
+                    this.removeList = (this.list.personalDetail.emergencyContactNumber.contacts);
+                    for (let i = 0; i < this.removeList.length; i++) {
+                        this.showEditContact.push(false);
+                    }
+                }
+            } else {
+                this.removeList = this.list.personalDetail.emergencyContactNumber.contacts;
+            }
+        }
+    }
+
+    initSpouse() {
+        if (this.list.personalDetail.family !== undefined) {
+            if (this.list.personalDetail.family.spouse !== undefined && (typeof (this.spouseList) == "object")) {
+                this.displayFamily = true;
+                if (!(this.list.personalDetail.family.spouse instanceof Array)) {
+                    this.spouseList.push(this.list.personalDetail.family.spouse);
+                    for (let i = 0; i < this.spouseList.length; i++) {
+                        this.showEditSpouse.push(false);
+                    }
+                } else {
+                    this.spouseList = (this.list.personalDetail.family.spouse);
+                    for (let i = 0; i < this.spouseList.length; i++) {
+                        this.showEditSpouse.push(false);
+                    }
+                }
+            } else {
+                this.displayFamily = false;
+                this.spouseList = this.list.personalDetail.family.spouse;
+            }
+        }
+    }
+
+    initChild() {
+        if (this.list.personalDetail.family !== undefined) {
+            if (this.list.personalDetail.family.child !== undefined && (typeof (this.childList) == "object")) {
+                if (!(this.list.personalDetail.family.child instanceof Array)) {
+                    this.childList.push(this.list.personalDetail.family.child);
+                    for (let i = 0; i < this.childList.length; i++) {
+                        this.showEditChild.push(false);
+                    }
+                } else {
+                    this.childList = (this.list.personalDetail.family.child);
+                    for (let i = 0; i < this.childList.length; i++) {
+                        this.showEditChild.push(false);
+                    }
+                }
+            } else {
+                this.childList = this.list.personalDetail.family.child;
+            }
+        }
+    }
+
+    initEducation() {
+        if (this.list.personalDetail.education !== undefined) {
+            if (this.list.personalDetail.education.educationDetail !== undefined && (typeof (this.educationList) == "object")) {
+                this.displayEducation = true;
+                if (!(this.list.personalDetail.education.educationDetail instanceof Array)) {
+                    this.educationList.push(this.list.personalDetail.education.educationDetail);
+                    for (let i = 0; i < this.educationList.length; i++) {
+                        this.showEditEducation.push(false);
+                    }
+                } else {
+                    this.educationList = (this.list.personalDetail.education.educationDetail);
+                    for (let i = 0; i < this.educationList.length; i++) {
+                        this.showEditEducation.push(false);
+                    }
+                }
+            } else {
+                this.displayEducation = false;
+                this.educationList = this.list.personalDetail.education.educationDetail;
+            }
+        }
+    }
+
     clickToHideHeader() {
         this.showHeader = false;
     }
@@ -118,9 +208,80 @@ export class PersonalDetailsPage implements OnInit {
         this.removeList.splice(index, 1);
         this.patchData();
     }
+    removeSpouse(index: number) {
+        this.spouseList.splice(index, 1);
+        this.patchData();
+    }
+
+    removeChild(index: number) {
+        this.childList.splice(index, 1);
+        this.patchData();
+    }
+    removeEducation(index: number) {
+        this.educationList.splice(index, 1);
+        this.patchData();
+    }
     editContact(index, booValue) {
         for (let i = 0; i < this.removeList.length; i++) {
             this.showEditContact.splice(index, 1, booValue);
+        }
+    }
+    editSpouse(index, value) {
+        for (let i = 0; i < this.spouseList.length; i++) {
+            this.showEditSpouse.splice(index, 1, value);
+            if (!value && (this.spouseList[i].spouseName == '' || this.spouseList[i].spouseIdentificationNumber == '')) {
+                this.removeSpouse(i);
+            }
+        }
+    }
+    editChild(index, value) {
+        for (let i = 0; i < this.childList.length; i++) {
+            this.showEditChild.splice(index, 1, value);
+            if (!value && (this.childList[i].childName == '' || this.childList[i].childIdentificationNumber == '')) {
+                this.removeChild(i);
+            }
+        }
+    }
+
+    editEducationDetail(index, value) {
+        for (let i = 0; i < this.educationList.length; i++) {
+            this.showEditEducation.splice(index, 1, value);
+            if (!value && (this.educationList[i].qualificationLevel == '' || this.educationList[i].major == '' || this.educationList[i].university == '' || this.educationList[i].year == '')) {
+                this.removeEducation(i);
+            }
+        }
+    }
+    addContact() {
+        if (this.removeList === undefined) {
+            this.removeList = [];
+            this.removeList.push({ contactName: '', contactNumber: '' });
+        } else {
+            this.removeList.push({ contactName: '', contactNumber: '' });
+        }
+    }
+    addSpouseDetail() {
+        if (this.spouseList === undefined) {
+            this.spouseList = [];
+            this.spouseList.push({ spouseName: '', spouseIdentificationNumber: '' });
+        } else {
+            this.spouseList.push({ spouseName: '', spouseIdentificationNumber: '' });
+
+        }
+    }
+    addChildDetail() {
+        if (this.childList === undefined) {
+            this.childList = [];
+            this.childList.push({ childName: '', childIdentificationNumber: '' });
+        } else {
+            this.childList.push({ childName: '', childIdentificationNumber: '' });
+        }
+    }
+    addEducationDetail() {
+        if (this.educationList === undefined) {
+            this.educationList = [];
+            this.educationList.push({ qualificationLevel: '', major: '', university: '', year: '' });
+        } else {
+            this.educationList.push({ qualificationLevel: '', major: '', university: '', year: '' });
         }
     }
 
@@ -161,40 +322,13 @@ export class PersonalDetailsPage implements OnInit {
             "emergencyContact": {
                 "contacts": this.removeList
             },
-            // "education": {
-            //     "educationDetail": [
-            //         {
-            //             "qualificationLevel": "Matriculation",
-            //             "major": "Life Science",
-            //             "university": "KMNS",
-            //             "year": "2007-2008"
-            //         },
-            //         {
-            //             "qualificationLevel": "Bachelor Degree",
-            //             "major": "Biotechnology",
-            //             "university": "UKM",
-            //             "year": "2008-2011"
-            //         }
-            //     ]
-            // },
-            // "family": {
-            //     "spouse": [
-            //         {
-            //             "spouseName": "My Spouse Name",
-            //             "spouseIdentificationNumber": "kjhgf876543hgf"
-            //         }
-            //     ],
-            //     "child": [
-            //         {
-            //             "childName": "this is child Name",
-            //             "childIdentificationNumber": "HGF654GHJ"
-            //         },
-            //         {
-            //             "childName": "this is child 2 name",
-            //             "childIdentificationNumber": "789GBNM789"
-            //         }
-            //     ]
-            // }
+            "education": {
+                "educationDetail": this.educationList
+            },
+            "family": {
+                "spouse": this.spouseList,
+                "child": this.childList
+            }
         };
 
         this.subscription = this.apiService.patch_personal_details(this._datatoUpdate).subscribe(
@@ -209,6 +343,9 @@ export class PersonalDetailsPage implements OnInit {
             },
             response => {
                 console.log("PATCH call in error", response);
+                if (response.status === 401) {
+                    window.location.href = '/login';
+                }
             },
             () => {
                 console.log("The PATCH observable is now completed.");
