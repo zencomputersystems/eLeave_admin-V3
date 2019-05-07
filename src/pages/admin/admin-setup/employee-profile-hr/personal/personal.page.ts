@@ -14,10 +14,10 @@ const moment = _moment;
 export class PersonalPage implements OnInit {
 
     public list: any;
-    public contactList: any;
-    public spouseList: any;
-    public childList: any;
-    public educationList: any;
+    public contactList: any = [];
+    public spouseList: any = [];
+    public childList: any = [];
+    public educationList: any = [];
     public numOfArray: boolean = false;
     public editProfile: boolean = false;
     public displayFamily: boolean = false;
@@ -62,37 +62,10 @@ export class PersonalPage implements OnInit {
         this._subscription = this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
-                if (this.list.personalDetail.emergencyContactNumber.contacts !== undefined) {
-                    this.contactList = this.list.personalDetail.emergencyContactNumber.contacts;
-                    for (let i = 0; i < this.contactList.length; i++) {
-                        this.showEditContact.push(false);
-                    }
-                }
-                if (this.list.personalDetail.family !== undefined) {
-                    if (this.list.personalDetail.family.spouse !== undefined) {
-                        this.displayFamily = true;
-                        this.spouseList = this.list.personalDetail.family.spouse;
-                        for (let i = 0; i < this.spouseList.length; i++) {
-                            this.showEditSpouse.push(false);
-                        }
-                    }
-                }
-                if (this.list.personalDetail.family !== undefined) {
-                    if (this.list.personalDetail.family.child !== undefined) {
-                        this.displayFamily = true;
-                        this.childList = this.list.personalDetail.family.child;
-                        for (let i = 0; i < this.childList.length; i++) {
-                            this.showEditChild.push(false);
-                        }
-                    }
-                }
-                if (this.list.personalDetail.education.educationDetail !== undefined) {
-                    this.displayEducation = true;
-                    this.educationList = this.list.personalDetail.education.educationDetail;
-                    for (let i = 0; i < this.educationList.length; i++) {
-                        this.showEditEducation.push(false);
-                    }
-                }
+                this.initContact();
+                this.initSpouse();
+                this.initChild();
+                this.initEducation();
                 this._date = this._formBuilder.group({
                     datepicker: ['', Validators.required]
                 });
@@ -129,6 +102,90 @@ export class PersonalPage implements OnInit {
 
     ngOnDestroy() {
         this._subscription.unsubscribe();
+    }
+
+    initContact() {
+        if (this.list.personalDetail.emergencyContactNumber !== undefined) {
+            if (this.list.personalDetail.emergencyContactNumber.contacts !== undefined && (typeof (this.contactList) == "object")) {
+                if (!(this.list.personalDetail.emergencyContactNumber.contacts instanceof Array)) {
+                    this.contactList.push(this.list.personalDetail.emergencyContactNumber.contacts);
+                    for (let i = 0; i < this.contactList.length; i++) {
+                        this.showEditContact.push(false);
+                    }
+                } else {
+                    this.contactList = (this.list.personalDetail.emergencyContactNumber.contacts);
+                    for (let i = 0; i < this.contactList.length; i++) {
+                        this.showEditContact.push(false);
+                    }
+                }
+            } else {
+                this.contactList = this.list.personalDetail.emergencyContactNumber.contacts;
+            }
+        }
+    }
+
+    initSpouse() {
+        if (this.list.personalDetail.family !== undefined) {
+            if (this.list.personalDetail.family.spouse !== undefined && (typeof (this.spouseList) == "object")) {
+                this.displayFamily = true;
+                if (!(this.list.personalDetail.family.spouse instanceof Array)) {
+                    this.spouseList.push(this.list.personalDetail.family.spouse);
+                    for (let i = 0; i < this.spouseList.length; i++) {
+                        this.showEditSpouse.push(false);
+                    }
+                } else {
+                    this.spouseList = (this.list.personalDetail.family.spouse);
+                    for (let i = 0; i < this.spouseList.length; i++) {
+                        this.showEditSpouse.push(false);
+                    }
+                }
+            } else {
+                this.displayFamily = false;
+                this.spouseList = this.list.personalDetail.family.spouse;
+            }
+        }
+    }
+
+    initChild() {
+        if (this.list.personalDetail.family !== undefined) {
+            if (this.list.personalDetail.family.child !== undefined && (typeof (this.childList) == "object")) {
+                if (!(this.list.personalDetail.family.child instanceof Array)) {
+                    this.childList.push(this.list.personalDetail.family.child);
+                    for (let i = 0; i < this.childList.length; i++) {
+                        this.showEditChild.push(false);
+                    }
+                } else {
+                    this.childList = (this.list.personalDetail.family.child);
+                    for (let i = 0; i < this.childList.length; i++) {
+                        this.showEditChild.push(false);
+                    }
+                }
+            } else {
+                this.childList = this.list.personalDetail.family.child;
+            }
+        }
+    }
+
+    initEducation() {
+        if (this.list.personalDetail.education !== undefined) {
+            if (this.list.personalDetail.education.educationDetail !== undefined && (typeof (this.educationList) == "object")) {
+                this.displayEducation = true;
+                if (!(this.list.personalDetail.education.educationDetail instanceof Array)) {
+                    this.educationList.push(this.list.personalDetail.education.educationDetail);
+                    for (let i = 0; i < this.educationList.length; i++) {
+                        this.showEditEducation.push(false);
+                    }
+                } else {
+                    this.educationList = (this.list.personalDetail.education.educationDetail);
+                    for (let i = 0; i < this.educationList.length; i++) {
+                        this.showEditEducation.push(false);
+                    }
+                }
+            } else {
+                this.displayEducation = false;
+                this.educationList = this.list.personalDetail.education.educationDetail;
+            }
+        }
     }
 
     patchAllData() {
@@ -248,26 +305,21 @@ export class PersonalPage implements OnInit {
         }
     }
     addSpouse() {
-        if (typeof (this.spouseList) == "object") {
-            this.spouseList = [this.spouseList];
-            this.spouseList.push({ spouseName: '', spouseIdentificationNumber: '' });
-        } else if (this.spouseList === undefined) {
+        if (this.spouseList === undefined) {
             this.spouseList = [];
             this.spouseList.push({ spouseName: '', spouseIdentificationNumber: '' });
-        }
-        else {
+        } else {
             this.spouseList.push({ spouseName: '', spouseIdentificationNumber: '' });
+
         }
     }
     addChild() {
-        if (typeof (this.childList) == "object") {
-            this.childList = [this.childList];
-            this.childList.push({ childName: '', childIdentificationNumber: '' });
-        } else if (this.childList === undefined) {
+        if (this.childList === undefined) {
             this.childList = [];
             this.childList.push({ childName: '', childIdentificationNumber: '' });
         } else {
             this.childList.push({ childName: '', childIdentificationNumber: '' });
+
         }
     }
     addEducation() {
