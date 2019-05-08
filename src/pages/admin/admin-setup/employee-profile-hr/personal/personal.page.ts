@@ -26,6 +26,10 @@ export class PersonalPage implements OnInit {
     public showEditSpouse: boolean[] = [];
     public showEditChild: boolean[] = [];
     public showEditEducation: boolean[] = [];
+    public contactObj = { contactName: '', contactNumber: '' };
+    public spouseObj = { spouseName: '', spouseIdentificationNumber: '' };
+    public childObj = { childName: '', childIdentificationNumber: '' };
+    public educationObj = { qualificationLevel: '', major: '', university: '', year: '' };
     public name: string;
     public nickname: string;
     public personalPhoneValue: string;
@@ -62,10 +66,10 @@ export class PersonalPage implements OnInit {
         this._subscription = this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
-                this.initContact();
-                this.initSpouse();
-                this.initChild();
-                this.initEducation();
+                this.getContactInit();
+                this.getSpouseInit();
+                this.getChildInit();
+                this.getEducationInit();
                 this._date = this._formBuilder.group({
                     datepicker: ['', Validators.required]
                 });
@@ -104,88 +108,102 @@ export class PersonalPage implements OnInit {
         this._subscription.unsubscribe();
     }
 
-    initContact() {
-        if (this.list.personalDetail.emergencyContactNumber !== undefined) {
-            if (this.list.personalDetail.emergencyContactNumber.contacts !== undefined && (typeof (this.contactList) == "object")) {
-                if (!(this.list.personalDetail.emergencyContactNumber.contacts instanceof Array)) {
-                    this.contactList.push(this.list.personalDetail.emergencyContactNumber.contacts);
-                    for (let i = 0; i < this.contactList.length; i++) {
-                        this.showEditContact.push(false);
-                    }
-                } else {
-                    this.contactList = (this.list.personalDetail.emergencyContactNumber.contacts);
-                    for (let i = 0; i < this.contactList.length; i++) {
-                        this.showEditContact.push(false);
-                    }
-                }
-            } else {
-                this.contactList = this.list.personalDetail.emergencyContactNumber.contacts;
+    getContactInit() {
+        if (this.list.personalDetail.emergencyContactNumber.contacts !== undefined && !(this.list.personalDetail.emergencyContactNumber.contacts instanceof Array)) {
+            this.contactList.push(this.list.personalDetail.emergencyContactNumber.contacts);
+            for (let i = 0; i < this.contactList.length; i++) {
+                this.showEditContact.push(false);
             }
+        }
+        else if (this.list.personalDetail.emergencyContactNumber.contacts !== undefined && (this.list.personalDetail.emergencyContactNumber.contacts instanceof Array)) {
+            this.contactList = (this.list.personalDetail.emergencyContactNumber.contacts);
+            for (let i = 0; i < this.contactList.length; i++) {
+                this.showEditContact.push(false);
+            }
+        }
+        else {
+            this.contactList = this.list.personalDetail.emergencyContactNumber.contacts;
         }
     }
 
-    initSpouse() {
-        if (this.list.personalDetail.family !== undefined) {
-            if (this.list.personalDetail.family.spouse !== undefined && (typeof (this.spouseList) == "object")) {
-                this.displayFamily = true;
-                if (!(this.list.personalDetail.family.spouse instanceof Array)) {
-                    this.spouseList.push(this.list.personalDetail.family.spouse);
-                    for (let i = 0; i < this.spouseList.length; i++) {
-                        this.showEditSpouse.push(false);
-                    }
-                } else {
-                    this.spouseList = (this.list.personalDetail.family.spouse);
-                    for (let i = 0; i < this.spouseList.length; i++) {
-                        this.showEditSpouse.push(false);
-                    }
-                }
-            } else {
-                this.displayFamily = false;
-                this.spouseList = this.list.personalDetail.family.spouse;
+    getSpouseInit() {
+        if (this.list.personalDetail.family.spouse !== undefined && !(this.list.personalDetail.family.spouse instanceof Array)) {
+            this.displayFamily = true;
+            this.spouseList.push(this.list.personalDetail.family.spouse);
+            for (let i = 0; i < this.spouseList.length; i++) {
+                this.showEditSpouse.push(false);
             }
+        } else if (this.list.personalDetail.family.spouse !== undefined && (this.list.personalDetail.family.spouse instanceof Array)) {
+            this.displayFamily = true;
+            this.spouseList = (this.list.personalDetail.family.spouse);
+            for (let i = 0; i < this.spouseList.length; i++) {
+                this.showEditSpouse.push(false);
+            }
+        } else {
+            this.displayFamily = false;
+            this.spouseList = this.list.personalDetail.family.spouse;
         }
     }
 
-    initChild() {
-        if (this.list.personalDetail.family !== undefined) {
-            if (this.list.personalDetail.family.child !== undefined && (typeof (this.childList) == "object")) {
-                if (!(this.list.personalDetail.family.child instanceof Array)) {
-                    this.childList.push(this.list.personalDetail.family.child);
-                    for (let i = 0; i < this.childList.length; i++) {
-                        this.showEditChild.push(false);
-                    }
-                } else {
-                    this.childList = (this.list.personalDetail.family.child);
-                    for (let i = 0; i < this.childList.length; i++) {
-                        this.showEditChild.push(false);
-                    }
-                }
-            } else {
-                this.childList = this.list.personalDetail.family.child;
+    getChildInit() {
+        if (this.list.personalDetail.family.child !== undefined && !(this.list.personalDetail.family.child instanceof Array)) {
+            this.displayFamily = true;
+            this.childList.push(this.list.personalDetail.family.child);
+            for (let i = 0; i < this.childList.length; i++) {
+                this.showEditChild.push(false);
             }
+        } else if (this.list.personalDetail.family.child !== undefined && (this.list.personalDetail.family.child instanceof Array)) {
+            this.displayFamily = true;
+            this.childList = (this.list.personalDetail.family.child);
+            for (let i = 0; i < this.childList.length; i++) {
+                this.showEditChild.push(false);
+            }
+        } else {
+            this.childList = this.list.personalDetail.family.child;
         }
     }
 
-    initEducation() {
-        if (this.list.personalDetail.education !== undefined) {
-            if (this.list.personalDetail.education.educationDetail !== undefined && (typeof (this.educationList) == "object")) {
-                this.displayEducation = true;
-                if (!(this.list.personalDetail.education.educationDetail instanceof Array)) {
-                    this.educationList.push(this.list.personalDetail.education.educationDetail);
-                    for (let i = 0; i < this.educationList.length; i++) {
-                        this.showEditEducation.push(false);
-                    }
-                } else {
-                    this.educationList = (this.list.personalDetail.education.educationDetail);
-                    for (let i = 0; i < this.educationList.length; i++) {
-                        this.showEditEducation.push(false);
-                    }
-                }
-            } else {
-                this.displayEducation = false;
-                this.educationList = this.list.personalDetail.education.educationDetail;
+    getEducationInit() {
+        if (this.list.personalDetail.education.educationDetail !== undefined && !(this.list.personalDetail.education.educationDetail instanceof Array)) {
+            this.displayEducation = true;
+            this.educationList.push(this.list.personalDetail.education.educationDetail);
+            for (let i = 0; i < this.educationList.length; i++) {
+                this.showEditEducation.push(false);
             }
+        } else if (this.list.personalDetail.education.educationDetail !== undefined && (this.list.personalDetail.education.educationDetail instanceof Array)) {
+            this.displayEducation = true;
+            this.educationList = (this.list.personalDetail.education.educationDetail);
+            for (let i = 0; i < this.educationList.length; i++) {
+                this.showEditEducation.push(false);
+            }
+        } else {
+            this.displayEducation = false;
+            this.educationList = this.list.personalDetail.education.educationDetail;
         }
+    }
+
+    addList(list, obj) {
+        if (list === undefined) {
+            list = [];
+            list.push(obj);
+            this.objectList(list, obj);
+        } else {
+            list.push(obj);
+            this.objectList(list, obj);
+        }
+    }
+
+    objectList(addList, object) {
+        if (object === this.contactObj) { this.contactList = addList; }
+        if (object === this.spouseObj) { this.spouseList = addList; }
+        if (object === this.childObj) { this.childList = addList; }
+        if (object === this.educationObj) { this.educationList = addList; }
+    }
+
+
+    removeItem(index: number, list: any) {
+        list.splice(index, 1);
+        this.patchAllData();
     }
 
     patchAllData() {
@@ -242,30 +260,11 @@ export class PersonalPage implements OnInit {
             });
     }
 
-    removeContact(index: number) {
-        this.contactList.splice(index, 1);
-        this.patchAllData();
-    }
-
-    removeSpouse(index: number) {
-        this.spouseList.splice(index, 1);
-        this.patchAllData();
-    }
-
-    removeChild(index: number) {
-        this.childList.splice(index, 1);
-        this.patchAllData();
-    }
-    removeEducation(index: number) {
-        this.educationList.splice(index, 1);
-        this.patchAllData();
-    }
-
     editContact(index, value) {
         for (let i = 0; i < this.contactList.length; i++) {
             this.showEditContact.splice(index, 1, value);
             if (!value && (this.contactList[i].contactName == '' || this.contactList[i].contactNumber == '')) {
-                this.removeContact(i);
+                this.removeItem(i, this.contactList);
             }
         }
     }
@@ -274,7 +273,7 @@ export class PersonalPage implements OnInit {
         for (let i = 0; i < this.spouseList.length; i++) {
             this.showEditSpouse.splice(index, 1, value);
             if (!value && (this.spouseList[i].spouseName == '' || this.spouseList[i].spouseIdentificationNumber == '')) {
-                this.removeSpouse(i);
+                this.removeItem(i, this.spouseList);
             }
         }
     }
@@ -282,7 +281,7 @@ export class PersonalPage implements OnInit {
         for (let i = 0; i < this.childList.length; i++) {
             this.showEditChild.splice(index, 1, value);
             if (!value && (this.childList[i].childName == '' || this.childList[i].childIdentificationNumber == '')) {
-                this.removeChild(i);
+                this.removeItem(i, this.childList);
             }
         }
     }
@@ -291,43 +290,8 @@ export class PersonalPage implements OnInit {
         for (let i = 0; i < this.educationList.length; i++) {
             this.showEditEducation.splice(index, 1, value);
             if (!value && (this.educationList[i].qualificationLevel == '' || this.educationList[i].major == '' || this.educationList[i].university == '' || this.educationList[i].year == '')) {
-                this.removeEducation(i);
+                this.removeItem(i, this.educationList);
             }
-        }
-    }
-
-    addInput() {
-        if (this.contactList === undefined) {
-            this.contactList = [];
-            this.contactList.push({ contactName: '', contactNumber: '' });
-        } else {
-            this.contactList.push({ contactName: '', contactNumber: '' });
-        }
-    }
-    addSpouse() {
-        if (this.spouseList === undefined) {
-            this.spouseList = [];
-            this.spouseList.push({ spouseName: '', spouseIdentificationNumber: '' });
-        } else {
-            this.spouseList.push({ spouseName: '', spouseIdentificationNumber: '' });
-
-        }
-    }
-    addChild() {
-        if (this.childList === undefined) {
-            this.childList = [];
-            this.childList.push({ childName: '', childIdentificationNumber: '' });
-        } else {
-            this.childList.push({ childName: '', childIdentificationNumber: '' });
-
-        }
-    }
-    addEducation() {
-        if (this.educationList === undefined) {
-            this.educationList = [];
-            this.educationList.push({ qualificationLevel: '', major: '', university: '', year: '' });
-        } else {
-            this.educationList.push({ qualificationLevel: '', major: '', university: '', year: '' });
         }
     }
 

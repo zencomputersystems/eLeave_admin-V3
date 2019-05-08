@@ -29,21 +29,18 @@ export class AdminInvitesPage implements OnInit {
     public get personalList() {
         return this.currentPageItems;
     }
-    public get sortDirectionArrowDownName(): boolean {
-        return this.arrowDownName;
-    }
-    public get sortDirectionArrowDownId(): boolean {
-        return this.arrowDownId;
-    }
-    public get disabledNextButton() {
-        return this.disableNextButton;
-    }
-    public get disabledPreviousButton() {
-        return this.disablePrevButton;
-    }
-    constructor(private apiService: APIService, private router: Router) { }
+
+    constructor(private apiService: APIService, public router: Router) { }
 
     ngOnInit() {
+        this.endPoint();
+    }
+
+    ngOnDestroy() {
+        this._subscription.unsubscribe();
+    }
+
+    endPoint() {
         this._subscription = this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.list = data;
@@ -54,20 +51,6 @@ export class AdminInvitesPage implements OnInit {
                 if (error) {
                     window.location.href = '/login';
                 }
-            }
-        );
-    }
-
-    ngOnDestroy(){
-        this._subscription.unsubscribe();
-    }
-
-    endPoint() {
-        this._subscription = this.apiService.get_user_profile_list().subscribe(
-            (data: any[]) => {
-                this.list = data;
-                this.pageIndex = 1;
-                this.loopItemsPerPage(this.pageIndex, this.list, this.itemsPerPage, this.startEndNumber);
             }
         );
     }
@@ -147,52 +130,26 @@ export class AdminInvitesPage implements OnInit {
         this.enableDisablePrevButton();
     }
 
-    sortAscName() {
-        this.arrowDownName = true;
+    sortName(booleanValue: boolean, ascValue: number, desValue: number) {
+        this.arrowDownName = booleanValue;
         this.list = this.list.slice(0);
         this.list.sort(function (a, b) {
             var x = a.employeeName.toLowerCase();
             var y = b.employeeName.toLowerCase();
-            return x < y ? -1 : x > y ? 1 : 0;
+            return x < y ? ascValue : x > y ? desValue : 0;
         });
         this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
 
-    sortDesName() {
-        this.arrowDownName = false;
-        this.list = this.list.slice(0);
-        this.list.sort(function (a, b) {
-            var x = a.employeeName.toLowerCase();
-            var y = b.employeeName.toLowerCase();
-            return x < y ? 1 : x > y ? -1 : 0;
-        });
-        this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
-        this.disableNextButton = false;
-        this.disablePrevButton = true;
-    }
-
-    sortAscId() {
-        this.arrowDownId = true;
+    sortId(value: boolean, asc: number, des: number) {
+        this.arrowDownId = value;
         this.list = this.list.slice(0);
         this.list.sort(function (a, b) {
             var x = a.staffNumber;
             var y = b.staffNumber;
-            return x < y ? -1 : x > y ? 1 : 0;
-        });
-        this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
-        this.disableNextButton = false;
-        this.disablePrevButton = true;
-    }
-
-    sortDescId() {
-        this.arrowDownId = false;
-        this.list = this.list.slice(0);
-        this.list.sort(function (a, b) {
-            var x = a.staffNumber;
-            var y = b.staffNumber;
-            return x < y ? 1 : x > y ? -1 : 0;
+            return x < y ? asc : x > y ? des : 0;
         });
         this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
         this.disableNextButton = false;
@@ -234,26 +191,20 @@ export class AdminInvitesPage implements OnInit {
         });
     }
 
-
     saveAsFavourite(index: number, item: any) {
         const create = { index: index, itemId: item.id };
         const items = create;
-        if (this.favouriteList.length > 0) {
-            if (this.checkUserID(item.id)) {
-                for (let i = 0; i < this.favouriteList.length; i++) {
-                    if (this.favouriteList[i].index == index && this.favouriteList[i].itemId == item.id) {
-                        this.favouriteList.splice(i, 1);
-                    }
+        if (this.favouriteList.length > 0 && this.checkUserID(item.id)) {
+            for (let i = 0; i < this.favouriteList.length; i++) {
+                if (this.favouriteList[i].index == index && this.favouriteList[i].itemId == item.id) {
+                    this.favouriteList.splice(i, 1);
                 }
-            } else {
-                this.favouriteList.push(items);
             }
+        } else if (this.favouriteList.length > 0 && !this.checkUserID(item.id)) {
+            this.favouriteList.push(items);
         } else {
             this.favouriteList.push(items);
         }
     };
 
-    routeToInvitePage() {
-        this.router.navigate(['/main/invite-more']);
-    }
 }

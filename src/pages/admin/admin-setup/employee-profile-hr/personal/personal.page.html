@@ -183,7 +183,7 @@
             <input matInput placeholder="Contact Number" [(ngModel)]="contactList[index].contactNumber">
         </mat-form-field>
         <div class="delete-icon" *ngIf="!showEditContact[index]" [inlineSVG]="'assets/icon/Option/trash.svg'"
-            (click)="removeContact(index)">
+            (click)="removeItem(index, this.contactList)">
         </div>
         <div class="edit-pencil-icon" *ngIf="!showEditContact[index]" [inlineSVG]="'assets/icon/Option/pencil.svg'"
             (click)="editContact(index, true)">
@@ -204,7 +204,8 @@
 <ion-row class="detailsRow">
     <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
         padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
-    <span style="color:#057dcd; cursor: pointer;" (click)="addInput();editContact(contactList.length-1, true)">Add
+    <span style="color:#057dcd; cursor: pointer;"
+        (click)="addList(this.contactList, contactObj);editContact(contactList.length-1, true)">Add
         more</span>
 </ion-row>
 <ion-item class="divider"></ion-item>
@@ -230,7 +231,7 @@
                     [(ngModel)]="spouseList[index].spouseIdentificationNumber">
             </mat-form-field>
             <div class="delete-icon" *ngIf="!showEditSpouse[index]" [inlineSVG]="'assets/icon/Option/trash.svg'"
-                (click)="removeSpouse(index)">
+                (click)="removeItem(index, this.spouseList)">
             </div>
             <div class="edit-pencil-icon" *ngIf="!showEditSpouse[index]" [inlineSVG]="'assets/icon/Option/pencil.svg'"
                 (click)="editSpouse(index, true)">
@@ -252,7 +253,8 @@
     <ion-row class="detailsRow">
         <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
         padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
-        <span style="color:#057dcd; cursor: pointer;" (click)="addSpouse();editSpouse(spouseList.length-1, true)">Add
+        <span style="color:#057dcd; cursor: pointer;"
+            (click)="addList(this.spouseList, spouseObj);editSpouse(spouseList.length-1, true)">Add
             spouse</span>
     </ion-row>
     <!-- child -->
@@ -273,7 +275,7 @@
                     [(ngModel)]="childList[index].childIdentificationNumber">
             </mat-form-field>
             <div class="delete-icon" *ngIf="!showEditChild[index]" [inlineSVG]="'assets/icon/Option/trash.svg'"
-                (click)="removeChild(index)">
+                (click)="removeItem(index, this.childList)">
             </div>
             <div class="edit-pencil-icon" *ngIf="!showEditChild[index]" [inlineSVG]="'assets/icon/Option/pencil.svg'"
                 (click)="editChild(index, true)">
@@ -295,7 +297,8 @@
     <ion-row class="detailsRow">
         <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
             padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
-        <span style="color:#057dcd; cursor: pointer;" (click)="addChild();editChild(childList.length-1, true)">Add
+        <span style="color:#057dcd; cursor: pointer;"
+            (click)="addList(this.childList, childObj);editChild(childList.length-1, true)">Add
             child</span>
     </ion-row>
     <ion-item class="divider"></ion-item>
@@ -351,7 +354,7 @@
         </ion-col>
         <ion-col size="1">
             <div class="education-delete-icon" *ngIf="!showEditEducation[index]"
-                [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeEducation(index)">
+                [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeItem(index, this.educationList)">
             </div>
             <div class="education-edit-pencil-icon" *ngIf="!showEditEducation[index]"
                 [inlineSVG]="'assets/icon/Option/pencil.svg'" (click)="editEducation(index, true)">
@@ -373,7 +376,7 @@
         <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
         padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
         <span style="color:#057dcd; cursor: pointer;"
-            (click)="addEducation();editEducation(educationList.length-1, true)">
+            (click)="addList(this.educationList, educationObj);editEducation(educationList.length-1, true)">
             Add eduation qualification</span>
     </ion-row>
     <ion-item class="divider"></ion-item>

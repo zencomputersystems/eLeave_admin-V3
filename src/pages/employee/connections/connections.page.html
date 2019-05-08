@@ -25,8 +25,8 @@ margin: 0 auto;margin-top: 3%;">
 <div class="connectionsContainer" *ngIf="listView" [style.height]="connectionRoute ? '100%' : 'calc(100% - 58px)'"
     [style.width.%]="connectionRoute ? '100' : '95'">
     <div class="topHeader">
-        <p class="numOfPeople" [style.left.%]="connectionRoute ? '3' : '5'" *ngIf="employeeList">
-            {{employeeList.length}}
+        <p class="numOfPeople" [style.left.%]="connectionRoute ? '3' : '5'" *ngIf="items">
+            {{items.length}}
             people</p>
         <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="clearDetails()"
             (ionChange)="changeDetails($event)"></ion-searchbar>
@@ -39,14 +39,14 @@ margin: 0 auto;margin-top: 3%;">
             padding-left: 3%;">
                 <span style="padding-right: 10px;">Page</span>
                 <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
-                padding-right: 7px;">{{pageIndex}}</span>
-                <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageIndex}}
+                padding-right: 7px;">{{pageNum}}</span>
+                <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageNum}}
                 <i class="fas fa-angle-left" title="Previous page"
                     style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
-                    (click)="clickToPrevPage(pageIndex-1)"></i>
+                    (click)="clickToPrevPage(pageNum-1)"></i>
                 <i class="fas fa-angle-right" title="Next page"
                     style="cursor:pointer; font-size: 15px;padding-left: 10px"
-                    (click)="clickToNextPage(pageIndex+1)"></i>
+                    (click)="clickToNextPage(pageNum+1)"></i>
             </div>
         </div>
     </div>
@@ -59,17 +59,16 @@ margin: 0 auto;margin-top: 3%;">
             </ion-col>
             <ion-col size="1" style="display: inline-flex">
                 <ion-label style="font-size: 12px;">ID</ion-label>
-                <ion-icon class="arrow" name="arrow-dropdown" (click)="sortDesId()" *ngIf="sortDirectionArrowDownId">
+                <ion-icon class="arrow" name="arrow-dropdown" (click)="IDSorting(false,1,-1)" *ngIf="arrowDownId">
                 </ion-icon>
-                <ion-icon class="arrow" name="arrow-dropup" *ngIf="!sortDirectionArrowDownId" (click)="sortAscId()">
+                <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownId" (click)="IDSorting(true,-1,1)">
                 </ion-icon>
             </ion-col>
             <ion-col size="3" style="display: inline-flex">
                 <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
-                <ion-icon class="arrow" name="arrow-dropdown" (click)="sortDesName()"
-                    *ngIf="sortDirectionArrowDownName">
+                <ion-icon class="arrow" name="arrow-dropdown" (click)="nameSorting(false,1,-1)" *ngIf="arrowDownName">
                 </ion-icon>
-                <ion-icon class="arrow" name="arrow-dropup" *ngIf="!sortDirectionArrowDownName" (click)="sortAscName()">
+                <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownName" (click)="nameSorting(true,-1,1)">
                 </ion-icon>
             </ion-col>
             <ion-col size="3">
@@ -95,7 +94,8 @@ margin: 0 auto;margin-top: 3%;">
                 <ion-label style="color:#7a8589; font-size: 13px;">{{item.staffNumber}}</ion-label>
             </ion-col>
             <ion-col class="colOfLeave" size="3" style="color: #057dcd; font-size: 13px;cursor: pointer;"
-                (click)="routeToPublicProfile(item.id, item.employeeName)">{{item.employeeName}}
+                (click)="router.navigate(['/main/user-public-profile'], { queryParams: { GUID: item.id, name: item.employeeName } });">
+                {{item.employeeName}}
             </ion-col>
             <ion-col class="colOfLeave" size="3" style="color:#7a8589; font-size: 13px;">{{item.designation}}
             </ion-col>
@@ -114,26 +114,26 @@ margin: 0 auto;margin-top: 3%;">
 
     </ion-content>
     <div style="padding-left: 17px; display: inline-flex">
-        <ion-button [disabled]="disabledPreviousButton" fill="outline" (click)="clickToPrevPage(pageIndex-1)"
+        <ion-button [disabled]="disablePrevButton" fill="outline" (click)="clickToPrevPage(pageNum-1)"
             style="font-size: 12px;height: 30px;width: 90px;" color="primary">
             <ion-icon name="arrow-back"></ion-icon>Prev
         </ion-button>
         <div style="padding-left: 10px"></div>
-        <ion-button [disabled]="disabledNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
-            (click)="clickToNextPage(pageIndex+1)">Next<ion-icon name="arrow-forward">
+        <ion-button [disabled]="disableNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
+            (click)="clickToNextPage(pageNum+1)">Next<ion-icon name="arrow-forward">
             </ion-icon>
         </ion-button>
         <div [style.padding-right.%]="connectionRoute ? '3' : '8'"
             style="position: absolute;color: #7a8589;font-size: 12px;right: 0;padding-top: 1%;">
             <span style="padding-right: 10px;">Page</span>
             <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
-            padding-right: 7px;">{{pageIndex}}</span>
-            <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageIndex}}
+            padding-right: 7px;">{{pageNum}}</span>
+            <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageNum}}
             <i class="fas fa-angle-left" title="Previous page"
                 style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
-                (click)="clickToPrevPage(pageIndex-1)"></i>
+                (click)="clickToPrevPage(pageNum-1)"></i>
             <i class="fas fa-angle-right" title="Next page" style="cursor:pointer; font-size: 15px;padding-left: 10px"
-                (click)="clickToNextPage(pageIndex+1)"></i>
+                (click)="clickToNextPage(pageNum+1)"></i>
         </div>
     </div>
 </div>
@@ -143,8 +143,8 @@ margin: 0 auto;margin-top: 3%;">
 <div class="connectionsContainer" *ngIf="gridView" [style.height]="connectionRoute ? '100%' : 'calc(100% - 58px)'"
     [style.width.%]="connectionRoute ? '100' : '95'">
     <div class="topHeader">
-        <p class="numOfPeople" [style.left.%]="connectionRoute ? '3' : '5'" *ngIf="employeeList">
-            {{employeeList.length}}
+        <p class="numOfPeople" [style.left.%]="connectionRoute ? '3' : '5'" *ngIf="items">
+            {{items.length}}
             people</p>
         <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="clearDetails()"
             (ionChange)="changeDetails($event)"></ion-searchbar>
@@ -158,14 +158,14 @@ margin: 0 auto;margin-top: 3%;">
             <div style="color: #7a8589;font-size: 12px;display: inline;padding-left: 3%;">
                 <span style="padding-right: 10px;">Page</span>
                 <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
-                        padding-right: 7px;">{{pageIndex}}</span>
-                <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageIndex}}
+                        padding-right: 7px;">{{pageNum}}</span>
+                <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageNum}}
                 <i class="fas fa-angle-left" title="Previous page"
                     style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
-                    (click)="clickToPrevPage(pageIndex-1)"></i>
+                    (click)="clickToPrevPage(pageNum-1)"></i>
                 <i class="fas fa-angle-right" title="Next page"
                     style="cursor:pointer; font-size: 15px;padding-left: 10px"
-                    (click)="clickToNextPage(pageIndex+1)"></i>
+                    (click)="clickToNextPage(pageNum+1)"></i>
             </div>
         </div>
     </div>
@@ -184,7 +184,8 @@ margin: 0 auto;margin-top: 3%;">
                     </ion-avatar>
                     <mat-card-header>
                         <mat-card-subtitle style="color: #057dcd;white-space: nowrap; cursor: pointer;"
-                            (click)="routeToPublicProfile(item.id, item.employeeName)">{{item.employeeName}}
+                            (click)="router.navigate(['/main/user-public-profile'], { queryParams: { GUID: item.id, name: item.employeeName } });">
+                            {{item.employeeName}}
                         </mat-card-subtitle>
                         <mat-card-subtitle> <i class="far fa-id-card"></i>
                             {{item.staffNumber}}</mat-card-subtitle>
@@ -203,26 +204,26 @@ margin: 0 auto;margin-top: 3%;">
 
     </ion-content>
     <div style="padding-left: 17px; display: inline-flex">
-        <ion-button [disabled]="disabledPreviousButton" fill="outline" (click)="clickToPrevPage(pageIndex-1)"
+        <ion-button [disabled]="disablePrevButton" fill="outline" (click)="clickToPrevPage(pageNum-1)"
             style="font-size: 12px;height: 30px;width: 90px;" color="primary">
             <ion-icon name="arrow-back"></ion-icon>Prev
         </ion-button>
         <div style="padding-left: 10px"></div>
-        <ion-button [disabled]="disabledNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
-            (click)="clickToNextPage(pageIndex+1)">Next<ion-icon name="arrow-forward">
+        <ion-button [disabled]="disableNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
+            (click)="clickToNextPage(pageNum+1)">Next<ion-icon name="arrow-forward">
             </ion-icon>
         </ion-button>
         <div [style.padding-right.%]="connectionRoute ? '3' : '8'"
             style="position: absolute;color: #7a8589;font-size: 12px;right: 0;padding-top:1%">
             <span style="padding-right: 10px;">Page</span>
             <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
-                padding-right: 7px;">{{pageIndex}}</span>
-            <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageIndex}}
+                padding-right: 7px;">{{pageNum}}</span>
+            <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageNum}}
             <i class="fas fa-angle-left" title="Previous page"
                 style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
-                (click)="clickToPrevPage(pageIndex-1)"></i>
+                (click)="clickToPrevPage(pageNum-1)"></i>
             <i class="fas fa-angle-right" title="Next page" style="cursor:pointer; font-size: 15px;padding-left: 10px"
-                (click)="clickToNextPage(pageIndex+1)"></i>
+                (click)="clickToNextPage(pageNum+1)"></i>
         </div>
     </div>
 </div>
