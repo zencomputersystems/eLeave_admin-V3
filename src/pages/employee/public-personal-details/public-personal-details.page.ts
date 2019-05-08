@@ -34,7 +34,7 @@ export class PublicPersonalDetailsPage implements OnInit {
                         this.list = data;
                     },
                     error => {
-                        if (error) {
+                        if (error.status === 401) {
                             window.location.href = '/login';
                         }
                     },

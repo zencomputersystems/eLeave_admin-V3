@@ -38,6 +38,10 @@ export class PersonalDetailsPage implements OnInit {
     public showEditSpouse: boolean[] = [];
     public showEditChild: boolean[] = [];
     public showEditEducation: boolean[] = [];
+    public contactObj = { contactName: '', contactNumber: '' };
+    public spouseObj = { spouseName: '', spouseIdentificationNumber: '' };
+    public childObj = { childName: '', childIdentificationNumber: '' };
+    public educationObj = { qualificationLevel: '', major: '', university: '', year: '' };
     public selectedGender: string;
     public selectedMaritalStatus: string;
     public selectedAddress: string;
@@ -80,29 +84,7 @@ export class PersonalDetailsPage implements OnInit {
                 this.initSpouse();
                 this.initChild();
                 this.initEducation();
-                this._date = this._formBuilder.group({
-                    firstPicker: ['', Validators.required]
-                });
-                this._date = new FormGroup({
-                    firstPicker: new FormControl(new Date(this.list.personalDetail.dob)),
-                })
-                this._reformatDate = moment(this._date.value.firstPicker).format('YYYY-MM-DD');
-                this.selectedGender = this.list.personalDetail.gender;
-                this.selectedMaritalStatus = this.list.personalDetail.maritalStatus;
-                this.raceValue = this.list.personalDetail.race;
-                this.religionValue = this.list.personalDetail.religion;
-                this.nationalityValue = this.list.personalDetail.nationality;
-                this.phoneNum = this.list.personalDetail.phoneNumber;
-                this.workPhoneNum = this.list.personalDetail.workPhoneNumber;
-                this.firstEmailAdd = this.list.personalDetail.emailAddress;
-                this.secondEmailAdd = this.list.personalDetail.workEmailAddress;
-                this.addLine1 = this.list.personalDetail.residentialAddress1;
-                this.addLine2 = this.list.personalDetail.residentialAddress2;
-                this.postcode = this.list.personalDetail.postcode;
-                this.city = this.list.personalDetail.city;
-                this.state = this.list.personalDetail.state;
-                this.country = this.list.personalDetail.country;
-                this.nric = this.list.personalDetail.nric;
+                this.modelBindingValue();
             },
             error => {
                 if (error) {
@@ -114,6 +96,32 @@ export class PersonalDetailsPage implements OnInit {
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
+    }
+
+    modelBindingValue() {
+        this._date = this._formBuilder.group({
+            firstPicker: ['', Validators.required]
+        });
+        this._date = new FormGroup({
+            firstPicker: new FormControl(new Date(this.list.personalDetail.dob)),
+        })
+        this._reformatDate = moment(this._date.value.firstPicker).format('YYYY-MM-DD');
+        this.selectedGender = this.list.personalDetail.gender;
+        this.selectedMaritalStatus = this.list.personalDetail.maritalStatus;
+        this.raceValue = this.list.personalDetail.race;
+        this.religionValue = this.list.personalDetail.religion;
+        this.nationalityValue = this.list.personalDetail.nationality;
+        this.phoneNum = this.list.personalDetail.phoneNumber;
+        this.workPhoneNum = this.list.personalDetail.workPhoneNumber;
+        this.firstEmailAdd = this.list.personalDetail.emailAddress;
+        this.secondEmailAdd = this.list.personalDetail.workEmailAddress;
+        this.addLine1 = this.list.personalDetail.residentialAddress1;
+        this.addLine2 = this.list.personalDetail.residentialAddress2;
+        this.postcode = this.list.personalDetail.postcode;
+        this.city = this.list.personalDetail.city;
+        this.state = this.list.personalDetail.state;
+        this.country = this.list.personalDetail.country;
+        this.nric = this.list.personalDetail.nric;
     }
 
     initContact() {
@@ -200,45 +208,40 @@ export class PersonalDetailsPage implements OnInit {
         }
     }
 
-    clickToHideHeader() {
-        this.showHeader = false;
+    addList(list, obj) {
+        if (list === undefined) {
+            list = [];
+            list.push(obj);
+        } else {
+            list.push(obj);
+        }
     }
 
-    removeContact(index: number) {
-        this.removeList.splice(index, 1);
-        this.patchData();
-    }
-    removeSpouse(index: number) {
-        this.spouseList.splice(index, 1);
+    removeItem(index: number, list) {
+        list.splice(index, 1);
         this.patchData();
     }
 
-    removeChild(index: number) {
-        this.childList.splice(index, 1);
-        this.patchData();
-    }
-    removeEducation(index: number) {
-        this.educationList.splice(index, 1);
-        this.patchData();
-    }
     editContact(index, booValue) {
         for (let i = 0; i < this.removeList.length; i++) {
             this.showEditContact.splice(index, 1, booValue);
         }
     }
+
     editSpouse(index, value) {
         for (let i = 0; i < this.spouseList.length; i++) {
             this.showEditSpouse.splice(index, 1, value);
             if (!value && (this.spouseList[i].spouseName == '' || this.spouseList[i].spouseIdentificationNumber == '')) {
-                this.removeSpouse(i);
+                this.removeItem(i, this.spouseList);
             }
         }
     }
+
     editChild(index, value) {
         for (let i = 0; i < this.childList.length; i++) {
             this.showEditChild.splice(index, 1, value);
             if (!value && (this.childList[i].childName == '' || this.childList[i].childIdentificationNumber == '')) {
-                this.removeChild(i);
+                this.removeItem(i, this.childList);
             }
         }
     }
@@ -247,58 +250,45 @@ export class PersonalDetailsPage implements OnInit {
         for (let i = 0; i < this.educationList.length; i++) {
             this.showEditEducation.splice(index, 1, value);
             if (!value && (this.educationList[i].qualificationLevel == '' || this.educationList[i].major == '' || this.educationList[i].university == '' || this.educationList[i].year == '')) {
-                this.removeEducation(i);
+                this.removeItem(i, this.educationList);
             }
-        }
-    }
-    addContact() {
-        if (this.removeList === undefined) {
-            this.removeList = [];
-            this.removeList.push({ contactName: '', contactNumber: '' });
-        } else {
-            this.removeList.push({ contactName: '', contactNumber: '' });
-        }
-    }
-    addSpouseDetail() {
-        if (this.spouseList === undefined) {
-            this.spouseList = [];
-            this.spouseList.push({ spouseName: '', spouseIdentificationNumber: '' });
-        } else {
-            this.spouseList.push({ spouseName: '', spouseIdentificationNumber: '' });
-
-        }
-    }
-    addChildDetail() {
-        if (this.childList === undefined) {
-            this.childList = [];
-            this.childList.push({ childName: '', childIdentificationNumber: '' });
-        } else {
-            this.childList.push({ childName: '', childIdentificationNumber: '' });
-        }
-    }
-    addEducationDetail() {
-        if (this.educationList === undefined) {
-            this.educationList = [];
-            this.educationList.push({ qualificationLevel: '', major: '', university: '', year: '' });
-        } else {
-            this.educationList.push({ qualificationLevel: '', major: '', university: '', year: '' });
         }
     }
 
     genderChanged(event) {
         this.selectedGender = event.value;
     }
+
     maritalStatusChanged(event) {
         this.selectedMaritalStatus = event.value;
     }
+
     onDateChange(): void {
         if (!this._date.value.firstPicker || this._date.status === 'INVALID') {
         } else {
             this._reformatDate = moment(this._date.value.firstPicker).format('YYYY-MM-DD');
         }
     }
+
     patchData() {
         this.showEditProfile = false;
+        this.data();
+        this.subscription = this.apiService.patch_personal_details(this._datatoUpdate).subscribe(
+            (val) => {
+                this.subscription = this.apiService.get_personal_details().subscribe(
+                    (data: any[]) => {
+                        this.list = data;
+                    }
+                );
+            },
+            response => {
+                if (response.status === 401) {
+                    window.location.href = '/login';
+                }
+            });
+    }
+
+    data() {
         this._datatoUpdate = {
             "id": this.list.id,
             "nickname": 'wantan',
@@ -330,26 +320,6 @@ export class PersonalDetailsPage implements OnInit {
                 "child": this.childList
             }
         };
-
-        this.subscription = this.apiService.patch_personal_details(this._datatoUpdate).subscribe(
-            (val) => {
-                console.log("PATCH call successful value returned in body", val);
-                this.subscription = this.apiService.get_personal_details().subscribe(
-                    (data: any[]) => {
-                        this.list = data;
-                        console.log(this.list);
-                    }
-                );
-            },
-            response => {
-                console.log("PATCH call in error", response);
-                if (response.status === 401) {
-                    window.location.href = '/login';
-                }
-            },
-            () => {
-                console.log("The PATCH observable is now completed.");
-            });
     }
 
 

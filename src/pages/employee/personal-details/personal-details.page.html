@@ -2,7 +2,7 @@
     Your profile completeness is {{progressPercentage}}%
     <ion-progress-bar [value]="progressPercentage/100" color="success"
         style="display:inline-block; width:10%; margin-left: 3%"></ion-progress-bar>
-    <ion-icon class="crossIcon" name="close" (click)="clickToHideHeader()"></ion-icon>
+    <ion-icon class="crossIcon" name="close" (click)="showHeader = false;"></ion-icon>
 </div>
 <ion-card>
     <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
@@ -207,7 +207,7 @@
                         <input matInput placeholder="Contact Number" [(ngModel)]="removeList[index].contactNumber">
                     </mat-form-field>
                     <div class="delete-icon" *ngIf="!showEditContact[index]"
-                        [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeContact(index)">
+                        [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeItem(index, removeList)">
                     </div>
                     <div class="edit-pencil-icon" *ngIf="!showEditContact[index]"
                         [inlineSVG]="'assets/icon/Option/pencil.svg'" (click)="editContact(index, true)">
@@ -230,7 +230,7 @@
                 <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
                     padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
                 <span style="color:#057dcd; cursor: pointer;"
-                    (click)="addContact();editContact(contactList.length-1, true)">Add
+                    (click)="addList(removeList, contactObj);editContact(removeList.length-1, true)">Add
                     more</span>
             </ion-row>
             <ion-item class="divider"></ion-item>
@@ -256,7 +256,7 @@
                                 [(ngModel)]="spouseList[index].spouseIdentificationNumber">
                         </mat-form-field>
                         <div class="delete-icon" *ngIf="!showEditSpouse[index]"
-                            [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeSpouse(index)">
+                            [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeItem(index, spouseList)">
                         </div>
                         <div class="edit-pencil-icon" *ngIf="!showEditSpouse[index]"
                             [inlineSVG]="'assets/icon/Option/pencil.svg'" (click)="editSpouse(index, true)">
@@ -280,7 +280,7 @@
                     <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
         padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
                     <span style="color:#057dcd; cursor: pointer;"
-                        (click)="addSpouseDetail();editSpouse(spouseList.length-1, true)">Add
+                        (click)="addList(spouseList, spouseObj);editSpouse(spouseList.length-1, true)">Add
                         spouse</span>
                 </ion-row>
                 <!-- child -->
@@ -301,7 +301,7 @@
                                 [(ngModel)]="childList[index].childIdentificationNumber">
                         </mat-form-field>
                         <div class="delete-icon" *ngIf="!showEditChild[index]"
-                            [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeChild(index)">
+                            [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeItem(index, childList)">
                         </div>
                         <div class="edit-pencil-icon" *ngIf="!showEditChild[index]"
                             [inlineSVG]="'assets/icon/Option/pencil.svg'" (click)="editChild(index, true)">
@@ -325,7 +325,7 @@
                     <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
             padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
                     <span style="color:#057dcd; cursor: pointer;"
-                        (click)="addChildDetail();editChild(childList.length-1, true)">Add
+                        (click)="addList(childList, childObj);editChild(childList.length-1, true)">Add
                         child</span>
                 </ion-row>
                 <ion-item class="divider"></ion-item>
@@ -382,7 +382,7 @@
                     </ion-col>
                     <ion-col size="1">
                         <div class="education-delete-icon" *ngIf="!showEditEducation[index]"
-                            [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeEducation(index)">
+                            [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeItem(index, educationList)">
                         </div>
                         <div class="education-edit-pencil-icon" *ngIf="!showEditEducation[index]"
                             [inlineSVG]="'assets/icon/Option/pencil.svg'" (click)="editEducationDetail(index, true)">
@@ -394,7 +394,8 @@
                             cancel
                         </ion-button>
                         <div style="display: inline-block"></div>
-                        <ion-button shape="round" fill="outline" (click)="patchData(); editEducationDetail(index, false)"
+                        <ion-button shape="round" fill="outline"
+                            (click)="patchData(); editEducationDetail(index, false)"
                             style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;"
                             color="primary">
                             save
@@ -405,7 +406,7 @@
                     <ion-icon name="add-circle-outline" style="color: #057dcd;padding-top: 2px;padding-right: 10px;
         padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
                     <span style="color:#057dcd; cursor: pointer;"
-                        (click)="addEducationDetail();editEducationDetail(educationList.length-1, true)">
+                        (click)="addList(educationList, educationObj);editEducationDetail(educationList.length-1, true)">
                         Add eduation qualification</span>
                 </ion-row>
                 <ion-item class="divider"></ion-item>

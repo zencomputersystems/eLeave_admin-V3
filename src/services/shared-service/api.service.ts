@@ -28,8 +28,8 @@ export class APIService {
             .pipe(map((res: Response) => res.json()))
     }
 
-    patchApi(data: any, address: string) {
-        return this.http.patch(this.baseUrl + address, data, { headers: this.headers })
+    patchApi(body: any, api: string) {
+        return this.http.patch(this.baseUrl + api, body, { headers: this.headers })
             .pipe(map((res: Response) => res.json()))
     }
 
