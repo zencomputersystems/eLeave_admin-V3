@@ -98,16 +98,16 @@ export class ConnectionsPage implements OnInit {
         this.totalItem = this.items.length;
         this.totalPageNum = this.totalItem / pageIndex;
         this.totalPageNum = Math.ceil(this.totalPageNum);
-        const startNum = (this.pageNum * pageIndex) - rangeNumber;
-        const endNum = this.pageNum * pageIndex;
-        const currentPageItems = [];
-        for (let j = startNum - 1; j < endNum; j++) {
-            const itemNum = data[j];
-            if (itemNum !== undefined) {
-                currentPageItems.push(itemNum);
+        const firstNum = (this.pageNum * pageIndex) - rangeNumber;
+        const lastNum = this.pageNum * pageIndex;
+        const currentPageList = [];
+        for (let j = firstNum - 1; j < lastNum; j++) {
+            const itemValue = data[j];
+            if (itemValue !== undefined) {
+                currentPageList.push(itemValue);
             }
         }
-        this.currentPageItems = currentPageItems;
+        this.currentPageItems = currentPageList;
     }
 
     disableEnableNextButton() {
@@ -152,8 +152,8 @@ export class ConnectionsPage implements OnInit {
         this.arrowDownName = value;
         this.items = this.items.slice(0);
         this.items.sort(function (a: any, b: any) {
-            const x = a.employeeName.toLowerCase();
-            const y = b.employeeName.toLowerCase();
+            const x = a.employeeName.toUpperCase();
+            const y = b.employeeName.toUpperCase();
             return x < y ? checkAsc : x > y ? checkDes : 0;
         });
         this.renderItems(1, this.items, this.pageItems, this.range);
@@ -164,20 +164,20 @@ export class ConnectionsPage implements OnInit {
     IDSorting(value: boolean, ascValue: number, desValue: number) {
         this.arrowDownId = value;
         this.items = this.items.slice(0);
-        this.items.sort(function (a, b) {
-            var x = a.staffNumber;
-            var y = b.staffNumber;
-            return x < y ? ascValue : x > y ? desValue : 0;
+        this.items.sort(function (x, y) {
+            const a = x.staffNumber;
+            const b = y.staffNumber;
+            return a < b ? ascValue : a > b ? desValue : 0;
         });
         this.renderItems(1, this.items, this.pageItems, this.range);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
 
-    filterDetails(text: any) {
-        if (text && text.trim() != '') {
-            this.items = this.items.filter((item: any) => {
-                return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
+    filterDetails(char: any) {
+        if (char && char.trim() != '') {
+            this.items = this.items.filter((data: any) => {
+                return (data.employeeName.toUpperCase().indexOf(char.toUpperCase()) > -1);
             })
 
             this.pageNum = 1;
@@ -214,20 +214,18 @@ export class ConnectionsPage implements OnInit {
     }
 
     clickAsFavourite(index: number, item: any) {
-        const objects = { index: index, itemId: item.id };
-        const a = objects;
-        if (this.setAsFavourite.length < 1) {
-            this.setAsFavourite.push(a);
-        } else {
-            if (this.userIDExists(item.id)) {
-                for (let i = 0; i < this.setAsFavourite.length; i++) {
-                    if (this.setAsFavourite[i].index == index && this.setAsFavourite[i].itemId == item.id) {
-                        this.setAsFavourite.splice(i, 1);
-                    }
+        const obj = { index: index, itemId: item.id };
+        const data = obj;
+        if (!this.userIDExists(item.id) && this.setAsFavourite.length > 0) {
+            this.setAsFavourite.push(data);
+        } else if (this.userIDExists(item.id) && this.setAsFavourite.length > 0) {
+            for (let i = 0; i < this.setAsFavourite.length; i++) {
+                if (this.setAsFavourite[i].itemId == item.id && this.setAsFavourite[i].index == index) {
+                    this.setAsFavourite.splice(i, 1);
                 }
-            } else {
-                this.setAsFavourite.push(a);
             }
+        } else {
+            this.setAsFavourite.push(data);
         }
     };
 

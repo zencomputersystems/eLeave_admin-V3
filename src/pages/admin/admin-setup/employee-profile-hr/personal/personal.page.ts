@@ -70,42 +70,43 @@ export class PersonalPage implements OnInit {
                 this.getSpouseInit();
                 this.getChildInit();
                 this.getEducationInit();
-                this._date = this._formBuilder.group({
-                    datepicker: ['', Validators.required]
-                });
+                this._date = this._formBuilder.group({ datepicker: ['', Validators.required] });
                 this._date = new FormGroup({
                     datepicker: new FormControl(new Date(this.list.personalDetail.dob)),
                 })
-                this.name = this.list.employeeName;
-                this.nickname = this.list.personalDetail.nickname;
-                this._reformatDate = moment(this._date.value.firstPicker).format('YYYY-MM-DD');
-                this.nric = this.list.personalDetail.nric;
-                this.genderValue = this.list.personalDetail.gender;
-                this.maritalStatusValue = this.list.personalDetail.maritalStatus;
-                this.raceValue = this.list.personalDetail.race;
-                this.religionValue = this.list.personalDetail.religion;
-                this.nationalityValue = this.list.personalDetail.nationality;
-                this.personalPhoneValue = this.list.personalDetail.phoneNumber;
-                this.personalEmailValue = this.list.personalDetail.emailAddress;
-                this.workEmailValue = this.list.personalDetail.workEmailAddress;
-                this.workPhoneValue = this.list.personalDetail.workPhoneNumber;
-                this.addLine1 = this.list.personalDetail.residentialAddress1;
-                this.addLine2 = this.list.personalDetail.residentialAddress2;
-                this.postcode = this.list.personalDetail.postcode;
-                this.city = this.list.personalDetail.city;
-                this.state = this.list.personalDetail.state;
-                this.country = this.list.personalDetail.country;
+                this.initValue();
             },
             error => {
-                if (error) {
+                if (error.status === 401) {
                     window.location.href = '/login';
                 }
-            }
-        );
+            });
     }
 
     ngOnDestroy() {
         this._subscription.unsubscribe();
+    }
+
+    initValue() {
+        this.name = this.list.employeeName;
+        this.nickname = this.list.personalDetail.nickname;
+        this._reformatDate = moment(this._date.value.firstPicker).format('YYYY-MM-DD');
+        this.nric = this.list.personalDetail.nric;
+        this.genderValue = this.list.personalDetail.gender;
+        this.maritalStatusValue = this.list.personalDetail.maritalStatus;
+        this.raceValue = this.list.personalDetail.race;
+        this.religionValue = this.list.personalDetail.religion;
+        this.nationalityValue = this.list.personalDetail.nationality;
+        this.personalPhoneValue = this.list.personalDetail.phoneNumber;
+        this.personalEmailValue = this.list.personalDetail.emailAddress;
+        this.workEmailValue = this.list.personalDetail.workEmailAddress;
+        this.workPhoneValue = this.list.personalDetail.workPhoneNumber;
+        this.addLine1 = this.list.personalDetail.residentialAddress1;
+        this.addLine2 = this.list.personalDetail.residentialAddress2;
+        this.postcode = this.list.personalDetail.postcode;
+        this.city = this.list.personalDetail.city;
+        this.state = this.list.personalDetail.state;
+        this.country = this.list.personalDetail.country;
     }
 
     getContactInit() {
@@ -200,7 +201,6 @@ export class PersonalPage implements OnInit {
         if (object === this.educationObj) { this.educationList = addList; }
     }
 
-
     removeItem(index: number, list: any) {
         list.splice(index, 1);
         this.patchAllData();
@@ -208,7 +208,25 @@ export class PersonalPage implements OnInit {
 
     patchAllData() {
         this.editProfile = false;
-        const toPatchData = {
+        this._subscription = this.apiService.patch_personal_details(this.bindingData()).subscribe(
+            (val) => {
+                console.log("PATCH call successful value returned in body", val);
+            },
+            response => {
+                if (response.status === 401) {
+                    window.location.href = '/login';
+                }
+            },
+            () => {
+                this._subscription = this.apiService.get_personal_details().subscribe(
+                    (data: any[]) => {
+                        this.list = data;
+                    });
+            });
+    }
+
+    bindingData() {
+        return {
             "id": this.list.id,
             "nickname": this.nickname,
             "nric": this.nric.toString(),
@@ -228,36 +246,13 @@ export class PersonalPage implements OnInit {
             "city": this.city,
             "state": this.state,
             "country": this.country,
-            "emergencyContact": {
-                "contacts": this.contactList
-            },
-            "education": {
-                "educationDetail": this.educationList
-            },
+            "emergencyContact": { "contacts": this.contactList },
+            "education": { "educationDetail": this.educationList },
             "family": {
                 "spouse": this.spouseList,
                 "child": this.childList
             }
         };
-
-        this._subscription = this.apiService.patch_personal_details(toPatchData).subscribe(
-            (val) => {
-                console.log("PATCH call successful value returned in body", val);
-            },
-            response => {
-                console.log("PATCH call in error", response);
-                if (response.status === 401) {
-                    window.location.href = '/login';
-                }
-            },
-            () => {
-                console.log("The PATCH observable is now completed.");
-                this._subscription = this.apiService.get_personal_details().subscribe(
-                    (data: any[]) => {
-                        this.list = data;
-                    }
-                );
-            });
     }
 
     editContact(index, value) {
@@ -277,6 +272,7 @@ export class PersonalPage implements OnInit {
             }
         }
     }
+
     editChild(index, value) {
         for (let i = 0; i < this.childList.length; i++) {
             this.showEditChild.splice(index, 1, value);
