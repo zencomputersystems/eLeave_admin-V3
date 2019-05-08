@@ -125,86 +125,76 @@ export class PersonalDetailsPage implements OnInit {
     }
 
     initContact() {
-        if (this.list.personalDetail.emergencyContactNumber !== undefined) {
-            if (this.list.personalDetail.emergencyContactNumber.contacts !== undefined && (typeof (this.removeList) == "object")) {
-                if (!(this.list.personalDetail.emergencyContactNumber.contacts instanceof Array)) {
-                    this.removeList.push(this.list.personalDetail.emergencyContactNumber.contacts);
-                    for (let i = 0; i < this.removeList.length; i++) {
-                        this.showEditContact.push(false);
-                    }
-                } else {
-                    this.removeList = (this.list.personalDetail.emergencyContactNumber.contacts);
-                    for (let i = 0; i < this.removeList.length; i++) {
-                        this.showEditContact.push(false);
-                    }
-                }
-            } else {
-                this.removeList = this.list.personalDetail.emergencyContactNumber.contacts;
+        if (this.list.personalDetail.emergencyContactNumber.contacts !== undefined && !(this.list.personalDetail.emergencyContactNumber.contacts instanceof Array)) {
+            this.removeList.push(this.list.personalDetail.emergencyContactNumber.contacts);
+            for (let i = 0; i < this.removeList.length; i++) {
+                this.showEditContact.push(false);
             }
+        }
+        else if (this.list.personalDetail.emergencyContactNumber.contacts !== undefined && (this.list.personalDetail.emergencyContactNumber.contacts instanceof Array)) {
+            this.removeList = (this.list.personalDetail.emergencyContactNumber.contacts);
+            for (let i = 0; i < this.removeList.length; i++) {
+                this.showEditContact.push(false);
+            }
+        }
+        else {
+            this.removeList = this.list.personalDetail.emergencyContactNumber.contacts;
         }
     }
 
     initSpouse() {
-        if (this.list.personalDetail.family !== undefined) {
-            if (this.list.personalDetail.family.spouse !== undefined && (typeof (this.spouseList) == "object")) {
-                this.displayFamily = true;
-                if (!(this.list.personalDetail.family.spouse instanceof Array)) {
-                    this.spouseList.push(this.list.personalDetail.family.spouse);
-                    for (let i = 0; i < this.spouseList.length; i++) {
-                        this.showEditSpouse.push(false);
-                    }
-                } else {
-                    this.spouseList = (this.list.personalDetail.family.spouse);
-                    for (let i = 0; i < this.spouseList.length; i++) {
-                        this.showEditSpouse.push(false);
-                    }
-                }
-            } else {
-                this.displayFamily = false;
-                this.spouseList = this.list.personalDetail.family.spouse;
+        if (this.list.personalDetail.family.spouse !== undefined && !(this.list.personalDetail.family.spouse instanceof Array)) {
+            this.displayFamily = true;
+            this.spouseList.push(this.list.personalDetail.family.spouse);
+            for (let i = 0; i < this.spouseList.length; i++) {
+                this.showEditSpouse.push(false);
             }
+        } else if (this.list.personalDetail.family.spouse !== undefined && (this.list.personalDetail.family.spouse instanceof Array)) {
+            this.displayFamily = true;
+            this.spouseList = (this.list.personalDetail.family.spouse);
+            for (let i = 0; i < this.spouseList.length; i++) {
+                this.showEditSpouse.push(false);
+            }
+        } else {
+            this.displayFamily = false;
+            this.spouseList = this.list.personalDetail.family.spouse;
         }
     }
 
     initChild() {
-        if (this.list.personalDetail.family !== undefined) {
-            if (this.list.personalDetail.family.child !== undefined && (typeof (this.childList) == "object")) {
-                if (!(this.list.personalDetail.family.child instanceof Array)) {
-                    this.childList.push(this.list.personalDetail.family.child);
-                    for (let i = 0; i < this.childList.length; i++) {
-                        this.showEditChild.push(false);
-                    }
-                } else {
-                    this.childList = (this.list.personalDetail.family.child);
-                    for (let i = 0; i < this.childList.length; i++) {
-                        this.showEditChild.push(false);
-                    }
-                }
-            } else {
-                this.childList = this.list.personalDetail.family.child;
+        if (this.list.personalDetail.family.child !== undefined && !(this.list.personalDetail.family.child instanceof Array)) {
+            this.displayFamily = true;
+            this.childList.push(this.list.personalDetail.family.child);
+            for (let i = 0; i < this.childList.length; i++) {
+                this.showEditChild.push(false);
             }
+        } else if (this.list.personalDetail.family.child !== undefined && (this.list.personalDetail.family.child instanceof Array)) {
+            this.displayFamily = true;
+            this.childList = (this.list.personalDetail.family.child);
+            for (let i = 0; i < this.childList.length; i++) {
+                this.showEditChild.push(false);
+            }
+        } else {
+            this.childList = this.list.personalDetail.family.child;
         }
     }
 
     initEducation() {
-        if (this.list.personalDetail.education !== undefined) {
-            if (this.list.personalDetail.education.educationDetail !== undefined && (typeof (this.educationList) == "object")) {
-                this.displayEducation = true;
-                if (!(this.list.personalDetail.education.educationDetail instanceof Array)) {
-                    this.educationList.push(this.list.personalDetail.education.educationDetail);
-                    for (let i = 0; i < this.educationList.length; i++) {
-                        this.showEditEducation.push(false);
-                    }
-                } else {
-                    this.educationList = (this.list.personalDetail.education.educationDetail);
-                    for (let i = 0; i < this.educationList.length; i++) {
-                        this.showEditEducation.push(false);
-                    }
-                }
-            } else {
-                this.displayEducation = false;
-                this.educationList = this.list.personalDetail.education.educationDetail;
+        if (this.list.personalDetail.education.educationDetail !== undefined && !(this.list.personalDetail.education.educationDetail instanceof Array)) {
+            this.displayEducation = true;
+            this.educationList.push(this.list.personalDetail.education.educationDetail);
+            for (let i = 0; i < this.educationList.length; i++) {
+                this.showEditEducation.push(false);
             }
+        } else if (this.list.personalDetail.education.educationDetail !== undefined && (this.list.personalDetail.education.educationDetail instanceof Array)) {
+            this.displayEducation = true;
+            this.educationList = (this.list.personalDetail.education.educationDetail);
+            for (let i = 0; i < this.educationList.length; i++) {
+                this.showEditEducation.push(false);
+            }
+        } else {
+            this.displayEducation = false;
+            this.educationList = this.list.personalDetail.education.educationDetail;
         }
     }
 
@@ -212,12 +202,22 @@ export class PersonalDetailsPage implements OnInit {
         if (list === undefined) {
             list = [];
             list.push(obj);
+            this.getObject(list, obj);
         } else {
             list.push(obj);
+            this.getObject(list, obj);
         }
     }
 
-    removeItem(index: number, list) {
+    getObject(list, obj) {
+        if (obj === this.contactObj) { this.removeList = list; }
+        if (obj === this.spouseObj) { this.spouseList = list; }
+        if (obj === this.childObj) { this.childList = list; }
+        if (obj === this.educationObj) { this.educationList = list; }
+    }
+
+
+    removeItem(index: number, list: any) {
         list.splice(index, 1);
         this.patchData();
     }
