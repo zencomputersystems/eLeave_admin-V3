@@ -28,8 +28,13 @@ export class APIService {
             .pipe(map((res: Response) => res.json()))
     }
 
-    patchApi(body: any, api: string) {
-        return this.http.patch(this.baseUrl + api, body, { headers: this.headers })
+    getApiWithId(address: string, guid: string) {
+        return this.http.get(this.baseUrl + address + guid, { headers: this.headers })
+            .pipe(map((res: Response) => res.json()))
+    }
+
+    patchApi(data: any, address: string) {
+        return this.http.patch(this.baseUrl + address, data, { headers: this.headers })
             .pipe(map((res: Response) => res.json()))
     }
 
@@ -45,8 +50,7 @@ export class APIService {
     }
 
     get_user_personal_details(guid): Observable<any> {
-        return this.http.get(this.baseUrl + '/userprofile/personal-detail/' + guid, { headers: this.headers })
-            .pipe(map((res: Response) => res.json()))
+        return this.getApiWithId('/userprofile/personal-detail/', guid);
     }
 
     patch_personal_details(updateData): Observable<any[]> {
@@ -55,8 +59,7 @@ export class APIService {
     }
 
     get_employment_details(userId): Observable<any> {
-        return this.http.get(this.baseUrl + '/userprofile/employment-detail/' + userId, { headers: this.headers })
-            .pipe(map((res: Response) => res.json()))
+        return this.getApiWithId('/userprofile/employment-detail/', userId);
     }
 
     patch_employment_details(updateData: any): Observable<any> {
