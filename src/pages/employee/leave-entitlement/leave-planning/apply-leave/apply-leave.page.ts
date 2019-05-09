@@ -1,9 +1,3 @@
-export enum DayType {
-    'Full Day',
-    'Half Day',
-    'Quarter Day'
-}
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { ActivatedRoute } from '@angular/router';
@@ -16,6 +10,7 @@ import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import * as _moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Subscription } from 'rxjs';
+import { DayType } from './apply-leave.service';
 const moment = _moment;
 
 @Component({
@@ -282,7 +277,6 @@ export class ApplyLeavePage implements OnInit {
             } else {
                 this._thirdFormIndex.push(indexj);
             }
-            this._thirdFormIndex.push(indexj);
         }
     }
 

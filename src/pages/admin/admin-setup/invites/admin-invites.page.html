@@ -8,7 +8,8 @@
             <i class="material-icons"
                 style="padding-left: 10px; color: #7a8589; float: right;cursor: pointer">more_horiz</i>
             <ion-label class="label" style="font-size: 14px; color: #057dcd;float: right;
-            margin-top: 5px;padding-right: 10px;cursor: pointer" (click)="router.navigate(['/main/invite-more']);">Invite more</ion-label>
+            margin-top: 5px;padding-right: 10px;cursor: pointer" (click)="router.navigate(['/main/invite-more']);">
+                Invite more</ion-label>
         </div>
     </ion-toolbar>
 </ion-header>
@@ -22,8 +23,10 @@
             (ionChange)="changeDetails($event)"></ion-searchbar>
         <div style="display: inline-block;white-space: nowrap;width: 66%;">
             <div style="padding-top: 18px;display: inline-block;padding-left: 46%">
-                <i class="fas fa-bars" (click)="viewOnList()" [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
-                <i class="fas fa-th" (click)="viewOnGrid()" [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
+                <i class="fas fa-bars" (click)="viewType(true, 6, 5)"
+                    [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
+                <i class="fas fa-th" (click)="viewType(false, 8, 7)"
+                    [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
             </div>
             <div style="color: #7a8589;font-size: 12px;display: inline;
             padding-left: 3%;">
@@ -56,8 +59,7 @@
             </ion-col>
             <ion-col size="3" style="display: inline-flex">
                 <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
-                <ion-icon class="arrow" name="arrow-dropdown" (click)="sortName(false, 1, -1)"
-                    *ngIf="arrowDownName">
+                <ion-icon class="arrow" name="arrow-dropdown" (click)="sortName(false, 1, -1)" *ngIf="arrowDownName">
                 </ion-icon>
                 <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownName" (click)="sortName(true, -1, 1)">
                 </ion-icon>
@@ -134,8 +136,10 @@
                 white-space: nowrap;
                 width: 66%;">
             <div style="padding-top: 18px;display: inline-block;padding-left: 46%">
-                <i class="fas fa-bars" (click)="viewOnList()" [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
-                <i class="fas fa-th" (click)="viewOnGrid()" [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
+                <i class="fas fa-bars" (click)="viewType(true, 6, 5)"
+                    [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
+                <i class="fas fa-th" (click)="viewType(false, 8, 7)()"
+                    [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
             </div>
             <div style="color: #7a8589;font-size: 12px;display: inline;
                     padding-left: 3%;">

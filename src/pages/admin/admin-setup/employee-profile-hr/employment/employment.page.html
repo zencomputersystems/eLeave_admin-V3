@@ -20,14 +20,14 @@
             <ion-label>EMPLOYEE ID NO</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.employeeNumber}}</p>
             <mat-form-field *ngIf="edit">
-                <input matInput [(ngModel)]="numID">
+                <input matInput [(ngModel)]="employmentlist.employmentDetail.employeeNumber">
             </mat-form-field>
         </ion-col>
         <ion-col>
             <ion-label>DESIGNATION</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employeeDesignation}}</p>
             <mat-form-field *ngIf="edit">
-                <input matInput [(ngModel)]="designation">
+                <input matInput [(ngModel)]="employmentlist.employeeDesignation">
             </mat-form-field>
         </ion-col>
     </ion-row>
@@ -43,7 +43,7 @@
             <ion-label>DEPARTMENT</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employeeDepartment}}</p>
             <mat-form-field *ngIf="edit">
-                <input matInput [(ngModel)]="department">
+                <input matInput [(ngModel)]="employmentlist.employeeDepartment">
             </mat-form-field>
         </ion-col>
         <ion-col>
@@ -55,7 +55,7 @@
                 {{employmentPersonalList.employmentDetail.reportingTo}}
             </p>
             <mat-form-field *ngIf="edit">
-                <input matInput [(ngModel)]="reportingTo">
+                <input matInput [(ngModel)]="employmentlist.employmentDetail.reportingTo">
             </mat-form-field>
         </ion-col>
     </ion-row>
@@ -64,7 +64,7 @@
             <ion-label>WORK LOCATION</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.workLocation}}</p>
             <mat-form-field *ngIf="edit">
-                <input matInput [(ngModel)]="workLocation">
+                <input matInput [(ngModel)]="employmentlist.employmentDetail.workLocation">
             </mat-form-field>
         </ion-col>
     </ion-row>
@@ -74,7 +74,7 @@
             <ion-label>EMPLOYMENT TYPE</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.employmentType}}</p>
             <mat-form-field *ngIf="edit">
-                <mat-select [(value)]="type" (selectionChange)="typeChanged($event)">
+                <mat-select [(value)]="employmentlist.employmentDetail.employmentType">
                     <mat-option value="Permanent">Permanent</mat-option>
                     <mat-option value="Contract">Contract</mat-option>
                     <mat-option value="Temporary">Temporary</mat-option>
@@ -85,7 +85,7 @@
             <ion-label>EMPLOYMENT STATUS</ion-label>
             <p *ngIf="!edit">{{status}}</p>
             <mat-form-field *ngIf="edit">
-                <mat-select [(value)]="status" (selectionChange)="statusChanged($event)">
+                <mat-select [(value)]="status">
                     <mat-option value="Probation">Probation</mat-option>
                     <mat-option value="Confirmed">Confirmed</mat-option>
                     <mat-option value="Terminated">Terminated</mat-option>
@@ -99,8 +99,7 @@
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.dateOfJoin}}</p>
             <form [formGroup]="dateJoinForm">
                 <mat-form-field *ngIf="edit" style="width:67%">
-                    <input matInput [matDatepicker]="dateOfJoin" formControlName="dateJoin" required
-                        (dateChange)="dateChange()">
+                    <input matInput [matDatepicker]="dateOfJoin" formControlName="dateJoin" required>
                     <mat-datepicker-toggle matSuffix [for]="dateOfJoin"></mat-datepicker-toggle>
                     <mat-datepicker #dateOfJoin></mat-datepicker>
                 </mat-form-field>
@@ -111,8 +110,7 @@
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.dateOfConfirmation}}</p>
             <form [formGroup]="dateConfirmForm">
                 <mat-form-field *ngIf="edit" style="width:67%">
-                    <input matInput [matDatepicker]="dateOfConfirm" formControlName="dateConfirm" required
-                        (dateChange)="dateChange()">
+                    <input matInput [matDatepicker]="dateOfConfirm" formControlName="dateConfirm" required>
                     <mat-datepicker-toggle matSuffix [for]="dateOfConfirm"></mat-datepicker-toggle>
                     <mat-datepicker #dateOfConfirm></mat-datepicker>
                 </mat-form-field>
@@ -125,8 +123,7 @@
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.dateOfResign}}</p>
             <form [formGroup]="dateResignForm">
                 <mat-form-field *ngIf="edit" style="width:67%">
-                    <input matInput [matDatepicker]="dateOfResign" formControlName="dateResign" required
-                        (dateChange)="dateChange()">
+                    <input matInput [matDatepicker]="dateOfResign" formControlName="dateResign" required>
                     <mat-datepicker-toggle matSuffix [for]="dateOfResign"></mat-datepicker-toggle>
                     <mat-datepicker #dateOfResign></mat-datepicker>
                 </mat-form-field>
@@ -136,7 +133,7 @@
             <ion-label>YEARS OF SERVICE</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.yearOfService}}</p>
             <mat-form-field *ngIf="edit">
-                <input matInput [(ngModel)]="yearService">
+                <input matInput [(ngModel)]="employmentlist.employmentDetail.yearOfService">
             </mat-form-field>
         </ion-col>
     </ion-row>
@@ -146,14 +143,14 @@
             <ion-label>BANK NAME</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.bankAccountName}}</p>
             <mat-form-field *ngIf="edit">
-                <input matInput [(ngModel)]="accName">
+                <input matInput [(ngModel)]="employmentlist.employmentDetail.bankAccountName">
             </mat-form-field>
         </ion-col>
         <ion-col>
             <ion-label>BANK ACCOUNT NO</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.bankAccountNumber}}</p>
             <mat-form-field *ngIf="edit">
-                <input matInput [(ngModel)]="accNum">
+                <input matInput [(ngModel)]="employmentlist.employmentDetail.bankAccountNumber">
             </mat-form-field>
         </ion-col>
     </ion-row>
@@ -162,14 +159,14 @@
             <ion-label>EPF NO</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.epfNumber}}</p>
             <mat-form-field *ngIf="edit">
-                <input matInput [(ngModel)]="epf">
+                <input matInput [(ngModel)]="employmentlist.employmentDetail.epfNumber">
             </mat-form-field>
         </ion-col>
         <ion-col>
             <ion-label>INCOME TAX NO</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.incomeTaxNumber}}</p>
             <mat-form-field *ngIf="edit">
-                <input matInput [(ngModel)]="incomeTax">
+                <input matInput [(ngModel)]="employmentlist.employmentDetail.incomeTaxNumber">
             </mat-form-field>
         </ion-col>
     </ion-row>

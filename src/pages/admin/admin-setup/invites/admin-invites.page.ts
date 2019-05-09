@@ -55,23 +55,13 @@ export class AdminInvitesPage implements OnInit {
         );
     }
 
-    viewOnList() {
-        this.listView = true;
-        this.gridView = false;
+    viewType(list: boolean, pageItems: number, range: number) {
+        this.listView = list;
+        this.gridView = !list;
         this.disableNextButton = false;
         this.disablePrevButton = true;
-        this.itemsPerPage = 6;
-        this.startEndNumber = 5;
-        this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
-    }
-
-    viewOnGrid() {
-        this.listView = false;
-        this.gridView = true;
-        this.disableNextButton = false;
-        this.disablePrevButton = true;
-        this.itemsPerPage = 8;
-        this.startEndNumber = 7;
+        this.itemsPerPage = pageItems;
+        this.startEndNumber = range;
         this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
     }
 

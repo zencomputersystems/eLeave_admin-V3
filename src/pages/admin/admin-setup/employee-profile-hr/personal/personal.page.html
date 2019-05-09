@@ -19,14 +19,14 @@
         <ion-label>FULL NAME</ion-label>
         <p *ngIf="!editProfile">{{personalList.employeeName}}</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput [(ngModel)]="name" disabled>
+            <input matInput [(ngModel)]="list.employeeName" disabled>
         </mat-form-field>
     </ion-col>
     <ion-col>
         <ion-label>DISPLAY NAME</ion-label>
         <p *ngIf="!editProfile">{{personalList.personalDetail.nickname}}</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput [(ngModel)]="nickname">
+            <input matInput [(ngModel)]="list.personalDetail.nickname">
         </mat-form-field>
     </ion-col>
 </ion-row>
@@ -35,14 +35,14 @@
         <ion-label>PERSONAL PHONE NUMBER</ion-label>
         <p *ngIf="!editProfile">{{personalList.personalDetail.phoneNumber}}</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput [(ngModel)]="personalPhoneValue">
+            <input matInput [(ngModel)]="list.personalDetail.phoneNumber">
         </mat-form-field>
     </ion-col>
     <ion-col>
         <ion-label>PERSONAL EMAIL ADDRESS</ion-label>
         <p *ngIf="!editProfile">{{personalList.personalDetail.emailAddress}}</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput [(ngModel)]="personalEmailValue" value="{{personalList.personalDetail.emailAddress}}">
+            <input matInput [(ngModel)]="list.personalDetail.emailAddress">
         </mat-form-field>
     </ion-col>
 </ion-row>
@@ -51,14 +51,14 @@
         <ion-label>WORK PHONE NUMBER</ion-label>
         <p *ngIf="!editProfile">{{personalList.personalDetail.workPhoneNumber}}</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput [(ngModel)]="workPhoneValue" value="{{personalList.personalDetail.workPhoneNumber}}">
+            <input matInput [(ngModel)]="list.personalDetail.workPhoneNumber">
         </mat-form-field>
     </ion-col>
     <ion-col>
         <ion-label>WORK EMAIL ADDRESS</ion-label>
         <p *ngIf="!editProfile">{{personalList.personalDetail.workEmailAddress}}</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput [(ngModel)]="workEmailValue" value="{{personalList.personalDetail.workEmailAddress}}">
+            <input matInput [(ngModel)]="list.personalDetail.workEmailAddress">
         </mat-form-field>
     </ion-col>
 </ion-row>
@@ -68,8 +68,7 @@
         <p *ngIf="!editProfile">{{personalList.personalDetail.dob}}</p>
         <form [formGroup]="dateForm">
             <mat-form-field *ngIf="editProfile" style="width:67%">
-                <input matInput [matDatepicker]="datePicker" formControlName="datepicker" required
-                    (dateChange)="dateChange()">
+                <input matInput [matDatepicker]="datePicker" formControlName="datepicker" required>
                 <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
                 <mat-datepicker #datePicker></mat-datepicker>
             </mat-form-field>
@@ -79,7 +78,7 @@
         <ion-label>NRIC</ion-label>
         <p *ngIf="!editProfile">{{personalList.personalDetail.nric}}</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput [(ngModel)]="nric">
+            <input matInput [(ngModel)]="list.personalDetail.nric">
         </mat-form-field>
     </ion-col>
 </ion-row>
@@ -88,7 +87,7 @@
         <ion-label>GENDER</ion-label>
         <p *ngIf="!editProfile">{{personalList.personalDetail.gender}}</p>
         <mat-form-field *ngIf="editProfile">
-            <mat-select [(value)]="genderValue" (selectionChange)="gender($event)">
+            <mat-select [(value)]="list.personalDetail.gender">
                 <mat-option value="Female">Female</mat-option>
                 <mat-option value="Male">Male</mat-option>
             </mat-select>
@@ -98,7 +97,7 @@
         <ion-label>MARITAL STATUS</ion-label>
         <p *ngIf="!editProfile">{{personalList.personalDetail.maritalStatus}}</p>
         <mat-form-field *ngIf="editProfile">
-            <mat-select [(value)]="maritalStatusValue" (selectionChange)="maritalStatus($event)">
+            <mat-select [(value)]="list.personalDetail.maritalStatus">
                 <mat-option value="Single">Single</mat-option>
                 <mat-option value="Married">Married</mat-option>
             </mat-select>
@@ -110,14 +109,14 @@
         <ion-label>RELIGION</ion-label>
         <p *ngIf="!editProfile">{{personalList.personalDetail.religion}}</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput [(ngModel)]="religionValue">
+            <input matInput [(ngModel)]="list.personalDetail.religion">
         </mat-form-field>
     </ion-col>
     <ion-col>
         <ion-label>RACE</ion-label>
         <p *ngIf="!editProfile">{{personalList.personalDetail.race}}</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput [(ngModel)]="raceValue">
+            <input matInput [(ngModel)]="list.personalDetail.race">
         </mat-form-field>
     </ion-col>
 </ion-row>
@@ -126,7 +125,7 @@
         <ion-label>NATIONALITY</ion-label>
         <p *ngIf="!editProfile">{{personalList.personalDetail.nationality}}</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput [(ngModel)]="nationalityValue">
+            <input matInput [(ngModel)]="list.personalDetail.nationality">
         </mat-form-field>
     </ion-col>
 </ion-row>
@@ -136,33 +135,33 @@
         <p style="display: inline" *ngIf="!editProfile">
             {{personalList.personalDetail.residentialAddress1}},</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput placeholder="Address line 1" [(ngModel)]="addLine1">
+            <input matInput placeholder="Address line 1" [(ngModel)]="list.personalDetail.residentialAddress1">
         </mat-form-field>
         &nbsp;
         <p style="display: inline" *ngIf="!editProfile">
             {{personalList.personalDetail.residentialAddress2}},</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput placeholder="Address line 2" [(ngModel)]="addLine2">
+            <input matInput placeholder="Address line 2" [(ngModel)]="list.personalDetail.residentialAddress2">
         </mat-form-field>
         &nbsp;
         <p style="display: inline" *ngIf="!editProfile">{{personalList.personalDetail.postcode}},</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput placeholder="Postcode" [(ngModel)]="postcode">
+            <input matInput placeholder="Postcode" [(ngModel)]="list.personalDetail.postcode">
         </mat-form-field>
         &nbsp;
         <p style="display: inline" *ngIf="!editProfile">{{personalList.personalDetail.city}},</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput placeholder="City" [(ngModel)]="city">
+            <input matInput placeholder="City" [(ngModel)]="list.personalDetail.city">
         </mat-form-field>
         &nbsp;
         <p style="display: inline" *ngIf="!editProfile">{{personalList.personalDetail.state}},</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput placeholder="State" [(ngModel)]="state">
+            <input matInput placeholder="State" [(ngModel)]="list.personalDetail.state">
         </mat-form-field>
         &nbsp;
         <p style="display: inline" *ngIf="!editProfile">{{personalList.personalDetail.country}}.</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput placeholder="Country" [(ngModel)]="country">
+            <input matInput placeholder="Country" [(ngModel)]="list.personalDetail.country">
         </mat-form-field>
     </ion-col>
 </ion-row>

@@ -61,8 +61,7 @@
                     <p *ngIf="!showEditProfile">{{personalList.personalDetail.dob}}</p>
                     <form [formGroup]="dateForm">
                         <mat-form-field *ngIf="showEditProfile" style="width:80%">
-                            <input matInput [matDatepicker]="picker1" formControlName="firstPicker" required
-                                (dateChange)="onDateChange()">
+                            <input matInput [matDatepicker]="picker1" formControlName="firstPicker" required>
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
                         </mat-form-field>
@@ -72,7 +71,7 @@
                     <ion-label>GENDER</ion-label>
                     <p *ngIf="!showEditProfile">{{personalList.personalDetail.gender}}</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <mat-select [(value)]="selectedGender" (selectionChange)="genderChanged($event)">
+                        <mat-select [(value)]="items.personalDetail.gender">
                             <mat-option value="Female">Female</mat-option>
                             <mat-option value="Male">Male</mat-option>
                         </mat-select>
@@ -82,7 +81,7 @@
                     <ion-label>MARITAL STATUS</ion-label>
                     <p *ngIf="!showEditProfile">{{personalList.personalDetail.maritalStatus}}</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <mat-select [(value)]="selectedMaritalStatus" (selectionChange)="maritalStatusChanged($event)">
+                        <mat-select [(value)]="items.personalDetail.maritalStatus">
                             <mat-option value="Single">Single</mat-option>
                             <mat-option value="Married">Married</mat-option>
                         </mat-select>
@@ -94,21 +93,21 @@
                     <ion-label>RACE</ion-label>
                     <p *ngIf="!showEditProfile">{{personalList.personalDetail.race}}</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput [(ngModel)]="raceValue">
+                        <input matInput [(ngModel)]="items.personalDetail.race">
                     </mat-form-field>
                 </ion-col>
                 <ion-col>
                     <ion-label>RELIGION</ion-label>
                     <p *ngIf="!showEditProfile">{{personalList.personalDetail.religion}}</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput [(ngModel)]="religionValue">
+                        <input matInput [(ngModel)]="items.personalDetail.religion">
                     </mat-form-field>
                 </ion-col>
                 <ion-col>
                     <ion-label>NATIONALITY</ion-label>
                     <p *ngIf="!showEditProfile">{{personalList.personalDetail.nationality}}</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput [(ngModel)]="nationalityValue">
+                        <input matInput [(ngModel)]="items.personalDetail.nationality">
                     </mat-form-field>
                 </ion-col>
             </ion-row>
@@ -117,21 +116,21 @@
                     <ion-label>PERSONAL PHONE NUMBER</ion-label>
                     <p *ngIf="!showEditProfile">{{personalList.personalDetail.phoneNumber}}</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput [(ngModel)]="phoneNum">
+                        <input matInput [(ngModel)]="items.personalDetail.phoneNumber">
                     </mat-form-field>
                 </ion-col>
                 <ion-col>
                     <ion-label>WORK PHONE NUMBER</ion-label>
                     <p *ngIf="!showEditProfile">{{personalList.personalDetail.workPhoneNumber}}</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput [(ngModel)]="workPhoneNum">
+                        <input matInput [(ngModel)]="items.personalDetail.workPhoneNumber">
                     </mat-form-field>
                 </ion-col>
                 <ion-col>
                     <ion-label>NRIC</ion-label>
                     <p *ngIf="!showEditProfile">{{personalList.personalDetail.nric}}</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput [(ngModel)]="nric">
+                        <input matInput [(ngModel)]="items.personalDetail.nric">
                     </mat-form-field>
                 </ion-col>
             </ion-row>
@@ -140,15 +139,14 @@
                     <ion-label>PERSONAL EMAIL ADDRESS</ion-label>
                     <p *ngIf="!showEditProfile">{{personalList.personalDetail.emailAddress}}</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput [(ngModel)]="firstEmailAdd"
-                            value="{{personalList.personalDetail.emailAddress}}">
+                        <input matInput [(ngModel)]="items.personalDetail.emailAddress">
                     </mat-form-field>
                 </ion-col>
                 <ion-col>
                     <ion-label>WORK EMAIL ADDRESS</ion-label>
                     <p *ngIf="!showEditProfile">{{personalList.personalDetail.workEmailAddress}}</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput [(ngModel)]="secondEmailAdd">
+                        <input matInput [(ngModel)]="items.personalDetail.workEmailAddress">
                     </mat-form-field>
                 </ion-col>
                 <ion-col>
@@ -161,33 +159,35 @@
                     <p *ngIf="!showEditProfile" style="display: inline">
                         {{personalList.personalDetail.residentialAddress1}},</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput placeholder="Address line 1" [(ngModel)]="addLine1">
+                        <input matInput placeholder="Address line 1"
+                            [(ngModel)]="items.personalDetail.residentialAddress1">
                     </mat-form-field>
                     &nbsp;
                     <p *ngIf="!showEditProfile" style="display: inline">
                         {{personalList.personalDetail.residentialAddress2}},</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput placeholder="Address line 2" [(ngModel)]="addLine2">
+                        <input matInput placeholder="Address line 2"
+                            [(ngModel)]="items.personalDetail.residentialAddress2">
                     </mat-form-field>
                     &nbsp;
                     <p *ngIf="!showEditProfile" style="display: inline">{{personalList.personalDetail.postcode}},</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput placeholder="Postcode" [(ngModel)]="postcode">
+                        <input matInput placeholder="Postcode" [(ngModel)]="items.personalDetail.postcode">
                     </mat-form-field>
                     &nbsp;
                     <p *ngIf="!showEditProfile" style="display: inline">{{personalList.personalDetail.city}},</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput placeholder="City" [(ngModel)]="city">
+                        <input matInput placeholder="City" [(ngModel)]="items.personalDetail.city">
                     </mat-form-field>
                     &nbsp;
                     <p *ngIf="!showEditProfile" style="display: inline">{{personalList.personalDetail.state}},</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput placeholder="State" [(ngModel)]="state">
+                        <input matInput placeholder="State" [(ngModel)]="items.personalDetail.state">
                     </mat-form-field>
                     &nbsp;
                     <p *ngIf="!showEditProfile" style="display: inline">{{personalList.personalDetail.country}}.</p>
                     <mat-form-field *ngIf="showEditProfile">
-                        <input matInput placeholder="Country" [(ngModel)]="country">
+                        <input matInput placeholder="Country" [(ngModel)]="items.personalDetail.country">
                     </mat-form-field>
                 </ion-col>
             </ion-row>
@@ -394,8 +394,7 @@
                             cancel
                         </ion-button>
                         <div style="display: inline-block"></div>
-                        <ion-button shape="round" fill="outline"
-                            (click)="patchData(); editEducation(index, false)"
+                        <ion-button shape="round" fill="outline" (click)="patchData(); editEducation(index, false)"
                             style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;"
                             color="primary">
                             save

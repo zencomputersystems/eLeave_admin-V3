@@ -16,25 +16,11 @@ export class EmploymentPage implements OnInit {
     public list: any;
     public employmentlist: any;
     public edit: boolean = false;
-    public numID: string;
-    public designation: string;
-    public department: string;
-    public workLocation: string;
-    public reportingTo: string;
-    public type: any;
     public status: any;
     public dateJoinForm: FormGroup;
     public dateConfirmForm: FormGroup;
     public dateResignForm: FormGroup;
-    public yearService: string;
-    public accName: string;
-    public accNum: string;
-    public epf: string;
-    public incomeTax: string;
     public branch: string;
-    private _dateJoin;
-    private _dateConfirm;
-    private _dateResign;
     private _subscription: Subscription = new Subscription();
 
     get personalList() {
@@ -62,7 +48,7 @@ export class EmploymentPage implements OnInit {
                 this.list = data;
             },
             error => {
-                if (error) {
+                if (error.status === 401) {
                     window.location.href = '/login';
                 }
             },
@@ -71,79 +57,48 @@ export class EmploymentPage implements OnInit {
                 this._subscription = this.apiService.get_employment_details(userId).subscribe(
                     data => {
                         this.employmentlist = data;
-                        console.log('employ', this.employmentlist);
-                        this.numID = this.employmentlist.employmentDetail.employeeNumber;
-                        this.designation = this.employmentlist.employeeDesignation;
-                        this.dateJoinForm = new FormGroup({
-                            dateJoin: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfJoin)),
-                        })
-                        this.dateConfirmForm = new FormGroup({
-                            dateConfirm: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfConfirmation)),
-                        })
-                        this.dateResignForm = new FormGroup({
-                            dateResign: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfResign)),
-                        })
-                        this._dateJoin = moment(this.dateJoinForm.value.dateJoin).format('YYYY-MM-DD');
-                        this._dateConfirm = moment(this.dateConfirmForm.value.dateConfirm).format('YYYY-MM-DD');
-                        this._dateResign = moment(this.dateResignForm.value.dateResign).format('YYYY-MM-DD');
-                        this.department = this.employmentlist.employeeDepartment;
-                        this.workLocation = this.employmentlist.employmentDetail.workLocation;
-                        this.reportingTo = this.employmentlist.employmentDetail.reportingTo;
-                        this.type = this.employmentlist.employmentDetail.employmentType;
-                        this.status = employeeStatus[this.employmentlist.employmentDetail.employmentStatus];
-                        this.yearService = this.employmentlist.employmentDetail.yearOfService;
-                        this.accName = this.employmentlist.employmentDetail.bankAccountName;
-                        this.accNum = this.employmentlist.employmentDetail.bankAccountNumber;
-                        this.epf = this.employmentlist.employmentDetail.epfNumber;
-                        this.incomeTax = this.employmentlist.employmentDetail.incomeTaxNumber;
-                    }
-                )
-            }
-        );
+                        this.data();
+                    })
+            });
     }
 
     ngOnDestroy() {
         this._subscription.unsubscribe();
     }
 
-    dateChange() {
-        if (this.dateJoinForm.value.dateJoin || this.dateJoinForm.status === 'VALID') {
-            this._dateJoin = moment(this.dateJoinForm.value.dateJoin).format('YYYY-MM-DD');
-        }
-        if (this.dateConfirmForm.value.dateConfirm || this.dateConfirmForm.status === 'VALID') {
-            this._dateConfirm = moment(this.dateConfirmForm.value.dateConfirm).format('YYYY-MM-DD');
-        }
-        if (this.dateResignForm.value.dateResign || this.dateResignForm.status === 'VALID') {
-            this._dateResign = moment(this.dateResignForm.value.dateResign).format('YYYY-MM-DD');
-        }
+    data() {
+        this.dateJoinForm = new FormGroup({
+            dateJoin: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfJoin)),
+        })
+        this.dateConfirmForm = new FormGroup({
+            dateConfirm: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfConfirmation)),
+        })
+        this.dateResignForm = new FormGroup({
+            dateResign: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfResign)),
+        })
+        this.status = employeeStatus[this.employmentlist.employmentDetail.employmentStatus];
     }
-    statusChanged(event) {
-        this.status = event.value;
-        console.log('status', this.status);
-    }
-    typeChanged(event) {
-        this.type = event.value;
-    }
+
     patchEmploymentData() {
         this.edit = false;
         const data = {
             "id": this.list.id,
-            "employeeNumber": this.numID,
-            "designation": this.designation,
-            "department": this.department,
-            "branch": "Cyberjaya",
+            "employeeNumber": this.employmentlist.employmentDetail.employeeNumber,
+            "designation": this.employmentlist.employeeDesignation,
+            "department": this.employmentlist.employeeDepartment,
+            "branch": this.branch,
             "division": "",
-            "workLocation": this.workLocation,  //nt able to patch this data
-            "reportingTo": this.reportingTo,
-            "employmentType": this.type,
+            "workLocation": this.employmentlist.employmentDetail.workLocation,  //nt able to patch this data
+            "reportingTo": this.employmentlist.employmentDetail.reportingTo,
+            "employmentType": this.employmentlist.employmentDetail.employmentType,
             "employmentStatus": employeeStatus[this.status],
-            "dateOfJoin": this._dateJoin,
-            "dateOfConfirmation": this._dateConfirm,
-            "dateOfResign": this._dateResign,
-            "bankAccountName": this.accName,
-            "bankAccountNumber": this.accNum,
-            "epfNumber": this.epf,
-            "incomeTaxNumber": this.incomeTax,
+            "dateOfJoin": moment(this.dateJoinForm.value.dateJoin).format('YYYY-MM-DD'),
+            "dateOfConfirmation": moment(this.dateConfirmForm.value.dateConfirm).format('YYYY-MM-DD'),
+            "dateOfResign": moment(this.dateResignForm.value.dateResign).format('YYYY-MM-DD'),
+            "bankAccountName": this.employmentlist.employmentDetail.bankAccountName,
+            "bankAccountNumber": this.employmentlist.employmentDetail.bankAccountNumber,
+            "epfNumber": this.employmentlist.employmentDetail.epfNumber,
+            "incomeTaxNumber": this.employmentlist.employmentDetail.incomeTaxNumber,
         };
         this._subscription = this.apiService.patch_employment_details(data).subscribe((val) => {
             console.log("PATCH call successful value returned in body", val);

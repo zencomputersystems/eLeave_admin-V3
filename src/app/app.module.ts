@@ -12,7 +12,6 @@ import { HttpModule } from '@angular/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { XmlJson } from 'src/services/shared-service/xml-json.service';
-import { AlertService } from 'src/services/shared-service/alert.service';
 import { EmployeeSetupPageModule } from 'src/pages/employee/employee-setup.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponent } from './page-not-found.component';
@@ -37,7 +36,6 @@ import { LoginModule } from './login/login.module';
     StatusBar,
     SplashScreen,
     XmlJson,
-    AlertService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

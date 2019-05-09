@@ -30,26 +30,7 @@ export class PersonalPage implements OnInit {
     public spouseObj = { spouseName: '', spouseIdentificationNumber: '' };
     public childObj = { childName: '', childIdentificationNumber: '' };
     public educationObj = { qualificationLevel: '', major: '', university: '', year: '' };
-    public name: string;
-    public nickname: string;
-    public personalPhoneValue: string;
-    public personalEmailValue: string;
-    public workPhoneValue: string;
-    public workEmailValue: string;
-    public nric: string;
-    public genderValue: string;
-    public maritalStatusValue: string;
-    public religionValue: string;
-    public raceValue: string;
-    public nationalityValue: string;
-    public addLine1: string;
-    public addLine2: string;
-    public postcode: string;
-    public city: string;
-    public state: string;
-    public country: string;
     private _date: FormGroup;
-    private _reformatDate: string;
     private _subscription: Subscription = new Subscription();
 
     get dateForm(): FormGroup {
@@ -74,7 +55,6 @@ export class PersonalPage implements OnInit {
                 this._date = new FormGroup({
                     datepicker: new FormControl(new Date(this.list.personalDetail.dob)),
                 })
-                this.initValue();
             },
             error => {
                 if (error.status === 401) {
@@ -87,99 +67,81 @@ export class PersonalPage implements OnInit {
         this._subscription.unsubscribe();
     }
 
-    initValue() {
-        this.name = this.list.employeeName;
-        this.nickname = this.list.personalDetail.nickname;
-        this._reformatDate = moment(this._date.value.firstPicker).format('YYYY-MM-DD');
-        this.nric = this.list.personalDetail.nric;
-        this.genderValue = this.list.personalDetail.gender;
-        this.maritalStatusValue = this.list.personalDetail.maritalStatus;
-        this.raceValue = this.list.personalDetail.race;
-        this.religionValue = this.list.personalDetail.religion;
-        this.nationalityValue = this.list.personalDetail.nationality;
-        this.personalPhoneValue = this.list.personalDetail.phoneNumber;
-        this.personalEmailValue = this.list.personalDetail.emailAddress;
-        this.workEmailValue = this.list.personalDetail.workEmailAddress;
-        this.workPhoneValue = this.list.personalDetail.workPhoneNumber;
-        this.addLine1 = this.list.personalDetail.residentialAddress1;
-        this.addLine2 = this.list.personalDetail.residentialAddress2;
-        this.postcode = this.list.personalDetail.postcode;
-        this.city = this.list.personalDetail.city;
-        this.state = this.list.personalDetail.state;
-        this.country = this.list.personalDetail.country;
-    }
-
     getContactInit() {
-        if (this.list.personalDetail.emergencyContactNumber.contacts !== undefined && !(this.list.personalDetail.emergencyContactNumber.contacts instanceof Array)) {
-            this.contactList.push(this.list.personalDetail.emergencyContactNumber.contacts);
+        const contact = this.list.personalDetail.emergencyContactNumber.contacts;
+        if (contact !== undefined && !(contact instanceof Array)) {
+            this.contactList.push(contact);
             for (let i = 0; i < this.contactList.length; i++) {
                 this.showEditContact.push(false);
             }
         }
-        else if (this.list.personalDetail.emergencyContactNumber.contacts !== undefined && (this.list.personalDetail.emergencyContactNumber.contacts instanceof Array)) {
-            this.contactList = (this.list.personalDetail.emergencyContactNumber.contacts);
+        else if (contact !== undefined && (contact instanceof Array)) {
+            this.contactList = (contact);
             for (let i = 0; i < this.contactList.length; i++) {
                 this.showEditContact.push(false);
             }
         }
         else {
-            this.contactList = this.list.personalDetail.emergencyContactNumber.contacts;
+            this.contactList = contact;
         }
     }
 
     getSpouseInit() {
-        if (this.list.personalDetail.family.spouse !== undefined && !(this.list.personalDetail.family.spouse instanceof Array)) {
+        const spouse = this.list.personalDetail.family.spouse;
+        if (spouse !== undefined && !(spouse instanceof Array)) {
             this.displayFamily = true;
-            this.spouseList.push(this.list.personalDetail.family.spouse);
+            this.spouseList.push(spouse);
             for (let i = 0; i < this.spouseList.length; i++) {
                 this.showEditSpouse.push(false);
             }
-        } else if (this.list.personalDetail.family.spouse !== undefined && (this.list.personalDetail.family.spouse instanceof Array)) {
+        } else if (spouse !== undefined && (spouse instanceof Array)) {
             this.displayFamily = true;
-            this.spouseList = (this.list.personalDetail.family.spouse);
+            this.spouseList = (spouse);
             for (let i = 0; i < this.spouseList.length; i++) {
                 this.showEditSpouse.push(false);
             }
         } else {
             this.displayFamily = false;
-            this.spouseList = this.list.personalDetail.family.spouse;
+            this.spouseList = spouse;
         }
     }
 
     getChildInit() {
-        if (this.list.personalDetail.family.child !== undefined && !(this.list.personalDetail.family.child instanceof Array)) {
+        const child = this.list.personalDetail.family.child;
+        if (child !== undefined && !(child instanceof Array)) {
             this.displayFamily = true;
-            this.childList.push(this.list.personalDetail.family.child);
+            this.childList.push(child);
             for (let i = 0; i < this.childList.length; i++) {
                 this.showEditChild.push(false);
             }
-        } else if (this.list.personalDetail.family.child !== undefined && (this.list.personalDetail.family.child instanceof Array)) {
+        } else if (child !== undefined && (child instanceof Array)) {
             this.displayFamily = true;
-            this.childList = (this.list.personalDetail.family.child);
+            this.childList = (child);
             for (let i = 0; i < this.childList.length; i++) {
                 this.showEditChild.push(false);
             }
         } else {
-            this.childList = this.list.personalDetail.family.child;
+            this.childList = child;
         }
     }
 
     getEducationInit() {
-        if (this.list.personalDetail.education.educationDetail !== undefined && !(this.list.personalDetail.education.educationDetail instanceof Array)) {
+        const education = this.list.personalDetail.education.educationDetail;
+        if (education !== undefined && !(education instanceof Array)) {
             this.displayEducation = true;
-            this.educationList.push(this.list.personalDetail.education.educationDetail);
+            this.educationList.push(education);
             for (let i = 0; i < this.educationList.length; i++) {
                 this.showEditEducation.push(false);
             }
-        } else if (this.list.personalDetail.education.educationDetail !== undefined && (this.list.personalDetail.education.educationDetail instanceof Array)) {
+        } else if (education !== undefined && (education instanceof Array)) {
             this.displayEducation = true;
-            this.educationList = (this.list.personalDetail.education.educationDetail);
+            this.educationList = (education);
             for (let i = 0; i < this.educationList.length; i++) {
                 this.showEditEducation.push(false);
             }
         } else {
             this.displayEducation = false;
-            this.educationList = this.list.personalDetail.education.educationDetail;
+            this.educationList = education;
         }
     }
 
@@ -228,24 +190,24 @@ export class PersonalPage implements OnInit {
     bindingData() {
         return {
             "id": this.list.id,
-            "nickname": this.nickname,
-            "nric": this.nric.toString(),
-            "dob": this._reformatDate,
-            "gender": genderStatus[this.genderValue],
-            "maritalStatus": maritalStatus[this.maritalStatusValue],
-            "race": this.raceValue,
-            "religion": this.religionValue,
-            "nationality": this.nationalityValue,
-            "phoneNumber": this.personalPhoneValue.toString(),
-            "emailAddress": this.personalEmailValue,
-            "workPhoneNumber": this.workPhoneValue,
-            "workEmailAddress": this.workEmailValue,
-            "address1": this.addLine1,
-            "address2": this.addLine2,
-            "postcode": this.postcode.toString(),
-            "city": this.city,
-            "state": this.state,
-            "country": this.country,
+            "nickname": this.list.personalDetail.nickname,
+            "nric": this.list.personalDetail.nric.toString(),
+            "dob": moment(this._date.value.datepicker).format('YYYY-MM-DD'),
+            "gender": genderStatus[this.list.personalDetail.gender],
+            "maritalStatus": maritalStatus[this.list.personalDetail.maritalStatus],
+            "race": this.list.personalDetail.race,
+            "religion": this.list.personalDetail.religion,
+            "nationality": this.list.personalDetail.nationality,
+            "phoneNumber": this.list.personalDetail.phoneNumber.toString(),
+            "emailAddress": this.list.personalDetail.emailAddress,
+            "workPhoneNumber": this.list.personalDetail.workPhoneNumber,
+            "workEmailAddress": this.list.personalDetail.workEmailAddress,
+            "address1": this.list.personalDetail.residentialAddress1.toString(),
+            "address2": this.list.personalDetail.residentialAddress2.toString(),
+            "postcode": this.list.personalDetail.postcode.toString(),
+            "city": this.list.personalDetail.city,
+            "state": this.list.personalDetail.state,
+            "country": this.list.personalDetail.country,
             "emergencyContact": { "contacts": this.contactList },
             "education": { "educationDetail": this.educationList },
             "family": {
@@ -289,20 +251,6 @@ export class PersonalPage implements OnInit {
                 this.removeItem(i, this.educationList);
             }
         }
-    }
-
-    dateChange(): void {
-        if (this._date.value.datepicker || this._date.status === 'VALID') {
-            this._reformatDate = moment(this._date.value.datepicker).format('YYYY-MM-DD');
-        }
-    }
-
-    gender(event) {
-        this.genderValue = event.value;
-    }
-
-    maritalStatus(event) {
-        this.maritalStatusValue = event.value;
     }
 
     clickAsFavourite() {

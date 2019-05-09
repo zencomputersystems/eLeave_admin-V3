@@ -1,18 +1,9 @@
-export enum genderStatus {
-    "Female",
-    "Male"
-}
-
-export enum maritalStatus {
-    "Single",
-    "Married"
-}
-
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as _moment from 'moment';
 import { Subscription } from 'rxjs';
+import { genderStatus, maritalStatus } from './personal-details.service';
 const moment = _moment;
 
 @Component({
@@ -41,26 +32,7 @@ export class PersonalDetailsPage implements OnInit {
     public spouseObj = { spouseName: '', spouseIdentificationNumber: '' };
     public childObj = { childName: '', childIdentificationNumber: '' };
     public educationObj = { qualificationLevel: '', major: '', university: '', year: '' };
-    public selectedGender: string;
-    public selectedMaritalStatus: string;
-    public selectedAddress: string;
-    public raceValue: string;
-    public religionValue: string;
-    public nationalityValue: string;
-    public phoneNum: string;
-    public workPhoneNum: string;
-    public nric: string;
-    public firstEmailAdd: string;
-    public secondEmailAdd: string;
-    public addLine1: string;
-    public addLine2: string;
-    public postcode: string;
-    public city: string;
-    public state: string;
-    public country: string;
-    private _datatoUpdate: any;
     private _date: FormGroup;
-    private _reformatDate: string;
     private subscription: Subscription = new Subscription();
 
     get personalList() {
@@ -80,45 +52,23 @@ export class PersonalDetailsPage implements OnInit {
                 this.items = data;
                 this.showSpinner = false;
                 this._date = this._formBuilder.group({ firstPicker: ['', Validators.required] });
+                this._date = new FormGroup({
+                    firstPicker: new FormControl(new Date(this.items.personalDetail.dob))
+                })
                 this.initContact();
                 this.initSpouse();
                 this.initChild();
                 this.initEducation();
-                this.modelBindingValue();
             },
             error => {
-                if (error) {
+                if (error.status === 401) {
                     window.location.href = '/login';
                 }
-            }
-        );
+            });
     }
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
-    }
-
-    modelBindingValue() {
-        this._date = new FormGroup({
-            firstPicker: new FormControl(new Date(this.items.personalDetail.dob))
-        })
-        this._reformatDate = moment(this._date.value.firstPicker).format('YYYY-MM-DD');
-        this.selectedGender = this.items.personalDetail.gender;
-        this.selectedMaritalStatus = this.items.personalDetail.maritalStatus;
-        this.raceValue = this.items.personalDetail.race;
-        this.religionValue = this.items.personalDetail.religion;
-        this.nationalityValue = this.items.personalDetail.nationality;
-        this.phoneNum = this.items.personalDetail.phoneNumber;
-        this.workPhoneNum = this.items.personalDetail.workPhoneNumber;
-        this.firstEmailAdd = this.items.personalDetail.emailAddress;
-        this.secondEmailAdd = this.items.personalDetail.workEmailAddress;
-        this.addLine1 = this.items.personalDetail.residentialAddress1;
-        this.addLine2 = this.items.personalDetail.residentialAddress2;
-        this.postcode = this.items.personalDetail.postcode;
-        this.city = this.items.personalDetail.city;
-        this.state = this.items.personalDetail.state;
-        this.country = this.items.personalDetail.country;
-        this.nric = this.items.personalDetail.nric;
     }
 
     initContact() {
@@ -255,25 +205,9 @@ export class PersonalDetailsPage implements OnInit {
         }
     }
 
-    genderChanged(event) {
-        this.selectedGender = event.value;
-    }
-
-    maritalStatusChanged(event) {
-        this.selectedMaritalStatus = event.value;
-    }
-
-    onDateChange(): void {
-        if (!this._date.value.firstPicker || this._date.status === 'INVALID') {
-        } else {
-            this._reformatDate = moment(this._date.value.firstPicker).format('YYYY-MM-DD');
-        }
-    }
-
     patchData() {
         this.showEditProfile = false;
-        this.data();
-        this.subscription = this.apiService.patch_personal_details(this._datatoUpdate).subscribe(
+        this.subscription = this.apiService.patch_personal_details(this.data()).subscribe(
             (val) => {
                 this.subscription = this.apiService.get_personal_details().subscribe(
                     (data: any[]) => {
@@ -289,26 +223,26 @@ export class PersonalDetailsPage implements OnInit {
     }
 
     data() {
-        this._datatoUpdate = {
+        return {
             "id": this.items.id,
             "nickname": 'wantan',
-            "nric": this.nric.toString(),
-            "dob": this._reformatDate,
-            "gender": genderStatus[this.selectedGender],
-            "maritalStatus": maritalStatus[this.selectedMaritalStatus],
-            "race": this.raceValue,
-            "religion": this.religionValue,
-            "nationality": this.nationalityValue,
-            "phoneNumber": this.phoneNum.toString(),
-            "workPhoneNumber": this.workPhoneNum.toString(),
-            "emailAddress": this.firstEmailAdd,
-            "workEmailAddress": this.secondEmailAdd,
-            "address1": this.addLine1,
-            "address2": this.addLine2,
-            "postcode": this.postcode.toString(),
-            "city": this.city,
-            "state": this.state,
-            "country": this.country,
+            "nric": this.items.personalDetail.nric.toString(),
+            "dob": moment(this._date.value.firstPicker).format('YYYY-MM-DD'),
+            "gender": genderStatus[this.items.personalDetail.gender],
+            "maritalStatus": maritalStatus[this.items.personalDetail.maritalStatus],
+            "race": this.items.personalDetail.race,
+            "religion": this.items.personalDetail.religion,
+            "nationality": this.items.personalDetail.nationality,
+            "phoneNumber": this.items.personalDetail.phoneNumber.toString(),
+            "workPhoneNumber": this.items.personalDetail.workPhoneNumber.toString(),
+            "emailAddress": this.items.personalDetail.emailAddress,
+            "workEmailAddress": this.items.personalDetail.workEmailAddress,
+            "address1": this.items.personalDetail.residentialAddress1.toString(),
+            "address2": this.items.personalDetail.residentialAddress2.toString(),
+            "postcode": this.items.personalDetail.postcode.toString(),
+            "city": this.items.personalDetail.city,
+            "state": this.items.personalDetail.state,
+            "country": this.items.personalDetail.country,
             "emergencyContact": { "contacts": this.removeItems },
             "education": { "educationDetail": this.eduList },
             "family": {
