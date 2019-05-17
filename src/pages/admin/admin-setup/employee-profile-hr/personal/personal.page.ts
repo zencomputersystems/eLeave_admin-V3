@@ -172,18 +172,15 @@ export class PersonalPage implements OnInit {
         this.editProfile = false;
         this._subscription = this.apiService.patch_personal_details(this.bindingData()).subscribe(
             (val) => {
-                console.log("PATCH call successful value returned in body", val);
+                this._subscription = this.apiService.get_personal_details().subscribe(
+                    (data: any[]) => {
+                        this.list = data;
+                    });
             },
             response => {
                 if (response.status === 401) {
                     window.location.href = '/login';
                 }
-            },
-            () => {
-                this._subscription = this.apiService.get_personal_details().subscribe(
-                    (data: any[]) => {
-                        this.list = data;
-                    });
             });
     }
 
