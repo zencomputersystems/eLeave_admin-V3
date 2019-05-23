@@ -11,6 +11,8 @@ import * as _moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Subscription } from 'rxjs';
 import { DayType } from './apply-leave.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationPage } from './notification/notification.page';
 const moment = _moment;
 
 @Component({
@@ -53,7 +55,7 @@ export class ApplyLeavePage implements OnInit {
     }
 
     constructor(private apiService: APIService,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute, private snackBar: MatSnackBar) {
         this.applyLeaveForm = this.formGroup();
         route.queryParams
             .subscribe(params => {
@@ -123,6 +125,7 @@ export class ApplyLeavePage implements OnInit {
             (val) => {
                 console.log("PATCH call successful value returned in body", val);
                 this.clearArrayList();
+                this.openSnackBar();
             },
             response => {
                 console.log("PATCH call in error", response);
@@ -303,6 +306,12 @@ export class ApplyLeavePage implements OnInit {
         this.daysAvailable = leave.balanceDays;
         this._leaveTypeId = leave.leaveTypeId;
         this._leaveTypeName = leave.leaveTypeName;
+    }
+
+    openSnackBar() {
+        this.snackBar.openFromComponent(NotificationPage, {
+            duration: 2000,
+        });
     }
 
 }

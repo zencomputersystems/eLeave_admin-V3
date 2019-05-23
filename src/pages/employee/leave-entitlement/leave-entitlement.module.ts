@@ -19,6 +19,8 @@ import { LeavePlanningPage } from './leave-planning/leave-planning.page';
 import { ApplyLeavePage } from './leave-planning/apply-leave/apply-leave.page';
 import { CalendarViewPage } from './leave-planning/calendar-view/calendar-view.page';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NotificationPage } from './leave-planning/apply-leave/notification/notification.page';
 
 
 const routes: Routes = [
@@ -45,8 +47,10 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatRadioModule,
     SpinnerModule,
+    MatSnackBarModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [LeaveEntitlementPage, LeavePlanningPage, ApplyLeavePage, CalendarViewPage]
+  entryComponents: [NotificationPage],
+  declarations: [LeaveEntitlementPage, LeavePlanningPage, ApplyLeavePage, CalendarViewPage, NotificationPage]
 })
 export class LeaveEntitlementModule { }
