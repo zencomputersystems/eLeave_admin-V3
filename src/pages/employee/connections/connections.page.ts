@@ -73,23 +73,13 @@ export class ConnectionsPage implements OnInit {
         this.subscription.unsubscribe();
     }
 
-    viewOnList() {
-        this.listView = true;
-        this.gridView = false;
+    viewList(showList: boolean, pageItem: number, range: number) {
+        this.listView = showList;
+        this.gridView = !showList;
         this.disableNextButton = false;
         this.disablePrevButton = true;
-        this.pageItems = 6;
-        this.range = 5;
-        this.renderItems(1, this.items, this.pageItems, this.range);
-    }
-
-    viewOnGrid() {
-        this.listView = false;
-        this.gridView = true;
-        this.disableNextButton = false;
-        this.disablePrevButton = true;
-        this.pageItems = 8;
-        this.range = 7;
+        this.pageItems = pageItem;
+        this.range = range;
         this.renderItems(1, this.items, this.pageItems, this.range);
     }
 
@@ -135,20 +125,17 @@ export class ConnectionsPage implements OnInit {
         }
     }
 
-    clickToNextPage(index: number) {
-        if (!(index > this.totalPageNum)) {
+    clickPageButton(index: number, nextOrPrev: string) {
+        if (!(index > this.totalPageNum) && nextOrPrev === 'next') {
             this.showSpinner = true;
             this.renderItems(index, this.items, this.pageItems, this.range);
+            this.disableEnableNextButton();
         }
-        this.disableEnableNextButton();
-    }
-
-    clickToPrevPage(index: number) {
-        if (!(index < 1)) {
+        if (!(index < 1) && nextOrPrev === 'prev') {
             this.showSpinner = true;
             this.renderItems(index, this.items, this.pageItems, this.range);
+            this.disableEnablePreviousButton();
         }
-        this.disableEnablePreviousButton();
     }
 
     nameSorting(value: boolean, checkAsc: number, checkDes: number) {
@@ -233,14 +220,5 @@ export class ConnectionsPage implements OnInit {
             this.setAsFavourite.push(data);
         }
     };
-
-    moreFilter() {
-        if (this.viewMoreFilter) {
-            this.viewMoreFilter = false;
-        } else {
-            this.viewMoreFilter = true;
-        }
-    }
-
 
 }

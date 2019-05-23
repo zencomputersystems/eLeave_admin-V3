@@ -7,7 +7,7 @@
             <!-- <i class="fab fa-facebook-f"></i>
                 <i class="fab fa-instagram"></i> -->
             <!-- <i class="fas fa-sliders-h" (click)="moreFilter()"></i> -->
-            <div class="filter-icon" [inlineSVG]="'assets/icon/Option/filter.svg'" (click)="moreFilter()"></div>
+            <div class="filter-icon" [inlineSVG]="'assets/icon/Option/filter.svg'" (click)="viewMoreFilter=true;"></div>
         </div>
     </ion-toolbar>
 </ion-header>
@@ -32,8 +32,10 @@ margin: 0 auto;margin-top: 3%;">
             (ionChange)="changeDetails($event)"></ion-searchbar>
         <div style="display: inline-block;white-space: nowrap;width: 66%;">
             <div style="padding-top: 18px;display: inline-block;padding-left: 46%">
-                <i class="fas fa-bars" (click)="viewOnList()" [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
-                <i class="fas fa-th" (click)="viewOnGrid()" [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
+                <i class="fas fa-bars" (click)="viewList(true, 6, 5)"
+                    [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
+                <i class="fas fa-th" (click)="viewList(false, 8, 7)"
+                    [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
             </div>
             <div style="color: #7a8589;font-size: 12px;display: inline;
             padding-left: 3%;">
@@ -43,10 +45,9 @@ margin: 0 auto;margin-top: 3%;">
                 <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageNum}}
                 <i class="fas fa-angle-left" title="Previous page"
                     style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
-                    (click)="clickToPrevPage(pageNum-1)"></i>
+                    (click)="clickPageButton(pageNum-1, 'prev')"></i>
                 <i class="fas fa-angle-right" title="Next page"
-                    style="cursor:pointer; font-size: 15px;padding-left: 10px"
-                    (click)="clickToNextPage(pageNum+1)"></i>
+                    style="cursor:pointer; font-size: 15px;padding-left: 10px" (click)="clickPageButton(pageNum+1, 'next')"></i>
             </div>
         </div>
     </div>
@@ -114,13 +115,13 @@ margin: 0 auto;margin-top: 3%;">
 
     </ion-content>
     <div style="padding-left: 17px; display: inline-flex">
-        <ion-button [disabled]="disablePrevButton" fill="outline" (click)="clickToPrevPage(pageNum-1)"
+        <ion-button [disabled]="disablePrevButton" fill="outline" (click)="clickPageButton(pageNum-1, 'prev')"
             style="font-size: 12px;height: 30px;width: 90px;" color="primary">
             <ion-icon name="arrow-back"></ion-icon>Prev
         </ion-button>
         <div style="padding-left: 10px"></div>
         <ion-button [disabled]="disableNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
-            (click)="clickToNextPage(pageNum+1)">Next<ion-icon name="arrow-forward">
+            (click)="clickPageButton(pageNum+1, 'next')">Next<ion-icon name="arrow-forward">
             </ion-icon>
         </ion-button>
         <div [style.padding-right.%]="connectionRoute ? '3' : '8'"
@@ -131,9 +132,9 @@ margin: 0 auto;margin-top: 3%;">
             <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageNum}}
             <i class="fas fa-angle-left" title="Previous page"
                 style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
-                (click)="clickToPrevPage(pageNum-1)"></i>
+                (click)="clickPageButton(pageNum-1, 'prev')"></i>
             <i class="fas fa-angle-right" title="Next page" style="cursor:pointer; font-size: 15px;padding-left: 10px"
-                (click)="clickToNextPage(pageNum+1)"></i>
+                (click)="clickPageButton(pageNum+1, 'next')"></i>
         </div>
     </div>
 </div>
@@ -152,8 +153,10 @@ margin: 0 auto;margin-top: 3%;">
                 white-space: nowrap;
                 width: 66%;">
             <div style="padding-top: 18px;display: inline-block;padding-left: 46%">
-                <i class="fas fa-bars" (click)="viewOnList()" [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
-                <i class="fas fa-th" (click)="viewOnGrid()" [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
+                <i class="fas fa-bars" (click)="viewList(true, 6, 5)"
+                    [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
+                <i class="fas fa-th" (click)="viewList(false, 8, 7)"
+                    [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
             </div>
             <div style="color: #7a8589;font-size: 12px;display: inline;padding-left: 3%;">
                 <span style="padding-right: 10px;">Page</span>
@@ -162,10 +165,9 @@ margin: 0 auto;margin-top: 3%;">
                 <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageNum}}
                 <i class="fas fa-angle-left" title="Previous page"
                     style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
-                    (click)="clickToPrevPage(pageNum-1)"></i>
+                    (click)="clickPageButton(pageNum-1, 'prev')"></i>
                 <i class="fas fa-angle-right" title="Next page"
-                    style="cursor:pointer; font-size: 15px;padding-left: 10px"
-                    (click)="clickToNextPage(pageNum+1)"></i>
+                    style="cursor:pointer; font-size: 15px;padding-left: 10px" (click)="clickPageButton(pageNum+1, 'next')"></i>
             </div>
         </div>
     </div>
@@ -204,13 +206,13 @@ margin: 0 auto;margin-top: 3%;">
 
     </ion-content>
     <div style="padding-left: 17px; display: inline-flex">
-        <ion-button [disabled]="disablePrevButton" fill="outline" (click)="clickToPrevPage(pageNum-1)"
+        <ion-button [disabled]="disablePrevButton" fill="outline" (click)="clickPageButton(pageNum-1, 'prev')"
             style="font-size: 12px;height: 30px;width: 90px;" color="primary">
             <ion-icon name="arrow-back"></ion-icon>Prev
         </ion-button>
         <div style="padding-left: 10px"></div>
         <ion-button [disabled]="disableNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
-            (click)="clickToNextPage(pageNum+1)">Next<ion-icon name="arrow-forward">
+            (click)="clickPageButton(pageNum+1, 'next')">Next<ion-icon name="arrow-forward">
             </ion-icon>
         </ion-button>
         <div [style.padding-right.%]="connectionRoute ? '3' : '8'"
@@ -221,9 +223,9 @@ margin: 0 auto;margin-top: 3%;">
             <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageNum}}
             <i class="fas fa-angle-left" title="Previous page"
                 style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
-                (click)="clickToPrevPage(pageNum-1)"></i>
+                (click)="clickPageButton(pageNum-1, 'prev')"></i>
             <i class="fas fa-angle-right" title="Next page" style="cursor:pointer; font-size: 15px;padding-left: 10px"
-                (click)="clickToNextPage(pageNum+1)"></i>
+                (click)="clickPageButton(pageNum+1, 'next')"></i>
         </div>
     </div>
 </div>
@@ -231,7 +233,8 @@ margin: 0 auto;margin-top: 3%;">
 <!-------------------------------------------Filter Options-------------------------------------->
 
 <div class="filerContainer" *ngIf="viewMoreFilter" [style.bottom.px]="showHeader ? '-181' : '0'">
-    <ion-icon name="close" style="color:#dfe3e6;padding: 10px;font-size: 25px;cursor: pointer;" (click)="moreFilter()">
+    <ion-icon name="close" style="color:#dfe3e6;padding: 10px;font-size: 25px;cursor: pointer;"
+        (click)="viewMoreFilter=false;">
     </ion-icon>
     <p style="color: #20291f;padding-left: 15px;font-size: 14px;">FILTER BY</p>
 
