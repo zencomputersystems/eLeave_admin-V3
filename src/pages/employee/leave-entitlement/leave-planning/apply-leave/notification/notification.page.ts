@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
+import { MAT_SNACK_BAR_DATA } from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-notification',
@@ -9,4 +10,11 @@ import { Component } from "@angular/core";
       }
     `],
 })
-export class NotificationPage { }
+export class NotificationPage {
+    constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {
+    }
+
+    ngOnInit() {
+
+    }
+}

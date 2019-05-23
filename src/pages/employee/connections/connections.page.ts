@@ -108,6 +108,7 @@ export class ConnectionsPage implements OnInit {
             }
         }
         this.currentPageItems = currentPageList;
+        this.showSpinner = false;
     }
 
     disableEnableNextButton() {
@@ -136,6 +137,7 @@ export class ConnectionsPage implements OnInit {
 
     clickToNextPage(index: number) {
         if (!(index > this.totalPageNum)) {
+            this.showSpinner = true;
             this.renderItems(index, this.items, this.pageItems, this.range);
         }
         this.disableEnableNextButton();
@@ -143,12 +145,14 @@ export class ConnectionsPage implements OnInit {
 
     clickToPrevPage(index: number) {
         if (!(index < 1)) {
+            this.showSpinner = true;
             this.renderItems(index, this.items, this.pageItems, this.range);
         }
         this.disableEnablePreviousButton();
     }
 
     nameSorting(value: boolean, checkAsc: number, checkDes: number) {
+        this.showSpinner = true;
         this.arrowDownName = value;
         this.items = this.items.slice(0);
         this.items.sort(function (a: any, b: any) {
@@ -162,6 +166,7 @@ export class ConnectionsPage implements OnInit {
     }
 
     IDSorting(value: boolean, ascValue: number, desValue: number) {
+        this.showSpinner = true;
         this.arrowDownId = value;
         this.items = this.items.slice(0);
         this.items.sort(function (x, y) {
@@ -179,7 +184,6 @@ export class ConnectionsPage implements OnInit {
             this.items = this.items.filter((data: any) => {
                 return (data.employeeName.toUpperCase().indexOf(char.toUpperCase()) > -1);
             })
-
             this.pageNum = 1;
             this.renderItems(this.pageNum, this.items, this.pageItems, this.range);
             this.disableEnableNextButton();
@@ -200,6 +204,7 @@ export class ConnectionsPage implements OnInit {
     }
 
     changeDetails(text: any) {
+        this.showSpinner = true;
         if (text.srcElement.value === '') {
             this.clearDetails();
         } else {

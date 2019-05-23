@@ -125,10 +125,14 @@ export class ApplyLeavePage implements OnInit {
             (val) => {
                 console.log("PATCH call successful value returned in body", val);
                 this.clearArrayList();
-                this.openSnackBar();
+                this.openSnackBar('success');
             },
             response => {
                 console.log("PATCH call in error", response);
+                this.openSnackBar('fail');
+                if(response.status === 401){
+                    window.location.href = '/login';
+                }
             });
         this.setEvent(this._leaveTypeName, this.applyLeaveForm.value.firstPicker, new Date((this.applyLeaveForm.value.secondPicker).setDate((this.applyLeaveForm.value.secondPicker).getDate() + 1)));
     }
@@ -308,9 +312,10 @@ export class ApplyLeavePage implements OnInit {
         this._leaveTypeName = leave.leaveTypeName;
     }
 
-    openSnackBar() {
+    openSnackBar(message: string) {
         this.snackBar.openFromComponent(NotificationPage, {
             duration: 2000,
+            data: message
         });
     }
 
