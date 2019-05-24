@@ -31,7 +31,8 @@
                 <mat-label>Start date</mat-label>
                 <input class="dateInput" matInput [matDatepicker]="picker1" formControlName="firstPicker" required
                     (dateInput)="getValueFrom($event)" [max]="maxDate" (dateChange)="onDateChange()">
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <div class="calendar-icon" [inlineSVG]="'assets/icon/Option/calendar.svg'" (click)="picker1.open()">
+                </div>
                 <mat-datepicker #picker1></mat-datepicker>
                 <mat-error *ngIf="!applyLeaveForm.firstPicker" style="padding: 5px;padding-left: 0;">
                     Invalid start date</mat-error>
@@ -41,7 +42,8 @@
                 <mat-label>End date</mat-label>
                 <input class="dateInput" matInput [matDatepicker]="picker2" formControlName="secondPicker" required
                     (dateInput)="getValueTo($event)" [min]="minDate" (dateChange)="onDateChange()">
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <div class="calendar-icon" [inlineSVG]="'assets/icon/Option/calendar.svg'" (click)="picker2.open()">
+                </div>
                 <mat-datepicker #picker2></mat-datepicker>
                 <mat-error *ngIf="!applyLeaveForm.secondPicker" style="padding: 5px;padding-left: 0;">
                     Invalid end date</mat-error>
