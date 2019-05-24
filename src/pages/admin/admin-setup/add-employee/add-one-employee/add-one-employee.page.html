@@ -1,0 +1,76 @@
+<div class="box">
+    <div class="back-icon" [inlineSVG]="'assets/icon/Option/arrow-pointing-to-left-edit.svg'"
+        (click)="dialogAddOneEmployee.close()"></div>
+    <p style="text-align: center;color: #7a8589;font-size: 16px;padding-bottom: 3%;margin-top: 0;">
+        Please enter the employee details below</p>
+    <form [formGroup]="invitationForm">
+        <div style="display:block; white-space: nowrap;text-align: center;">
+            <mat-form-field appearance="outline" style="width: 40%;padding-top: 1%;">
+                <mat-label>FIRST NAME</mat-label>
+                <input matInput formControlName="firstName">
+                <mat-error *ngIf="!invitationForm.firstName" style="padding: 5px;padding-left: 0;">
+                    Please enter first name</mat-error>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <mat-form-field appearance="outline" style="width: 40%;padding-top: 1%;">
+                <mat-label>LAST NAME</mat-label>
+                <input matInput formControlName="lastName">
+                <mat-error *ngIf="!invitationForm.lastName" style="padding: 5px;padding-left: 0;">
+                    Please enter last name</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div style="display:block; white-space: nowrap;text-align: center;">
+            <mat-form-field appearance="outline" style="width: 20%;padding-top: 1%;">
+                <mat-label>EMPLOYEE ID</mat-label>
+                <input matInput formControlName="id">
+                <mat-error *ngIf="!invitationForm.id" style="padding: 5px;padding-left: 0;">
+                    Please enter ID#</mat-error>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <mat-form-field class="date" appearance="outline" style="width: 30%;padding-top: 1%;">
+                <mat-label>DATE OF HIRE</mat-label>
+                <input class="dateInput" matInput [matDatepicker]="picker1" formControlName="firstPicker" required>
+                <!-- (dateInput)="getValueFrom($event)" (dateChange)="onDateChange()" -->
+                <!-- <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle> -->
+                <div class="calendar-icon" [inlineSVG]="'assets/icon/Option/calendar.svg'" (click)="picker1.open()">
+                </div>
+                <mat-datepicker #picker1></mat-datepicker>
+                <mat-error *ngIf="!invitationForm.firstPicker" style="padding: 5px;padding-left: 0;">
+                    Invalid date</mat-error>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <mat-form-field appearance="outline" style="width: 27%;padding-top: 1%;">
+                <mat-label>DESIGNATION</mat-label>
+                <mat-select class="selectLeave" formControlName="designation">
+                    <mat-option *ngFor="let designationItem of designationList; let i=index"
+                        [value]="designationItem.DESIGNATION">
+                        <!-- (click)="getIndex(leave)" -->
+                        {{designationItem.DESIGNATION}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!invitationForm.designation" style="padding: 5px;padding-left: 0;">
+                    Please select a designation</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div style="display:block; white-space: nowrap;text-align: center">
+            <mat-form-field appearance="outline" style="width: 82%;padding-top: 1%;">
+                <mat-label>EMAIL ADDRESS</mat-label>
+                <input matInput formControlName="email">
+                <mat-error *ngIf="!invitationForm.email" style="padding: 5px;padding-left: 0;">
+                    Invalid email</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div style="text-align: right;padding-right: 7.5%;">
+            <ion-button fill="outline" style="font-size: 12px;height: 30px;width: 90px;background: white;"
+                color="primary" (click)="dialogAddOneEmployee.close()">
+                CANCEL
+            </ion-button>
+            <div style="width: 10px; display: inline-block"></div>
+            <ion-button style="font-size: 12px;height: 30px;width: 160px;" color="primary"
+                [disabled]="invitationForm.invalid" (click)="sendInvitation()">SEND INVITATION
+            </ion-button>
+        </div>
+    </form>
+</div>

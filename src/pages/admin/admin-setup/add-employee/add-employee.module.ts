@@ -14,6 +14,11 @@ import { BulkImportSuccessPage } from './bulk-import-success/bulk-import-success
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FileDropModule } from 'ngx-file-drop';
+import { AddOneEmployeePage } from './add-one-employee/add-one-employee.page';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 
 
 const routes: Routes = [
@@ -36,9 +41,13 @@ const routes: Routes = [
         MatFormFieldModule,
         ReactiveFormsModule,
         FileDropModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatInputModule,
+        MatSelectModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [AddEmployeePage, BulkImportPage, BulkImportSuccessPage],
-    entryComponents: [BulkImportPage, BulkImportSuccessPage]
+    declarations: [AddEmployeePage, BulkImportPage, BulkImportSuccessPage, AddOneEmployeePage],
+    entryComponents: [BulkImportPage, BulkImportSuccessPage, AddOneEmployeePage]
 })
 export class AddEmployeeModule { }

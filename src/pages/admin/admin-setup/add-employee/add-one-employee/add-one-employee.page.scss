@@ -1,0 +1,51 @@
+:host {
+  .box {
+    margin: auto;
+    padding: 1%;
+    padding-bottom: 3%;
+    padding-top: 3%;
+    background: white;
+  }
+  .back-icon {
+    fill: #bebebe;
+    cursor: pointer;
+  }
+  .calendar-icon {
+    fill: #bebebe;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: 0;
+    top: 4px;
+  }
+  .button-outline {
+    --border-width: 1px;
+  }
+  ::ng-deep .mat-select-value-text {
+    color: #7a8589;
+    font-size: 14px;
+  }
+  ::ng-deep .mat-select-arrow {
+    color: #7a8589;
+  }
+  input {
+    font-size: 14px;
+    color: #7a8589;
+  }
+  ::ng-deep .mat-form-field-label-wrapper {
+    font-size: 14px;
+  }
+  ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+    padding: 0.4em 0px !important;
+  }
+  ::ng-deep .mat-form-field-label-wrapper {
+    top: -1.5em;
+  }
+  ::ng-deep
+    .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+    .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+  }
+}

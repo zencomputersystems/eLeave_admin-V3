@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BulkImportPage } from './bulk-import/bulk-import.page';
+import { AddOneEmployeePage } from './add-one-employee/add-one-employee.page';
 
 @Component({
     selector: 'app-add-employee',
@@ -16,16 +17,12 @@ export class AddEmployeePage implements OnInit {
 
     }
 
-    openBulkImport() {
-        const dialogRef = this.dialog.open(BulkImportPage, {
-            // width: '250px',
-            // data: { name: this.name, animal: this.animal }
-        });
+    openAddOneEmployee() {
+        this.dialog.open(AddOneEmployeePage);
+    }
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-            // this.animal = result;
-        });
+    openBulkImport() {
+        this.dialog.open(BulkImportPage);
     }
 
     downloadFile() {

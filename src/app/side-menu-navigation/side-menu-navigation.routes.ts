@@ -16,6 +16,7 @@ import { LeavePlanningPage } from 'src/pages/employee/leave-entitlement/leave-pl
 import { AddEmployeePage } from 'src/pages/admin/admin-setup/add-employee/add-employee.page';
 import { BulkImportPage } from 'src/pages/admin/admin-setup/add-employee/bulk-import/bulk-import.page';
 import { BulkImportSuccessPage } from 'src/pages/admin/admin-setup/add-employee/bulk-import-success/bulk-import-success.page';
+import { AddOneEmployeePage } from 'src/pages/admin/admin-setup/add-employee/add-one-employee/add-one-employee.page';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -25,7 +26,7 @@ export const sideMenuNavigationRoutes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: AdminInvitesPage },
-            { path: 'inbox', component: EmployeeProfilePage }, // AddEmployeePage
+            { path: 'inbox', component: AddEmployeePage }, // AddEmployeePage //EmployeeProfilePage
             { path: 'plan-my-leave', component: LeavePlanningPage },
             { path: 'employee-directory', component: ConnectionsPage },
             { path: 'invite-more', component: InviteMorePage },
