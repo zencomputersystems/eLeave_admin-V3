@@ -32,7 +32,8 @@
         <img src="assets/icon/picture.png">
       </ion-avatar>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="router.navigate(['/main/employee-setup']);">My Profile</button>
+        <button mat-menu-item >My Profile</button>
+        <!-- (click)="router.navigate(['/main/employee-setup']);" -->
         <button mat-menu-item (click)="logout($event)">Logout</button>
       </mat-menu>
       <ion-label class="labelName" *ngIf="personalList">
@@ -82,7 +83,8 @@
         <img src="assets/icon/picture.png">
       </ion-avatar>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="router.navigate(['/main/employee-setup']);">My Profile</button>
+        <button mat-menu-item >My Profile</button>
+        <!-- (click)="router.navigate(['/main/employee-setup']);" -->
         <button mat-menu-item (click)="logout($event)">Logout</button>
       </mat-menu>
       <ion-label class="labelName" *ngIf="personalList" [matMenuTriggerFor]="menu">
