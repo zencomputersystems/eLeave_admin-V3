@@ -12,7 +12,7 @@ export class APIService {
     public queryHeaders = new Headers();
     public headers = new Headers();
     // public baseUrl: string = "http://zencore.southeastasia.cloudapp.azure.com:3000";
-    public baseUrl: string = "http://zencore.zen.com.my:3000/api";
+    public baseUrl: string = "http://zencore.zen.com.my:3000/";
 
     constructor(public http: Http) {
     }
@@ -46,7 +46,7 @@ export class APIService {
 
     get_personal_details(): Observable<any> {
         this.headerAuthorization();
-        return this.getApi('/userprofile/personal-detail');
+        return this.getApi('api/userprofile/personal-detail');
     }
 
     // get_user_personal_details(guid): Observable<any> {
@@ -55,16 +55,16 @@ export class APIService {
 
     patch_personal_details(updateData): Observable<any[]> {
         this.headerAuthorization();
-        return this.patchApi(updateData, '/userprofile/personal-detail');
+        return this.patchApi(updateData, 'api/userprofile/personal-detail');
     }
 
     get_employment_details(userId): Observable<any> {
-        return this.getApiWithId('/userprofile/employment-detail/', userId);
+        return this.getApiWithId('api/userprofile/employment-detail/', userId);
     }
 
     patch_employment_details(updateData: any): Observable<any> {
         this.headerAuthorization();
-        return this.patchApi(updateData, '/userprofile/employment-detail');
+        return this.patchApi(updateData, 'api/userprofile/employment-detail');
     }
 
     // get_user_profile(): Observable<any> {
@@ -74,7 +74,7 @@ export class APIService {
 
     get_user_profile_list(): Observable<any> {
         this.headerAuthorization();
-        return this.getApi('/users');
+        return this.getApi('api/users');
     }
 
     // get_user_profile_details(guid): Observable<any> {
@@ -96,7 +96,11 @@ export class APIService {
 
     post_user_invite(userId): Observable<any> {
         this.headerAuthorization();
-        return this.postApi(userId, '/admin/user-invite');
+        return this.postApi(userId, 'api/admin/user-invite');
     }
 
+    get_public_holiday(): Observable<any> {
+        this.headerAuthorization();
+        return this.getApi('admin/api/holiday/calendar');
+    }
 }
