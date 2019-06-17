@@ -1,11 +1,16 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { map } from 'rxjs/operators';
 import { RequestOptions, Http, Headers } from '@angular/http';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BulkImportSuccessPage } from '../bulk-import-success/bulk-import-success.page';
 import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
-
+/**
+ * Bulk Import Page
+ * @export
+ * @class BulkImportPage
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'app-bulk-import',
     templateUrl: './bulk-import.page.html',
@@ -13,17 +18,59 @@ import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry 
 })
 export class BulkImportPage implements OnInit {
 
+    /**
+     * Get file name of imported/dropped file
+     * @type {*}
+     * @memberof BulkImportPage
+     */
     public filename: any;
-    public headers = new Headers();
+
+    /**
+     * Show upload button after imported/dropped file
+     * @memberof BulkImportPage
+     */
     public showUploadButton: boolean = false;
+
+    /**
+     * Form group format for file
+     * @type {FormGroup}
+     * @memberof BulkImportPage
+     */
     public fileform: FormGroup;
+
+    /**
+     * Get document info from imported/dropped file
+     * @type {UploadFile[]}
+     * @memberof BulkImportPage
+     */
     public files: UploadFile[] = [];
+
+    /**
+     * Form data from document to post to API
+     * @type {FormData}
+     * @memberof BulkImportPage
+     */
     public formData: FormData = new FormData();
 
+    /**
+     * Return value of filename from imported document
+     * @readonly
+     * @type {string}
+     * @memberof BulkImportPage
+     */
     get fileName(): string {
         return this.filename;
     }
 
+    /**
+     *Creates an instance of BulkImportPage.
+     * @param {MatDialogRef<BulkImportPage>} dialogBulkImport
+     * @param {MatDialogRef<BulkImportSuccessPage>} dialogSuccess
+     * @param {MatDialog} dialog
+     * @param {Http} http
+     * @param {FormBuilder} fb
+     * @memberof BulkImportPage
+     */
     constructor(public dialogBulkImport: MatDialogRef<BulkImportPage>,
         public dialogSuccess: MatDialogRef<BulkImportSuccessPage>,
         public dialog: MatDialog, private http: Http, private fb: FormBuilder) {
@@ -35,10 +82,20 @@ export class BulkImportPage implements OnInit {
         });
     }
 
+    /**
+     * To close pop up page
+     * @memberof BulkImportPage
+     */
     onCloseClick(): void {
         this.dialogBulkImport.close();
     }
 
+    /**
+     * Get dropped file details
+     * Submit file to API
+     * @param {UploadEvent} event
+     * @memberof BulkImportPage
+     */
     public dropped(event: UploadEvent) {
         this.files = event.files;
         for (const droppedFile of event.files) {
@@ -57,6 +114,13 @@ export class BulkImportPage implements OnInit {
         }
     }
 
+    /**
+     * Get the uploaded file details
+     * Set value to fileform (form data)
+     * @param {*} event
+     * @param {*} uploadedFileName
+     * @memberof BulkImportPage
+     */
     openFile(event, uploadedFileName) {
         if (uploadedFileName) {
             this.showUploadButton = true;
@@ -68,6 +132,11 @@ export class BulkImportPage implements OnInit {
         }
     }
 
+    /**
+     * Upload file to API
+     * @returns
+     * @memberof BulkImportPage
+     */
     onSubmit() {
         this.formData.append('file', new Blob([(this.fileform.get('file').value)], { type: 'text/csv' }), this.fileName);
         const queryHeaders = new Headers();

@@ -157,36 +157,6 @@
                                     <a href="../classes/AppPage.html" >AppPage</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../classes/BranchModel.html" >BranchModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/ConnectionsModel.html" >ConnectionsModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/CostCentreModel.html" >CostCentreModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/EmployeeModel.html" >EmployeeModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/LeaveTypeEntitlementModel.html" >LeaveTypeEntitlementModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/LeaveTypeModel.html" >LeaveTypeModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/PersonalDetailsModel.html" >PersonalDetailsModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/SectionModel.html" >SectionModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/UserInfoModel.html" >UserInfoModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/ViewLeaveTypeSetupModel.html" >ViewLeaveTypeSetupModel</a>
-                                </li>
-                                <li class="link">
                                     <a href="../classes/XmlJson.html" >XmlJson</a>
                                 </li>
                         </ul>
@@ -402,36 +372,6 @@
                                            <a href="../classes/AppPage.html" >AppPage</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../classes/BranchModel.html" >BranchModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/ConnectionsModel.html" >ConnectionsModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/CostCentreModel.html" >CostCentreModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/EmployeeModel.html" >EmployeeModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/LeaveTypeEntitlementModel.html" >LeaveTypeEntitlementModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/LeaveTypeModel.html" >LeaveTypeModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/PersonalDetailsModel.html" >PersonalDetailsModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/SectionModel.html" >SectionModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/UserInfoModel.html" >UserInfoModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/ViewLeaveTypeSetupModel.html" >ViewLeaveTypeSetupModel</a>
-                                       </li>
-                                       <li class="link">
                                            <a href="../classes/XmlJson.html" >XmlJson</a>
                                        </li>
                                </ul>
@@ -531,7 +471,19 @@
     <code>src/library/spinner/spinner.component.ts</code>
 </p>
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Spinner Component</p>
 
+    </p>
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+    </div>
 
 <section>
     <h3>Metadata</h3>
@@ -580,6 +532,8 @@
                             <code>color</code>
                         </td>
                         <td class="col-md-10">
+                            <div><p>Input property for color</p>
+</div>
                             <p>
                               <em>Default value: </em><code>primary</code>
                             </p>
@@ -594,6 +548,8 @@
                             <code>height</code>
                         </td>
                         <td class="col-md-10">
+                            <div><p>Input property for height</p>
+</div>
                             <p>
                               <em>Default value: </em><code>100</code>
                             </p>
@@ -608,6 +564,8 @@
                             <code>name</code>
                         </td>
                         <td class="col-md-10">
+                            <div><p>Input property for spinner style name</p>
+</div>
                             <p>
                               <em>Default value: </em><code>lines</code>
                             </p>
@@ -622,6 +580,8 @@
                             <code>width</code>
                         </td>
                         <td class="col-md-10">
+                            <div><p>Input property for width</p>
+</div>
                             <p>
                               <em>Default value: </em><code>40</code>
                             </p>
@@ -642,6 +602,14 @@
                         </td>
                     </tr>
     
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Creates an instance of SpinnerComponent.</p>
+    </div>
+                                <div class="io-description">
+                                </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
     </section>
@@ -650,7 +618,12 @@
 </div>
         <div class="tab-pane fade tab-source-code" id="source">
             <pre><code class="hljs javascript">import { Component, Input, OnInit } from &#x27;@angular/core&#x27;;
-
+/**
+ * Spinner Component
+ * @export
+ * @class SpinnerComponent
+ * @implements {OnInit}
+ */
 @Component({
     selector: &#x27;app-spinner&#x27;,
     templateUrl: &#x27;./spinner.component.html&#x27;,
@@ -658,11 +631,34 @@
 })
 export class SpinnerComponent implements OnInit {
 
+    /**
+     * Input property for width
+     * @memberof SpinnerComponent
+     */
     @Input() width &#x3D; &#x27;40&#x27;;
+
+    /**
+     * Input property for height
+     * @memberof SpinnerComponent
+     */
     @Input() height &#x3D; &#x27;100&#x27;;
+
+    /**
+     * Input property for spinner style name
+     * @memberof SpinnerComponent
+     */
     @Input() name &#x3D; &#x27;lines&#x27;;
+
+    /**
+     * Input property for color
+     * @memberof SpinnerComponent
+     */
     @Input() color &#x3D; &#x27;primary&#x27;;
 
+    /**
+     *Creates an instance of SpinnerComponent.
+     * @memberof SpinnerComponent
+     */
     constructor() { }
 
     ngOnInit() {

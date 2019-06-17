@@ -5,7 +5,12 @@ import * as _moment from 'moment';
 import { genderStatus, maritalStatus } from '../employee-profile.service';
 import { Subscription } from 'rxjs';
 const moment = _moment;
-
+/**
+ * Personal Page
+ * @export
+ * @class PersonalPage
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'app-personal',
     templateUrl: './personal.page.html',
@@ -13,33 +18,160 @@ const moment = _moment;
 })
 export class PersonalPage implements OnInit {
 
+    /**
+     * Get Persoanl details from API
+     * @type {*}
+     * @memberof PersonalPage
+     */
     public list: any;
+
+    /**
+     * Empty array to save emergency contact
+     * @type {*}
+     * @memberof PersonalPage
+     */
     public contactList: any = [];
+
+    /**
+     * Empty array to save spouse details
+     * @type {*}
+     * @memberof PersonalPage
+     */
     public spouseList: any = [];
+
+    /**
+     * Empty array to save child details
+     * @type {*}
+     * @memberof PersonalPage
+     */
     public childList: any = [];
+
+    /**
+     * Empty array to save education details
+     * @type {*}
+     * @memberof PersonalPage
+     */
     public educationList: any = [];
+
+
     public numOfArray: boolean = false;
+
+    /**
+     * Show or hide edit profile
+     * @type {boolean}
+     * @memberof PersonalPage
+     */
     public editProfile: boolean = false;
+
+    /**
+     * Show or hide family details
+     * Default is hide if no info to show
+     * @type {boolean}
+     * @memberof PersonalPage
+     */
     public displayFamily: boolean = false;
+
+    /**
+     * Show or hide education details
+     * Default is hide if no info to show
+     * @type {boolean}
+     * @memberof PersonalPage
+     */
     public displayEducation: boolean = false;
+
+    /**
+     * Show edit emergency contact form field
+     * @type {boolean[]}
+     * @memberof PersonalPage
+     */
     public showEditContact: boolean[] = [];
+
+    /**
+     * Show edit spouse form field
+     * @type {boolean[]}
+     * @memberof PersonalPage
+     */
     public showEditSpouse: boolean[] = [];
+
+    /**
+     * Show edit child form field
+     * @type {boolean[]}
+     * @memberof PersonalPage
+     */
     public showEditChild: boolean[] = [];
+
+    /**
+     * Show edit education form field
+     * @type {boolean[]}
+     * @memberof PersonalPage
+     */
     public showEditEducation: boolean[] = [];
+
+    /**
+     * Object format of emergency contact
+     * @memberof PersonalPage
+     */
     public contactObj = { contactName: '', contactNumber: '' };
+
+    /**
+     * Object format of spouse details
+     * @memberof PersonalPage
+     */
     public spouseObj = { spouseName: '', spouseIdentificationNumber: '' };
+
+    /**
+     * Object format of child details
+     * @memberof PersonalPage
+     */
     public childObj = { childName: '', childIdentificationNumber: '' };
+
+    /**
+     * Object format of education details
+     * @memberof PersonalPage
+     */
     public educationObj = { qualificationLevel: '', major: '', university: '', year: '' };
+
+    /**
+     * Track birthdate value and validation
+     * @private
+     * @type {FormGroup}
+     * @memberof PersonalPage
+     */
     private _date: FormGroup;
+
+    /**
+     * Add observable as disposable resource
+     * @private
+     * @type {Subscription}
+     * @memberof PersonalPage
+     */
     private _subscription: Subscription = new Subscription();
 
+    /**
+     * Return birthdate value
+     * @readonly
+     * @type {FormGroup}
+     * @memberof PersonalPage
+     */
     get dateForm(): FormGroup {
         return this._date;
     }
+
+    /**
+     * Return Personal Details from API
+     * @readonly
+     * @memberof PersonalPage
+     */
     get personalList() {
         return this.list;
     }
 
+    /**
+     *Creates an instance of PersonalPage.
+     * @param {APIService} apiService
+     * @param {FormBuilder} _formBuilder
+     * @memberof PersonalPage
+     */
     constructor(private apiService: APIService, private _formBuilder: FormBuilder) {
     }
 
@@ -63,10 +195,18 @@ export class PersonalPage implements OnInit {
             });
     }
 
+    /**
+     * Destroy subscription
+     * @memberof PersonalPage
+     */
     ngOnDestroy() {
         this._subscription.unsubscribe();
     }
 
+    /**
+     * To show emergency contact info
+     * @memberof PersonalPage
+     */
     getContactInit() {
         const contact = this.list.personalDetail.emergencyContactNumber.contacts;
         if (contact !== undefined && !(contact instanceof Array)) {
@@ -86,6 +226,10 @@ export class PersonalPage implements OnInit {
         }
     }
 
+    /**
+     * To show spouse info
+     * @memberof PersonalPage
+     */
     getSpouseInit() {
         const spouse = this.list.personalDetail.family.spouse;
         if (spouse !== undefined && !(spouse instanceof Array)) {
@@ -106,6 +250,10 @@ export class PersonalPage implements OnInit {
         }
     }
 
+    /**
+     * To show child info
+     * @memberof PersonalPage
+     */
     getChildInit() {
         const child = this.list.personalDetail.family.child;
         if (child !== undefined && !(child instanceof Array)) {
@@ -125,6 +273,10 @@ export class PersonalPage implements OnInit {
         }
     }
 
+    /**
+     * To show education info
+     * @memberof PersonalPage
+     */
     getEducationInit() {
         const education = this.list.personalDetail.education.educationDetail;
         if (education !== undefined && !(education instanceof Array)) {
@@ -145,6 +297,12 @@ export class PersonalPage implements OnInit {
         }
     }
 
+    /**
+     * To create new form field input
+     * @param {*} list
+     * @param {*} obj
+     * @memberof PersonalPage
+     */
     addList(list, obj) {
         if (list === undefined) {
             list = [];
@@ -156,18 +314,33 @@ export class PersonalPage implements OnInit {
         }
     }
 
+    /**
+     * Show required object format of each details 
+     * @param {*} addList
+     * @param {*} object
+     * @memberof PersonalPage
+     */
     objectList(addList, object) {
         if (object === this.contactObj) { this.contactList = addList; }
         if (object === this.spouseObj) { this.spouseList = addList; }
         if (object === this.childObj) { this.childList = addList; }
         if (object === this.educationObj) { this.educationList = addList; }
     }
-
+    /**
+     * Remove item from clicked list
+     * @param {number} index
+     * @param {*} list
+     * @memberof PersonalPage
+     */
     removeItem(index: number, list: any) {
         list.splice(index, 1);
         this.patchAllData();
     }
 
+    /**
+     * Update personal details to API
+     * @memberof PersonalPage
+     */
     patchAllData() {
         this.editProfile = false;
         this._subscription = this.apiService.patch_personal_details(this.bindingData()).subscribe(
@@ -184,6 +357,11 @@ export class PersonalPage implements OnInit {
             });
     }
 
+    /**
+     * body content that need to POST to API 
+     * @returns
+     * @memberof PersonalPage
+     */
     bindingData() {
         return {
             "id": this.list.id,
@@ -214,6 +392,12 @@ export class PersonalPage implements OnInit {
         };
     }
 
+    /**
+     * Edit emergency contact 
+     * @param {*} index
+     * @param {*} value
+     * @memberof PersonalPage
+     */
     editContact(index, value) {
         for (let i = 0; i < this.contactList.length; i++) {
             this.showEditContact.splice(index, 1, value);
@@ -223,6 +407,12 @@ export class PersonalPage implements OnInit {
         }
     }
 
+    /**
+     * Edit spouse details
+     * @param {*} index
+     * @param {*} value
+     * @memberof PersonalPage
+     */
     editSpouse(index, value) {
         for (let i = 0; i < this.spouseList.length; i++) {
             this.showEditSpouse.splice(index, 1, value);
@@ -232,6 +422,12 @@ export class PersonalPage implements OnInit {
         }
     }
 
+    /**
+     * Edit child details
+     * @param {*} index
+     * @param {*} value
+     * @memberof PersonalPage
+     */
     editChild(index, value) {
         for (let i = 0; i < this.childList.length; i++) {
             this.showEditChild.splice(index, 1, value);
@@ -241,6 +437,12 @@ export class PersonalPage implements OnInit {
         }
     }
 
+    /**
+     * Edit education details
+     * @param {*} index
+     * @param {*} value
+     * @memberof PersonalPage
+     */
     editEducation(index, value) {
         for (let i = 0; i < this.educationList.length; i++) {
             this.showEditEducation.splice(index, 1, value);
@@ -249,14 +451,5 @@ export class PersonalPage implements OnInit {
             }
         }
     }
-
-    clickAsFavourite() {
-        if (this.numOfArray) {
-            this.numOfArray = false;
-        } else {
-            this.numOfArray = true;
-        }
-    };
-
 
 }

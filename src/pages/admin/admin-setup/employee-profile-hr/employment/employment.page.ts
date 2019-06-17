@@ -13,23 +13,94 @@ const moment = _moment;
 })
 export class EmploymentPage implements OnInit {
 
+    /**
+     * Get personal details from API
+     * @type {*}
+     * @memberof EmploymentPage
+     */
     public list: any;
+
+    /**
+     * Get employment details from API
+     * @type {*}
+     * @memberof EmploymentPage
+     */
     public employmentlist: any;
+
+    /**
+     * Show edit form field or vice versa
+     * @type {boolean}
+     * @memberof EmploymentPage
+     */
     public edit: boolean = false;
+
+    /**
+     * Get employment status from enum 
+     * @type {*}
+     * @memberof EmploymentPage
+     */
     public status: any;
+
+    /**
+     * Tracks validity of date join
+     * @type {FormGroup}
+     * @memberof EmploymentPage
+     */
     public dateJoinForm: FormGroup;
+
+    /**
+     * Tracks validity of date confirm
+     * @type {FormGroup}
+     * @memberof EmploymentPage
+     */
     public dateConfirmForm: FormGroup;
+
+    /**
+     * Tracks validity of date resign
+     * @type {FormGroup}
+     * @memberof EmploymentPage
+     */
     public dateResignForm: FormGroup;
+
+    /**
+     * Get company branch
+     * @type {string}
+     * @memberof EmploymentPage
+     */
     public branch: string;
+
+    /**
+     * For execution of API
+     * @private
+     * @type {Subscription}
+     * @memberof EmploymentPage
+     */
     private _subscription: Subscription = new Subscription();
 
+    /**
+     * Return value from personal details
+     * @readonly
+     * @memberof EmploymentPage
+     */
     get personalList() {
         return this.list;
     }
+
+    /**
+     * Return value from employment details
+     * @readonly
+     * @memberof EmploymentPage
+     */
     get employmentPersonalList() {
         return this.employmentlist;
     }
 
+    /**
+     *Creates an instance of EmploymentPage.
+     * @param {APIService} apiService
+     * @param {FormBuilder} _formBuilder
+     * @memberof EmploymentPage
+     */
     constructor(private apiService: APIService, private _formBuilder: FormBuilder) {
     }
 
@@ -62,10 +133,18 @@ export class EmploymentPage implements OnInit {
             });
     }
 
+    /**
+     * Destroy the subscribed API 
+     * @memberof EmploymentPage
+     */
     ngOnDestroy() {
         this._subscription.unsubscribe();
     }
 
+    /**
+     * Create new form group for date join, confirm & resign
+     * @memberof EmploymentPage
+     */
     data() {
         this.dateJoinForm = new FormGroup({
             dateJoin: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfJoin)),
@@ -79,6 +158,10 @@ export class EmploymentPage implements OnInit {
         this.status = employeeStatus[this.employmentlist.employmentDetail.employmentStatus];
     }
 
+    /**
+     * Update employment details to API
+     * @memberof EmploymentPage
+     */
     patchEmploymentData() {
         this.edit = false;
         const data = {

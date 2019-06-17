@@ -3,7 +3,12 @@ import { RequestOptions, Http, Headers } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-
+/**
+ * Add One Employee Page
+ * @export
+ * @class AddOneEmployeePage
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'app-add-one-employee',
     templateUrl: './add-one-employee.page.html',
@@ -11,10 +16,27 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddOneEmployeePage implements OnInit {
 
+    /**
+     * get designation list from API
+     * @type {*}
+     * @memberof AddOneEmployeePage
+     */
     public designationList: any;
+
+    /**
+     * form group for invitation
+     * @type {FormGroup}
+     * @memberof AddOneEmployeePage
+     */
     public invitationForm: FormGroup;
 
-    constructor(private http: Http, public dialogAddOneEmployee: MatDialogRef<AddOneEmployeePage>,) {
+    /**
+     *Creates an instance of AddOneEmployeePage.
+     * @param {Http} http
+     * @param {MatDialogRef<AddOneEmployeePage>} dialogAddOneEmployee
+     * @memberof AddOneEmployeePage
+     */
+    constructor(private http: Http, public dialogAddOneEmployee: MatDialogRef<AddOneEmployeePage>, ) {
 
         this.invitationForm = new FormGroup({
             firstName: new FormControl('', Validators.required),
@@ -49,7 +71,11 @@ export class AddOneEmployeePage implements OnInit {
 
     }
 
-    sendInvitation(){
+    /**
+     * Send invitation to employee
+     * @memberof AddOneEmployeePage
+     */
+    sendInvitation() {
         console.log(this.invitationForm.value);
         this.dialogAddOneEmployee.close();
     }

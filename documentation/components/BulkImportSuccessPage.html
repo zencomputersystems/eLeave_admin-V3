@@ -157,36 +157,6 @@
                                     <a href="../classes/AppPage.html" >AppPage</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../classes/BranchModel.html" >BranchModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/ConnectionsModel.html" >ConnectionsModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/CostCentreModel.html" >CostCentreModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/EmployeeModel.html" >EmployeeModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/LeaveTypeEntitlementModel.html" >LeaveTypeEntitlementModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/LeaveTypeModel.html" >LeaveTypeModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/PersonalDetailsModel.html" >PersonalDetailsModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/SectionModel.html" >SectionModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/UserInfoModel.html" >UserInfoModel</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/ViewLeaveTypeSetupModel.html" >ViewLeaveTypeSetupModel</a>
-                                </li>
-                                <li class="link">
                                     <a href="../classes/XmlJson.html" >XmlJson</a>
                                 </li>
                         </ul>
@@ -402,36 +372,6 @@
                                            <a href="../classes/AppPage.html" >AppPage</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../classes/BranchModel.html" >BranchModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/ConnectionsModel.html" >ConnectionsModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/CostCentreModel.html" >CostCentreModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/EmployeeModel.html" >EmployeeModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/LeaveTypeEntitlementModel.html" >LeaveTypeEntitlementModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/LeaveTypeModel.html" >LeaveTypeModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/PersonalDetailsModel.html" >PersonalDetailsModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/SectionModel.html" >SectionModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/UserInfoModel.html" >UserInfoModel</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/ViewLeaveTypeSetupModel.html" >ViewLeaveTypeSetupModel</a>
-                                       </li>
-                                       <li class="link">
                                            <a href="../classes/XmlJson.html" >XmlJson</a>
                                        </li>
                                </ul>
@@ -531,7 +471,19 @@
     <code>src/pages/admin/admin-setup/add-employee/bulk-import-success/bulk-import-success.page.ts</code>
 </p>
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Bulk Import Success Page</p>
 
+    </p>
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+    </div>
 
 <section>
     <h3>Metadata</h3>
@@ -583,6 +535,27 @@
                         </td>
                     </tr>
     
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Creates an instance of BulkImportSuccessPage.</p>
+    </div>
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>dialogRef</b>
+                                                            :     <code>MatDialogRef</code>
+    
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
     </section>
@@ -623,6 +596,12 @@
                                 <i>Default value: </i><code>true</code>
                             </td>
                         </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Show or hide spinner</p>
+    </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <table class="table table-sm table-bordered">
@@ -643,6 +622,12 @@
                                 <i>Default value: </i><code>dots</code>
                             </td>
                         </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Loading spinner style name</p>
+    </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
     </section>
@@ -650,7 +635,12 @@
         <div class="tab-pane fade tab-source-code" id="source">
             <pre><code class="hljs javascript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
 import { MatDialogRef } from &#x27;@angular/material/dialog&#x27;;
-
+/**
+ * Bulk Import Success Page
+ * @export
+ * @class BulkImportSuccessPage
+ * @implements {OnInit}
+ */
 @Component({
     selector: &#x27;app-bulk-import-success&#x27;,
     templateUrl: &#x27;./bulk-import-success.page.html&#x27;,
@@ -658,9 +648,23 @@ import { MatDialogRef } from &#x27;@angular/material/dialog&#x27;;
 })
 export class BulkImportSuccessPage implements OnInit {
 
+    /**
+     * Loading spinner style name
+     * @memberof BulkImportSuccessPage
+     */
     public spinnerName &#x3D; &quot;dots&quot;;
+
+    /**
+     * Show or hide spinner
+     * @memberof BulkImportSuccessPage
+     */
     public showSpinner &#x3D; true;
 
+    /**
+     *Creates an instance of BulkImportSuccessPage.
+     * @param {MatDialogRef&lt;BulkImportSuccessPage&gt;} dialogRef
+     * @memberof BulkImportSuccessPage
+     */
     constructor(public dialogRef: MatDialogRef&lt;BulkImportSuccessPage&gt;,
     ) {
     }

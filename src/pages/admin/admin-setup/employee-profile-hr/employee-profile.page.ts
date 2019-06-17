@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-
+/**
+ * Employee Profile Page
+ * @export
+ * @class EmployeeProfilePage
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'app-employee-profile',
     templateUrl: './employee-profile.page.html',
@@ -10,20 +15,66 @@ import { Router } from '@angular/router';
 })
 export class EmployeeProfilePage implements OnInit {
 
+    /**
+     * Get personal details from API
+     * @type {*}
+     * @memberof EmployeeProfilePage
+     */
     public list: any;
+
+    /**
+     * Get user Id from API
+     * @type {string}
+     * @memberof EmployeeProfilePage
+     */
     public userId: string;
+
+    /**
+     * Get Employment details from API
+     * @type {*}
+     * @memberof EmployeeProfilePage
+     */
     public employmentlist: any;
-    public setAsFavourite = [];
+
+    /**
+     * Show star icon highlight or vice versa
+     * @type {boolean}
+     * @memberof EmployeeProfilePage
+     */
     public numOfArray: boolean = false;
+
+    /**
+     * Create subscription for execution of API
+     * @private
+     * @type {Subscription}
+     * @memberof EmployeeProfilePage
+     */
     private subscription: Subscription = new Subscription();
 
+    /**
+     * Return personal details content
+     * @readonly
+     * @memberof EmployeeProfilePage
+     */
     get personalList() {
         return this.list;
     }
+
+    /**
+     * Return employment details content
+     * @readonly
+     * @memberof EmployeeProfilePage
+     */
     get employmentPersonalList() {
         return this.employmentlist;
     }
 
+    /**
+     *Creates an instance of EmployeeProfilePage.
+     * @param {APIService} apiService
+     * @param {Router} router
+     * @memberof EmployeeProfilePage
+     */
     constructor(private apiService: APIService, private router: Router) {
     }
 
@@ -49,10 +100,18 @@ export class EmployeeProfilePage implements OnInit {
         );
     }
 
+    /**
+     * Destroy subscription
+     * @memberof EmployeeProfilePage
+     */
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
 
+    /**
+     * To change star icon color when clicked
+     * @memberof EmployeeProfilePage
+     */
     clickAsFavourite() {
         if (this.numOfArray) {
             this.numOfArray = false;
@@ -61,6 +120,10 @@ export class EmployeeProfilePage implements OnInit {
         }
     };
 
+    /**
+     * Route to personal details page
+     * @memberof EmployeeProfilePage
+     */
     toMyProfile() {
         this.router.navigate(['/main/employee-setup']);
     }
