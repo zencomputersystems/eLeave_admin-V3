@@ -9,6 +9,7 @@ import { AddEmployeePage } from 'src/pages/admin/admin-setup/add-employee/add-em
 import { BulkImportPage } from 'src/pages/admin/admin-setup/add-employee/bulk-import/bulk-import.page';
 import { BulkImportSuccessPage } from 'src/pages/admin/admin-setup/add-employee/bulk-import-success/bulk-import-success.page';
 import { AddOneEmployeePage } from 'src/pages/admin/admin-setup/add-employee/add-one-employee/add-one-employee.page';
+import { PublicHolidaySetup } from 'src/pages/admin/admin-setup/public-holiday-setup/public-holiday-setup';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -19,7 +20,7 @@ export const sideMenuNavigationRoutes: Routes = [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: EmployeeProfilePage },
             { path: 'inbox', component: AddEmployeePage }, // AddEmployeePage //EmployeeProfilePage
-            { path: 'plan-my-leave', component: AdminInvitesPage },
+            { path: 'plan-my-leave', component: PublicHolidaySetup },
             { path: 'employee-directory', component: AdminInvitesPage },
             { path: 'invite-more', component: InviteMorePage },
             // { path: 'user-public-profile', component: PublicPersonalDetailsPage },

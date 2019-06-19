@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-toolbar class="toolbar2">
+        <div class="back-icon" [inlineSVG]="'assets/icon/Option/arrow-pointing-to-left.svg'" (click)="backToProfile()">
+        </div>
+        <ion-title style="display: inline-block;color: #20291f;font-size: 16px;" *ngIf="personalList">
+            {{personalList.employeeName}}'s Profile
+        </ion-title>
+        <div style="float: right; padding-right: 20px;">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-linkedin-in"></i>
+            <i class="fab fa-instagram"></i>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-card class="leftCard">
+    <ion-card-content>
+        <mat-tab-group selectedIndex="0">
+            <mat-tab label="Public Holiday Setup">
+                <app-manage-holiday></app-manage-holiday>
+            </mat-tab>
+            <mat-tab label="Calendar">
+                <!-- <app-calendar-view></app-calendar-view> -->
+            </mat-tab>
+        </mat-tab-group>
+
+    </ion-card-content>
+</ion-card>
+<div style="width: 100%; height:100%; text-align: center" *ngIf="showSpinner">
+    <app-spinner></app-spinner>
+</div>

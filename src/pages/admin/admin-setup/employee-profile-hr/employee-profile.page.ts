@@ -94,6 +94,7 @@ export class EmployeeProfilePage implements OnInit {
                 this.subscription = this.apiService.get_employment_details(userId).subscribe(
                     data => {
                         this.employmentlist = data;
+                        console.log(this.employmentlist);
                     }
                 )
             }

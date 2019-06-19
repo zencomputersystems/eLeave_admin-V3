@@ -139,9 +139,6 @@ export class AdminInvitesPage implements OnInit {
 
     ngOnInit() {
         this.endPoint();
-        this.apiService.get_public_holiday().subscribe(value => {
-            console.log(value.response)
-        })
     }
 
     /**

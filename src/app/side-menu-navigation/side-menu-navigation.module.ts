@@ -13,6 +13,7 @@ import { EmployeeProfileModule } from 'src/pages/admin/admin-setup/employee-prof
 import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
 import { AddEmployeeModule } from 'src/pages/admin/admin-setup/add-employee/add-employee.module';
+import { PublicHolidaySetupModule } from 'src/pages/admin/admin-setup/public-holiday-setup/public-holiday-setup.module';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import { AddEmployeeModule } from 'src/pages/admin/admin-setup/add-employee/add-
         EmployeeProfileModule,
         MatMenuModule,
         AddEmployeeModule,
+        PublicHolidaySetupModule,
         RouterModule.forChild(sideMenuNavigationRoutes)
     ],
     providers: [AuthGuard],

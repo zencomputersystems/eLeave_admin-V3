@@ -101,10 +101,6 @@ export class APIService {
         return this.getApi('api/userprofile/personal-detail');
     }
 
-    // get_user_personal_details(guid): Observable<any> {
-    //     return this.getApiWithId('/userprofile/personal-detail/', guid);
-    // }
-
     /**
      * Update personal details to endpoint
      * @param {*} updateData
@@ -137,11 +133,6 @@ export class APIService {
         return this.patchApi(updateData, 'api/userprofile/employment-detail');
     }
 
-    // get_user_profile(): Observable<any> {
-    //     this.headerAuthorization();
-    //     return this.getApi('/userprofile');
-    // }
-
     /**
      * Get user profile list JSON data from endpoint
      * @returns {Observable<any>}
@@ -152,23 +143,6 @@ export class APIService {
         return this.getApi('api/users');
     }
 
-    // get_user_profile_details(guid): Observable<any> {
-    //     this.headerAuthorization();
-    //     return this.http.get(this.baseUrl + '/userprofile/' + guid, { headers: this.headers })
-    //         .pipe(map((res: Response) => res.json()));
-    // }
-
-    // post_user_apply_leave(leaveData: any): Observable<any> {
-    //     this.headerAuthorization();
-    //     return this.http.post(this.baseUrl + '/leave/apply', leaveData, { headers: this.headers })
-    //         .pipe(map((res: Response) => res.json()));
-    // }
-
-    // get_department(): Observable<any> {
-    //     this.headerAuthorization();
-    //     return this.getApi('/department');
-    // }
-
     /**
      * POST invited new user Id to endpoint
      * @param {*} userId
@@ -177,7 +151,7 @@ export class APIService {
      */
     post_user_invite(userId): Observable<any> {
         this.headerAuthorization();
-        return this.postApi(userId, 'api/admin/user-invite');
+        return this.postApi(userId, 'api/invitation');
     }
 
     /**
@@ -185,8 +159,44 @@ export class APIService {
      * @returns {Observable<any>}
      * @memberof APIService
      */
-    get_public_holiday(): Observable<any> {
+    get_public_holiday_list(): Observable<any> {
         this.headerAuthorization();
-        return this.getApi('admin/api/holiday/calendar');
+        return this.getApi('api/admin/holiday/calendar');
     }
+
+    /**
+     * Get all calendar profile list 
+     * [{ "calendar_guid": "075f64d0-8cf1-11e9-805c-2f26cd7ad959", "code": "profile 1" }]
+     * @returns {Observable<any>}
+     * @memberof APIService
+     */
+    get_calendar_profile_list(): Observable<any> {
+        this.headerAuthorization();
+        return this.getApi('api/admin/holiday/calendar-profile');
+    }
+
+    /**
+     * Update calendar for specific calendar Id profile (each employee)
+     * @param {*} profileBody
+     * @returns {Observable<any>}
+     * @memberof APIService
+     */
+    patch_calendar_profile(profileBody): Observable<any> {
+        this.headerAuthorization();
+        return this.patchApi(profileBody, 'api/admin/holiday/calendar-profile');
+    }
+
+    /**
+     * Setup new calendar profile with different holiday or rest day
+     * @param {*} newProfile
+     * @returns {Observable<any>}
+     * @memberof APIService
+     */
+    post_calendar_profile(newProfile): Observable<any> {
+        this.headerAuthorization();
+        return this.postApi(newProfile, 'api/admin/holiday/calendar-profile');
+    }
+
+
 }
+
