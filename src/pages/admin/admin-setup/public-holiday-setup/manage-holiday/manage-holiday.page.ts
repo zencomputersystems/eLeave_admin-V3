@@ -7,15 +7,14 @@ import timeGrigPlugin from '@fullcalendar/timegrid';
 import listYear from '@fullcalendar/list';
 import { EventInput } from '@fullcalendar/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Validators, FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { IonSelect } from '@ionic/angular';
 const moment = _moment;
 
 @Component({
     selector: 'app-manage-holiday',
     templateUrl: './manage-holiday.page.html',
     styleUrls: ['./manage-holiday.page.scss'],
-    providers: [NgbTooltipConfig]
 })
 export class ManageHolidayPage implements OnInit {
 
@@ -61,56 +60,53 @@ export class ManageHolidayPage implements OnInit {
      */
     public editDate: boolean = false;
 
-    /**
-     * Track start date value and validation
-     * @private
-     * @type {FormGroup}
-     * @memberof PersonalPage
-     */
-    private _date: FormGroup;
 
-    /**
-     * Return start date value
-     * @readonly
-     * @type {FormGroup}
-     * @memberof PersonalPage
-     */
-    get dateForm(): FormGroup {
-        return this._date;
-    }
+    public profileList;
 
-    //     public eventRender: function(info) {
-    //     var tooltip = new Tooltip(info.el, {
-    //         title: info.event.extendedProps.description,
-    //         placement: 'top',
-    //         trigger: 'hover',
-    //         container: 'body'
-    //     });
-    // }
+    public profile;
 
+    public value;
+
+    public restDay;
+
+    public weekdays: string[];
+
+    public calendarForm: FormGroup = new FormGroup({
+        calendarProfile: new FormControl('', Validators.required),
+        dayControl: new FormControl('', Validators.required),
+    });;
+
+    @ViewChild('mySelect') selectRef: IonSelect;
 
     /**
      *Creates an instance of CalendarViewPage.
      * @param {APIService} apiService
      * @memberof CalendarViewPage
      */
-    constructor(private apiService: APIService, config: NgbTooltipConfig, private _formBuilder: FormBuilder
-    ) {
-        config.placement = 'top';
-        config.triggers = 'click';
-        config.container = 'body';
+    constructor(private apiService: APIService, private fb: FormBuilder) {
     }
 
     ngOnInit() {
+
+        // this.calendarForm = this.fb.group({
+        //     dayControl: [this.restDay.fullname]
+        // });
+
+        this.subscription = this.apiService.get_calendar_profile_list().subscribe(
+            (data: any[]) => {
+                this.profileList = data;
+            },
+            error => {
+                if (error) {
+                    window.location.href = '/login';
+                }
+            })
+
         this.subscription = this.apiService.get_public_holiday_list().subscribe(
             (data: any[]) => {
                 this.list = data;
                 this.events = [];
                 for (let i = 0; i < this.list.response.holidays.length; i++) {
-                    this._date = this._formBuilder.group({ datepicker: ['', Validators.required] });
-                    this._date = new FormGroup({
-                        datepicker: new FormControl(new Date(this.list.response.holidays[i].date.iso)),
-                    })
                     this.events.push({
                         "start": moment(this.list.response.holidays[i].date.iso).format('YYYY-MM-DD'),
                         "end": moment(this.list.response.holidays[i].date.iso).format('YYYY-MM-DD'),
@@ -126,7 +122,6 @@ export class ManageHolidayPage implements OnInit {
                     let calendarView = this.calendar.getApi();
                     calendarView.render();
                 }, 100);
-                console.log(this.list, this.events);
             },
             error => {
                 if (error) {
@@ -145,25 +140,6 @@ export class ManageHolidayPage implements OnInit {
     }
 
     /**
-     * format date using moment library
-     * @param {*} date
-     * @memberof CalendarViewPage
-     */
-    editDateFormat(date) {
-        this.events = date;
-        for (let i = 0; i < date.length; i++) {
-            this.events[i].start = (moment(date[i].start).format('YYYY-MM-DD'));
-            this.events[i].end = moment(date[i].end).format('YYYY-MM-DD');
-            this.events[i].day = this.getWeekDay(new Date(date[i].start));
-            this.events[i].allDay = true;
-        }
-        setTimeout(() => {
-            let calendarView = this.calendar.getApi();
-            calendarView.render();
-        }, 100);
-    }
-
-    /**
      * Method to get day of the week from a given date
      * @param {*} date
      * @returns
@@ -171,13 +147,13 @@ export class ManageHolidayPage implements OnInit {
      */
     getWeekDay(date) {
         //Create an array containing each day, starting with Sunday.
-        const weekdays = new Array(
+        this.weekdays = new Array(
             "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
         );
         //Use the getDay() method to get the day.
         const day = date.getDay();
         //Return the element that corresponds to that index.
-        return weekdays[day];
+        return this.weekdays[day];
     }
 
 
@@ -186,8 +162,57 @@ export class ManageHolidayPage implements OnInit {
         console.log(this.events);
     }
 
-    saveData(){
+    saveData() {
+        console.log(this.events);
+        console.log('id', this.profile);
+        this.editDate = false;
+        let holiday = this.events;
+        for (let i = 0; i < this.events.length; i++) {
+            delete holiday[i].allDay;
+            delete holiday[i].backgroundColor;
+            delete holiday[i].borderColor;
+            delete holiday[i].day;
+            delete holiday[i].description;
+        }
+        console.log('holiday', holiday);
+        const body = {
+            "calendar_guid": this.profile.calendar_guid,
+            "data": {
+                "code": this.profile.code,
+                "holiday": holiday,
+                "rest": this.restDay
+            }
+        }
+        this.subscription = this.apiService.patch_calendar_profile(body).subscribe(
+            (data: any[]) => {
+                console.log(data);
+            },
+            () => {
+                console.log('success');
+            })
+    }
 
+    selectProfile(list) {
+        this.profile = list;
+        this.subscription = this.apiService.get_personal_holiday_calendar(this.profile.calendar_guid).subscribe(
+            (data: any) => {
+                this.restDay = data.rest;
+                console.log(this.restDay);
+            })
+    }
+
+    addEvent(value, index) {
+        this.events[index].start = moment(value).format('YYYY-MM-DD');
+        this.events[index].end = moment(value).format('YYYY-MM-DD');
+        this.events[index].day = this.getWeekDay(new Date(value));
+    }
+
+    onSearchChange(inputValue, index) {
+        this.events[index].title = inputValue;
+    }
+
+    restDaySelected(index, day) {
+        console.log(index, day);
     }
 
 }

@@ -197,6 +197,11 @@ export class APIService {
         return this.postApi(newProfile, 'api/admin/holiday/calendar-profile');
     }
 
+    get_personal_holiday_calendar(id): Observable<any> {
+        // this.headerAuthorization();
+        return this.getApiWithId('api/admin/holiday/', id);
+    }
+
 
 }
 
