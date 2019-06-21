@@ -121,7 +121,7 @@
                                     <a href="../components/EmployeeProfilePage.html" >EmployeeProfilePage</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../components/EmploymentPage.html"  class="active" >EmploymentPage</a>
+                                    <a href="../components/EmploymentPage.html" >EmploymentPage</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/InviteMorePage.html" >InviteMorePage</a>
@@ -130,7 +130,7 @@
                                     <a href="../components/LoginComponent.html" >LoginComponent</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../components/ManageHolidayPage.html" >ManageHolidayPage</a>
+                                    <a href="../components/ManageHolidayPage.html"  class="active" >ManageHolidayPage</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/PageNotFoundComponent.html" >PageNotFoundComponent</a>
@@ -345,7 +345,7 @@
                                            <a href="../components/EmployeeProfilePage.html" >EmployeeProfilePage</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../components/EmploymentPage.html"  class="active" >EmploymentPage</a>
+                                           <a href="../components/EmploymentPage.html" >EmploymentPage</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/InviteMorePage.html" >InviteMorePage</a>
@@ -354,7 +354,7 @@
                                            <a href="../components/LoginComponent.html" >LoginComponent</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../components/ManageHolidayPage.html" >ManageHolidayPage</a>
+                                           <a href="../components/ManageHolidayPage.html"  class="active" >ManageHolidayPage</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/PageNotFoundComponent.html" >PageNotFoundComponent</a>
@@ -468,7 +468,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>EmploymentPage</li>
+  <li>ManageHolidayPage</li>
 </ol>
 
 
@@ -486,7 +486,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>src/pages/admin/admin-setup/employee-profile-hr/employment/employment.page.ts</code>
+    <code>src/pages/admin/admin-setup/public-holiday-setup/manage-holiday/manage-holiday.page.ts</code>
 </p>
 
 
@@ -505,23 +505,31 @@
 
 
 
+            <tr>
+                <td class="col-md-3">providers</td>
+                <td class="col-md-9">
+                    <code>
+                        TitleCasePipe
+                    </code>
+                </td>
+            </tr>
 
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>app-employment</code></td>
+                <td class="col-md-9"><code>app-manage-holiday</code></td>
             </tr>
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>employment.page.scss</code></td>
+                <td class="col-md-9"><code>manage-holiday.page.scss</code></td>
             </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>employment.page.html</code></td>
+                <td class="col-md-9"><code>manage-holiday.page.html</code></td>
             </tr>
 
 
@@ -537,13 +545,13 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <code>constructor(apiService: any, _formBuilder: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a>)</code>
+                            <code>constructor(apiService: any, fb: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a>, titlecasePipe: TitleCasePipe)</code>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-description"><p>Creates an instance of EmploymentPage.</p>
+                                <div class="io-description"><p>Creates an instance of CalendarViewPage.</p>
     </div>
                                 <div class="io-description">
                                         <b>Parameters :</b>
@@ -552,16 +560,6 @@
                                                     <div>
                                                         <b>apiService</b>
                                                             :     <code><a href="../injectables/APIService.html" target="_self" >APIService</a></code>
-    
-                                                    </div>
-                                                    <div>
-                                                        
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div>
-                                                        <b>_formBuilder</b>
-                                                            :     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a></code>
     
                                                     </div>
                                                     <div>
@@ -582,19 +580,62 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> data</b>
+                            <b> getWeekDay</b>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-    <code>data()</code>
+    <code>getWeekDay(date: any)</code>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-description"><p>Create new form group for date join, confirm &amp; resign</p>
+                                <div class="io-description"><p>Method to get day of the week from a given date</p>
+    </div>
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>date</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        <p>* </p>
+    
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> getPublicHolidayList</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>getPublicHolidayList()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Get public holiday list from calendarific</p>
     </div>
                                 <div class="io-description">
                                 </div>
@@ -613,19 +654,61 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> patchEmploymentData</b>
+                            <b> deleteHoliday</b>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-    <code>patchEmploymentData()</code>
+    <code>deleteHoliday(index: any)</code>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-description"><p>Update employment details to API</p>
+                                <div class="io-description"><p>Delete public holiday before patch to API</p>
+    </div>
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>index</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> saveData</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>saveData()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>click save button to patch the calendar to selected calendar profile</p>
     </div>
                                 <div class="io-description">
                                 </div>
@@ -635,6 +718,272 @@
                                 </div>
                                     <div class="io-description">
                                         
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> selectProfile</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>selectProfile(list: any)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Select calendar profile to pass the calendar Id to API<br>Pass rest day value (eg: sat) to the select input to show initial value</p>
+    </div>
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>list</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> dateChanged</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>dateChanged(value: any, index: any)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Edit public holiday date &amp; show day name according changed date</p>
+    </div>
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>value</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div>
+                                                        <b>index</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> titleChanges</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>titleChanges(inputValue: any, index: any)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Edit title of the public holiday to update to API</p>
+    </div>
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>inputValue</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div>
+                                                        <b>index</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> restDaySelected</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>restDaySelected(day: string)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Create a rest day array list<br>Check or uncheck weekday make changes in rest day array list</p>
+    </div>
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>day</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> open</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>open()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Update value of form control when open the mat-select input</p>
+    </div>
+                                <div class="io-description">
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> checkObjectExist</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>checkObjectExist(obj: any, array: any)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>To check whether the object is exist in array or not</p>
+    </div>
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>obj</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div>
+                                                        <b>array</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        <p>* </p>
+    
                                     </div>
                         </td>
                     </tr>
@@ -648,18 +997,18 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Private</span> _subscription</b>
+                            <b> calendar</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <span class="modifier-icon fa fa-lock"></span><code>_subscription:     <code>Subscription</code>
+                            <code>calendar:     <code>FullCalendarComponent</code>
     </bcode>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-description"><p>For execution of API</p>
+                            <div class="io-description"><p>This is local property for Full Calendar Component</p>
     </div>
                         </td>
                     </tr>
@@ -669,18 +1018,18 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Public</span> branch</b>
+                            <b><span class="modifier">Public</span> calendarForm</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>branch:     <code>string</code>
+                            <span class="modifier-icon fa fa-circle"></span><code>calendarForm:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
     </bcode>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-description"><p>Get company branch</p>
+                            <div class="io-description"><p>Track calendar input</p>
     </div>
                         </td>
                     </tr>
@@ -690,18 +1039,18 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Public</span> dateConfirmForm</b>
+                            <b><span class="modifier">Public</span> calendarPlugins</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>dateConfirmForm:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
+                            <span class="modifier-icon fa fa-circle"></span><code>calendarPlugins:     <code>any[]</code>
     </bcode>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-description"><p>Tracks validity of date confirm</p>
+                            <div class="io-description"><p>This is input property for plugins of Full Calendar Component</p>
     </div>
                         </td>
                     </tr>
@@ -711,54 +1060,12 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Public</span> dateJoinForm</b>
+                            <b><span class="modifier">Public</span> editDate</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>dateJoinForm:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Tracks validity of date join</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> dateResignForm</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>dateResignForm:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Tracks validity of date resign</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> edit</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>edit:     <code>boolean</code>
+                            <span class="modifier-icon fa fa-circle"></span><code>editDate:     <code>boolean</code>
     </bcode>
                         </td>
                     </tr>
@@ -769,7 +1076,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-description"><p>Show edit form field or vice versa</p>
+                            <div class="io-description"><p>Show or hide edit profile</p>
     </div>
                         </td>
                     </tr>
@@ -779,39 +1086,18 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Public</span> employmentlist</b>
+                            <b><span class="modifier">Public</span> events</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>employmentlist:     <code>any</code>
+                            <span class="modifier-icon fa fa-circle"></span><code>events:     <code>EventInput[]</code>
     </bcode>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-description"><p>Get employment details from API</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> employmentPersonalList</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <code>employmentPersonalList:     <code>any</code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Return value from employment details</p>
+                            <div class="io-description"><p>Property for alias Event Input of Full Calendar Component</p>
     </div>
                         </td>
                     </tr>
@@ -832,7 +1118,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-description"><p>Get personal details from API</p>
+                            <div class="io-description"><p>Get data from user profile API</p>
     </div>
                         </td>
                     </tr>
@@ -842,18 +1128,18 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> personalList</b>
+                            <b><span class="modifier">Public</span> personalProfile</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <code>personalList:     <code>any</code>
+                            <span class="modifier-icon fa fa-circle"></span><code>personalProfile:     <code>any</code>
     </bcode>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-description"><p>Return value from personal details</p>
+                            <div class="io-description"><p>Requested personal profile from API<br>Get API with calendar Id</p>
     </div>
                         </td>
                     </tr>
@@ -863,18 +1149,123 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Public</span> status</b>
+                            <b><span class="modifier">Public</span> profileList</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>status:     <code>any</code>
+                            <span class="modifier-icon fa fa-circle"></span><code>profileList:     <code>any</code>
     </bcode>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-description"><p>Get employment status from enum </p>
+                            <div class="io-description"><p>Calendar profile list from API<br>eg: { &quot;calendar_guid&quot;: &quot;string&quot;, &quot;code&quot;: &quot;string&quot; }</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> restDay</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>restDay:     <code>any[]</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Selected day name array list</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> selectedCalendarProfile</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>selectedCalendarProfile:     <code>any</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Selected Calendar profile from list</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> selectedWeekday</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>selectedWeekday:     <code>any[]</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Array list for rest to patch to API<br>eg: { &quot;fullname&quot;: &quot;SATURDAY&quot;, &quot;name&quot;: &quot;SAT&quot; }</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Private</span> subscription</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-lock"></span><code>subscription:     <code>Subscription</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>This local property is used to set subscription</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> weekdays</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>weekdays:     <code>string[]</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Array list of Sunday - Saturday to show on select input</p>
     </div>
                         </td>
                     </tr>
@@ -883,211 +1274,335 @@
     </section>
 </div>
         <div class="tab-pane fade tab-source-code" id="source">
-            <pre><code class="hljs javascript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
-import { APIService } from &#x27;src/services/shared-service/api.service&#x27;;
-import { FormGroup, FormBuilder, Validators, FormControl } from &#x27;@angular/forms&#x27;;
+            <pre><code class="hljs javascript">import { Component, OnInit, ViewChild } from &#x27;@angular/core&#x27;;
 import * as _moment from &#x27;moment&#x27;;
-import { employeeStatus, employeeType } from &#x27;../employee-profile.service&#x27;;
+import { FullCalendarComponent } from &#x27;@fullcalendar/angular&#x27;;
 import { Subscription } from &#x27;rxjs&#x27;;
+import dayGridPlugin from &#x27;@fullcalendar/daygrid&#x27;;
+import timeGrigPlugin from &#x27;@fullcalendar/timegrid&#x27;;
+import listYear from &#x27;@fullcalendar/list&#x27;;
+import { EventInput } from &#x27;@fullcalendar/core&#x27;;
+import { APIService } from &#x27;src/services/shared-service/api.service&#x27;;
+import { Validators, FormGroup, FormControl, FormBuilder } from &#x27;@angular/forms&#x27;;
+import { TitleCasePipe } from &#x27;@angular/common&#x27;;
 const moment &#x3D; _moment;
 
 @Component({
-    selector: &#x27;app-employment&#x27;,
-    templateUrl: &#x27;./employment.page.html&#x27;,
-    styleUrls: [&#x27;./employment.page.scss&#x27;],
+    selector: &#x27;app-manage-holiday&#x27;,
+    templateUrl: &#x27;./manage-holiday.page.html&#x27;,
+    styleUrls: [&#x27;./manage-holiday.page.scss&#x27;],
+    providers: [TitleCasePipe]
 })
-export class EmploymentPage implements OnInit {
+export class ManageHolidayPage implements OnInit {
 
     /**
-     * Get personal details from API
+      * This is local property for Full Calendar Component
+      * @type {FullCalendarComponent}
+      * @memberof CalendarViewPage
+      */
+    @ViewChild(&#x27;calendar&#x27;) calendar: FullCalendarComponent;
+
+    /**
+     * This is input property for plugins of Full Calendar Component
+     * @memberof CalendarViewPage
+     */
+    public calendarPlugins &#x3D; [dayGridPlugin, timeGrigPlugin, listYear];
+
+    /**
+     * This local property is used to set subscription
+     * @private
+     * @type {Subscription}
+     * @memberof LeavePlanningPage
+     */
+    private subscription: Subscription &#x3D; new Subscription();
+
+    /**
+     * Get data from user profile API
      * @type {*}
-     * @memberof EmploymentPage
+     * @memberof CalendarViewPage
      */
     public list: any;
 
-    /**
-     * Get employment details from API
-     * @type {*}
-     * @memberof EmploymentPage
+    /** 
+     * Property for alias Event Input of Full Calendar Component
+     * @type {EventInput[]}
+     * @memberof CalendarViewPage
      */
-    public employmentlist: any;
+    public events: EventInput[];
 
     /**
-     * Show edit form field or vice versa
+     * Show or hide edit profile
      * @type {boolean}
-     * @memberof EmploymentPage
+     * @memberof PersonalPage
      */
-    public edit: boolean &#x3D; false;
+    public editDate: boolean &#x3D; false;
 
     /**
-     * Get employment status from enum 
-     * @type {*}
-     * @memberof EmploymentPage
+     * Calendar profile list from API
+     * eg: { &quot;calendar_guid&quot;: &quot;string&quot;, &quot;code&quot;: &quot;string&quot; }
+     * @memberof ManageHolidayPage
      */
-    public status: any;
+    public profileList;
 
     /**
-     * Tracks validity of date join
+     * Selected Calendar profile from list
+     * @memberof ManageHolidayPage
+     */
+    public selectedCalendarProfile;
+
+    /**
+     * Requested personal profile from API 
+     * Get API with calendar Id
+     * @memberof ManageHolidayPage
+     */
+    public personalProfile;
+
+    /**
+     * Selected day name array list
+     * @memberof ManageHolidayPage
+     */
+    public restDay &#x3D; [];
+
+    /**
+     * Array list of Sunday - Saturday to show on select input
+     * @type {string[]}
+     * @memberof ManageHolidayPage
+     */
+    public weekdays: string[];
+
+    /**
+     * Array list for rest to patch to API
+     * eg: { &quot;fullname&quot;: &quot;SATURDAY&quot;, &quot;name&quot;: &quot;SAT&quot; }
+     * @memberof ManageHolidayPage
+     */
+    public selectedWeekday &#x3D; [];
+
+    /**
+     * Track calendar input
      * @type {FormGroup}
-     * @memberof EmploymentPage
+     * @memberof ManageHolidayPage
      */
-    public dateJoinForm: FormGroup;
+    public calendarForm: FormGroup;
 
     /**
-     * Tracks validity of date confirm
-     * @type {FormGroup}
-     * @memberof EmploymentPage
-     */
-    public dateConfirmForm: FormGroup;
-
-    /**
-     * Tracks validity of date resign
-     * @type {FormGroup}
-     * @memberof EmploymentPage
-     */
-    public dateResignForm: FormGroup;
-
-    /**
-     * Get company branch
-     * @type {string}
-     * @memberof EmploymentPage
-     */
-    public branch: string;
-
-    /**
-     * For execution of API
-     * @private
-     * @type {Subscription}
-     * @memberof EmploymentPage
-     */
-    private _subscription: Subscription &#x3D; new Subscription();
-
-    /**
-     * Return value from personal details
-     * @readonly
-     * @memberof EmploymentPage
-     */
-    get personalList() {
-        return this.list;
-    }
-
-    /**
-     * Return value from employment details
-     * @readonly
-     * @memberof EmploymentPage
-     */
-    get employmentPersonalList() {
-        return this.employmentlist;
-    }
-
-    /**
-     *Creates an instance of EmploymentPage.
+     *Creates an instance of CalendarViewPage.
      * @param {APIService} apiService
-     * @param {FormBuilder} _formBuilder
-     * @memberof EmploymentPage
+     * @memberof CalendarViewPage
      */
-    constructor(private apiService: APIService, private _formBuilder: FormBuilder) {
+    constructor(private apiService: APIService, private fb: FormBuilder, private titlecasePipe: TitleCasePipe) {
     }
 
     ngOnInit() {
-        this.dateJoinForm &#x3D; this._formBuilder.group({
-            dateJoin: [&#x27;&#x27;, Validators.required]
+
+        this.calendarForm &#x3D; this.fb.group({
+            calendarProfile: new FormControl(&#x27;&#x27;, Validators.required),
+            dayControl: new FormControl([&#x27;&#x27;])
         });
-        this.dateConfirmForm &#x3D; this._formBuilder.group({
-            dateConfirm: [&#x27;&#x27;, Validators.required]
-        });
-        this.dateResignForm &#x3D; this._formBuilder.group({
-            dateResign: [&#x27;&#x27;, Validators.required]
-        });
-        this._subscription &#x3D; this.apiService.get_personal_details().subscribe(
+        this.getPublicHolidayList();
+        this.subscription &#x3D; this.apiService.get_calendar_profile_list().subscribe(
             (data: any[]) &#x3D;&gt; {
-                this.list &#x3D; data;
+                this.profileList &#x3D; data;
             },
             error &#x3D;&gt; {
-                if (error.status &#x3D;&#x3D;&#x3D; 401) {
+                if (error) {
                     window.location.href &#x3D; &#x27;/login&#x27;;
                 }
-            },
-            () &#x3D;&gt; {
-                const userId &#x3D; this.list.id;
-                this._subscription &#x3D; this.apiService.get_employment_details(userId).subscribe(
-                    data &#x3D;&gt; {
-                        this.employmentlist &#x3D; data;
-                        this.data();
-                    })
-            });
+            })
     }
 
     /**
-     * Destroy the subscribed API 
-     * @memberof EmploymentPage
+     * This method is used to destroy subscription
+     * @memberof ApplyLeavePage
      */
     ngOnDestroy() {
-        this._subscription.unsubscribe();
+        this.subscription.unsubscribe();
     }
 
     /**
-     * Create new form group for date join, confirm &amp; resign
-     * @memberof EmploymentPage
+     * Method to get day of the week from a given date
+     * @param {*} date
+     * @returns
+     * @memberof CalendarViewPage
      */
-    data() {
-        this.dateJoinForm &#x3D; new FormGroup({
-            dateJoin: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfJoin)),
-        })
-        this.dateConfirmForm &#x3D; new FormGroup({
-            dateConfirm: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfConfirmation)),
-        })
-        this.dateResignForm &#x3D; new FormGroup({
-            dateResign: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfResign)),
-        })
-        this.status &#x3D; employeeStatus[this.employmentlist.employmentDetail.employmentStatus];
+    getWeekDay(date) {
+        //Create an array containing each day, starting with Sunday.
+        this.weekdays &#x3D; new Array(
+            &quot;Sunday&quot;, &quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;
+        );
+        //Use the getDay() method to get the day.
+        const day &#x3D; date.getDay();
+        //Return the element that corresponds to that index.
+        return this.weekdays[day];
     }
 
     /**
-     * Update employment details to API
-     * @memberof EmploymentPage
+     * Get public holiday list from calendarific
+     * @memberof ManageHolidayPage
      */
-    patchEmploymentData() {
-        this.edit &#x3D; false;
-        const data &#x3D; {
-            &quot;id&quot;: this.list.id,
-            &quot;employeeNumber&quot;: this.employmentlist.employmentDetail.employeeNumber,
-            &quot;designation&quot;: this.employmentlist.employeeDesignation,
-            &quot;department&quot;: this.employmentlist.employeeDepartment,
-            &quot;branch&quot;: this.branch,
-            &quot;division&quot;: &quot;&quot;,
-            &quot;workLocation&quot;: this.employmentlist.employmentDetail.workLocation,  //nt able to patch this data
-            &quot;reportingTo&quot;: this.employmentlist.employmentDetail.reportingTo,
-            &quot;employmentType&quot;: this.employmentlist.employmentDetail.employmentType,
-            &quot;employmentStatus&quot;: employeeStatus[this.status],
-            &quot;dateOfJoin&quot;: moment(this.dateJoinForm.value.dateJoin).format(&#x27;YYYY-MM-DD&#x27;),
-            &quot;dateOfConfirmation&quot;: moment(this.dateConfirmForm.value.dateConfirm).format(&#x27;YYYY-MM-DD&#x27;),
-            &quot;dateOfResign&quot;: moment(this.dateResignForm.value.dateResign).format(&#x27;YYYY-MM-DD&#x27;),
-            &quot;bankAccountName&quot;: this.employmentlist.employmentDetail.bankAccountName,
-            &quot;bankAccountNumber&quot;: this.employmentlist.employmentDetail.bankAccountNumber,
-            &quot;epfNumber&quot;: this.employmentlist.employmentDetail.epfNumber,
-            &quot;incomeTaxNumber&quot;: this.employmentlist.employmentDetail.incomeTaxNumber,
-        };
-        this._subscription &#x3D; this.apiService.patch_employment_details(data).subscribe((val) &#x3D;&gt; {
-            console.log(&quot;PATCH call successful value returned in body&quot;, val);
-        },
-            response &#x3D;&gt; {
-                console.log(&quot;PATCH call in error&quot;, response);
+    getPublicHolidayList() {
+        this.subscription &#x3D; this.apiService.get_public_holiday_list().subscribe(
+            (data: any[]) &#x3D;&gt; {
+                this.list &#x3D; data;
+                this.events &#x3D; [];
+                for (let i &#x3D; 0; i &lt; this.list.response.holidays.length; i++) {
+                    this.events.push({
+                        &quot;start&quot;: moment(this.list.response.holidays[i].date.iso).format(&#x27;YYYY-MM-DD&#x27;),
+                        &quot;end&quot;: moment(this.list.response.holidays[i].date.iso).format(&#x27;YYYY-MM-DD&#x27;),
+                        &quot;title&quot;: this.list.response.holidays[i].name,
+                        &quot;day&quot;: this.getWeekDay(new Date(this.list.response.holidays[i].date.iso)),
+                        &quot;description&quot;: this.list.response.holidays[i].description,
+                        &quot;allDay&quot;: true,
+                        &quot;backgroundColor&quot;: &quot;#283593&quot;,
+                        &quot;borderColor&quot;: &quot;#283593&quot;
+                    });
+                }
+                setTimeout(() &#x3D;&gt; {
+                    let calendarView &#x3D; this.calendar.getApi();
+                    calendarView.render();
+                }, 100);
             },
-            () &#x3D;&gt; {
-                console.log(&quot;The PATCH observable is now completed.&quot;);
-                const userId &#x3D; this.list.id;
-                this._subscription &#x3D; this.apiService.get_employment_details(userId).subscribe(
-                    data &#x3D;&gt; {
-                        this.employmentlist &#x3D; data;
-                        console.log(&#x27;get back&#x27;, this.employmentlist);
-                    })
-            });
+            error &#x3D;&gt; {
+                if (error) {
+                    window.location.href &#x3D; &#x27;/login&#x27;;
+                }
+            }
+        );
     }
 
+    /**
+     * Delete public holiday before patch to API
+     * @param {*} index
+     * @memberof ManageHolidayPage
+     */
+    deleteHoliday(index) {
+        this.events.splice(index, 1);
+    }
 
-}
-</code></pre>
+    /**
+     * click save button to patch the calendar to selected calendar profile
+     * @memberof ManageHolidayPage
+     */
+    saveData() {
+        console.log(this.events);
+        this.editDate &#x3D; false;
+        const holiday &#x3D; this.events;
+        for (let i &#x3D; 0; i &lt; this.events.length; i++) {
+            delete holiday[i].allDay;
+            delete holiday[i].backgroundColor;
+            delete holiday[i].borderColor;
+            delete holiday[i].day;
+            delete holiday[i].description;
+        }
+
+        for (let j &#x3D; 0; j &lt; this.restDay.length; j++) {
+            let obj &#x3D; {};
+            obj[&quot;fullname&quot;] &#x3D; (this.restDay[j]).toUpperCase();
+            obj[&quot;name&quot;] &#x3D; obj[&quot;fullname&quot;].substring(0, 3);
+            this.selectedWeekday.push(obj);
+        }
+        const body &#x3D; {
+            &quot;calendar_guid&quot;: this.selectedCalendarProfile.calendar_guid,
+            &quot;data&quot;: {
+                &quot;code&quot;: this.selectedCalendarProfile.code,
+                &quot;holiday&quot;: holiday,
+                &quot;rest&quot;: this.selectedWeekday
+            }
+        }
+        this.subscription &#x3D; this.apiService.patch_calendar_profile(body).subscribe(
+            (data: any[]) &#x3D;&gt; {
+                this.restDay &#x3D; [];
+                this.selectedWeekday &#x3D; [];
+                this.calendarForm.reset();
+                setTimeout(() &#x3D;&gt; {
+                    this.getPublicHolidayList();
+                }, 100);
+            })
+    }
+
+    /**
+     * Select calendar profile to pass the calendar Id to API
+     * Pass rest day value (eg: sat) to the select input to show initial value
+     * @param {*} list
+     * @memberof ManageHolidayPage
+     */
+    selectProfile(list) {
+        this.selectedCalendarProfile &#x3D; list;
+        this.subscription &#x3D; this.apiService.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid).subscribe(
+            (data: any) &#x3D;&gt; {
+                this.personalProfile &#x3D; data;
+                if (this.personalProfile[&quot;rest&quot;] !&#x3D; undefined &amp;&amp; Array.isArray(this.personalProfile.rest) &#x3D;&#x3D; false) {
+                    this.restDay.push(this.titlecasePipe.transform(this.personalProfile.rest.fullname));
+                }
+                if (this.personalProfile[&quot;rest&quot;] !&#x3D; undefined &amp;&amp; Array.isArray(this.personalProfile.rest) &#x3D;&#x3D; true) {
+                    for (let i &#x3D; 0; i &lt; this.personalProfile.rest.length; i++) {
+                        this.restDay.push(this.titlecasePipe.transform(this.personalProfile.rest[i].fullname));
+                    }
+                }
+            })
+    }
+
+    /**
+     * Edit public holiday date &amp; show day name according changed date
+     * @param {*} value
+     * @param {*} index
+     * @memberof ManageHolidayPage
+     */
+    dateChanged(value, index) {
+        this.events[index].start &#x3D; moment(value).format(&#x27;YYYY-MM-DD&#x27;);
+        this.events[index].end &#x3D; moment(value).format(&#x27;YYYY-MM-DD&#x27;);
+        this.events[index].day &#x3D; this.getWeekDay(new Date(value));
+    }
+
+    /**
+     * Edit title of the public holiday to update to API
+     * @param {*} inputValue
+     * @param {*} index
+     * @memberof ManageHolidayPage
+     */
+    titleChanges(inputValue, index) {
+        this.events[index].title &#x3D; inputValue;
+    }
+
+    /**
+     * Create a rest day array list
+     * Check or uncheck weekday make changes in rest day array list
+     * @param {string} day
+     * @memberof ManageHolidayPage
+     */
+    restDaySelected(day: string) {
+        if (this.checkObjectExist(day, this.restDay) &#x3D;&#x3D;&#x3D; false) {
+            this.restDay.push(day);
+        } else {
+            const indexes: number &#x3D; this.restDay.indexOf(day);
+            this.restDay.splice(indexes, 1);
+        }
+    }
+
+    /**
+     * Update value of form control when open the mat-select input
+     * @memberof ManageHolidayPage
+     */
+    open() {
+        this.calendarForm.patchValue({ dayControl: this.restDay });
+    }
+
+    /**
+     * To check whether the object is exist in array or not
+     * @param {*} obj
+     * @param {*} array
+     * @returns
+     * @memberof ManageHolidayPage
+     */
+    checkObjectExist(obj: any, array: any) {
+        for (let j &#x3D; 0; j &lt; array.length; j++) {
+            if (array[j] &#x3D;&#x3D;&#x3D; obj) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+}</code></pre>
         </div>
     </div>
 

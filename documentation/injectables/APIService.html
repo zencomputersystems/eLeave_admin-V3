@@ -77,6 +77,9 @@
                                     <a href="../modules/LoginModule.html" >LoginModule</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../modules/PublicHolidaySetupModule.html" >PublicHolidaySetupModule</a>
+                                </li>
+                                <li class="link">
                                     <a href="../modules/SideMenuNavigationModule.html" >SideMenuNavigationModule</a>
                                 </li>
                                 <li class="link">
@@ -127,10 +130,16 @@
                                     <a href="../components/LoginComponent.html" >LoginComponent</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../components/ManageHolidayPage.html" >ManageHolidayPage</a>
+                                </li>
+                                <li class="link">
                                     <a href="../components/PageNotFoundComponent.html" >PageNotFoundComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/PersonalPage.html" >PersonalPage</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../components/PublicHolidaySetup.html" >PublicHolidaySetup</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/SideMenuNavigationComponent.html" >SideMenuNavigationComponent</a>
@@ -292,6 +301,9 @@
                                            <a href="../modules/LoginModule.html" >LoginModule</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../modules/PublicHolidaySetupModule.html" >PublicHolidaySetupModule</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../modules/SideMenuNavigationModule.html" >SideMenuNavigationModule</a>
                                        </li>
                                        <li class="link">
@@ -342,10 +354,16 @@
                                            <a href="../components/LoginComponent.html" >LoginComponent</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../components/ManageHolidayPage.html" >ManageHolidayPage</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../components/PageNotFoundComponent.html" >PageNotFoundComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/PersonalPage.html" >PersonalPage</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../components/PublicHolidaySetup.html" >PublicHolidaySetup</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/SideMenuNavigationComponent.html" >SideMenuNavigationComponent</a>
@@ -985,13 +1003,13 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <b> get_public_holiday</b>
+                                    <b> get_public_holiday_list</b>
                                 </td>
                             </tr>
             
                             <tr>
                                 <td class="col-md-4">
-            <code>get_public_holiday()</code>
+            <code>get_public_holiday_list()</code>
                                 </td>
                             </tr>
             
@@ -1009,6 +1027,148 @@
                                                 <p>* </p>
             
                                             </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> get_calendar_profile_list</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            <code>get_calendar_profile_list()</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>Get all calendar profile list<br>[{ &quot;calendar_guid&quot;: &quot;075f64d0-8cf1-11e9-805c-2f26cd7ad959&quot;, &quot;code&quot;: &quot;profile 1&quot; }]</p>
+            </div>
+                                        <div class="io-description">
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>Observable&lt;any&gt;</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                <p>* </p>
+            
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> patch_calendar_profile</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            <code>patch_calendar_profile(profileBody: any)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>Update calendar for specific calendar Id profile (each employee)</p>
+            </div>
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>profileBody</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>Observable&lt;any&gt;</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                <p>* </p>
+            
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> post_calendar_profile</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            <code>post_calendar_profile(newProfile: any)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>Setup new calendar profile with different holiday or rest day</p>
+            </div>
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>newProfile</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>Observable&lt;any&gt;</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                <p>* </p>
+            
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> get_personal_holiday_calendar</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            <code>get_personal_holiday_calendar(id: any)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>Observable&lt;any&gt;</code>
+            
+                                        </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -1185,10 +1345,6 @@ export class APIService {
         return this.getApi(&#x27;api/userprofile/personal-detail&#x27;);
     }
 
-    // get_user_personal_details(guid): Observable&lt;any&gt; {
-    //     return this.getApiWithId(&#x27;/userprofile/personal-detail/&#x27;, guid);
-    // }
-
     /**
      * Update personal details to endpoint
      * @param {*} updateData
@@ -1221,11 +1377,6 @@ export class APIService {
         return this.patchApi(updateData, &#x27;api/userprofile/employment-detail&#x27;);
     }
 
-    // get_user_profile(): Observable&lt;any&gt; {
-    //     this.headerAuthorization();
-    //     return this.getApi(&#x27;/userprofile&#x27;);
-    // }
-
     /**
      * Get user profile list JSON data from endpoint
      * @returns {Observable&lt;any&gt;}
@@ -1236,23 +1387,6 @@ export class APIService {
         return this.getApi(&#x27;api/users&#x27;);
     }
 
-    // get_user_profile_details(guid): Observable&lt;any&gt; {
-    //     this.headerAuthorization();
-    //     return this.http.get(this.baseUrl + &#x27;/userprofile/&#x27; + guid, { headers: this.headers })
-    //         .pipe(map((res: Response) &#x3D;&gt; res.json()));
-    // }
-
-    // post_user_apply_leave(leaveData: any): Observable&lt;any&gt; {
-    //     this.headerAuthorization();
-    //     return this.http.post(this.baseUrl + &#x27;/leave/apply&#x27;, leaveData, { headers: this.headers })
-    //         .pipe(map((res: Response) &#x3D;&gt; res.json()));
-    // }
-
-    // get_department(): Observable&lt;any&gt; {
-    //     this.headerAuthorization();
-    //     return this.getApi(&#x27;/department&#x27;);
-    // }
-
     /**
      * POST invited new user Id to endpoint
      * @param {*} userId
@@ -1261,7 +1395,7 @@ export class APIService {
      */
     post_user_invite(userId): Observable&lt;any&gt; {
         this.headerAuthorization();
-        return this.postApi(userId, &#x27;api/admin/user-invite&#x27;);
+        return this.postApi(userId, &#x27;api/invitation&#x27;);
     }
 
     /**
@@ -1269,11 +1403,52 @@ export class APIService {
      * @returns {Observable&lt;any&gt;}
      * @memberof APIService
      */
-    get_public_holiday(): Observable&lt;any&gt; {
+    get_public_holiday_list(): Observable&lt;any&gt; {
         this.headerAuthorization();
-        return this.getApi(&#x27;admin/api/holiday/calendar&#x27;);
+        return this.getApi(&#x27;api/admin/holiday/calendar&#x27;);
     }
+
+    /**
+     * Get all calendar profile list 
+     * [{ &quot;calendar_guid&quot;: &quot;075f64d0-8cf1-11e9-805c-2f26cd7ad959&quot;, &quot;code&quot;: &quot;profile 1&quot; }]
+     * @returns {Observable&lt;any&gt;}
+     * @memberof APIService
+     */
+    get_calendar_profile_list(): Observable&lt;any&gt; {
+        this.headerAuthorization();
+        return this.getApi(&#x27;api/admin/holiday/calendar-profile&#x27;);
+    }
+
+    /**
+     * Update calendar for specific calendar Id profile (each employee)
+     * @param {*} profileBody
+     * @returns {Observable&lt;any&gt;}
+     * @memberof APIService
+     */
+    patch_calendar_profile(profileBody): Observable&lt;any&gt; {
+        this.headerAuthorization();
+        return this.patchApi(profileBody, &#x27;api/admin/holiday/calendar-profile&#x27;);
+    }
+
+    /**
+     * Setup new calendar profile with different holiday or rest day
+     * @param {*} newProfile
+     * @returns {Observable&lt;any&gt;}
+     * @memberof APIService
+     */
+    post_calendar_profile(newProfile): Observable&lt;any&gt; {
+        this.headerAuthorization();
+        return this.postApi(newProfile, &#x27;api/admin/holiday/calendar-profile&#x27;);
+    }
+
+    get_personal_holiday_calendar(id): Observable&lt;any&gt; {
+        // this.headerAuthorization();
+        return this.getApiWithId(&#x27;api/admin/holiday/&#x27;, id);
+    }
+
+
 }
+
 </code></pre>
     </div>
 </div>

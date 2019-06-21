@@ -4,7 +4,7 @@
 </div>
 <form [formGroup]="calendarForm">
     <div style="text-align: right;" *ngIf="editDate">
-        <ion-button fill="clear" (click)="editDate = false"
+        <ion-button fill="clear" (click)="editDate = false;calendarForm.reset();getPublicHolidayList();restDay = [];selectedWeekday = [];"
             style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
             cancel
         </ion-button>
@@ -14,8 +14,6 @@
             save
         </ion-button>
     </div>
-
-
 
     <div class='app-calendar'>
         <full-calendar #calendar defaultView="dayGridMonth" [header]="{
@@ -28,24 +26,27 @@
     </div>
 
     <div class="holidayView">
-        <mat-form-field appearance="outline" style="width: 97%;" *ngIf="editDate">
-            <mat-label>Calendar profile</mat-label>
-            <mat-select class="selectLeave" formControlName="calendarProfile">
-                <mat-option *ngFor="let list of profileList; let i=index" [value]="list.calendar_guid"
-                    (click)="selectProfile(list)">
-                    {{list.code}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="!calendarForm.calendarProfile" style="padding: 5px;padding-left: 0;">
-                Please select calendar profile</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" style="width: 97%;" *ngIf="editDate">
-            <mat-label>Rest day</mat-label>
-            <mat-select class="selectLeave" formControlName="dayControl" multiple>
-                <mat-option *ngFor="let day of weekdays; let j=index" [value]="day" (click)="restDaySelected(j, day)">
-                    {{day}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+        <div style="display:block; white-space: nowrap;">
+            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="editDate">
+                <mat-label>Calendar profile</mat-label>
+                <mat-select class="selectLeave" formControlName="calendarProfile">
+                    <mat-option *ngFor="let list of profileList; let i=index" [value]="list.calendar_guid"
+                        (click)="selectProfile(list)">
+                        {{list.code}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!calendarForm.calendarProfile" style="padding: 5px;padding-left: 0;">
+                    Please select calendar profile</mat-error>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="editDate">
+                <mat-label>Rest day</mat-label>
+                <mat-select class="selectLeave" formControlName="dayControl" (openedChange)="open()" multiple>
+                    <mat-option *ngFor="let day of weekdays; let j=index" [value]="day"
+                        (click)="restDaySelected(day)" [disabled]="!calendarForm.valid">
+                        {{day}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
 
         <ion-row class="titleRow">
             <ion-col size="3">
@@ -71,7 +72,7 @@
                 <p *ngIf="!editDate">{{holiday.start}}</p>
                 <mat-form-field *ngIf="editDate" style="width: 100%">
                     <input matInput [matDatepicker]="datePicker" [(value)]="holiday.start" required
-                        (dateChange)="addEvent($event.target.value, i)">
+                        (dateChange)="dateChanged($event.target.value, i)">
                     <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
                     <mat-datepicker #datePicker></mat-datepicker>
                 </mat-form-field>
@@ -80,7 +81,7 @@
             <ion-col size="4" class="colOfLeave" style="color: #057dcd">
                 <p *ngIf="!editDate">{{holiday.title}}</p>
                 <mat-form-field *ngIf="editDate" style="width: 100%">
-                    <input matInput [(value)]="holiday.title" (input)="onSearchChange($event.target.value, i)">
+                    <input matInput [(value)]="holiday.title" (input)="titleChanges($event.target.value, i)">
                 </mat-form-field>
             </ion-col>
             <ion-col size="1" *ngIf="editDate" style="display: flex;align-items: center;justify-content: center;">

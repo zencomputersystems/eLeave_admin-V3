@@ -77,6 +77,9 @@
                                     <a href="../modules/LoginModule.html" >LoginModule</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../modules/PublicHolidaySetupModule.html" >PublicHolidaySetupModule</a>
+                                </li>
+                                <li class="link">
                                     <a href="../modules/SideMenuNavigationModule.html"  class="active" >SideMenuNavigationModule</a>
                                 </li>
                                 <li class="link">
@@ -127,10 +130,16 @@
                                     <a href="../components/LoginComponent.html" >LoginComponent</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../components/ManageHolidayPage.html" >ManageHolidayPage</a>
+                                </li>
+                                <li class="link">
                                     <a href="../components/PageNotFoundComponent.html" >PageNotFoundComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/PersonalPage.html" >PersonalPage</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../components/PublicHolidaySetup.html" >PublicHolidaySetup</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/SideMenuNavigationComponent.html" >SideMenuNavigationComponent</a>
@@ -292,6 +301,9 @@
                                            <a href="../modules/LoginModule.html" >LoginModule</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../modules/PublicHolidaySetupModule.html" >PublicHolidaySetupModule</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../modules/SideMenuNavigationModule.html"  class="active" >SideMenuNavigationModule</a>
                                        </li>
                                        <li class="link">
@@ -342,10 +354,16 @@
                                            <a href="../components/LoginComponent.html" >LoginComponent</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../components/ManageHolidayPage.html" >ManageHolidayPage</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../components/PageNotFoundComponent.html" >PageNotFoundComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/PersonalPage.html" >PersonalPage</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../components/PublicHolidaySetup.html" >PublicHolidaySetup</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/SideMenuNavigationComponent.html" >SideMenuNavigationComponent</a>
@@ -514,6 +532,9 @@
                             <li class="list-group-item">
                                     <a href="../modules/AddEmployeeModule.html" >AddEmployeeModule</a>
                             </li>
+                            <li class="list-group-item">
+                                    <a href="../modules/PublicHolidaySetupModule.html" >PublicHolidaySetupModule</a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -535,6 +556,7 @@ import { EmployeeProfileModule } from &#x27;src/pages/admin/admin-setup/employee
 import { HttpClientModule } from &#x27;@angular/common/http&#x27;;
 import { MatMenuModule } from &#x27;@angular/material/menu&#x27;;
 import { AddEmployeeModule } from &#x27;src/pages/admin/admin-setup/add-employee/add-employee.module&#x27;;
+import { PublicHolidaySetupModule } from &#x27;src/pages/admin/admin-setup/public-holiday-setup/public-holiday-setup.module&#x27;;
 
 @NgModule({
     imports: [
@@ -547,6 +569,7 @@ import { AddEmployeeModule } from &#x27;src/pages/admin/admin-setup/add-employee
         EmployeeProfileModule,
         MatMenuModule,
         AddEmployeeModule,
+        PublicHolidaySetupModule,
         RouterModule.forChild(sideMenuNavigationRoutes)
     ],
     providers: [AuthGuard],

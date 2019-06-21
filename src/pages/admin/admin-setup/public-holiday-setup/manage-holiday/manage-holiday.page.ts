@@ -8,13 +8,14 @@ import listYear from '@fullcalendar/list';
 import { EventInput } from '@fullcalendar/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Validators, FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { IonSelect } from '@ionic/angular';
+import { TitleCasePipe } from '@angular/common';
 const moment = _moment;
 
 @Component({
     selector: 'app-manage-holiday',
     templateUrl: './manage-holiday.page.html',
     styleUrls: ['./manage-holiday.page.scss'],
+    providers: [TitleCasePipe]
 })
 export class ManageHolidayPage implements OnInit {
 
@@ -60,38 +61,68 @@ export class ManageHolidayPage implements OnInit {
      */
     public editDate: boolean = false;
 
-
+    /**
+     * Calendar profile list from API
+     * eg: { "calendar_guid": "string", "code": "string" }
+     * @memberof ManageHolidayPage
+     */
     public profileList;
 
-    public profile;
+    /**
+     * Selected Calendar profile from list
+     * @memberof ManageHolidayPage
+     */
+    public selectedCalendarProfile;
 
-    public value;
+    /**
+     * Requested personal profile from API 
+     * Get API with calendar Id
+     * @memberof ManageHolidayPage
+     */
+    public personalProfile;
 
-    public restDay;
+    /**
+     * Selected day name array list
+     * @memberof ManageHolidayPage
+     */
+    public restDay = [];
 
+    /**
+     * Array list of Sunday - Saturday to show on select input
+     * @type {string[]}
+     * @memberof ManageHolidayPage
+     */
     public weekdays: string[];
 
-    public calendarForm: FormGroup = new FormGroup({
-        calendarProfile: new FormControl('', Validators.required),
-        dayControl: new FormControl('', Validators.required),
-    });;
+    /**
+     * Array list for rest to patch to API
+     * eg: { "fullname": "SATURDAY", "name": "SAT" }
+     * @memberof ManageHolidayPage
+     */
+    public selectedWeekday = [];
 
-    @ViewChild('mySelect') selectRef: IonSelect;
+    /**
+     * Track calendar input
+     * @type {FormGroup}
+     * @memberof ManageHolidayPage
+     */
+    public calendarForm: FormGroup;
 
     /**
      *Creates an instance of CalendarViewPage.
      * @param {APIService} apiService
      * @memberof CalendarViewPage
      */
-    constructor(private apiService: APIService, private fb: FormBuilder) {
+    constructor(private apiService: APIService, private fb: FormBuilder, private titlecasePipe: TitleCasePipe) {
     }
 
     ngOnInit() {
 
-        // this.calendarForm = this.fb.group({
-        //     dayControl: [this.restDay.fullname]
-        // });
-
+        this.calendarForm = this.fb.group({
+            calendarProfile: new FormControl('', Validators.required),
+            dayControl: new FormControl([''])
+        });
+        this.getPublicHolidayList();
         this.subscription = this.apiService.get_calendar_profile_list().subscribe(
             (data: any[]) => {
                 this.profileList = data;
@@ -101,7 +132,38 @@ export class ManageHolidayPage implements OnInit {
                     window.location.href = '/login';
                 }
             })
+    }
 
+    /**
+     * This method is used to destroy subscription
+     * @memberof ApplyLeavePage
+     */
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
+
+    /**
+     * Method to get day of the week from a given date
+     * @param {*} date
+     * @returns
+     * @memberof CalendarViewPage
+     */
+    getWeekDay(date) {
+        //Create an array containing each day, starting with Sunday.
+        this.weekdays = new Array(
+            "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+        );
+        //Use the getDay() method to get the day.
+        const day = date.getDay();
+        //Return the element that corresponds to that index.
+        return this.weekdays[day];
+    }
+
+    /**
+     * Get public holiday list from calendarific
+     * @memberof ManageHolidayPage
+     */
+    getPublicHolidayList() {
         this.subscription = this.apiService.get_public_holiday_list().subscribe(
             (data: any[]) => {
                 this.list = data;
@@ -132,41 +194,22 @@ export class ManageHolidayPage implements OnInit {
     }
 
     /**
-     * This method is used to destroy subscription
-     * @memberof ApplyLeavePage
+     * Delete public holiday before patch to API
+     * @param {*} index
+     * @memberof ManageHolidayPage
      */
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
+    deleteHoliday(index) {
+        this.events.splice(index, 1);
     }
 
     /**
-     * Method to get day of the week from a given date
-     * @param {*} date
-     * @returns
-     * @memberof CalendarViewPage
+     * click save button to patch the calendar to selected calendar profile
+     * @memberof ManageHolidayPage
      */
-    getWeekDay(date) {
-        //Create an array containing each day, starting with Sunday.
-        this.weekdays = new Array(
-            "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
-        );
-        //Use the getDay() method to get the day.
-        const day = date.getDay();
-        //Return the element that corresponds to that index.
-        return this.weekdays[day];
-    }
-
-
-    deleteHoliday(index) {
-        this.events.splice(index, 1);
-        console.log(this.events);
-    }
-
     saveData() {
         console.log(this.events);
-        console.log('id', this.profile);
         this.editDate = false;
-        let holiday = this.events;
+        const holiday = this.events;
         for (let i = 0; i < this.events.length; i++) {
             delete holiday[i].allDay;
             delete holiday[i].backgroundColor;
@@ -174,45 +217,113 @@ export class ManageHolidayPage implements OnInit {
             delete holiday[i].day;
             delete holiday[i].description;
         }
-        console.log('holiday', holiday);
+
+        for (let j = 0; j < this.restDay.length; j++) {
+            let obj = {};
+            obj["fullname"] = (this.restDay[j]).toUpperCase();
+            obj["name"] = obj["fullname"].substring(0, 3);
+            this.selectedWeekday.push(obj);
+        }
         const body = {
-            "calendar_guid": this.profile.calendar_guid,
+            "calendar_guid": this.selectedCalendarProfile.calendar_guid,
             "data": {
-                "code": this.profile.code,
+                "code": this.selectedCalendarProfile.code,
                 "holiday": holiday,
-                "rest": this.restDay
+                "rest": this.selectedWeekday
             }
         }
         this.subscription = this.apiService.patch_calendar_profile(body).subscribe(
             (data: any[]) => {
-                console.log(data);
-            },
-            () => {
-                console.log('success');
+                this.restDay = [];
+                this.selectedWeekday = [];
+                this.calendarForm.reset();
+                setTimeout(() => {
+                    this.getPublicHolidayList();
+                }, 100);
             })
     }
 
+    /**
+     * Select calendar profile to pass the calendar Id to API
+     * Pass rest day value (eg: sat) to the select input to show initial value
+     * @param {*} list
+     * @memberof ManageHolidayPage
+     */
     selectProfile(list) {
-        this.profile = list;
-        this.subscription = this.apiService.get_personal_holiday_calendar(this.profile.calendar_guid).subscribe(
+        this.selectedCalendarProfile = list;
+        this.subscription = this.apiService.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid).subscribe(
             (data: any) => {
-                this.restDay = data.rest;
-                console.log(this.restDay);
+                this.personalProfile = data;
+                if (this.personalProfile["rest"] != undefined && Array.isArray(this.personalProfile.rest) == false) {
+                    this.restDay.push(this.titlecasePipe.transform(this.personalProfile.rest.fullname));
+                }
+                if (this.personalProfile["rest"] != undefined && Array.isArray(this.personalProfile.rest) == true) {
+                    for (let i = 0; i < this.personalProfile.rest.length; i++) {
+                        this.restDay.push(this.titlecasePipe.transform(this.personalProfile.rest[i].fullname));
+                    }
+                }
             })
     }
 
-    addEvent(value, index) {
+    /**
+     * Edit public holiday date & show day name according changed date
+     * @param {*} value
+     * @param {*} index
+     * @memberof ManageHolidayPage
+     */
+    dateChanged(value, index) {
         this.events[index].start = moment(value).format('YYYY-MM-DD');
         this.events[index].end = moment(value).format('YYYY-MM-DD');
         this.events[index].day = this.getWeekDay(new Date(value));
     }
 
-    onSearchChange(inputValue, index) {
+    /**
+     * Edit title of the public holiday to update to API
+     * @param {*} inputValue
+     * @param {*} index
+     * @memberof ManageHolidayPage
+     */
+    titleChanges(inputValue, index) {
         this.events[index].title = inputValue;
     }
 
-    restDaySelected(index, day) {
-        console.log(index, day);
+    /**
+     * Create a rest day array list
+     * Check or uncheck weekday make changes in rest day array list
+     * @param {string} day
+     * @memberof ManageHolidayPage
+     */
+    restDaySelected(day: string) {
+        if (this.checkObjectExist(day, this.restDay) === false) {
+            this.restDay.push(day);
+        } else {
+            const indexes: number = this.restDay.indexOf(day);
+            this.restDay.splice(indexes, 1);
+        }
+    }
+
+    /**
+     * Update value of form control when open the mat-select input
+     * @memberof ManageHolidayPage
+     */
+    open() {
+        this.calendarForm.patchValue({ dayControl: this.restDay });
+    }
+
+    /**
+     * To check whether the object is exist in array or not
+     * @param {*} obj
+     * @param {*} array
+     * @returns
+     * @memberof ManageHolidayPage
+     */
+    checkObjectExist(obj: any, array: any) {
+        for (let j = 0; j < array.length; j++) {
+            if (array[j] === obj) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

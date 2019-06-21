@@ -121,7 +121,7 @@
                                     <a href="../components/EmployeeProfilePage.html" >EmployeeProfilePage</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../components/EmploymentPage.html"  class="active" >EmploymentPage</a>
+                                    <a href="../components/EmploymentPage.html" >EmploymentPage</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/InviteMorePage.html" >InviteMorePage</a>
@@ -139,7 +139,7 @@
                                     <a href="../components/PersonalPage.html" >PersonalPage</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../components/PublicHolidaySetup.html" >PublicHolidaySetup</a>
+                                    <a href="../components/PublicHolidaySetup.html"  class="active" >PublicHolidaySetup</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/SideMenuNavigationComponent.html" >SideMenuNavigationComponent</a>
@@ -345,7 +345,7 @@
                                            <a href="../components/EmployeeProfilePage.html" >EmployeeProfilePage</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../components/EmploymentPage.html"  class="active" >EmploymentPage</a>
+                                           <a href="../components/EmploymentPage.html" >EmploymentPage</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/InviteMorePage.html" >InviteMorePage</a>
@@ -363,7 +363,7 @@
                                            <a href="../components/PersonalPage.html" >PersonalPage</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../components/PublicHolidaySetup.html" >PublicHolidaySetup</a>
+                                           <a href="../components/PublicHolidaySetup.html"  class="active" >PublicHolidaySetup</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/SideMenuNavigationComponent.html" >SideMenuNavigationComponent</a>
@@ -468,7 +468,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>EmploymentPage</li>
+  <li>PublicHolidaySetup</li>
 </ol>
 
 
@@ -486,10 +486,22 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>src/pages/admin/admin-setup/employee-profile-hr/employment/employment.page.ts</code>
+    <code>src/pages/admin/admin-setup/public-holiday-setup/public-holiday-setup.ts</code>
 </p>
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Leave Planning Page</p>
 
+    </p>
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+    </div>
 
 <section>
     <h3>Metadata</h3>
@@ -509,19 +521,19 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>app-employment</code></td>
+                <td class="col-md-9"><code>app-public-holiday-setup</code></td>
             </tr>
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>employment.page.scss</code></td>
+                <td class="col-md-9"><code>public-holiday-setup.scss</code></td>
             </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>employment.page.html</code></td>
+                <td class="col-md-9"><code>public-holiday-setup.html</code></td>
             </tr>
 
 
@@ -537,13 +549,13 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <code>constructor(apiService: any, _formBuilder: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a>)</code>
+                            <code>constructor(apiService: any, router: <a href="https://angular.io/docs/ts/latest/api/router/index/Router-class.html" target="_blank" >Router</a>)</code>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-description"><p>Creates an instance of EmploymentPage.</p>
+                                <div class="io-description"><p>Creates an instance of LeavePlanningPage.</p>
     </div>
                                 <div class="io-description">
                                         <b>Parameters :</b>
@@ -560,8 +572,8 @@
                                                 </li>
                                                 <li>
                                                     <div>
-                                                        <b>_formBuilder</b>
-                                                            :     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a></code>
+                                                        <b>router</b>
+                                                            :     <code><a href="https://angular.io/docs/ts/latest/api/router/index/Router-class.html" target="_blank" >Router</a></code>
     
                                                     </div>
                                                     <div>
@@ -582,50 +594,19 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> data</b>
+                            <b> backToProfile</b>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-    <code>data()</code>
+    <code>backToProfile()</code>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-description"><p>Create new form group for date join, confirm &amp; resign</p>
-    </div>
-                                <div class="io-description">
-                                </div>
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                                    <div class="io-description">
-                                        
-                                    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> patchEmploymentData</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>patchEmploymentData()</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description"><p>Update employment details to API</p>
+                                <div class="io-description"><p>This method is used to route to the personal leave entitlement page</p>
     </div>
                                 <div class="io-description">
                                 </div>
@@ -648,179 +629,6 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Private</span> _subscription</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-lock"></span><code>_subscription:     <code>Subscription</code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>For execution of API</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> branch</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>branch:     <code>string</code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Get company branch</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> dateConfirmForm</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>dateConfirmForm:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Tracks validity of date confirm</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> dateJoinForm</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>dateJoinForm:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Tracks validity of date join</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> dateResignForm</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>dateResignForm:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Tracks validity of date resign</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> edit</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>edit:     <code>boolean</code>
-    </bcode>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Default value: </i><code>false</code>
-                            </td>
-                        </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Show edit form field or vice versa</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> employmentlist</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>employmentlist:     <code>any</code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Get employment details from API</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> employmentPersonalList</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <code>employmentPersonalList:     <code>any</code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Return value from employment details</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
                             <b><span class="modifier">Public</span> list</b>
                         </td>
                     </tr>
@@ -832,7 +640,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-description"><p>Get personal details from API</p>
+                            <div class="io-description"><p>This local property is used to get personal details from API</p>
     </div>
                         </td>
                     </tr>
@@ -853,7 +661,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-description"><p>Return value from personal details</p>
+                            <div class="io-description"><p>Return API content</p>
     </div>
                         </td>
                     </tr>
@@ -863,18 +671,44 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Public</span> status</b>
+                            <b><span class="modifier">Public</span> showSpinner</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>status:     <code>any</code>
+                            <span class="modifier-icon fa fa-circle"></span><code>showSpinner:     <code>boolean</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>true</code>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>This local property is used to show or hide spinner</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Private</span> subscription</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-lock"></span><code>subscription:     <code>Subscription</code>
     </bcode>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-description"><p>Get employment status from enum </p>
+                            <div class="io-description"><p>This local property is used to set subscription</p>
     </div>
                         </td>
                     </tr>
@@ -885,209 +719,97 @@
         <div class="tab-pane fade tab-source-code" id="source">
             <pre><code class="hljs javascript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
 import { APIService } from &#x27;src/services/shared-service/api.service&#x27;;
-import { FormGroup, FormBuilder, Validators, FormControl } from &#x27;@angular/forms&#x27;;
-import * as _moment from &#x27;moment&#x27;;
-import { employeeStatus, employeeType } from &#x27;../employee-profile.service&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
 import { Subscription } from &#x27;rxjs&#x27;;
-const moment &#x3D; _moment;
 
+/**
+ * Leave Planning Page
+ * @export
+ * @class LeavePlanningPage
+ * @implements {OnInit}
+ */
 @Component({
-    selector: &#x27;app-employment&#x27;,
-    templateUrl: &#x27;./employment.page.html&#x27;,
-    styleUrls: [&#x27;./employment.page.scss&#x27;],
+    selector: &#x27;app-public-holiday-setup&#x27;,
+    templateUrl: &#x27;./public-holiday-setup.html&#x27;,
+    styleUrls: [&#x27;./public-holiday-setup.scss&#x27;],
 })
-export class EmploymentPage implements OnInit {
+export class PublicHolidaySetup implements OnInit {
 
     /**
-     * Get personal details from API
+     * This local property is used to get personal details from API
      * @type {*}
-     * @memberof EmploymentPage
+     * @memberof LeavePlanningPage
      */
     public list: any;
 
     /**
-     * Get employment details from API
-     * @type {*}
-     * @memberof EmploymentPage
-     */
-    public employmentlist: any;
-
-    /**
-     * Show edit form field or vice versa
+     * This local property is used to show or hide spinner
      * @type {boolean}
-     * @memberof EmploymentPage
+     * @memberof LeavePlanningPage
      */
-    public edit: boolean &#x3D; false;
+    public showSpinner: boolean &#x3D; true;
 
     /**
-     * Get employment status from enum 
-     * @type {*}
-     * @memberof EmploymentPage
-     */
-    public status: any;
-
-    /**
-     * Tracks validity of date join
-     * @type {FormGroup}
-     * @memberof EmploymentPage
-     */
-    public dateJoinForm: FormGroup;
-
-    /**
-     * Tracks validity of date confirm
-     * @type {FormGroup}
-     * @memberof EmploymentPage
-     */
-    public dateConfirmForm: FormGroup;
-
-    /**
-     * Tracks validity of date resign
-     * @type {FormGroup}
-     * @memberof EmploymentPage
-     */
-    public dateResignForm: FormGroup;
-
-    /**
-     * Get company branch
-     * @type {string}
-     * @memberof EmploymentPage
-     */
-    public branch: string;
-
-    /**
-     * For execution of API
+     * This local property is used to set subscription
      * @private
      * @type {Subscription}
-     * @memberof EmploymentPage
+     * @memberof LeavePlanningPage
      */
-    private _subscription: Subscription &#x3D; new Subscription();
+    private subscription: Subscription &#x3D; new Subscription();
 
     /**
-     * Return value from personal details
+     * Return API content
      * @readonly
-     * @memberof EmploymentPage
+     * @memberof LeavePlanningPage
      */
     get personalList() {
         return this.list;
     }
 
     /**
-     * Return value from employment details
-     * @readonly
-     * @memberof EmploymentPage
+     *Creates an instance of LeavePlanningPage.
+     * @param {APIService} apiService
+     * @param {Router} router
+     * @memberof LeavePlanningPage
      */
-    get employmentPersonalList() {
-        return this.employmentlist;
-    }
+    constructor(private apiService: APIService, private router: Router
+    ) { }
 
     /**
-     *Creates an instance of EmploymentPage.
-     * @param {APIService} apiService
-     * @param {FormBuilder} _formBuilder
-     * @memberof EmploymentPage
+     * Initial method
+     * Get personal details from API
+     * @memberof LeavePlanningPage
      */
-    constructor(private apiService: APIService, private _formBuilder: FormBuilder) {
-    }
-
     ngOnInit() {
-        this.dateJoinForm &#x3D; this._formBuilder.group({
-            dateJoin: [&#x27;&#x27;, Validators.required]
-        });
-        this.dateConfirmForm &#x3D; this._formBuilder.group({
-            dateConfirm: [&#x27;&#x27;, Validators.required]
-        });
-        this.dateResignForm &#x3D; this._formBuilder.group({
-            dateResign: [&#x27;&#x27;, Validators.required]
-        });
-        this._subscription &#x3D; this.apiService.get_personal_details().subscribe(
+        this.subscription &#x3D; this.apiService.get_personal_details().subscribe(
             (data: any[]) &#x3D;&gt; {
                 this.list &#x3D; data;
+                this.showSpinner &#x3D; false;
             },
             error &#x3D;&gt; {
-                if (error.status &#x3D;&#x3D;&#x3D; 401) {
+                if (error) {
                     window.location.href &#x3D; &#x27;/login&#x27;;
                 }
-            },
-            () &#x3D;&gt; {
-                const userId &#x3D; this.list.id;
-                this._subscription &#x3D; this.apiService.get_employment_details(userId).subscribe(
-                    data &#x3D;&gt; {
-                        this.employmentlist &#x3D; data;
-                        this.data();
-                    })
-            });
+            }
+        );
     }
 
     /**
-     * Destroy the subscribed API 
-     * @memberof EmploymentPage
+     * This method is used to destroy subscription
+     * @memberof LeavePlanningPage
      */
     ngOnDestroy() {
-        this._subscription.unsubscribe();
+        this.subscription.unsubscribe();
     }
 
     /**
-     * Create new form group for date join, confirm &amp; resign
-     * @memberof EmploymentPage
+     * This method is used to route to the personal leave entitlement page
+     * @memberof LeavePlanningPage
      */
-    data() {
-        this.dateJoinForm &#x3D; new FormGroup({
-            dateJoin: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfJoin)),
-        })
-        this.dateConfirmForm &#x3D; new FormGroup({
-            dateConfirm: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfConfirmation)),
-        })
-        this.dateResignForm &#x3D; new FormGroup({
-            dateResign: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfResign)),
-        })
-        this.status &#x3D; employeeStatus[this.employmentlist.employmentDetail.employmentStatus];
+    backToProfile() {
+        this.router.navigate([&#x27;/main/employee-setup/leave-entitlement&#x27;]);
     }
-
-    /**
-     * Update employment details to API
-     * @memberof EmploymentPage
-     */
-    patchEmploymentData() {
-        this.edit &#x3D; false;
-        const data &#x3D; {
-            &quot;id&quot;: this.list.id,
-            &quot;employeeNumber&quot;: this.employmentlist.employmentDetail.employeeNumber,
-            &quot;designation&quot;: this.employmentlist.employeeDesignation,
-            &quot;department&quot;: this.employmentlist.employeeDepartment,
-            &quot;branch&quot;: this.branch,
-            &quot;division&quot;: &quot;&quot;,
-            &quot;workLocation&quot;: this.employmentlist.employmentDetail.workLocation,  //nt able to patch this data
-            &quot;reportingTo&quot;: this.employmentlist.employmentDetail.reportingTo,
-            &quot;employmentType&quot;: this.employmentlist.employmentDetail.employmentType,
-            &quot;employmentStatus&quot;: employeeStatus[this.status],
-            &quot;dateOfJoin&quot;: moment(this.dateJoinForm.value.dateJoin).format(&#x27;YYYY-MM-DD&#x27;),
-            &quot;dateOfConfirmation&quot;: moment(this.dateConfirmForm.value.dateConfirm).format(&#x27;YYYY-MM-DD&#x27;),
-            &quot;dateOfResign&quot;: moment(this.dateResignForm.value.dateResign).format(&#x27;YYYY-MM-DD&#x27;),
-            &quot;bankAccountName&quot;: this.employmentlist.employmentDetail.bankAccountName,
-            &quot;bankAccountNumber&quot;: this.employmentlist.employmentDetail.bankAccountNumber,
-            &quot;epfNumber&quot;: this.employmentlist.employmentDetail.epfNumber,
-            &quot;incomeTaxNumber&quot;: this.employmentlist.employmentDetail.incomeTaxNumber,
-        };
-        this._subscription &#x3D; this.apiService.patch_employment_details(data).subscribe((val) &#x3D;&gt; {
-            console.log(&quot;PATCH call successful value returned in body&quot;, val);
-        },
-            response &#x3D;&gt; {
-                console.log(&quot;PATCH call in error&quot;, response);
-            },
-            () &#x3D;&gt; {
-                console.log(&quot;The PATCH observable is now completed.&quot;);
-                const userId &#x3D; this.list.id;
-                this._subscription &#x3D; this.apiService.get_employment_details(userId).subscribe(
-                    data &#x3D;&gt; {
-                        this.employmentlist &#x3D; data;
-                        console.log(&#x27;get back&#x27;, this.employmentlist);
-                    })
-            });
-    }
-
-
-}
-</code></pre>
+}</code></pre>
         </div>
     </div>
 
