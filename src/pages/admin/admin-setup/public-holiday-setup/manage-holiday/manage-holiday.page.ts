@@ -10,6 +10,7 @@ import { APIService } from 'src/services/shared-service/api.service';
 import { Validators, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
 const moment = _moment;
+import { getDataSet, reduce } from "iso3166-2-db";
 
 @Component({
     selector: 'app-manage-holiday',
@@ -33,14 +34,6 @@ export class ManageHolidayPage implements OnInit {
     public calendarPlugins = [dayGridPlugin, timeGrigPlugin, listYear];
 
     /**
-     * This local property is used to set subscription
-     * @private
-     * @type {Subscription}
-     * @memberof LeavePlanningPage
-     */
-    private subscription: Subscription = new Subscription();
-
-    /**
      * Get data from user profile API
      * @type {*}
      * @memberof CalendarViewPage
@@ -59,7 +52,7 @@ export class ManageHolidayPage implements OnInit {
      * @type {boolean}
      * @memberof PersonalPage
      */
-    public editDate: boolean = false;
+    public editCalendar: boolean = false;
 
     /**
      * Calendar profile list from API
@@ -102,11 +95,81 @@ export class ManageHolidayPage implements OnInit {
     public selectedWeekday = [];
 
     /**
-     * Track calendar input
+     * Track calendar input of edit calendar form
      * @type {FormGroup}
      * @memberof ManageHolidayPage
      */
-    public calendarForm: FormGroup;
+    public editCalendarForm: FormGroup;
+
+    /**
+     *  Track calendar input of add calendar form
+     * @type {FormGroup}
+     * @memberof ManageHolidayPage
+     */
+    public addCalendarForm: FormGroup;
+
+    /**
+     * Public holiday list from API
+     * @memberof ManageHolidayPage
+     */
+    public countryList;
+
+    /**
+     * Region list of selected country
+     * @memberof ManageHolidayPage
+     */
+    public countryRegion;
+
+    /**
+     * Show/hide input form of add new calendar profile
+     * @type {boolean}
+     * @memberof ManageHolidayPage
+     */
+    public addCalendar: boolean = false;
+
+    /**
+     * Show/hide of save button and calendar profile select input
+     * @type {boolean}
+     * @memberof ManageHolidayPage
+     */
+    public showEditForm: boolean = false;
+
+    /**
+     * Show/hide loading spinner
+     * @type {boolean}
+     * @memberof ManageHolidayPage
+     */
+    public showSpinner: boolean = true;
+
+    /**
+         * This local property is used to set subscription
+         * @private
+         * @type {Subscription}
+         * @memberof LeavePlanningPage
+         */
+    private subscription: Subscription = new Subscription();
+
+    /**
+        * World public holiday from database npm i
+        * @private
+        * @memberof ManageHolidayPage
+        */
+    private _countryDB;
+
+    /**
+     * Value of Region ISO from selected region/states
+     * @private
+     * @memberof ManageHolidayPage
+     */
+    private _regionISO;
+
+    /**
+     * Value of selected Country ISO
+     * @private
+     * @type {string}
+     * @memberof ManageHolidayPage
+     */
+    private _countryIso: string;
 
     /**
      *Creates an instance of CalendarViewPage.
@@ -117,15 +180,21 @@ export class ManageHolidayPage implements OnInit {
     }
 
     ngOnInit() {
-
-        this.calendarForm = this.fb.group({
+        this._countryDB = reduce(getDataSet(), "en");
+        this.countryList = Object.keys(this._countryDB).map(key => this._countryDB[key]);
+        this.countryList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+        this.editCalendarForm = this.fb.group({
             calendarProfile: new FormControl('', Validators.required),
-            dayControl: new FormControl([''])
+            dayControl: new FormControl(['']),
+        });
+        this.addCalendarForm = this.fb.group({
+            profileName: new FormControl('', Validators.required),
         });
         this.getPublicHolidayList();
         this.subscription = this.apiService.get_calendar_profile_list().subscribe(
             (data: any[]) => {
                 this.profileList = data;
+                this.showSpinner = false;
             },
             error => {
                 if (error) {
@@ -164,8 +233,10 @@ export class ManageHolidayPage implements OnInit {
      * @memberof ManageHolidayPage
      */
     getPublicHolidayList() {
+        this.showSpinner = true;
         this.subscription = this.apiService.get_public_holiday_list().subscribe(
             (data: any[]) => {
+                this.showSpinner = false;
                 this.list = data;
                 this.events = [];
                 for (let i = 0; i < this.list.response.holidays.length; i++) {
@@ -207,8 +278,9 @@ export class ManageHolidayPage implements OnInit {
      * @memberof ManageHolidayPage
      */
     saveData() {
+        this.showSpinner = true;
         console.log(this.events);
-        this.editDate = false;
+        this.editCalendar = false;
         const holiday = this.events;
         for (let i = 0; i < this.events.length; i++) {
             delete holiday[i].allDay;
@@ -234,9 +306,10 @@ export class ManageHolidayPage implements OnInit {
         }
         this.subscription = this.apiService.patch_calendar_profile(body).subscribe(
             (data: any[]) => {
+                this.showSpinner = false;
                 this.restDay = [];
                 this.selectedWeekday = [];
-                this.calendarForm.reset();
+                this.editCalendarForm.reset();
                 setTimeout(() => {
                     this.getPublicHolidayList();
                 }, 100);
@@ -250,10 +323,29 @@ export class ManageHolidayPage implements OnInit {
      * @memberof ManageHolidayPage
      */
     selectProfile(list) {
+        this.showSpinner = true;
         this.selectedCalendarProfile = list;
+        this.restDay = [];
         this.subscription = this.apiService.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid).subscribe(
             (data: any) => {
+                this.showSpinner = false;
                 this.personalProfile = data;
+                this.events = [];
+                for (let i = 0; i < this.personalProfile.holiday.length; i++) {
+                    this.events.push({
+                        "start": moment(this.personalProfile.holiday[i].start).format('YYYY-MM-DD'),
+                        "end": moment(this.personalProfile.holiday[i].end).format('YYYY-MM-DD'),
+                        "title": this.personalProfile.holiday[i].title,
+                        "day": this.getWeekDay(new Date(this.personalProfile.holiday[i].start)),
+                        "allDay": true,
+                        "backgroundColor": "#283593",
+                        "borderColor": "#283593"
+                    });
+                }
+                setTimeout(() => {
+                    let calendarView = this.calendar.getApi();
+                    calendarView.render();
+                }, 100);
                 if (this.personalProfile["rest"] != undefined && Array.isArray(this.personalProfile.rest) == false) {
                     this.restDay.push(this.titlecasePipe.transform(this.personalProfile.rest.fullname));
                 }
@@ -307,7 +399,7 @@ export class ManageHolidayPage implements OnInit {
      * @memberof ManageHolidayPage
      */
     open() {
-        this.calendarForm.patchValue({ dayControl: this.restDay });
+        this.editCalendarForm.patchValue({ dayControl: this.restDay });
     }
 
     /**
@@ -324,6 +416,95 @@ export class ManageHolidayPage implements OnInit {
             }
         }
         return false;
+    }
+
+    /**
+     * Method to get selected country ISO
+     * @param {*} country
+     * @memberof ManageHolidayPage
+     */
+    selectedCountry(country) {
+        this.countryRegion = this._countryDB[country].regions;
+        this._countryIso = country;
+    }
+
+    /**
+     * Method to get selected region ISO
+     * @param {*} region
+     * @memberof ManageHolidayPage
+     */
+    selectedRegion(region) {
+        this._regionISO = region;
+    }
+
+    /**
+     * Get public holiday list from API by passing parameters of:-
+     * country, location, year and month (optional)
+     * @param {*} year
+     * @param {*} month
+     * @memberof ManageHolidayPage
+     */
+    callParamAPI(year, month) {
+        this.showSpinner = true;
+        this.editCalendar = true;
+        this.addCalendar = false;
+        const params = { 'country': this._countryIso, 'location': this._regionISO, 'year': year, 'month': month, };
+        this.subscription = this.apiService.get_public_holiday_list(params).subscribe(
+            (data: any[]) => {
+                this.showSpinner = false;
+                this.list = data;
+                this.events = [];
+                for (let i = 0; i < this.list.response.holidays.length; i++) {
+                    this.events.push({
+                        "start": moment(this.list.response.holidays[i].date.iso).format('YYYY-MM-DD'),
+                        "end": moment(this.list.response.holidays[i].date.iso).format('YYYY-MM-DD'),
+                        "title": this.list.response.holidays[i].name,
+                        "day": this.getWeekDay(new Date(this.list.response.holidays[i].date.iso)),
+                        "description": this.list.response.holidays[i].description,
+                        "allDay": true,
+                        "backgroundColor": "#283593",
+                        "borderColor": "#283593"
+                    });
+                }
+            })
+    }
+
+    /**
+     * POST/create new calendar to endpoint API
+     * @memberof ManageHolidayPage
+     */
+    postData() {
+        this.showSpinner = true;
+        const holiday = this.events;
+        for (let i = 0; i < this.events.length; i++) {
+            delete holiday[i].allDay;
+            delete holiday[i].backgroundColor;
+            delete holiday[i].borderColor;
+            delete holiday[i].day;
+            delete holiday[i].description;
+        }
+
+        for (let j = 0; j < this.restDay.length; j++) {
+            let obj = {};
+            obj["fullname"] = (this.restDay[j]).toUpperCase();
+            obj["name"] = obj["fullname"].substring(0, 3);
+            this.selectedWeekday.push(obj);
+        }
+        const newProfile = {
+            "code": this.addCalendarForm.get('profileName').value,
+            "holiday": holiday,
+            "rest": this.selectedWeekday
+        }
+        this.subscription = this.apiService.post_calendar_profile(newProfile).subscribe(
+            response => {
+                this.showSpinner = false;
+            });
+        this.restDay = [];
+        this.selectedWeekday = [];
+        this.addCalendarForm.reset();
+        setTimeout(() => {
+            this.getPublicHolidayList();
+        }, 100);
     }
 
 }

@@ -1009,13 +1009,13 @@
             
                             <tr>
                                 <td class="col-md-4">
-            <code>get_public_holiday_list()</code>
+            <code>get_public_holiday_list(param: any)</code>
                                 </td>
                             </tr>
             
                             <tr>
                                 <td class="col-md-4">
-                                        <div class="io-description"><p>Get public holiday JSON data from endpoint</p>
+                                        <div class="io-description"><p>Get public holiday JSON data from endpoint calendarific</p>
             </div>
                                         <div class="io-description">
                                         </div>
@@ -1399,13 +1399,15 @@ export class APIService {
     }
 
     /**
-     * Get public holiday JSON data from endpoint
+     * Get public holiday JSON data from endpoint calendarific
      * @returns {Observable&lt;any&gt;}
      * @memberof APIService
      */
-    get_public_holiday_list(): Observable&lt;any&gt; {
+    get_public_holiday_list(param?): Observable&lt;any&gt; {
         this.headerAuthorization();
-        return this.getApi(&#x27;api/admin/holiday/calendar&#x27;);
+        // return this.getApi(&#x27;api/admin/holiday/calendar&#x27;, {params: data});
+        return this.http.get(this.baseUrl + &#x27;api/admin/holiday/calendar&#x27;, { params: param, headers: this.headers })
+            .pipe(map((res: Response) &#x3D;&gt; res.json()))
     }
 
     /**
