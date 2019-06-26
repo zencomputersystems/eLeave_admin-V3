@@ -142,6 +142,12 @@ export class ManageHolidayPage implements OnInit {
     public showSpinner: boolean = true;
 
     /**
+     * Value of Region ISO from selected region/states
+     * @memberof ManageHolidayPage
+     */
+    public regionISO;
+
+    /**
          * This local property is used to set subscription
          * @private
          * @type {Subscription}
@@ -155,13 +161,6 @@ export class ManageHolidayPage implements OnInit {
         * @memberof ManageHolidayPage
         */
     private _countryDB;
-
-    /**
-     * Value of Region ISO from selected region/states
-     * @private
-     * @memberof ManageHolidayPage
-     */
-    private _regionISO;
 
     /**
      * Value of selected Country ISO
@@ -239,18 +238,7 @@ export class ManageHolidayPage implements OnInit {
                 this.showSpinner = false;
                 this.list = data;
                 this.events = [];
-                for (let i = 0; i < this.list.response.holidays.length; i++) {
-                    this.events.push({
-                        "start": moment(this.list.response.holidays[i].date.iso).format('YYYY-MM-DD'),
-                        "end": moment(this.list.response.holidays[i].date.iso).format('YYYY-MM-DD'),
-                        "title": this.list.response.holidays[i].name,
-                        "day": this.getWeekDay(new Date(this.list.response.holidays[i].date.iso)),
-                        "description": this.list.response.holidays[i].description,
-                        "allDay": true,
-                        "backgroundColor": "#283593",
-                        "borderColor": "#283593"
-                    });
-                }
+                this.createHolidayList(this.list);
                 setTimeout(() => {
                     let calendarView = this.calendar.getApi();
                     calendarView.render();
@@ -265,15 +253,6 @@ export class ManageHolidayPage implements OnInit {
     }
 
     /**
-     * Delete public holiday before patch to API
-     * @param {*} index
-     * @memberof ManageHolidayPage
-     */
-    deleteHoliday(index) {
-        this.events.splice(index, 1);
-    }
-
-    /**
      * click save button to patch the calendar to selected calendar profile
      * @memberof ManageHolidayPage
      */
@@ -282,20 +261,7 @@ export class ManageHolidayPage implements OnInit {
         console.log(this.events);
         this.editCalendar = false;
         const holiday = this.events;
-        for (let i = 0; i < this.events.length; i++) {
-            delete holiday[i].allDay;
-            delete holiday[i].backgroundColor;
-            delete holiday[i].borderColor;
-            delete holiday[i].day;
-            delete holiday[i].description;
-        }
-
-        for (let j = 0; j < this.restDay.length; j++) {
-            let obj = {};
-            obj["fullname"] = (this.restDay[j]).toUpperCase();
-            obj["name"] = obj["fullname"].substring(0, 3);
-            this.selectedWeekday.push(obj);
-        }
+        this.reformatHolidayObject(holiday);
         const body = {
             "calendar_guid": this.selectedCalendarProfile.calendar_guid,
             "data": {
@@ -370,16 +336,6 @@ export class ManageHolidayPage implements OnInit {
     }
 
     /**
-     * Edit title of the public holiday to update to API
-     * @param {*} inputValue
-     * @param {*} index
-     * @memberof ManageHolidayPage
-     */
-    titleChanges(inputValue, index) {
-        this.events[index].title = inputValue;
-    }
-
-    /**
      * Create a rest day array list
      * Check or uncheck weekday make changes in rest day array list
      * @param {string} day
@@ -392,14 +348,6 @@ export class ManageHolidayPage implements OnInit {
             const indexes: number = this.restDay.indexOf(day);
             this.restDay.splice(indexes, 1);
         }
-    }
-
-    /**
-     * Update value of form control when open the mat-select input
-     * @memberof ManageHolidayPage
-     */
-    open() {
-        this.editCalendarForm.patchValue({ dayControl: this.restDay });
     }
 
     /**
@@ -429,15 +377,6 @@ export class ManageHolidayPage implements OnInit {
     }
 
     /**
-     * Method to get selected region ISO
-     * @param {*} region
-     * @memberof ManageHolidayPage
-     */
-    selectedRegion(region) {
-        this._regionISO = region;
-    }
-
-    /**
      * Get public holiday list from API by passing parameters of:-
      * country, location, year and month (optional)
      * @param {*} year
@@ -448,34 +387,32 @@ export class ManageHolidayPage implements OnInit {
         this.showSpinner = true;
         this.editCalendar = true;
         this.addCalendar = false;
-        const params = { 'country': this._countryIso, 'location': this._regionISO, 'year': year, 'month': month, };
+        const params = { 'country': this._countryIso, 'location': this.regionISO, 'year': year, 'month': month, };
         this.subscription = this.apiService.get_public_holiday_list(params).subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
                 this.list = data;
                 this.events = [];
-                for (let i = 0; i < this.list.response.holidays.length; i++) {
-                    this.events.push({
-                        "start": moment(this.list.response.holidays[i].date.iso).format('YYYY-MM-DD'),
-                        "end": moment(this.list.response.holidays[i].date.iso).format('YYYY-MM-DD'),
-                        "title": this.list.response.holidays[i].name,
-                        "day": this.getWeekDay(new Date(this.list.response.holidays[i].date.iso)),
-                        "description": this.list.response.holidays[i].description,
-                        "allDay": true,
-                        "backgroundColor": "#283593",
-                        "borderColor": "#283593"
-                    });
-                }
+                this.createHolidayList(this.list);
             })
     }
 
-    /**
-     * POST/create new calendar to endpoint API
-     * @memberof ManageHolidayPage
-     */
-    postData() {
-        this.showSpinner = true;
-        const holiday = this.events;
+    createHolidayList(data) {
+        for (let i = 0; i < data.response.holidays.length; i++) {
+            this.events.push({
+                "start": moment(data.response.holidays[i].date.iso).format('YYYY-MM-DD'),
+                "end": moment(data.response.holidays[i].date.iso).format('YYYY-MM-DD'),
+                "title": data.response.holidays[i].name,
+                "day": this.getWeekDay(new Date(data.response.holidays[i].date.iso)),
+                "description": data.response.holidays[i].description,
+                "allDay": true,
+                "backgroundColor": "#283593",
+                "borderColor": "#283593"
+            });
+        }
+    }
+
+    reformatHolidayObject(holiday) {
         for (let i = 0; i < this.events.length; i++) {
             delete holiday[i].allDay;
             delete holiday[i].backgroundColor;
@@ -490,6 +427,16 @@ export class ManageHolidayPage implements OnInit {
             obj["name"] = obj["fullname"].substring(0, 3);
             this.selectedWeekday.push(obj);
         }
+    }
+
+    /**
+     * POST/create new calendar to endpoint API
+     * @memberof ManageHolidayPage
+     */
+    postData() {
+        this.showSpinner = true;
+        const holiday = this.events;
+        this.reformatHolidayObject(holiday);
         const newProfile = {
             "code": this.addCalendarForm.get('profileName').value,
             "holiday": holiday,

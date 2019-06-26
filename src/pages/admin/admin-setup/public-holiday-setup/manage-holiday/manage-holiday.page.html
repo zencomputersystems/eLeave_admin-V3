@@ -1,4 +1,4 @@
-<div *ngIf="!editCalendar || !addCalendar" style="color: #057dcd; text-align: right;padding-top: 15px;">
+<div *ngIf="!editCalendar && !addCalendar" style="color: #057dcd; text-align: right;padding-top: 15px;">
     <div (click)="editCalendar = true;showEditForm = false" style="display: inline-block">
         <i class="far fa-edit personal"></i>
         <span style="padding-right: 10px;cursor: pointer;">Edit calendar</span>
@@ -77,7 +77,8 @@
             <span *ngIf="editCalendar">&nbsp;&nbsp;</span>
             <mat-form-field appearance="outline" style="width: 47%;" *ngIf="editCalendar ">
                 <mat-label>Rest day</mat-label>
-                <mat-select class="selectLeave" formControlName="dayControl" (openedChange)="open()" multiple>
+                <mat-select class="selectLeave" formControlName="dayControl"
+                    (openedChange)="editCalendarForm.patchValue({ dayControl: this.restDay });" multiple>
                     <mat-option *ngFor="let day of weekdays; let j=index" [value]="day" (click)="restDaySelected(day)"
                         [disabled]="!editCalendarForm.valid">
                         {{day}}</mat-option>
@@ -120,7 +121,7 @@
                     <mat-select>
                         <mat-option value="" selected></mat-option>
                         <mat-option *ngFor="let list of countryRegion; let i=index" [value]="list.iso"
-                            (click)="selectedRegion(list.iso)">
+                            (click)=" regionISO = list.iso">
                             {{list.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -143,7 +144,7 @@
             <ion-col size="3">
                 <ion-label>Day</ion-label>
             </ion-col>
-            <ion-col size="4">
+            <ion-col size="3">
                 <ion-label>Date</ion-label>
             </ion-col>
             <ion-col size="4">
@@ -160,7 +161,7 @@
                     </mat-form-field>
                 </ion-col>
 
-                <ion-col size="4" class="colOfLeave">
+                <ion-col size="3" class="colOfLeave">
                     <p *ngIf="!editCalendar">{{holiday.start}}</p>
                     <mat-form-field *ngIf="editCalendar" style="width: 100%">
                         <input matInput [matDatepicker]="datePicker" [(value)]="holiday.start" required
@@ -173,12 +174,12 @@
                 <ion-col size="4" class="colOfLeave" style="color: #057dcd">
                     <p *ngIf="!editCalendar">{{holiday.title}}</p>
                     <mat-form-field *ngIf="editCalendar" style="width: 100%">
-                        <input matInput [(value)]="holiday.title" (input)="titleChanges($event.target.value, i)">
+                        <input matInput [(value)]="holiday.title" (input)=" events[i].title = $event.target.value;">
                     </mat-form-field>
                 </ion-col>
-                <ion-col size="1" *ngIf="editCalendar"
+                <ion-col size="2" *ngIf="editCalendar"
                     style="display: flex;align-items: center;justify-content: center;">
-                    <i class="far fa-trash-alt" (click)="deleteHoliday(i)"></i>
+                    <i class="far fa-trash-alt" (click)="events.splice(i, 1);"></i>
                 </ion-col>
                 <ion-item class="divider" lines="full"></ion-item>
             </ion-row>
