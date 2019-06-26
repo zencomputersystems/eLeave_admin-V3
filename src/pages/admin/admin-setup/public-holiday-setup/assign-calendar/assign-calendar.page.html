@@ -1,0 +1,46 @@
+<div>
+    <div class='app-calendar'>
+        <full-calendar #calendar defaultView="dayGridMonth" [header]="{
+                                  left: 'prev,next today',
+                                  center: 'title',
+                                  right: 'dayGridMonth,timeGridWeek, listYear'
+                                }" [plugins]="calendarPlugins" [events]="events">
+        </full-calendar>
+    </div>
+    <div class="holidayView">
+        <form [formGroup]="assignCalendarForm">
+            <mat-form-field appearance="outline" style="width: 94%;">
+                <mat-label>Employees list</mat-label>
+                <mat-select formControlName="user" multiple required>
+                    <mat-option *ngFor="let item of userList; let j=index" [value]="item.id"
+                        (click)="employeeSelected(item.id)">
+                        {{item.employeeName}}</mat-option>
+                </mat-select>
+                <mat-error>Please select at least one option</mat-error>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <mat-form-field appearance="outline" style="width: 94%;">
+                <mat-label>Calendar profile</mat-label>
+                <mat-select formControlName="calendar" required>
+                    <mat-option *ngFor="let item of calendarList; let j=index" [value]="item.calendar_guid"
+                        (click)="calendarSelected(item.calendar_guid)">
+                        {{item.code}}</mat-option>
+                </mat-select>
+                <mat-error>Please select an option</mat-error>
+            </mat-form-field>
+            <div style="text-align: center; padding-top: 5%;">
+                <ion-button fill="outline" style="font-size: 12px;height: 30px;width: 90px;background: white;"
+                    color="primary" (click)="assignCalendarForm.reset()">
+                    CLEAR
+                </ion-button>
+                <div style="width: 10px; display: inline-block"></div>
+                <ion-button style="font-size: 12px;height: 30px;width: 100px;" color="primary" (click)="submitData()"
+                    [disabled]="!assignCalendarForm.valid">SUBMIT
+                </ion-button>
+                <ion-spinner name="lines" *ngIf="showSpinner" color="primary"
+                    style="position: absolute;margin-top: 5px;margin-left: 5px;">
+                </ion-spinner>
+            </div>
+        </form>
+    </div>
+</div>

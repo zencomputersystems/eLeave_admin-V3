@@ -18,6 +18,9 @@ import { PublicHolidaySetup } from './public-holiday-setup';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { AssignCalendarPage } from './assign-calendar/assign-calendar.page';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackbarNotificationPage } from './snackbar-notification/snackbar-notification';
 
 const routes: Routes = [
     {
@@ -44,8 +47,10 @@ const routes: Routes = [
         SpinnerModule,
         MatDatepickerModule,
         ReactiveFormsModule,
+        MatSnackBarModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [ManageHolidayPage, PublicHolidaySetup]
+    entryComponents: [SnackbarNotificationPage],
+    declarations: [ManageHolidayPage, PublicHolidaySetup, AssignCalendarPage, SnackbarNotificationPage]
 })
 export class PublicHolidaySetupModule { }

@@ -112,6 +112,9 @@
                                     <a href="../components/AppComponent.html" >AppComponent</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../components/AssignCalendarPage.html" >AssignCalendarPage</a>
+                                </li>
+                                <li class="link">
                                     <a href="../components/BulkImportPage.html" >BulkImportPage</a>
                                 </li>
                                 <li class="link">
@@ -143,6 +146,9 @@
                                 </li>
                                 <li class="link">
                                     <a href="../components/SideMenuNavigationComponent.html" >SideMenuNavigationComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../components/SnackbarNotificationPage.html" >SnackbarNotificationPage</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/SpinnerComponent.html" >SpinnerComponent</a>
@@ -336,6 +342,9 @@
                                            <a href="../components/AppComponent.html" >AppComponent</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../components/AssignCalendarPage.html" >AssignCalendarPage</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../components/BulkImportPage.html" >BulkImportPage</a>
                                        </li>
                                        <li class="link">
@@ -367,6 +376,9 @@
                                        </li>
                                        <li class="link">
                                            <a href="../components/SideMenuNavigationComponent.html" >SideMenuNavigationComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../components/SnackbarNotificationPage.html" >SnackbarNotificationPage</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/SpinnerComponent.html" >SpinnerComponent</a>
@@ -1173,6 +1185,30 @@
                             </tr>
                         </tbody>
                     </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> patch_assign_calendar_profile</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            <code>patch_assign_calendar_profile(body: any)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>Observable&lt;any&gt;</code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
             </section>
 
             <section>
@@ -1446,6 +1482,12 @@ export class APIService {
     get_personal_holiday_calendar(id): Observable&lt;any&gt; {
         // this.headerAuthorization();
         return this.getApiWithId(&#x27;api/admin/holiday/&#x27;, id);
+    }
+
+
+    patch_assign_calendar_profile(body): Observable&lt;any&gt; {
+        this.headerAuthorization();
+        return this.patchApi(body, &#x27;api/admin/holiday/user-calendar&#x27;);
     }
 
 

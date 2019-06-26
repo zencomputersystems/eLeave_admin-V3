@@ -1,0 +1,16 @@
+:host {
+  .button-outline {
+    --border-width: 1px;
+  }
+  .app-calendar {
+    width: 55%;
+    margin-top: 4%;
+    display: inline-block;
+  }
+  .holidayView {
+    padding-left: 3%;
+    margin-top: 4%;
+    float: right;
+    width: 45%;
+  }
+}

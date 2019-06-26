@@ -112,6 +112,9 @@
                                     <a href="../components/AppComponent.html" >AppComponent</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../components/AssignCalendarPage.html" >AssignCalendarPage</a>
+                                </li>
+                                <li class="link">
                                     <a href="../components/BulkImportPage.html" >BulkImportPage</a>
                                 </li>
                                 <li class="link">
@@ -143,6 +146,9 @@
                                 </li>
                                 <li class="link">
                                     <a href="../components/SideMenuNavigationComponent.html" >SideMenuNavigationComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../components/SnackbarNotificationPage.html" >SnackbarNotificationPage</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/SpinnerComponent.html" >SpinnerComponent</a>
@@ -336,6 +342,9 @@
                                            <a href="../components/AppComponent.html" >AppComponent</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../components/AssignCalendarPage.html" >AssignCalendarPage</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../components/BulkImportPage.html" >BulkImportPage</a>
                                        </li>
                                        <li class="link">
@@ -367,6 +376,9 @@
                                        </li>
                                        <li class="link">
                                            <a href="../components/SideMenuNavigationComponent.html" >SideMenuNavigationComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../components/SnackbarNotificationPage.html" >SnackbarNotificationPage</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/SpinnerComponent.html" >SpinnerComponent</a>
@@ -513,6 +525,12 @@
                             <li class="list-group-item">
                                 <a href="../s/PublicHolidaySetup.html">PublicHolidaySetup</a>
                             </li>
+                            <li class="list-group-item">
+                                <a href="../components/AssignCalendarPage.html">AssignCalendarPage</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../s/SnackbarNotificationPage.html">SnackbarNotificationPage</a>
+                            </li>
                     </ul>
                 </div>
                 <div class="col-sm-3">
@@ -547,6 +565,9 @@ import { PublicHolidaySetup } from &#x27;./public-holiday-setup&#x27;;
 import { SpinnerModule } from &#x27;src/library/spinner/spinner.module&#x27;;
 import { MatTabsModule } from &#x27;@angular/material/tabs&#x27;;
 import { MatDatepickerModule } from &#x27;@angular/material/datepicker&#x27;;
+import { AssignCalendarPage } from &#x27;./assign-calendar/assign-calendar.page&#x27;;
+import { MatSnackBarModule } from &#x27;@angular/material/snack-bar&#x27;;
+import { SnackbarNotificationPage } from &#x27;./snackbar-notification/snackbar-notification&#x27;;
 
 const routes: Routes &#x3D; [
     {
@@ -573,9 +594,11 @@ const routes: Routes &#x3D; [
         SpinnerModule,
         MatDatepickerModule,
         ReactiveFormsModule,
+        MatSnackBarModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [ManageHolidayPage, PublicHolidaySetup]
+    entryComponents: [SnackbarNotificationPage],
+    declarations: [ManageHolidayPage, PublicHolidaySetup, AssignCalendarPage, SnackbarNotificationPage]
 })
 export class PublicHolidaySetupModule { }
 </code></pre>

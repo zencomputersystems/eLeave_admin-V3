@@ -112,6 +112,9 @@
                                     <a href="../components/AppComponent.html" >AppComponent</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../components/AssignCalendarPage.html" >AssignCalendarPage</a>
+                                </li>
+                                <li class="link">
                                     <a href="../components/BulkImportPage.html" >BulkImportPage</a>
                                 </li>
                                 <li class="link">
@@ -143,6 +146,9 @@
                                 </li>
                                 <li class="link">
                                     <a href="../components/SideMenuNavigationComponent.html" >SideMenuNavigationComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../components/SnackbarNotificationPage.html" >SnackbarNotificationPage</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/SpinnerComponent.html" >SpinnerComponent</a>
@@ -336,6 +342,9 @@
                                            <a href="../components/AppComponent.html" >AppComponent</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../components/AssignCalendarPage.html" >AssignCalendarPage</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../components/BulkImportPage.html" >BulkImportPage</a>
                                        </li>
                                        <li class="link">
@@ -367,6 +376,9 @@
                                        </li>
                                        <li class="link">
                                            <a href="../components/SideMenuNavigationComponent.html" >SideMenuNavigationComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../components/SnackbarNotificationPage.html" >SnackbarNotificationPage</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/SpinnerComponent.html" >SpinnerComponent</a>
@@ -1288,6 +1300,27 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
+                            <b><span class="modifier">Public</span> items</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>items:     <code>any</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Get data from user profile API (with parameters)</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
                             <b><span class="modifier">Public</span> list</b>
                         </td>
                     </tr>
@@ -1569,6 +1602,13 @@ export class ManageHolidayPage implements OnInit {
      * @memberof CalendarViewPage
      */
     public list: any;
+
+    /**
+     * Get data from user profile API (with parameters)
+     * @type {*}
+     * @memberof ManageHolidayPage
+     */
+    public items: any;
 
     /** 
      * Property for alias Event Input of Full Calendar Component
@@ -1901,10 +1941,10 @@ export class ManageHolidayPage implements OnInit {
         this.subscription &#x3D; this.apiService.get_public_holiday_list(params).subscribe(
             (data: any[]) &#x3D;&gt; {
                 this.showSpinner &#x3D; false;
-                this.list &#x3D; data;
+                this.items &#x3D; data;
                 this.events &#x3D; [];
-                for (let i &#x3D; 0; i &lt; this.list.response.holidays.length; i++) {
-                    this.createHolidayList(this.list.response.holidays[i].date.iso, this.list.response.holidays[i].name);
+                for (let j &#x3D; 0; j &lt; this.items.response.holidays.length; j++) {
+                    this.createHolidayList(this.items.response.holidays[j].date.iso, this.items.response.holidays[j].name);
                 }
             })
     }

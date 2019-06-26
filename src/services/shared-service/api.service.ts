@@ -205,5 +205,11 @@ export class APIService {
     }
 
 
+    patch_assign_calendar_profile(body): Observable<any> {
+        this.headerAuthorization();
+        return this.patchApi(body, 'api/admin/holiday/user-calendar');
+    }
+
+
 }
 
