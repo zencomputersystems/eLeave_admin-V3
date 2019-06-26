@@ -133,7 +133,7 @@ export class InviteMorePage implements OnInit {
     filterDetails(text: any) {
         if (text && text.trim() != '') {
             this.filterList = this.employeeList.filter((item: any) => {
-                return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
+                return (item.employeeName.toUpperCase().indexOf(text.toUpperCase()) > -1);
             })
         }
     }

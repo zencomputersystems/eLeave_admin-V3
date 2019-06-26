@@ -40,6 +40,13 @@ export class ManageHolidayPage implements OnInit {
      */
     public list: any;
 
+    /**
+     * Get data from user profile API (with parameters)
+     * @type {*}
+     * @memberof ManageHolidayPage
+     */
+    public items: any;
+
     /** 
      * Property for alias Event Input of Full Calendar Component
      * @type {EventInput[]}
@@ -371,10 +378,10 @@ export class ManageHolidayPage implements OnInit {
         this.subscription = this.apiService.get_public_holiday_list(params).subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
-                this.list = data;
+                this.items = data;
                 this.events = [];
-                for (let i = 0; i < this.list.response.holidays.length; i++) {
-                    this.createHolidayList(this.list.response.holidays[i].date.iso, this.list.response.holidays[i].name);
+                for (let j = 0; j < this.items.response.holidays.length; j++) {
+                    this.createHolidayList(this.items.response.holidays[j].date.iso, this.items.response.holidays[j].name);
                 }
             })
     }
