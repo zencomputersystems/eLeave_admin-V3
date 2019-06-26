@@ -148,27 +148,25 @@ export class ManageHolidayPage implements OnInit {
     public regionISO;
 
     /**
+     * Value of selected Country ISO
+     * @type {string}
+     * @memberof ManageHolidayPage
+     */
+    public countryIso: string;
+
+    /**
+        * World public holiday from database npm i
+        * @memberof ManageHolidayPage
+        */
+    public countryDB;
+
+    /**
          * This local property is used to set subscription
          * @private
          * @type {Subscription}
          * @memberof LeavePlanningPage
          */
     private subscription: Subscription = new Subscription();
-
-    /**
-        * World public holiday from database npm i
-        * @private
-        * @memberof ManageHolidayPage
-        */
-    private _countryDB;
-
-    /**
-     * Value of selected Country ISO
-     * @private
-     * @type {string}
-     * @memberof ManageHolidayPage
-     */
-    private _countryIso: string;
 
     /**
      *Creates an instance of CalendarViewPage.
@@ -179,8 +177,8 @@ export class ManageHolidayPage implements OnInit {
     }
 
     ngOnInit() {
-        this._countryDB = reduce(getDataSet(), "en");
-        this.countryList = Object.keys(this._countryDB).map(key => this._countryDB[key]);
+        this.countryDB = reduce(getDataSet(), "en");
+        this.countryList = Object.keys(this.countryDB).map(key => this.countryDB[key]);
         this.countryList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
         this.editCalendarForm = this.fb.group({
             calendarProfile: new FormControl('', Validators.required),
@@ -238,7 +236,9 @@ export class ManageHolidayPage implements OnInit {
                 this.showSpinner = false;
                 this.list = data;
                 this.events = [];
-                this.createHolidayList(this.list);
+                for (let i = 0; i < this.list.response.holidays.length; i++) {
+                    this.createHolidayList(this.list.response.holidays[i].date.iso, this.list.response.holidays[i].name);
+                }
                 setTimeout(() => {
                     let calendarView = this.calendar.getApi();
                     calendarView.render();
@@ -258,15 +258,13 @@ export class ManageHolidayPage implements OnInit {
      */
     saveData() {
         this.showSpinner = true;
-        console.log(this.events);
         this.editCalendar = false;
-        const holiday = this.events;
-        this.reformatHolidayObject(holiday);
+        this.reformatHolidayObject(this.events);
         const body = {
             "calendar_guid": this.selectedCalendarProfile.calendar_guid,
             "data": {
                 "code": this.selectedCalendarProfile.code,
-                "holiday": holiday,
+                "holiday": this.events,
                 "rest": this.selectedWeekday
             }
         }
@@ -298,15 +296,7 @@ export class ManageHolidayPage implements OnInit {
                 this.personalProfile = data;
                 this.events = [];
                 for (let i = 0; i < this.personalProfile.holiday.length; i++) {
-                    this.events.push({
-                        "start": moment(this.personalProfile.holiday[i].start).format('YYYY-MM-DD'),
-                        "end": moment(this.personalProfile.holiday[i].end).format('YYYY-MM-DD'),
-                        "title": this.personalProfile.holiday[i].title,
-                        "day": this.getWeekDay(new Date(this.personalProfile.holiday[i].start)),
-                        "allDay": true,
-                        "backgroundColor": "#283593",
-                        "borderColor": "#283593"
-                    });
+                    this.createHolidayList(this.personalProfile.holiday[i].start, this.personalProfile.holiday[i].title);
                 }
                 setTimeout(() => {
                     let calendarView = this.calendar.getApi();
@@ -367,16 +357,6 @@ export class ManageHolidayPage implements OnInit {
     }
 
     /**
-     * Method to get selected country ISO
-     * @param {*} country
-     * @memberof ManageHolidayPage
-     */
-    selectedCountry(country) {
-        this.countryRegion = this._countryDB[country].regions;
-        this._countryIso = country;
-    }
-
-    /**
      * Get public holiday list from API by passing parameters of:-
      * country, location, year and month (optional)
      * @param {*} year
@@ -387,38 +367,48 @@ export class ManageHolidayPage implements OnInit {
         this.showSpinner = true;
         this.editCalendar = true;
         this.addCalendar = false;
-        const params = { 'country': this._countryIso, 'location': this.regionISO, 'year': year, 'month': month, };
+        const params = { 'country': this.countryIso, 'location': this.regionISO, 'year': year, 'month': month, };
         this.subscription = this.apiService.get_public_holiday_list(params).subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
                 this.list = data;
                 this.events = [];
-                this.createHolidayList(this.list);
+                for (let i = 0; i < this.list.response.holidays.length; i++) {
+                    this.createHolidayList(this.list.response.holidays[i].date.iso, this.list.response.holidays[i].name);
+                }
             })
     }
 
-    createHolidayList(data) {
-        for (let i = 0; i < data.response.holidays.length; i++) {
-            this.events.push({
-                "start": moment(data.response.holidays[i].date.iso).format('YYYY-MM-DD'),
-                "end": moment(data.response.holidays[i].date.iso).format('YYYY-MM-DD'),
-                "title": data.response.holidays[i].name,
-                "day": this.getWeekDay(new Date(data.response.holidays[i].date.iso)),
-                "description": data.response.holidays[i].description,
-                "allDay": true,
-                "backgroundColor": "#283593",
-                "borderColor": "#283593"
-            });
-        }
+    /**
+     * Push objects to array of event holidays
+     * @param {*} dateIso
+     * @param {*} name
+     * @memberof ManageHolidayPage
+     */
+    createHolidayList(dateIso, name) {
+        this.events.push({
+            "start": moment(dateIso).format('YYYY-MM-DD'),
+            "end": moment(dateIso).format('YYYY-MM-DD'),
+            "title": name,
+            "day": this.getWeekDay(new Date(dateIso)),
+            "allDay": true,
+            "backgroundColor": "#283593",
+            "borderColor": "#283593"
+        });
     }
 
+    /**
+     * Arrange object according body required of API 
+     * POST / PATCH calendar profile
+     * @param {*} holiday
+     * @memberof ManageHolidayPage
+     */
     reformatHolidayObject(holiday) {
         for (let i = 0; i < this.events.length; i++) {
             delete holiday[i].allDay;
             delete holiday[i].backgroundColor;
             delete holiday[i].borderColor;
             delete holiday[i].day;
-            delete holiday[i].description;
         }
 
         for (let j = 0; j < this.restDay.length; j++) {
@@ -435,11 +425,10 @@ export class ManageHolidayPage implements OnInit {
      */
     postData() {
         this.showSpinner = true;
-        const holiday = this.events;
-        this.reformatHolidayObject(holiday);
+        this.reformatHolidayObject(this.events);
         const newProfile = {
             "code": this.addCalendarForm.get('profileName').value,
-            "holiday": holiday,
+            "holiday": this.events,
             "rest": this.selectedWeekday
         }
         this.subscription = this.apiService.post_calendar_profile(newProfile).subscribe(

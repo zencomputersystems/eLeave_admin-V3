@@ -111,7 +111,7 @@
                     <mat-select>
                         <mat-option value="" selected></mat-option>
                         <mat-option *ngFor="let list of countryList; let i=index" [value]="list.iso"
-                            (click)="selectedCountry(list.iso)">
+                            (click)="countryRegion = countryDB[list.iso].regions; countryIso = list.iso;">
                             {{list.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>

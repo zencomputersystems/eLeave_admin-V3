@@ -870,48 +870,6 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> selectedCountry</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>selectedCountry(country: any)</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description"><p>Method to get selected country ISO</p>
-    </div>
-                                <div class="io-description">
-                                        <b>Parameters :</b>
-                                        <ul class="jsdoc-params">
-                                                <li>
-                                                    <div>
-                                                        <b>country</b>
-                                                    </div>
-                                                    <div>
-                                                        
-                                                    </div>
-                                                </li>
-                                        </ul>
-                                </div>
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                                    <div class="io-description">
-                                        
-                                    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
                             <b> callParamAPI</b>
                         </td>
                     </tr>
@@ -968,16 +926,42 @@
     
                     <tr>
                         <td class="col-md-4">
-    <code>createHolidayList(data: any)</code>
+    <code>createHolidayList(dateIso: any, name: any)</code>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
+                                <div class="io-description"><p>Push objects to array of event holidays</p>
+    </div>
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>dateIso</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div>
+                                                        <b>name</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
                                 <div class="io-description">
                                     <b>Returns: </b>    <code>void</code>
     
                                 </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
                         </td>
                     </tr>
                 </tbody>
@@ -998,10 +982,28 @@
     
                     <tr>
                         <td class="col-md-4">
+                                <div class="io-description"><p>Arrange object according body required of API<br>POST / PATCH calendar profile</p>
+    </div>
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>holiday</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
                                 <div class="io-description">
                                     <b>Returns: </b>    <code>void</code>
     
                                 </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
                         </td>
                     </tr>
                 </tbody>
@@ -1041,48 +1043,6 @@
 
     <section>
         <h3 id="inputs">Properties</h3>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Private</span> _countryDB</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-lock"></span><code>_countryDB:     <code>any</code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>World public holiday from database npm i</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Private</span> _countryIso</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-lock"></span><code>_countryIso:     <code>string</code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Value of selected Country ISO</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
             <table class="table table-sm table-bordered">
                 <tbody>
                     <tr>
@@ -1167,6 +1127,48 @@
                     <tr>
                         <td class="col-md-4">
                             <div class="io-description"><p>This is input property for plugins of Full Calendar Component</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> countryDB</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>countryDB:     <code>any</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>World public holiday from database npm i</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> countryIso</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>countryIso:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Value of selected Country ISO</p>
     </div>
                         </td>
                     </tr>
@@ -1676,27 +1678,25 @@ export class ManageHolidayPage implements OnInit {
     public regionISO;
 
     /**
+     * Value of selected Country ISO
+     * @type {string}
+     * @memberof ManageHolidayPage
+     */
+    public countryIso: string;
+
+    /**
+        * World public holiday from database npm i
+        * @memberof ManageHolidayPage
+        */
+    public countryDB;
+
+    /**
          * This local property is used to set subscription
          * @private
          * @type {Subscription}
          * @memberof LeavePlanningPage
          */
     private subscription: Subscription &#x3D; new Subscription();
-
-    /**
-        * World public holiday from database npm i
-        * @private
-        * @memberof ManageHolidayPage
-        */
-    private _countryDB;
-
-    /**
-     * Value of selected Country ISO
-     * @private
-     * @type {string}
-     * @memberof ManageHolidayPage
-     */
-    private _countryIso: string;
 
     /**
      *Creates an instance of CalendarViewPage.
@@ -1707,8 +1707,8 @@ export class ManageHolidayPage implements OnInit {
     }
 
     ngOnInit() {
-        this._countryDB &#x3D; reduce(getDataSet(), &quot;en&quot;);
-        this.countryList &#x3D; Object.keys(this._countryDB).map(key &#x3D;&gt; this._countryDB[key]);
+        this.countryDB &#x3D; reduce(getDataSet(), &quot;en&quot;);
+        this.countryList &#x3D; Object.keys(this.countryDB).map(key &#x3D;&gt; this.countryDB[key]);
         this.countryList.sort((a, b) &#x3D;&gt; (a.name &gt; b.name) ? 1 : ((b.name &gt; a.name) ? -1 : 0));
         this.editCalendarForm &#x3D; this.fb.group({
             calendarProfile: new FormControl(&#x27;&#x27;, Validators.required),
@@ -1766,7 +1766,9 @@ export class ManageHolidayPage implements OnInit {
                 this.showSpinner &#x3D; false;
                 this.list &#x3D; data;
                 this.events &#x3D; [];
-                this.createHolidayList(this.list);
+                for (let i &#x3D; 0; i &lt; this.list.response.holidays.length; i++) {
+                    this.createHolidayList(this.list.response.holidays[i].date.iso, this.list.response.holidays[i].name);
+                }
                 setTimeout(() &#x3D;&gt; {
                     let calendarView &#x3D; this.calendar.getApi();
                     calendarView.render();
@@ -1786,15 +1788,13 @@ export class ManageHolidayPage implements OnInit {
      */
     saveData() {
         this.showSpinner &#x3D; true;
-        console.log(this.events);
         this.editCalendar &#x3D; false;
-        const holiday &#x3D; this.events;
-        this.reformatHolidayObject(holiday);
+        this.reformatHolidayObject(this.events);
         const body &#x3D; {
             &quot;calendar_guid&quot;: this.selectedCalendarProfile.calendar_guid,
             &quot;data&quot;: {
                 &quot;code&quot;: this.selectedCalendarProfile.code,
-                &quot;holiday&quot;: holiday,
+                &quot;holiday&quot;: this.events,
                 &quot;rest&quot;: this.selectedWeekday
             }
         }
@@ -1826,15 +1826,7 @@ export class ManageHolidayPage implements OnInit {
                 this.personalProfile &#x3D; data;
                 this.events &#x3D; [];
                 for (let i &#x3D; 0; i &lt; this.personalProfile.holiday.length; i++) {
-                    this.events.push({
-                        &quot;start&quot;: moment(this.personalProfile.holiday[i].start).format(&#x27;YYYY-MM-DD&#x27;),
-                        &quot;end&quot;: moment(this.personalProfile.holiday[i].end).format(&#x27;YYYY-MM-DD&#x27;),
-                        &quot;title&quot;: this.personalProfile.holiday[i].title,
-                        &quot;day&quot;: this.getWeekDay(new Date(this.personalProfile.holiday[i].start)),
-                        &quot;allDay&quot;: true,
-                        &quot;backgroundColor&quot;: &quot;#283593&quot;,
-                        &quot;borderColor&quot;: &quot;#283593&quot;
-                    });
+                    this.createHolidayList(this.personalProfile.holiday[i].start, this.personalProfile.holiday[i].title);
                 }
                 setTimeout(() &#x3D;&gt; {
                     let calendarView &#x3D; this.calendar.getApi();
@@ -1895,16 +1887,6 @@ export class ManageHolidayPage implements OnInit {
     }
 
     /**
-     * Method to get selected country ISO
-     * @param {*} country
-     * @memberof ManageHolidayPage
-     */
-    selectedCountry(country) {
-        this.countryRegion &#x3D; this._countryDB[country].regions;
-        this._countryIso &#x3D; country;
-    }
-
-    /**
      * Get public holiday list from API by passing parameters of:-
      * country, location, year and month (optional)
      * @param {*} year
@@ -1915,38 +1897,48 @@ export class ManageHolidayPage implements OnInit {
         this.showSpinner &#x3D; true;
         this.editCalendar &#x3D; true;
         this.addCalendar &#x3D; false;
-        const params &#x3D; { &#x27;country&#x27;: this._countryIso, &#x27;location&#x27;: this.regionISO, &#x27;year&#x27;: year, &#x27;month&#x27;: month, };
+        const params &#x3D; { &#x27;country&#x27;: this.countryIso, &#x27;location&#x27;: this.regionISO, &#x27;year&#x27;: year, &#x27;month&#x27;: month, };
         this.subscription &#x3D; this.apiService.get_public_holiday_list(params).subscribe(
             (data: any[]) &#x3D;&gt; {
                 this.showSpinner &#x3D; false;
                 this.list &#x3D; data;
                 this.events &#x3D; [];
-                this.createHolidayList(this.list);
+                for (let i &#x3D; 0; i &lt; this.list.response.holidays.length; i++) {
+                    this.createHolidayList(this.list.response.holidays[i].date.iso, this.list.response.holidays[i].name);
+                }
             })
     }
 
-    createHolidayList(data) {
-        for (let i &#x3D; 0; i &lt; data.response.holidays.length; i++) {
-            this.events.push({
-                &quot;start&quot;: moment(data.response.holidays[i].date.iso).format(&#x27;YYYY-MM-DD&#x27;),
-                &quot;end&quot;: moment(data.response.holidays[i].date.iso).format(&#x27;YYYY-MM-DD&#x27;),
-                &quot;title&quot;: data.response.holidays[i].name,
-                &quot;day&quot;: this.getWeekDay(new Date(data.response.holidays[i].date.iso)),
-                &quot;description&quot;: data.response.holidays[i].description,
-                &quot;allDay&quot;: true,
-                &quot;backgroundColor&quot;: &quot;#283593&quot;,
-                &quot;borderColor&quot;: &quot;#283593&quot;
-            });
-        }
+    /**
+     * Push objects to array of event holidays
+     * @param {*} dateIso
+     * @param {*} name
+     * @memberof ManageHolidayPage
+     */
+    createHolidayList(dateIso, name) {
+        this.events.push({
+            &quot;start&quot;: moment(dateIso).format(&#x27;YYYY-MM-DD&#x27;),
+            &quot;end&quot;: moment(dateIso).format(&#x27;YYYY-MM-DD&#x27;),
+            &quot;title&quot;: name,
+            &quot;day&quot;: this.getWeekDay(new Date(dateIso)),
+            &quot;allDay&quot;: true,
+            &quot;backgroundColor&quot;: &quot;#283593&quot;,
+            &quot;borderColor&quot;: &quot;#283593&quot;
+        });
     }
 
+    /**
+     * Arrange object according body required of API 
+     * POST / PATCH calendar profile
+     * @param {*} holiday
+     * @memberof ManageHolidayPage
+     */
     reformatHolidayObject(holiday) {
         for (let i &#x3D; 0; i &lt; this.events.length; i++) {
             delete holiday[i].allDay;
             delete holiday[i].backgroundColor;
             delete holiday[i].borderColor;
             delete holiday[i].day;
-            delete holiday[i].description;
         }
 
         for (let j &#x3D; 0; j &lt; this.restDay.length; j++) {
@@ -1963,11 +1955,10 @@ export class ManageHolidayPage implements OnInit {
      */
     postData() {
         this.showSpinner &#x3D; true;
-        const holiday &#x3D; this.events;
-        this.reformatHolidayObject(holiday);
+        this.reformatHolidayObject(this.events);
         const newProfile &#x3D; {
             &quot;code&quot;: this.addCalendarForm.get(&#x27;profileName&#x27;).value,
-            &quot;holiday&quot;: holiday,
+            &quot;holiday&quot;: this.events,
             &quot;rest&quot;: this.selectedWeekday
         }
         this.subscription &#x3D; this.apiService.post_calendar_profile(newProfile).subscribe(
