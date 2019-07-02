@@ -13,4 +13,23 @@
     float: right;
     width: 45%;
   }
+  .inputDropdown {
+    cursor: pointer;
+  }
+  .dropdownList {
+    position: absolute;
+    margin-top: -17px;
+    width: 100%;
+    z-index: 2;
+    height: 300px;
+    overflow: auto;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+      0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  }
+  .showSelection {
+    width: 94%;
+    height: 200px;
+    overflow: auto;
+    margin-bottom: 20px;
+  }
 }

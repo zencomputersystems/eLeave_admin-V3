@@ -10,16 +10,6 @@
     <div class="holidayView">
         <form [formGroup]="assignCalendarForm">
             <mat-form-field appearance="outline" style="width: 94%;">
-                <mat-label>Employees list</mat-label>
-                <mat-select formControlName="user" multiple required>
-                    <mat-option *ngFor="let item of userList; let j=index" [value]="item.id"
-                        (click)="employeeSelected(item.id)">
-                        {{item.employeeName}}</mat-option>
-                </mat-select>
-                <mat-error>Please select at least one option</mat-error>
-            </mat-form-field>
-            &nbsp;&nbsp;
-            <mat-form-field appearance="outline" style="width: 94%;">
                 <mat-label>Calendar profile</mat-label>
                 <mat-select formControlName="calendar" required>
                     <mat-option *ngFor="let item of calendarList; let j=index" [value]="item.calendar_guid"
@@ -28,9 +18,64 @@
                 </mat-select>
                 <mat-error>Please select an option</mat-error>
             </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 94%;cursor: pointer;" (click)="showTreeDropdown = true;">
+                <mat-label>Employee list</mat-label>
+                <input matInput class="inputDropdown" readonly required>
+                <mat-icon matSuffix class="iconDropdown"><i class="material-icons">arrow_drop_down</i></mat-icon>
+                <mat-error>Please select at least one option</mat-error>
+                <div class="dropdownList" *ngIf="showTreeDropdown" (clickOutside)="outside($event)">
+                    <mat-tree style="z-index: 2;position: absolute;width: 100%;" [dataSource]="dataSource"
+                        [treeControl]="treeControl">
+                        <!-- inner checkbox -->
+                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                            <button mat-icon-button disabled></button>
+                            <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)"
+                                (change)="todoLeafItemSelectionToggle(node)" color="primary">{{node.item}}
+                            </mat-checkbox>
+                        </mat-tree-node>
+
+                        <!-- main checkbox -->
+                        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+                                <mat-icon class="mat-icon-rtl-mirror">
+                                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                </mat-icon>
+                            </button>
+                            <mat-checkbox [checked]="descendantsAllSelected(node)"
+                                [indeterminate]="descendantsPartiallySelected(node)"
+                                (change)="todoItemSelectionToggle(node)" color="primary">{{node.item}}
+                            </mat-checkbox>
+                        </mat-tree-node>
+                    </mat-tree>
+                </div>
+            </mat-form-field>
+            <div class="showSelection" *ngIf="showSelectedTree">
+                <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                    <!-- inner checkbox -->
+                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                        <button mat-icon-button disabled></button>
+                        <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)"
+                            (change)="todoLeafItemSelectionToggle(node)" color="primary">{{node.item}}
+                        </mat-checkbox>
+                    </mat-tree-node>
+
+                    <!-- main checkbox -->
+                    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+                            <mat-icon class="mat-icon-rtl-mirror">
+                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                        </button>
+                        <mat-checkbox [checked]="descendantsAllSelected(node)"
+                            [indeterminate]="descendantsPartiallySelected(node)"
+                            (change)="todoItemSelectionToggle(node)" color="primary">{{node.item}}
+                        </mat-checkbox>
+                    </mat-tree-node>
+                </mat-tree>
+            </div>
             <div style="text-align: center; padding-top: 5%;">
                 <ion-button fill="outline" style="font-size: 12px;height: 30px;width: 90px;background: white;"
-                    color="primary" (click)="assignCalendarForm.reset()">
+                    color="primary" (click)="assignCalendarForm.reset();checklistSelection.clear();showSelectedTree = false;">
                     CLEAR
                 </ion-button>
                 <div style="width: 10px; display: inline-block"></div>

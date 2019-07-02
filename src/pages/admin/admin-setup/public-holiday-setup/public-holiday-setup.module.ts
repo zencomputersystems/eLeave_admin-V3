@@ -21,6 +21,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AssignCalendarPage } from './assign-calendar/assign-calendar.page';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarNotificationPage } from './snackbar-notification/snackbar-notification';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { ClickOutsideModule } from 'ng-click-outside';
+
 
 const routes: Routes = [
     {
@@ -48,6 +53,10 @@ const routes: Routes = [
         MatDatepickerModule,
         ReactiveFormsModule,
         MatSnackBarModule,
+        MatTreeModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        ClickOutsideModule,
         RouterModule.forChild(routes)
     ],
     entryComponents: [SnackbarNotificationPage],
