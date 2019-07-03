@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, Injectable } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { APIService } from "src/services/shared-service/api.service";
-import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from "@angular/forms";
+import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import listYear from '@fullcalendar/list';
@@ -11,7 +11,6 @@ import { SnackbarNotificationPage } from "../snackbar-notification/snackbar-noti
 import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { BehaviorSubject } from 'rxjs';
 import { EmployeeListDatabase, TodoItemNode, TodoItemFlatNode } from "./assign-calendar-treeview.service";
 
 /**
@@ -91,13 +90,19 @@ export class AssignCalendarPage implements OnInit {
      */
     public events: EventInput[];
 
+    /**
+     * Click to show dropdown of treeview checkbox list
+     * @type {boolean}
+     * @memberof AssignCalendarPage
+     */
     public showTreeDropdown: boolean = false;
 
+    /**
+     * Show treeview selected value after close dropdown
+     * @type {boolean}
+     * @memberof AssignCalendarPage
+     */
     public showSelectedTree: boolean = false;
-
-    dataChange = new BehaviorSubject<TodoItemNode[]>([]);
-
-    get data(): TodoItemNode[] { return this.dataChange.value; }
 
     /** Map from flat node to nested node. This helps us finding the nested node to be modified */
     flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
@@ -105,22 +110,38 @@ export class AssignCalendarPage implements OnInit {
     /** Map from nested node to flattened node. This helps us to keep the same object for selection */
     nestedNodeMap = new Map<TodoItemNode, TodoItemFlatNode>();
 
+    /**
+     * Allow expand/collpase tree for subtree recursively for flattened tree
+     * @type {FlatTreeControl<TodoItemFlatNode>}
+     * @memberof AssignCalendarPage
+     */
     treeControl: FlatTreeControl<TodoItemFlatNode>;
 
+    /**
+     * Convert normal node to node with level & children info
+     * @type {MatTreeFlattener<TodoItemNode, TodoItemFlatNode>}
+     * @memberof AssignCalendarPage
+     */
     treeFlattener: MatTreeFlattener<TodoItemNode, TodoItemFlatNode>;
 
+    /**
+     * Data details for tree checkbox list
+     * @type {MatTreeFlatDataSource<TodoItemNode, TodoItemFlatNode>}
+     * @memberof AssignCalendarPage
+     */
     dataSource: MatTreeFlatDataSource<TodoItemNode, TodoItemFlatNode>;
 
     /** The selection for checklist */
     checklistSelection = new SelectionModel<TodoItemFlatNode>(true /* multiple */);
 
     /**
-     *Creates an instance of AssignCalendarPage.
+     * Creates an instance of AssignCalendarPage.
      * @param {APIService} apiService
      * @param {MatSnackBar} snackBar
+     * @param {EmployeeListDatabase} database
+     * @param {FormBuilder} fb
      * @memberof AssignCalendarPage
      */
-
     constructor(private apiService: APIService, private snackBar: MatSnackBar, private database: EmployeeListDatabase, private fb: FormBuilder) {
         this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
             this.isExpandable, this.getChildren);
@@ -150,15 +171,29 @@ export class AssignCalendarPage implements OnInit {
         }, 100);
     }
 
+    /**
+     * Get level info
+     * @memberof AssignCalendarPage
+     */
     getLevel = (node: TodoItemFlatNode) => node.level;
 
+    /**
+     * Get explandable boolean value
+     * @memberof AssignCalendarPage
+     */
     isExpandable = (node: TodoItemFlatNode) => node.expandable;
 
+    /**
+     * Get children items
+     * @memberof AssignCalendarPage
+     */
     getChildren = (node: TodoItemNode): TodoItemNode[] => node.children;
 
+    /**
+     * Get boolean value for hasChild
+     * @memberof AssignCalendarPage
+     */
     hasChild = (_: number, _nodeData: TodoItemFlatNode) => _nodeData.expandable;
-
-    hasNoContent = (_: number, _nodeData: TodoItemFlatNode) => _nodeData.item === '';
 
     /**
      * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
@@ -301,7 +336,6 @@ export class AssignCalendarPage implements OnInit {
      * @memberof AssignCalendarPage
      */
     submitData() {
-
         for (let i = 0; i < this.assignCalendarForm.controls.user.value.length; i++) {
             if (this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]) != 0) {
                 const index: number = this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]);
@@ -316,6 +350,7 @@ export class AssignCalendarPage implements OnInit {
             response => {
                 this.assignCalendarForm.reset();
                 this.events = [];
+                this.employeeList = [];
                 this.showSelectedTree = false;
                 this.checklistSelection.clear();
                 this.openSnackBar('successfully');
@@ -338,20 +373,25 @@ export class AssignCalendarPage implements OnInit {
         });
     }
 
-    outside(event) {
+    /**
+     * Closed div after clicked outside of div
+     * Push all items to array if they have checked
+     * Clear array if no item checked
+     * @param {*} event
+     * @memberof AssignCalendarPage
+     */
+    clickOutside(event) {
         if (!event.target.className.includes("inputDropdown") && !event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix")) {
             this.showTreeDropdown = false;
             this.showSelectedTree = true;
             for (let i = 0; i < this.checklistSelection.selected.length; i++) {
-                if (this.checklistSelection.selected[i].level == 1) {
-                    if (this.assignCalendarForm.controls.user.value.indexOf(this.checklistSelection.selected[i].item) === -1) {
-                        this.assignCalendarForm.controls.user.value.push(this.checklistSelection.selected[i].item);
-                    }
+                if (this.checklistSelection.selected[i].level == 1 && this.assignCalendarForm.controls.user.value.indexOf(this.checklistSelection.selected[i].item) === -1) {
+                    this.assignCalendarForm.controls.user.value.push(this.checklistSelection.selected[i].item);
                 }
             }
-            if (this.checklistSelection.selected.length === 0) {
-                this.assignCalendarForm.controls.user.value.length = 0;
-            }
+        }
+        if (this.checklistSelection.selected.length === 0) {
+            this.assignCalendarForm.controls.user.value.length = 0;
         }
     }
 }

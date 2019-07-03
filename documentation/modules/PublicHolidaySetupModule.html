@@ -172,6 +172,12 @@
                                     <a href="../classes/AppPage.html" >AppPage</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../classes/TodoItemFlatNode.html" >TodoItemFlatNode</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/TodoItemNode.html" >TodoItemNode</a>
+                                </li>
+                                <li class="link">
                                     <a href="../classes/XmlJson.html" >XmlJson</a>
                                 </li>
                         </ul>
@@ -200,6 +206,9 @@
                                 </li>
                                 <li class="link">
                                     <a href="../injectables/AuthService.html" >AuthService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../injectables/EmployeeListDatabase.html" >EmployeeListDatabase</a>
                                 </li>
                                 <li class="link">
                                     <a href="../injectables/RoleGuard.html" >RoleGuard</a>
@@ -402,6 +411,12 @@
                                            <a href="../classes/AppPage.html" >AppPage</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../classes/TodoItemFlatNode.html" >TodoItemFlatNode</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/TodoItemNode.html" >TodoItemNode</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../classes/XmlJson.html" >XmlJson</a>
                                        </li>
                                </ul>
@@ -430,6 +445,9 @@
                                        </li>
                                        <li class="link">
                                            <a href="../injectables/AuthService.html" >AuthService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../injectables/EmployeeListDatabase.html" >EmployeeListDatabase</a>
                                        </li>
                                        <li class="link">
                                            <a href="../injectables/RoleGuard.html" >RoleGuard</a>
@@ -568,6 +586,11 @@ import { MatDatepickerModule } from &#x27;@angular/material/datepicker&#x27;;
 import { AssignCalendarPage } from &#x27;./assign-calendar/assign-calendar.page&#x27;;
 import { MatSnackBarModule } from &#x27;@angular/material/snack-bar&#x27;;
 import { SnackbarNotificationPage } from &#x27;./snackbar-notification/snackbar-notification&#x27;;
+import { MatTreeModule } from &#x27;@angular/material/tree&#x27;;
+import { MatCheckboxModule } from &#x27;@angular/material/checkbox&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+import { ClickOutsideModule } from &#x27;ng-click-outside&#x27;;
+
 
 const routes: Routes &#x3D; [
     {
@@ -595,6 +618,10 @@ const routes: Routes &#x3D; [
         MatDatepickerModule,
         ReactiveFormsModule,
         MatSnackBarModule,
+        MatTreeModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        ClickOutsideModule,
         RouterModule.forChild(routes)
     ],
     entryComponents: [SnackbarNotificationPage],

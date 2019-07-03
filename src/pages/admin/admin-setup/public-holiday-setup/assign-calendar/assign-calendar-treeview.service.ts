@@ -6,14 +6,44 @@ import { APIService } from "src/services/shared-service/api.service";
  * Node for to-do item
  */
 export class TodoItemNode {
+
+    /**
+     * Children info
+     * @type {TodoItemNode[]}
+     * @memberof TodoItemNode
+     */
     children: TodoItemNode[];
+
+    /**
+     * Name of employee in user list
+     * @type {string}
+     * @memberof TodoItemNode
+     */
     item: string;
 }
 
 /** Flat to-do item node with expandable and level information */
 export class TodoItemFlatNode {
+
+    /**
+     * Name of employee in user list
+     * @type {string}
+     * @memberof TodoItemFlatNode
+     */
     item: string;
+
+    /**
+     * Level number in treeview list
+     * @type {number}
+     * @memberof TodoItemFlatNode
+     */
     level: number;
+
+    /**
+     * Boolean value of expandable item in treeview list
+     * @type {boolean}
+     * @memberof TodoItemFlatNode
+     */
     expandable: boolean;
 }
 
@@ -26,9 +56,32 @@ export class TodoItemFlatNode {
  */
 @Injectable()
 export class EmployeeListDatabase {
+
+    /**
+     * A subject use to observe value of item & children
+     * @memberof EmployeeListDatabase
+     */
     public dataChange = new BehaviorSubject<TodoItemNode[]>([]);
+
+    /**
+     * Get user list from API
+     * @type {*}
+     * @memberof EmployeeListDatabase
+     */
     public list: any;
+
+    /**
+     * Object value for nested tree list
+     * @memberof EmployeeListDatabase
+     */
     public objectTree = {};
+
+    /** 
+     * Return data of children and item
+     * @readonly
+     * @type {TodoItemNode[]}
+     * @memberof EmployeeListDatabase
+     */
     get data(): TodoItemNode[] { return this.dataChange.value; }
 
     /**

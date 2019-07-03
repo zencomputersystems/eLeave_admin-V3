@@ -172,6 +172,12 @@
                                     <a href="../classes/AppPage.html" >AppPage</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../classes/TodoItemFlatNode.html" >TodoItemFlatNode</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/TodoItemNode.html" >TodoItemNode</a>
+                                </li>
+                                <li class="link">
                                     <a href="../classes/XmlJson.html" >XmlJson</a>
                                 </li>
                         </ul>
@@ -200,6 +206,9 @@
                                 </li>
                                 <li class="link">
                                     <a href="../injectables/AuthService.html" >AuthService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../injectables/EmployeeListDatabase.html" >EmployeeListDatabase</a>
                                 </li>
                                 <li class="link">
                                     <a href="../injectables/RoleGuard.html" >RoleGuard</a>
@@ -402,6 +411,12 @@
                                            <a href="../classes/AppPage.html" >AppPage</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../classes/TodoItemFlatNode.html" >TodoItemFlatNode</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/TodoItemNode.html" >TodoItemNode</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../classes/XmlJson.html" >XmlJson</a>
                                        </li>
                                </ul>
@@ -430,6 +445,9 @@
                                        </li>
                                        <li class="link">
                                            <a href="../injectables/AuthService.html" >AuthService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../injectables/EmployeeListDatabase.html" >EmployeeListDatabase</a>
                                        </li>
                                        <li class="link">
                                            <a href="../injectables/RoleGuard.html" >RoleGuard</a>
@@ -529,6 +547,14 @@
 
 
 
+            <tr>
+                <td class="col-md-3">providers</td>
+                <td class="col-md-9">
+                    <code>
+                        EmployeeListDatabase
+                    </code>
+                </td>
+            </tr>
 
 
             <tr>
@@ -561,7 +587,7 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <code>constructor(apiService: any, snackBar: MatSnackBar)</code>
+                            <code>constructor(apiService: any, snackBar: MatSnackBar, database: <a href="../injectables/EmployeeListDatabase.html" >EmployeeListDatabase</a>, fb: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a>)</code>
                         </td>
                     </tr>
     
@@ -592,6 +618,26 @@
                                                         
                                                     </div>
                                                 </li>
+                                                <li>
+                                                    <div>
+                                                        <b>database</b>
+                                                            :     <code><a href="../injectables/EmployeeListDatabase.html" target="_self" >EmployeeListDatabase</a></code>
+    
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div>
+                                                        <b>fb</b>
+                                                            :     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a></code>
+    
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
                                         </ul>
                                 </div>
                         </td>
@@ -606,40 +652,176 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> employeeSelected</b>
+                            <b> descendantsAllSelected</b>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-    <code>employeeSelected(userId: any)</code>
+    <code>descendantsAllSelected(node: <a href="../classes/TodoItemFlatNode.html" >TodoItemFlatNode</a>)</code>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-description"><p>To get selected user/users from list </p>
+                                <div class="io-description"><p>Whether all the descendants of the node are selected. </p>
     </div>
                                 <div class="io-description">
-                                        <b>Parameters :</b>
-                                        <ul class="jsdoc-params">
-                                                <li>
-                                                    <div>
-                                                        <b>userId</b>
-                                                    </div>
-                                                    <div>
-                                                        
-                                                    </div>
-                                                </li>
-                                        </ul>
+                                    <b>Returns: </b>    <code>boolean</code>
+    
                                 </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> descendantsPartiallySelected</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>descendantsPartiallySelected(node: <a href="../classes/TodoItemFlatNode.html" >TodoItemFlatNode</a>)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Whether part of the descendants are selected </p>
+    </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>boolean</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> todoItemSelectionToggle</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>todoItemSelectionToggle(node: <a href="../classes/TodoItemFlatNode.html" >TodoItemFlatNode</a>)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Toggle the to-do item selection. Select/deselect all the descendants node </p>
+    </div>
                                 <div class="io-description">
                                     <b>Returns: </b>    <code>void</code>
     
                                 </div>
-                                    <div class="io-description">
-                                        
-                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> todoLeafItemSelectionToggle</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>todoLeafItemSelectionToggle(node: <a href="../classes/TodoItemFlatNode.html" >TodoItemFlatNode</a>)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Toggle a leaf to-do item selection. Check all the parents to see if they changed </p>
+    </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> checkAllParentsSelection</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>checkAllParentsSelection(node: <a href="../classes/TodoItemFlatNode.html" >TodoItemFlatNode</a>)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> checkRootNodeSelection</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>checkRootNodeSelection(node: <a href="../classes/TodoItemFlatNode.html" >TodoItemFlatNode</a>)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Check root node checked state and change it accordingly </p>
+    </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> getParentNode</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>getParentNode(node: <a href="../classes/TodoItemFlatNode.html" >TodoItemFlatNode</a>)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code><a href="../classes/TodoItemFlatNode.html" target="_self" >TodoItemFlatNode</a></code>
+    
+                                </div>
                         </td>
                     </tr>
                 </tbody>
@@ -810,6 +992,48 @@
                     </tr>
                 </tbody>
             </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> clickOutside</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>clickOutside(event: any)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Closed div after clicked outside of div<br>Push all items to array if they have checked<br>Clear array if no item checked</p>
+    </div>
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>event</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
     </section>
 
     <section>
@@ -902,6 +1126,48 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
+                            <b> checklistSelection</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>checklistSelection:     <code><a href="../classes/TodoItemFlatNode.html" target="_self" >SelectionModel&lt;TodoItemFlatNode&gt;</a></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>The selection for checklist </p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> dataSource</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>dataSource:     <code><a href="../classes/TodoItemNode.html" target="_self" >MatTreeFlatDataSource&lt;TodoItemNode, TodoItemFlatNode&gt;</a></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Data details for tree checkbox list</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
                             <b><span class="modifier">Public</span> employeeList</b>
                         </td>
                     </tr>
@@ -944,6 +1210,132 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
+                            <b> flatNodeMap</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>flatNodeMap:     <code>any</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Map from flat node to nested node. This helps us finding the nested node to be modified </p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> getChildren</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>getChildren:     <code><a href="../classes/TodoItemNode.html" target="_self" >(node: TodoItemNode) &#x3D;&gt; TodoItemNode[]</a></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Get children items</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> getLevel</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>getLevel:     <code><a href="../classes/TodoItemFlatNode.html" target="_self" >(node: TodoItemFlatNode) &#x3D;&gt; number</a></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Get level info</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> hasChild</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>hasChild:     <code><a href="../classes/TodoItemFlatNode.html" target="_self" >(_: number, _nodeData: TodoItemFlatNode) &#x3D;&gt; boolean</a></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Get boolean value for hasChild</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> isExpandable</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>isExpandable:     <code><a href="../classes/TodoItemFlatNode.html" target="_self" >(node: TodoItemFlatNode) &#x3D;&gt; boolean</a></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Get explandable boolean value</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> nestedNodeMap</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>nestedNodeMap:     <code>any</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Map from nested node to flattened node. This helps us to keep the same object for selection </p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
                             <b><span class="modifier">Public</span> selectedCalendarId</b>
                         </td>
                     </tr>
@@ -956,6 +1348,32 @@
                     <tr>
                         <td class="col-md-4">
                             <div class="io-description"><p>Value of selected ID</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> showSelectedTree</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>showSelectedTree:     <code>boolean</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>false</code>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Show treeview selected value after close dropdown</p>
     </div>
                         </td>
                     </tr>
@@ -991,6 +1409,95 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
+                            <b><span class="modifier">Public</span> showTreeDropdown</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>showTreeDropdown:     <code>boolean</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>false</code>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Click to show dropdown of treeview checkbox list</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> transformer</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>transformer:     <code><a href="../classes/TodoItemNode.html" target="_self" >(node: TodoItemNode, level: number) &#x3D;&gt; any</a></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Transformer to convert nested node to flat node. Record the nodes in maps for later use.</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> treeControl</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>treeControl:     <code><a href="../classes/TodoItemFlatNode.html" target="_self" >FlatTreeControl&lt;TodoItemFlatNode&gt;</a></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Allow expand/collpase tree for subtree recursively for flattened tree</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> treeFlattener</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>treeFlattener:     <code><a href="../classes/TodoItemNode.html" target="_self" >MatTreeFlattener&lt;TodoItemNode, TodoItemFlatNode&gt;</a></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Convert normal node to node with level &amp; children info</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
                             <b><span class="modifier">Public</span> userList</b>
                         </td>
                     </tr>
@@ -1013,7 +1520,7 @@
         <div class="tab-pane fade tab-source-code" id="source">
             <pre><code class="hljs javascript">import { Component, OnInit, ViewChild } from &quot;@angular/core&quot;;
 import { APIService } from &quot;src/services/shared-service/api.service&quot;;
-import { FormGroup, FormControl, Validators } from &quot;@angular/forms&quot;;
+import { FormGroup, Validators, FormBuilder } from &quot;@angular/forms&quot;;
 import dayGridPlugin from &#x27;@fullcalendar/daygrid&#x27;;
 import timeGrigPlugin from &#x27;@fullcalendar/timegrid&#x27;;
 import listYear from &#x27;@fullcalendar/list&#x27;;
@@ -1021,6 +1528,11 @@ import { EventInput } from &quot;@fullcalendar/core&quot;;
 import { FullCalendarComponent } from &quot;@fullcalendar/angular&quot;;
 import { MatSnackBar } from &quot;@angular/material/snack-bar&quot;;
 import { SnackbarNotificationPage } from &quot;../snackbar-notification/snackbar-notification&quot;;
+import { SelectionModel } from &#x27;@angular/cdk/collections&#x27;;
+import { FlatTreeControl } from &#x27;@angular/cdk/tree&#x27;;
+import { MatTreeFlatDataSource, MatTreeFlattener } from &#x27;@angular/material/tree&#x27;;
+import { EmployeeListDatabase, TodoItemNode, TodoItemFlatNode } from &quot;./assign-calendar-treeview.service&quot;;
+
 /**
  * Assign Calendar Page
  * Admin assign employee&#x27;s calendar profile in this page
@@ -1032,6 +1544,7 @@ import { SnackbarNotificationPage } from &quot;../snackbar-notification/snackbar
     selector: &#x27;app-assign-calendar&#x27;,
     templateUrl: &#x27;./assign-calendar.page.html&#x27;,
     styleUrls: [&#x27;./assign-calendar.page.scss&#x27;],
+    providers: [EmployeeListDatabase]
 })
 export class AssignCalendarPage implements OnInit {
 
@@ -1043,18 +1556,18 @@ export class AssignCalendarPage implements OnInit {
     @ViewChild(&#x27;calendar&#x27;) calendarComponent: FullCalendarComponent;
 
     /**
-     * Users list that show in options of selection
-     * @type {*}
-     * @memberof AssignCalendarPage
-     */
-    public userList: any;
-
-    /**
      * Calendar profile list that show in options of selection
      * @type {*}
      * @memberof AssignCalendarPage
      */
     public calendarList: any;
+
+    /**
+   * Users list that show in options of selection
+   * @type {*}
+   * @memberof AssignCalendarPage
+   */
+    public userList: any;
 
     /**
      * Array list of selected employees ID
@@ -1098,25 +1611,76 @@ export class AssignCalendarPage implements OnInit {
     public events: EventInput[];
 
     /**
-     *Creates an instance of AssignCalendarPage.
-     * @param {APIService} apiService
-     * @param {MatSnackBar} snackBar
+     * Click to show dropdown of treeview checkbox list
+     * @type {boolean}
      * @memberof AssignCalendarPage
      */
-    constructor(private apiService: APIService, private snackBar: MatSnackBar) {
+    public showTreeDropdown: boolean &#x3D; false;
+
+    /**
+     * Show treeview selected value after close dropdown
+     * @type {boolean}
+     * @memberof AssignCalendarPage
+     */
+    public showSelectedTree: boolean &#x3D; false;
+
+    /** Map from flat node to nested node. This helps us finding the nested node to be modified */
+    flatNodeMap &#x3D; new Map&lt;TodoItemFlatNode, TodoItemNode&gt;();
+
+    /** Map from nested node to flattened node. This helps us to keep the same object for selection */
+    nestedNodeMap &#x3D; new Map&lt;TodoItemNode, TodoItemFlatNode&gt;();
+
+    /**
+     * Allow expand/collpase tree for subtree recursively for flattened tree
+     * @type {FlatTreeControl&lt;TodoItemFlatNode&gt;}
+     * @memberof AssignCalendarPage
+     */
+    treeControl: FlatTreeControl&lt;TodoItemFlatNode&gt;;
+
+    /**
+     * Convert normal node to node with level &amp; children info
+     * @type {MatTreeFlattener&lt;TodoItemNode, TodoItemFlatNode&gt;}
+     * @memberof AssignCalendarPage
+     */
+    treeFlattener: MatTreeFlattener&lt;TodoItemNode, TodoItemFlatNode&gt;;
+
+    /**
+     * Data details for tree checkbox list
+     * @type {MatTreeFlatDataSource&lt;TodoItemNode, TodoItemFlatNode&gt;}
+     * @memberof AssignCalendarPage
+     */
+    dataSource: MatTreeFlatDataSource&lt;TodoItemNode, TodoItemFlatNode&gt;;
+
+    /** The selection for checklist */
+    checklistSelection &#x3D; new SelectionModel&lt;TodoItemFlatNode&gt;(true /* multiple */);
+
+    /**
+     * Creates an instance of AssignCalendarPage.
+     * @param {APIService} apiService
+     * @param {MatSnackBar} snackBar
+     * @param {EmployeeListDatabase} database
+     * @param {FormBuilder} fb
+     * @memberof AssignCalendarPage
+     */
+    constructor(private apiService: APIService, private snackBar: MatSnackBar, private database: EmployeeListDatabase, private fb: FormBuilder) {
+        this.treeFlattener &#x3D; new MatTreeFlattener(this.transformer, this.getLevel,
+            this.isExpandable, this.getChildren);
+        this.treeControl &#x3D; new FlatTreeControl&lt;TodoItemFlatNode&gt;(this.getLevel, this.isExpandable);
+        this.dataSource &#x3D; new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+        database.dataChange.subscribe(data &#x3D;&gt; {
+            this.dataSource.data &#x3D; data;
+        });
     }
 
     ngOnInit() {
-        this.assignCalendarForm &#x3D; new FormGroup({
-            user: new FormControl(&#x27;&#x27;, Validators.required),
-            calendar: new FormControl(&#x27;&#x27;, Validators.required),
+        this.assignCalendarForm &#x3D; this.fb.group({
+            user: this.fb.array([]),
+            calendar: [&#x27;&#x27;, Validators.required]
         });
-
         this.apiService.get_user_profile_list().subscribe(
-            list &#x3D;&gt; {
-                this.userList &#x3D; list;
+            data &#x3D;&gt; {
+                this.userList &#x3D; data;
             });
-
         this.apiService.get_calendar_profile_list().subscribe(
             data &#x3D;&gt; {
                 this.calendarList &#x3D; data;
@@ -1127,18 +1691,127 @@ export class AssignCalendarPage implements OnInit {
         }, 100);
     }
 
-    /** 
-     * To get selected user/users from list 
-     * @param {*} userId
+    /**
+     * Get level info
      * @memberof AssignCalendarPage
      */
-    employeeSelected(userId) {
-        if (this.checkIdExist(this.employeeList, userId) &#x3D;&#x3D;&#x3D; 1) {
-            const index: number &#x3D; this.employeeList.indexOf(userId);
-            this.employeeList.splice(index, 1);
-        } else {
-            this.employeeList.push(userId);
+    getLevel &#x3D; (node: TodoItemFlatNode) &#x3D;&gt; node.level;
+
+    /**
+     * Get explandable boolean value
+     * @memberof AssignCalendarPage
+     */
+    isExpandable &#x3D; (node: TodoItemFlatNode) &#x3D;&gt; node.expandable;
+
+    /**
+     * Get children items
+     * @memberof AssignCalendarPage
+     */
+    getChildren &#x3D; (node: TodoItemNode): TodoItemNode[] &#x3D;&gt; node.children;
+
+    /**
+     * Get boolean value for hasChild
+     * @memberof AssignCalendarPage
+     */
+    hasChild &#x3D; (_: number, _nodeData: TodoItemFlatNode) &#x3D;&gt; _nodeData.expandable;
+
+    /**
+     * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
+     */
+    transformer &#x3D; (node: TodoItemNode, level: number) &#x3D;&gt; {
+        const existingNode &#x3D; this.nestedNodeMap.get(node);
+        const flatNode &#x3D; existingNode &amp;&amp; existingNode.item &#x3D;&#x3D;&#x3D; node.item
+            ? existingNode
+            : new TodoItemFlatNode();
+        flatNode.item &#x3D; node.item;
+        flatNode.level &#x3D; level;
+        flatNode.expandable &#x3D; !!node.children;
+        this.flatNodeMap.set(flatNode, node);
+        this.nestedNodeMap.set(node, flatNode);
+        return flatNode;
+    }
+
+    /** Whether all the descendants of the node are selected. */
+    descendantsAllSelected(node: TodoItemFlatNode): boolean {
+        const descendants &#x3D; this.treeControl.getDescendants(node);
+        const descAllSelected &#x3D; descendants.every(child &#x3D;&gt;
+            this.checklistSelection.isSelected(child)
+        );
+        // console.log(&#x27;select&#x27;, this.checklistSelection);
+        return descAllSelected;
+    }
+
+    /** Whether part of the descendants are selected */
+    descendantsPartiallySelected(node: TodoItemFlatNode): boolean {
+        const descendants &#x3D; this.treeControl.getDescendants(node);
+        const result &#x3D; descendants.some(child &#x3D;&gt; this.checklistSelection.isSelected(child));
+        return result &amp;&amp; !this.descendantsAllSelected(node);
+    }
+
+    /** Toggle the to-do item selection. Select/deselect all the descendants node */
+    todoItemSelectionToggle(node: TodoItemFlatNode): void {
+        this.checklistSelection.toggle(node);
+        const descendants &#x3D; this.treeControl.getDescendants(node);
+        this.checklistSelection.isSelected(node)
+            ? this.checklistSelection.select(...descendants)
+            : this.checklistSelection.deselect(...descendants);
+
+        // Force update for the parent
+        descendants.every(child &#x3D;&gt;
+            this.checklistSelection.isSelected(child)
+        );
+        this.checkAllParentsSelection(node);
+        // console.log(&#x27;main&#x27;, node, this.checklistSelection);
+    }
+
+    /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
+    todoLeafItemSelectionToggle(node: TodoItemFlatNode): void {
+        this.checklistSelection.toggle(node);
+        this.checkAllParentsSelection(node);
+        // console.log(&#x27;inner&#x27;, node, this.checklistSelection);
+    }
+
+    /* Checks all the parents when a leaf node is selected/unselected */
+    checkAllParentsSelection(node: TodoItemFlatNode): void {
+        let parent: TodoItemFlatNode | null &#x3D; this.getParentNode(node);
+        while (parent) {
+            this.checkRootNodeSelection(parent);
+            parent &#x3D; this.getParentNode(parent);
         }
+    }
+
+    /** Check root node checked state and change it accordingly */
+    checkRootNodeSelection(node: TodoItemFlatNode): void {
+        const nodeSelected &#x3D; this.checklistSelection.isSelected(node);
+        const descendants &#x3D; this.treeControl.getDescendants(node);
+        const descAllSelected &#x3D; descendants.every(child &#x3D;&gt;
+            this.checklistSelection.isSelected(child)
+        );
+        if (nodeSelected &amp;&amp; !descAllSelected) {
+            this.checklistSelection.deselect(node);
+        } else if (!nodeSelected &amp;&amp; descAllSelected) {
+            this.checklistSelection.select(node);
+        }
+    }
+
+    /* Get the parent node of a node */
+    getParentNode(node: TodoItemFlatNode): TodoItemFlatNode | null {
+        const currentLevel &#x3D; this.getLevel(node);
+
+        if (currentLevel &lt; 1) {
+            return null;
+        }
+
+        const startIndex &#x3D; this.treeControl.dataNodes.indexOf(node) - 1;
+
+        for (let i &#x3D; startIndex; i &gt;&#x3D; 0; i--) {
+            const currentNode &#x3D; this.treeControl.dataNodes[i];
+
+            if (this.getLevel(currentNode) &lt; currentLevel) {
+                return currentNode;
+            }
+        }
+        return null;
     }
 
     /**
@@ -1171,8 +1844,8 @@ export class AssignCalendarPage implements OnInit {
      */
     checkIdExist(array: any, obj: any) {
         for (let j &#x3D; 0; j &lt; array.length; j++) {
-            if (array[j] &#x3D;&#x3D;&#x3D; obj) {
-                return 1;
+            if (array[j].employeeName &#x3D;&#x3D;&#x3D; obj) {
+                return j;
             }
         }
         return 0;
@@ -1183,6 +1856,12 @@ export class AssignCalendarPage implements OnInit {
      * @memberof AssignCalendarPage
      */
     submitData() {
+        for (let i &#x3D; 0; i &lt; this.assignCalendarForm.controls.user.value.length; i++) {
+            if (this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]) !&#x3D; 0) {
+                const index: number &#x3D; this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]);
+                this.employeeList.push(this.userList[index].id);
+            }
+        }
         const body &#x3D; {
             &quot;user_guid&quot;: this.employeeList,
             &quot;calendar_guid&quot;: this.selectedCalendarId
@@ -1191,6 +1870,9 @@ export class AssignCalendarPage implements OnInit {
             response &#x3D;&gt; {
                 this.assignCalendarForm.reset();
                 this.events &#x3D; [];
+                this.employeeList &#x3D; [];
+                this.showSelectedTree &#x3D; false;
+                this.checklistSelection.clear();
                 this.openSnackBar(&#x27;successfully&#x27;);
             }, error &#x3D;&gt; {
                 this.openSnackBar(&#x27;unsuccessfully&#x27;);
@@ -1209,6 +1891,28 @@ export class AssignCalendarPage implements OnInit {
             duration: 2500,
             data: message
         });
+    }
+
+    /**
+     * Closed div after clicked outside of div
+     * Push all items to array if they have checked
+     * Clear array if no item checked
+     * @param {*} event
+     * @memberof AssignCalendarPage
+     */
+    clickOutside(event) {
+        if (!event.target.className.includes(&quot;inputDropdown&quot;) &amp;&amp; !event.target.className.includes(&quot;material-icons&quot;) &amp;&amp; !event.target.className.includes(&quot;mat-form-field-infix&quot;)) {
+            this.showTreeDropdown &#x3D; false;
+            this.showSelectedTree &#x3D; true;
+            for (let i &#x3D; 0; i &lt; this.checklistSelection.selected.length; i++) {
+                if (this.checklistSelection.selected[i].level &#x3D;&#x3D; 1 &amp;&amp; this.assignCalendarForm.controls.user.value.indexOf(this.checklistSelection.selected[i].item) &#x3D;&#x3D;&#x3D; -1) {
+                    this.assignCalendarForm.controls.user.value.push(this.checklistSelection.selected[i].item);
+                }
+            }
+        }
+        if (this.checklistSelection.selected.length &#x3D;&#x3D;&#x3D; 0) {
+            this.assignCalendarForm.controls.user.value.length &#x3D; 0;
+        }
     }
 }</code></pre>
         </div>

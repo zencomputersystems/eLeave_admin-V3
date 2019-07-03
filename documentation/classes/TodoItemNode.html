@@ -115,7 +115,7 @@
                                     <a href="../components/AssignCalendarPage.html" >AssignCalendarPage</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../components/BulkImportPage.html"  class="active" >BulkImportPage</a>
+                                    <a href="../components/BulkImportPage.html" >BulkImportPage</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/BulkImportSuccessPage.html" >BulkImportSuccessPage</a>
@@ -175,7 +175,7 @@
                                     <a href="../classes/TodoItemFlatNode.html" >TodoItemFlatNode</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../classes/TodoItemNode.html" >TodoItemNode</a>
+                                    <a href="../classes/TodoItemNode.html"  class="active" >TodoItemNode</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/XmlJson.html" >XmlJson</a>
@@ -354,7 +354,7 @@
                                            <a href="../components/AssignCalendarPage.html" >AssignCalendarPage</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../components/BulkImportPage.html"  class="active" >BulkImportPage</a>
+                                           <a href="../components/BulkImportPage.html" >BulkImportPage</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/BulkImportSuccessPage.html" >BulkImportSuccessPage</a>
@@ -414,7 +414,7 @@
                                            <a href="../classes/TodoItemFlatNode.html" >TodoItemFlatNode</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../classes/TodoItemNode.html" >TodoItemNode</a>
+                                           <a href="../classes/TodoItemNode.html"  class="active" >TodoItemNode</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/XmlJson.html" >XmlJson</a>
@@ -492,678 +492,198 @@
                    
                    </nav>
                </div>
-               <div class="content component">
+               <div class="content class">
                    <div class="content-data">
 
 
+
+
+
+
 <ol class="breadcrumb">
-  <li>Components</li>
-  <li>BulkImportPage</li>
+  <li>Classes</li>
+  <li>TodoItemNode</li>
 </ol>
 
+<ul class="nav nav-tabs" role="tablist">
+    <li class="active">
+        <a href="#infos" id="infos-tab" role="tab" data-toggle="tab">Infos</a>
+    </li>
+    <li>
+        <a href="#source" role="tab" id="source-tab" data-toggle="tab">Source</a>
+    </li>
+</ul>
 
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#infos" id="infos-tab" role="tab" data-toggle="tab">Infos</a>
-        </li>
-        <li>
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab">Source</a>
-        </li>
-    </ul>
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="infos">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/pages/admin/admin-setup/public-holiday-setup/assign-calendar/assign-calendar-treeview.service.ts</code>
+        </p>
 
-    <div class="tab-content">
-        <div class="tab-pane fade active in" id="infos"><p class="comment">
-    <h3>File</h3>
-</p>
-<p class="comment">
-    <code>src/pages/admin/admin-setup/add-employee/bulk-import/bulk-import.page.ts</code>
-</p>
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Node for to-do item</p>
 
-    <p class="comment">
-        <h3>Description</h3>
-    </p>
-    <p class="comment">
-        <p>Bulk Import Page</p>
+            </p>
 
-    </p>
 
-    <p class="comment">
-        <h3>Example</h3>
-    </p>
-    <div class="io-description">
+
+
+            <section>
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> children</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <code>children:     <code><a href="../classes/TodoItemNode.html" target="_self" >TodoItemNode[]</a></code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> item</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <code>item:     <code>string</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </section>
     </div>
+    <div class="tab-pane fade tab-source-code" id="source">
+        <pre><code class="hljs javascript">import { Injectable } from &quot;@angular/core&quot;;
+import { BehaviorSubject } from &quot;rxjs&quot;;
+import { APIService } from &quot;src/services/shared-service/api.service&quot;;
 
-<section>
-    <h3>Metadata</h3>
-    <table class="table table-sm table-hover">
-        <tbody>
-
-
-
-
-
-
-
-
-
-
-
-
-            <tr>
-                <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>app-bulk-import</code></td>
-            </tr>
-
-            <tr>
-                <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>bulk-import.page.scss</code></td>
-            </tr>
-
-
-
-            <tr>
-                <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>bulk-import.page.html</code></td>
-            </tr>
-
-
-        </tbody>
-    </table>
-</section>
-
-
-
-    <section>
-        <h3 id="constructor">Constructor</h3>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <code>constructor(dialogBulkImport: any, dialogSuccess: any, dialog: MatDialog, http: <a href="https://angular.io/docs/ts/latest/api/http/index/Http-class.html" target="_blank" >Http</a>, fb: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a>)</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description"><p>Creates an instance of BulkImportPage.</p>
-    </div>
-                                <div class="io-description">
-                                        <b>Parameters :</b>
-                                        <ul class="jsdoc-params">
-                                                <li>
-                                                    <div>
-                                                        <b>dialogBulkImport</b>
-                                                            :     <code>MatDialogRef</code>
-    
-                                                    </div>
-                                                    <div>
-                                                        
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div>
-                                                        <b>dialogSuccess</b>
-                                                            :     <code>MatDialogRef</code>
-    
-                                                    </div>
-                                                    <div>
-                                                        
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div>
-                                                        <b>dialog</b>
-                                                            :     <code>MatDialog</code>
-    
-                                                    </div>
-                                                    <div>
-                                                        
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div>
-                                                        <b>http</b>
-                                                            :     <code><a href="https://angular.io/docs/ts/latest/api/http/index/Http-class.html" target="_blank" >Http</a></code>
-    
-                                                    </div>
-                                                    <div>
-                                                        
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div>
-                                                        <b>fb</b>
-                                                            :     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a></code>
-    
-                                                    </div>
-                                                    <div>
-                                                        
-                                                    </div>
-                                                </li>
-                                        </ul>
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-    </section>
-
-    <section>
-        <h3 id="methods">Methods</h3>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> onCloseClick</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>onCloseClick()</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description"><p>To close pop up page</p>
-    </div>
-                                <div class="io-description">
-                                </div>
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                                    <div class="io-description">
-                                        
-                                    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> dropped</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <span class="modifier-icon method fa fa-play circle">
-                                    <span class="fa fa-circle"></span>
-                                </span>
-                            <code>dropped(event: UploadEvent)</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description"><p>Get dropped file details<br>Submit file to API</p>
-    </div>
-                                <div class="io-description">
-                                        <b>Parameters :</b>
-                                        <ul class="jsdoc-params">
-                                                <li>
-                                                    <div>
-                                                        <b>event</b>
-                                                            :     <code>UploadEvent</code>
-    
-                                                    </div>
-                                                    <div>
-                                                        
-                                                    </div>
-                                                </li>
-                                        </ul>
-                                </div>
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                                    <div class="io-description">
-                                        
-                                    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> openFile</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>openFile(event: any, uploadedFileName: any)</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description"><p>Get the uploaded file details<br>Set value to fileform (form data)</p>
-    </div>
-                                <div class="io-description">
-                                        <b>Parameters :</b>
-                                        <ul class="jsdoc-params">
-                                                <li>
-                                                    <div>
-                                                        <b>event</b>
-                                                    </div>
-                                                    <div>
-                                                        
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div>
-                                                        <b>uploadedFileName</b>
-                                                    </div>
-                                                    <div>
-                                                        
-                                                    </div>
-                                                </li>
-                                        </ul>
-                                </div>
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                                    <div class="io-description">
-                                        
-                                    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> onSubmit</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>onSubmit()</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description"><p>Upload file to API</p>
-    </div>
-                                <div class="io-description">
-                                </div>
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                                    <div class="io-description">
-                                        <p>* </p>
-    
-                                    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-    </section>
-
-    <section>
-        <h3 id="inputs">Properties</h3>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> dialog</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <code>dialog:     <code>MatDialog</code>
-    </bcode>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> dialogBulkImport</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <code>dialogBulkImport:     <code>any</code>
-    </bcode>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> dialogSuccess</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <code>dialogSuccess:     <code>any</code>
-    </bcode>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> fileform</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>fileform:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Form group format for file</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> filename</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>filename:     <code>any</code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Get file name of imported/dropped file</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> fileName</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <code>fileName:     <code>string</code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Return value of filename from imported document</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> files</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>files:     <code>UploadFile[]</code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Get document info from imported/dropped file</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> formData</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>formData:     <code>FormData</code>
-    </bcode>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Form data from document to post to API</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> showUploadButton</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>showUploadButton:     <code>boolean</code>
-    </bcode>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Default value: </i><code>false</code>
-                            </td>
-                        </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Show upload button after imported/dropped file</p>
-    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-    </section>
-</div>
-        <div class="tab-pane fade tab-source-code" id="source">
-            <pre><code class="hljs javascript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
-import { MatDialogRef, MatDialog } from &#x27;@angular/material/dialog&#x27;;
-import { map } from &#x27;rxjs/operators&#x27;;
-import { RequestOptions, Http, Headers } from &#x27;@angular/http&#x27;;
-import { FormGroup, FormBuilder } from &#x27;@angular/forms&#x27;;
-import { BulkImportSuccessPage } from &#x27;../bulk-import-success/bulk-import-success.page&#x27;;
-import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from &#x27;ngx-file-drop&#x27;;
 /**
- * Bulk Import Page
- * @export
- * @class BulkImportPage
- * @implements {OnInit}
+ * Node for to-do item
  */
-@Component({
-    selector: &#x27;app-bulk-import&#x27;,
-    templateUrl: &#x27;./bulk-import.page.html&#x27;,
-    styleUrls: [&#x27;./bulk-import.page.scss&#x27;],
-})
-export class BulkImportPage implements OnInit {
-
-    /**
-     * Get file name of imported/dropped file
-     * @type {*}
-     * @memberof BulkImportPage
-     */
-    public filename: any;
-
-    /**
-     * Show upload button after imported/dropped file
-     * @memberof BulkImportPage
-     */
-    public showUploadButton: boolean &#x3D; false;
-
-    /**
-     * Form group format for file
-     * @type {FormGroup}
-     * @memberof BulkImportPage
-     */
-    public fileform: FormGroup;
-
-    /**
-     * Get document info from imported/dropped file
-     * @type {UploadFile[]}
-     * @memberof BulkImportPage
-     */
-    public files: UploadFile[] &#x3D; [];
-
-    /**
-     * Form data from document to post to API
-     * @type {FormData}
-     * @memberof BulkImportPage
-     */
-    public formData: FormData &#x3D; new FormData();
-
-    /**
-     * Return value of filename from imported document
-     * @readonly
-     * @type {string}
-     * @memberof BulkImportPage
-     */
-    get fileName(): string {
-        return this.filename;
-    }
-
-    /**
-     *Creates an instance of BulkImportPage.
-     * @param {MatDialogRef&lt;BulkImportPage&gt;} dialogBulkImport
-     * @param {MatDialogRef&lt;BulkImportSuccessPage&gt;} dialogSuccess
-     * @param {MatDialog} dialog
-     * @param {Http} http
-     * @param {FormBuilder} fb
-     * @memberof BulkImportPage
-     */
-    constructor(public dialogBulkImport: MatDialogRef&lt;BulkImportPage&gt;,
-        public dialogSuccess: MatDialogRef&lt;BulkImportSuccessPage&gt;,
-        public dialog: MatDialog, private http: Http, private fb: FormBuilder) {
-    }
-
-    ngOnInit() {
-        this.fileform &#x3D; this.fb.group({
-            file: &#x27;&#x27;
-        });
-    }
-
-    /**
-     * To close pop up page
-     * @memberof BulkImportPage
-     */
-    onCloseClick(): void {
-        this.dialogBulkImport.close();
-    }
-
-    /**
-     * Get dropped file details
-     * Submit file to API
-     * @param {UploadEvent} event
-     * @memberof BulkImportPage
-     */
-    public dropped(event: UploadEvent) {
-        this.files &#x3D; event.files;
-        for (const droppedFile of event.files) {
-            if (droppedFile.fileEntry.isFile) {
-                const fileEntry &#x3D; droppedFile.fileEntry as FileSystemFileEntry;
-                fileEntry.file((file: File) &#x3D;&gt; {
-                    this.filename &#x3D; file.name;
-                    this.fileform.get(&#x27;file&#x27;).setValue(file);
-                    this.onSubmit();
-                });
-            } else {
-                // It was a directory (empty directories are added, otherwise only files)
-                const fileEntry &#x3D; droppedFile.fileEntry as FileSystemDirectoryEntry;
-                console.log(droppedFile.relativePath, fileEntry);
-            }
-        }
-    }
-
-    /**
-     * Get the uploaded file details
-     * Set value to fileform (form data)
-     * @param {*} event
-     * @param {*} uploadedFileName
-     * @memberof BulkImportPage
-     */
-    openFile(event, uploadedFileName) {
-        if (uploadedFileName) {
-            this.showUploadButton &#x3D; true;
-        }
-        if (event.target.files.length &gt; 0) {
-            const file &#x3D; event.target.files[0];
-            this.filename &#x3D; file.name;
-            this.fileform.get(&#x27;file&#x27;).setValue(file);
-        }
-    }
-
-    /**
-     * Upload file to API
-     * @returns
-     * @memberof BulkImportPage
-     */
-    onSubmit() {
-        this.formData.append(&#x27;file&#x27;, new Blob([(this.fileform.get(&#x27;file&#x27;).value)], { type: &#x27;text/csv&#x27; }), this.fileName);
-        const queryHeaders &#x3D; new Headers();
-        queryHeaders.append(&#x27;Authorization&#x27;, &#x27;JWT &#x27; + JSON.parse(localStorage.getItem(&#x27;access_token&#x27;)));
-        const options &#x3D; new RequestOptions({ headers: queryHeaders });
-        return new Promise((resolve) &#x3D;&gt; {
-            this.http.post(&#x27;http://zencore.zen.com.my:3000/api/userimport/csv&#x27;, this.formData, options)
-                .pipe(map((response) &#x3D;&gt; {
-                    return response;
-                })).subscribe(
-                    (response) &#x3D;&gt; {
-                        resolve(response.json());
-                        this.dialogBulkImport.close();
-                        this.dialog.open(BulkImportSuccessPage);
-                    },
-                    (err) &#x3D;&gt; {
-                        if (err.status &#x3D;&#x3D;&#x3D; 401) {
-                            window.location.href &#x3D; &#x27;/login&#x27;;
-                        }
-                    }
-                )
-        })
-    }
+export class TodoItemNode {
+    children: TodoItemNode[];
+    item: string;
 }
-</code></pre>
-        </div>
+
+/** Flat to-do item node with expandable and level information */
+export class TodoItemFlatNode {
+    item: string;
+    level: number;
+    expandable: boolean;
+}
+
+/**
+ * EmployeeList database, it can build a tree structured Json object.
+ * Each node in Json object represents a to-do item or a category.
+ * If a node is a category, it has children items and new items can be added under the category.
+ * @export
+ * @class EmployeeListDatabase
+ */
+@Injectable()
+export class EmployeeListDatabase {
+
+    /**
+     * A subject use to observe value of item &amp; children
+     * @memberof EmployeeListDatabase
+     */
+    public dataChange &#x3D; new BehaviorSubject&lt;TodoItemNode[]&gt;([]);
+
+    /**
+     * Get user list from API
+     * @type {*}
+     * @memberof EmployeeListDatabase
+     */
+    public list: any;
+
+    /**
+     * Object value for nested tree list
+     * @memberof EmployeeListDatabase
+     */
+    public objectTree &#x3D; {};
+
+    /** 
+     * Return data of children and item
+     * @readonly
+     * @type {TodoItemNode[]}
+     * @memberof EmployeeListDatabase
+     */
+    get data(): TodoItemNode[] { return this.dataChange.value; }
+
+    /**
+     *Creates an instance of EmployeeListDatabase.
+     * @param {APIService} apiService
+     * @memberof EmployeeListDatabase
+     */
+    constructor(private apiService: APIService) {
+        this.apiService.get_user_profile_list().subscribe(
+            list &#x3D;&gt; {
+                this.list &#x3D; list;
+                for (let i &#x3D; 0; i &lt; this.list.length; i++) {
+                    if (this.list[i].department in this.objectTree) {
+                        this.objectTree[this.list[i].department].push(this.list[i].employeeName);
+                    } else {
+                        this.objectTree[this.list[i].department] &#x3D; new Array();
+                        this.objectTree[this.list[i].department].push(this.list[i].employeeName);
+                    }
+                }
+                this.initialize();
+            });
+    }
+
+    /**
+     * Initialize builded tree nodes from JSON list
+     * @memberof EmployeeListDatabase
+     */
+    initialize() {
+        // Build the tree nodes from Json object. The result is a list of &#x60;TodoItemNode&#x60; with nested
+        //     file node as children.
+        const data &#x3D; this.buildFileTree(this.objectTree, 0);
+
+        // Notify the change.
+        this.dataChange.next(data);
+    }
+
+    /**
+     * Build the file structure tree. The &#x60;value&#x60; is the Json object, or a sub-tree of a Json object.
+     * The return value is the list of &#x60;TodoItemNode&#x60;.
+     */
+    buildFileTree(obj: { [key: string]: any }, level: number): TodoItemNode[] {
+        return Object.keys(obj).reduce&lt;TodoItemNode[]&gt;((accumulator, key) &#x3D;&gt; {
+            const value &#x3D; obj[key];
+            const node &#x3D; new TodoItemNode();
+            node.item &#x3D; key;
+
+            if (value !&#x3D; null) {
+                if (typeof value &#x3D;&#x3D;&#x3D; &#x27;object&#x27;) {
+                    node.children &#x3D; this.buildFileTree(value, level + 1);
+                } else {
+                    node.item &#x3D; value;
+                }
+            }
+
+            return accumulator.concat(node);
+        }, []);
+    }
+
+}</code></pre>
     </div>
-
-
-
-
-
+</div>
 
 
 

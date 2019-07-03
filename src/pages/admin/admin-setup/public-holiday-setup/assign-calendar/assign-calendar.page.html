@@ -23,7 +23,7 @@
                 <input matInput class="inputDropdown" readonly required>
                 <mat-icon matSuffix class="iconDropdown"><i class="material-icons">arrow_drop_down</i></mat-icon>
                 <mat-error>Please select at least one option</mat-error>
-                <div class="dropdownList" *ngIf="showTreeDropdown" (clickOutside)="outside($event)">
+                <div class="dropdownList" *ngIf="showTreeDropdown" (clickOutside)="clickOutside($event)">
                     <mat-tree style="z-index: 2;position: absolute;width: 100%;" [dataSource]="dataSource"
                         [treeControl]="treeControl">
                         <!-- inner checkbox -->
@@ -55,7 +55,7 @@
                     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
                         <button mat-icon-button disabled></button>
                         <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)"
-                            (change)="todoLeafItemSelectionToggle(node)" color="primary">{{node.item}}
+                            (change)="todoLeafItemSelectionToggle(node)" color="primary" disabled>{{node.item}}
                         </mat-checkbox>
                     </mat-tree-node>
 
@@ -68,7 +68,7 @@
                         </button>
                         <mat-checkbox [checked]="descendantsAllSelected(node)"
                             [indeterminate]="descendantsPartiallySelected(node)"
-                            (change)="todoItemSelectionToggle(node)" color="primary">{{node.item}}
+                            (change)="todoItemSelectionToggle(node)" color="primary" disabled>{{node.item}}
                         </mat-checkbox>
                     </mat-tree-node>
                 </mat-tree>

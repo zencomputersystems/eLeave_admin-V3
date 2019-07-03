@@ -11,7 +11,12 @@ import { Validators, FormGroup, FormControl, FormBuilder } from '@angular/forms'
 import { TitleCasePipe } from '@angular/common';
 const moment = _moment;
 import { getDataSet, reduce } from "iso3166-2-db";
-
+/**
+ * Manage holiday and rest day for employee
+ * @export
+ * @class ManageHolidayPage
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'app-manage-holiday',
     templateUrl: './manage-holiday.page.html',
