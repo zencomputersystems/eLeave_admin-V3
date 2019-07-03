@@ -336,6 +336,7 @@ export class AssignCalendarPage implements OnInit {
      * @memberof AssignCalendarPage
      */
     submitData() {
+        this.showSpinner = true;
         for (let i = 0; i < this.assignCalendarForm.controls.user.value.length; i++) {
             if (this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]) != 0) {
                 const index: number = this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]);
@@ -354,6 +355,7 @@ export class AssignCalendarPage implements OnInit {
                 this.showSelectedTree = false;
                 this.checklistSelection.clear();
                 this.openSnackBar('successfully');
+                this.showSpinner = false;
             }, error => {
                 this.openSnackBar('unsuccessfully');
                 window.location.href = '/login';
