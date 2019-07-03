@@ -11,6 +11,9 @@ import { Validators, FormGroup, FormControl, FormBuilder } from '@angular/forms'
 import { TitleCasePipe } from '@angular/common';
 const moment = _moment;
 import { getDataSet, reduce } from "iso3166-2-db";
+import { MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
+import { APP_DATE_FORMATS, AppDateAdapter } from '../date.adapter';
+
 /**
  * Manage holiday and rest day for employee
  * @export
@@ -21,7 +24,9 @@ import { getDataSet, reduce } from "iso3166-2-db";
     selector: 'app-manage-holiday',
     templateUrl: './manage-holiday.page.html',
     styleUrls: ['./manage-holiday.page.scss'],
-    providers: [TitleCasePipe]
+    providers: [TitleCasePipe,
+        { provide: DateAdapter, useClass: AppDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
 })
 export class ManageHolidayPage implements OnInit {
 

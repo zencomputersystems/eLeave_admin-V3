@@ -28,7 +28,7 @@ export class AddOneEmployeePage implements OnInit {
      * @type {FormGroup}
      * @memberof AddOneEmployeePage
      */
-    public invitationForm: FormGroup;
+    public invitationForm;
 
     /**
      *Creates an instance of AddOneEmployeePage.
@@ -36,8 +36,7 @@ export class AddOneEmployeePage implements OnInit {
      * @param {MatDialogRef<AddOneEmployeePage>} dialogAddOneEmployee
      * @memberof AddOneEmployeePage
      */
-    constructor(private http: Http, public dialogAddOneEmployee: MatDialogRef<AddOneEmployeePage>, ) {
-
+    constructor(private http: Http, public dialogAddOneEmployee: MatDialogRef<AddOneEmployeePage>) {
         this.invitationForm = new FormGroup({
             firstName: new FormControl('', Validators.required),
             lastName: new FormControl('', Validators.required),
