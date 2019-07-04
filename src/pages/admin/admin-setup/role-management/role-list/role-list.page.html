@@ -1,0 +1,72 @@
+<div class="container" *ngIf="showContent">
+    <div style="width: 100%; height:100%; text-align: center;margin-top: -30px" *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <div class="cardContent">
+        <ion-card-content>
+            <!-- <div class="leaveHistoryContainer">View leave history</div> -->
+            <div style="margin-top: 3%">
+                <ion-row class="titleRow">
+                    <ion-col style="display: inline-flex">
+                        <ion-label class="titleLabel">ROLE NAME</ion-label>
+                        <ion-icon class="arrow" name="arrow-dropdown" (click)="sortDesLeaveType()"
+                            *ngIf="sortDirectionArrowDown">
+                        </ion-icon>
+                        <ion-icon class="arrow" name="arrow-dropup" *ngIf="!sortDirectionArrowDown"
+                            (click)="sortAscLeaveType()">
+                        </ion-icon>
+                    </ion-col>
+                    <ion-col>
+                        <ion-label class="titleLabel">DESCRIPTION</ion-label>
+                        <ion-icon class="arrow" name="arrow-dropdown" (click)="sortDesLeaveType()"
+                            *ngIf="sortDirectionArrowDown">
+                        </ion-icon>
+                        <ion-icon class="arrow" name="arrow-dropup" *ngIf="!sortDirectionArrowDown"
+                            (click)="sortAscLeaveType()">
+                        </ion-icon>
+                    </ion-col>
+                    <ion-col>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="detailsRow" *ngFor="let role of roleList">
+                    <ion-col>
+                        <ion-label style="color: #057dcd;font-size: 13px;">{{role.code}}</ion-label>
+                    </ion-col>
+                    <ion-col class="colOfLeave">{{role.description}}
+                    </ion-col>
+                    <ion-col align-self-end>
+                        <ion-button shape="round" fill="outline" float-right style="margin-right: 7%; margin-top: -0.2%;font-size: 10px;
+                        height: 27px;" (click)="getRoleId(role.role_guid)">
+                            <span style="padding-right: 5px">Edit</span>
+                            <div class="edit-pencil-icon" [inlineSVG]="'assets/icon/Option/pencil.svg'">
+                            </div>
+                        </ion-button>
+                    </ion-col>
+                    <ion-item class="divider" lines="full"></ion-item>
+                </ion-row>
+            </div>
+        </ion-card-content>
+    </div>
+    <div style="padding-left: 45px;padding-right: 20px;display: inline-flex;width: 97%;min-width: 330px;">
+        <ion-button [disabled]="disablePrevButton" fill="outline" (click)="clickToPrevPage(pageIndex-1)"
+            style="font-size: 12px;height: 30px;width: 90px;" color="primary">
+            <ion-icon name="arrow-back"></ion-icon>Prev
+        </ion-button>
+        <div style="padding-left: 10px"></div>
+        <ion-button [disabled]="disableNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
+            (click)="clickToNextPage(pageIndex+1)">Next<ion-icon name="arrow-forward">
+            </ion-icon>
+        </ion-button>
+        <div class="paginator">
+            <span style="padding-right: 10px;">Page</span>
+            <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
+                    padding-right: 7px;">{{pageIndex}}</span>
+            <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageIndex}}
+            <i class="fas fa-angle-left" title="Previous page"
+                style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
+                (click)="clickToPrevPage(pageIndex-1)"></i>
+            <i class="fas fa-angle-right" title="Next page" style="cursor:pointer; font-size: 15px;padding-left: 10px"
+                (click)="clickToNextPage(pageIndex+1)"></i>
+        </div>
+    </div>
+</div>

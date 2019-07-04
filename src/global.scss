@@ -15,7 +15,7 @@
 
 @import "~@fullcalendar/core/main.css";
 @import "~@fullcalendar/daygrid/main.css";
-@import '@fullcalendar/list/main.css';
+@import "@fullcalendar/list/main.css";
 // @import '~@fullcalendar/timegrid/main.css';
 
 $mat-myapp-primary: (
@@ -91,51 +91,10 @@ $theme: mat-light-theme($primary, $accent);
 
 @include angular-material-theme($theme);
 
-app-connections
-  > div.connectionsContainer
-  > div.topHeader
-  > ion-searchbar.searchbar
-  > div.searchbar-input-container
-  > input.searchbar-input {
-  background: transparent;
-  border-radius: 30px;
-  border: 0.5px solid #bebebe;
-  height: 31px;
-}
-app-connections
-  > div.connectionsContainer
-  > div.topHeader
-  > ion-searchbar.searchbar
-  > div.searchbar-input-container
-  > ion-icon.searchbar-search-icon.sc-ion-searchbar-ios {
-  height: 88%;
-}
-app-connections
-  > div.connectionsContainer
-  > div.topHeader
-  > ion-searchbar.searchbar
-  > div.searchbar-input-container
-  > button
-  > ion-icon.searchbar-clear-icon.sc-ion-searchbar-ios {
-  height: 80%;
-  margin-top: -3px;
-}
-app-connections
-  > div.connectionsContainer
-  > ion-content
-  > .mat-grid-list
-  > div
-  > .mat-grid-tile
-  > figure
-  > .mat-card
-  > .mat-card-header
-  > div.mat-card-header-text {
-  overflow: hidden;
-}
 app-public-personal-details > mat-card > .mat-card-header > div.mat-card-header-text {
   overflow: hidden;
 }
-app-admin-invites
+app-invite-list
   > div.connectionsContainer
   > div.topHeader
   > ion-searchbar.searchbar
@@ -146,7 +105,7 @@ app-admin-invites
   border: 0.5px solid #bebebe;
   height: 31px;
 }
-app-admin-invites
+app-invite-list
   > div.connectionsContainer
   > div.topHeader
   > ion-searchbar.searchbar
@@ -154,7 +113,7 @@ app-admin-invites
   > ion-icon.searchbar-search-icon.sc-ion-searchbar-ios {
   height: 88%;
 }
-app-admin-invites
+app-invite-list
   > div.connectionsContainer
   > div.topHeader
   > ion-searchbar.searchbar
@@ -164,7 +123,7 @@ app-admin-invites
   height: 80%;
   margin-top: -3px;
 }
-app-admin-invites
+app-invite-list
   > div.connectionsContainer
   > ion-content
   > .mat-grid-list

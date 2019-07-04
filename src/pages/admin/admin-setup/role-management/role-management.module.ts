@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
@@ -11,17 +11,21 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
-import { AdminInvitesPage } from './admin-invites.page';
 import { InlineSVGModule } from 'ng-inline-svg';
-import { InviteMorePage } from './inivite-more/invite-more.page';
-import { InviteListPage } from './invite-list/invite-list.page';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { RoleManagementPage } from './role-management.page';
+import { RoleRightsPage } from './role-rights/role-rights.page';
+import { RoleListPage } from './role-list/role-list.page';
 
 
 const routes: Routes = [
     {
         path: '',
-        component: AdminInvitesPage
+        component: RoleManagementPage
     }
 ];
 
@@ -39,8 +43,14 @@ const routes: Routes = [
         MatCardModule,
         InlineSVGModule,
         SpinnerModule,
+        ReactiveFormsModule,
+        MatSnackBarModule,
+        MatTreeModule,
+        MatCheckboxModule,
+        MatButtonModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [AdminInvitesPage, InviteMorePage, InviteListPage]
+    entryComponents: [],
+    declarations: [RoleManagementPage, RoleRightsPage, RoleListPage]
 })
-export class AdminInvitesModule { }
+export class RoleManagementModule { }

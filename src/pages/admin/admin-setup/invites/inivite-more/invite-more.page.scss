@@ -1,6 +1,8 @@
 :host {
-  top: 48px;
-  background: #f9fafc;
+  margin: auto;
+  width: 100%;
+  min-height: calc(100% - 58px);
+
   .header-md:after {
     height: 0px;
     background-image: none;
@@ -72,12 +74,8 @@
     --border-width: 1px;
   }
   .connectionsContainer {
-    // background-color:#f9fafc;
-    // height: calc( 100% - 84px);
     background: white;
-    height: calc(100% - 58px);
-    padding-left: 20px;
-    padding-right: 20px;
+    height: 100%;
     width: 95%;
     margin: 0 auto;
   }
@@ -89,10 +87,8 @@
     margin-left: 1%;
   }
   .searchbar {
-    //   width: 34%;
     color: #7a8589;
     font-size: 12px;
-    // float: left;
   }
   ::ng-deep .searchbar-clear-icon {
     display: none;

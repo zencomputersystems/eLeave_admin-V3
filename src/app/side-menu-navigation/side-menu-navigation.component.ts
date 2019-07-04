@@ -90,7 +90,12 @@ export class SideMenuNavigationComponent implements OnInit {
       title: 'Employee',
       url: '/main/employee-directory',
       icon: 'employee.svg'
-    }
+    },
+    {
+      title: 'Role Management',
+      url: '/main/role-management',
+      icon: 'outline-people.svg'
+    },
   ];
 
   /** 

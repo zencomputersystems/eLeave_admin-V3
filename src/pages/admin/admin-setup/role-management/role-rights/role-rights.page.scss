@@ -1,0 +1,46 @@
+:host {
+  margin: auto;
+  width: 100%;
+  min-height: calc(100% - 58px);
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 10px;
+  }
+  .column1 {
+    flex: 100%;
+    max-width: 30%;
+    padding: 0 10px;
+  }
+  .column2 {
+    flex: 100%;
+    max-width: 30%;
+    padding: 0 10px;
+  }
+  .column3 {
+    flex: 100%;
+    max-width: 30%;
+    padding: 0 10px;
+  }
+  .column1 .leaveSetup {
+    margin-top: 5px;
+    vertical-align: middle;
+  }
+  .column1 .reportView {
+    margin-top: 5px;
+    vertical-align: middle;
+  }
+  .column2 .leaveManagement {
+    margin-top: 5px;
+    vertical-align: middle;
+  }
+  .column2 .calendarView {
+    margin-top: 5px;
+    vertical-align: middle;
+  }
+  .column3 .profileManagement {
+    margin-top: 5px;
+    vertical-align: middle;
+  }
+}

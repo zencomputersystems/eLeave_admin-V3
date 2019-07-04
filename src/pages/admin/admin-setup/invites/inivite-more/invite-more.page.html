@@ -1,15 +1,3 @@
-<ion-header>
-    <ion-toolbar class="toolbar2">
-        <ion-title style="display: inline-block;color: #20291f; font-size: 16px">
-            Invites
-        </ion-title>
-        <div style="float: right; padding-right: 20px;">
-            <i class="material-icons"
-                style="padding-left: 10px; color: #7a8589; float: right;cursor: pointer">more_horiz</i>
-        </div>
-    </ion-toolbar>
-</ion-header>
-
 <div class="connectionsContainer">
     <div class="topHeader">
         <ion-searchbar mode="ios" class="searchbar" autocomplete="true" #searchbar [value]="inputValue"
@@ -34,8 +22,9 @@
         </p>
     </div>
 
-    <ion-content style="padding: 20px;height: calc( 100% - 130px);--background: #f9f9f9;">
-        <div style="padding: 30px;">
+    <ion-content
+        style="padding: 20px;height: calc( 100% - 130px);--background: #f9f9f9;border-bottom: solid 0.5px #dfe3e6;">
+        <div style="padding: 30px;border-top: solid 0.5px #dfe3e6;">
             <div class="numOfPeople">You have added {{dataList.length}} people</div>
             <ion-row class="detailsRow" *ngFor="let item of dataList; let i=index">
                 <ion-col size="0.7">
@@ -68,3 +57,4 @@
             [disabled]="dataList.length === 0" (click)="sendInvitation()">SEND INVITATION
         </ion-button>
     </div>
+</div>

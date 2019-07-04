@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
 import { AddEmployeeModule } from 'src/pages/admin/admin-setup/add-employee/add-employee.module';
 import { PublicHolidaySetupModule } from 'src/pages/admin/admin-setup/public-holiday-setup/public-holiday-setup.module';
+import { RoleManagementModule } from 'src/pages/admin/admin-setup/role-management/role-management.module';
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import { PublicHolidaySetupModule } from 'src/pages/admin/admin-setup/public-hol
         MatMenuModule,
         AddEmployeeModule,
         PublicHolidaySetupModule,
+        RoleManagementModule,
         RouterModule.forChild(sideMenuNavigationRoutes)
     ],
     providers: [AuthGuard],

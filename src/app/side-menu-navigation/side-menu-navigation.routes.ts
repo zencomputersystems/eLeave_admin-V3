@@ -10,6 +10,10 @@ import { BulkImportPage } from 'src/pages/admin/admin-setup/add-employee/bulk-im
 import { BulkImportSuccessPage } from 'src/pages/admin/admin-setup/add-employee/bulk-import-success/bulk-import-success.page';
 import { AddOneEmployeePage } from 'src/pages/admin/admin-setup/add-employee/add-one-employee/add-one-employee.page';
 import { PublicHolidaySetup } from 'src/pages/admin/admin-setup/public-holiday-setup/public-holiday-setup';
+import { RoleManagementPage } from 'src/pages/admin/admin-setup/role-management/role-management.page';
+import { RoleRightsPage } from 'src/pages/admin/admin-setup/role-management/role-rights/role-rights.page';
+import { RoleListPage } from 'src/pages/admin/admin-setup/role-management/role-list/role-list.page';
+import { InviteListPage } from 'src/pages/admin/admin-setup/invites/invite-list/invite-list.page';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -21,22 +25,24 @@ export const sideMenuNavigationRoutes: Routes = [
             { path: 'dashboard', component: EmployeeProfilePage },
             { path: 'inbox', component: AddEmployeePage }, // AddEmployeePage //EmployeeProfilePage
             { path: 'plan-my-leave', component: PublicHolidaySetup },
-            { path: 'employee-directory', component: AdminInvitesPage },
-            { path: 'invite-more', component: InviteMorePage },
-            // { path: 'user-public-profile', component: PublicPersonalDetailsPage },
-            // {
-            //     path: 'employee-setup', component: EmployeeSetupPage,
-            //     children: [
-            //         { path: '', redirectTo: 'personal-details', pathMatch: 'full' },
-            //         { path: 'personal-details', component: PersonalDetailsPage },
-            //         { path: 'employment-details/:id', component: EmploymentDetailsPage },
-            //         { path: 'leave-entitlement', component: LeaveEntitlementPage },
-            //         { path: 'awards-certification', component: PageNotFoundComponent },
-            //         { path: 'connection', component: ConnectionsPage },
-            //         { path: 'account', component: AccountSettingPage }
-            //     ]
-            // }
+            {
+                path: 'employee-directory', component: AdminInvitesPage,
+                children: [
+                    { path: '', redirectTo: 'invite-list', pathMatch: 'full' },
+                    { path: 'invite-list', component: InviteListPage },
+                    { path: 'invite-more', component: InviteMorePage },
+                ]
+            },
+            {
+                path: 'role-management', component: RoleManagementPage,
+                children: [
+                    { path: '', redirectTo: 'role-list', pathMatch: 'full' },
+                    { path: 'role-list', component: RoleListPage },
+                    { path: 'role-rights/:id', component: RoleRightsPage }
+                ]
+            },
         ]
-    }
+    },
+    { path: '**', component: PageNotFoundComponent },
 ];
 
