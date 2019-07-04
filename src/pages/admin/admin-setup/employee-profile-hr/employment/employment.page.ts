@@ -169,7 +169,7 @@ export class EmploymentPage implements OnInit {
             "employeeNumber": this.employmentlist.employmentDetail.employeeNumber,
             "designation": this.employmentlist.employeeDesignation,
             "department": this.employmentlist.employeeDepartment,
-            "branch": this.branch,
+            "branch": '', // this.branch,
             "division": "",
             "workLocation": this.employmentlist.employmentDetail.workLocation,  //nt able to patch this data
             "reportingTo": this.employmentlist.employmentDetail.reportingTo,

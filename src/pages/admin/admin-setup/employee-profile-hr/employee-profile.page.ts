@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { AppDateAdapter, APP_DATE_FORMATS } from '../public-holiday-setup/date.adapter';
 /**
  * Employee Profile Page
  * @export
@@ -12,6 +14,9 @@ import { Router } from '@angular/router';
     selector: 'app-employee-profile',
     templateUrl: './employee-profile.page.html',
     styleUrls: ['./employee-profile.page.scss'],
+    providers: [
+        { provide: DateAdapter, useClass: AppDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
 })
 export class EmployeeProfilePage implements OnInit {
 
