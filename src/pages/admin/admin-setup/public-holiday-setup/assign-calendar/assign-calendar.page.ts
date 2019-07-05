@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { APIService } from "src/services/shared-service/api.service";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { FormGroup, Validators, FormControl, FormArray } from "@angular/forms";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import listYear from '@fullcalendar/list';
@@ -142,7 +142,7 @@ export class AssignCalendarPage implements OnInit {
      * @param {FormBuilder} fb
      * @memberof AssignCalendarPage
      */
-    constructor(private apiService: APIService, private snackBar: MatSnackBar, private database: EmployeeListDatabase, private fb: FormBuilder) {
+    constructor(private apiService: APIService, private snackBar: MatSnackBar, private database: EmployeeListDatabase) {
         this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
             this.isExpandable, this.getChildren);
         this.treeControl = new FlatTreeControl<TodoItemFlatNode>(this.getLevel, this.isExpandable);
@@ -153,10 +153,10 @@ export class AssignCalendarPage implements OnInit {
     }
 
     ngOnInit() {
-        this.assignCalendarForm = this.fb.group({
-            user: this.fb.array([]),
-            calendar: ['', Validators.required]
-        });
+        this.assignCalendarForm = new FormGroup({
+            user: new FormArray([]),
+            calendar: new FormControl(['', Validators.required])
+        })
         this.apiService.get_user_profile_list().subscribe(
             data => {
                 this.userList = data;
@@ -217,7 +217,6 @@ export class AssignCalendarPage implements OnInit {
         const descAllSelected = descendants.every(child =>
             this.checklistSelection.isSelected(child)
         );
-        // console.log('select', this.checklistSelection);
         return descAllSelected;
     }
 
@@ -241,14 +240,12 @@ export class AssignCalendarPage implements OnInit {
             this.checklistSelection.isSelected(child)
         );
         this.checkAllParentsSelection(node);
-        // console.log('main', node, this.checklistSelection);
     }
 
     /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
     todoLeafItemSelectionToggle(node: TodoItemFlatNode): void {
         this.checklistSelection.toggle(node);
         this.checkAllParentsSelection(node);
-        // console.log('inner', node, this.checklistSelection);
     }
 
     /* Checks all the parents when a leaf node is selected/unselected */
@@ -336,31 +333,27 @@ export class AssignCalendarPage implements OnInit {
      * @memberof AssignCalendarPage
      */
     submitData() {
-        this.showSpinner = true;
         for (let i = 0; i < this.assignCalendarForm.controls.user.value.length; i++) {
             if (this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]) != 0) {
                 const index: number = this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]);
                 this.employeeList.push(this.userList[index].id);
             }
         }
-        const body = {
+        this.apiService.patch_assign_calendar_profile({
             "user_guid": this.employeeList,
             "calendar_guid": this.selectedCalendarId
-        }
-        this.apiService.patch_assign_calendar_profile(body).subscribe(
-            response => {
-                this.assignCalendarForm.reset();
-                this.events = [];
-                this.employeeList = [];
-                this.showSelectedTree = false;
-                this.checklistSelection.clear();
-                this.openSnackBar('successfully');
-                this.showSpinner = false;
-            }, error => {
-                this.openSnackBar('unsuccessfully');
-                window.location.href = '/login';
-            }
-        );
+        }).subscribe(response => {
+            this.assignCalendarForm.reset();
+            this.events = [];
+            this.employeeList = [];
+            this.showSelectedTree = false;
+            this.showSpinner = false;
+            this.checklistSelection.clear();
+            this.openSnackBar('successfully');
+        }, error => {
+            this.openSnackBar('unsuccessfully');
+            window.location.href = '/login';
+        });
     }
 
     /**
@@ -386,10 +379,10 @@ export class AssignCalendarPage implements OnInit {
         if (!event.target.className.includes("inputDropdown") && !event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix")) {
             this.showTreeDropdown = false;
             this.showSelectedTree = true;
-            for (let i = 0; i < this.checklistSelection.selected.length; i++) {
-                if (this.checklistSelection.selected[i].level == 1 && this.assignCalendarForm.controls.user.value.indexOf(this.checklistSelection.selected[i].item) === -1) {
-                    this.assignCalendarForm.controls.user.value.push(this.checklistSelection.selected[i].item);
-                }
+        }
+        for (let i = 0; i < this.checklistSelection.selected.length; i++) {
+            if (this.checklistSelection.selected[i].level == 1 && this.assignCalendarForm.controls.user.value.indexOf(this.checklistSelection.selected[i].item) === -1) {
+                this.assignCalendarForm.controls.user.value.push(this.checklistSelection.selected[i].item)
             }
         }
         if (this.checklistSelection.selected.length === 0) {

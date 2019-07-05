@@ -79,7 +79,7 @@
                     CLEAR
                 </ion-button>
                 <div style="width: 10px; display: inline-block"></div>
-                <ion-button style="font-size: 12px;height: 30px;width: 100px;" color="primary" (click)="submitData()"
+                <ion-button style="font-size: 12px;height: 30px;width: 100px;" color="primary" (click)="submitData(); showSpinner = true;"
                     [disabled]="!assignCalendarForm.valid">SUBMIT
                 </ion-button>
                 <ion-spinner name="lines" *ngIf="showSpinner" color="primary"

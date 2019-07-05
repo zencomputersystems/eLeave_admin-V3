@@ -147,6 +147,7 @@ export class InviteListPage implements OnInit {
     constructor(private apiService: APIService, public router: Router) { }
 
     ngOnInit() {
+        this.listView = true;
         this.endPoint();
     }
 
@@ -166,10 +167,9 @@ export class InviteListPage implements OnInit {
         this._subscription = this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
-                this.listView = true;
                 this.list = data;
                 this.pageIndex = 1;
-                this.loopItemsPerPage(this.pageIndex, this.list, this.itemsPerPage, this.startEndNumber);
+                this.loopItemsPerPage(this.pageIndex);
             },
             error => {
                 if (error) {
@@ -193,7 +193,7 @@ export class InviteListPage implements OnInit {
         this.disablePrevButton = true;
         this.itemsPerPage = pageItems;
         this.startEndNumber = range;
-        this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
+        this.loopItemsPerPage(1);
     }
 
     /**
@@ -204,16 +204,16 @@ export class InviteListPage implements OnInit {
      * @param {*} startEndNumber
      * @memberof InviteListPage
      */
-    loopItemsPerPage(index: number, data: any, itemEachPage: number, startEndNumber) {
+    loopItemsPerPage(index: number) {
         this.pageIndex = index;
         this.totalItem = this.list.length;
-        this.totalPageIndex = this.totalItem / itemEachPage;
+        this.totalPageIndex = this.totalItem / this.itemsPerPage;
         this.totalPageIndex = Math.ceil(this.totalPageIndex);
-        const startNum = (this.pageIndex * itemEachPage) - startEndNumber;
-        const endNum = this.pageIndex * itemEachPage;
+        const startNum = (this.pageIndex * this.itemsPerPage) - this.startEndNumber;
+        const endNum = this.pageIndex * this.itemsPerPage;
         const currentPageItems = [];
         for (let j = startNum - 1; j < endNum; j++) {
-            const itemNum = data[j];
+            const itemNum = this.list[j];
             if (itemNum !== undefined) {
                 currentPageItems.push(itemNum);
             }
@@ -260,7 +260,7 @@ export class InviteListPage implements OnInit {
      */
     clickToNextPage(index: number) {
         if (!(index > this.totalPageIndex)) {
-            this.loopItemsPerPage(index, this.list, this.itemsPerPage, this.startEndNumber);
+            this.loopItemsPerPage(index);
         }
         this.enableDisableNextButton();
     }
@@ -272,7 +272,7 @@ export class InviteListPage implements OnInit {
      */
     clickToPrevPage(index: number) {
         if (!(index < 1)) {
-            this.loopItemsPerPage(index, this.list, this.itemsPerPage, this.startEndNumber);
+            this.loopItemsPerPage(index);
         }
         this.enableDisablePrevButton();
     }
@@ -292,7 +292,7 @@ export class InviteListPage implements OnInit {
             var y = b.employeeName.toLowerCase();
             return x < y ? ascValue : x > y ? desValue : 0;
         });
-        this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
+        this.loopItemsPerPage(1);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
@@ -312,7 +312,7 @@ export class InviteListPage implements OnInit {
             var y = b.staffNumber;
             return x < y ? asc : x > y ? des : 0;
         });
-        this.loopItemsPerPage(1, this.list, this.itemsPerPage, this.startEndNumber);
+        this.loopItemsPerPage(1);
         this.disableNextButton = false;
         this.disablePrevButton = true;
     }
@@ -329,7 +329,7 @@ export class InviteListPage implements OnInit {
             })
 
             this.pageIndex = 1;
-            this.loopItemsPerPage(this.pageIndex, this.list, this.itemsPerPage, this.startEndNumber);
+            this.loopItemsPerPage(this.pageIndex);
             this.enableDisableNextButton();
             this.enableDisablePrevButton();
         }
