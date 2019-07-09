@@ -52,7 +52,8 @@
             <div class="showSelection" *ngIf="showSelectedTree">
                 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
                     <!-- inner checkbox -->
-                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                    <mat-tree-node [style.display]="checklistSelection.isSelected(node) ? 'block' : 'none'"
+                        *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
                         <button mat-icon-button disabled></button>
                         <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)"
                             (change)="todoLeafItemSelectionToggle(node)" color="primary" disabled>{{node.item}}
@@ -60,7 +61,9 @@
                     </mat-tree-node>
 
                     <!-- main checkbox -->
-                    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                    <mat-tree-node
+                        [style.display]="(descendantsAllSelected(node) || descendantsPartiallySelected(node)) ? 'block' : 'none'"
+                        *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
                         <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
                             <mat-icon class="mat-icon-rtl-mirror">
                                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
@@ -75,12 +78,13 @@
             </div>
             <div style="text-align: center; padding-top: 5%;">
                 <ion-button fill="outline" style="font-size: 12px;height: 30px;width: 90px;background: white;"
-                    color="primary" (click)="assignCalendarForm.reset();checklistSelection.clear();showSelectedTree = false;">
+                    color="primary"
+                    (click)="assignCalendarForm.reset();checklistSelection.clear();showSelectedTree = false;">
                     CLEAR
                 </ion-button>
                 <div style="width: 10px; display: inline-block"></div>
-                <ion-button style="font-size: 12px;height: 30px;width: 100px;" color="primary" (click)="submitData(); showSpinner = true;"
-                    [disabled]="!assignCalendarForm.valid">SUBMIT
+                <ion-button style="font-size: 12px;height: 30px;width: 100px;" color="primary"
+                    (click)="submitData(); showSpinner = true;" [disabled]="!assignCalendarForm.valid">SUBMIT
                 </ion-button>
                 <ion-spinner name="lines" *ngIf="showSpinner" color="primary"
                     style="position: absolute;margin-top: 5px;margin-left: 5px;">

@@ -32,4 +32,8 @@
     overflow: auto;
     margin-bottom: 20px;
   }
+  ::ng-deep .mat-checkbox-layout {
+    display: contents;
+    white-space: inherit;
+  }
 }
