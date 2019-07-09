@@ -389,4 +389,5 @@ export class AssignCalendarPage implements OnInit {
             this.assignCalendarForm.controls.user.value.length = 0;
         }
     }
+
 }
