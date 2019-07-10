@@ -36,6 +36,11 @@ export class RolesAPIService {
             .pipe(map((res: Response) => res.json()));
     }
 
+    patch_role_profile(body): Observable<any> {
+        this.authorization();
+        return this.http.patch(this.baseUrl + '/api/admin/role/role-profile', body, { headers: this.headerApp })
+    }
+
 
 
 }

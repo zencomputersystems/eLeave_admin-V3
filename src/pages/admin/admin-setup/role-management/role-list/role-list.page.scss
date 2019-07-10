@@ -14,13 +14,18 @@
     min-height: 100%;
     width: 95%;
     margin: auto;
+    height: 100%;
   }
   .cardContent {
-    // overflow: auto;
-    padding: 20px;
+    overflow: auto;
     --offset-top: 0px;
     --offset-bottom: 0px;
-    min-height: calc(100% - 50px);
+    min-height: calc(100% - 38px);
+    height: calc(100% - 130px);
+    // padding: 20px;
+    // --offset-top: 0px;
+    // --offset-bottom: 0px;
+    // min-height: calc(100% - 50px);
   }
   .paginator {
     color: #7a8589;
