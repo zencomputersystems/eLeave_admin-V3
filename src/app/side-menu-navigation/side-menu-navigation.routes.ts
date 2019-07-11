@@ -38,7 +38,8 @@ export const sideMenuNavigationRoutes: Routes = [
                 children: [
                     { path: '', redirectTo: 'role-list', pathMatch: 'full' },
                     { path: 'role-list', component: RoleListPage },
-                    { path: 'role-rights/:id', component: RoleRightsPage }
+                    { path: 'role-rights/:id', component: RoleRightsPage },
+                    { path: 'create-new-role', component: RoleRightsPage }
                 ]
             },
         ]

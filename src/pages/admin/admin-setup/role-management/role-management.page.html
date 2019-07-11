@@ -3,6 +3,13 @@
         <ion-title style="display: inline-block;color: #20291f;font-size: 16px;">
             Roles
         </ion-title>
+        <div style="float: right; padding-right: 20px;">
+            <i class="material-icons" style="padding-right: 5px; color: #057dcd; cursor: pointer;">add</i>
+            <ion-label class="label" style="font-size: 14px; color: #057dcd;float: right;
+            margin-top: 5px;padding-right: 10px;cursor: pointer"
+                (click)="router.navigate(['/main/role-management/create-new-role']);">
+                Create role</ion-label>
+        </div>
     </ion-toolbar>
 </ion-header>
 <router-outlet></router-outlet>

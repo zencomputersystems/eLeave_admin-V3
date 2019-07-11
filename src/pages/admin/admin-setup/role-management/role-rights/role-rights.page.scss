@@ -20,6 +20,8 @@
     cursor: pointer;
   }
   .pText {
+    text-overflow: ellipsis;
+    overflow: hidden;
     color: #7a8589;
     width: 39%;
     margin-left: 10%;
@@ -90,13 +92,17 @@
   ::ng-deep .mat-option-text {
     color: #7a8589;
   }
-  .cardTitle{
+  .cardTitle {
     font-size: 16px;
-    color:#7a8589;
+    color: #7a8589;
   }
 
   // button
   .button-outline {
     --border-width: 1px;
+  }
+  // create role
+  ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0%;
   }
 }
