@@ -10,7 +10,6 @@ import { RolesAPIService } from '../role-api.service';
 export class RoleListPage implements OnInit {
 
     public roleList: any;
-
     public showSpinner: boolean = true;
     public showContent: boolean = false;
 
@@ -31,7 +30,6 @@ export class RoleListPage implements OnInit {
     }
 
     getRoleId(roleId) {
-        console.log(roleId);
         this.router.navigate(['/main/role-management/role-rights', roleId]);
     }
 

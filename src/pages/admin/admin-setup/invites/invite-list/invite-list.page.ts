@@ -147,7 +147,7 @@ export class InviteListPage implements OnInit {
     constructor(private apiService: APIService, public router: Router) { }
 
     ngOnInit() {
-        this.listView = true;
+        this.listView = false;
         this.endPoint();
     }
 
@@ -167,6 +167,7 @@ export class InviteListPage implements OnInit {
         this._subscription = this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
+                this.listView = true;
                 this.list = data;
                 this.pageIndex = 1;
                 this.loopItemsPerPage(this.pageIndex);
