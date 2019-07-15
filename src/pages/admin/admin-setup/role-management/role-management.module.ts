@@ -22,6 +22,7 @@ import { RoleRightsPage } from './role-rights/role-rights.page';
 import { RoleListPage } from './role-list/role-list.page';
 import { SnackbarNotificationPage } from '../public-holiday-setup/snackbar-notification/snackbar-notification';
 import { PublicHolidaySetupModule } from '../public-holiday-setup/public-holiday-setup.module';
+import { AssignRolePage } from './assign-role/assign-role.page';
 
 
 const routes: Routes = [
@@ -54,6 +55,6 @@ const routes: Routes = [
         RouterModule.forChild(routes)
     ],
     entryComponents: [],
-    declarations: [RoleManagementPage, RoleRightsPage, RoleListPage]
+    declarations: [RoleManagementPage, RoleRightsPage, RoleListPage, AssignRolePage]
 })
 export class RoleManagementModule { }

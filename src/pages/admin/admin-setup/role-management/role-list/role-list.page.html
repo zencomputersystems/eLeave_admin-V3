@@ -4,10 +4,13 @@
     </div>
     <div class="cardContent" *ngIf="showContent">
         <ion-card-content>
-            <!-- <div class="leaveHistoryContainer">View leave history</div> -->
-            <div style="margin-top: 3%">
+            <div class="textAssign" (click)="assignRole()">
+                <i class="fas fa-tasks" style="font-size: 14px;"></i>
+                <span style="padding-left: 10px;">Assign role</span>
+            </div>
+            <div style="margin-top: 4%">
                 <ion-row class="titleRow">
-                    <ion-col style="display: inline-flex">
+                    <ion-col style="display: inline-flex" size="4">
                         <ion-label class="titleLabel">ROLE NAME</ion-label>
                         <ion-icon class="arrow" name="arrow-dropdown" (click)="sortDesLeaveType()"
                             *ngIf="sortDirectionArrowDown">
@@ -16,7 +19,7 @@
                             (click)="sortAscLeaveType()">
                         </ion-icon>
                     </ion-col>
-                    <ion-col>
+                    <ion-col size="5">
                         <ion-label class="titleLabel">DESCRIPTION</ion-label>
                         <ion-icon class="arrow" name="arrow-dropdown" (click)="sortDesLeaveType()"
                             *ngIf="sortDirectionArrowDown">
@@ -29,10 +32,10 @@
                     </ion-col>
                 </ion-row>
                 <ion-row class="detailsRow" *ngFor="let role of roleList">
-                    <ion-col>
-                        <ion-label style="color: #057dcd;font-size: 13px;">{{role.code}}</ion-label>
+                    <ion-col size="4">
+                        <ion-label class="colOfLeave">{{role.code}}</ion-label>
                     </ion-col>
-                    <ion-col class="colOfLeave">{{role.description}}
+                    <ion-col size="5" class="colOfLeave">{{role.description}}
                     </ion-col>
                     <ion-col align-self-end>
                         <ion-button shape="round" fill="outline" float-right style="margin-right: 7%; margin-top: -0.2%;font-size: 10px;

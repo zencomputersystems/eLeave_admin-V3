@@ -33,4 +33,8 @@ export class RoleListPage implements OnInit {
         this.router.navigate(['/main/role-management/role-rights', roleId]);
     }
 
+    assignRole() {
+        this.router.navigate(['/main/role-management/assign-role']);
+    }
+
 }

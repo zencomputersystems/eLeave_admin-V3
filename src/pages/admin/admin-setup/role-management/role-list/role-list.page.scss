@@ -23,6 +23,14 @@
     min-height: calc(100% - 38px);
     height: calc(100% - 130px);
   }
+  .textAssign {
+    color: #057dcd;
+    cursor: pointer;
+    margin-right: 3%;
+    margin-top: 10px;
+    position: absolute;
+    right: 20px;
+  }
   .paginator {
     color: #7a8589;
     font-size: 12px;

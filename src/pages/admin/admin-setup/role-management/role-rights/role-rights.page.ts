@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SnackbarNotificationPage } from '../../public-holiday-setup/snackbar-notification/snackbar-notification';
 import { MatSnackBar } from '@angular/material';
+import { roleDetails, options } from '../role-details-data';
 
 @Component({
     selector: 'app-role-rights',
@@ -35,80 +36,14 @@ export class RoleRightsPage implements OnInit {
             rolename: new FormControl('', Validators.required),
             description: new FormControl('', Validators.required),
         })
-        this.viewReportList = [
-            { name: 'None' },
-            { name: 'All Level', value: 'All' },
-            { name: 'Company Level', value: 'Company' },
-            { name: 'Division Level', value: 'Division' },
-            { name: 'Branch Level', value: 'Branch' },
-            { name: 'Department Level', value: 'Department' },
-            { name: 'Branch Department Level', value: 'Branch Department' }]
+        this.viewReportList = options;
     }
 
 
     ngOnInit() {
         if (this.route.routeConfig.path.includes('create-new-role')) {
             this.showInput = true;
-            this.profileDetails = {
-                "code": "",
-                "description": "",
-                "property": {
-                    "allowLeaveSetup": {
-                        "allowLeaveTypeSetup": {
-                            "value": false
-                        },
-                        "allowLeaveEntitlementSetup": {
-                            "value": false
-                        },
-                        "allowApprovalGroupSetup": {
-                            "value": false
-                        },
-                        "allowYearEndClosingSetup": {
-                            "value": false
-                        }
-                    },
-                    "allowViewReport": {
-                        "value": false,
-                        "level": ""
-                    },
-                    "allowViewCalendar": {
-                        "value": false,
-                        "level": ""
-                    },
-                    "allowLeaveManagement": {
-                        "allowLeaveAdjustmant": {
-                            "value": false,
-                            "level": ""
-                        },
-                        "allowApplyOnBehalf": {
-                            "value": false,
-                            "level": ""
-                        },
-                        "allowApprovalOverride": {
-                            "value": false,
-                            "level": ""
-                        }
-                    },
-                    "allowProfileManagement": {
-                        "allowViewProfile": {
-                            "value": false,
-                            "level": ""
-                        },
-                        "allowEditProfile": {
-                            "value": false,
-                            "level": ""
-                        },
-                        "allowChangePassword": {
-                            "value": false,
-                            "level": ""
-                        },
-                        "allowProfileAdmin": {
-                            "value": false,
-                            "level": ""
-                        }
-                    }
-                }
-            };
+            this.profileDetails = roleDetails;
             this.getInit();
         } else {
             this.roleAPi.get_role_details_profile(this._roleId).subscribe(data => {
@@ -119,12 +54,9 @@ export class RoleRightsPage implements OnInit {
                 });
                 this.showSmallSpinner = false;
                 this.getInit();
-            },
-                error => {
-                    if (error) {
-                        window.location.href = '/login';
-                    }
-                });
+            }, error => {
+                window.location.href = '/login';
+            });
         }
     }
 
