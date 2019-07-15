@@ -17,22 +17,17 @@ export class RoleRightsPage implements OnInit {
     public showSmallSpinner: boolean = false;
     public showInput: boolean = false;
     public showContent: boolean = false;
-    public isIndeterminateLeaveSetup: boolean;
-    public isIndeterminateLeaveMngt: boolean;
-    public isIndeterminateProfileMngt: boolean;
-    public modelLeaveSetup: boolean;
-    public modelLeaveMngtSetup: boolean;
-    public modelProfileMngtSetup: boolean;
+    public isIndeterminate: boolean[] = [false, false, false];
+    public mainCheckbox: boolean[] = [false, false, false];
     public viewReportList: any;
-    public getLeaveSetupKey;
-    public getLeaveMngtKey;
-    public getProfileMngtKey;
+    public getLeaveSetupKey: any;
+    public getLeaveMngtKey: any;
+    public getProfileMngtKey: any;
     public getCalendarKey = [];
     public getReportKey = [];
     public inputFormControl: any;
     private _roleId: string;
     private _body: any = {};
-    // private arrayModelList: any[] = [];
 
     constructor(private roleAPi: RolesAPIService, private route: ActivatedRoute, private snackBar: MatSnackBar) {
         route.params.subscribe(params => { this._roleId = params.id; });
@@ -141,85 +136,37 @@ export class RoleRightsPage implements OnInit {
         this.getProfileMngtKey = Object.keys(this.profileDetails.property.allowProfileManagement).map(value => this.profileDetails.property.allowProfileManagement[value]);
         this.getCalendarKey.push(this.profileDetails.property.allowViewCalendar);
         this.getReportKey.push(this.profileDetails.property.allowViewReport);
-        this.checkEvent(this.getLeaveSetupKey, 'leaveSetup');
-        this.checkEvent(this.getReportKey, 'reportView');
-        this.checkEvent(this.getLeaveMngtKey, 'leaveManagement');
-        this.checkEvent(this.getCalendarKey, 'calendarView');
-        this.checkEvent(this.getProfileMngtKey, 'profileManagement');
+        this.checkEvent(this.getLeaveSetupKey, 0);
+        this.checkEvent(this.getReportKey);
+        this.checkEvent(this.getLeaveMngtKey, 1);
+        this.checkEvent(this.getCalendarKey);
+        this.checkEvent(this.getProfileMngtKey, 2);
     }
 
-    checkMaster(list, ngModel) {
-        if (ngModel === 'leaveSetup') {
-            setTimeout(() => {
-                list.forEach(obj => {
-                    obj.value = this.modelLeaveSetup;
-                });
-            })
-        }
-        if (ngModel === 'leaveManagement') {
-            setTimeout(() => {
-                list.forEach(obj => {
-                    obj.value = this.modelLeaveMngtSetup;
-                });
-            })
-        }
-        if (ngModel === 'profileManagement') {
-            setTimeout(() => {
-                list.forEach(obj => {
-                    obj.value = this.modelProfileMngtSetup;
-                });
-            })
-        }
+    checkMaster(list, index: number) {
+        setTimeout(() => {
+            list.forEach(obj => {
+                obj.value = this.mainCheckbox[index];
+            });
+        })
     }
 
-    checkEvent(list: any, value: any, index?: number) {
-        // this.arrayModelList = [
-        //     { 'modelLeaveSetup': this.modelLeaveSetup },
-        //     { 'modelLeaveMngtSetup': this.modelLeaveMngtSetup },
-        //     { 'modelProfileMngtSetup': this.modelProfileMngtSetup }]
-
+    checkEvent(list: any, masterIndex?: number, index?: number) {
         const totalItems = list.length;
         let checked = 0;
         list.map(obj => {
             if (obj.value) checked++
             if (!obj.value && index > -1) { list[index].level = '' }
         });
-        if (value === 'leaveSetup') {
-
-            if (checked > 0 && checked < totalItems) {
-                this.isIndeterminateLeaveSetup = true;
-                this.modelLeaveSetup = false;
-            } else if (checked == totalItems) {
-                this.modelLeaveSetup = true;
-                this.isIndeterminateLeaveSetup = false;
-            } else {
-                this.isIndeterminateLeaveSetup = false;
-                this.modelLeaveSetup = false;
-            }
-        }
-        if (value === 'leaveManagement') {
-            if (checked > 0 && checked < totalItems) {
-                this.isIndeterminateLeaveMngt = true;
-                this.modelLeaveMngtSetup = false;
-            } else if (checked == totalItems) {
-                this.modelLeaveMngtSetup = true;
-                this.isIndeterminateLeaveMngt = false;
-            } else {
-                this.isIndeterminateLeaveMngt = false;
-                this.modelLeaveMngtSetup = false;
-            }
-        }
-        if (value === 'profileManagement') {
-            if (checked > 0 && checked < totalItems) {
-                this.isIndeterminateProfileMngt = true;
-                this.modelProfileMngtSetup = false;
-            } else if (checked == totalItems) {
-                this.modelProfileMngtSetup = true;
-                this.isIndeterminateProfileMngt = false;
-            } else {
-                this.isIndeterminateProfileMngt = false;
-                this.modelProfileMngtSetup = false;
-            }
+        if (checked > 0 && checked < totalItems) {
+            this.isIndeterminate[masterIndex] = true;
+            this.mainCheckbox[masterIndex] = false;
+        } else if (checked == totalItems) {
+            this.mainCheckbox[masterIndex] = true;
+            this.isIndeterminate[masterIndex] = false;
+        } else {
+            this.isIndeterminate[masterIndex] = false;
+            this.mainCheckbox[masterIndex] = false;
         }
     }
 
