@@ -20,6 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { RoleManagementPage } from './role-management.page';
 import { RoleRightsPage } from './role-rights/role-rights.page';
 import { RoleListPage } from './role-list/role-list.page';
+import { SnackbarNotificationPage } from '../public-holiday-setup/snackbar-notification/snackbar-notification';
+import { PublicHolidaySetupModule } from '../public-holiday-setup/public-holiday-setup.module';
 
 
 const routes: Routes = [
@@ -48,6 +50,7 @@ const routes: Routes = [
         MatTreeModule,
         MatCheckboxModule,
         MatButtonModule,
+        PublicHolidaySetupModule,
         RouterModule.forChild(routes)
     ],
     entryComponents: [],

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RolesAPIService } from '../role-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SnackbarNotificationPage } from '../../public-holiday-setup/snackbar-notification/snackbar-notification';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-role-rights',
@@ -29,10 +31,10 @@ export class RoleRightsPage implements OnInit {
     public getReportKey = [];
     public inputFormControl: any;
     private _roleId: string;
-    private _body: any;
+    private _body: any = {};
     // private arrayModelList: any[] = [];
 
-    constructor(private roleAPi: RolesAPIService, private route: ActivatedRoute) {
+    constructor(private roleAPi: RolesAPIService, private route: ActivatedRoute, private snackBar: MatSnackBar) {
         route.params.subscribe(params => { this._roleId = params.id; });
         this.inputFormControl = new FormGroup({
             rolename: new FormControl('', Validators.required),
@@ -228,24 +230,35 @@ export class RoleRightsPage implements OnInit {
         };
         this.roleAPi.patch_role_profile(body).subscribe(response => {
             this.showSmallSpinner = false;
-            // this.router.navigate(['/main/role-management']);
+            this.openSnackBar('saved successfully');
+        }, error => {
+            this.openSnackBar('saved unsuccessfully');
+            window.location.href = '/login';
         });
     }
 
     save() {
-        this.showSmallSpinner = true;
-        this._body = {
-            'code': this.inputFormControl.value.rolename,
-            'description': this.inputFormControl.value.description,
-            'property': this.profileDetails.property
-        }
+        this._body["code"] = this.inputFormControl.value.rolename;
+        this._body["description"] = this.inputFormControl.value.description;
+        this._body["property"] = this.profileDetails.property;
         if (this.showInput === true) {
             this.roleAPi.post_role_profile(this._body).subscribe(response => {
                 this.showSmallSpinner = false;
-            })
+                this.openSnackBar('saved successfully');
+            }, error => {
+                this.openSnackBar('saved unsuccessfully');
+                window.location.href = '/login';
+            });
         } else {
             this.patchData();
         }
+    }
+
+    openSnackBar(message: string) {
+        this.snackBar.openFromComponent(SnackbarNotificationPage, {
+            duration: 2500,
+            data: message
+        });
     }
 
 }

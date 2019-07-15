@@ -303,11 +303,12 @@ margin: 0 auto;">
         </ion-button>
         <div style="width: 10px; display: inline-block"></div>
         <ion-button *ngIf="showInput" [disabled]="!inputFormControl.valid"
-            style="font-size: 12px;height: 30px;width: 100px;margin-right: 20px;" color="primary" (click)="save()">
+            style="font-size: 12px;height: 30px;width: 100px;margin-right: 20px;" color="primary"
+            (click)="save();showSmallSpinner = true;inputFormControl.reset();ngOnInit()">
             SAVE
         </ion-button>
         <ion-button *ngIf="!showInput" style="font-size: 12px;height: 30px;width: 100px;margin-right: 20px;"
-            color="primary" (click)="save()">
+            color="primary" (click)="save();showSmallSpinner = true;">
             SAVE
         </ion-button>
         <div style="display: inline-block;height: 60%;vertical-align: middle;" *ngIf="showSmallSpinner">

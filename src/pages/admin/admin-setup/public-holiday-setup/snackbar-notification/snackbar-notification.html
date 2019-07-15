@@ -1,10 +1,10 @@
-<span class="alertSuccess" *ngIf="data == 'successfully'">
+<span class="alertSuccess" *ngIf="data.includes('successfully')">
     <ion-icon name="checkmark-circle-outline" style="width: 24px;
         height: 24px;position: absolute;top: 11px;"></ion-icon>
-    <ion-label style="padding-left: 35px;">You have submitted {{data}}!</ion-label>
+    <ion-label style="padding-left: 35px;">You have {{data}}!</ion-label>
 </span>
-<span class="alertFail" *ngIf="data == 'unsuccessfully'">
+<span class="alertFail" *ngIf="data.includes('unsuccessfully')">
     <ion-icon name="information-circle-outline" style="width: 24px;
         height: 24px;position: absolute;top: 11px;"></ion-icon>
-    <ion-label style="padding-left: 35px;">You have submitted {{data}}!</ion-label>
+    <ion-label style="padding-left: 35px;">You have {{data}}!</ion-label>
 </span>

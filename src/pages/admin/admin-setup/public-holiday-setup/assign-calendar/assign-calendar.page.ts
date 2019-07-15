@@ -349,9 +349,9 @@ export class AssignCalendarPage implements OnInit {
             this.showSelectedTree = false;
             this.showSpinner = false;
             this.checklistSelection.clear();
-            this.openSnackBar('successfully');
+            this.openSnackBar('submitted successfully');
         }, error => {
-            this.openSnackBar('unsuccessfully');
+            this.openSnackBar('submitted unsuccessfully');
             window.location.href = '/login';
         });
     }
