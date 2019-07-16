@@ -1,0 +1,367 @@
+<div style="width: 100%; height:100%; text-align: center;margin-top: -30px" *ngIf="showSpinner">
+    <app-spinner></app-spinner>
+</div>
+
+<mat-hint *ngIf="showContent"
+    style="font-size: 14px;width: 61%;margin: 0 auto;padding-top: 1%;display: inline-block;margin-left: 2%;">
+    Role details readonly</mat-hint>
+
+<div class="row" *ngIf="showContent">
+    <div class="inputForm">
+        <mat-form-field appearance="outline" style="font-size: 13px;width: 47%;margin-right: 3%;color:#7a8589">
+            <mat-label>Role name</mat-label>
+            <input matInput [(ngModel)]="rolename" readonly>
+            <mat-error style="padding-top: 14px;">
+                Role name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="font-size: 13px;width: 47%;color:#7a8589">
+            <mat-label>Description</mat-label>
+            <input matInput [(ngModel)]="description" readonly>
+            <mat-error style="padding-top: 14px;">
+                Description is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="column1">
+        <mat-card class="leaveSetup">
+            <mat-card-header>
+                <mat-card-subtitle>Leave Setup</mat-card-subtitle>
+            </mat-card-header>
+            <ion-item class="ionItem" lines="none">
+                <ion-label><strong>Allow All</strong></ion-label>
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="mainCheckbox[0]"
+                    [indeterminate]="isIndeterminate[0]" disabled>
+                </ion-checkbox>
+            </ion-item>
+            <ion-list lines="none">
+                <ion-item class="ionItem">
+                    <ion-label>Leave Type Setup</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                        [(ngModel)]="data.property.allowLeaveSetup.allowLeaveTypeSetup.value"
+                        (ionChange)="checkEvent(getLeaveSetupKey, 0)" disabled>
+                    </ion-checkbox>
+                </ion-item>
+                <ion-item class="ionItem">
+                    <ion-label>Leave Entitlement Setup</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                        [(ngModel)]="data.property.allowLeaveSetup.allowLeaveEntitlementSetup.value"
+                        (ionChange)="checkEvent(getLeaveSetupKey, 0)" disabled>
+                    </ion-checkbox>
+                </ion-item>
+                <ion-item class="ionItem">
+                    <ion-label>Approval Group Setup</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                        [(ngModel)]="data.property.allowLeaveSetup.allowApprovalGroupSetup.value"
+                        (ionChange)="checkEvent(getLeaveSetupKey, 0)" disabled>
+                    </ion-checkbox>
+                </ion-item>
+                <ion-item class="ionItem">
+                    <ion-label>Year End Closing Setup</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                        [(ngModel)]="data.property.allowLeaveSetup.allowYearEndClosingSetup.value"
+                        (ionChange)="checkEvent(getLeaveSetupKey, 0)" disabled>
+                    </ion-checkbox>
+                </ion-item>
+            </ion-list>
+        </mat-card>
+        <mat-card class="leaveManagement">
+            <mat-card-header>
+                <mat-card-subtitle>Leave Management</mat-card-subtitle>
+            </mat-card-header>
+            <ion-item class="ionItem" lines="none">
+                <ion-label><strong>Allow All</strong></ion-label>
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="mainCheckbox[1]"
+                    [indeterminate]="isIndeterminate[1]" disabled>
+                </ion-checkbox>
+            </ion-item>
+            <ion-list lines="none" class="ionItem"
+                style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                    [(ngModel)]="data.property.allowLeaveManagement.allowLeaveAdjustmant.value"
+                    (ionChange)="checkEvent(getLeaveMngtKey, 1, 0)" disabled>
+                </ion-checkbox>
+                <mat-form-field appearance="outline" style="width: 76%">
+                    <mat-label>Leave Adjustmant</mat-label>
+                    <mat-select [(ngModel)]="data.property.allowLeaveManagement.allowLeaveAdjustmant.level" disabled>
+                        <mat-option *ngFor="let item of viewReportList" [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error style="padding-top: 10px;"
+                        *ngIf="data.property.allowLeaveManagement.allowLeaveAdjustmant.value">
+                        Option is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </ion-list>
+            <ion-list lines="none" class="ionItem"
+                style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                    [(ngModel)]="data.property.allowLeaveManagement.allowApplyOnBehalf.value"
+                    (ionChange)="checkEvent(getLeaveMngtKey, 1, 1)" disabled>
+                </ion-checkbox>
+                <mat-form-field appearance="outline" style="width: 76%">
+                    <mat-label>Apply On Behalf</mat-label>
+                    <mat-select [(ngModel)]="data.property.allowLeaveManagement.allowApplyOnBehalf.level" disabled>
+                        <mat-option *ngFor="let item of viewReportList" [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error style="padding-top: 10px;"
+                        *ngIf="data.property.allowLeaveManagement.allowApplyOnBehalf.value">
+                        Option is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </ion-list>
+            <ion-list lines="none" class="ionItem"
+                style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                    [(ngModel)]="data.property.allowLeaveManagement.allowApprovalOverride.value"
+                    (ionChange)="checkEvent(getLeaveMngtKey, 1 ,2)" disabled>
+                </ion-checkbox>
+                <mat-form-field appearance="outline" style="width: 76%">
+                    <mat-label>Approval Override</mat-label>
+                    <mat-select [(ngModel)]="data.property.allowLeaveManagement.allowApprovalOverride.level" disabled>
+                        <mat-option *ngFor="let item of viewReportList" [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error style="padding-top: 10px;"
+                        *ngIf="data.property.allowLeaveManagement.allowApprovalOverride.value">
+                        Option is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </ion-list>
+        </mat-card>
+    </div>
+
+    <div class="column2">
+        <mat-card class="profileManagement">
+            <mat-card-header>
+                <mat-card-subtitle>Profile Management</mat-card-subtitle>
+            </mat-card-header>
+            <ion-item class="ionItem" lines="none">
+                <ion-label><strong>Allow All</strong></ion-label>
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="mainCheckbox[2]"
+                    [indeterminate]="isIndeterminate[2]" disabled>
+                </ion-checkbox>
+            </ion-item>
+            <ion-list lines="none" class="ionItem"
+                style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                    [(ngModel)]="data.property.allowProfileManagement.allowViewProfile.value"
+                    (ionChange)="checkEvent(getProfileMngtKey, 2,0)" disabled>
+                </ion-checkbox>
+                <mat-form-field appearance="outline" style="width: 76%">
+                    <mat-label>View Profile</mat-label>
+                    <mat-select [(ngModel)]="data.property.allowProfileManagement.allowViewProfile.level" disabled>
+                        <mat-option *ngFor="let item of viewReportList" [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error style="padding-top: 10px;"
+                        *ngIf="data.property.allowProfileManagement.allowViewProfile.value">
+                        Option is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </ion-list>
+            <ion-list lines="none" class="ionItem"
+                style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                    [(ngModel)]="data.property.allowProfileManagement.allowEditProfile.value"
+                    (ionChange)="checkEvent(getProfileMngtKey, 2,1)" disabled>
+                </ion-checkbox>
+                <mat-form-field appearance="outline" style="width: 76%">
+                    <mat-label>Edit Profile</mat-label>
+                    <mat-select [(ngModel)]="data.property.allowProfileManagement.allowEditProfile.level" disabled>
+                        <mat-option *ngFor="let item of viewReportList" [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error style="padding-top: 10px;"
+                        *ngIf="data.property.allowProfileManagement.allowEditProfile.value">
+                        Option is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </ion-list>
+            <ion-list lines="none" class="ionItem"
+                style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                    [(ngModel)]="data.property.allowProfileManagement.allowChangePassword.value"
+                    (ionChange)="checkEvent(getProfileMngtKey, 2, 2)" disabled>
+                </ion-checkbox>
+                <mat-form-field appearance="outline" style="width: 76%">
+                    <mat-label>Change Password</mat-label>
+                    <mat-select [(ngModel)]="data.property.allowProfileManagement.allowChangePassword.level" disabled>
+                        <mat-option *ngFor="let item of viewReportList" [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error style="padding-top: 10px;"
+                        *ngIf="data.property.allowProfileManagement.allowChangePassword.value">
+                        Option is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </ion-list>
+            <ion-list lines="none" class="ionItem"
+                style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                    [(ngModel)]="data.property.allowProfileManagement.allowProfileAdmin.value"
+                    (ionChange)="checkEvent(getProfileMngtKey, 2, 3)" disabled>
+                </ion-checkbox>
+                <mat-form-field appearance="outline" style="width: 76%">
+                    <mat-label>Profile Admin</mat-label>
+                    <mat-select [(ngModel)]="data.property.allowProfileManagement.allowProfileAdmin.level" disabled>
+                        <mat-option *ngFor="let item of viewReportList" [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error style="padding-top: 10px;"
+                        *ngIf="data.property.allowProfileManagement.allowProfileAdmin.value">
+                        Option is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </ion-list>
+        </mat-card>
+        <mat-card class="calendarView">
+            <mat-card-header>
+                <mat-card-subtitle>Calendar</mat-card-subtitle>
+            </mat-card-header>
+            <ion-list lines="none" class="ionItem" style="padding-left: 18px">
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                    [(ngModel)]="data.property.allowViewCalendar.value" (ionChange)="checkEvent(getCalendarKey,null ,0)"
+                    disabled>
+                </ion-checkbox>
+                <mat-form-field appearance="outline" style="width: 76%">
+                    <mat-label>View Calendar</mat-label>
+                    <mat-select [(ngModel)]="data.property.allowViewCalendar.level" disabled>
+                        <mat-option *ngFor="let item of viewReportList" [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error style="padding-top: 10px;" *ngIf="data.property.allowViewCalendar.value">
+                        Option is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </ion-list>
+        </mat-card>
+        <mat-card class="reportView">
+            <mat-card-header>
+                <mat-card-subtitle>Report</mat-card-subtitle>
+            </mat-card-header>
+            <ion-list lines="none" class="ionItem" style="padding-left: 18px;">
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                    [(ngModel)]="data.property.allowViewReport.value" (ionChange)="checkEvent(getReportKey, null,0)"
+                    disabled>
+                </ion-checkbox>
+                <mat-form-field appearance="outline" style="width: 76%">
+                    <mat-label>View Report</mat-label>
+                    <mat-select [(ngModel)]="data.property.allowViewReport.level" disabled>
+                        <mat-option *ngFor="let item of viewReportList" [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error style="padding-top: 10px;" *ngIf="data.property.allowViewReport.value">
+                        Option is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </ion-list>
+        </mat-card>
+    </div>
+</div>
+
+<!-------------------------------- Select list to assign  ----------------------->
+<div *ngIf="showContent"
+    style="width: 33%;height: 100%;margin-top: 0.5%;display: inline-block;position: absolute;right: 2.5%;">
+    <form [formGroup]="assignRoleForm" style="background: white;height: 82%;">
+        <div style="width: 100%; height: 100%;margin: 1.5%;margin-bottom: 0;padding: 16px;">
+            <mat-form-field appearance="outline" style="width: 100%;font-size: 14px">
+                <mat-label>Role profile</mat-label>
+                <mat-select formControlName="role" required>
+                    <mat-option *ngFor="let item of list; let j=index" [value]="item.role_guid"
+                        (click)="roleSelected(item.role_guid)">
+                        {{item.code}}</mat-option>
+                </mat-select>
+                <mat-error style="margin-top: 15px;">Please select an option</mat-error>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <mat-form-field appearance="outline" style="width: 100%;cursor: pointer;font-size: 14px"
+                (click)="showTreeDropdown = true;">
+                <mat-label>Employee list</mat-label>
+                <input matInput class="inputDropdown" readonly>
+                <mat-icon matSuffix class="iconDropdown"><i class="material-icons">arrow_drop_down</i></mat-icon>
+                <mat-error>Please select at least one option</mat-error>
+                <div class="dropdownList" *ngIf="showTreeDropdown" (clickOutside)="clickToCloseDiv($event)">
+                    <mat-tree style="z-index: 2;position: absolute;width: 100%;" [dataSource]="treeview.dataSource"
+                        [treeControl]="treeview.treeControl">
+                        <!-- inner checkbox -->
+                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                            <button mat-icon-button disabled></button>
+                            <mat-checkbox class="checklist-leaf-node"
+                                [checked]="treeview.checklistSelection.isSelected(node)"
+                                (change)="treeview.todoLeafItemSelectionToggle(node)" color="primary">{{node.item}}
+                            </mat-checkbox>
+                        </mat-tree-node>
+
+                        <!-- main checkbox -->
+                        <mat-tree-node *matTreeNodeDef="let node; when: treeview.hasChild" matTreeNodePadding>
+                            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+                                <mat-icon class="mat-icon-rtl-mirror">
+                                    {{treeview.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                </mat-icon>
+                            </button>
+                            <mat-checkbox [checked]="treeview.descendantsAllSelected(node)"
+                                [indeterminate]="treeview.descendantsPartiallySelected(node)"
+                                (change)="treeview.todoItemSelectionToggle(node)" color="primary">{{node.item}}
+                            </mat-checkbox>
+                        </mat-tree-node>
+                    </mat-tree>
+                </div>
+            </mat-form-field>
+            <div class="showSelection" *ngIf="showSelectedTree">
+                <mat-tree [dataSource]="treeview.dataSource" [treeControl]="treeview.treeControl">
+                    <!-- inner checkbox -->
+                    <mat-tree-node [style.display]="treeview.checklistSelection.isSelected(node) ? 'block' : 'none'"
+                        *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                        <button mat-icon-button disabled></button>
+                        <mat-checkbox class="checklist-leaf-node"
+                            [checked]="treeview.checklistSelection.isSelected(node)"
+                            (change)="treeview.todoLeafItemSelectionToggle(node)" color="primary" disabled>
+                            {{node.item}}
+                        </mat-checkbox>
+                    </mat-tree-node>
+
+                    <!-- main checkbox -->
+                    <mat-tree-node
+                        [style.display]="(treeview.descendantsAllSelected(node) || treeview.descendantsPartiallySelected(node)) ? 'block' : 'none'"
+                        *matTreeNodeDef="let node; when: treeview.hasChild" matTreeNodePadding>
+                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+                            <mat-icon class="mat-icon-rtl-mirror">
+                                {{treeview.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                        </button>
+                        <mat-checkbox [checked]="treeview.descendantsAllSelected(node)"
+                            [indeterminate]="treeview.descendantsPartiallySelected(node)"
+                            (change)="treeview.todoItemSelectionToggle(node)" color="primary" disabled>{{node.item}}
+                        </mat-checkbox>
+                    </mat-tree-node>
+                </mat-tree>
+            </div>
+        </div>
+        <div *ngIf="showContent" style="text-align: center; padding-bottom: 2%;background: white;">
+            <ion-button fill="outline" style="font-size: 12px;height: 30px;width: 90px;background: white;"
+                color="primary"
+                (click)="assignRoleForm.reset({ role: null});treeview.checklistSelection.clear();showSelectedTree = false;">
+                CLEAR
+            </ion-button>
+            <div style="width: 10px; display: inline-block"></div>
+            <ion-button style="font-size: 12px;height: 30px;width: 100px;" color="primary"
+                (click)="assignData(); showSmallSpinner = true;"
+                [disabled]="assignRoleForm.controls.role.value === null">SUBMIT
+            </ion-button>
+            <ion-spinner name="lines" *ngIf="showSmallSpinner" color="primary"
+                style="position: absolute;margin-top: 5px;margin-left: 5px;">
+            </ion-spinner>
+        </div>
+    </form>
+</div>

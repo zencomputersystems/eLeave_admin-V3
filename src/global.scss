@@ -149,3 +149,9 @@ app-employee-profile
   > .mat-tab-label {
   height: 35px;
 }
+app-assign-role > div.row > div.column1 > mat-card > .mat-card-header > div.mat-card-header-text{
+  overflow: hidden;
+}
+app-assign-role > div.row > div.column2 > mat-card > .mat-card-header > div.mat-card-header-text{
+  overflow: hidden;
+}

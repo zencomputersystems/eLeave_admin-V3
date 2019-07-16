@@ -14,6 +14,7 @@ import { RoleManagementPage } from 'src/pages/admin/admin-setup/role-management/
 import { RoleRightsPage } from 'src/pages/admin/admin-setup/role-management/role-rights/role-rights.page';
 import { RoleListPage } from 'src/pages/admin/admin-setup/role-management/role-list/role-list.page';
 import { InviteListPage } from 'src/pages/admin/admin-setup/invites/invite-list/invite-list.page';
+import { AssignRolePage } from 'src/pages/admin/admin-setup/role-management/assign-role/assign-role.page';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -39,7 +40,8 @@ export const sideMenuNavigationRoutes: Routes = [
                     { path: '', redirectTo: 'role-list', pathMatch: 'full' },
                     { path: 'role-list', component: RoleListPage },
                     { path: 'role-rights/:id', component: RoleRightsPage },
-                    { path: 'create-new-role', component: RoleRightsPage }
+                    { path: 'create-new-role', component: RoleRightsPage },
+                    { path: 'assign-role', component: AssignRolePage }
                 ]
             },
         ]
