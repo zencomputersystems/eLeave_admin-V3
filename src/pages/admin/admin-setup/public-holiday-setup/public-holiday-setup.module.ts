@@ -25,6 +25,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { EmployeeListDatabase } from './assign-calendar/assign-calendar-treeview.service';
 
 
 const routes: Routes = [
@@ -59,6 +60,7 @@ const routes: Routes = [
         ClickOutsideModule,
         RouterModule.forChild(routes)
     ],
+    providers:[EmployeeListDatabase],
     entryComponents: [SnackbarNotificationPage],
     declarations: [ManageHolidayPage, PublicHolidaySetup, AssignCalendarPage, SnackbarNotificationPage]
 })
