@@ -21,11 +21,11 @@ export class RoleRightsPage implements OnInit {
     public isIndeterminate: boolean[] = [false, false, false];
     public mainCheckbox: boolean[] = [false, false, false];
     public viewReportList: any;
-    public getLeaveSetupKey: any;
-    public getLeaveMngtKey: any;
-    public getProfileMngtKey: any;
-    public getCalendarKey = [];
-    public getReportKey = [];
+    public leaveSetupKey: any;
+    public leaveMngtKey: any;
+    public profileMngtKey: any;
+    public calendarKey = [];
+    public reportKey = [];
     public inputFormControl: any;
     private _roleId: string;
     private _body: any = {};
@@ -44,7 +44,7 @@ export class RoleRightsPage implements OnInit {
         if (this.route.routeConfig.path.includes('create-new-role')) {
             this.showInput = true;
             this.profileDetails = roleDetails;
-            this.getInit();
+            this.initCheckedValue();
         } else {
             this.roleAPi.get_role_details_profile(this._roleId).subscribe(data => {
                 this.profileDetails = data;
@@ -53,26 +53,30 @@ export class RoleRightsPage implements OnInit {
                     description: this.profileDetails.description
                 });
                 this.showSmallSpinner = false;
-                this.getInit();
+                this.initCheckedValue();
             }, error => {
                 window.location.href = '/login';
             });
         }
     }
 
-    getInit() {
+    initCheckedValue() {
         this.showSpinner = false;
         this.showContent = true;
-        this.getLeaveSetupKey = Object.keys(this.profileDetails.property.allowLeaveSetup).map(key => this.profileDetails.property.allowLeaveSetup[key]);
-        this.getLeaveMngtKey = Object.keys(this.profileDetails.property.allowLeaveManagement).map(value => this.profileDetails.property.allowLeaveManagement[value]);
-        this.getProfileMngtKey = Object.keys(this.profileDetails.property.allowProfileManagement).map(value => this.profileDetails.property.allowProfileManagement[value]);
-        this.getCalendarKey.push(this.profileDetails.property.allowViewCalendar);
-        this.getReportKey.push(this.profileDetails.property.allowViewReport);
-        this.checkEvent(this.getLeaveSetupKey, 0);
-        this.checkEvent(this.getReportKey);
-        this.checkEvent(this.getLeaveMngtKey, 1);
-        this.checkEvent(this.getCalendarKey);
-        this.checkEvent(this.getProfileMngtKey, 2);
+        this.leaveSetupKey = Object.keys(this.profileDetails.property.allowLeaveSetup).map(key => this.profileDetails.property.allowLeaveSetup[key]);
+        this.leaveMngtKey = Object.keys(this.profileDetails.property.allowLeaveManagement).map(value => this.profileDetails.property.allowLeaveManagement[value]);
+        this.profileMngtKey = Object.keys(this.profileDetails.property.allowProfileManagement).map(value => this.profileDetails.property.allowProfileManagement[value]);
+        this.calendarKey.push(this.profileDetails.property.allowViewCalendar);
+        this.reportKey.push(this.profileDetails.property.allowViewReport);
+        this.callCheckEvent();
+    }
+
+    callCheckEvent() {
+        this.checkEvent(this.leaveSetupKey, 0);
+        this.checkEvent(this.reportKey);
+        this.checkEvent(this.leaveMngtKey, 1);
+        this.checkEvent(this.calendarKey);
+        this.checkEvent(this.profileMngtKey, 2);
     }
 
     checkMaster(list, index: number) {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { roleDetails, options } from "../role-details-data";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { RolesAPIService } from "../role-api.service";
 import { EmployeeTreeview } from "../../public-holiday-setup/assign-calendar/employee-treeview.service";
 import { APIService } from "src/services/shared-service/api.service";
@@ -20,8 +20,8 @@ export class AssignRolePage implements OnInit {
     public showSpinner: boolean = true;
     public showSmallSpinner: boolean = false;
     public showContent: boolean = false;
-    public isIndeterminate: boolean[] = [false, false, false];
-    public mainCheckbox: boolean[] = [false, false, false];
+    public indeterminate: boolean[] = [false, false, false];
+    public allowAll: boolean[] = [false, false, false];
     public viewReportList: any;
     public getLeaveSetupKey: any;
     public getLeaveMngtKey: any;
@@ -33,25 +33,25 @@ export class AssignRolePage implements OnInit {
     public rolename: string;
     public description: string;
     public userList: string[] = [];
+    public submitButton: boolean = true;
     /**
      * Click to show dropdown of treeview checkbox list
      * @type {boolean}
      * @memberof AssignCalendarPage
      */
-    public showTreeDropdown: boolean = false;
+    public displayDivDropdown: boolean = false;
 
     /**
      * Show treeview selected value after close dropdown
      * @type {boolean}
      * @memberof AssignCalendarPage
      */
-    public showSelectedTree: boolean = false;
+    public displaySelectedTreeview: boolean = false;
     private _roleId: string;
 
-    constructor(fb: FormBuilder, private snackBar: MatSnackBar, private roleAPi: RolesAPIService, private apiService: APIService, private treeview: EmployeeTreeview) {
-        this.assignRoleForm = fb.group({
-            role: null,
-        });
+    constructor(private snackBar: MatSnackBar, private roleAPi: RolesAPIService, private apiService: APIService, private treeview: EmployeeTreeview) {
+        this.assignRoleForm = new FormGroup(
+            { role: new FormControl(null, Validators.required) });
     }
 
     ngOnInit() {
@@ -79,29 +79,33 @@ export class AssignRolePage implements OnInit {
         this.getProfileMngtKey = Object.keys(this.data.property.allowProfileManagement).map(value => this.data.property.allowProfileManagement[value]);
         this.getCalendarKey.push(this.data.property.allowViewCalendar);
         this.getReportKey.push(this.data.property.allowViewReport);
-        this.checkEvent(this.getLeaveSetupKey, 0);
-        this.checkEvent(this.getReportKey);
-        this.checkEvent(this.getLeaveMngtKey, 1);
-        this.checkEvent(this.getCalendarKey);
-        this.checkEvent(this.getProfileMngtKey, 2);
+        this.getChildCheckedValue();
     }
 
-    checkEvent(list: any, masterIndex?: number, index?: number) {
-        const totalItems = list.length;
-        let checked = 0;
+    getChildCheckedValue() {
+        this.childCheckbox(this.getLeaveSetupKey, 0);
+        this.childCheckbox(this.getReportKey);
+        this.childCheckbox(this.getLeaveMngtKey, 1);
+        this.childCheckbox(this.getCalendarKey);
+        this.childCheckbox(this.getProfileMngtKey, 2);
+    }
+
+    childCheckbox(list: any, mainIndex?: number, childIndex?: number) {
+        const itemsNum = list.length;
+        let isChecked = 0;
         list.map(obj => {
-            if (obj.value) checked++
-            if (!obj.value && index > -1) { list[index].level = '' }
+            if (obj.value) isChecked++
+            if (!obj.value && childIndex > -1) { list[childIndex].level = '' }
         });
-        if (checked > 0 && checked < totalItems) {
-            this.isIndeterminate[masterIndex] = true;
-            this.mainCheckbox[masterIndex] = false;
-        } else if (checked == totalItems) {
-            this.mainCheckbox[masterIndex] = true;
-            this.isIndeterminate[masterIndex] = false;
+        if (isChecked > 0 && isChecked < itemsNum) {
+            this.indeterminate[mainIndex] = true;
+            this.allowAll[mainIndex] = false;
+        } else if (isChecked == itemsNum) {
+            this.allowAll[mainIndex] = true;
+            this.indeterminate[mainIndex] = false;
         } else {
-            this.isIndeterminate[masterIndex] = false;
-            this.mainCheckbox[masterIndex] = false;
+            this.indeterminate[mainIndex] = false;
+            this.allowAll[mainIndex] = false;
         }
     }
 
@@ -113,13 +117,15 @@ export class AssignRolePage implements OnInit {
      * @memberof AssignCalendarPage
      */
     clickToCloseDiv(event) {
-        if (!event.target.className.includes("inputDropdown") && !event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix")) {
-            this.showTreeDropdown = false;
-            this.showSelectedTree = true;
+        if (!event.target.className.includes("dropdown") && !event.target.className.includes("material-icons.dropdown-icon") && !event.target.className.includes("mat-form-field-infix")) {
+            this.displayDivDropdown = false;
+            this.displaySelectedTreeview = true;
+            this.disabledSubmit();
         }
         for (let i = 0; i < this.treeview.checklistSelection.selected.length; i++) {
             if (this.treeview.checklistSelection.selected[i].level == 1 && this.employeeNameList.indexOf(this.treeview.checklistSelection.selected[i].item) === -1) {
-                this.employeeNameList.push(this.treeview.checklistSelection.selected[i].item)
+                this.employeeNameList.push(this.treeview.checklistSelection.selected[i].item);
+                this.disabledSubmit();
             }
         }
         if (this.treeview.checklistSelection.selected.length === 0) {
@@ -136,8 +142,15 @@ export class AssignRolePage implements OnInit {
                 this.rolename = this.data.code;
                 this.description = this.data.description;
                 this.showSmallSpinner = false;
+                this.disabledSubmit();
                 this.getInit();
             })
+    }
+
+    disabledSubmit() {
+        if (this.employeeNameList.length > 0 && this.assignRoleForm.controls.role.value != null) {
+            this.submitButton = false;
+        } else { this.submitButton = true; }
     }
 
     checkNameExist(list: any, nameObj: any) {
@@ -165,7 +178,7 @@ export class AssignRolePage implements OnInit {
         }).subscribe(response => {
             this.showSmallSpinner = false;
             this.assignRoleForm.reset({ role: null });
-            this.showSelectedTree = false;
+            this.displaySelectedTreeview = false;
             this.userList = [];
             this.treeview.checklistSelection.clear();
             this.alertMessage('submitted successfully');

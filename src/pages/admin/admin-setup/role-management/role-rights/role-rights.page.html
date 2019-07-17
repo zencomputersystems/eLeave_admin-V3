@@ -34,7 +34,7 @@ margin: 0 auto;">
             <ion-item class="ionItem" lines="none">
                 <ion-label><strong>Allow All</strong></ion-label>
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="mainCheckbox[0]"
-                    [indeterminate]="isIndeterminate[0]" (click)="checkMaster(getLeaveSetupKey, 0)">
+                    [indeterminate]="isIndeterminate[0]" (click)="checkMaster(leaveSetupKey, 0)">
                 </ion-checkbox>
             </ion-item>
             <ion-list lines="none">
@@ -42,28 +42,28 @@ margin: 0 auto;">
                     <ion-label>Leave Type Setup</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                         [(ngModel)]="profileDetails.property.allowLeaveSetup.allowLeaveTypeSetup.value"
-                        (ionChange)="checkEvent(getLeaveSetupKey, 0)">
+                        (ionChange)="checkEvent(leaveSetupKey, 0)">
                     </ion-checkbox>
                 </ion-item>
                 <ion-item class="ionItem">
                     <ion-label>Leave Entitlement Setup</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                         [(ngModel)]="profileDetails.property.allowLeaveSetup.allowLeaveEntitlementSetup.value"
-                        (ionChange)="checkEvent(getLeaveSetupKey, 0)">
+                        (ionChange)="checkEvent(leaveSetupKey, 0)">
                     </ion-checkbox>
                 </ion-item>
                 <ion-item class="ionItem">
                     <ion-label>Approval Group Setup</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                         [(ngModel)]="profileDetails.property.allowLeaveSetup.allowApprovalGroupSetup.value"
-                        (ionChange)="checkEvent(getLeaveSetupKey, 0)">
+                        (ionChange)="checkEvent(leaveSetupKey, 0)">
                     </ion-checkbox>
                 </ion-item>
                 <ion-item class="ionItem">
                     <ion-label>Year End Closing Setup</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                         [(ngModel)]="profileDetails.property.allowLeaveSetup.allowYearEndClosingSetup.value"
-                        (ionChange)="checkEvent(getLeaveSetupKey, 0)">
+                        (ionChange)="checkEvent(leaveSetupKey, 0)">
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -76,7 +76,7 @@ margin: 0 auto;">
             <ion-list lines="none" class="ionItem" style="padding-left: 18px;padding-top: 18px">
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="profileDetails.property.allowViewReport.value"
-                    (ionChange)="checkEvent(getReportKey, null,0)">
+                    (ionChange)="checkEvent(reportKey, null,0)">
                 </ion-checkbox>
                 <mat-form-field appearance="outline" style="width: 76%">
                     <mat-label>View Report</mat-label>
@@ -101,14 +101,14 @@ margin: 0 auto;">
             <ion-item class="ionItem" lines="none">
                 <ion-label><strong>Allow All</strong></ion-label>
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="mainCheckbox[1]"
-                    [indeterminate]="isIndeterminate[1]" (click)="checkMaster(getLeaveMngtKey, 1)">
+                    [indeterminate]="isIndeterminate[1]" (click)="checkMaster(leaveMngtKey, 1)">
                 </ion-checkbox>
             </ion-item>
             <ion-list lines="none" class="ionItem"
                 style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.value"
-                    (ionChange)="checkEvent(getLeaveMngtKey, 1, 0)">
+                    (ionChange)="checkEvent(leaveMngtKey, 1, 0)">
                 </ion-checkbox>
                 <mat-form-field appearance="outline" style="width: 76%">
                     <mat-label>Leave Adjustmant</mat-label>
@@ -128,7 +128,7 @@ margin: 0 auto;">
                 style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="profileDetails.property.allowLeaveManagement.allowApplyOnBehalf.value"
-                    (ionChange)="checkEvent(getLeaveMngtKey, 1, 1)">
+                    (ionChange)="checkEvent(leaveMngtKey, 1, 1)">
                 </ion-checkbox>
                 <mat-form-field appearance="outline" style="width: 76%">
                     <mat-label>Apply On Behalf</mat-label>
@@ -148,7 +148,7 @@ margin: 0 auto;">
                 style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="profileDetails.property.allowLeaveManagement.allowApprovalOverride.value"
-                    (ionChange)="checkEvent(getLeaveMngtKey, 1 ,2)">
+                    (ionChange)="checkEvent(leaveMngtKey, 1 ,2)">
                 </ion-checkbox>
                 <mat-form-field appearance="outline" style="width: 76%">
                     <mat-label>Approval Override</mat-label>
@@ -173,7 +173,7 @@ margin: 0 auto;">
             <ion-list lines="none" class="ionItem" style="padding-left: 18px;padding-top: 18px">
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="profileDetails.property.allowViewCalendar.value"
-                    (ionChange)="checkEvent(getCalendarKey,null ,0)">
+                    (ionChange)="checkEvent(calendarKey,null ,0)">
                 </ion-checkbox>
                 <mat-form-field appearance="outline" style="width: 76%">
                     <mat-label>View Calendar</mat-label>
@@ -198,14 +198,14 @@ margin: 0 auto;">
             <ion-item class="ionItem" lines="none">
                 <ion-label><strong>Allow All</strong></ion-label>
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="mainCheckbox[2]"
-                    [indeterminate]="isIndeterminate[2]" (click)="checkMaster(getProfileMngtKey, 2)">
+                    [indeterminate]="isIndeterminate[2]" (click)="checkMaster(profileMngtKey, 2)">
                 </ion-checkbox>
             </ion-item>
             <ion-list lines="none" class="ionItem"
                 style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="profileDetails.property.allowProfileManagement.allowViewProfile.value"
-                    (ionChange)="checkEvent(getProfileMngtKey, 2,0)">
+                    (ionChange)="checkEvent(profileMngtKey, 2,0)">
                 </ion-checkbox>
                 <mat-form-field appearance="outline" style="width: 76%">
                     <mat-label>View Profile</mat-label>
@@ -225,7 +225,7 @@ margin: 0 auto;">
                 style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="profileDetails.property.allowProfileManagement.allowEditProfile.value"
-                    (ionChange)="checkEvent(getProfileMngtKey, 2,1)">
+                    (ionChange)="checkEvent(profileMngtKey, 2,1)">
                 </ion-checkbox>
                 <mat-form-field appearance="outline" style="width: 76%">
                     <mat-label>Edit Profile</mat-label>
@@ -245,7 +245,7 @@ margin: 0 auto;">
                 style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="profileDetails.property.allowProfileManagement.allowChangePassword.value"
-                    (ionChange)="checkEvent(getProfileMngtKey, 2, 2)">
+                    (ionChange)="checkEvent(profileMngtKey, 2, 2)">
                 </ion-checkbox>
                 <mat-form-field appearance="outline" style="width: 76%">
                     <mat-label>Change Password</mat-label>
@@ -265,7 +265,7 @@ margin: 0 auto;">
                 style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="profileDetails.property.allowProfileManagement.allowProfileAdmin.value"
-                    (ionChange)="checkEvent(getProfileMngtKey, 2, 3)">
+                    (ionChange)="checkEvent(profileMngtKey, 2, 3)">
                 </ion-checkbox>
                 <mat-form-field appearance="outline" style="width: 76%">
                     <mat-label>Profile Admin</mat-label>
