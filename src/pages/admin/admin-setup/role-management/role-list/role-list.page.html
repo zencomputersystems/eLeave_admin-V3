@@ -3,7 +3,7 @@
         <app-spinner></app-spinner>
     </div>
     <div class="cardContent" *ngIf="showContent">
-        <ion-card-content>
+        <ion-card-content style="padding-top: 5px;padding-bottom: 0;">
             <div class="textAssign" (click)="assignRole()">
                 <i class="fas fa-tasks" style="font-size: 14px;"></i>
                 <span style="padding-left: 10px;">Assign role</span>
@@ -12,26 +12,26 @@
                 <ion-row class="titleRow">
                     <ion-col style="display: inline-flex" size="4">
                         <ion-label class="titleLabel">ROLE NAME</ion-label>
-                        <ion-icon class="arrow" name="arrow-dropdown" (click)="sortDesLeaveType()"
-                            *ngIf="sortDirectionArrowDown">
+                        <ion-icon class="arrow" name="arrow-dropdown"
+                            (click)="sortName(1, -1, 'code');arrowDownName=false;" *ngIf="arrowDownName">
                         </ion-icon>
-                        <ion-icon class="arrow" name="arrow-dropup" *ngIf="!sortDirectionArrowDown"
-                            (click)="sortAscLeaveType()">
+                        <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownName"
+                            (click)="sortName(-1, 1, 'code');arrowDownName=true;">
                         </ion-icon>
                     </ion-col>
                     <ion-col size="5">
-                        <ion-label class="titleLabel">DESCRIPTION</ion-label>
-                        <ion-icon class="arrow" name="arrow-dropdown" (click)="sortDesLeaveType()"
-                            *ngIf="sortDirectionArrowDown">
+                        <ion-label class="titleLabel" style="position: absolute">DESCRIPTION</ion-label>
+                        <ion-icon style="padding-left: 88px;font-size: 18px;cursor: pointer;" name="arrow-dropdown"
+                            (click)="sortName(1, -1, 'description');arrowDownDes=false;" *ngIf="arrowDownDes">
                         </ion-icon>
-                        <ion-icon class="arrow" name="arrow-dropup" *ngIf="!sortDirectionArrowDown"
-                            (click)="sortAscLeaveType()">
+                        <ion-icon style="padding-left: 88px;font-size: 18px;cursor: pointer;" name="arrow-dropup"
+                            *ngIf="!arrowDownDes" (click)="sortName(-1, 1, 'description');arrowDownDes=true;">
                         </ion-icon>
                     </ion-col>
                     <ion-col>
                     </ion-col>
                 </ion-row>
-                <ion-row class="detailsRow" *ngFor="let role of roleList">
+                <ion-row class="detailsRow" *ngFor="let role of currentItems">
                     <ion-col size="4">
                         <ion-label class="colOfLeave">{{role.code}}</ion-label>
                     </ion-col>
@@ -52,25 +52,25 @@
     </div>
     <div *ngIf="showContent"
         style="padding-left: 45px;padding-right: 20px;display: inline-flex;width: 97%;min-width: 330px;">
-        <ion-button [disabled]="disablePrevButton" fill="outline" (click)="clickToPrevPage(pageIndex-1)"
+        <ion-button [disabled]="disablePrevButton" fill="outline" (click)="onClickPrevPage(pageIndex-1)"
             style="font-size: 12px;height: 30px;width: 90px;" color="primary">
             <ion-icon name="arrow-back"></ion-icon>Prev
         </ion-button>
         <div style="padding-left: 10px"></div>
         <ion-button [disabled]="disableNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
-            (click)="clickToNextPage(pageIndex+1)">Next<ion-icon name="arrow-forward">
+            (click)="onClickNextPage(pageIndex+1)">Next<ion-icon name="arrow-forward">
             </ion-icon>
         </ion-button>
         <div class="paginator">
             <span style="padding-right: 10px;">Page</span>
             <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
                     padding-right: 7px;">{{pageIndex}}</span>
-            <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageIndex}}
+            <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{sumPageIndex}}
             <i class="fas fa-angle-left" title="Previous page"
                 style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
-                (click)="clickToPrevPage(pageIndex-1)"></i>
+                (click)="onClickPrevPage(pageIndex-1)"></i>
             <i class="fas fa-angle-right" title="Next page" style="cursor:pointer; font-size: 15px;padding-left: 10px"
-                (click)="clickToNextPage(pageIndex+1)"></i>
+                (click)="onClickNextPage(pageIndex+1)"></i>
         </div>
     </div>
 </div>

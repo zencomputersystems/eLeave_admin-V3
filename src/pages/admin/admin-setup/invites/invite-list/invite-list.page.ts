@@ -122,14 +122,6 @@ export class InviteListPage implements OnInit {
     public showSpinner: boolean = true;
 
     /**
-     * Add observable as disposable resource
-     * @private
-     * @type {Subscription}
-     * @memberof InviteListPage
-     */
-    private _subscription: Subscription = new Subscription();
-
-    /**
      * Return list of user profile for current page
      * @readonly
      * @memberof InviteListPage
@@ -152,19 +144,11 @@ export class InviteListPage implements OnInit {
     }
 
     /**
-     * Destroy or dispose subscription
-     * @memberof InviteListPage
-     */
-    ngOnDestroy() {
-        this._subscription.unsubscribe();
-    }
-
-    /**
      * Get user profile list from API
      * @memberof InviteListPage
      */
     endPoint() {
-        this._subscription = this.apiService.get_user_profile_list().subscribe(
+        this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
                 this.listView = true;
