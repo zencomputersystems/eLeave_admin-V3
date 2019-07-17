@@ -15,6 +15,7 @@ import { RoleRightsPage } from 'src/pages/admin/admin-setup/role-management/role
 import { RoleListPage } from 'src/pages/admin/admin-setup/role-management/role-list/role-list.page';
 import { InviteListPage } from 'src/pages/admin/admin-setup/invites/invite-list/invite-list.page';
 import { AssignRolePage } from 'src/pages/admin/admin-setup/role-management/assign-role/assign-role.page';
+import { SetupCalendarProfilePage } from 'src/pages/admin/admin-setup/public-holiday-setup/setup-calendar-profile/setup-calendar-profile.page';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -25,7 +26,13 @@ export const sideMenuNavigationRoutes: Routes = [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: EmployeeProfilePage },
             { path: 'inbox', component: AddEmployeePage }, // AddEmployeePage //EmployeeProfilePage
-            { path: 'plan-my-leave', component: PublicHolidaySetup },
+            {
+                path: 'plan-my-leave', component: PublicHolidaySetup,
+                children: [
+                    { path: '', redirectTo: 'public-holiday-setup', pathMatch: 'full' },
+                    { path: 'public-holiday-setup', component: SetupCalendarProfilePage }
+                ]
+            },
             {
                 path: 'employee-directory', component: AdminInvitesPage,
                 children: [

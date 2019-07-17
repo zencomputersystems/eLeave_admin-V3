@@ -101,6 +101,8 @@ export class AssignCalendarPage implements OnInit {
      */
     public showSelectedTree: boolean = false;
 
+    public disabledSubmitButton: boolean = true;
+
     /**
      *Creates an instance of AssignCalendarPage.
      * @param {APIService} apiService
@@ -114,7 +116,7 @@ export class AssignCalendarPage implements OnInit {
     ngOnInit() {
         this.assignCalendarForm = new FormGroup({
             user: new FormArray([]),
-            calendar: new FormControl(['', Validators.required])
+            calendar: new FormControl('', Validators.required)
         })
         this.apiService.get_user_profile_list().subscribe(
             data => {
@@ -139,6 +141,7 @@ export class AssignCalendarPage implements OnInit {
     calendarSelected(calendarId) {
         this.showSpinner = true;
         this.selectedCalendarId = calendarId;
+        this.disabledButton();
         this.apiService.get_personal_holiday_calendar(calendarId).subscribe(
             (data: any) => {
                 this.events = data.holiday;
@@ -165,6 +168,12 @@ export class AssignCalendarPage implements OnInit {
             }
         }
         return 0;
+    }
+
+    disabledButton() {
+        if (this.assignCalendarForm.controls.calendar.value != null && this.assignCalendarForm.controls.user.value.length > 0) {
+            this.disabledSubmitButton = false;
+        } else { this.disabledSubmitButton = true; }
     }
 
     /**
@@ -215,13 +224,15 @@ export class AssignCalendarPage implements OnInit {
      * @memberof AssignCalendarPage
      */
     clickOutside(event) {
-        if (!event.target.className.includes("inputDropdown") && !event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix")) {
+        if (!event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix") && !event.target.className.includes("inputDropdown")) {
             this.showTreeDropdown = false;
             this.showSelectedTree = true;
+            this.disabledButton();
         }
         for (let i = 0; i < this.treeview.checklistSelection.selected.length; i++) {
             if (this.treeview.checklistSelection.selected[i].level == 1 && this.assignCalendarForm.controls.user.value.indexOf(this.treeview.checklistSelection.selected[i].item) === -1) {
-                this.assignCalendarForm.controls.user.value.push(this.treeview.checklistSelection.selected[i].item)
+                this.assignCalendarForm.controls.user.value.push(this.treeview.checklistSelection.selected[i].item);
+                this.disabledButton();
             }
         }
         if (this.treeview.checklistSelection.selected.length === 0) {

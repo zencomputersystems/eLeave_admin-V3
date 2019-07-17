@@ -26,6 +26,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { EmployeeListDatabase } from './assign-calendar/assign-calendar-treeview.service';
+import { SetupCalendarProfilePage } from './setup-calendar-profile/setup-calendar-profile.page';
 
 
 const routes: Routes = [
@@ -62,6 +63,6 @@ const routes: Routes = [
     ],
     providers:[EmployeeListDatabase],
     entryComponents: [SnackbarNotificationPage],
-    declarations: [ManageHolidayPage, PublicHolidaySetup, AssignCalendarPage, SnackbarNotificationPage]
+    declarations: [ManageHolidayPage, PublicHolidaySetup, AssignCalendarPage, SnackbarNotificationPage, SetupCalendarProfilePage]
 })
 export class PublicHolidaySetupModule { }

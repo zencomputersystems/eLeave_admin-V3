@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import * as _moment from 'moment';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { Subscription } from 'rxjs';
@@ -177,6 +177,13 @@ export class ManageHolidayPage implements OnInit {
         */
     public countryDB;
 
+    /** 
+     * Get Height of calendar when window resize to set in holiday view
+     * @type {number}
+     * @memberof ManageHolidayPage
+     */
+    public height: number;
+
     /**
          * This local property is used to set subscription
          * @private
@@ -194,6 +201,7 @@ export class ManageHolidayPage implements OnInit {
     }
 
     ngOnInit() {
+        window.dispatchEvent(new Event('resize'));
         this.countryDB = reduce(getDataSet(), "en");
         this.countryList = Object.keys(this.countryDB).map(key => this.countryDB[key]);
         this.countryList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
@@ -205,16 +213,7 @@ export class ManageHolidayPage implements OnInit {
             profileName: new FormControl('', Validators.required),
         });
         this.getPublicHolidayList();
-        this.subscription = this.apiService.get_calendar_profile_list().subscribe(
-            (data: any[]) => {
-                this.profileList = data;
-                this.showSpinner = false;
-            },
-            error => {
-                if (error) {
-                    window.location.href = '/login';
-                }
-            })
+        this.getProfileList();
     }
 
     /**
@@ -267,6 +266,23 @@ export class ManageHolidayPage implements OnInit {
                 }
             }
         );
+    }
+
+    /**
+     * Get calendar profile list from API
+     * @memberof ManageHolidayPage
+     */
+    getProfileList() {
+        this.subscription = this.apiService.get_calendar_profile_list().subscribe(
+            (data: any[]) => {
+                this.profileList = data;
+                this.showSpinner = false;
+            },
+            error => {
+                if (error) {
+                    window.location.href = '/login';
+                }
+            })
     }
 
     /**
@@ -458,6 +474,10 @@ export class ManageHolidayPage implements OnInit {
         setTimeout(() => {
             this.getPublicHolidayList();
         }, 100);
+    }
+
+    onResize(event) {
+        this.height = (event.target.innerHeight - 153) - (5 / 100)
     }
 
 }

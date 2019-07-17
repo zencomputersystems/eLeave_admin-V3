@@ -52,7 +52,7 @@
         </ion-button>
     </div>
 
-    <div class='app-calendar'>
+    <div class='app-calendar' (window:resize)="onResize($event)">
         <full-calendar #calendar defaultView="dayGridMonth" [header]="{
                           left: 'prev,next today',
                           center: 'title',
@@ -61,7 +61,7 @@
         </full-calendar>
     </div>
 
-    <div class="holidayView">
+    <div class="holidayView" [style.max-height.px]="height">
         <!------------------------------- Edit calendar ----------------------------------------->
         <div style="display:block; white-space: nowrap;" *ngIf="!showEditForm">
             <mat-form-field appearance="outline" style="width: 47%;" *ngIf="editCalendar">

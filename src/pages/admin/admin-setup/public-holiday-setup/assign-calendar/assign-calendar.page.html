@@ -19,7 +19,7 @@
                 <mat-error>Please select an option</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" style="width: 94%;cursor: pointer;" (click)="showTreeDropdown = true;">
-                <mat-label>Employee list</mat-label>
+                <mat-label>Assign to employee</mat-label>
                 <input matInput class="inputDropdown" readonly required>
                 <mat-icon matSuffix class="iconDropdown"><i class="material-icons">arrow_drop_down</i></mat-icon>
                 <mat-error>Please select at least one option</mat-error>
@@ -79,12 +79,12 @@
             <div style="text-align: center; padding-top: 5%;">
                 <ion-button fill="outline" style="font-size: 12px;height: 30px;width: 90px;background: white;"
                     color="primary"
-                    (click)="assignCalendarForm.reset();treeview.checklistSelection.clear();showSelectedTree = false;">
+                    (click)="assignCalendarForm.reset();treeview.checklistSelection.clear();showSelectedTree = false;disabledButton();">
                     CLEAR
                 </ion-button>
                 <div style="width: 10px; display: inline-block"></div>
                 <ion-button style="font-size: 12px;height: 30px;width: 100px;" color="primary"
-                    (click)="submitData(); showSpinner = true;" [disabled]="!assignCalendarForm.valid">SUBMIT
+                    (click)="submitData(); showSpinner = true;" [disabled]="disabledSubmitButton">SUBMIT
                 </ion-button>
                 <ion-spinner name="lines" *ngIf="showSpinner" color="primary"
                     style="position: absolute;margin-top: 5px;margin-left: 5px;">

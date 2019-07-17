@@ -18,9 +18,8 @@
     color: #f04141;
   }
   .app-calendar {
-    // max-width: 900px;
     width: 55%;
-    margin-top: 4%;
+    margin-top: 1%;
     display: inline-block;
   }
   ::ng-deep.fc-content-skeleton {
@@ -28,11 +27,10 @@
   }
   .holidayView {
     padding-left: 3%;
-    margin-top: 4%;
+    margin-top: 1%;
     float: right;
     width: 45%;
     overflow: auto;
-    max-height: 410px;
   }
   .titleRow {
     padding-left: 2%;
