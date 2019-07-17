@@ -284,22 +284,22 @@ margin: 0 auto;">
         </mat-card>
     </div>
     <div *ngIf="showContent" style="margin: 0 auto;padding: 20px;">
-        <ion-button *ngIf="showInput" fill="outline" style="font-size: 12px;height: 30px;width: 90px;background: white;"
+        <ion-button *ngIf="showButtons" fill="outline" style="font-size: 12px;height: 30px;width: 90px;background: white;"
             color="primary" (click)="ngOnInit();inputFormControl.reset();">
             CLEAR
         </ion-button>
-        <ion-button *ngIf="!showInput" fill="outline"
+        <ion-button *ngIf="!showButtons" fill="outline"
             style="font-size: 12px;height: 30px;width: 90px;background: white;" color="primary"
             (click)="ngOnInit();showSmallSpinner=true;">
             CANCEL
         </ion-button>
         <div style="width: 10px; display: inline-block"></div>
-        <ion-button *ngIf="showInput" [disabled]="!inputFormControl.valid"
+        <ion-button *ngIf="showButtons" [disabled]="!inputFormControl.valid"
             style="font-size: 12px;height: 30px;width: 100px;margin-right: 20px;" color="primary"
             (click)="save();showSmallSpinner = true;inputFormControl.reset();ngOnInit()">
             SAVE
         </ion-button>
-        <ion-button *ngIf="!showInput" style="font-size: 12px;height: 30px;width: 100px;margin-right: 20px;"
+        <ion-button *ngIf="!showButtons" style="font-size: 12px;height: 30px;width: 100px;margin-right: 20px;"
             color="primary" (click)="save();showSmallSpinner = true;">
             SAVE
         </ion-button>

@@ -6,6 +6,12 @@ import { SnackbarNotificationPage } from '../../public-holiday-setup/snackbar-no
 import { MatSnackBar } from '@angular/material';
 import { roleDetails, options } from '../role-details-data';
 
+/**
+ * Manage rights/permission for each role
+ * @export
+ * @class RoleRightsPage
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'app-role-rights',
     templateUrl: './role-rights.page.html',
@@ -13,23 +19,126 @@ import { roleDetails, options } from '../role-details-data';
 })
 export class RoleRightsPage implements OnInit {
 
+    /**
+     * Role details from each roleID 
+     * @type {*}
+     * @memberof RoleRightsPage
+     */
     public profileDetails: any;
+
+    /**
+     * SHow/hide Loading spinner 
+     * @type {boolean}
+     * @memberof RoleRightsPage
+     */
     public showSpinner: boolean = true;
+
+    /**
+     * Show/hide small Spinner when await for requested list from API
+     * @type {boolean}
+     * @memberof RoleRightsPage
+     */
     public showSmallSpinner: boolean = false;
-    public showInput: boolean = false;
+
+    /**
+     * Show clear & submit button in create-new-role path only
+     * @type {boolean}
+     * @memberof RoleRightsPage
+     */
+    public showButtons: boolean = false;
+
+    /**
+     * Show content after the details loaded from API
+     * @type {boolean}
+     * @memberof RoleRightsPage
+     */
     public showContent: boolean = false;
+
+    /**
+     * Value of checkbox (either indeterminate or vice versa)
+     * @type {boolean[]}
+     * @memberof RoleRightsPage
+     */
     public isIndeterminate: boolean[] = [false, false, false];
+
+    /**
+     * Value of main checkbox (either true or vice versa)
+     * @type {boolean[]}
+     * @memberof RoleRightsPage
+     */
     public mainCheckbox: boolean[] = [false, false, false];
+
+    /**
+     * Options in select input
+     * @type {*}
+     * @memberof RoleRightsPage
+     */
     public viewReportList: any;
+
+    /**
+     * checked value for all leave setup child in array
+     * @type {*}
+     * @memberof RoleRightsPage
+     */
     public leaveSetupKey: any;
+
+    /**
+     * checked value for all leave management child in array
+     * @type {*}
+     * @memberof RoleRightsPage
+     */
     public leaveMngtKey: any;
+
+    /**
+     * checked value for all profile management child in array
+     * @type {*}
+     * @memberof RoleRightsPage
+     */
     public profileMngtKey: any;
+
+    /**
+     * checked value of view calendar
+     * @memberof RoleRightsPage
+     */
     public calendarKey = [];
+
+    /**
+     * checked value of view report
+     * @memberof RoleRightsPage
+     */
     public reportKey = [];
+
+    /**
+     * form group of input rolename & description
+     * @type {*}
+     * @memberof RoleRightsPage
+     */
     public inputFormControl: any;
+
+    /**
+     * roleId value get from url 
+     * used for request role profile details
+     * @private
+     * @type {string}
+     * @memberof RoleRightsPage
+     */
     private _roleId: string;
+
+    /**
+     * code, description, property to send to API
+     * @private
+     * @type {*}
+     * @memberof RoleRightsPage
+     */
     private _body: any = {};
 
+    /**
+     *Creates an instance of RoleRightsPage.
+     * @param {RolesAPIService} roleAPi
+     * @param {ActivatedRoute} route
+     * @param {MatSnackBar} snackBar
+     * @memberof RoleRightsPage
+     */
     constructor(private roleAPi: RolesAPIService, private route: ActivatedRoute, private snackBar: MatSnackBar) {
         route.params.subscribe(params => { this._roleId = params.id; });
         this.inputFormControl = new FormGroup({
@@ -42,7 +151,7 @@ export class RoleRightsPage implements OnInit {
 
     ngOnInit() {
         if (this.route.routeConfig.path.includes('create-new-role')) {
-            this.showInput = true;
+            this.showButtons = true;
             this.profileDetails = roleDetails;
             this.initCheckedValue();
         } else {
@@ -60,6 +169,10 @@ export class RoleRightsPage implements OnInit {
         }
     }
 
+    /**
+     * Initial value for role details 
+     * @memberof RoleRightsPage
+     */
     initCheckedValue() {
         this.showSpinner = false;
         this.showContent = true;
@@ -71,6 +184,10 @@ export class RoleRightsPage implements OnInit {
         this.callCheckEvent();
     }
 
+    /**
+     * get initial checked value of property 
+     * @memberof RoleRightsPage
+     */
     callCheckEvent() {
         this.checkEvent(this.leaveSetupKey, 0);
         this.checkEvent(this.reportKey);
@@ -79,6 +196,12 @@ export class RoleRightsPage implements OnInit {
         this.checkEvent(this.profileMngtKey, 2);
     }
 
+    /**
+     * Click to select main checkbox, following by child checkbox
+     * @param {*} list
+     * @param {number} index
+     * @memberof RoleRightsPage
+     */
     checkMaster(list, index: number) {
         setTimeout(() => {
             list.forEach(obj => {
@@ -87,6 +210,14 @@ export class RoleRightsPage implements OnInit {
         })
     }
 
+    /**
+     * detect checkbox is Indeterminate or not
+     * detect main checkbox value
+     * @param {*} list
+     * @param {number} [masterIndex]
+     * @param {number} [index]
+     * @memberof RoleRightsPage
+     */
     checkEvent(list: any, masterIndex?: number, index?: number) {
         const totalItems = list.length;
         let checked = 0;
@@ -106,6 +237,10 @@ export class RoleRightsPage implements OnInit {
         }
     }
 
+    /**
+     * edit role details to send to API
+     * @memberof RoleRightsPage
+     */
     patchData() {
         const body = {
             "role_guid": this._roleId,
@@ -120,11 +255,16 @@ export class RoleRightsPage implements OnInit {
         });
     }
 
+    /**
+     * Submit/save value to send to API
+     * POST/PATCH
+     * @memberof RoleRightsPage
+     */
     save() {
         this._body["code"] = this.inputFormControl.value.rolename;
         this._body["description"] = this.inputFormControl.value.description;
         this._body["property"] = this.profileDetails.property;
-        if (this.showInput === true) {
+        if (this.showButtons === true) {
             this.roleAPi.post_role_profile(this._body).subscribe(response => {
                 this.showSmallSpinner = false;
                 this.openSnackBar('saved successfully');
@@ -137,6 +277,11 @@ export class RoleRightsPage implements OnInit {
         }
     }
 
+    /**
+     * Show alert message after submit role details to API
+     * @param {string} message
+     * @memberof RoleRightsPage
+     */
     openSnackBar(message: string) {
         this.snackBar.openFromComponent(SnackbarNotificationPage, {
             duration: 2500,
