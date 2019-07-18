@@ -13,6 +13,7 @@ const moment = _moment;
 import { getDataSet, reduce } from "iso3166-2-db";
 import { MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 import { APP_DATE_FORMATS, AppDateAdapter } from '../date.adapter';
+import { LeaveAPIService } from '../leave-api.service';
 
 /**
  * Manage holiday and rest day for employee
@@ -193,11 +194,13 @@ export class ManageHolidayPage implements OnInit {
     private subscription: Subscription = new Subscription();
 
     /**
-     *Creates an instance of CalendarViewPage.
-     * @param {APIService} apiService
-     * @memberof CalendarViewPage
+     *Creates an instance of ManageHolidayPage.
+     * @param {LeaveAPIService} leaveAPI
+     * @param {FormBuilder} fb
+     * @param {TitleCasePipe} titlecasePipe
+     * @memberof ManageHolidayPage
      */
-    constructor(private apiService: APIService, private fb: FormBuilder, private titlecasePipe: TitleCasePipe) {
+    constructor(private leaveAPI: LeaveAPIService, private fb: FormBuilder, private titlecasePipe: TitleCasePipe) {
     }
 
     ngOnInit() {
@@ -247,7 +250,7 @@ export class ManageHolidayPage implements OnInit {
      */
     getPublicHolidayList() {
         this.showSpinner = true;
-        this.subscription = this.apiService.get_public_holiday_list().subscribe(
+        this.subscription = this.leaveAPI.get_public_holiday_list().subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
                 this.list = data;
@@ -273,7 +276,7 @@ export class ManageHolidayPage implements OnInit {
      * @memberof ManageHolidayPage
      */
     getProfileList() {
-        this.subscription = this.apiService.get_calendar_profile_list().subscribe(
+        this.subscription = this.leaveAPI.get_calendar_profile_list().subscribe(
             (data: any[]) => {
                 this.profileList = data;
                 this.showSpinner = false;
@@ -301,7 +304,7 @@ export class ManageHolidayPage implements OnInit {
                 "rest": this.selectedWeekday
             }
         }
-        this.subscription = this.apiService.patch_calendar_profile(body).subscribe(
+        this.subscription = this.leaveAPI.patch_calendar_profile(body).subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
                 this.restDay = [];
@@ -323,7 +326,7 @@ export class ManageHolidayPage implements OnInit {
         this.showSpinner = true;
         this.selectedCalendarProfile = list;
         this.restDay = [];
-        this.subscription = this.apiService.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid).subscribe(
+        this.subscription = this.leaveAPI.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid).subscribe(
             (data: any) => {
                 this.showSpinner = false;
                 this.personalProfile = data;
@@ -401,7 +404,7 @@ export class ManageHolidayPage implements OnInit {
         this.editCalendar = true;
         this.addCalendar = false;
         const params = { 'country': this.countryIso, 'location': this.regionISO, 'year': year, 'month': month, };
-        this.subscription = this.apiService.get_public_holiday_list(params).subscribe(
+        this.subscription = this.leaveAPI.get_public_holiday_list(params).subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
                 this.items = data;
@@ -464,7 +467,7 @@ export class ManageHolidayPage implements OnInit {
             "holiday": this.events,
             "rest": this.selectedWeekday
         }
-        this.subscription = this.apiService.post_calendar_profile(newProfile).subscribe(
+        this.subscription = this.leaveAPI.post_calendar_profile(newProfile).subscribe(
             response => {
                 this.showSpinner = false;
             });

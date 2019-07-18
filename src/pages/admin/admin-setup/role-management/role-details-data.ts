@@ -1,5 +1,22 @@
+
+/**
+ * interface of selection option
+ * @export
+ * @interface Selection
+ */
 export interface Selection {
+    /**
+     * name of selection item
+     * @type {string}
+     * @memberof Selection
+     */
     name: string;
+
+    /**
+     * option value of selection item
+     * @type {string}
+     * @memberof Selection
+     */
     value?: string;
 }
 

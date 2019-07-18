@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
+/**
+ * Role Management page
+ * @export
+ * @class RoleManagementPage
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'app-role-management',
     templateUrl: './role-management.page.html',
@@ -8,10 +14,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class RoleManagementPage implements OnInit {
 
+    /**
+     *Creates an instance of RoleManagementPage.
+     * @param {Router} router
+     * @memberof RoleManagementPage
+     */
     constructor(private router: Router) {
 
     }
-
 
     ngOnInit() {
     }

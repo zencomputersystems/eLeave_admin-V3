@@ -1,8 +1,19 @@
 import { NativeDateAdapter } from "@angular/material";
 
-
+/**
+ * Date format configuration
+ * @export
+ * @class AppDateAdapter
+ * @extends {NativeDateAdapter}
+ */
 export class AppDateAdapter extends NativeDateAdapter {
 
+    /**
+     * parse date string to number
+     * @param {*} value
+     * @returns {(Date | null)}
+     * @memberof AppDateAdapter
+     */
     parse(value: any): Date | null {
         if ((typeof value === 'string') && (value.indexOf('/') > -1)) {
             const str = value.split('/');
@@ -14,6 +25,14 @@ export class AppDateAdapter extends NativeDateAdapter {
         const timestamp = typeof value === 'number' ? value : Date.parse(value);
         return isNaN(timestamp) ? null : new Date(timestamp);
     }
+
+    /**
+     * date format to display in date input
+     * @param {Date} date
+     * @param {string} displayFormat
+     * @returns {string}
+     * @memberof AppDateAdapter
+     */
     format(date: Date, displayFormat: string): string {
         if (displayFormat == "input") {
             let day = date.getDate();
@@ -29,6 +48,13 @@ export class AppDateAdapter extends NativeDateAdapter {
         }
     }
 
+    /**
+     * two digit allow in day and month format
+     * @private
+     * @param {number} n
+     * @returns
+     * @memberof AppDateAdapter
+     */
     private _to2digit(n: number) {
         return ('00' + n).slice(-2);
     }

@@ -15,6 +15,7 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../date.adapter';
 import { SnackbarNotificationPage } from '../snackbar-notification/snackbar-notification';
 import { DayType } from './apply-on-behalf.service';
+import { LeaveAPIService } from '../leave-api.service';
 const moment = _moment;
 /**
  * Apply Leave Page
@@ -286,13 +287,13 @@ export class ApplyOnBehalfPage implements OnInit {
     }
 
     /**
-     *Creates an instance of ApplyLeavePage.
-     * @param {APIService} apiService
+     *Creates an instance of ApplyOnBehalfPage.
+     * @param {LeaveAPIService} leaveAPI
      * @param {ActivatedRoute} route
      * @param {MatSnackBar} snackBar
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfPage
      */
-    constructor(private apiService: APIService,
+    constructor(private leaveAPI: LeaveAPIService,
         private route: ActivatedRoute, private snackBar: MatSnackBar) {
         this.applyLeaveForm = this.formGroup();
         route.queryParams
@@ -312,7 +313,7 @@ export class ApplyOnBehalfPage implements OnInit {
      */
     ngOnInit() {
 
-        this.apiService.get_compant_list().subscribe(
+        this.leaveAPI.get_compant_list().subscribe(
             list => {
                 this.companyList = list;
             }

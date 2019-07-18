@@ -9,6 +9,7 @@ import { FullCalendarComponent } from "@fullcalendar/angular";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { SnackbarNotificationPage } from "../snackbar-notification/snackbar-notification";
 import { EmployeeTreeview } from "./employee-treeview.service";
+import { LeaveAPIService } from "../leave-api.service";
 
 
 /**
@@ -101,16 +102,22 @@ export class AssignCalendarPage implements OnInit {
      */
     public showSelectedTree: boolean = false;
 
+    /**
+     * Enable or disable submit button
+     * @type {boolean}
+     * @memberof AssignCalendarPage
+     */
     public disabledSubmitButton: boolean = true;
 
     /**
      *Creates an instance of AssignCalendarPage.
      * @param {APIService} apiService
+     * @param {LeaveAPIService} leaveAPI
      * @param {MatSnackBar} snackBar
      * @param {EmployeeTreeview} treeview
      * @memberof AssignCalendarPage
      */
-    constructor(private apiService: APIService, private snackBar: MatSnackBar, private treeview: EmployeeTreeview) {
+    constructor(private apiService: APIService, private leaveAPI: LeaveAPIService, private snackBar: MatSnackBar, private treeview: EmployeeTreeview) {
     }
 
     ngOnInit() {
@@ -122,7 +129,7 @@ export class AssignCalendarPage implements OnInit {
             data => {
                 this.userList = data;
             });
-        this.apiService.get_calendar_profile_list().subscribe(
+        this.leaveAPI.get_calendar_profile_list().subscribe(
             data => {
                 this.calendarList = data;
             });
@@ -142,7 +149,7 @@ export class AssignCalendarPage implements OnInit {
         this.showSpinner = true;
         this.selectedCalendarId = calendarId;
         this.disabledButton();
-        this.apiService.get_personal_holiday_calendar(calendarId).subscribe(
+        this.leaveAPI.get_personal_holiday_calendar(calendarId).subscribe(
             (data: any) => {
                 this.events = data.holiday;
                 for (let i = 0; i < this.events.length; i++) {
@@ -187,7 +194,7 @@ export class AssignCalendarPage implements OnInit {
                 this.employeeList.push(this.userList[index].id);
             }
         }
-        this.apiService.patch_assign_calendar_profile({
+        this.leaveAPI.patch_assign_calendar_profile({
             "user_guid": this.employeeList,
             "calendar_guid": this.selectedCalendarId
         }).subscribe(response => {
