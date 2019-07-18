@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response } from "@angular/http";
+import { Http, Response } from "@angular/http";
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { APIService } from "src/services/shared-service/api.service";
 
 /**
  * Leave API endpoint
@@ -12,12 +13,6 @@ import { Observable } from "rxjs";
     providedIn: 'root'
 })
 export class LeaveAPIService {
-
-    /**
-     * header value to be append in application
-     * @memberof LeaveAPIService
-     */
-    public headerValue = new Headers();
 
     /**
      * main url of server
@@ -31,65 +26,7 @@ export class LeaveAPIService {
      * @param {Http} http
      * @memberof LeaveAPIService
      */
-    constructor(public http: Http) {
-    }
-
-    /**
-     * pass authorized token to application header
-     * @memberof LeaveAPIService
-     */
-    tokenAuthorization() {
-        if (this.headerValue["_headers"].size < 1) {
-            this.headerValue.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
-        }
-    }
-
-    /**
-     * Get endpoint with assign path
-     * @param {string} url
-     * @returns
-     * @memberof LeaveAPIService
-     */
-    GET(url: string) {
-        return this.http.get(this.baseUrl + url, { headers: this.headerValue })
-            .pipe(map((response: Response) => response.json()))
-    }
-
-    /**
-     * Get endpoint with assign path & guid
-     * @param {string} url
-     * @param {string} ID
-     * @returns
-     * @memberof LeaveAPIService
-     */
-    GET_ID(url: string, ID: string) {
-        return this.http.get(this.baseUrl + url + ID, { headers: this.headerValue })
-            .pipe(map((response: Response) => response.json()))
-    }
-
-    /**
-     * Update endpoint to given path and body data
-     * @param {*} data
-     * @param {string} urlPath
-     * @returns
-     * @memberof LeaveAPIService
-     */
-    PATCH(data: any, urlPath: string) {
-        return this.http.patch(this.baseUrl + urlPath, data, { headers: this.headerValue })
-            .pipe(map((response: Response) => response.json()))
-    }
-
-    /**
-     * POST endpoint to given path & data
-     * @param {*} bodyDetails
-     * @param {string} url
-     * @returns
-     * @memberof LeaveAPIService
-     */
-    POST(bodyDetails: any, url: string) {
-        return this.http.post(this.baseUrl + url, bodyDetails, { headers: this.headerValue })
-            .pipe(map((response: Response) => response.json()
-            ));
+    constructor(public http: Http, private apiService: APIService) {
     }
 
     /**
@@ -98,8 +35,8 @@ export class LeaveAPIService {
      * @memberof LeaveAPIService
      */
     get_public_holiday_list(param?): Observable<any> {
-        this.tokenAuthorization();
-        return this.http.get(this.baseUrl + '/api/admin/holiday/calendar', { params: param, headers: this.headerValue })
+        this.apiService.headerAuthorization();
+        return this.http.get(this.baseUrl + '/api/admin/holiday/calendar', { params: param, headers: this.apiService.headers })
             .pipe(map((res: Response) => res.json()))
     }
 
@@ -110,8 +47,8 @@ export class LeaveAPIService {
      * @memberof LeaveAPIService
      */
     get_calendar_profile_list(): Observable<any> {
-        this.tokenAuthorization();
-        return this.GET('/api/admin/holiday/calendar-profile');
+        this.apiService.headerAuthorization();
+        return this.apiService.getApi('/api/admin/holiday/calendar-profile');
     }
 
     /**
@@ -121,8 +58,8 @@ export class LeaveAPIService {
      * @memberof LeaveAPIService
      */
     patch_calendar_profile(profileBody): Observable<any> {
-        this.tokenAuthorization();
-        return this.PATCH(profileBody, '/api/admin/holiday/calendar-profile');
+        this.apiService.headerAuthorization();
+        return this.apiService.patchApi(profileBody, '/api/admin/holiday/calendar-profile');
     }
 
     /**
@@ -132,8 +69,8 @@ export class LeaveAPIService {
      * @memberof LeaveAPIService
      */
     post_calendar_profile(newProfile): Observable<any> {
-        this.tokenAuthorization();
-        return this.POST(newProfile, '/api/admin/holiday/calendar-profile');
+        this.apiService.headerAuthorization();
+        return this.apiService.postApi(newProfile, '/api/admin/holiday/calendar-profile');
     }
 
     /**
@@ -144,8 +81,8 @@ export class LeaveAPIService {
      * @memberof LeaveAPIService
      */
     get_personal_holiday_calendar(id): Observable<any> {
-        this.tokenAuthorization();
-        return this.GET_ID('/api/admin/holiday/', id);
+        this.apiService.headerAuthorization();
+        return this.apiService.getApiWithId('/api/admin/holiday/', id);
     }
 
     /**
@@ -155,8 +92,8 @@ export class LeaveAPIService {
      * @memberof LeaveAPIService
      */
     patch_assign_calendar_profile(body): Observable<any> {
-        this.tokenAuthorization();
-        return this.PATCH(body, '/api/admin/holiday/user-calendar');
+        this.apiService.headerAuthorization();
+        return this.apiService.patchApi(body, '/api/admin/holiday/user-calendar');
     }
 
     /**
@@ -167,8 +104,8 @@ export class LeaveAPIService {
      * @memberof LeaveAPIService
      */
     post_apply_leave_onBehalf(id, data): Observable<any> {
-        this.tokenAuthorization();
-        return this.POST(data, '/api/leave/apply-on-behalf/' + id);
+        this.apiService.headerAuthorization();
+        return this.apiService.postApi(data, '/api/leave/apply-on-behalf/' + id);
     }
 
     /**
@@ -177,8 +114,8 @@ export class LeaveAPIService {
      * @memberof LeaveAPIService
      */
     get_compant_list(): Observable<any> {
-        this.tokenAuthorization();
-        return this.GET('/api/company');
+        this.apiService.headerAuthorization();
+        return this.apiService.getApi('/api/company');
     }
 
     /**
@@ -188,7 +125,7 @@ export class LeaveAPIService {
      * @memberof LeaveAPIService
      */
     get_company_details(tenantId): Observable<any> {
-        this.tokenAuthorization();
-        return this.GET_ID('/api/company/', tenantId);
+        this.apiService.headerAuthorization();
+        return this.apiService.getApiWithId('/api/company/', tenantId);
     }
 }
