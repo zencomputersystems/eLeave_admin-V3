@@ -109,7 +109,7 @@
                 <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
                     <mat-label>Country list</mat-label>
                     <mat-select>
-                        <mat-option value="" selected></mat-option>
+                        <mat-option selected>None</mat-option>
                         <mat-option *ngFor="let list of countryList; let i=index" [value]="list.iso"
                             (click)="countryRegion = countryDB[list.iso].regions; countryIso = list.iso;">
                             {{list.name}}</mat-option>
@@ -119,7 +119,7 @@
                 <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
                     <mat-label>Regions</mat-label>
                     <mat-select>
-                        <mat-option value="" selected></mat-option>
+                        <mat-option selected>None</mat-option>
                         <mat-option *ngFor="let list of countryRegion; let i=index" [value]="list.iso"
                             (click)=" regionISO = list.iso">
                             {{list.name}}</mat-option>

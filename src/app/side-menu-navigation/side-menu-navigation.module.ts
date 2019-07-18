@@ -13,8 +13,8 @@ import { EmployeeProfileModule } from 'src/pages/admin/admin-setup/employee-prof
 import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
 import { AddEmployeeModule } from 'src/pages/admin/admin-setup/add-employee/add-employee.module';
-import { PublicHolidaySetupModule } from 'src/pages/admin/admin-setup/public-holiday-setup/public-holiday-setup.module';
 import { RoleManagementModule } from 'src/pages/admin/admin-setup/role-management/role-management.module';
+import { LeaveSetupModule } from 'src/pages/admin/admin-setup/leave-setup/leave-setup.module';
 
 @NgModule({
     imports: [
@@ -27,7 +27,7 @@ import { RoleManagementModule } from 'src/pages/admin/admin-setup/role-managemen
         EmployeeProfileModule,
         MatMenuModule,
         AddEmployeeModule,
-        PublicHolidaySetupModule,
+        LeaveSetupModule,
         RoleManagementModule,
         RouterModule.forChild(sideMenuNavigationRoutes)
     ],

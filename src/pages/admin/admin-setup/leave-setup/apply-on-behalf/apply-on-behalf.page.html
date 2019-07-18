@@ -1,0 +1,150 @@
+<div class='app-calendar'>
+    <full-calendar #calendar defaultView="dayGridMonth" selectable="true" [header]="{
+                          left: 'prev,next today',
+                          center: 'title',
+                          right: 'dayGridMonth,timeGridWeek'
+                        }" [plugins]="calendarPlugins" [events]="calendarEvents">
+        <!-- (dateClick)="handleDateClick($event) (select)="select($event)"  (dayRender)="dayRender($event,el)"-->
+    </full-calendar>
+</div>
+<div class="selection">
+    <form [formGroup]="applyLeaveForm">
+        <div style="display:block; white-space: nowrap;">
+            <mat-form-field appearance="outline" style="width: 47%;">
+                <mat-label>Company List</mat-label>
+                <mat-select class="selectLeave" formControlName="company" required>
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let list of companyList; let i=index" [value]="list.TENANT_COMPANY_GUID">
+                        {{list.NAME}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!applyLeaveForm.company" style="padding: 5px;padding-left: 0;">
+                    Please select one company</mat-error>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <mat-form-field style="width: 47%" appearance="outline" required>
+                <mat-label>Department List</mat-label>
+                <mat-select class="selectLeave" name="leave" formControlName="department" required>
+                    <mat-option *ngFor="let leave of entitlement; let i=index" [value]="leave.leaveTypeName"
+                        (click)="daysAvailable = leave.balanceDays;leaveTypeId = leave.leaveTypeId;">
+                        {{leave.leaveTypeName}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!applyLeaveForm.leaveTypes" style="padding: 5px;padding-left: 0;">
+                    Please select one department</mat-error>
+            </mat-form-field>
+        </div>
+        <div style="display:block; white-space: nowrap;">
+            <mat-form-field appearance="outline" style="width: 70%;">
+                <mat-label>Leave types</mat-label>
+                <mat-select class="selectLeave" name="leave" formControlName="leaveTypes">
+                    <mat-option *ngFor="let leave of entitlement; let i=index" [value]="leave.leaveTypeName"
+                        (click)="daysAvailable = leave.balanceDays;leaveTypeId = leave.leaveTypeId;">
+                        {{leave.leaveTypeName}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!applyLeaveForm.leaveTypes" style="padding: 5px;padding-left: 0;">
+                    Please select one leave type</mat-error>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <mat-form-field style="width: 24%" appearance="outline">
+                <mat-label>Days available</mat-label>
+                <input matInput [(value)]="daysAvailable" disabled>
+            </mat-form-field>
+        </div>
+        <div style="display:block; white-space: nowrap;">
+            <mat-form-field class="date" appearance="outline">
+                <mat-label>Start date</mat-label>
+                <input class="dateInput" matInput [matDatepicker]="picker1" formControlName="firstPicker" required
+                    (dateInput)="getValueFrom($event)" [max]="maxDate" (dateChange)="onDateChange()">
+                <div class="calendar-icon" [inlineSVG]="'assets/icon/Option/calendar.svg'" (click)="picker1.open()">
+                </div>
+                <mat-datepicker #picker1></mat-datepicker>
+                <mat-error *ngIf="!applyLeaveForm.firstPicker" style="padding: 5px;padding-left: 0;">
+                    Invalid start date</mat-error>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <mat-form-field class="date" appearance="outline">
+                <mat-label>End date</mat-label>
+                <input class="dateInput" matInput [matDatepicker]="picker2" formControlName="secondPicker" required
+                    (dateInput)="getValueTo($event)" [min]="minDate" (dateChange)="onDateChange()">
+                <div class="calendar-icon" [inlineSVG]="'assets/icon/Option/calendar.svg'" (click)="picker2.open()">
+                </div>
+                <mat-datepicker #picker2></mat-datepicker>
+                <mat-error *ngIf="!applyLeaveForm.secondPicker" style="padding: 5px;padding-left: 0;">
+                    Invalid end date</mat-error>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <mat-form-field style="width: 20%" appearance="outline">
+                <mat-label>No of days</mat-label>
+                <input matInput [(value)]="daysCount" disabled>
+            </mat-form-field>
+        </div>
+
+        <ion-item class="divider" lines="full"></ion-item>
+        <div style="display: block; white-space: nowrap;" formArrayName="dayTypes">
+            <div style="display: block; white-space: nowrap;" *ngFor="let dayType of dayTypes.controls; let i=index"
+                [formGroupName]="i">
+                <mat-form-field appearance="outline" style="width: 30%;">
+                    <mat-label>Day types</mat-label>
+                    <mat-select class="selectLeave" formControlName="name"
+                        (selectionChange)="dayTypesChanged($event, i)">
+                        <mat-option value=0> Full Day</mat-option>
+                        <mat-option value=1> Half Day</mat-option>
+                        <mat-option value=2 *ngIf="daysCount === 1"> Quarter Day</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                &nbsp;&nbsp;
+                <mat-form-field appearance="outline" style="width: 32%;" *ngIf="dayTypes.value[i].name == 1 ">
+                    <mat-label>Half day dates </mat-label>
+                    <mat-select class="selectLeave" (selectionChange)="halfDaySelectionChanged($event.value,i)"
+                        (openedChange)="open(i)" multiple>
+                        <mat-option *ngFor="let selectArray of dayTypes.controls[i].value.selectArray[0]; let j=index"
+                            [value]="selectArray" [disabled]="dayTypes.controls[i].value.status[0][j]"
+                            (click)="valueSelected(i, j)">
+                            {{selectArray | date:'M/d/y'}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <span *ngIf="dayTypes.value[i].name !== 2 ">&nbsp;&nbsp;</span>
+                <mat-radio-group class="example-radio-group" (change)="timeSlotChanged($event,i)" style="width: 24%"
+                    *ngIf="dayTypes.value[i].name == 1 " [value]="dayTypes.controls[i].value.selectArray[1]">
+                    <mat-radio-button value="AM">AM
+                    </mat-radio-button>
+                    <mat-radio-button style="padding-left: 10px;" value="PM">PM
+                    </mat-radio-button>
+                </mat-radio-group>
+                <mat-form-field appearance="outline" style="width: 32%;" *ngIf="dayTypes.value[i].name == 2 ">
+                    <mat-label>Quarter hours</mat-label>
+                    <mat-select [(value)]="selectedQuarterHour">
+                        <mat-option value="Q1">Q1 Hours</mat-option>
+                        <mat-option value="Q2">Q2 Hours</mat-option>
+                        <mat-option value="Q3">Q3 Hours</mat-option>
+                        <mat-option value="Q4">Q4 Hours</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <ion-icon class="addIcon" name="add" *ngIf="showAddIcon" (click)="addFormField()">
+            </ion-icon>
+            <mat-hint style="font-size: 75%;display: block;padding: 5px;padding-top: 0;">
+                Please ignore day types selection if not considered other options (half/quarter)
+            </mat-hint>
+        </div>
+        <ion-item class="divider" lines="full"></ion-item>
+        <mat-form-field appearance="outline">
+            <mat-label>Reason</mat-label>
+            <input matInput formControlName="inputReason" required>
+            <mat-error *ngIf="!applyLeaveForm.inputReason" style="padding: 5px;padding-left: 0;"> Please
+                enter reason</mat-error>
+        </mat-form-field>
+
+        <div style="text-align: center;">
+            <ion-button shape="round" fill="outline"
+                (click)="applyLeaveForm.reset(); daysAvailable='';daysCount=0;minDate='';maxDate='';clearArrayList()"
+                style="height: 27px; font-size: 12px;text-transform: none">Clear
+            </ion-button>
+            <ion-button shape="round" style="height: 27px;font-size: 12px;width: 115px;text-transform: none"
+                [disabled]="!applyLeaveForm.valid"
+                (click)="postData(); applyLeaveForm.reset();daysAvailable='';daysCount=0;minDate='';maxDate='';">
+                Apply for {{daysCount}} days
+            </ion-button>
+        </div>
+    </form>
+</div>

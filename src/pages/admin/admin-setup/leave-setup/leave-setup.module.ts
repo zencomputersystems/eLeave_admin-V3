@@ -14,7 +14,6 @@ import { MatCardModule } from '@angular/material/card';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar
 import { ManageHolidayPage } from './manage-holiday/manage-holiday.page';
-import { PublicHolidaySetup } from './public-holiday-setup';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -27,12 +26,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { EmployeeListDatabase } from './assign-calendar/assign-calendar-treeview.service';
 import { SetupCalendarProfilePage } from './setup-calendar-profile/setup-calendar-profile.page';
+import { ApplyOnBehalfPage } from './apply-on-behalf/apply-on-behalf.page';
+import { MatRadioModule } from '@angular/material';
+import { LeaveSetup } from './leave-setup';
 
 
 const routes: Routes = [
     {
         path: '',
-        component: PublicHolidaySetup
+        component: LeaveSetup
     }
 ];
 
@@ -59,10 +61,11 @@ const routes: Routes = [
         MatCheckboxModule,
         MatButtonModule,
         ClickOutsideModule,
+        MatRadioModule,
         RouterModule.forChild(routes)
     ],
     providers:[EmployeeListDatabase],
     entryComponents: [SnackbarNotificationPage],
-    declarations: [ManageHolidayPage, PublicHolidaySetup, AssignCalendarPage, SnackbarNotificationPage, SetupCalendarProfilePage]
+    declarations: [ManageHolidayPage, LeaveSetup, AssignCalendarPage, SnackbarNotificationPage, SetupCalendarProfilePage, ApplyOnBehalfPage]
 })
-export class PublicHolidaySetupModule { }
+export class LeaveSetupModule { }

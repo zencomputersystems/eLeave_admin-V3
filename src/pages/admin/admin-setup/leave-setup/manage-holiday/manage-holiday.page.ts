@@ -33,20 +33,20 @@ export class ManageHolidayPage implements OnInit {
     /**
       * This is local property for Full Calendar Component
       * @type {FullCalendarComponent}
-      * @memberof CalendarViewPage
+      * @memberof ManageHolidayPage
       */
     @ViewChild('calendar') calendar: FullCalendarComponent;
 
     /**
      * This is input property for plugins of Full Calendar Component
-     * @memberof CalendarViewPage
+     * @memberof ManageHolidayPage
      */
     public calendarPlugins = [dayGridPlugin, timeGrigPlugin, listYear];
 
     /**
      * Get data from user profile API
      * @type {*}
-     * @memberof CalendarViewPage
+     * @memberof ManageHolidayPage
      */
     public list: any;
 
@@ -60,14 +60,14 @@ export class ManageHolidayPage implements OnInit {
     /** 
      * Property for alias Event Input of Full Calendar Component
      * @type {EventInput[]}
-     * @memberof CalendarViewPage
+     * @memberof ManageHolidayPage
      */
     public events: EventInput[];
 
     /**
      * Show or hide edit profile
      * @type {boolean}
-     * @memberof PersonalPage
+     * @memberof ManageHolidayPage
      */
     public editCalendar: boolean = false;
 
@@ -188,7 +188,7 @@ export class ManageHolidayPage implements OnInit {
          * This local property is used to set subscription
          * @private
          * @type {Subscription}
-         * @memberof LeavePlanningPage
+         * @memberof ManageHolidayPage
          */
     private subscription: Subscription = new Subscription();
 

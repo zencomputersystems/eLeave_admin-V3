@@ -20,9 +20,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { RoleManagementPage } from './role-management.page';
 import { RoleRightsPage } from './role-rights/role-rights.page';
 import { RoleListPage } from './role-list/role-list.page';
-import { PublicHolidaySetupModule } from '../public-holiday-setup/public-holiday-setup.module';
+import { LeaveSetupModule } from '../leave-setup/leave-setup.module';
 import { AssignRolePage } from './assign-role/assign-role.page';
-import { EmployeeListDatabase } from '../public-holiday-setup/assign-calendar/assign-calendar-treeview.service';
+import { EmployeeListDatabase } from '../leave-setup/assign-calendar/assign-calendar-treeview.service';
 import { ClickOutsideModule } from 'ng-click-outside';
 
 
@@ -52,7 +52,7 @@ const routes: Routes = [
         MatTreeModule,
         MatCheckboxModule,
         MatButtonModule,
-        PublicHolidaySetupModule,
+        LeaveSetupModule,
         ClickOutsideModule,
         RouterModule.forChild(routes)
     ],

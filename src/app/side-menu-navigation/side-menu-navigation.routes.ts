@@ -9,13 +9,13 @@ import { AddEmployeePage } from 'src/pages/admin/admin-setup/add-employee/add-em
 import { BulkImportPage } from 'src/pages/admin/admin-setup/add-employee/bulk-import/bulk-import.page';
 import { BulkImportSuccessPage } from 'src/pages/admin/admin-setup/add-employee/bulk-import-success/bulk-import-success.page';
 import { AddOneEmployeePage } from 'src/pages/admin/admin-setup/add-employee/add-one-employee/add-one-employee.page';
-import { PublicHolidaySetup } from 'src/pages/admin/admin-setup/public-holiday-setup/public-holiday-setup';
 import { RoleManagementPage } from 'src/pages/admin/admin-setup/role-management/role-management.page';
 import { RoleRightsPage } from 'src/pages/admin/admin-setup/role-management/role-rights/role-rights.page';
 import { RoleListPage } from 'src/pages/admin/admin-setup/role-management/role-list/role-list.page';
 import { InviteListPage } from 'src/pages/admin/admin-setup/invites/invite-list/invite-list.page';
 import { AssignRolePage } from 'src/pages/admin/admin-setup/role-management/assign-role/assign-role.page';
-import { SetupCalendarProfilePage } from 'src/pages/admin/admin-setup/public-holiday-setup/setup-calendar-profile/setup-calendar-profile.page';
+import { LeaveSetup } from 'src/pages/admin/admin-setup/leave-setup/leave-setup';
+import { SetupCalendarProfilePage } from 'src/pages/admin/admin-setup/leave-setup/setup-calendar-profile/setup-calendar-profile.page';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -27,7 +27,7 @@ export const sideMenuNavigationRoutes: Routes = [
             { path: 'dashboard', component: EmployeeProfilePage },
             { path: 'inbox', component: AddEmployeePage }, // AddEmployeePage //EmployeeProfilePage
             {
-                path: 'plan-my-leave', component: PublicHolidaySetup,
+                path: 'plan-my-leave', component: LeaveSetup,
                 children: [
                     { path: '', redirectTo: 'public-holiday-setup', pathMatch: 'full' },
                     { path: 'public-holiday-setup', component: SetupCalendarProfilePage }

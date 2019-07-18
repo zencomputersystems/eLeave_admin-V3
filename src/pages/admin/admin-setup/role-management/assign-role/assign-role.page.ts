@@ -2,9 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { roleDetails, options } from "../role-details-data";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { RolesAPIService } from "../role-api.service";
-import { EmployeeTreeview } from "../../public-holiday-setup/assign-calendar/employee-treeview.service";
+import { EmployeeTreeview } from "../../leave-setup/assign-calendar/employee-treeview.service";
 import { APIService } from "src/services/shared-service/api.service";
-import { SnackbarNotificationPage } from "../../public-holiday-setup/snackbar-notification/snackbar-notification";
+import { SnackbarNotificationPage } from "../../leave-setup/snackbar-notification/snackbar-notification";
 import { MatSnackBar } from "@angular/material";
 
 @Component({

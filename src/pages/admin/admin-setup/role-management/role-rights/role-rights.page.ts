@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RolesAPIService } from '../role-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SnackbarNotificationPage } from '../../public-holiday-setup/snackbar-notification/snackbar-notification';
+import { SnackbarNotificationPage } from '../../leave-setup/snackbar-notification/snackbar-notification';
 import { MatSnackBar } from '@angular/material';
 import { roleDetails, options } from '../role-details-data';
 

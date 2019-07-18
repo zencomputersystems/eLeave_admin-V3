@@ -23,7 +23,7 @@ export class APIService {
      * @type {string}
      * @memberof APIService
      */
-    public baseUrl: string = "http://zencore.zen.com.my:3000/";
+    public baseUrl: string = "http://zencore.zen.com.my:3000";
 
     /**
      *Creates an instance of APIService.
@@ -98,7 +98,7 @@ export class APIService {
      */
     get_personal_details(): Observable<any> {
         this.headerAuthorization();
-        return this.getApi('api/userprofile/personal-detail');
+        return this.getApi('/api/userprofile/personal-detail');
     }
 
     /**
@@ -109,7 +109,7 @@ export class APIService {
      */
     patch_personal_details(updateData): Observable<any[]> {
         this.headerAuthorization();
-        return this.patchApi(updateData, 'api/userprofile/personal-detail');
+        return this.patchApi(updateData, '/api/userprofile/personal-detail');
     }
 
     /**
@@ -119,7 +119,7 @@ export class APIService {
      * @memberof APIService
      */
     get_employment_details(userId): Observable<any> {
-        return this.getApiWithId('api/userprofile/employment-detail/', userId);
+        return this.getApiWithId('/api/userprofile/employment-detail/', userId);
     }
 
     /**
@@ -130,7 +130,7 @@ export class APIService {
      */
     patch_employment_details(updateData: any): Observable<any> {
         this.headerAuthorization();
-        return this.patchApi(updateData, 'api/userprofile/employment-detail');
+        return this.patchApi(updateData, '/api/userprofile/employment-detail');
     }
 
     /**
@@ -140,7 +140,7 @@ export class APIService {
      */
     get_user_profile_list(): Observable<any> {
         this.headerAuthorization();
-        return this.getApi('api/users');
+        return this.getApi('/api/users');
     }
 
     /**
@@ -151,7 +151,7 @@ export class APIService {
      */
     post_user_invite(userId): Observable<any> {
         this.headerAuthorization();
-        return this.postApi(userId, 'api/invitation');
+        return this.postApi(userId, '/api/invitation');
     }
 
     /**
@@ -162,7 +162,7 @@ export class APIService {
     get_public_holiday_list(param?): Observable<any> {
         this.headerAuthorization();
         // return this.getApi('api/admin/holiday/calendar', {params: data});
-        return this.http.get(this.baseUrl + 'api/admin/holiday/calendar', { params: param, headers: this.headers })
+        return this.http.get(this.baseUrl + '/api/admin/holiday/calendar', { params: param, headers: this.headers })
             .pipe(map((res: Response) => res.json()))
     }
 
@@ -174,7 +174,7 @@ export class APIService {
      */
     get_calendar_profile_list(): Observable<any> {
         this.headerAuthorization();
-        return this.getApi('api/admin/holiday/calendar-profile');
+        return this.getApi('/api/admin/holiday/calendar-profile');
     }
 
     /**
@@ -185,7 +185,7 @@ export class APIService {
      */
     patch_calendar_profile(profileBody): Observable<any> {
         this.headerAuthorization();
-        return this.patchApi(profileBody, 'api/admin/holiday/calendar-profile');
+        return this.patchApi(profileBody, '/api/admin/holiday/calendar-profile');
     }
 
     /**
@@ -196,18 +196,33 @@ export class APIService {
      */
     post_calendar_profile(newProfile): Observable<any> {
         this.headerAuthorization();
-        return this.postApi(newProfile, 'api/admin/holiday/calendar-profile');
+        return this.postApi(newProfile, '/api/admin/holiday/calendar-profile');
     }
 
     get_personal_holiday_calendar(id): Observable<any> {
         // this.headerAuthorization();
-        return this.getApiWithId('api/admin/holiday/', id);
+        return this.getApiWithId('/api/admin/holiday/', id);
     }
 
 
     patch_assign_calendar_profile(body): Observable<any> {
         this.headerAuthorization();
-        return this.patchApi(body, 'api/admin/holiday/user-calendar');
+        return this.patchApi(body, '/api/admin/holiday/user-calendar');
+    }
+
+    post_apply_leave_onBehalf(id, data): Observable<any> {
+        this.headerAuthorization();
+        return this.postApi(data, '/api/leave/apply-on-behalf/' + id);
+    }
+
+    get_compant_list(): Observable<any> {
+        this.headerAuthorization();
+        return this.getApi('/api/company');
+    }
+
+    get_company_details(tenantId): Observable<any> {
+        this.headerAuthorization();
+        return this.getApiWithId('/api/company/', tenantId);
     }
 
 

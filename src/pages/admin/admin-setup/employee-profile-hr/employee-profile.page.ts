@@ -3,7 +3,7 @@ import { APIService } from 'src/services/shared-service/api.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import { AppDateAdapter, APP_DATE_FORMATS } from '../public-holiday-setup/date.adapter';
+import { AppDateAdapter, APP_DATE_FORMATS } from '../leave-setup/date.adapter';
 /**
  * Employee Profile Page
  * @export
