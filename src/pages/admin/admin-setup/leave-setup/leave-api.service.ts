@@ -46,49 +46,49 @@ export class LeaveAPIService {
 
     /**
      * Get endpoint with assign path
-     * @param {string} address
-     * @returns
-     * @memberof LeaveAPIService
-     */
-    GET(address: string) {
-        return this.http.get(this.baseUrl + address, { headers: this.headerValue })
-            .pipe(map((res: Response) => res.json()))
-    }
-
-    /**
-     * Get endpoint with assign path & guid
-     * @param {string} address
-     * @param {string} guid
-     * @returns
-     * @memberof LeaveAPIService
-     */
-    GET_ID(address: string, guid: string) {
-        return this.http.get(this.baseUrl + address + guid, { headers: this.headerValue })
-            .pipe(map((res: Response) => res.json()))
-    }
-
-    /**
-     * Update endpoint to given path and body data
-     * @param {*} body
      * @param {string} url
      * @returns
      * @memberof LeaveAPIService
      */
-    PATCH(body: any, url: string) {
-        return this.http.patch(this.baseUrl + url, body, { headers: this.headerValue })
-            .pipe(map((res: Response) => res.json()))
+    GET(url: string) {
+        return this.http.get(this.baseUrl + url, { headers: this.headerValue })
+            .pipe(map((response: Response) => response.json()))
+    }
+
+    /**
+     * Get endpoint with assign path & guid
+     * @param {string} url
+     * @param {string} ID
+     * @returns
+     * @memberof LeaveAPIService
+     */
+    GET_ID(url: string, ID: string) {
+        return this.http.get(this.baseUrl + url + ID, { headers: this.headerValue })
+            .pipe(map((response: Response) => response.json()))
+    }
+
+    /**
+     * Update endpoint to given path and body data
+     * @param {*} data
+     * @param {string} urlPath
+     * @returns
+     * @memberof LeaveAPIService
+     */
+    PATCH(data: any, urlPath: string) {
+        return this.http.patch(this.baseUrl + urlPath, data, { headers: this.headerValue })
+            .pipe(map((response: Response) => response.json()))
     }
 
     /**
      * POST endpoint to given path & data
-     * @param {*} data
-     * @param {string} address
+     * @param {*} bodyDetails
+     * @param {string} url
      * @returns
      * @memberof LeaveAPIService
      */
-    POST(data: any, address: string) {
-        return this.http.post(this.baseUrl + address, data, { headers: this.headerValue })
-            .pipe(map((res: Response) => res.json()
+    POST(bodyDetails: any, url: string) {
+        return this.http.post(this.baseUrl + url, bodyDetails, { headers: this.headerValue })
+            .pipe(map((response: Response) => response.json()
             ));
     }
 
