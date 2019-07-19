@@ -29,8 +29,8 @@ export const sideMenuNavigationRoutes: Routes = [
             {
                 path: 'plan-my-leave', component: LeaveSetup,
                 children: [
-                    { path: '', redirectTo: 'public-holiday-setup', pathMatch: 'full' },
-                    { path: 'public-holiday-setup', component: SetupCalendarProfilePage }
+                    { path: '', redirectTo: 'leave-setup', pathMatch: 'full' },
+                    { path: 'leave-setup', component: SetupCalendarProfilePage }
                 ]
             },
             {
