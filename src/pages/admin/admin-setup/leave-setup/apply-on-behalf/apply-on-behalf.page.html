@@ -13,23 +13,27 @@
             <mat-form-field appearance="outline" style="width: 47%;">
                 <mat-label>Company List</mat-label>
                 <mat-select class="selectLeave" formControlName="company" required>
-                    <mat-option>None</mat-option>
-                    <mat-option *ngFor="let list of companyList; let i=index" [value]="list.TENANT_COMPANY_GUID">
+                    <mat-option>-- None --</mat-option>
+                    <mat-option *ngFor="let list of companyList; let i=index" [value]="list.TENANT_COMPANY_GUID"
+                        (click)="selectedCompany(list.TENANT_COMPANY_GUID)">
                         {{list.NAME}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="!applyLeaveForm.company" style="padding: 5px;padding-left: 0;">
                     Please select one company</mat-error>
             </mat-form-field>
             &nbsp;&nbsp;
-            <mat-form-field style="width: 47%" appearance="outline" required>
-                <mat-label>Department List</mat-label>
-                <mat-select class="selectLeave" name="leave" formControlName="department" required>
-                    <mat-option *ngFor="let leave of entitlement; let i=index" [value]="leave.leaveTypeName"
-                        (click)="daysAvailable = leave.balanceDays;leaveTypeId = leave.leaveTypeId;">
-                        {{leave.leaveTypeName}}</mat-option>
+            <mat-form-field appearance="outline" style="width: 47%;">
+                <mat-label>Employee List</mat-label>
+                <mat-select formControlName="userControl" required>
+                    <mat-option>-- None --</mat-option>
+                    <mat-optgroup *ngFor="let department of departmentlist" [label]="department.item"
+                        [disabled]="department.disabled">
+                        <mat-option *ngFor="let name of department.children" [value]="name.item"
+                            (click)="getSelectedEmployee(name.item)">
+                            {{name.item}}
+                        </mat-option>
+                    </mat-optgroup>
                 </mat-select>
-                <mat-error *ngIf="!applyLeaveForm.leaveTypes" style="padding: 5px;padding-left: 0;">
-                    Please select one department</mat-error>
             </mat-form-field>
         </div>
         <div style="display:block; white-space: nowrap;">
@@ -54,7 +58,7 @@
                 <mat-label>Start date</mat-label>
                 <input class="dateInput" matInput [matDatepicker]="picker1" formControlName="firstPicker" required
                     (dateInput)="getValueFrom($event)" [max]="maxDate" (dateChange)="onDateChange()">
-                <div class="calendar-icon" [inlineSVG]="'assets/icon/Option/calendar.svg'" (click)="picker1.open()">
+                <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'" (click)="picker1.open()">
                 </div>
                 <mat-datepicker #picker1></mat-datepicker>
                 <mat-error *ngIf="!applyLeaveForm.firstPicker" style="padding: 5px;padding-left: 0;">
@@ -65,7 +69,7 @@
                 <mat-label>End date</mat-label>
                 <input class="dateInput" matInput [matDatepicker]="picker2" formControlName="secondPicker" required
                     (dateInput)="getValueTo($event)" [min]="minDate" (dateChange)="onDateChange()">
-                <div class="calendar-icon" [inlineSVG]="'assets/icon/Option/calendar.svg'" (click)="picker2.open()">
+                <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'" (click)="picker2.open()">
                 </div>
                 <mat-datepicker #picker2></mat-datepicker>
                 <mat-error *ngIf="!applyLeaveForm.secondPicker" style="padding: 5px;padding-left: 0;">

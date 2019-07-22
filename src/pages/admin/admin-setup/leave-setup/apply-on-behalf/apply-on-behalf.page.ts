@@ -16,6 +16,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from '../date.adapter';
 import { SnackbarNotificationPage } from '../snackbar-notification/snackbar-notification';
 import { DayType } from './apply-on-behalf.service';
 import { LeaveAPIService } from '../leave-api.service';
+import { EmployeeTreeview } from '../assign-calendar/employee-treeview.service';
 const moment = _moment;
 /**
  * Apply Leave Page
@@ -117,6 +118,15 @@ export class ApplyOnBehalfPage implements OnInit {
 
     public companyList: any;
 
+    public selectedCompanyId: string;
+
+    public departmentlist: any = [];
+
+    public showTreeDropdown: boolean = false;
+
+    public showSelectedTree: boolean = false;
+
+    private guid: string;
     /**
      * Local private property for value get from API
      * @private
@@ -268,14 +278,6 @@ export class ApplyOnBehalfPage implements OnInit {
     private _arrayDateSlot = [];
 
     /**
-     * This is local property to set subscription
-     * @private
-     * @type {Subscription}
-     * @memberof ApplyLeavePage
-     */
-    private subscription: Subscription = new Subscription();
-
-    /**
      * This is local property for Full Calendar Component
      * @type {FullCalendarComponent}
      * @memberof ApplyLeavePage
@@ -294,7 +296,7 @@ export class ApplyOnBehalfPage implements OnInit {
      * @memberof ApplyOnBehalfPage
      */
     constructor(private leaveAPI: LeaveAPIService,
-        private route: ActivatedRoute, private snackBar: MatSnackBar) {
+        private route: ActivatedRoute, private snackBar: MatSnackBar, private treeview: EmployeeTreeview, private apiService: APIService) {
         this.applyLeaveForm = this.formGroup();
         route.queryParams
             .subscribe(params => {
@@ -312,49 +314,15 @@ export class ApplyOnBehalfPage implements OnInit {
      * @memberof ApplyLeavePage
      */
     ngOnInit() {
-
         this.leaveAPI.get_compant_list().subscribe(
             list => {
                 this.companyList = list;
             }
         )
-        // this.subscription = this.apiService.get_user_profile().subscribe(
-        //     (data: any[]) => {
-        //         this._userList = data;
-        //         this.entitlement = this._userList.entitlementDetail;
-        //         this.calendarId = this._userList.calendarId;
-        //     },
-        //     error => {
-        //         if (error) {
-        //             window.location.href = '/login';
-        //         }
-        //     },
-        //     () => {
-        //         this.subscription = this.apiService.get_personal_holiday_calendar(this.calendarId).subscribe(
-        //             data => {
-        //                 this.formatDate(data.holiday);
-        //                 for (let i = 0; i < data.rest.length; i++) {
-        //                     const weekdays = new Array(
-        //                         "SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"
-        //                     );
-        //                     this._weekDayNumber.push(weekdays.indexOf(data.rest[i].fullname));
-        //                 }
-        //             }
-        //         );
-        //     }
-        // );
         setTimeout(() => {
             let calendarApi = this.calendarComponent.getApi();
             calendarApi.render();
         }, 100);
-    }
-
-    /**
-     * This method is used to destroy subscription
-     * @memberof ApplyLeavePage
-     */
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
     }
 
     /**
@@ -365,7 +333,7 @@ export class ApplyOnBehalfPage implements OnInit {
     formGroup() {
         return new FormGroup({
             company: new FormControl('', Validators.required),
-            department: new FormControl('', Validators.required),
+            userControl: new FormControl('', Validators.required),
             dayTypes: new FormArray([
                 new FormGroup({
                     name: new FormControl(0),
@@ -382,12 +350,6 @@ export class ApplyOnBehalfPage implements OnInit {
             inputReason: new FormControl('', Validators.required),
         });
     }
-
-    // dayRender(ev) {
-    //     ev.el.addEventListener('dblclick', () => {
-    //         alert('double click!');
-    //     });
-    // }
 
     /**
      * format date using moment library
@@ -493,22 +455,18 @@ export class ApplyOnBehalfPage implements OnInit {
             "reason": this.applyLeaveForm.value.inputReason,
             "data": this._arrayDateSlot
         }
-        console.log(applyLeaveData);
-
-        // this.subscription = this.apiService.post_apply_leave_onBehalf(id,applyLeaveData).subscribe(
-        //     (val) => {
-        //         console.log("PATCH call successful value returned in body", val);
-        //         this.clearArrayList();
-        //         this.openSnackBar('success');
-        //     },
-        //     response => {
-        //         console.log("PATCH call in error", response);
-        //         this.clearArrayList();
-        //         this.openSnackBar('fail');
-        //         if (response.status === 401) {
-        //             window.location.href = '/login';
-        //         }
-        //     });
+        this.leaveAPI.post_apply_leave_onBehalf(this.guid, applyLeaveData).subscribe(
+            response => {
+                this.clearArrayList();
+                if (!response.valid) {
+                    this.openSnackBar('submitted unsuccessfully' + response.message);
+                } else {
+                    this.openSnackBar('submitted successfully' + response.message);
+                }
+                if (response.status === 401) {
+                    window.location.href = '/login';
+                }
+            });
     }
 
     /**
@@ -529,6 +487,7 @@ export class ApplyOnBehalfPage implements OnInit {
         this._objSlot3 = [];
         this._arrayDateSlot = [];
         this.selectedQuarterHour = '';
+        this.departmentlist = [];
     }
 
     /**
@@ -828,6 +787,33 @@ export class ApplyOnBehalfPage implements OnInit {
             this.showAddIcon = false;
             alert("No other option");
         }
+    }
+
+    selectedCompany(selectedCompanyId) {
+        this.leaveAPI.get_company_details(selectedCompanyId).subscribe(list => {
+            for (let i = 0; i < this.treeview.dataSource.data.length; i++) {
+                if (list.companyName == this.treeview.dataSource.data[i].item) {
+                    for (let j = 0; j < this.treeview.dataSource.data[i].children.length; j++) {
+                        this.departmentlist.push(this.treeview.dataSource.data[i].children[j]);
+                    }
+                }
+            }
+        })
+    }
+
+    getSelectedEmployee(name) {
+        this.apiService.get_user_profile_list().subscribe(list => {
+            for (let i = 0; i < list.length; i++) {
+                if (list[i].employeeName === name) {
+                    this.guid = list[i].userId;
+                    this.apiService.get_user_profile_details(this.guid).subscribe(data => {
+                        this.entitlement = data;
+                        this.entitlement = data.entitlementDetail;
+                    })
+                }
+            }
+        })
+
     }
 
     /**

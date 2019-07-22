@@ -105,10 +105,11 @@
     margin-top: -17px;
     width: 100%;
     z-index: 2;
-    height: 300px;
+    height: 290px;
     overflow: auto;
     box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
       0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    background: white;
   }
   .showSelection {
     width: 100%;
@@ -123,7 +124,7 @@
   .ionCheckbox[disabled] {
     opacity: unset;
   }
-  .item-interactive-disabled .sc-ion-label-md-h{
+  .item-interactive-disabled .sc-ion-label-md-h {
     opacity: unset;
   }
 }

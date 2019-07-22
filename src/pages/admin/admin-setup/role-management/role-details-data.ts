@@ -21,7 +21,7 @@ export interface Selection {
 }
 
 export const options: Selection[] = [
-    { name: 'None' },
+    { name: '-- None --' },
     { name: 'All Level', value: 'All' },
     { name: 'Company Level', value: 'Company' },
     { name: 'Division Level', value: 'Division' },

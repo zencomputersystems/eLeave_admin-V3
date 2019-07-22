@@ -51,6 +51,7 @@ export const sideMenuNavigationRoutes: Routes = [
                     { path: 'assign-role', component: AssignRolePage }
                 ]
             },
+            { path: 'employee-profile', component: EmployeeProfilePage }
         ]
     },
     { path: '**', component: PageNotFoundComponent },
