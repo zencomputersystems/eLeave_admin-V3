@@ -181,10 +181,10 @@
         <mat-form-field *ngIf="showEditContact[index]">
             <input matInput placeholder="Contact Number" [(ngModel)]="contactList[index].contactNumber">
         </mat-form-field>
-        <div class="delete-icon" *ngIf="!showEditContact[index]" [inlineSVG]="'assets/icon/Option/trash.svg'"
+        <div class="delete-icon" *ngIf="!showEditContact[index]" [inlineSVG]="'assets/icon/option/trash.svg'"
             (click)="removeItem(index, this.contactList)">
         </div>
-        <div class="edit-pencil-icon" *ngIf="!showEditContact[index]" [inlineSVG]="'assets/icon/Option/pencil.svg'"
+        <div class="edit-pencil-icon" *ngIf="!showEditContact[index]" [inlineSVG]="'assets/icon/option/pencil.svg'"
             (click)="editContact(index, true)">
         </div>
         <div style="float: right;" *ngIf="showEditContact[index]">
@@ -229,10 +229,10 @@
                 <input matInput placeholder="Identity card Number"
                     [(ngModel)]="spouseList[index].spouseIdentificationNumber">
             </mat-form-field>
-            <div class="delete-icon" *ngIf="!showEditSpouse[index]" [inlineSVG]="'assets/icon/Option/trash.svg'"
+            <div class="delete-icon" *ngIf="!showEditSpouse[index]" [inlineSVG]="'assets/icon/option/trash.svg'"
                 (click)="removeItem(index, this.spouseList)">
             </div>
-            <div class="edit-pencil-icon" *ngIf="!showEditSpouse[index]" [inlineSVG]="'assets/icon/Option/pencil.svg'"
+            <div class="edit-pencil-icon" *ngIf="!showEditSpouse[index]" [inlineSVG]="'assets/icon/option/pencil.svg'"
                 (click)="editSpouse(index, true)">
             </div>
             <div style="float: right;" *ngIf="showEditSpouse[index]">
@@ -273,10 +273,10 @@
                 <input matInput placeholder="Identity card Number"
                     [(ngModel)]="childList[index].childIdentificationNumber">
             </mat-form-field>
-            <div class="delete-icon" *ngIf="!showEditChild[index]" [inlineSVG]="'assets/icon/Option/trash.svg'"
+            <div class="delete-icon" *ngIf="!showEditChild[index]" [inlineSVG]="'assets/icon/option/trash.svg'"
                 (click)="removeItem(index, this.childList)">
             </div>
-            <div class="edit-pencil-icon" *ngIf="!showEditChild[index]" [inlineSVG]="'assets/icon/Option/pencil.svg'"
+            <div class="edit-pencil-icon" *ngIf="!showEditChild[index]" [inlineSVG]="'assets/icon/option/pencil.svg'"
                 (click)="editChild(index, true)">
             </div>
             <div style="float: right;" *ngIf="showEditChild[index]">
@@ -353,10 +353,10 @@
         </ion-col>
         <ion-col size="1">
             <div class="education-delete-icon" *ngIf="!showEditEducation[index]"
-                [inlineSVG]="'assets/icon/Option/trash.svg'" (click)="removeItem(index, this.educationList)">
+                [inlineSVG]="'assets/icon/option/trash.svg'" (click)="removeItem(index, this.educationList)">
             </div>
             <div class="education-edit-pencil-icon" *ngIf="!showEditEducation[index]"
-                [inlineSVG]="'assets/icon/Option/pencil.svg'" (click)="editEducation(index, true)">
+                [inlineSVG]="'assets/icon/option/pencil.svg'" (click)="editEducation(index, true)">
             </div>
         </ion-col>
         <div *ngIf="showEditEducation[index]" style="display: block;width: 99.1%;text-align: right;">
@@ -390,7 +390,7 @@
         <span style="color: white; font-size: 18px;">Add family </span>
         <br>
         <span style="color: white; font-size: 18px;">information</span>
-        <div class="family-icon" [inlineSVG]="'assets/icon/User_profile/family.svg'"></div>
+        <div class="family-icon" [inlineSVG]="'assets/icon/user_profile/family.svg'"></div>
     </ion-col>
     <div style="width: 20px"></div>
     <ion-col [style.cursor]="(educationList === undefined) ? 'pointer' : ''"
@@ -399,6 +399,6 @@
         <span style="color: white; font-size: 18px;">Add education </span>
         <br>
         <span style="color: white; font-size: 18px;">qualification</span>
-        <div class="education-icon" [inlineSVG]="'assets/icon/User_profile/education.svg'"></div>
+        <div class="education-icon" [inlineSVG]="'assets/icon/user_profile/education.svg'"></div>
     </ion-col>
 </ion-row>

@@ -17,7 +17,7 @@
         <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
           <ion-item lines="none" [routerLink]="[p.url]" (click)="activeRoute = appPages[i].url"
             [class.background-highlight]="activeRoute === appPages[i].url">
-            <div class="my-icon" aria-label="My icon" [inlineSVG]="'assets/icon/Sidebar_menus/' + p.icon"></div>
+            <div class="my-icon" aria-label="My icon" [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div>
             <ion-label (click)="activeRoute = appPages[i].url" [class.text-color]="activeRoute === appPages[i].url ">
               {{p.title}}
             </ion-label>
@@ -41,11 +41,11 @@
       </ion-label>
       <div class="verticalLine"></div>
       <div style="width:15px; float: right; height: 20px"></div>
-      <div class="bell-icon" [inlineSVG]="'assets/icon/Top_header/notifications.svg'"></div>
+      <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
       <div style="width: 12px; float:right; height: 20px"></div>
-      <div class="edit-icon" [inlineSVG]="'assets/icon/Top_header/action.svg'"></div>
+      <div class="edit-icon" [inlineSVG]="'assets/icon/top_header/action.svg'"></div>
       <div style="width:15px; float: left; height: 20px"></div>
-      <div class="search-icon" [inlineSVG]="'assets/icon/Top_header/search.svg'"></div>
+      <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
     </ion-toolbar>
   </ion-router-outlet>
 </ion-split-pane>
@@ -70,7 +70,7 @@
           <ion-item no-padding lines="none" [routerLink]="[p.url]" style="float: left; padding-left: 8px"
             [class.background-highlight]="activeRoute === appPages[i].url "
             [class.first-highlight]="router.url === this.appPages[i].url" (click)="activeRoute = appPages[i].url ">
-            <div class="my-icon-menu" aria-label="My icon" [inlineSVG]="'assets/icon/Sidebar_menus/' + p.icon"></div>
+            <div class="my-icon-menu" aria-label="My icon" [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div>
           </ion-item>
         </ion-menu-toggle>
       </ion-list>
@@ -92,11 +92,11 @@
       </ion-label>
       <div class="verticalLine"></div>
       <div style="width:15px; float: right; height: 20px"></div>
-      <div class="bell-icon" [inlineSVG]="'assets/icon/Top_header/notifications.svg'"></div>
+      <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
       <div style="width: 12px; float:right; height: 20px"></div>
-      <div class="edit-icon" [inlineSVG]="'assets/icon/Top_header/action.svg'"></div>
+      <div class="edit-icon" [inlineSVG]="'assets/icon/top_header/action.svg'"></div>
       <div style="width:15px; float: left; height: 20px"></div>
-      <div class="search-icon" [inlineSVG]="'assets/icon/Top_header/search.svg'"></div>
+      <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
     </ion-toolbar>
   </ion-router-outlet>
 </ion-split-pane>

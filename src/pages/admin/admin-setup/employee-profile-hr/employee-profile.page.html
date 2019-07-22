@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar class="toolbar2">
-        <div class="back-icon" [inlineSVG]="'assets/icon/Option/arrow-pointing-to-left.svg'" (click)="toMyProfile()"></div>
+        <div class="back-icon" [inlineSVG]="'assets/icon/option/arrow-pointing-to-left.svg'" (click)="toMyProfile()"></div>
         <ion-title style="display: inline-block;color: #20291f;font-size: 16px;" *ngIf="personalList">
             {{personalList.employeeName}}'s Profile
         </ion-title>
@@ -45,17 +45,17 @@
             {{employmentPersonalList.employmentDetail.employmentStatus}}
         </mat-card-subtitle>
         <mat-card-subtitle style="white-space: nowrap;color: #7a8589;padding-top: 12px;">
-            <div class="mail-icon" [inlineSVG]="'assets/icon/User_profile/mail.svg'"></div>
+            <div class="mail-icon" [inlineSVG]="'assets/icon/user_profile/mail.svg'"></div>
             <span style="padding-left: 10px;">{{personalList.personalDetail.emailAddress}}</span>
         </mat-card-subtitle>
         <mat-card-subtitle style="white-space: nowrap; color:#7a8589;padding-top: 5px;">
-            <div class="marker-icon" [inlineSVG]="'assets/icon/User_profile/pin.svg'"></div>
+            <div class="marker-icon" [inlineSVG]="'assets/icon/user_profile/pin.svg'"></div>
             <span style="padding-left:8px"> {{employmentPersonalList.employmentDetail.workLocation}}</span>
         </mat-card-subtitle>
     </mat-card-header>
     <div class="footer">
         <ion-button class="footerButton" shape="round" fill="outline">
-            <div class="message-icon" [inlineSVG]="'assets/icon/Option/message.svg'"></div>
+            <div class="message-icon" [inlineSVG]="'assets/icon/option/message.svg'"></div>
             <span style="padding-left: 5px">Send a message</span>
         </ion-button>
     </div>

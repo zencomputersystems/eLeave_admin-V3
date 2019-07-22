@@ -1,5 +1,5 @@
 <div class="box">
-    <div class="back-icon" [inlineSVG]="'assets/icon/Option/arrow-pointing-to-left-edit.svg'"
+    <div class="back-icon" [inlineSVG]="'assets/icon/option/arrow-pointing-to-left-edit.svg'"
         (click)="dialogAddOneEmployee.close()"></div>
     <p style="text-align: center;color: #7a8589;font-size: 16px;padding-bottom: 3%;margin-top: 0;">
         Please enter the employee details below</p>
@@ -33,7 +33,7 @@
                 <input class="dateInput" matInput [matDatepicker]="picker1" formControlName="firstPicker" required>
                 <!-- (dateInput)="getValueFrom($event)" (dateChange)="onDateChange()" -->
                 <!-- <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle> -->
-                <div class="calendar-icon" [inlineSVG]="'assets/icon/Option/calendar.svg'" (click)="picker1.open()">
+                <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'" (click)="picker1.open()">
                 </div>
                 <mat-datepicker #picker1></mat-datepicker>
                 <mat-error *ngIf="!invitationForm.firstPicker" style="padding: 5px;padding-left: 0;">
