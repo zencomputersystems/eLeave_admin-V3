@@ -279,7 +279,7 @@ export class AssignRolePage implements OnInit {
             this.disabledSubmit();
         }
         for (let i = 0; i < this.treeview.checklistSelection.selected.length; i++) {
-            if (this.treeview.checklistSelection.selected[i].level == 1 && this.employeeNameList.indexOf(this.treeview.checklistSelection.selected[i].item) === -1) {
+            if (this.treeview.checklistSelection.selected[i].level == 2 && this.employeeNameList.indexOf(this.treeview.checklistSelection.selected[i].item) === -1) {
                 this.employeeNameList.push(this.treeview.checklistSelection.selected[i].item);
                 this.disabledSubmit();
             }

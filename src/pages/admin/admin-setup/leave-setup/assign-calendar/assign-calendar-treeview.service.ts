@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
+import { LeaveAPIService } from "../leave-api.service";
 
 /**
  * Node for to-do item
@@ -76,6 +77,8 @@ export class EmployeeListDatabase {
      */
     public objectTree = {};
 
+    public companyName: string;
+
     /** 
      * Return data of children and item
      * @readonly
@@ -89,20 +92,36 @@ export class EmployeeListDatabase {
      * @param {APIService} apiService
      * @memberof EmployeeListDatabase
      */
-    constructor(private apiService: APIService) {
+    constructor(private apiService: APIService, private leaveAPI: LeaveAPIService) {
         this.apiService.get_user_profile_list().subscribe(
             list => {
                 this.list = list;
                 for (let i = 0; i < this.list.length; i++) {
-                    if (this.list[i].department in this.objectTree) {
-                        this.objectTree[this.list[i].department].push(this.list[i].employeeName);
-                    } else {
-                        this.objectTree[this.list[i].department] = new Array();
-                        this.objectTree[this.list[i].department].push(this.list[i].employeeName);
+                    if (!(this.list[i].companyId in this.objectTree)) {
+                        this.objectTree[this.list[i].companyId] = {};
+                        this.objectTree[this.list[i].companyId][this.list[i].department] = new Array();
+                        this.objectTree[this.list[i].companyId][this.list[i].department].push(this.list[i].employeeName);
+                    }
+                    else if (this.list[i].companyId in this.objectTree && this.list[i].department in this.objectTree[this.list[i].companyId]) {
+                        this.objectTree[this.list[i].companyId][this.list[i].department].push(this.list[i].employeeName);
+                    }
+                    else {
+                        this.objectTree[this.list[i].companyId][this.list[i].department] = new Array();
+                        this.objectTree[this.list[i].companyId][this.list[i].department].push(this.list[i].employeeName);
                     }
                 }
-                this.initialize();
+                this.getCompanyName(Object.keys(this.objectTree));
             });
+    }
+
+    getCompanyName(companyId) {
+        for (let i = 0; i < companyId.length; i++) {
+            this.leaveAPI.get_company_details(companyId[i]).subscribe(data => {
+                this.objectTree[data.companyName] = this.objectTree[companyId[i]];
+                delete this.objectTree[companyId[i]];
+                this.initialize();
+            })
+        }
     }
 
     /**

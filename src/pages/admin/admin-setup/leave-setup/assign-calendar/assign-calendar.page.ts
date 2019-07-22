@@ -237,7 +237,7 @@ export class AssignCalendarPage implements OnInit {
             this.disabledButton();
         }
         for (let i = 0; i < this.treeview.checklistSelection.selected.length; i++) {
-            if (this.treeview.checklistSelection.selected[i].level == 1 && this.assignCalendarForm.controls.user.value.indexOf(this.treeview.checklistSelection.selected[i].item) === -1) {
+            if (this.treeview.checklistSelection.selected[i].level == 2 && this.assignCalendarForm.controls.user.value.indexOf(this.treeview.checklistSelection.selected[i].item) === -1) {
                 this.assignCalendarForm.controls.user.value.push(this.treeview.checklistSelection.selected[i].item);
                 this.disabledButton();
             }
