@@ -122,11 +122,17 @@ export class ApplyOnBehalfPage implements OnInit {
 
     public departmentlist: any = [];
 
+    public treeControl: any = [];
+
     public showTreeDropdown: boolean = false;
 
     public showSelectedTree: boolean = false;
 
+    public radioOption: string = '1';
+
     private guid: string;
+
+    public employeeTree: any = [];
     /**
      * Local private property for value get from API
      * @private
@@ -790,12 +796,14 @@ export class ApplyOnBehalfPage implements OnInit {
     }
 
     selectedCompany(selectedCompanyId) {
+        this.departmentlist = [];
         this.leaveAPI.get_company_details(selectedCompanyId).subscribe(list => {
             for (let i = 0; i < this.treeview.dataSource.data.length; i++) {
                 if (list.companyName == this.treeview.dataSource.data[i].item) {
                     for (let j = 0; j < this.treeview.dataSource.data[i].children.length; j++) {
                         this.departmentlist.push(this.treeview.dataSource.data[i].children[j]);
                     }
+                    console.log(this.departmentlist, this.treeview.dataSource);
                 }
             }
         })
@@ -814,6 +822,23 @@ export class ApplyOnBehalfPage implements OnInit {
             }
         })
 
+    }
+
+    clickOutside(event) {
+        if (!event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix") && !event.target.className.includes("inputDropdown")) {
+            this.showTreeDropdown = false;
+            this.showSelectedTree = true;
+            // this.disabledButton();
+        }
+        for (let i = 0; i < this.treeview.checklistSelection.selected.length; i++) {
+            if (this.treeview.checklistSelection.selected[i].level == 1 && this.employeeTree.indexOf(this.treeview.checklistSelection.selected[i].item) === -1) {
+                this.employeeTree.push(this.treeview.checklistSelection.selected[i].item);
+                // this.disabledButton();
+            }
+        }
+        if (this.treeview.checklistSelection.selected.length === 0) {
+            this.employeeTree.length = 0;
+        }
     }
 
     /**

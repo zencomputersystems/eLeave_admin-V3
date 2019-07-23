@@ -4,14 +4,21 @@
                           center: 'title',
                           right: 'dayGridMonth,timeGridWeek'
                         }" [plugins]="calendarPlugins" [events]="calendarEvents">
-        <!-- (dateClick)="handleDateClick($event) (select)="select($event)"  (dayRender)="dayRender($event,el)"-->
     </full-calendar>
 </div>
 <div class="selection">
+    <form #radioForm="ngForm">
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="radioOption" name="radio" required>
+            <mat-radio-button value="1" [checked]="radioOption == '1'">Apply for one</mat-radio-button>
+            &nbsp;&nbsp;
+            <mat-radio-button value="2">Apply for group</mat-radio-button>
+        </mat-radio-group>
+    </form>
+
     <form [formGroup]="applyLeaveForm">
         <div style="display:block; white-space: nowrap;">
             <mat-form-field appearance="outline" style="width: 47%;">
-                <mat-label>Company List</mat-label>
+                <mat-label>Company list</mat-label>
                 <mat-select class="selectLeave" formControlName="company" required>
                     <mat-option>-- None --</mat-option>
                     <mat-option *ngFor="let list of companyList; let i=index" [value]="list.TENANT_COMPANY_GUID"
@@ -22,8 +29,8 @@
                     Please select one company</mat-error>
             </mat-form-field>
             &nbsp;&nbsp;
-            <mat-form-field appearance="outline" style="width: 47%;">
-                <mat-label>Employee List</mat-label>
+            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="radioOption == '1'">
+                <mat-label>Employee list</mat-label>
                 <mat-select formControlName="userControl" required>
                     <mat-option>-- None --</mat-option>
                     <mat-optgroup *ngFor="let department of departmentlist" [label]="department.item"
@@ -34,10 +41,46 @@
                         </mat-option>
                     </mat-optgroup>
                 </mat-select>
+                <mat-error *ngIf="!applyLeaveForm.userControl" style="padding: 5px;padding-left: 0;">
+                    Please select one employee</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 47%;cursor: pointer;" *ngIf="radioOption == '2'"
+                (click)="showTreeDropdown = true;">
+                <mat-label>Employee list</mat-label>
+                <input matInput class="inputDropdown" readonly required>
+                <mat-icon matSuffix class="iconDropdown"><i class="material-icons">arrow_drop_down</i></mat-icon>
+                <mat-error>Please select at least one option</mat-error>
+                <div class="dropdownList" *ngIf="showTreeDropdown" (clickOutside)="clickOutside($event)">
+                    <mat-tree style="z-index: 2;position: absolute;width: 100%;" [dataSource]="treeview.dataSource"
+                        [treeControl]="treeview.treeControl">
+                        <!-- inner checkbox -->
+                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                            <button mat-icon-button disabled></button>
+                            <mat-checkbox class="checklist-leaf-node"
+                                [checked]="treeview.checklistSelection.isSelected(node)"
+                                (change)="treeview.todoLeafItemSelectionToggle(node)" color="primary">{{node.item}}
+                            </mat-checkbox>
+                        </mat-tree-node>
+
+                        <!-- main checkbox -->
+                        <mat-tree-node *matTreeNodeDef="let node; when: treeview.hasChild" matTreeNodePadding>
+                            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+                                <mat-icon class="mat-icon-rtl-mirror">
+                                    {{treeview.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                </mat-icon>
+                            </button>
+                            <mat-checkbox [checked]="treeview.descendantsAllSelected(node)"
+                                [indeterminate]="treeview.descendantsPartiallySelected(node)"
+                                (change)="treeview.todoItemSelectionToggle(node)" color="primary">
+                                {{node.item}}
+                            </mat-checkbox>
+                        </mat-tree-node>
+                    </mat-tree>
+                </div>
             </mat-form-field>
         </div>
         <div style="display:block; white-space: nowrap;">
-            <mat-form-field appearance="outline" style="width: 70%;">
+            <mat-form-field appearance="outline" [style.width.%]="radioOption == '1' ? 70 : 97">
                 <mat-label>Leave types</mat-label>
                 <mat-select class="selectLeave" name="leave" formControlName="leaveTypes">
                     <mat-option *ngFor="let leave of entitlement; let i=index" [value]="leave.leaveTypeName"
@@ -48,7 +91,7 @@
                     Please select one leave type</mat-error>
             </mat-form-field>
             &nbsp;&nbsp;
-            <mat-form-field style="width: 24%" appearance="outline">
+            <mat-form-field style="width: 24%" appearance="outline" *ngIf="radioOption === '1'">
                 <mat-label>Days available</mat-label>
                 <input matInput [(value)]="daysAvailable" disabled>
             </mat-form-field>
