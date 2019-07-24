@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { ActivatedRoute } from '@angular/router';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -9,7 +8,6 @@ import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import * as _moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../date.adapter';
@@ -133,6 +131,11 @@ export class ApplyOnBehalfPage implements OnInit {
     private guid: string;
 
     public employeeTree: any = [];
+
+    public leaveTypes: any;
+
+    public showSpinner: boolean = false;
+
     /**
      * Local private property for value get from API
      * @private
@@ -297,21 +300,14 @@ export class ApplyOnBehalfPage implements OnInit {
     /**
      *Creates an instance of ApplyOnBehalfPage.
      * @param {LeaveAPIService} leaveAPI
-     * @param {ActivatedRoute} route
      * @param {MatSnackBar} snackBar
+     * @param {EmployeeTreeview} tree
+     * @param {APIService} apiService
      * @memberof ApplyOnBehalfPage
      */
     constructor(private leaveAPI: LeaveAPIService,
-        private route: ActivatedRoute, private snackBar: MatSnackBar, private treeview: EmployeeTreeview, private apiService: APIService) {
+        private snackBar: MatSnackBar, private tree: EmployeeTreeview, private apiService: APIService) {
         this.applyLeaveForm = this.formGroup();
-        route.queryParams
-            .subscribe(params => {
-                this.applyLeaveForm.patchValue({
-                    leaveTypes: params.type,
-                });
-                this.daysAvailable = params.balance;
-                this.leaveTypeId = params.id;
-            });
     }
 
     /**
@@ -329,6 +325,9 @@ export class ApplyOnBehalfPage implements OnInit {
             let calendarApi = this.calendarComponent.getApi();
             calendarApi.render();
         }, 100);
+        this.leaveAPI.get_admin_leavetype().subscribe(leave =>
+            this.leaveTypes = leave
+        )
     }
 
     /**
@@ -339,7 +338,7 @@ export class ApplyOnBehalfPage implements OnInit {
     formGroup() {
         return new FormGroup({
             company: new FormControl('', Validators.required),
-            userControl: new FormControl('', Validators.required),
+            userControl: new FormControl({ value: '', disabled: true }, Validators.required),
             dayTypes: new FormArray([
                 new FormGroup({
                     name: new FormControl(0),
@@ -350,44 +349,13 @@ export class ApplyOnBehalfPage implements OnInit {
                     status: new FormControl([false])
                 })
             ]),
-            leaveTypes: new FormControl('', Validators.required),
-            firstPicker: new FormControl('', Validators.required),
-            secondPicker: new FormControl('', Validators.required),
+            leaveTypes: new FormControl({ value: '', disabled: true }, Validators.required),
+            firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
+            secondPicker: new FormControl({ value: '', disabled: true }, Validators.required),
             inputReason: new FormControl('', Validators.required),
         });
     }
 
-    /**
-     * format date using moment library
-     * @param {*} holiday
-     * @memberof CalendarViewPage
-     */
-    formatDate(holiday) {
-        this.calendarEvents = holiday;
-        for (let i = 0; i < holiday.length; i++) {
-            this.calendarEvents[i].start = (moment(holiday[i].start).format('YYYY-MM-DD'));
-            this.calendarEvents[i].end = moment(holiday[i].end).format('YYYY-MM-DD');
-            this.calendarEvents[i].day = this.getDayName(new Date(holiday[i].start));
-            this.calendarEvents[i].allDay = true;
-        }
-    }
-
-    /**
-     * Method to get day of the week from a given date
-     * @param {*} date
-     * @returns
-     * @memberof CalendarViewPage
-     */
-    getDayName(date) {
-        //Create an array containing each day, starting with Sunday.
-        const weekdays = new Array(
-            "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
-        );
-        //Use the getDay() method to get the day.
-        const day = date.getDay();
-        //Return the element that corresponds to that index.
-        return weekdays[day];
-    }
 
     /**
      * This method is used to create consecutive date as an array list
@@ -461,16 +429,21 @@ export class ApplyOnBehalfPage implements OnInit {
             "reason": this.applyLeaveForm.value.inputReason,
             "data": this._arrayDateSlot
         }
+        for (let i = 0; i < this.employeeTree.length; i++) {
+            if (this.checkIdExist(this._userList, this.employeeTree[i]) != 0) {
+                const index: number = this.checkIdExist(this._userList, this.employeeTree[i]);
+                // TODO: push userID to send to API, waiting confirm format of API
+                // this.employeeList.push(this._userList[index].userId);
+            }
+        }
         this.leaveAPI.post_apply_leave_onBehalf(this.guid, applyLeaveData).subscribe(
             response => {
                 this.clearArrayList();
-                if (!response.valid) {
-                    this.openSnackBar('submitted unsuccessfully' + response.message);
-                } else {
-                    this.openSnackBar('submitted successfully' + response.message);
-                }
+                this.showSelectedTree = false;
+                this.openSnackBar('submitted successfully. ' + response.message);
                 if (response.status === 401) {
                     window.location.href = '/login';
+                    this.openSnackBar('submitted unsuccessfully. ' + response.message);
                 }
             });
     }
@@ -494,6 +467,7 @@ export class ApplyOnBehalfPage implements OnInit {
         this._arrayDateSlot = [];
         this.selectedQuarterHour = '';
         this.departmentlist = [];
+        this.employeeTree = [];
     }
 
     /**
@@ -798,47 +772,58 @@ export class ApplyOnBehalfPage implements OnInit {
     selectedCompany(selectedCompanyId) {
         this.departmentlist = [];
         this.leaveAPI.get_company_details(selectedCompanyId).subscribe(list => {
-            for (let i = 0; i < this.treeview.dataSource.data.length; i++) {
-                if (list.companyName == this.treeview.dataSource.data[i].item) {
-                    for (let j = 0; j < this.treeview.dataSource.data[i].children.length; j++) {
-                        this.departmentlist.push(this.treeview.dataSource.data[i].children[j]);
+            this.applyLeaveForm.controls.userControl.enable();
+            for (let i = 0; i < this.tree.dataSource.data.length; i++) {
+                if (list.companyName == this.tree.dataSource.data[i].item) {
+                    for (let j = 0; j < this.tree.dataSource.data[i].children.length; j++) {
+                        this.departmentlist.push(this.tree.dataSource.data[i].children[j]);
                     }
-                    console.log(this.departmentlist, this.treeview.dataSource);
                 }
             }
         })
     }
 
     getSelectedEmployee(name) {
+        this.showSpinner = true;
         this.apiService.get_user_profile_list().subscribe(list => {
+            this._userList = list;
             for (let i = 0; i < list.length; i++) {
                 if (list[i].employeeName === name) {
                     this.guid = list[i].userId;
                     this.apiService.get_user_profile_details(this.guid).subscribe(data => {
                         this.entitlement = data;
                         this.entitlement = data.entitlementDetail;
+                        this.showSpinner = false;
+                        this.applyLeaveForm.controls.leaveTypes.enable();
                     })
                 }
             }
         })
-
     }
 
     clickOutside(event) {
-        if (!event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix") && !event.target.className.includes("inputDropdown")) {
+        if (!event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix") && !event.target.className.includes("dropdownDiv")) {
             this.showTreeDropdown = false;
             this.showSelectedTree = true;
-            // this.disabledButton();
+            this.showSpinner = true;
         }
-        for (let i = 0; i < this.treeview.checklistSelection.selected.length; i++) {
-            if (this.treeview.checklistSelection.selected[i].level == 1 && this.employeeTree.indexOf(this.treeview.checklistSelection.selected[i].item) === -1) {
-                this.employeeTree.push(this.treeview.checklistSelection.selected[i].item);
-                // this.disabledButton();
+        for (let i = 0; i < this.tree.checklistSelection.selected.length; i++) {
+            if (this.tree.checklistSelection.selected[i].level == 2 && this.employeeTree.indexOf(this.tree.checklistSelection.selected[i].item) < 0) {
+                this.employeeTree.push(this.tree.checklistSelection.selected[i].item);
             }
         }
-        if (this.treeview.checklistSelection.selected.length === 0) {
+        if (this.tree.checklistSelection.selected.length === 0) {
             this.employeeTree.length = 0;
         }
+    }
+
+    checkIdExist(array: any, obj: any) {
+        for (let j = 0; j < array.length; j++) {
+            if (array[j].employeeName === obj) {
+                return j;
+            }
+        }
+        return 0;
     }
 
     /**
@@ -848,7 +833,7 @@ export class ApplyOnBehalfPage implements OnInit {
      */
     openSnackBar(message: string) {
         this.snackBar.openFromComponent(SnackbarNotificationPage, {
-            duration: 2000,
+            duration: 5000,
             data: message
         });
     }

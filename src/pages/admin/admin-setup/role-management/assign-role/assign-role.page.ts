@@ -343,7 +343,7 @@ export class AssignRolePage implements OnInit {
         for (let i = 0; i < this.employeeNameList.length; i++) {
             if (this.checkNameExist(this.users, this.employeeNameList[i]) != 0) {
                 const index: number = this.checkNameExist(this.users, this.employeeNameList[i]);
-                this.userList.push(this.users[index].id);
+                this.userList.push(this.users[index].userId);
             }
         }
     }

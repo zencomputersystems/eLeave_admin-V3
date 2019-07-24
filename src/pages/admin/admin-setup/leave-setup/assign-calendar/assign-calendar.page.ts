@@ -191,7 +191,7 @@ export class AssignCalendarPage implements OnInit {
         for (let i = 0; i < this.assignCalendarForm.controls.user.value.length; i++) {
             if (this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]) != 0) {
                 const index: number = this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]);
-                this.employeeList.push(this.userList[index].id);
+                this.employeeList.push(this.userList[index].userId);
             }
         }
         this.leaveAPI.patch_assign_calendar_profile({
