@@ -16,6 +16,8 @@ import { InviteListPage } from 'src/pages/admin/admin-setup/invites/invite-list/
 import { AssignRolePage } from 'src/pages/admin/admin-setup/role-management/assign-role/assign-role.page';
 import { LeaveSetup } from 'src/pages/admin/admin-setup/leave-setup/leave-setup';
 import { SetupCalendarProfilePage } from 'src/pages/admin/admin-setup/leave-setup/setup-calendar-profile/setup-calendar-profile.page';
+import { GeneralLeavePolicyPage } from 'src/pages/admin/admin-setup/general-leave-policy/general-leave-policy.page';
+import { CreatePolicyPage } from 'src/pages/admin/admin-setup/general-leave-policy/create-policy/create-policy.page';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -49,6 +51,13 @@ export const sideMenuNavigationRoutes: Routes = [
                     { path: 'role-rights/:id', component: RoleRightsPage },
                     { path: 'create-new-role', component: RoleRightsPage },
                     { path: 'assign-role', component: AssignRolePage }
+                ]
+            },
+            {
+                path: 'general-leave-policy', component: GeneralLeavePolicyPage,
+                children: [
+                    { path: '', redirectTo: 'create-policy', pathMatch: 'full' },
+                    { path: 'create-policy', component: CreatePolicyPage }
                 ]
             },
             { path: 'employee-profile', component: EmployeeProfilePage }

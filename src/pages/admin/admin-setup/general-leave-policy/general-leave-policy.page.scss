@@ -1,0 +1,17 @@
+:host {
+  top: 48px;
+  background: #f9fafc;
+  .header-md:after {
+    height: 0px;
+    background-image: none;
+  }
+  .toolbar2 {
+    --min-height: 35px;
+    border: 1px solid
+      var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
+  }
+  ion-label {
+    color: #20291f;
+    font-weight: 500;
+  }
+}

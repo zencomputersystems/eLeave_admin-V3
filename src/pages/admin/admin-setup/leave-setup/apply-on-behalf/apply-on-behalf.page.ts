@@ -801,8 +801,8 @@ export class ApplyOnBehalfPage implements OnInit {
         })
     }
 
-    clickOutside(event) {
-        if (!event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix") && !event.target.className.includes("dropdownDiv")) {
+    clickOutside(evt) {
+        if (!evt.target.className.includes("material-icons") && !evt.target.className.includes("dropdownDiv") && !evt.target.className.includes("mat-form-field-infix")) {
             this.showTreeDropdown = false;
             this.showSelectedTree = true;
             this.showSpinner = true;

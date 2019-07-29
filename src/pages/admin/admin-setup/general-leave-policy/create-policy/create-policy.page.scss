@@ -1,0 +1,96 @@
+:host {
+  margin: auto;
+  width: 100%;
+  height: calc(100% - 58px);
+  overflow: auto;
+
+  .container {
+    background: white;
+    width: 95%;
+    margin: auto;
+  }
+  .content {
+    padding: 16px;
+  }
+  // button
+  .button-outline {
+    --border-width: 1px;
+  }
+
+  //mat-form-field adjustment
+  ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+    padding: 0.5em 0px !important;
+  }
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-label {
+    margin-top: -8px;
+  }
+  ::ng-deep .mat-form-field-label-wrapper {
+    top: -1em;
+  }
+  ::ng-deep
+    .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+    .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: 0;
+  }
+
+  // radio button
+  .example-radio-group-label {
+    color: #7a8589;
+    font-size: 14px;
+  }
+  .example-radio-button {
+    display: block;
+    color: #7a8589;
+    font-size: 13px;
+    padding-top: 10px;
+    padding-left: 19px;
+  }
+  ::ng-deep .mat-radio-container {
+    height: 20px;
+    width: 20px;
+    margin-right: 6px;
+  }
+  ::ng-deep .mat-radio-outer-circle {
+    border-width: 1px;
+    height: 20px;
+    width: 20px;
+  }
+  ::ng-deep .mat-radio-inner-circle {
+    height: 20px;
+    width: 20px;
+  }
+  ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #057dcd;
+  }
+  ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #057dcd;
+  }
+  ::ng-deep .mat-radio-button.mat-radio-disabled .mat-radio-outer-circle {
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+  ::ng-deep .mat-radio-button .mat-radio-ripple {
+    display: none;
+  }
+
+  // others
+  .divider {
+    --min-height: none;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    width: 100%;
+  }
+  .ionCheckbox {
+    width: 20px;
+    height: 20px;
+    margin-right: 14px;
+  }
+  .ionItem {
+    color: #7a8589;
+    font-size: 13px;
+  }
+}

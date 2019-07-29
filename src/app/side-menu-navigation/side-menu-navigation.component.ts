@@ -94,7 +94,12 @@ export class SideMenuNavigationComponent implements OnInit {
     {
       title: 'Role Management',
       url: '/main/role-management',
-      icon: 'outline-people.svg'
+      icon: 'page_admins.svg'
+    },
+    {
+      title: 'General Leave Policy',
+      url: '/main/general-leave-policy',
+      icon: 'policy.svg'
     },
   ];
 

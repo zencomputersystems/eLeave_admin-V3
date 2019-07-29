@@ -15,6 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AddEmployeeModule } from 'src/pages/admin/admin-setup/add-employee/add-employee.module';
 import { RoleManagementModule } from 'src/pages/admin/admin-setup/role-management/role-management.module';
 import { LeaveSetupModule } from 'src/pages/admin/admin-setup/leave-setup/leave-setup.module';
+import { GeneralLeavePolicyModule } from 'src/pages/admin/admin-setup/general-leave-policy/general-leave-policy.module';
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import { LeaveSetupModule } from 'src/pages/admin/admin-setup/leave-setup/leave-
         AddEmployeeModule,
         LeaveSetupModule,
         RoleManagementModule,
+        GeneralLeavePolicyModule,
         RouterModule.forChild(sideMenuNavigationRoutes)
     ],
     providers: [AuthGuard],
