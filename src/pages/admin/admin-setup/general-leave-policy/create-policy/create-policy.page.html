@@ -2,150 +2,169 @@
     <div style="width: 100%; height:100%; text-align: center;" *ngIf="showSpinner">
         <app-spinner></app-spinner>
     </div>
-    <div class="content">
-        <!-- Anyone, Everyone, Superior -->
-        <span class="example-radio-group-label" style="padding-left: 20px;">Employee can go leave, if:</span>
-        <mat-radio-group class="example-radio-group" [(ngModel)]="favoriteSeason">
-            <mat-radio-button class="example-radio-button" value="Anyone" style="height: 60px;">
-                Anyone in hierarchy approves limit to
-                <mat-form-field appearance="outline"
-                    style="font-size: 13px;width: 70px;color:#7a8589;padding-left: 5px;">
-                    <input matInput required><span matSuffix>level</span>
-                </mat-form-field>
-            </mat-radio-button>
-            <mat-radio-button class="example-radio-button" value="Everyone" style="height: 55px;">
-                Everyone in hierarchy approves limit to
-                <mat-form-field appearance="outline"
-                    style="font-size: 13px;width: 70px;color:#7a8589;padding-left: 5px;">
-                    <input matInput required><span matSuffix>level</span>
-                </mat-form-field>
-            </mat-radio-button>
-            <mat-form-field style="font-size: 13px;width: 175px;color:#7a8589;padding-left: 53px;">
-                <mat-label>Escalate after</mat-label>
-                <input matInput required><span matSuffix>days</span>
+    <form [formGroup]="policyForm">
+        <div class="content">
+            <span style="padding-bottom: 10px;font-size: 14px;color:#7a8589;padding-left: 18px;display: block">Company
+                list</span>
+            <mat-form-field appearance="outline"
+                style="display: block;font-size: 13px;width: 400px;color:#7a8589;padding-left: 18px;">
+                <mat-label>Please select company tenant</mat-label>
+                <mat-select formControlName="company" required>
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let company of list" [value]=company.TENANT_COMPANY_GUID>{{company.NAME}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
-            <mat-radio-button class="example-radio-button" value="Superior">
-                Superior approves
-            </mat-radio-button>
-        </mat-radio-group>
-        <ion-item class="divider" lines="full"></ion-item>
+            <!-- Anyone, Everyone, Superior -->
+            <span class="example-radio-group-label" style="padding-left: 20px;display: block">
+                Employee can go leave, if:</span>
+            <mat-radio-group class="example-radio-group">
+                <mat-radio-button class="example-radio-button" value="Anyone" style="display:inline-block"
+                    (change)="showEscalateDay = false;radioEvent($event)">
+                    Anyone in hierarchy approves limit to
+                </mat-radio-button>
+                <mat-form-field appearance="outline"
+                    style="font-size: 13px;width: 80px;color:#7a8589;padding-left: 5px;">
+                    <input matInput formControlName="level" required><span matSuffix>level</span>
+                </mat-form-field>
+                <div style="display: block"></div>
+                <mat-radio-button class="example-radio-button" value="Everyone"
+                    (change)="showEscalateDay = true;radioEvent($event)" style="display:inline-block">
+                    Everyone in hierarchy approves limit to
+                </mat-radio-button>
+                <mat-form-field appearance="outline"
+                    style="font-size: 13px;width: 80px;color:#7a8589;padding-left: 5px;">
+                    <input matInput formControlName="level" required><span matSuffix>level</span>
+                </mat-form-field>
+                <mat-form-field style="font-size: 13px;width: 175px;color:#7a8589;padding-left: 53px;display:block"
+                    *ngIf="showEscalateDay">
+                    <mat-label>Escalate after</mat-label>
+                    <input matInput formControlName="escalateAfterDays" required><span matSuffix>days</span>
+                </mat-form-field>
+                <mat-radio-button class="example-radio-button" value="Superior"
+                    (change)="showEscalateDay = false;radioEvent($event)">
+                    Superior approves
+                </mat-radio-button>
+            </mat-radio-group>
+            <ion-item class="divider" lines="full"></ion-item>
 
-        <!-- CF leaves -->
-        <ion-list lines="none">
-            <ion-item class="ionItem">
-                <ion-label>Forfeit carried forward leaves on:</ion-label>
-                <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="CF"
-                    (ionChange)="checkEvent(leaveSetupKey, 0)">
-                </ion-checkbox>
-            </ion-item>
-        </ion-list>
-        <mat-form-field appearance="outline" style="font-size: 13px;width: 180px;color:#7a8589;padding-left: 50px;">
-            <mat-label>Month</mat-label>
-            <mat-select [(value)]="monthCF" (selectionChange)="monthCFChanged('monthCF')">
-                <mat-option>None</mat-option>
-                <mat-option value="January">January</mat-option>
-                <mat-option value="February">February</mat-option>
-                <mat-option value="March">March</mat-option>
-                <mat-option value="April">April</mat-option>
-                <mat-option value="May">May</mat-option>
-                <mat-option value="Jun">Jun</mat-option>
-                <mat-option value="July">July</mat-option>
-                <mat-option value="August">August</mat-option>
-                <mat-option value="September">September</mat-option>
-                <mat-option value="October">October</mat-option>
-                <mat-option value="November">November</mat-option>
-                <mat-option value="December">December</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 24px;">
-            <mat-label>Day</mat-label>
-            <mat-select [(value)]="dayCF">
-                <mat-option>None</mat-option>
-                <mat-option *ngFor="let day of daysOfCF" [value]=day>{{day}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-        &nbsp;&nbsp;
-        <span style="font-size: 13px;color:#7a8589">next year</span>
-        <ion-item class="divider" lines="full"></ion-item>
+            <!-- CF leaves -->
+            <ion-list lines="none">
+                <ion-item class="ionItem">
+                    <ion-label>Forfeit carried forward leaves on:</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="CF"
+                        (click)="$event.srcElement.checked ? CF=false: CF=true"
+                        (ionChange)="checkEvent($event, policyForm.controls.CFMonth, policyForm.controls.CFDay)">
+                    </ion-checkbox>
+                </ion-item>
+            </ion-list>
+            <mat-form-field appearance="outline" style="font-size: 13px;width: 180px;color:#7a8589;padding-left: 50px;">
+                <mat-label>Month</mat-label>
+                <mat-select formControlName="CFMonth" (selectionChange)="monthChanged('monthCF')">
+                    <mat-option>None</mat-option>
+                    <mat-option value="January">January</mat-option>
+                    <mat-option value="February">February</mat-option>
+                    <mat-option value="March">March</mat-option>
+                    <mat-option value="April">April</mat-option>
+                    <mat-option value="May">May</mat-option>
+                    <mat-option value="Jun">Jun</mat-option>
+                    <mat-option value="July">July</mat-option>
+                    <mat-option value="August">August</mat-option>
+                    <mat-option value="September">September</mat-option>
+                    <mat-option value="October">October</mat-option>
+                    <mat-option value="November">November</mat-option>
+                    <mat-option value="December">December</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 24px;">
+                <mat-label>Day</mat-label>
+                <mat-select formControlName="CFDay">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let day of daysOfCF" [value]=day>{{day}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <span style="font-size: 13px;color:#7a8589">next year</span>
+            <ion-item class="divider" lines="full"></ion-item>
+            <!-- Year end closing -->
+            <ion-list lines="none">
+                <ion-item class="ionItem">
+                    <ion-label>Allow year end closing after:</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="yearEnd"  (click)="$event.srcElement.checked ? yearEnd=false: yearEnd=true"
+                        (ionChange)="checkEvent($event, policyForm.controls.YEMonth, policyForm.controls.YEDay, policyForm.controls.YEChoice)">
+                    </ion-checkbox>
+                </ion-item>
+            </ion-list>
+            <mat-form-field appearance="outline" style="font-size: 13px;width: 180px;color:#7a8589;padding-left: 50px;">
+                <mat-label>Month</mat-label>
+                <mat-select formControlName="YEMonth" (selectionChange)="monthChanged('monthYE')">
+                    <mat-option>None</mat-option>
+                    <mat-option value="January">January</mat-option>
+                    <mat-option value="February">February</mat-option>
+                    <mat-option value="March">March</mat-option>
+                    <mat-option value="April">April</mat-option>
+                    <mat-option value="May">May</mat-option>
+                    <mat-option value="Jun">Jun</mat-option>
+                    <mat-option value="July">July</mat-option>
+                    <mat-option value="August">August</mat-option>
+                    <mat-option value="September">September</mat-option>
+                    <mat-option value="October">October</mat-option>
+                    <mat-option value="November">November</mat-option>
+                    <mat-option value="December">December</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 24px;">
+                <mat-label>Day</mat-label>
+                <mat-select formControlName="YEDay">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let day of daysOfYE" [value]=day>{{day}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 24px;">
+                <mat-label>Year</mat-label>
+                <mat-select formControlName="YEChoice" (selectionChange)="yearChanged($event)">
+                    <mat-option>None</mat-option>
+                    <mat-option value="This year">This year</mat-option>
+                    <mat-option value="Next year">Next year</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <ion-item class="divider" lines="full"></ion-item>
 
-        <!-- Year end closing -->
-        <ion-list lines="none">
-            <ion-item class="ionItem">
-                <ion-label>Allow year end closing after:</ion-label>
-                <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="yearEnd"
-                    (ionChange)="checkEvent(leaveSetupKey, 0)">
-                </ion-checkbox>
-            </ion-item>
-        </ion-list>
-        <mat-form-field appearance="outline" style="font-size: 13px;width: 180px;color:#7a8589;padding-left: 50px;">
-            <mat-label>Month</mat-label>
-            <mat-select [(value)]="monthYE" (selectionChange)="monthCFChanged('monthYE')">
-                <mat-option>None</mat-option>
-                <mat-option value="January">January</mat-option>
-                <mat-option value="February">February</mat-option>
-                <mat-option value="March">March</mat-option>
-                <mat-option value="April">April</mat-option>
-                <mat-option value="May">May</mat-option>
-                <mat-option value="Jun">Jun</mat-option>
-                <mat-option value="July">July</mat-option>
-                <mat-option value="August">August</mat-option>
-                <mat-option value="September">September</mat-option>
-                <mat-option value="October">October</mat-option>
-                <mat-option value="November">November</mat-option>
-                <mat-option value="December">December</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 24px;">
-            <mat-label>Day</mat-label>
-            <mat-select [(value)]="dayYE">
-                <mat-option>None</mat-option>
-                <mat-option *ngFor="let day of daysOfYE" [value]=day>{{day}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 24px;">
-            <mat-label>Year</mat-label>
-            <mat-select [(value)]="yearChoice" (selectionChange)="yearChanged($event)">
-                <mat-option>None</mat-option>
-                <mat-option value="This year">This year</mat-option>
-                <mat-option value="Next year">Next year</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <ion-item class="divider" lines="full"></ion-item>
+            <!-- Apply on behalf -->
+            <ion-list lines="none">
+                <ion-item class="ionItem">
+                    <ion-label>Apply on behalf feature requires employee to confirm the application</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="onBehalf" (click)="$event.srcElement.checked ? onBehalf=false: onBehalf=true"
+                        (ionChange)="checkEvent($event)">
+                    </ion-checkbox>
+                </ion-item>
+            </ion-list>
+            <ion-item class="divider" lines="full"></ion-item>
 
-        <!-- Apply on behalf -->
-        <ion-list lines="none">
-            <ion-item class="ionItem">
-                <ion-label>Apply on behalf feature requires employee to confirm the application</ion-label>
-                <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="onBehalf"
-                    (ionChange)="checkEvent(leaveSetupKey, 0)">
-                </ion-checkbox>
-            </ion-item>
-        </ion-list>
-        <ion-item class="divider" lines="full"></ion-item>
-
-        <!-- Email reminder -->
-        <ion-list lines="none">
-            <ion-item class="ionItem">
-                <ion-label>Email reminder</ion-label>
-                <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="email"
-                    (ionChange)="checkEvent(leaveSetupKey, 0)">
-                </ion-checkbox>
-            </ion-item>
-        </ion-list>
-        <ion-item class="divider" lines="full"></ion-item>
-    </div>
-    <div style="text-align: center;padding: 20px;">
-        <ion-button fill="outline" style="font-size: 12px;height: 30px;width: 90px;background: white;" color="primary"
-            (click)="ngOnInit();inputFormControl.reset();">
-            CLEAR
-        </ion-button>
-        <div style="width: 10px; display: inline-block"></div>
-        <ion-button style="font-size: 12px;height: 30px;width: 150px;margin-right: 20px;" color="primary"
-            (click)="save();showSmallSpinner = true;">
-            CREATE POLICY
-        </ion-button>
-        <div style="display: inline-block;height: 60%;vertical-align: middle;" *ngIf="showSmallSpinner">
-            <ion-spinner name="lines" color="primary"></ion-spinner>
+            <!-- Email reminder -->
+            <ion-list lines="none">
+                <ion-item class="ionItem">
+                    <ion-label>Email reminder</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="email" (click)="$event.srcElement.checked ? email=false: email=true"
+                        (ionChange)="checkEvent($event)">
+                    </ion-checkbox>
+                </ion-item>
+            </ion-list>
+            <ion-item class="divider" lines="full"></ion-item>
         </div>
-    </div>
+        <div style="text-align: center;padding: 20px;">
+            <ion-button fill="outline" style="font-size: 12px;height: 30px;width: 90px;background: white;"
+                color="primary" (click)="policyForm.reset();">
+                CLEAR
+            </ion-button>
+            <div style="width: 10px; display: inline-block"></div>
+            <ion-button style="font-size: 12px;height: 30px;width: 150px;margin-right: 20px;" color="primary"
+                (click)="createPolicy();showSmallSpinner = true;">
+                CREATE POLICY
+            </ion-button>
+            <div style="display: inline-block;height: 60%;vertical-align: middle;" *ngIf="showSmallSpinner">
+                <ion-spinner name="lines" color="primary"></ion-spinner>
+            </div>
+        </div>
+    </form>
 </div>
