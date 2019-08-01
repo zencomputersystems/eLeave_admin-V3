@@ -57,7 +57,8 @@ export const sideMenuNavigationRoutes: Routes = [
                 path: 'general-leave-policy', component: GeneralLeavePolicyPage,
                 children: [
                     { path: '', redirectTo: 'create-policy', pathMatch: 'full' },
-                    { path: 'create-policy', component: CreatePolicyPage }
+                    { path: 'create-policy', component: CreatePolicyPage },
+                    { path: 'edit-policy', component: CreatePolicyPage }
                 ]
             },
             { path: 'employee-profile', component: EmployeeProfilePage }

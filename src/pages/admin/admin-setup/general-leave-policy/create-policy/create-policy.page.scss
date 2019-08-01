@@ -8,10 +8,41 @@
     background: white;
     width: 95%;
     margin: auto;
+    margin-top: 1.5%;
   }
   .content {
     padding: 16px;
   }
+
+  //header
+
+  .objects-icon {
+    float: left;
+    width: 230px;
+    // height: 140px;
+    // margin-left: 4%;
+    // margin-top: 10px;
+  }
+  .advertiseTop {
+    display: flex;
+    width: 95%;
+    height: 150px;
+    background: #01a0d7;
+    margin: 0 auto;
+  }
+  .pText {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: white;
+    width: 50%;
+    margin-left: 7%;
+    margin-top: 38px;
+    line-height: 1.6;
+    letter-spacing: 1px;
+    vertical-align: middle;
+    height: 50%;
+  }
+
   // button
   .button-outline {
     --border-width: 1px;
@@ -91,7 +122,8 @@
     --min-height: none;
     padding-top: 1%;
     padding-bottom: 1%;
-    width: 100%;
+    width: 97%;
+    margin: auto;
   }
   .ionCheckbox {
     width: 20px;

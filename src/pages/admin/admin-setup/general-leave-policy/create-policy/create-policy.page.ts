@@ -4,6 +4,7 @@ import { PolicyAPIService } from "../policy-api.service";
 import { LeaveAPIService } from "../../leave-setup/leave-api.service";
 import { MatSnackBar } from "@angular/material";
 import { SnackbarNotificationPage } from "../../leave-setup/snackbar-notification/snackbar-notification";
+import { ActivatedRoute } from "@angular/router";
 
 /**
  * create general leave policy
@@ -24,6 +25,10 @@ export class CreatePolicyPage implements OnInit {
      * @memberof CreatePolicyPage
      */
     public list: any;
+
+    public policyList: any;
+
+    public showEditPolicy: boolean;
 
     /**
      * show spinner during loading page
@@ -74,28 +79,28 @@ export class CreatePolicyPage implements OnInit {
      * @type {boolean}
      * @memberof CreatePolicyPage
      */
-    public CF: boolean;
+    public CF: boolean = false;
 
     /**
      * year end closing checkbox value
      * @type {boolean}
      * @memberof CreatePolicyPage
      */
-    public yearEnd: boolean;
+    public yearEnd: boolean = false;
 
     /**
      * apply on behalf checkbox value
      * @type {boolean}
      * @memberof CreatePolicyPage
      */
-    public onBehalf: boolean;
+    public onBehalf: boolean = false;
 
     /**
      * email checkbox value
      * @type {boolean}
      * @memberof CreatePolicyPage
      */
-    public email: boolean;
+    public email: boolean = false;
 
     /**
      * validation form value
@@ -141,10 +146,11 @@ export class CreatePolicyPage implements OnInit {
      * @param {MatSnackBar} snackbar
      * @memberof CreatePolicyPage
      */
-    constructor(private policyApi: PolicyAPIService, private leaveAPi: LeaveAPIService, private snackbar: MatSnackBar) {
+    constructor(private policyApi: PolicyAPIService, private leaveAPi: LeaveAPIService, private snackbar: MatSnackBar, private route: ActivatedRoute) {
         this.policyForm = new FormGroup(
             {
                 company: new FormControl(null, Validators.required),
+                policyName: new FormControl(null, Validators.required),
                 level: new FormControl(null, Validators.required),
                 escalateAfterDays: new FormControl(null, Validators.required),
                 CFMonth: new FormControl({ value: null, disabled: true }, Validators.required),
@@ -156,7 +162,12 @@ export class CreatePolicyPage implements OnInit {
     }
 
     ngOnInit() {
+        if (this.route.routeConfig.path.includes('edit-policy')) {
+            this.showEditPolicy = true;
+            this.policyApi.get_general_leave_policy_list().subscribe(list => this.policyList = list)
+        }
         this.leaveAPi.get_compant_list().subscribe(data => {
+            this.showEditPolicy = false;
             this.list = data;
             this.showContainer = true;
             this.showSpinner = false;
@@ -239,19 +250,6 @@ export class CreatePolicyPage implements OnInit {
     }
 
     /**
-     * get the selected mat radio value
-     * @param {*} event
-     * @memberof CreatePolicyPage
-     */
-    radioEvent(event) {
-        this.radioValue = event.value;
-        if (this.radioValue == 'Superior') {
-            this.policyForm.controls.level.value = null;
-            // this.policyForm.controls.patchValue({ level: null })
-        }
-    }
-
-    /**
      * data that created to POST to backend API
      * @memberof CreatePolicyPage
      */
@@ -272,6 +270,7 @@ export class CreatePolicyPage implements OnInit {
         this._data.applyOnBehalfConfirmation = this.onBehalf;
         this._data.emailReminder = this.email;
         this._data.tenantCompanyId = this.policyForm.controls.company.value;
+        this._data.policyName = this.policyForm.controls.policyName.value;
     }
 
     /**

@@ -16,4 +16,10 @@ export class PolicyAPIService {
         this.apiService.headerAuthorization();
         return this.apiService.postApi(value, '/api/admin/general-leave-policy');
     }
+
+    get_general_leave_policy_list(): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.getApi('/api/admin/general-leave-policy');
+    }
+
 }
