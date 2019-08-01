@@ -2,6 +2,8 @@ import { OnInit, Component } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { PolicyAPIService } from "../policy-api.service";
 import { LeaveAPIService } from "../../leave-setup/leave-api.service";
+import { MatSnackBar } from "@angular/material";
+import { SnackbarNotificationPage } from "../../leave-setup/snackbar-notification/snackbar-notification";
 
 @Component({
     selector: 'app-create-policy',
@@ -26,7 +28,7 @@ export class CreatePolicyPage implements OnInit {
     private nextYear = new Date().getFullYear() + 1;
     private data: any = {};
 
-    constructor(private policyApi: PolicyAPIService, private leaveAPi: LeaveAPIService) {
+    constructor(private policyApi: PolicyAPIService, private leaveAPi: LeaveAPIService, private snackbar: MatSnackBar) {
         this.policyForm = new FormGroup(
             {
                 company: new FormControl(null, Validators.required),
@@ -94,21 +96,16 @@ export class CreatePolicyPage implements OnInit {
 
     radioEvent(event) {
         this.radioValue = event.value;
-        console.log(this.radioValue);
         if (this.radioValue == 'Superior') {
             this.policyForm.controls.patchValue({ level: null })
         }
     }
 
-    value(value) {
-        console.log(value);
-    }
-
-    createPolicy() {
+    getValue() {
         this.data.approvalConfirmation = {};
         this.data.approvalConfirmation.requirement = this.radioValue;
         this.data.approvalConfirmation.approvalLevel = Number(this.policyForm.controls.level.value);
-        this.data.approvalConfirmation.escalateAfterDays = this.policyForm.controls.escalateAfterDays.value;
+        this.data.approvalConfirmation.escalateAfterDays = Number(this.policyForm.controls.escalateAfterDays.value);
         this.data.forfeitCFLeave = {};
         this.data.forfeitCFLeave.value = this.CF;
         this.data.forfeitCFLeave.day = this.policyForm.controls.CFDay.value;
@@ -121,10 +118,31 @@ export class CreatePolicyPage implements OnInit {
         this.data.applyOnBehalfConfirmation = this.onBehalf;
         this.data.emailReminder = this.email;
         this.data.tenantCompanyId = this.policyForm.controls.company.value;
-        console.log(this.data);
+    }
+
+
+    createPolicy() {
+        this.getValue();
+        this.showSmallSpinner = true;
         this.policyApi.post_general_leave_policy(this.data).subscribe(success => {
-            console.log(success);
             this.showSmallSpinner = false;
+            this.policyForm.reset();
+            this.radioValue = null;
+            this.CF = false;
+            this.yearEnd = false;
+            this.onBehalf = false;
+            this.email = false;
+            this.message('saved successfully');
+        }, error => {
+            window.location.href = '/login';
+            this.message('saved unsuccessfully');
+        });
+    }
+
+    message(message: string) {
+        this.snackbar.openFromComponent(SnackbarNotificationPage, {
+            duration: 2500,
+            data: message
         });
     }
 }

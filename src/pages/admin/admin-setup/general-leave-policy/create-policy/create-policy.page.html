@@ -18,7 +18,7 @@
             <!-- Anyone, Everyone, Superior -->
             <span class="example-radio-group-label" style="padding-left: 20px;display: block">
                 Employee can go leave, if:</span>
-            <mat-radio-group class="example-radio-group">
+            <mat-radio-group class="example-radio-group" [value]="radioValue">
                 <mat-radio-button class="example-radio-button" value="Anyone" style="display:inline-block"
                     (change)="showEscalateDay = false;radioEvent($event)">
                     Anyone in hierarchy approves limit to
@@ -52,8 +52,8 @@
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Forfeit carried forward leaves on:</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="CF"
-                        (click)="$event.srcElement.checked ? CF=false: CF=true"
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                        (click)="$event.srcElement.checked ? CF=false: CF=true" [checked]="CF"
                         (ionChange)="checkEvent($event, policyForm.controls.CFMonth, policyForm.controls.CFDay)">
                     </ion-checkbox>
                 </ion-item>
@@ -90,7 +90,8 @@
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Allow year end closing after:</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="yearEnd"  (click)="$event.srcElement.checked ? yearEnd=false: yearEnd=true"
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [checked]="yearEnd"
+                        (click)="$event.srcElement.checked ? yearEnd=false: yearEnd=true"
                         (ionChange)="checkEvent($event, policyForm.controls.YEMonth, policyForm.controls.YEDay, policyForm.controls.YEChoice)">
                     </ion-checkbox>
                 </ion-item>
@@ -134,7 +135,8 @@
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Apply on behalf feature requires employee to confirm the application</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="onBehalf" (click)="$event.srcElement.checked ? onBehalf=false: onBehalf=true"
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [checked]="onBehalf"
+                        (click)="$event.srcElement.checked ? onBehalf=false: onBehalf=true"
                         (ionChange)="checkEvent($event)">
                     </ion-checkbox>
                 </ion-item>
@@ -145,8 +147,8 @@
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Email reminder</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="email" (click)="$event.srcElement.checked ? email=false: email=true"
-                        (ionChange)="checkEvent($event)">
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [checked]="email"
+                        (click)="$event.srcElement.checked ? email=false: email=true" (ionChange)="checkEvent($event)">
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -154,12 +156,13 @@
         </div>
         <div style="text-align: center;padding: 20px;">
             <ion-button fill="outline" style="font-size: 12px;height: 30px;width: 90px;background: white;"
-                color="primary" (click)="policyForm.reset();">
+                color="primary"
+                (click)="policyForm.reset();CF = false;yearEnd = false;onBehalf = false;email = false;radioValue=null;">
                 CLEAR
             </ion-button>
             <div style="width: 10px; display: inline-block"></div>
             <ion-button style="font-size: 12px;height: 30px;width: 150px;margin-right: 20px;" color="primary"
-                (click)="createPolicy();showSmallSpinner = true;">
+                (click)="createPolicy();">
                 CREATE POLICY
             </ion-button>
             <div style="display: inline-block;height: 60%;vertical-align: middle;" *ngIf="showSmallSpinner">
