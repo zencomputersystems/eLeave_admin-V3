@@ -5,6 +5,12 @@ import { LeaveAPIService } from "../../leave-setup/leave-api.service";
 import { MatSnackBar } from "@angular/material";
 import { SnackbarNotificationPage } from "../../leave-setup/snackbar-notification/snackbar-notification";
 
+/**
+ * create general leave policy
+ * @export
+ * @class CreatePolicyPage
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'app-create-policy',
     templateUrl: './create-policy.page.html',
@@ -12,22 +18,129 @@ import { SnackbarNotificationPage } from "../../leave-setup/snackbar-notificatio
 })
 export class CreatePolicyPage implements OnInit {
 
+    /**
+     * company list from API
+     * @type {*}
+     * @memberof CreatePolicyPage
+     */
     public list: any;
-    public showSpinner: boolean = true;
-    public radioValue: any;
-    public showEscalateDay: boolean = false;
-    public daysOfCF: number[];
-    public daysOfYE: number[];
-    public CF: any;
-    public yearEnd: any;
-    public onBehalf: any;
-    public email: any;
-    public policyForm: any;
-    public showSmallSpinner: boolean = false;
-    private monthArray = ['January', 'February', 'March', 'April', 'May', 'Jun', 'July', 'August', 'September', 'October', 'November', 'December'];
-    private nextYear = new Date().getFullYear() + 1;
-    private data: any = {};
 
+    /**
+     * show spinner during loading page
+     * @type {boolean}
+     * @memberof CreatePolicyPage
+     */
+    public showSpinner: boolean = true;
+
+    /**
+     * hide container during loading page
+     * @type {boolean}
+     * @memberof CreatePolicyPage
+     */
+    public showContainer: boolean = false;
+
+    /**
+     * mat radio button value 
+     * @type {*}
+     * @memberof CreatePolicyPage
+     */
+    public radioValue: any;
+
+    /**
+     * number of escalation day 
+     * @type {boolean}
+     * @memberof CreatePolicyPage
+     */
+    public showEscalateDay: boolean = false;
+
+    /**
+     * array list of days in a selected month in carried forward field
+     * eg: 1 to 30
+     * @type {number[]}
+     * @memberof CreatePolicyPage
+     */
+    public daysOfCF: number[];
+
+    /**
+     * array list of days in a selected month in year end closing field
+     * eg: 1 to 30
+     * @type {number[]}
+     * @memberof CreatePolicyPage
+     */
+    public daysOfYE: number[];
+
+    /**
+     * carried forward checkbox value
+     * @type {boolean}
+     * @memberof CreatePolicyPage
+     */
+    public CF: boolean;
+
+    /**
+     * year end closing checkbox value
+     * @type {boolean}
+     * @memberof CreatePolicyPage
+     */
+    public yearEnd: boolean;
+
+    /**
+     * apply on behalf checkbox value
+     * @type {boolean}
+     * @memberof CreatePolicyPage
+     */
+    public onBehalf: boolean;
+
+    /**
+     * email checkbox value
+     * @type {boolean}
+     * @memberof CreatePolicyPage
+     */
+    public email: boolean;
+
+    /**
+     * validation form value
+     * @type {*}
+     * @memberof CreatePolicyPage
+     */
+    public policyForm: any;
+
+    /**
+     * show loading spinner when clicked on create policy to API
+     * @type {boolean}
+     * @memberof CreatePolicyPage
+     */
+    public showSmallSpinner: boolean = false;
+
+    /**
+     * to get index of selected month 
+     * @private
+     * @memberof CreatePolicyPage
+     */
+    private _monthArray = ['January', 'February', 'March', 'April', 'May', 'Jun', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    /**
+     * next year number
+     * eg: 2020
+     * @private
+     * @memberof CreatePolicyPage
+     */
+    private _nextYear = new Date().getFullYear() + 1;
+
+    /**
+     * empty object 
+     * @private
+     * @type {*}
+     * @memberof CreatePolicyPage
+     */
+    private _data: any = {};
+
+    /**
+     *Creates an instance of CreatePolicyPage.
+     * @param {PolicyAPIService} policyApi
+     * @param {LeaveAPIService} leaveAPi
+     * @param {MatSnackBar} snackbar
+     * @memberof CreatePolicyPage
+     */
     constructor(private policyApi: PolicyAPIService, private leaveAPi: LeaveAPIService, private snackbar: MatSnackBar) {
         this.policyForm = new FormGroup(
             {
@@ -43,26 +156,44 @@ export class CreatePolicyPage implements OnInit {
     }
 
     ngOnInit() {
-        this.showSpinner = false;
-        this.leaveAPi.get_compant_list().subscribe(data => this.list = data)
+        this.leaveAPi.get_compant_list().subscribe(data => {
+            this.list = data;
+            this.showContainer = true;
+            this.showSpinner = false;
+        }, error => {
+            window.location.href = '/login';
+        })
     }
 
+    /**
+     * Get total number of day in a selected month and year
+     * @param {*} month
+     * @param {*} year
+     * @returns
+     * @memberof CreatePolicyPage
+     */
     getTotalDays(month, year) {
         return new Date(year, month, 0).getDate();
     };
 
+    /**
+     * Get total number of days in a month if selection month is changed
+     * @param {string} model
+     * @param {number} [year]
+     * @memberof CreatePolicyPage
+     */
     monthChanged(model: string, year?: number) {
         if (year == undefined || this.policyForm.controls.YEChoice.value == 'Next year') { year = 0 } else { year = 1 }
         if (model == 'monthCF') {
-            const monthCF = this.monthArray.indexOf(this.policyForm.controls.CFMonth.value) + 1;
-            let dayCF = this.getTotalDays(monthCF, this.nextYear);
+            const monthCF = this._monthArray.indexOf(this.policyForm.controls.CFMonth.value) + 1;
+            let dayCF = this.getTotalDays(monthCF, this._nextYear);
             this.daysOfCF = [];
             for (let i = 1; i < dayCF + 1; i++) {
                 this.daysOfCF.push(i);
             }
         } else {
-            const monthYE = this.monthArray.indexOf(this.policyForm.controls.YEMonth.value) + 1;
-            let dayYE = this.getTotalDays(monthYE, this.nextYear - year);
+            const monthYE = this._monthArray.indexOf(this.policyForm.controls.YEMonth.value) + 1;
+            let dayYE = this.getTotalDays(monthYE, this._nextYear - year);
             this.daysOfYE = [];
             for (let i = 1; i < dayYE + 1; i++) {
                 this.daysOfYE.push(i);
@@ -70,6 +201,11 @@ export class CreatePolicyPage implements OnInit {
         }
     }
 
+    /**
+     * Get total number of days in a month if selection year is changed
+     * @param {*} event
+     * @memberof CreatePolicyPage
+     */
     yearChanged(event) {
         if (event.value == 'This year') {
             this.monthChanged('monthYE', 1);
@@ -78,6 +214,14 @@ export class CreatePolicyPage implements OnInit {
         }
     }
 
+    /**
+     * When ion-checkbox is clicked, the selection/input form is enable/disable
+     * @param {*} event
+     * @param {*} enabledMonth
+     * @param {*} enabledDay
+     * @param {*} [enabledYr]
+     * @memberof CreatePolicyPage
+     */
     checkEvent(event, enabledMonth, enabledDay, enabledYr?: any) {
         if (event.detail.checked) {
             enabledMonth.enable();
@@ -94,37 +238,50 @@ export class CreatePolicyPage implements OnInit {
         }
     }
 
+    /**
+     * get the selected mat radio value
+     * @param {*} event
+     * @memberof CreatePolicyPage
+     */
     radioEvent(event) {
         this.radioValue = event.value;
         if (this.radioValue == 'Superior') {
-            this.policyForm.controls.patchValue({ level: null })
+            this.policyForm.controls.level.value = null;
+            // this.policyForm.controls.patchValue({ level: null })
         }
     }
 
+    /**
+     * data that created to POST to backend API
+     * @memberof CreatePolicyPage
+     */
     getValue() {
-        this.data.approvalConfirmation = {};
-        this.data.approvalConfirmation.requirement = this.radioValue;
-        this.data.approvalConfirmation.approvalLevel = Number(this.policyForm.controls.level.value);
-        this.data.approvalConfirmation.escalateAfterDays = Number(this.policyForm.controls.escalateAfterDays.value);
-        this.data.forfeitCFLeave = {};
-        this.data.forfeitCFLeave.value = this.CF;
-        this.data.forfeitCFLeave.day = this.policyForm.controls.CFDay.value;
-        this.data.forfeitCFLeave.month = this.policyForm.controls.CFMonth.value;
-        this.data.allowYearEndClosing = {};
-        this.data.allowYearEndClosing.value = this.yearEnd;
-        this.data.allowYearEndClosing.day = this.policyForm.controls.YEDay.value;
-        this.data.allowYearEndClosing.month = this.policyForm.controls.YEMonth.value;
-        this.data.allowYearEndClosing.relativeYear = this.policyForm.controls.YEChoice.value;
-        this.data.applyOnBehalfConfirmation = this.onBehalf;
-        this.data.emailReminder = this.email;
-        this.data.tenantCompanyId = this.policyForm.controls.company.value;
+        this._data.approvalConfirmation = {};
+        this._data.approvalConfirmation.requirement = this.radioValue;
+        this._data.approvalConfirmation.approvalLevel = Number(this.policyForm.controls.level.value);
+        this._data.approvalConfirmation.escalateAfterDays = Number(this.policyForm.controls.escalateAfterDays.value);
+        this._data.forfeitCFLeave = {};
+        this._data.forfeitCFLeave.value = this.CF;
+        this._data.forfeitCFLeave.day = this.policyForm.controls.CFDay.value;
+        this._data.forfeitCFLeave.month = this.policyForm.controls.CFMonth.value;
+        this._data.allowYearEndClosing = {};
+        this._data.allowYearEndClosing.value = this.yearEnd;
+        this._data.allowYearEndClosing.day = this.policyForm.controls.YEDay.value;
+        this._data.allowYearEndClosing.month = this.policyForm.controls.YEMonth.value;
+        this._data.allowYearEndClosing.relativeYear = this.policyForm.controls.YEChoice.value;
+        this._data.applyOnBehalfConfirmation = this.onBehalf;
+        this._data.emailReminder = this.email;
+        this._data.tenantCompanyId = this.policyForm.controls.company.value;
     }
 
-
+    /**
+     * POST data to backend API
+     * @memberof CreatePolicyPage
+     */
     createPolicy() {
         this.getValue();
         this.showSmallSpinner = true;
-        this.policyApi.post_general_leave_policy(this.data).subscribe(success => {
+        this.policyApi.post_general_leave_policy(this._data).subscribe(success => {
             this.showSmallSpinner = false;
             this.policyForm.reset();
             this.radioValue = null;
@@ -139,6 +296,11 @@ export class CreatePolicyPage implements OnInit {
         });
     }
 
+    /**
+     * show notifation snackbar after clicked create policy
+     * @param {string} message
+     * @memberof CreatePolicyPage
+     */
     message(message: string) {
         this.snackbar.openFromComponent(SnackbarNotificationPage, {
             duration: 2500,
