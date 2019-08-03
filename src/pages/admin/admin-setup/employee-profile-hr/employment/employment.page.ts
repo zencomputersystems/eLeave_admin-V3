@@ -6,6 +6,12 @@ import { employeeStatus, employeeType } from '../employee-profile.service';
 import { Subscription } from 'rxjs';
 const moment = _moment;
 
+/**
+ * Page of Employment Page
+ * @export
+ * @class EmploymentPage
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'app-employment',
     templateUrl: './employment.page.html',

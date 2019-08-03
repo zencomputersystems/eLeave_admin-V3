@@ -8,25 +8,26 @@
 </div>
 <div class="container" *ngIf="showContainer">
     <form [formGroup]="policyForm">
-        <div class="content">
+        <div class="content" style="padding-bottom: 0;" *ngIf="showEditPolicy">
             <!-- policy name list -->
-            <span *ngIf="showEditPolicy"
-                style="padding-bottom: 10px;font-size: 14px;color:#7a8589;padding-left: 18px;display: block">
+            <span style="padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
                 POLICY NAME LIST</span>
-            <mat-form-field appearance="outline" *ngIf="showEditPolicy"
-                style="display: block;font-size: 13px;width: 400px;color:#7a8589;padding-left: 18px;">
+            <mat-form-field appearance="outline"
+                style="display: inline-block;font-size: 13px;width: 400px;color:#7a8589;padding-left: 18px;">
                 <mat-label>Please select policy</mat-label>
-                <mat-select formControlName="company" required>
+                <mat-select formControlName="company" required (selectionChange)="listSelected($event)">
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let item of policyList" [value]=item.MAIN_GENERAL_POLICY_GUID>
                         {{item.PROPERTIES_XML.policyName}}
                     </mat-option>
                 </mat-select>
-                <mat-error>Policy name is <strong>required</strong></mat-error>
+                <mat-error>At least one policy is <strong>required</strong></mat-error>
             </mat-form-field>
-
+            <ion-item class="divider" lines="full"></ion-item>
+        </div>
+        <div class="content" *ngIf="loadSelectedPolicyItems || !showEditPolicy">
             <!-- policy name -->
-            <span style="padding-bottom: 10px;font-size: 14px;color:#7a8589;padding-left: 18px;display: block">
+            <span style="padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
                 POLICY NAME</span>
             <mat-form-field appearance="outline"
                 style="display: block;font-size: 13px;width: 400px;color:#7a8589;padding-left: 18px;">
@@ -36,7 +37,7 @@
             </mat-form-field>
 
             <!-- company tenant list -->
-            <span style="padding-bottom: 10px;font-size: 14px;color:#7a8589;padding-left: 18px;display: block">
+            <span style="padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
                 COMPANY LIST</span>
             <mat-form-field appearance="outline"
                 style="display: block;font-size: 13px;width: 400px;color:#7a8589;padding-left: 18px;">
@@ -60,7 +61,7 @@
                 </mat-radio-button>
                 <mat-form-field appearance="outline"
                     style="font-size: 13px;width: 80px;color:#7a8589;padding-left: 5px;">
-                    <input matInput formControlName="level" required><span matSuffix>level</span>
+                    <input matInput formControlName="anyoneLevel" required><span matSuffix>level</span>
                 </mat-form-field>
                 <div style="display: block"></div>
                 <mat-radio-button class="example-radio-button" value="Everyone"
@@ -69,7 +70,7 @@
                 </mat-radio-button>
                 <mat-form-field appearance="outline"
                     style="font-size: 13px;width: 80px;color:#7a8589;padding-left: 5px;">
-                    <input matInput formControlName="level" required><span matSuffix>level</span>
+                    <input matInput formControlName="everyoneLevel" required><span matSuffix>level</span>
                 </mat-form-field>
                 <mat-form-field style="font-size: 13px;width: 175px;color:#7a8589;padding-left: 53px;display:block"
                     *ngIf="showEscalateDay">
@@ -87,8 +88,8 @@
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Forfeit carried forward leaves on:</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
-                        (click)="$event.srcElement.checked ? CF=false: CF=true" [checked]="CF"
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" (click)="CF = !CF" [(ngModel)]="CF"
+                        [checked]="CF"
                         (ionChange)="checkEvent($event, policyForm.controls.CFMonth, policyForm.controls.CFDay)">
                     </ion-checkbox>
                 </ion-item>
@@ -125,8 +126,8 @@
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Allow year end closing after:</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [checked]="yearEnd"
-                        (click)="$event.srcElement.checked ? yearEnd=false: yearEnd=true"
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="yearEnd" [checked]="yearEnd"
+                        (click)="yearEnd = !yearEnd"
                         (ionChange)="checkEvent($event, policyForm.controls.YEMonth, policyForm.controls.YEDay, policyForm.controls.YEChoice)">
                     </ion-checkbox>
                 </ion-item>
@@ -158,7 +159,7 @@
             </mat-form-field>
             <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 24px;">
                 <mat-label>Year</mat-label>
-                <mat-select formControlName="YEChoice" (selectionChange)="yearChanged($event)">
+                <mat-select formControlName="YEChoice" (selectionChange)="yearChanged($event.value)">
                     <mat-option>None</mat-option>
                     <mat-option value="This year">This year</mat-option>
                     <mat-option value="Next year">Next year</mat-option>
@@ -170,9 +171,8 @@
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Apply on behalf feature requires employee to confirm the application</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [checked]="onBehalf"
-                        (click)="$event.srcElement.checked ? onBehalf=false: onBehalf=true"
-                        (ionChange)="checkEvent($event)">
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="onBehalf"
+                        [checked]="onBehalf" (click)="onBehalf = !onBehalf">
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -182,8 +182,8 @@
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Email reminder</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [checked]="email"
-                        (click)="$event.srcElement.checked ? email=false: email=true" (ionChange)="checkEvent($event)">
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="email" [checked]="email"
+                        (click)="email = !email">
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -196,9 +196,13 @@
                 CLEAR
             </ion-button>
             <div style="width: 10px; display: inline-block"></div>
-            <ion-button style="font-size: 12px;height: 30px;width: 150px;margin-right: 20px;" color="primary"
-                (click)="createPolicy();">
+            <ion-button *ngIf="!showEditPolicy" style="font-size: 12px;height: 30px;width: 150px;margin-right: 20px;"
+                color="primary" (click)="createPolicy()">
                 CREATE POLICY
+            </ion-button>
+            <ion-button *ngIf="showEditPolicy" style="font-size: 12px;height: 30px;width: 150px;margin-right: 20px;"
+                color="primary" (click)="savePolicy()">
+                SAVE POLICY
             </ion-button>
             <div style="display: inline-block;height: 60%;vertical-align: middle;" *ngIf="showSmallSpinner">
                 <ion-spinner name="lines" color="primary"></ion-spinner>

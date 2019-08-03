@@ -53,9 +53,6 @@ export class PersonalPage implements OnInit {
      */
     public educationList: any = [];
 
-
-    public numOfArray: boolean = false;
-
     /**
      * Show or hide edit profile
      * @type {boolean}

@@ -177,6 +177,10 @@ export class AssignCalendarPage implements OnInit {
         return 0;
     }
 
+    /**
+     * Disable or enable the submit button
+     * @memberof AssignCalendarPage
+     */
     disabledButton() {
         if (this.assignCalendarForm.controls.calendar.value != null && this.assignCalendarForm.controls.user.value.length > 0) {
             this.disabledSubmitButton = false;

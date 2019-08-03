@@ -129,7 +129,12 @@ export class LeaveAPIService {
         return this.apiService.getApiWithId('/api/company/', tenantId);
     }
 
-    get_admin_leavetype(): Observable<any>{
+    /**
+     * Get leavetype details list
+     * @returns {Observable<any>}
+     * @memberof LeaveAPIService
+     */
+    get_admin_leavetype(): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.getApi('/api/admin/leavetype');
     }

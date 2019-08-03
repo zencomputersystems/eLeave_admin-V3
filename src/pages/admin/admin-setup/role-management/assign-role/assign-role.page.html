@@ -275,8 +275,10 @@
     style="width: 33%;height: 100%;margin-top: 0.5%;display: inline-block;position: absolute;right: 2.5%;">
     <form [formGroup]="assignRoleForm" style="background: white;height: 82%;">
         <div style="width: 100%; height: 100%;margin: 1.5%;margin-bottom: 0;padding: 16px;">
+            <span style="padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 2px;display: block">
+                ROLE PROFILE LIST</span>
             <mat-form-field appearance="outline" style="width: 100%;font-size: 14px">
-                <mat-label>Role profile</mat-label>
+                <mat-label>Please select role profile</mat-label>
                 <mat-select formControlName="role" required>
                     <mat-option *ngFor="let item of list; let j=index" [value]="item.role_guid"
                         (click)="roleSelected(item.role_guid)">
@@ -285,9 +287,11 @@
                 <mat-error style="margin-top: 15px;">Please select an option</mat-error>
             </mat-form-field>
             &nbsp;&nbsp;
+            <span style="padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 2px;display: block">
+                EMPLOYEE LIST</span>
             <mat-form-field appearance="outline" style="width: 100%;cursor: pointer;font-size: 14px"
                 (click)="displayDivDropdown = true;">
-                <mat-label>Assign to employee</mat-label>
+                <mat-label>Please select employee</mat-label>
                 <input matInput class="dropdown" readonly required>
                 <mat-icon matSuffix class="iconDropdown"><i class="material-icons dropdown-icon">arrow_drop_down</i>
                 </mat-icon>

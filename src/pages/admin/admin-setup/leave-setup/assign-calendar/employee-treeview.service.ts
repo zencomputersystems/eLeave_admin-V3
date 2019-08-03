@@ -4,6 +4,11 @@ import { MatTreeFlattener, MatTreeFlatDataSource } from "@angular/material";
 import { SelectionModel } from "@angular/cdk/collections";
 import { Injectable } from "@angular/core";
 
+/**
+ * Employee Treeview 
+ * @export
+ * @class EmployeeTreeview
+ */
 @Injectable({
     providedIn: 'root'
 })
@@ -38,7 +43,11 @@ export class EmployeeTreeview {
     /** The selection for checklist */
     checklistSelection = new SelectionModel<TodoItemFlatNode>(true /* multiple */);
 
-
+    /**
+     *Creates an instance of EmployeeTreeview.
+     * @param {EmployeeListDatabase} database
+     * @memberof EmployeeTreeview
+     */
     constructor(private database: EmployeeListDatabase) {
         this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
             this.isExpandable, this.getChildren);

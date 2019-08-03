@@ -64,9 +64,11 @@
     transform: translateY(-1.1em) scale(0.75);
     width: 133.33333%;
   }
-
   ::ng-deep .mat-form-field-appearance-outline .mat-form-field-suffix {
     top: 0;
+  }
+  ::ng-deep .mat-select-value{
+    color: #7a8589;
   }
 
   // mat radio button
