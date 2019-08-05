@@ -24,6 +24,8 @@ import { LeaveSetupModule } from '../leave-setup/leave-setup.module';
 import { AssignRolePage } from './assign-role/assign-role.page';
 import { EmployeeListDatabase } from '../leave-setup/assign-calendar/assign-calendar-treeview.service';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { MatDialogModule } from '@angular/material';
+import { DialogDeleteConfirmationPage } from './dialog-delete-confirmation/dialog-delete-confirmation.page';
 
 
 const routes: Routes = [
@@ -54,10 +56,11 @@ const routes: Routes = [
         MatButtonModule,
         LeaveSetupModule,
         ClickOutsideModule,
+        MatDialogModule,
         RouterModule.forChild(routes)
     ],
     providers: [EmployeeListDatabase],
-    entryComponents: [],
-    declarations: [RoleManagementPage, RoleRightsPage, RoleListPage, AssignRolePage]
+    entryComponents: [DialogDeleteConfirmationPage],
+    declarations: [RoleManagementPage, RoleRightsPage, RoleListPage, AssignRolePage, DialogDeleteConfirmationPage]
 })
 export class RoleManagementModule { }

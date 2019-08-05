@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RolesAPIService } from '../role-api.service';
+import { MatDialog } from '@angular/material';
+import { DialogDeleteConfirmationPage } from '../dialog-delete-confirmation/dialog-delete-confirmation.page';
 
 /**
  * Show list of role
@@ -91,7 +93,7 @@ export class RoleListPage implements OnInit {
      * @param {Router} router
      * @memberof RoleListPage
      */
-    constructor(private roleAPi: RolesAPIService, private router: Router) { }
+    constructor(private roleAPi: RolesAPIService, private router: Router, public dialog: MatDialog) { }
 
 
     ngOnInit() {
@@ -117,6 +119,20 @@ export class RoleListPage implements OnInit {
      */
     getRoleId(roleId) {
         this.router.navigate(['/main/role-management/role-rights', roleId]);
+    }
+
+    /**
+     * delete confirmation pop up dialog message
+     * @param {*} role_guid
+     * @memberof RoleListPage
+     */
+    delete(role_guid) {
+        const dialogRef = this.dialog.open(DialogDeleteConfirmationPage, {
+            // width: '250px',
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            this.roleAPi.delete_role_profile(role_guid).subscribe(response => this.ngOnInit())
+        });
     }
 
     /**
@@ -158,8 +174,8 @@ export class RoleListPage implements OnInit {
      */
     renderItemPerPage(i: number) {
         let totalItem;
-        const pageItems = 6;
-        const startEndNumber = 5;
+        const pageItems = 7;
+        const startEndNumber = 6;
         this.pageIndex = i;
         totalItem = this.roleList.length;
         this.sumPageIndex = totalItem / pageItems;

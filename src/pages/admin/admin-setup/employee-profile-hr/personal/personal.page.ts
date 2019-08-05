@@ -137,14 +137,6 @@ export class PersonalPage implements OnInit {
     private _date: FormGroup;
 
     /**
-     * Add observable as disposable resource
-     * @private
-     * @type {Subscription}
-     * @memberof PersonalPage
-     */
-    private _subscription: Subscription = new Subscription();
-
-    /**
      * Return birthdate value
      * @readonly
      * @type {FormGroup}
@@ -173,7 +165,7 @@ export class PersonalPage implements OnInit {
     }
 
     ngOnInit() {
-        this._subscription = this.apiService.get_personal_details().subscribe(
+        this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
                 this.getContactInit();
@@ -190,14 +182,6 @@ export class PersonalPage implements OnInit {
                     window.location.href = '/login';
                 }
             });
-    }
-
-    /**
-     * Destroy subscription
-     * @memberof PersonalPage
-     */
-    ngOnDestroy() {
-        this._subscription.unsubscribe();
     }
 
     /**
@@ -340,9 +324,9 @@ export class PersonalPage implements OnInit {
      */
     patchAllData() {
         this.editProfile = false;
-        this._subscription = this.apiService.patch_personal_details(this.bindingData()).subscribe(
+        this.apiService.patch_personal_details(this.bindingData()).subscribe(
             (val) => {
-                this._subscription = this.apiService.get_personal_details().subscribe(
+                this.apiService.get_personal_details().subscribe(
                     (data: any[]) => {
                         this.list = data;
                     });

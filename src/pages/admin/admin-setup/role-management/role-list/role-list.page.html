@@ -35,15 +35,13 @@
                     <ion-col size="4">
                         <ion-label class="colOfLeave">{{role.code}}</ion-label>
                     </ion-col>
-                    <ion-col size="5" class="colOfLeave">{{role.description}}
+                    <ion-col size="6" class="colOfLeave">{{role.description}}
                     </ion-col>
-                    <ion-col align-self-end>
-                        <ion-button shape="round" fill="outline" float-right style="margin-right: 7%; margin-top: -0.2%;font-size: 10px;
-                        height: 27px;" (click)="getRoleId(role.role_guid)">
-                            <span style="padding-right: 5px">Edit</span>
-                            <div class="edit-pencil-icon" [inlineSVG]="'assets/icon/option/pencil.svg'">
-                            </div>
-                        </ion-button>
+                    <ion-col>
+                        <div class="edit-pencil-icon" [inlineSVG]="'assets/icon/option/pencil.svg'"
+                            (click)="getRoleId(role.role_guid)"></div>
+                        <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'"
+                            (click)="delete(role.role_guid)"></div>
                     </ion-col>
                     <ion-item class="divider" lines="full"></ion-item>
                 </ion-row>

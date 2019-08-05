@@ -90,6 +90,18 @@ export class RolesAPIService {
     }
 
     /**
+     * delete role and its all details from database
+     * @param {*} roleId
+     * @returns {Observable<any>}
+     * @memberof RolesAPIService
+     */
+    delete_role_profile(roleId): Observable<any> {
+        this.authorization();
+        return this.http.delete(this.baseUrl + '/api/admin/role/role-profile/' + roleId, { headers: this.headerApp })
+            .pipe(map((res: Response) => res.json()));
+    }
+
+    /**
      * assign role profile to employee
      * @param {*} id
      * @returns {Observable<any>}
@@ -99,6 +111,8 @@ export class RolesAPIService {
         this.authorization();
         return this.http.patch(this.baseUrl + '/api/admin/role/user-role', id, { headers: this.headerApp });
     }
+
+
 
 
 
