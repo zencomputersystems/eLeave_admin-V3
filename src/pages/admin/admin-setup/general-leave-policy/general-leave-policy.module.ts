@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { GeneralLeavePolicyPage } from './general-leave-policy.page';
 import { CreatePolicyPage } from './create-policy/create-policy.page';
 import { MatRadioModule } from '@angular/material';
+import { PolicyListPage } from './policy-list/policy-list.page';
 
 
 const routes: Routes = [
@@ -50,6 +51,6 @@ const routes: Routes = [
         RouterModule.forChild(routes)
     ],
     entryComponents: [],
-    declarations: [GeneralLeavePolicyPage, CreatePolicyPage]
+    declarations: [GeneralLeavePolicyPage, CreatePolicyPage, PolicyListPage]
 })
 export class GeneralLeavePolicyModule { }

@@ -41,13 +41,6 @@ export class CreatePolicyPage implements OnInit {
     public showEditPolicy: boolean = false;
 
     /**
-     * show selected content information when selected tenant policy
-     * @type {boolean}
-     * @memberof CreatePolicyPage
-     */
-    public loadSelectedPolicyItems: boolean = false;
-
-    /**
      * show spinner during loading page
      * @type {boolean}
      * @memberof CreatePolicyPage
@@ -165,17 +158,25 @@ export class CreatePolicyPage implements OnInit {
     private _policyGUID: string;
 
     /**
+     * company guid id from url parameter
+     * @private
+     * @type {string}
+     * @memberof CreatePolicyPage
+     */
+    private _companyGUID: string;
+
+    /**
      *Creates an instance of CreatePolicyPage.
      * @param {PolicyAPIService} policyApi
      * @param {LeaveAPIService} leaveAPi
      * @param {MatSnackBar} snackbar
+     * @param {ActivatedRoute} route
      * @memberof CreatePolicyPage
      */
     constructor(private policyApi: PolicyAPIService, private leaveAPi: LeaveAPIService, private snackbar: MatSnackBar, private route: ActivatedRoute) {
         this.policyForm = new FormGroup(
             {
                 company: new FormControl(null, Validators.required),
-                policyName: new FormControl(null, Validators.required),
                 anyoneLevel: new FormControl(null, Validators.required),
                 everyoneLevel: new FormControl(null, Validators.required),
                 escalateAfterDays: new FormControl(null, Validators.required),
@@ -189,8 +190,12 @@ export class CreatePolicyPage implements OnInit {
 
     ngOnInit() {
         if (this.route.routeConfig.path.includes('edit-policy')) {
+            this.route.params.subscribe(params => { this._companyGUID = params.id; });
             this.showEditPolicy = true;
-            this.policyApi.get_general_leave_policy_list().subscribe(list => this.policyList = list)
+            this.policyApi.get_general_leave_policy_id(this._companyGUID).subscribe(list => {
+                this.policyList = list;
+                this.editPolicyDetails();
+            })
         }
         this.leaveAPi.get_compant_list().subscribe(data => {
             this.list = data;
@@ -200,46 +205,37 @@ export class CreatePolicyPage implements OnInit {
             window.location.href = '/login';
         })
     }
+
     /**
-     * selected tenant policy information
-     * @param {*} event
+     * get the details from Id of company GUID
      * @memberof CreatePolicyPage
      */
-    listSelected(event) {
-        for (let i = 0; i < this.policyList.length; i++) {
-            if (event.value == this.policyList[i].MAIN_GENERAL_POLICY_GUID) {
-                console.log(this.policyList[i].PROPERTIES_XML);
-                this._policyGUID = event.value;
-                this.policyForm.controls.policyName.value = this.policyList[i].PROPERTIES_XML.policyName;
-                this.policyForm.controls.company.value = this.policyList[i].PROPERTIES_XML.tenantCompanyId;
-                this.radioValue = this.policyList[i].PROPERTIES_XML.approvalConfirmation.requirement;
-                if (this.radioValue == 'Anyone') {
-                    this.policyForm.controls.anyoneLevel.value = this.policyList[i].PROPERTIES_XML.approvalConfirmation.approvalLevel;
-                } else {
-                    this.policyForm.controls.everyoneLevel.value = this.policyList[i].PROPERTIES_XML.approvalConfirmation.approvalLevel;
-                }
-                this.policyForm.controls.escalateAfterDays.value = this.policyList[i].PROPERTIES_XML.approvalConfirmation.escalateAfterDays;
-                this.CF = this.policyList[i].PROPERTIES_XML.forfeitCFLeave.value;
-                this.policyForm.controls.CFMonth.value = this.policyList[i].PROPERTIES_XML.forfeitCFLeave.month;
-                this.policyForm.controls.CFDay.value = this.policyList[i].PROPERTIES_XML.forfeitCFLeave.day;
-                this.yearEnd = this.policyList[i].PROPERTIES_XML.allowYearEndClosing.value;
-                this.policyForm.controls.YEMonth.value = this.policyList[i].PROPERTIES_XML.allowYearEndClosing.month;
-                this.policyForm.controls.YEDay.value = this.policyList[i].PROPERTIES_XML.allowYearEndClosing.day;
-                this.policyForm.controls.YEChoice.value = this.policyList[i].PROPERTIES_XML.allowYearEndClosing.relativeYear;
-                this.onBehalf = this.policyList[i].PROPERTIES_XML.applyOnBehalfConfirmation;
-                this.email = this.policyList[i].PROPERTIES_XML.emailReminder;
-                this.loadSelectedPolicyItems = true;
-                this.yearChanged(this.policyForm.controls.YEChoice.value);
-                this.monthChanged('monthCF', 0);
-                this.policyForm.controls.CFMonth.enable();
-                this.policyForm.controls.CFDay.enable();
-                this.policyForm.controls.YEMonth.enable();
-                this.policyForm.controls.YEDay.enable();
-                this.policyForm.controls.YEChoice.enable();
-                console.log(this.policyForm.controls);
-                break;
-            }
+    editPolicyDetails() {
+        this._policyGUID = this.policyList.MAIN_GENERAL_POLICY_GUID;
+        this.policyForm.controls.company.value = this.policyList.PROPERTIES_XML.tenantCompanyId;
+        this.radioValue = this.policyList.PROPERTIES_XML.approvalConfirmation.requirement;
+        if (this.radioValue == 'Anyone') {
+            this.policyForm.controls.anyoneLevel.value = this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel;
+        } else {
+            this.policyForm.controls.everyoneLevel.value = this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel;
         }
+        this.policyForm.controls.escalateAfterDays.value = this.policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays;
+        this.CF = this.policyList.PROPERTIES_XML.forfeitCFLeave.value;
+        this.policyForm.controls.CFMonth.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.month;
+        this.policyForm.controls.CFDay.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.day;
+        this.yearEnd = this.policyList.PROPERTIES_XML.allowYearEndClosing.value;
+        this.policyForm.controls.YEMonth.value = this.policyList.PROPERTIES_XML.allowYearEndClosing.month;
+        this.policyForm.controls.YEDay.value = this.policyList.PROPERTIES_XML.allowYearEndClosing.day;
+        this.policyForm.controls.YEChoice.value = this.policyList.PROPERTIES_XML.allowYearEndClosing.relativeYear;
+        this.onBehalf = this.policyList.PROPERTIES_XML.applyOnBehalfConfirmation;
+        this.email = this.policyList.PROPERTIES_XML.emailReminder;
+        this.yearChanged(this.policyForm.controls.YEChoice.value);
+        this.monthChanged('monthCF', 0);
+        this.policyForm.controls.CFMonth.enable();
+        this.policyForm.controls.CFDay.enable();
+        this.policyForm.controls.YEMonth.enable();
+        this.policyForm.controls.YEDay.enable();
+        this.policyForm.controls.YEChoice.enable();
     }
 
     /**
@@ -340,7 +336,6 @@ export class CreatePolicyPage implements OnInit {
         this._data.applyOnBehalfConfirmation = this.onBehalf;
         this._data.emailReminder = this.email;
         this._data.tenantCompanyId = this.policyForm.controls.company.value;
-        this._data.policyName = this.policyForm.controls.policyName.value;
     }
 
     /**
@@ -369,13 +364,19 @@ export class CreatePolicyPage implements OnInit {
      * @memberof CreatePolicyPage
      */
     savePolicy() {
+        this.showSmallSpinner = true;
         this.getValue();
         const data = {
             'generalPolicyId': this._policyGUID,
             'data': this._data
         }
-        console.log(data);
-        this.policyApi.patch_general_leave_policy(data).subscribe(response => console.log(response))
+        this.policyApi.patch_general_leave_policy(data).subscribe(response => {
+            this.message('saved successfully');
+            this.showSmallSpinner = false;
+        }, error => {
+            window.location.href = '/login';
+            this.message('saved unsuccessfully');
+        })
     }
 
     /**

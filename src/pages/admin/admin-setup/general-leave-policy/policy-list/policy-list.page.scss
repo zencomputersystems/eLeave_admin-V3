@@ -1,0 +1,80 @@
+:host {
+  margin: auto;
+  width: 100%;
+  height: calc(100% - 58px);
+
+  .divider {
+    --min-height: none;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    width: 100%;
+  }
+  .container {
+    background: white;
+    min-height: 100%;
+    width: 95%;
+    margin: auto;
+    height: 100%;
+  }
+  .cardContent {
+    overflow: auto;
+    --offset-top: 0px;
+    --offset-bottom: 0px;
+    min-height: calc(100% - 38px);
+    height: calc(100% - 130px);
+  }
+  .textAssign {
+    color: #057dcd;
+    cursor: pointer;
+    margin-right: 3%;
+    margin-top: 10px;
+    position: absolute;
+    right: 20px;
+  }
+  .paginator {
+    color: #7a8589;
+    font-size: 12px;
+    margin-top: 11px;
+    margin-right: 25px;
+    text-align: right;
+    width: 95%;
+    white-space: nowrap;
+    margin: auto;
+  }
+  .titleLabel {
+    color: #20291f;
+    font-weight: 500;
+    font-size: 12px;
+  }
+  .titleRow {
+    padding-left: 2%;
+    padding-top: 5px;
+    padding-bottom: 2%;
+  }
+  .detailsRow {
+    padding-left: 2%;
+  }
+  .colOfLeave {
+    color: #7a8589;
+    font-size: 13px;
+  }
+  .button-round {
+    --padding-start: 18px;
+    --padding-end: 18px;
+  }
+  .button-outline {
+    --border-width: 1px;
+  }
+  .arrow {
+    font-size: 18px;
+    padding-left: 10px;
+    cursor: pointer;
+  }
+  .edit-pencil-icon {
+    width: 10px;
+    height: 10px;
+    fill: #057dcd;
+    float: right;
+    cursor: pointer;
+  }
+}

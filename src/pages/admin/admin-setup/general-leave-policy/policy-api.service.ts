@@ -53,4 +53,15 @@ export class PolicyAPIService {
         return this.apiService.patchApi(data, '/api/admin/general-leave-policy');
     }
 
+    /**
+     * get general leave policy details from specific Id
+     * @param {*} id
+     * @returns {Observable<any>}
+     * @memberof PolicyAPIService
+     */
+    get_general_leave_policy_id(id): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.getApiWithId('/api/admin/general-leave-policy/', id);
+    }
+
 }

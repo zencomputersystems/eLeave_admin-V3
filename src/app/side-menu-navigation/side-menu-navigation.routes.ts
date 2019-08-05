@@ -18,6 +18,7 @@ import { LeaveSetup } from 'src/pages/admin/admin-setup/leave-setup/leave-setup'
 import { SetupCalendarProfilePage } from 'src/pages/admin/admin-setup/leave-setup/setup-calendar-profile/setup-calendar-profile.page';
 import { GeneralLeavePolicyPage } from 'src/pages/admin/admin-setup/general-leave-policy/general-leave-policy.page';
 import { CreatePolicyPage } from 'src/pages/admin/admin-setup/general-leave-policy/create-policy/create-policy.page';
+import { PolicyListPage } from 'src/pages/admin/admin-setup/general-leave-policy/policy-list/policy-list.page';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -56,9 +57,10 @@ export const sideMenuNavigationRoutes: Routes = [
             {
                 path: 'general-leave-policy', component: GeneralLeavePolicyPage,
                 children: [
-                    { path: '', redirectTo: 'create-policy', pathMatch: 'full' },
+                    { path: '', redirectTo: 'policy-list', pathMatch: 'full' },
+                    { path: 'policy-list', component: PolicyListPage },
                     { path: 'create-policy', component: CreatePolicyPage },
-                    { path: 'edit-policy', component: CreatePolicyPage }
+                    { path: 'edit-policy/:id', component: CreatePolicyPage }
                 ]
             },
             { path: 'employee-profile', component: EmployeeProfilePage }
