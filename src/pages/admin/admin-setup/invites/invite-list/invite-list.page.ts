@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 /**
  *
@@ -122,15 +121,6 @@ export class InviteListPage implements OnInit {
     public showSpinner: boolean = true;
 
     /**
-     * Return list of user profile for current page
-     * @readonly
-     * @memberof InviteListPage
-     */
-    public get personalList() {
-        return this.currentPageItems;
-    }
-
-    /**
      *Creates an instance of InviteListPage.
      * @param {APIService} apiService
      * @param {Router} router
@@ -139,7 +129,7 @@ export class InviteListPage implements OnInit {
     constructor(private apiService: APIService, public router: Router) { }
 
     ngOnInit() {
-        this.listView = false;
+        this.listView = true;
         this.endPoint();
     }
 
@@ -151,7 +141,6 @@ export class InviteListPage implements OnInit {
         this.apiService.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
-                this.listView = true;
                 this.list = data;
                 this.pageIndex = 1;
                 this.loopItemsPerPage(this.pageIndex);
@@ -312,22 +301,11 @@ export class InviteListPage implements OnInit {
             this.list = this.list.filter((item: any) => {
                 return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
-
             this.pageIndex = 1;
             this.loopItemsPerPage(this.pageIndex);
             this.enableDisableNextButton();
             this.enableDisablePrevButton();
         }
-    }
-
-    /**
-     * Click icon to clear all text in searchbar
-     * @memberof InviteListPage
-     */
-    clearDetails() {
-        this.endPoint();
-        this.disableNextButton = false;
-        this.disablePrevButton = true;
     }
 
     /**

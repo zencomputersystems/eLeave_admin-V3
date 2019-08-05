@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import * as _moment from 'moment';
 import { FullCalendarComponent } from '@fullcalendar/angular';
-import { Subscription } from 'rxjs';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import listYear from '@fullcalendar/list';
 import { EventInput } from '@fullcalendar/core';
-import { APIService } from 'src/services/shared-service/api.service';
 import { Validators, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
 const moment = _moment;
@@ -186,14 +184,6 @@ export class ManageHolidayPage implements OnInit {
     public height: number;
 
     /**
-         * This local property is used to set subscription
-         * @private
-         * @type {Subscription}
-         * @memberof ManageHolidayPage
-         */
-    private subscription: Subscription = new Subscription();
-
-    /**
      *Creates an instance of ManageHolidayPage.
      * @param {LeaveAPIService} leaveAPI
      * @param {FormBuilder} fb
@@ -220,14 +210,6 @@ export class ManageHolidayPage implements OnInit {
     }
 
     /**
-     * This method is used to destroy subscription
-     * @memberof ApplyLeavePage
-     */
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-    }
-
-    /**
      * Method to get day of the week from a given date
      * @param {*} date
      * @returns
@@ -250,7 +232,7 @@ export class ManageHolidayPage implements OnInit {
      */
     getPublicHolidayList() {
         this.showSpinner = true;
-        this.subscription = this.leaveAPI.get_public_holiday_list().subscribe(
+        this.leaveAPI.get_public_holiday_list().subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
                 this.list = data;
@@ -276,7 +258,7 @@ export class ManageHolidayPage implements OnInit {
      * @memberof ManageHolidayPage
      */
     getProfileList() {
-        this.subscription = this.leaveAPI.get_calendar_profile_list().subscribe(
+        this.leaveAPI.get_calendar_profile_list().subscribe(
             (data: any[]) => {
                 this.profileList = data;
                 this.showSpinner = false;
@@ -304,7 +286,7 @@ export class ManageHolidayPage implements OnInit {
                 "rest": this.selectedWeekday
             }
         }
-        this.subscription = this.leaveAPI.patch_calendar_profile(body).subscribe(
+        this.leaveAPI.patch_calendar_profile(body).subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
                 this.restDay = [];
@@ -326,7 +308,7 @@ export class ManageHolidayPage implements OnInit {
         this.showSpinner = true;
         this.selectedCalendarProfile = list;
         this.restDay = [];
-        this.subscription = this.leaveAPI.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid).subscribe(
+        this.leaveAPI.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid).subscribe(
             (data: any) => {
                 this.showSpinner = false;
                 this.personalProfile = data;
@@ -404,7 +386,7 @@ export class ManageHolidayPage implements OnInit {
         this.editCalendar = true;
         this.addCalendar = false;
         const params = { 'country': this.countryIso, 'location': this.regionISO, 'year': year, 'month': month, };
-        this.subscription = this.leaveAPI.get_public_holiday_list(params).subscribe(
+        this.leaveAPI.get_public_holiday_list(params).subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
                 this.items = data;
@@ -467,7 +449,7 @@ export class ManageHolidayPage implements OnInit {
             "holiday": this.events,
             "rest": this.selectedWeekday
         }
-        this.subscription = this.leaveAPI.post_calendar_profile(newProfile).subscribe(
+        this.leaveAPI.post_calendar_profile(newProfile).subscribe(
             response => {
                 this.showSpinner = false;
             });
@@ -479,6 +461,11 @@ export class ManageHolidayPage implements OnInit {
         }, 100);
     }
 
+    /**
+     * Calculate height
+     * @param {*} event
+     * @memberof ManageHolidayPage
+     */
     onResize(event) {
         this.height = (event.target.innerHeight - 153) - (5 / 100)
     }

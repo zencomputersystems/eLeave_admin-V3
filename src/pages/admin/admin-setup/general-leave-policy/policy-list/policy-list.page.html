@@ -2,7 +2,7 @@
     <div style="width: 100%; height:100%; text-align: center;" *ngIf="showSpinner">
         <app-spinner></app-spinner>
     </div>
-    <div class="cardContent" *ngIf="showContent">
+    <div class="cardContent" *ngIf="showPage">
         <ion-card-content style="padding-top: 5px;padding-bottom: 0;">
             <div style="margin-top: 4%">
                 <ion-row class="titleRow">
@@ -35,14 +35,14 @@
             </div>
         </ion-card-content>
     </div>
-    <div *ngIf="showContent"
+    <div *ngIf="showPage"
         style="padding-left: 45px;padding-right: 20px;display: inline-flex;width: 97%;min-width: 330px;">
-        <ion-button [disabled]="disabledPrevButton" fill="outline" (click)="prevPage(pageIndex-1)"
+        <ion-button [disabled]="disablePrevButton" fill="outline" (click)="prevPage(pageIndex-1)"
             style="font-size: 12px;height: 30px;width: 90px;" color="primary">
             <ion-icon name="arrow-back"></ion-icon>Prev
         </ion-button>
         <div style="padding-left: 10px"></div>
-        <ion-button [disabled]="disabledNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
+        <ion-button [disabled]="disableNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
             (click)="nextPage(pageIndex+1)">Next<ion-icon name="arrow-forward">
             </ion-icon>
         </ion-button>

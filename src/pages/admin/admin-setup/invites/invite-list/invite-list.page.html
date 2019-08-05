@@ -5,8 +5,8 @@
 <div class="connectionsContainer" *ngIf="listView">
     <div class="topHeader">
         <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>
-        <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="clearDetails()"
-            (ionChange)="changeDetails($event)"></ion-searchbar>
+        <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="endPoint();
+        disableNextButton = false;disablePrevButton = true;listView=true;" (ionChange)="changeDetails($event)"></ion-searchbar>
         <div style="display: inline-block;white-space: nowrap;width: 66%;">
             <div style="padding-top: 18px;display: inline-block;padding-left: 46%">
                 <i class="fas fa-bars" (click)="viewType(true, 6, 5)"
@@ -57,7 +57,7 @@
             <ion-col>
             </ion-col>
         </ion-row>
-        <ion-row class="detailsRow" *ngFor="let item of personalList; let i=index">
+        <ion-row class="detailsRow" *ngFor="let item of currentPageItems; let i=index">
             <ion-col size="0.7">
                 <ion-avatar class="avatar">
                     <img src="assets/icon/picture.png">
@@ -114,8 +114,8 @@
 <div class="connectionsContainer" *ngIf="gridView">
     <div class="topHeader">
         <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>
-        <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="clearDetails()"
-            (ionChange)="changeDetails($event)"></ion-searchbar>
+        <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="endPoint();
+        disableNextButton = false;disablePrevButton = true;gridView=true;" (ionChange)="changeDetails($event)"></ion-searchbar>
         <div style="display: inline-block;
                     white-space: nowrap;
                     width: 66%;">
@@ -144,7 +144,7 @@
 
     <ion-content style="padding: 20px;height: calc( 100% - 130px);">
         <mat-grid-list cols="4" rowHeight="230px" style="height: 111%">
-            <mat-grid-tile *ngFor="let item of personalList; let i=index">
+            <mat-grid-tile *ngFor="let item of currentPageItems; let i=index">
                 <mat-card class="example-card" style="width: 98%;height: 98%;border-radius: 4px;
                     border: solid 0.5px #dfe3e6;">
                     <i class="fas fa-star" (click)="saveAsFavourite(i,item)"

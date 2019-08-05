@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PolicyAPIService } from '../policy-api.service';
 import { LeaveAPIService } from '../../leave-setup/leave-api.service';
 
 /**
@@ -35,7 +34,7 @@ export class PolicyListPage implements OnInit {
      * @type {boolean}
      * @memberof PolicyListPage
      */
-    public showContent: boolean = false;
+    public showPage: boolean = false;
 
     /**
      * To show arrow up or down icon for Name column
@@ -70,14 +69,14 @@ export class PolicyListPage implements OnInit {
      * @type {boolean}
      * @memberof PolicyListPage
      */
-    public disabledNextButton: boolean;
+    public disableNextButton: boolean;
 
     /**
      * Value of disable previous button
      * @type {boolean}
      * @memberof PolicyListPage
      */
-    public disabledPrevButton: boolean;
+    public disablePrevButton: boolean;
 
     /**
      *Creates an instance of PolicyListPage.
@@ -90,17 +89,16 @@ export class PolicyListPage implements OnInit {
     ngOnInit() {
         this.leaveAPi.get_compant_list().subscribe(data => {
             this.companyName = data;
-            this.showSpinner = false;
-            this.showContent = true;
             this.listOfPage(1);
-            this.disabledNextButton = false;
-            this.disabledPrevButton = true;
-        },
-            error => {
-                if (error) {
-                    window.location.href = '/login';
-                }
-            })
+            this.showSpinner = false;
+            this.showPage = true;
+            this.disableNextButton = false;
+            this.disablePrevButton = true;
+        }, error => {
+            if (error) {
+                window.location.href = '/login';
+            }
+        })
     }
 
     /**
@@ -126,8 +124,8 @@ export class PolicyListPage implements OnInit {
             return x < y ? val1 : x > y ? val2 : 0;
         });
         this.listOfPage(1);
-        this.disabledNextButton = false;
-        this.disabledPrevButton = true;
+        this.disableNextButton = false;
+        this.disablePrevButton = true;
     }
 
     /**
@@ -185,14 +183,14 @@ export class PolicyListPage implements OnInit {
      * @memberof PolicyListPage
      */
     buttonNext() {
+        if (this.pageIndex > 1) {
+            this.disablePrevButton = false;
+        }
         if (this.pageIndex === this.totalPageNum) {
-            this.disabledNextButton = true;
+            this.disableNextButton = true;
         }
         if (this.pageIndex > 0 && this.pageIndex < this.totalPageNum) {
-            this.disabledNextButton = false;
-        }
-        if (this.pageIndex > 1) {
-            this.disabledPrevButton = false;
+            this.disableNextButton = false;
         }
     }
 
@@ -201,14 +199,14 @@ export class PolicyListPage implements OnInit {
      * @memberof PolicyListPage
      */
     buttonPrev() {
+        if (this.pageIndex < this.totalPageNum) {
+            this.disableNextButton = false;
+        }
         if (this.pageIndex < 2) {
-            this.disabledPrevButton = true;
+            this.disablePrevButton = true;
         }
         if (this.pageIndex > 1 && this.pageIndex === this.totalPageNum) {
-            this.disabledPrevButton = false;
-        }
-        if (this.pageIndex < this.totalPageNum) {
-            this.disabledNextButton = false;
+            this.disablePrevButton = false;
         }
     }
 
