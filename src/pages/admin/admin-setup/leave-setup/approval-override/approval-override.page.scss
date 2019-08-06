@@ -1,0 +1,33 @@
+:host {
+  .titleRow {
+    padding-bottom: 10px;
+    // display: block;
+  }
+  .divider {
+    --min-height: none;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    width: 100%;
+  }
+  .detailsRow {
+    height: 55px;
+  }
+  .content {
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+  .avatar {
+    width: 30px;
+    height: 30px;
+    margin-top: -7px;
+  }
+  .checkboxOnAvatar {
+    display: none;
+  }
+  .avatar:hover .checkboxOnAvatar {
+    display: block;
+  }
+  .avatar:hover img {
+    display: none;
+  }
+}

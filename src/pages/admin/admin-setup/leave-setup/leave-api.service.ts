@@ -113,7 +113,7 @@ export class LeaveAPIService {
      * @returns {Observable<any>}
      * @memberof LeaveAPIService
      */
-    get_compant_list(): Observable<any> {
+    get_company_list(): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.getApi('/api/company');
     }
@@ -137,5 +137,10 @@ export class LeaveAPIService {
     get_admin_leavetype(): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.getApi('/api/admin/leavetype');
+    }
+
+    get_approval_override_list(): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.getApi('/api/admin/approval-override');
     }
 }

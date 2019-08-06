@@ -197,7 +197,7 @@ export class CreatePolicyPage implements OnInit {
                 this.editPolicyDetails();
             })
         }
-        this.leaveAPi.get_compant_list().subscribe(data => {
+        this.leaveAPi.get_company_list().subscribe(data => {
             this.list = data;
             this.showContainer = true;
             this.showSpinner = false;

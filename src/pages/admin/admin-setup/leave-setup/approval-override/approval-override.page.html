@@ -1,0 +1,101 @@
+<div style="margin-top: 4%;">
+    <form [formGroup]="approvalForm">
+        <div style="display: inline-block;width: 45%;">
+            <span style="padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
+                COMPANY LIST</span>
+            <mat-form-field appearance="outline"
+                style="display: block;font-size: 13px;width: 100%;color:#7a8589;padding-left: 18px;">
+                <mat-label>Please select company tenant</mat-label>
+                <mat-select formControlName="company" required>
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let company of companyList" [value]=company.TENANT_COMPANY_GUID
+                        (click)="selectedCompany(company.TENANT_COMPANY_GUID)">{{company.NAME}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>Company tenant is <strong>required</strong></mat-error>
+            </mat-form-field>
+        </div>
+        &nbsp;&nbsp;
+        <div style="display: inline-block;width: 45%;">
+            <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
+                DEPARTMENT LIST</span>
+            <mat-form-field appearance="outline"
+                style="display: block;font-size: 13px;width: 100%;color:#7a8589;padding-left: 18px;">
+                <mat-label>Please select department</mat-label>
+                <mat-select formControlName="department" required>
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let department of departmentList" [value]=department.department
+                        (click)="selectedDepartment(department.department)">{{department.department}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>Department is <strong>required</strong></mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+    <div class="content">
+        <ion-row class="titleRow" nowrap>
+            <ion-col size="0.7" style="padding-left: 10px;padding-right: 30px;">
+                <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;"></ion-checkbox>
+            </ion-col>
+            <ion-col size="2.5">
+                <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
+                <ion-icon class="arrow" name="arrow-dropdown" (click)="sortName(false, 1, -1)" *ngIf="arrowDownName">
+                </ion-icon>
+                <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownName" (click)="sortName(true, -1, 1)">
+                </ion-icon>
+            </ion-col>
+            <ion-col size="1.7">
+                <ion-label style="font-size: 12px;">LEAVE TYPE</ion-label>
+            </ion-col>
+            <ion-col size="1.5">
+                <ion-label style="font-size: 12px;">DATE APPLIED</ion-label>
+            </ion-col>
+            <ion-col size="1.4">
+                <ion-label style="font-size: 12px;">START DATE</ion-label>
+            </ion-col>
+            <ion-col size="1">
+                <ion-label style="font-size: 12px;">END DATE</ion-label>
+            </ion-col>
+            <ion-col size="1" style="text-align: center">
+                <ion-label style="font-size: 12px;">DAYS</ion-label>
+            </ion-col>
+            <ion-col size="1">
+                <ion-label style="font-size: 12px;">STATUS</ion-label>
+            </ion-col>
+            <ion-col size="1">
+                <ion-label style="font-size: 12px;">REMARKS</ion-label>
+            </ion-col>
+        </ion-row>
+        <ion-row class="detailsRow" *ngFor="let item of filteredPendingList; let i=index">
+            <ion-col size="0.7" style="padding-left: 10px;padding-right: 30px;">
+                <ion-avatar class="avatar">
+                    <img src="assets/icon/picture.png">
+                    <div class="checkboxOnAvatar">
+                        <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;margin-top: 7px;">
+                        </ion-checkbox>
+                    </div>
+                </ion-avatar>
+            </ion-col>
+            <ion-col size="2.5">
+                <ion-label style="color:#057dcd; font-size: 13px;">{{item.employeeName}}</ion-label>
+            </ion-col>
+            <ion-col size="1.7" class="colOfLeave" style="color: #7a8589; font-size: 13px;">{{item.leveTypeName}}
+            </ion-col>
+            <ion-col size="1.5" class="colOfLeave" style="color:#7a8589; font-size: 13px;">
+                {{item.CREATION_TS | date: 'yyyy-MM-dd'}}
+            </ion-col>
+            <ion-col size="1.4" class="colOfLeave" style="color:#7a8589; font-size: 13px">{{item.START_DATE}}
+            </ion-col>
+            <ion-col size="1" class="colOfLeave" style="color: #7a8589; font-size: 13px">{{item.END_DATE}}
+            </ion-col>
+            <ion-col size="1" class="colOfLeave" style="color:#7a8589; font-size: 13px;text-align: center">
+                {{item.NO_OF_DAYS}}
+            </ion-col>
+            <ion-col size="1" class="colOfLeave" style="color:#7a8589; font-size: 13px">{{item.STATUS}}
+            </ion-col>
+            <ion-col size="1" class="colOfLeave" style="color:#7a8589; font-size: 13px">{{item.REMARKS}}
+            </ion-col>
+            <ion-item class="divider" lines="full"></ion-item>
+        </ion-row>
+    </div>
+</div>

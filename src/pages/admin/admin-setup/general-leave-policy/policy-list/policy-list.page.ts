@@ -87,7 +87,7 @@ export class PolicyListPage implements OnInit {
 
 
     ngOnInit() {
-        this.leaveAPi.get_compant_list().subscribe(data => {
+        this.leaveAPi.get_company_list().subscribe(data => {
             this.companyName = data;
             this.listOfPage(1);
             this.showSpinner = false;
