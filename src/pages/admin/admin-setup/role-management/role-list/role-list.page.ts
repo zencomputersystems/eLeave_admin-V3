@@ -128,10 +128,12 @@ export class RoleListPage implements OnInit {
      */
     delete(role_guid) {
         const dialogRef = this.dialog.open(DialogDeleteConfirmationPage, {
-            // width: '250px',
+            data: role_guid
         });
         dialogRef.afterClosed().subscribe(result => {
-            this.roleAPi.delete_role_profile(role_guid).subscribe(response => this.ngOnInit())
+            if (result === role_guid) {
+                this.roleAPi.delete_role_profile(role_guid).subscribe(response => this.ngOnInit())
+            }
         });
     }
 

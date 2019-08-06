@@ -267,6 +267,8 @@ export class RoleRightsPage implements OnInit {
         if (this.showButtons === true) {
             this.roleAPi.post_role_profile(this._body).subscribe(response => {
                 this.showSmallSpinner = false;
+                this.defaultValue();
+                this.defaultProfileMngt();
                 this.openSnackBar('saved successfully');
             }, error => {
                 this.openSnackBar('saved unsuccessfully');
@@ -275,6 +277,42 @@ export class RoleRightsPage implements OnInit {
         } else {
             this.patchData();
         }
+    }
+
+    /**
+     * set the value to default (checkbox value to false, level to empty)
+     * @memberof RoleRightsPage
+     */
+    defaultValue() {
+        this.profileDetails.property.allowLeaveSetup.allowLeaveTypeSetup.value = false;
+        this.profileDetails.property.allowLeaveSetup.allowLeaveEntitlementSetup.value = false;
+        this.profileDetails.property.allowLeaveSetup.allowApprovalGroupSetup.value = false;
+        this.profileDetails.property.allowLeaveSetup.allowYearEndClosingSetup.value = false;
+        this.profileDetails.property.allowViewReport.value = false;
+        this.profileDetails.property.allowViewReport.level = '';
+        this.profileDetails.property.allowViewCalendar.value = false;
+        this.profileDetails.property.allowViewCalendar.level = '';
+        this.profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.value = false;
+        this.profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.level = '';
+        this.profileDetails.property.allowLeaveManagement.allowApplyOnBehalf.value = false;
+        this.profileDetails.property.allowLeaveManagement.allowApplyOnBehalf.level = '';
+        this.profileDetails.property.allowLeaveManagement.allowApprovalOverride.value = false;
+        this.profileDetails.property.allowLeaveManagement.allowApprovalOverride.level = '';
+    }
+
+    /**
+     * set the value to default (checkbox value to false, level to empty)
+     * @memberof RoleRightsPage
+     */
+    defaultProfileMngt() {
+        this.profileDetails.property.allowProfileManagement.allowViewProfile.value = false;
+        this.profileDetails.property.allowProfileManagement.allowViewProfile.level = '';
+        this.profileDetails.property.allowProfileManagement.allowEditProfile.value = false;
+        this.profileDetails.property.allowProfileManagement.allowEditProfile.level = '';
+        this.profileDetails.property.allowProfileManagement.allowChangePassword.value = false;
+        this.profileDetails.property.allowProfileManagement.allowChangePassword.level = '';
+        this.profileDetails.property.allowProfileManagement.allowProfileAdmin.value = false;
+        this.profileDetails.property.allowProfileManagement.allowProfileAdmin.level = '';
     }
 
     /**
