@@ -35,7 +35,8 @@
     <div class="content">
         <ion-row class="titleRow" nowrap>
             <ion-col size="0.7" style="padding-left: 10px;padding-right: 30px;">
-                <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;"></ion-checkbox>
+                <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;"
+                    [(ngModel)]="mainCheckbox" [indeterminate]="indeterminate" (click)="mainEvent()"></ion-checkbox>
             </ion-col>
             <ion-col size="2.5">
                 <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
@@ -62,16 +63,20 @@
             <ion-col size="1">
                 <ion-label style="font-size: 12px;">STATUS</ion-label>
             </ion-col>
-            <ion-col size="1">
-                <ion-label style="font-size: 12px;">REMARKS</ion-label>
+            <ion-col size="1" style="text-align: center">
+                <ion-label style="font-size: 12px">REMARKS</ion-label>
             </ion-col>
         </ion-row>
         <ion-row class="detailsRow" *ngFor="let item of filteredPendingList; let i=index">
             <ion-col size="0.7" style="padding-left: 10px;padding-right: 30px;">
-                <ion-avatar class="avatar">
-                    <img src="assets/icon/picture.png">
-                    <div class="checkboxOnAvatar">
-                        <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;margin-top: 7px;">
+                <ion-avatar class="avatar" (mouseover)="mouseEvent(true, item.isChecked)"
+                    (mouseout)="mouseEvent(false, item.isChecked)">
+                    <img src="assets/icon/picture.png" style="margin-left: -4px;"
+                        [style.display]="displayCheckbox ? 'none' : 'block'">
+                        <!-- if indetermine & mainCHeckbox is true , displayCheckbox = true; -->
+                    <div class="checkboxOnAvatar" [style.display]="displayCheckbox ? 'block' : 'none'">
+                        <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;margin-top: 7px;"
+                            [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
                         </ion-checkbox>
                     </div>
                 </ion-avatar>
@@ -93,9 +98,37 @@
             </ion-col>
             <ion-col size="1" class="colOfLeave" style="color:#7a8589; font-size: 13px">{{item.STATUS}}
             </ion-col>
-            <ion-col size="1" class="colOfLeave" style="color:#7a8589; font-size: 13px">{{item.REMARKS}}
+            <ion-col align-self-center size="1" class="colOfLeave"
+                style="color:#7a8589; font-size: 13px;text-align: center">
+                <!-- <i class="material-icons" style="padding-right: 5px; color: #057dcd; cursor: pointer;"
+                    (click)="openDialog()">add</i>
+                <span style="color:#7a8589; font-size: 13px;text-align: center;display: block;"
+                    *ngIf=" remark">{{remark}}</span> -->
+                {{item.REMARKS}}
             </ion-col>
             <ion-item class="divider" lines="full"></ion-item>
         </ion-row>
+    </div>
+
+    <div style="margin: 0 auto;padding: 20px;text-align: center;">
+        <ion-button fill="outline" style="font-size: 12px;height: 30px;width: 100px;" color="primary"
+            (click)="patchStatus('CANCEL')">
+            CANCEL
+        </ion-button>
+        <div style="width: 10px; display: inline-block"></div>
+        <ion-button style="font-size: 12px;height: 30px;width: 110px;background: white;" color="primary"
+            (click)="patchStatus('REJECTED')">
+            REJECT
+        </ion-button>
+        <div style="width: 10px; display: inline-block"></div>
+        <ion-button style="font-size: 12px;height: 30px;width: 110px;background: white;" color="primary"
+            (click)="patchStatus('APPROVED')">
+            APPROVE
+        </ion-button>
+        <!-- [disabled]="!inputFormControl.valid" -->
+
+        <!-- <div style="display: inline-block;height: 60%;vertical-align: middle;" *ngIf="showSmallSpinner">
+            <ion-spinner name="lines" color="primary"></ion-spinner>
+        </div> -->
     </div>
 </div>

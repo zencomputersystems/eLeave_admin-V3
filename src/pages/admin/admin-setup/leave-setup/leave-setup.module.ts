@@ -27,9 +27,10 @@ import { ClickOutsideModule } from 'ng-click-outside';
 import { EmployeeListDatabase } from './assign-calendar/assign-calendar-treeview.service';
 import { SetupCalendarProfilePage } from './setup-calendar-profile/setup-calendar-profile.page';
 import { ApplyOnBehalfPage } from './apply-on-behalf/apply-on-behalf.page';
-import { MatRadioModule } from '@angular/material';
+import { MatRadioModule, MatDialogModule } from '@angular/material';
 import { LeaveSetup } from './leave-setup';
 import { ApprovalOverridePage } from './approval-override/approval-override.page';
+import { AddRemarkPage } from './approval-override/add-remark-dialog/add-remark.page';
 
 
 const routes: Routes = [
@@ -63,11 +64,12 @@ const routes: Routes = [
         MatButtonModule,
         ClickOutsideModule,
         MatRadioModule,
+        MatDialogModule,
         RouterModule.forChild(routes)
     ],
     providers: [EmployeeListDatabase],
-    entryComponents: [SnackbarNotificationPage],
+    entryComponents: [SnackbarNotificationPage, AddRemarkPage],
     declarations: [ManageHolidayPage, LeaveSetup, AssignCalendarPage, SnackbarNotificationPage,
-        SetupCalendarProfilePage, ApplyOnBehalfPage, ApprovalOverridePage]
+        SetupCalendarProfilePage, ApplyOnBehalfPage, ApprovalOverridePage, AddRemarkPage]
 })
 export class LeaveSetupModule { }

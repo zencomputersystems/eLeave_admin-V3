@@ -1,7 +1,7 @@
 :host {
   .titleRow {
     padding-bottom: 10px;
-    // display: block;
+    color: #20291f;
   }
   .divider {
     --min-height: none;
@@ -21,13 +21,19 @@
     height: 30px;
     margin-top: -7px;
   }
-  .checkboxOnAvatar {
-    display: none;
+  .button-outline {
+    --border-width: 1px;
   }
-  .avatar:hover .checkboxOnAvatar {
-    display: block;
+  ::ng-deep .mat-select-value-text {
+    color: #7a8589;
   }
-  .avatar:hover img {
-    display: none;
-  }
+  // .checkboxOnAvatar {
+  //   display: none;
+  // }
+  // .avatar:hover .checkboxOnAvatar {
+  //   display: block;
+  // }
+  // .avatar:hover img {
+  //   display: none;
+  // }
 }
