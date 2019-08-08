@@ -114,27 +114,88 @@ export class ApplyOnBehalfPage implements OnInit {
      */
     public leaveTypeId: string;
 
+    /**
+     * company list from API
+     *
+     * @type {*}
+     * @memberof ApplyOnBehalfPage
+     */
     public companyList: any;
 
-    public selectedCompanyId: string;
 
+    /**
+     * department list get from selected company
+     * @type {*}
+     * @memberof ApplyOnBehalfPage
+     */
     public departmentlist: any = [];
 
-    public treeControl: any = [];
-
+    /**
+     * show/hide the tree view 
+     * @type {boolean}
+     * @memberof ApplyOnBehalfPage
+     */
     public showTreeDropdown: boolean = false;
 
+    /**
+     * show selected tree value after clicked outside the div
+     * @type {boolean}
+     * @memberof ApplyOnBehalfPage
+     */
     public showSelectedTree: boolean = false;
 
+    /**
+     * radio button value
+     * @type {string}
+     * @memberof ApplyOnBehalfPage
+     */
     public radioOption: string = '1';
 
-    private guid: string;
-
-    public employeeTree: any = [];
-
+    /**
+     * list of leave types
+     * @type {*}
+     * @memberof ApplyOnBehalfPage
+     */
     public leaveTypes: any;
 
+    /**
+     * show loading spinner
+     * @type {boolean}
+     * @memberof ApplyOnBehalfPage
+     */
     public showSpinner: boolean = false;
+
+    /**
+     * company Id get from selected company list
+     * @private
+     * @type {string}
+     * @memberof ApplyOnBehalfPage
+     */
+    private _selectedCompanyId: string;
+
+
+    /**
+     * selected tree item
+     * @private
+     * @type {*}
+     * @memberof ApplyOnBehalfPage
+     */
+    private _employeeTree: any = [];
+
+    /**
+     * user guid from selected employee (option == 1)
+     * @private
+     * @type {string}
+     * @memberof ApplyOnBehalfPage
+     */
+    private guid: string;
+    /**
+     * selected user id
+     * @private
+     * @type {string[]}
+     * @memberof ApplyOnBehalfPage
+     */
+    private _employeeId: string[] = [];
 
     /**
      * Local private property for value get from API
@@ -317,9 +378,9 @@ export class ApplyOnBehalfPage implements OnInit {
      */
     ngOnInit() {
         this.leaveAPI.get_company_list().subscribe(
-            list => {
-                this.companyList = list;
-            }
+            list => this.companyList = list);
+        this.apiService.get_user_profile_list().subscribe(list =>
+            this._userList = list
         )
         setTimeout(() => {
             let calendarApi = this.calendarComponent.getApi();
@@ -390,7 +451,6 @@ export class ApplyOnBehalfPage implements OnInit {
         newArray = newArray.filter(val => !this._firstForm.includes(val));
         newArray = newArray.filter(val => !this._secondForm.includes(val));
         newArray = newArray.filter(val => !this._thirdForm.includes(val));
-
         if (this.dayTypes.value[0].name !== 2) {
             let result = this.createConsecutiveDate(newArray);
             for (let i = 0; i < result.length; i++) {
@@ -423,24 +483,29 @@ export class ApplyOnBehalfPage implements OnInit {
                 }
             }
         }
-
+        if (this.radioOption == '2') {
+            for (let i = 0; i < this._employeeTree.length; i++) {
+                this.checkIdExist(this._userList, this._employeeTree[i]);
+            }
+        }
+        if (this.radioOption == '1') {
+            this._employeeId.push(this.guid);
+        }
         const applyLeaveData = {
             "leaveTypeID": this.leaveTypeId,
             "reason": this.applyLeaveForm.value.inputReason,
             "data": this._arrayDateSlot
         }
-        for (let i = 0; i < this.employeeTree.length; i++) {
-            if (this.checkIdExist(this._userList, this.employeeTree[i]) != 0) {
-                const index: number = this.checkIdExist(this._userList, this.employeeTree[i]);
-                // TODO: push userID to send to API, waiting confirm format of API
-                // this.employeeList.push(this._userList[index].userId);
-            }
-        }
-        this.leaveAPI.post_apply_leave_onBehalf(this.guid, applyLeaveData).subscribe(
+        const details = {};
+        details['userId'] = this._employeeId;
+        details['leaveDetails'] = applyLeaveData;
+
+        this.leaveAPI.post_apply_leave_onBehalf(details).subscribe(
             response => {
                 this.clearArrayList();
                 this.showSelectedTree = false;
-                this.openSnackBar('submitted successfully. ' + response.message);
+                this._employeeId = [];
+                this.openSnackBar('submitted successfully. ');
                 if (response.status === 401) {
                     window.location.href = '/login';
                     this.openSnackBar('submitted unsuccessfully. ' + response.message);
@@ -467,7 +532,7 @@ export class ApplyOnBehalfPage implements OnInit {
         this._arrayDateSlot = [];
         this.selectedQuarterHour = '';
         this.departmentlist = [];
-        this.employeeTree = [];
+        this._employeeTree = [];
     }
 
     /**
@@ -769,6 +834,11 @@ export class ApplyOnBehalfPage implements OnInit {
         }
     }
 
+    /**
+     * pass selected companyId to get department list
+     * @param {*} selectedCompanyId
+     * @memberof ApplyOnBehalfPage
+     */
     selectedCompany(selectedCompanyId) {
         this.departmentlist = [];
         this.leaveAPI.get_company_details(selectedCompanyId).subscribe(list => {
@@ -783,47 +853,58 @@ export class ApplyOnBehalfPage implements OnInit {
         })
     }
 
-    getSelectedEmployee(name) {
+    /**
+     * get selected employee's user profile details
+     * @param {string} name
+     * @memberof ApplyOnBehalfPage
+     */
+    getSelectedEmployee(name: string) {
         this.showSpinner = true;
-        this.apiService.get_user_profile_list().subscribe(list => {
-            this._userList = list;
-            for (let i = 0; i < list.length; i++) {
-                if (list[i].employeeName === name) {
-                    this.guid = list[i].userId;
-                    this.apiService.get_user_profile_details(this.guid).subscribe(data => {
-                        this.entitlement = data;
-                        this.entitlement = data.entitlementDetail;
-                        this.showSpinner = false;
-                        this.applyLeaveForm.controls.leaveTypes.enable();
-                    })
-                }
+        for (let i = 0; i < this._userList.length; i++) {
+            if (this._userList[i].employeeName === name) {
+                this.guid = this._userList[i].userId;
+                this.apiService.get_user_profile_details(this.guid).subscribe(data => {
+                    this.entitlement = data;
+                    this.entitlement = data.entitlementDetail;
+                    this.showSpinner = false;
+                    this.applyLeaveForm.controls.leaveTypes.enable();
+                })
             }
-        })
+        }
     }
 
+    /**
+     * close treeview div & get the selected  value
+     * @param {*} evt
+     * @memberof ApplyOnBehalfPage
+     */
     clickOutside(evt) {
         if (!evt.target.className.includes("material-icons") && !evt.target.className.includes("dropdownDiv") && !evt.target.className.includes("mat-form-field-infix")) {
             this.showTreeDropdown = false;
             this.showSelectedTree = true;
-            this.showSpinner = true;
         }
         for (let i = 0; i < this.tree.checklistSelection.selected.length; i++) {
-            if (this.tree.checklistSelection.selected[i].level == 2 && this.employeeTree.indexOf(this.tree.checklistSelection.selected[i].item) < 0) {
-                this.employeeTree.push(this.tree.checklistSelection.selected[i].item);
+            if (this.tree.checklistSelection.selected[i].level == 2 && this._employeeTree.indexOf(this.tree.checklistSelection.selected[i].item) < 0) {
+                this._employeeTree.push(this.tree.checklistSelection.selected[i].item);
             }
         }
         if (this.tree.checklistSelection.selected.length === 0) {
-            this.employeeTree.length = 0;
+            this._employeeTree.length = 0;
         }
     }
 
+    /**
+     * filter employee name that exist in user list
+     * @param {*} array
+     * @param {*} obj
+     * @memberof ApplyOnBehalfPage
+     */
     checkIdExist(array: any, obj: any) {
         for (let j = 0; j < array.length; j++) {
             if (array[j].employeeName === obj) {
-                return j;
+                this._employeeId.push(this._userList[j].userId);
             }
         }
-        return 0;
     }
 
     /**
@@ -833,7 +914,7 @@ export class ApplyOnBehalfPage implements OnInit {
      */
     openSnackBar(message: string) {
         this.snackBar.openFromComponent(SnackbarNotificationPage, {
-            duration: 5000,
+            duration: 3000,
             data: message
         });
     }

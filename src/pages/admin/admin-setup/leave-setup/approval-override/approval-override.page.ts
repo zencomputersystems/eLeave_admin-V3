@@ -331,6 +331,7 @@ export class ApprovalOverridePage implements OnInit {
             this.notification('submitted successfully. ');
             this.filteredPendingList = [];
             this.showSmallSpinner = false;
+            this.disableButton = true;
             this.filteredPendingList.forEach(element => {
                 element.isChecked = false;
             });

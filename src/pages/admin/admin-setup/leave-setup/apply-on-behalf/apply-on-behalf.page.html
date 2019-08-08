@@ -106,22 +106,26 @@
             </div>
         </div>
         <div style="display:block; white-space: nowrap;">
-            <mat-form-field appearance="outline" [style.width.%]="radioOption == '1' ? 70 : 97">
+            <mat-form-field appearance="outline" style="width:70%" *ngIf="radioOption == '1'">
                 <mat-label>Leave types</mat-label>
-                <mat-select class="selectLeave" *ngIf="radioOption == '1'" name="leave" formControlName="leaveTypes"
-                    required>
+                <mat-select class="selectLeave" name="leave" formControlName="leaveTypes" required>
                     <mat-option *ngFor="let leave of entitlement; let i=index" [value]="leave.leaveTypeName"
                         (click)="daysAvailable = leave.balanceDays;leaveTypeId = leave.leaveTypeId; applyLeaveForm.controls.firstPicker.enable();applyLeaveForm.controls.secondPicker.enable();">
                         {{leave.leaveTypeName}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="!applyLeaveForm.leaveTypes" style="padding: 5px;padding-left: 0;">
+                    Please select one leave type</mat-error>
+                <ion-spinner name="lines-small" *ngIf="showSpinner && radioOption == '1'" color="primary" style="position: absolute;
+                margin-left: -50px;margin-top: -10px;"></ion-spinner>
+            </mat-form-field>
+            <mat-form-field appearance="outline" *ngIf="radioOption == '2'" style="width:97%">
+                <mat-label>Leave types</mat-label>
                 <mat-select class="selectLeave" *ngIf="radioOption == '2'" name="leave" formControlName="leaveTypes"
                     required>
                     <mat-option *ngFor="let leave of leaveTypes; let i=index" [value]="leave.CODE"
                         (click)="leaveTypeId = leave.LEAVE_TYPE_GUID;applyLeaveForm.controls.firstPicker.enable();applyLeaveForm.controls.secondPicker.enable();">
                         {{leave.CODE}}</mat-option>
                 </mat-select>
-                <ion-spinner name="lines-small" *ngIf="showSpinner && radioOption == '1'" color="primary" style="position: absolute;
-                margin-left: -50px;margin-top: -10px;"></ion-spinner>
                 <mat-error *ngIf="!applyLeaveForm.leaveTypes" style="padding: 5px;padding-left: 0;">
                     Please select one leave type</mat-error>
             </mat-form-field>
@@ -231,7 +235,7 @@
             <ion-button *ngIf="radioOption == '2'" shape="round"
                 style="height: 27px;font-size: 12px;width: 115px;text-transform: none"
                 [disabled]="applyLeaveForm.controls.inputReason.invalid"
-                (click)="postData(); applyLeaveForm.reset();daysAvailable='';daysCount=0;minDate='';maxDate='';">
+                (click)="postData(); applyLeaveForm.reset();daysCount=0;minDate='';maxDate='';tree.checklistSelection.clear();">
                 Apply for {{daysCount}} days
             </ion-button>
         </div>

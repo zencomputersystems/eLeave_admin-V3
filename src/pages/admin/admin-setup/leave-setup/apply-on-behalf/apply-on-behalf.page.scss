@@ -117,4 +117,9 @@
     overflow: auto;
     margin-bottom: 20px;
   }
+
+  //mat-form-field
+  ::ng-deep .mat-form-field-infix > input {
+    cursor: pointer;
+  }
 }

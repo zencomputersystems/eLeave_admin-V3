@@ -103,9 +103,11 @@ export class LeaveAPIService {
      * @returns {Observable<any>}
      * @memberof LeaveAPIService
      */
-    post_apply_leave_onBehalf(id, data): Observable<any> {
+    post_apply_leave_onBehalf(data): Observable<any> {
         this.apiService.headerAuthorization();
-        return this.apiService.postApi(data, '/api/leave/apply-on-behalf/' + id);
+        return this.http.post(this.baseUrl + '/api/leave/apply-on-behalf', data, { headers: this.apiService.headers })
+            .pipe(map((res: Response) => res));
+        // return this.apiService.postApi(data, '/api/leave/apply-on-behalf');
     }
 
     /**
