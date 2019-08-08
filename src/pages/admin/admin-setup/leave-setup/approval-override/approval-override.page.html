@@ -1,6 +1,6 @@
 <div style="margin-top: 4%;">
     <form [formGroup]="approvalForm">
-        <div style="display: inline-block;width: 45%;">
+        <div style="display: inline-block;width: 31%;">
             <span style="padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
                 COMPANY LIST</span>
             <mat-form-field appearance="outline"
@@ -9,14 +9,15 @@
                 <mat-select formControlName="company" required>
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let company of companyList" [value]=company.TENANT_COMPANY_GUID
-                        (click)="selectedCompany(company.TENANT_COMPANY_GUID)">{{company.NAME}}
+                        (click)="selectedCompany(company.TENANT_COMPANY_GUID);enableDisableButton(true)">
+                        {{company.NAME}}
                     </mat-option>
                 </mat-select>
                 <mat-error>Company tenant is <strong>required</strong></mat-error>
             </mat-form-field>
         </div>
         &nbsp;&nbsp;
-        <div style="display: inline-block;width: 45%;">
+        <div style="display: inline-block;width: 31%;">
             <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
                 DEPARTMENT LIST</span>
             <mat-form-field appearance="outline"
@@ -25,18 +26,46 @@
                 <mat-select formControlName="department" required>
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let department of departmentList" [value]=department.department
-                        (click)="selectedDepartment(department.department)">{{department.department}}
+                        (click)="selectedDepartment(department.department);enableDisableButton(true)">
+                        {{department.department}}
                     </mat-option>
                 </mat-select>
                 <mat-error>Department is <strong>required</strong></mat-error>
             </mat-form-field>
         </div>
+        &nbsp;&nbsp;
+        <div style="display: inline-block;width: 31%;">
+            <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
+                REMARK</span>
+            <mat-form-field appearance="outline"
+                style="display: block;font-size: 13px;width: 100%;color:#7a8589;padding-left: 18px;">
+                <mat-label>Please enter remark</mat-label>
+                <input matInput formControlName="remark" required (input)="enableDisableButton(true)">
+                <mat-error>Remark is <strong>required</strong></mat-error>
+            </mat-form-field>
+        </div>
+
+        <div style="margin: 0 auto;padding-left: 20px;padding-right: 20px;">
+            <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;display: block">STATUS</span>
+            <div style="padding-bottom: 11px;padding-top: 11px;
+        border: 1px solid var(--ion-item-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.13))));
+        border-radius: 5px;border-color: rgba(0, 0, 0, 0.12);width: 280px;margin-bottom: 40px;">
+                <mat-radio-group aria-label="Select an option" formControlName="radio" required
+                    style="padding-left: 10px;white-space: nowrap;" (change)="enableDisableButton(true)">
+                    <mat-radio-button value="CANCEL">Cancel</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <mat-radio-button value="REJECT">Reject</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <mat-radio-button value="APPROVE">Approve</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
     </form>
-    <div class="content">
+
+    <div class="content" *ngIf="filteredPendingList.length > 0">
         <ion-row class="titleRow" nowrap>
             <ion-col size="0.7" style="padding-left: 10px;padding-right: 30px;">
                 <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;"
-                    [(ngModel)]="mainCheckbox" [indeterminate]="indeterminate" (click)="mainEvent()"></ion-checkbox>
+                    [(ngModel)]="mainCheckbox" [indeterminate]="indeterminate" (click)="mainEvent()">
+                </ion-checkbox>
             </ion-col>
             <ion-col size="2.5">
                 <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
@@ -73,7 +102,6 @@
                     (mouseout)="mouseEvent(false, item.isChecked)">
                     <img src="assets/icon/picture.png" style="margin-left: -4px;"
                         [style.display]="displayCheckbox ? 'none' : 'block'">
-                        <!-- if indetermine & mainCHeckbox is true , displayCheckbox = true; -->
                     <div class="checkboxOnAvatar" [style.display]="displayCheckbox ? 'block' : 'none'">
                         <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;margin-top: 7px;"
                             [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
@@ -81,54 +109,49 @@
                     </div>
                 </ion-avatar>
             </ion-col>
-            <ion-col size="2.5">
+            <ion-col size="2.5" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                 <ion-label style="color:#057dcd; font-size: 13px;">{{item.employeeName}}</ion-label>
             </ion-col>
-            <ion-col size="1.7" class="colOfLeave" style="color: #7a8589; font-size: 13px;">{{item.leveTypeName}}
+            <ion-col size="1.7" class="colOfLeave"
+                style="color: #7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                {{item.leveTypeName}}
             </ion-col>
-            <ion-col size="1.5" class="colOfLeave" style="color:#7a8589; font-size: 13px;">
+            <ion-col size="1.5" class="colOfLeave"
+                style="color:#7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                 {{item.CREATION_TS | date: 'yyyy-MM-dd'}}
             </ion-col>
-            <ion-col size="1.4" class="colOfLeave" style="color:#7a8589; font-size: 13px">{{item.START_DATE}}
+            <ion-col size="1.4" class="colOfLeave"
+                style="color:#7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                {{item.START_DATE}}
             </ion-col>
-            <ion-col size="1" class="colOfLeave" style="color: #7a8589; font-size: 13px">{{item.END_DATE}}
+            <ion-col size="1" class="colOfLeave"
+                style="color: #7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                {{item.END_DATE}}
             </ion-col>
-            <ion-col size="1" class="colOfLeave" style="color:#7a8589; font-size: 13px;text-align: center">
+            <ion-col size="1" class="colOfLeave"
+                style="color:#7a8589; font-size: 13px;text-align: center;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                 {{item.NO_OF_DAYS}}
             </ion-col>
-            <ion-col size="1" class="colOfLeave" style="color:#7a8589; font-size: 13px">{{item.STATUS}}
+            <ion-col size="1" class="colOfLeave"
+                style="color:#7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                {{item.STATUS}}
             </ion-col>
             <ion-col align-self-center size="1" class="colOfLeave"
-                style="color:#7a8589; font-size: 13px;text-align: center">
-                <!-- <i class="material-icons" style="padding-right: 5px; color: #057dcd; cursor: pointer;"
-                    (click)="openDialog()">add</i>
-                <span style="color:#7a8589; font-size: 13px;text-align: center;display: block;"
-                    *ngIf=" remark">{{remark}}</span> -->
+                style="color:#7a8589; font-size: 13px;text-align: center;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                 {{item.REMARKS}}
             </ion-col>
             <ion-item class="divider" lines="full"></ion-item>
         </ion-row>
     </div>
-
     <div style="margin: 0 auto;padding: 20px;text-align: center;">
-        <ion-button fill="outline" style="font-size: 12px;height: 30px;width: 100px;" color="primary"
-            (click)="patchStatus('CANCEL')">
-            CANCEL
-        </ion-button>
-        <div style="width: 10px; display: inline-block"></div>
         <ion-button style="font-size: 12px;height: 30px;width: 110px;background: white;" color="primary"
-            (click)="patchStatus('REJECTED')">
-            REJECT
+            (click)="patchStatus();approvalForm.reset();mainCheckbox=false;indeterminate=false"
+            [disabled]="disableButton">
+            SUBMIT
         </ion-button>
-        <div style="width: 10px; display: inline-block"></div>
-        <ion-button style="font-size: 12px;height: 30px;width: 110px;background: white;" color="primary"
-            (click)="patchStatus('APPROVED')">
-            APPROVE
-        </ion-button>
-        <!-- [disabled]="!inputFormControl.valid" -->
-
-        <!-- <div style="display: inline-block;height: 60%;vertical-align: middle;" *ngIf="showSmallSpinner">
-            <ion-spinner name="lines" color="primary"></ion-spinner>
-        </div> -->
+        <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
+            *ngIf="showSmallSpinner">
+            <ion-spinner name="lines-small" color="primary"></ion-spinner>
+        </div>
     </div>
 </div>

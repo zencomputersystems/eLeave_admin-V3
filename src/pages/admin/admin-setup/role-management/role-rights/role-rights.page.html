@@ -296,16 +296,16 @@ margin: 0 auto;">
         </ion-button>
         <div style="width: 10px; display: inline-block"></div>
         <ion-button *ngIf="showButtons" [disabled]="!inputFormControl.valid"
-            style="font-size: 12px;height: 30px;width: 130px;margin-right: 20px;" color="primary"
+            style="font-size: 12px;height: 30px;width: 130px;margin-right: 5px;" color="primary"
             (click)="save();showSmallSpinner = true;inputFormControl.reset();ngOnInit()">
             CREATE ROLE
         </ion-button>
-        <ion-button *ngIf="!showButtons" style="font-size: 12px;height: 30px;width: 100px;margin-right: 20px;"
+        <ion-button *ngIf="!showButtons" style="font-size: 12px;height: 30px;width: 100px;margin-right: 5px;"
             color="primary" (click)="save();showSmallSpinner = true;">
             SAVE
         </ion-button>
-        <div style="display: inline-block;height: 60%;vertical-align: middle;" *ngIf="showSmallSpinner">
-            <ion-spinner name="lines" color="primary"></ion-spinner>
+        <div style="display: inline-block;vertical-align: middle;margin-top: 8px;" *ngIf="showSmallSpinner">
+            <ion-spinner name="lines-small" color="primary"></ion-spinner>
         </div>
     </div>
 </div>

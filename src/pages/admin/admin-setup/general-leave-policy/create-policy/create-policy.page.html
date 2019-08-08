@@ -169,17 +169,17 @@
                 CLEAR
             </ion-button>
             <div style="width: 10px; display: inline-block"></div>
-            <ion-button *ngIf="!showEditPolicy" style="font-size: 12px;height: 30px;width: 150px;margin-right: 20px;"
+            <ion-button *ngIf="!showEditPolicy" style="font-size: 12px;height: 30px;width: 150px;margin-right: 5px;"
                 color="primary" (click)="createPolicy()">
                 CREATE POLICY
             </ion-button>
-            <ion-button *ngIf="showEditPolicy" style="font-size: 12px;height: 30px;width: 150px;margin-right: 20px;"
+            <ion-button *ngIf="showEditPolicy" style="font-size: 12px;height: 30px;width: 150px;margin-right: 5px;"
                 color="primary" (click)="savePolicy()">
                 SAVE POLICY
             </ion-button>
-            <div style="display: inline-block;height: 60%;vertical-align: middle;" *ngIf="showSmallSpinner">
-                <ion-spinner name="lines" color="primary"></ion-spinner>
-            </div>
+            <div style="display: inline-block;margin-top: 8px;vertical-align: middle;" *ngIf="showSmallSpinner">
+                    <ion-spinner name="lines-small" color="primary"></ion-spinner>
+                </div>
         </div>
     </form>
 </div>

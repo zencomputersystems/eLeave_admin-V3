@@ -120,7 +120,7 @@
                         (click)="leaveTypeId = leave.LEAVE_TYPE_GUID;applyLeaveForm.controls.firstPicker.enable();applyLeaveForm.controls.secondPicker.enable();">
                         {{leave.CODE}}</mat-option>
                 </mat-select>
-                <ion-spinner name="lines" *ngIf="showSpinner && radioOption == '1'" color="primary" style="position: absolute;
+                <ion-spinner name="lines-small" *ngIf="showSpinner && radioOption == '1'" color="primary" style="position: absolute;
                 margin-left: -50px;margin-top: -10px;"></ion-spinner>
                 <mat-error *ngIf="!applyLeaveForm.leaveTypes" style="padding: 5px;padding-left: 0;">
                     Please select one leave type</mat-error>

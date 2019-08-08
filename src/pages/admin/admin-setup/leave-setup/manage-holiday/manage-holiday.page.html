@@ -83,9 +83,10 @@
                         [disabled]="!editCalendarForm.valid">
                         {{day}}</mat-option>
                 </mat-select>
+                <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
+                margin-left: -50px;margin-top: -10px;"></ion-spinner>
             </mat-form-field>
         </div>
-        <ion-spinner name="lines" *ngIf="showSpinner" color="primary" style="width: 100%"></ion-spinner>
 
         <!------------------------------- add calendar ------------------------------------------>
         <form [formGroup]="addCalendarForm">

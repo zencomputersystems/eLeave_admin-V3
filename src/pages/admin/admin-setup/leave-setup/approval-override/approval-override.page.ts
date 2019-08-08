@@ -2,10 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { LeaveAPIService } from '../leave-api.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { APIService } from 'src/services/shared-service/api.service';
-import { MatDialog } from '@angular/material';
-import { AddRemarkPage } from './add-remark-dialog/add-remark.page';
+import { SnackbarNotificationPage } from '../snackbar-notification/snackbar-notification';
+import { MatSnackBar } from '@angular/material';
 
-
+/**
+ * override approval for pending leave applciation 
+ * @export
+ * @class ApprovalOverridePage
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'app-approval-override',
     templateUrl: './approval-override.page.html',
@@ -13,26 +18,130 @@ import { AddRemarkPage } from './add-remark-dialog/add-remark.page';
 })
 export class ApprovalOverridePage implements OnInit {
 
+    /**
+     * company list from API
+     * @type {*}
+     * @memberof ApprovalOverridePage
+     */
     public companyList: any;
-    public departmentList: any;
-    public approvalForm: any;
-    public filteredPendingList: any = [];
-    public mainCheckbox: boolean;
-    public indeterminate: boolean;
-    public displayCheckbox: boolean = false;
-    public remark: string;
-    public data: string;
-    private _userList: any;
-    private _pendingList: any;
-    private _companyId: string;
-    private _filteredUserList: any = [];
-    private _leaveTypeList: any;
-    private addApplication = [];
 
-    constructor(private leaveAPI: LeaveAPIService, private apiService: APIService, public dialog: MatDialog) {
+    /**
+     * department list from API
+     * @type {*}
+     * @memberof ApprovalOverridePage
+     */
+    public departmentList: any;
+
+    /**
+     * validation for form field
+     * @type {*}
+     * @memberof ApprovalOverridePage
+     */
+    public approvalForm: any;
+
+    /**
+     * list of pending approval application, filtered from selected company & department
+     * @type {*}
+     * @memberof ApprovalOverridePage
+     */
+    public filteredPendingList: any = [];
+
+    /**
+     * main checkbox value
+     * @type {boolean}
+     * @memberof ApprovalOverridePage
+     */
+    public mainCheckbox: boolean;
+
+    /**
+     * indetermine value of checkbox
+     * @type {boolean}
+     * @memberof ApprovalOverridePage
+     */
+    public indeterminate: boolean;
+
+    /**
+     * show /hide checkbox & vice versa for avatar
+     * @type {boolean}
+     * @memberof ApprovalOverridePage
+     */
+    public displayCheckbox: boolean = false;
+
+    /**
+     * selected pending application's leaveTransactionGUID to patch to API 
+     * @type {string[]}
+     * @memberof ApprovalOverridePage
+     */
+    public leaveTransactionGUID: string[] = [];
+
+    /**
+     * enable/disable submit button
+     * @type {boolean}
+     * @memberof ApprovalOverridePage
+     */
+    public disableButton: boolean = true;
+
+    /**
+     * show small spinner when loading
+     * @type {boolean}
+     * @memberof ApprovalOverridePage
+     */
+    public showSmallSpinner: boolean = false;
+
+    /**
+     * users list from API
+     * @private
+     * @type {*}
+     * @memberof ApprovalOverridePage
+     */
+    private _userList: any;
+
+    /**
+     * pending approval application list
+     * @private
+     * @type {*}
+     * @memberof ApprovalOverridePage
+     */
+    private _pendingList: any;
+
+    /**
+     * companyId from selected company list 
+     * to get department list from this id
+     * @private
+     * @type {string}
+     * @memberof ApprovalOverridePage
+     */
+    private _companyId: string;
+
+    /**
+     * user list from selected department
+     * @private
+     * @type {*}
+     * @memberof ApprovalOverridePage
+     */
+    private _filteredUserList: any = [];
+
+    /**
+     * leave type list from API
+     * @private
+     * @type {*}
+     * @memberof ApprovalOverridePage
+     */
+    private _leaveTypeList: any;
+
+    /**
+     *Creates an instance of ApprovalOverridePage.
+     * @param {LeaveAPIService} leaveAPI
+     * @param {APIService} apiService
+     * @param {MatSnackBar} snackBar
+     * @memberof ApprovalOverridePage
+     */
+    constructor(private leaveAPI: LeaveAPIService, private apiService: APIService, private snackBar: MatSnackBar) {
         this.approvalForm = new FormGroup({
             company: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),
+            remark: new FormControl('', Validators.required),
+            radio: new FormControl('', Validators.required)
         })
     }
 
@@ -41,21 +150,29 @@ export class ApprovalOverridePage implements OnInit {
         this.leaveAPI.get_approval_override_list().subscribe(list => this._pendingList = list)
     }
 
+    /**
+     * filter user from approval override list according filteredPendingList
+     * @param {*} list
+     * @param {*} obj
+     * @param {number} index
+     * @memberof ApprovalOverridePage
+     */
     filterUserGUID(list: any, obj: any, index: number) {
         for (let i = 0; i < list.length; i++) {
             if (list[i].USER_GUID === obj) {
-                // this.addApplication.push(i);
-                // return 1;
                 this.filteredPendingList.push(this._pendingList[i]);
                 this.filteredPendingList[this.filteredPendingList.length - 1].employeeName = this._filteredUserList[index].employeeName;
                 this.filteredPendingList[this.filteredPendingList.length - 1].isChecked = false;
                 this.getLeaveType(this.filteredPendingList.length - 1, this._pendingList[i].LEAVE_TYPE_GUID);
             }
-            // return this.addApplication;
         }
-        // return 0;
     }
 
+    /**
+     * selected company id to get department list
+     * @param {*} company_guid
+     * @memberof ApprovalOverridePage
+     */
     selectedCompany(company_guid) {
         this._companyId = company_guid;
         this.leaveAPI.get_company_details(company_guid).subscribe(list => {
@@ -63,6 +180,11 @@ export class ApprovalOverridePage implements OnInit {
         })
     }
 
+    /**
+     * selected department name to get user list
+     * @param {*} departmentName
+     * @memberof ApprovalOverridePage
+     */
     selectedDepartment(departmentName) {
         this.filteredPendingList = [];
         this._filteredUserList = [];
@@ -77,25 +199,22 @@ export class ApprovalOverridePage implements OnInit {
         })
     }
 
+    /**
+     * compare approval override list with user list of selected department
+     * @memberof ApprovalOverridePage
+     */
     checkPendingUserList() {
         for (let j = 0; j < this._filteredUserList.length; j++) {
             this.filterUserGUID(this._pendingList, this._filteredUserList[j].userId, j);
-            // if (this.addApplication.length > 0) {
-            // for (let i = 0; i < this.addApplication.length; i++) {
-            // if (this.filterUserGUID(this._pendingList, this._filteredUserList[j].userId) != 0) {
-            //     const index = this.filterUserGUID(this._pendingList, this._filteredUserList[j].userId);
-            //     this.filteredPendingList.push(this._pendingList[this.addApplication[index]);
-            //     this.filteredPendingList[this.filteredPendingList.length - 1].employeeName = this._filteredUserList[j].employeeName;
-            //     this.filteredPendingList[this.filteredPendingList.length - 1].isChecked = false;
-            //     this.getLeaveType(this.filteredPendingList.length - 1, this._pendingList[index].LEAVE_TYPE_GUID);
-            // }
-            // }
-            // }
-
-            console.log(this.filteredPendingList);
         }
     }
 
+    /**
+     * get leave type name from id
+     * @param {number} index
+     * @param {string} leaveTypeGuid
+     * @memberof ApprovalOverridePage
+     */
     getLeaveType(index: number, leaveTypeGuid: string) {
         this.leaveAPI.get_admin_leavetype().subscribe(type => {
             this._leaveTypeList = type;
@@ -107,6 +226,10 @@ export class ApprovalOverridePage implements OnInit {
         })
     }
 
+    /**
+     * value of main checkbox & indetermine
+     * @memberof ApprovalOverridePage
+     */
     mainEvent() {
         setTimeout(() => {
             this.filteredPendingList.forEach(item => {
@@ -116,19 +239,21 @@ export class ApprovalOverridePage implements OnInit {
                 } else {
                     this.displayCheckbox = false;
                 }
+                this.enableDisableButton();
             });
         })
     }
 
+    /**
+     * value of clicked sub checkbox
+     * @memberof ApprovalOverridePage
+     */
     subEvent() {
         const total = this.filteredPendingList.length;
         let checkedItem = 0;
         this.filteredPendingList.map(item => {
             if (item.isChecked) {
                 checkedItem++;
-                this.displayCheckbox = true;
-            } else {
-                this.displayCheckbox = false;
             }
         });
         if (checkedItem > 0 && checkedItem < total) {
@@ -141,39 +266,75 @@ export class ApprovalOverridePage implements OnInit {
             this.indeterminate = false;
             this.mainCheckbox = false;
         }
+        this.enableDisableButton();
     }
 
+    /**
+     * hover event for checkbox & avatar
+     * @param {*} value
+     * @param {*} isChecked
+     * @memberof ApprovalOverridePage
+     */
     mouseEvent(value, isChecked) {
-        if (isChecked) {
+        if (isChecked && (this.mainCheckbox || this.indeterminate)) {
+            this.displayCheckbox = true;
+        } else if (!isChecked && (this.mainCheckbox || this.indeterminate)) {
+            this.displayCheckbox = true;
+        } else if (value && !isChecked && !this.indeterminate && !this.mainCheckbox) {
             this.displayCheckbox = true;
         } else {
-            this.displayCheckbox = value;
+            this.displayCheckbox = false;
         }
     }
 
-    openDialog(): void {
-        const dialogRef = this.dialog.open(AddRemarkPage, {
-            // width: '250px',
-            // data: this.data
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed', result);
-            this.remark = result;
-        });
-
+    /**
+     * enable/disable submit button
+     * @memberof ApprovalOverridePage
+     */
+    enableDisableButton() {
+        if (this.approvalForm.valid && (this.mainCheckbox || this.indeterminate)) {
+            this.disableButton = false;
+        } else {
+            this.disableButton = true;
+        }
     }
 
-    patchStatus(status) {
-        const array = [];
-        for (let i = 0; i < this.filteredPendingList.length; i++) {
-            array.push(this.filteredPendingList[i].LEAVE_TRANSACTION_GUID);
-        }
+    /**
+     * snackbar message after submit approval
+     * @param {string} text
+     * @memberof ApprovalOverridePage
+     */
+    notification(text: string) {
+        this.snackBar.openFromComponent(SnackbarNotificationPage, {
+            duration: 5000,
+            data: text
+        });
+    }
+
+    /**
+     * patch selected user pending approval application 
+     * @memberof ApprovalOverridePage
+     */
+    patchStatus() {
+        this.showSmallSpinner = true;
+        this.filteredPendingList.forEach((element, i) => {
+            if (element.isChecked) {
+                this.leaveTransactionGUID.push(this.filteredPendingList[i].LEAVE_TRANSACTION_GUID);
+            }
+        });
         const body = {
-            "leaveTransactionId": array,
-            "status": status,
-            "remark": this.remark
+            "leaveTransactionId": this.leaveTransactionGUID,
+            "status": this.approvalForm.controls.radio.value,
+            "remark": this.approvalForm.controls.remark.value
         }
+        this.leaveAPI.patch_approval_override(body).subscribe(response => {
+            this.notification('submitted successfully. ');
+            this.filteredPendingList = [];
+            this.showSmallSpinner = false;
+            this.filteredPendingList.forEach(element => {
+                element.isChecked = false;
+            });
+        });
     }
 
 
