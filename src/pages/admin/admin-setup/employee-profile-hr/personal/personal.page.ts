@@ -3,7 +3,6 @@ import { APIService } from 'src/services/shared-service/api.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import * as _moment from 'moment';
 import { genderStatus, maritalStatus } from '../employee-profile.service';
-import { Subscription } from 'rxjs';
 const moment = _moment;
 /**
  * Personal Page
@@ -172,9 +171,10 @@ export class PersonalPage implements OnInit {
                 this.getSpouseInit();
                 this.getChildInit();
                 this.getEducationInit();
+                this.list.personalDetail.dob = moment(this.list.personalDetail.dob).format('DD-MM-YYYY');
                 this._date = this._formBuilder.group({ datepicker: ['', Validators.required] });
                 this._date = new FormGroup({
-                    datepicker: new FormControl(new Date(this.list.personalDetail.dob)),
+                    datepicker: new FormControl(new Date(moment(this.list.personalDetail.dob).format('DD-MM-YYYY'))),
                 })
             },
             error => {
@@ -329,6 +329,7 @@ export class PersonalPage implements OnInit {
                 this.apiService.get_personal_details().subscribe(
                     (data: any[]) => {
                         this.list = data;
+                        this.list.personalDetail.dob = moment(this.list.personalDetail.dob).format('DD-MM-YYYY');
                     });
             },
             response => {
@@ -356,7 +357,7 @@ export class PersonalPage implements OnInit {
             "nationality": this.list.personalDetail.nationality,
             "phoneNumber": this.list.personalDetail.phoneNumber.toString(),
             "emailAddress": this.list.personalDetail.emailAddress,
-            "workPhoneNumber": this.list.personalDetail.workPhoneNumber,
+            "workPhoneNumber": this.list.personalDetail.workPhoneNumber.toString(),
             "workEmailAddress": this.list.personalDetail.workEmailAddress,
             "address1": this.list.personalDetail.residentialAddress1.toString(),
             "address2": this.list.personalDetail.residentialAddress2.toString(),

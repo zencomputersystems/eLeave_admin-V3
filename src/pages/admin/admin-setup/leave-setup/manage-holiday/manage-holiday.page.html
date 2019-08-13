@@ -165,7 +165,7 @@
 
                 <ion-col size="3.5" class="colOfLeave">
                     <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" *ngIf="!editCalendar">
-                        {{holiday.start}}</p>
+                        {{holiday.str}}</p>
                     <mat-form-field *ngIf="editCalendar" style="width: 100%">
                         <input matInput [matDatepicker]="datePicker" [(value)]="holiday.start" required
                             (dateChange)="dateChanged($event.target.value, i)">

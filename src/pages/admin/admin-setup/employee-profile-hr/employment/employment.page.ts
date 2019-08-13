@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as _moment from 'moment';
-import { employeeStatus, employeeType } from '../employee-profile.service';
+import { employeeStatus } from '../employee-profile.service';
 import { Subscription } from 'rxjs';
 const moment = _moment;
 
@@ -131,11 +131,7 @@ export class EmploymentPage implements OnInit {
             },
             () => {
                 const userId = this.list.id;
-                this._subscription = this.apiService.get_employment_details(userId).subscribe(
-                    data => {
-                        this.employmentlist = data;
-                        this.data();
-                    })
+                this.getEmploymentDetailsById(userId);
             });
     }
 
@@ -147,19 +143,30 @@ export class EmploymentPage implements OnInit {
         this._subscription.unsubscribe();
     }
 
+    getEmploymentDetailsById(id: string) {
+        this._subscription = this.apiService.get_employment_details(id).subscribe(
+            data => {
+                this.employmentlist = data;
+                this.employmentlist.employmentDetail.dateOfJoin = moment(this.employmentlist.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
+                this.employmentlist.employmentDetail.dateOfConfirmation = moment(this.employmentlist.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
+                this.employmentlist.employmentDetail.dateOfResign = moment(this.employmentlist.employmentDetail.dateOfResign).format('DD-MM-YYYY');
+                this.data();
+            })
+    }
+
     /**
      * Create new form group for date join, confirm & resign
      * @memberof EmploymentPage
      */
     data() {
         this.dateJoinForm = new FormGroup({
-            dateJoin: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfJoin)),
+            dateJoin: new FormControl(new Date(moment(this.employmentlist.employmentDetail.dateOfJoin).format('DD-MM-YYYY'))),
         })
         this.dateConfirmForm = new FormGroup({
-            dateConfirm: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfConfirmation)),
+            dateConfirm: new FormControl(new Date(moment(this.employmentlist.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY'))),
         })
         this.dateResignForm = new FormGroup({
-            dateResign: new FormControl(new Date(this.employmentlist.employmentDetail.dateOfResign)),
+            dateResign: new FormControl(new Date(moment(this.employmentlist.employmentDetail.dateOfResign).format('DD-MM-YYYY'))),
         })
         this.status = employeeStatus[this.employmentlist.employmentDetail.employmentStatus];
     }
@@ -198,11 +205,7 @@ export class EmploymentPage implements OnInit {
             () => {
                 console.log("The PATCH observable is now completed.");
                 const userId = this.list.id;
-                this._subscription = this.apiService.get_employment_details(userId).subscribe(
-                    data => {
-                        this.employmentlist = data;
-                        console.log('get back', this.employmentlist);
-                    })
+                this.getEmploymentDetailsById(userId);
             });
     }
 

@@ -340,6 +340,7 @@ export class ManageHolidayPage implements OnInit {
      */
     dateChanged(value, index) {
         this.events[index].start = moment(value).format('YYYY-MM-DD');
+        this.events[index].str = moment(value).format('DD-MM-YYYY');
         this.events[index].end = moment(value).format('YYYY-MM-DD');
         this.events[index].day = this.getWeekDay(new Date(value));
     }
@@ -407,6 +408,7 @@ export class ManageHolidayPage implements OnInit {
     createHolidayList(dateIso, name) {
         this.events.push({
             "start": moment(dateIso).format('YYYY-MM-DD'),
+            "str": moment(dateIso).format('DD-MM-YYYY'),
             "end": moment(dateIso).format('YYYY-MM-DD'),
             "title": name,
             "day": this.getWeekDay(new Date(dateIso)),
