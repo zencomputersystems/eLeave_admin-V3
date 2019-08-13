@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-
+/**
+ * Leave header with router-outlet page 
+ * @export
+ * @class LeaveSetup
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'app-leave-setup',
     templateUrl: './leave-setup.html',
