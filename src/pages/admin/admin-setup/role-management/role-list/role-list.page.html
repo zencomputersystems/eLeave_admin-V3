@@ -8,9 +8,9 @@
                 <i class="fas fa-tasks" style="font-size: 14px;"></i>
                 <span style="padding-left: 10px;">Assign role</span>
             </div>
-            <div style="margin-top: 4%">
+            <div style="margin-top: 2%">
                 <ion-row class="titleRow">
-                    <ion-col style="display: inline-flex" size="4">
+                    <ion-col size="4">
                         <ion-label class="titleLabel">ROLE NAME</ion-label>
                         <ion-icon class="arrow" name="arrow-dropdown"
                             (click)="sortFunction(1, -1, 'code');arrowDownName=false;" *ngIf="arrowDownName">
@@ -20,12 +20,12 @@
                         </ion-icon>
                     </ion-col>
                     <ion-col size="5">
-                        <ion-label class="titleLabel" style="position: absolute">DESCRIPTION</ion-label>
-                        <ion-icon style="padding-left: 88px;font-size: 18px;cursor: pointer;" name="arrow-dropdown"
+                        <ion-label class="titleLabel">DESCRIPTION</ion-label>
+                        <ion-icon class="arrow" name="arrow-dropdown"
                             (click)="sortFunction(1, -1, 'description');arrowDownDes=false;" *ngIf="arrowDownDes">
                         </ion-icon>
-                        <ion-icon style="padding-left: 88px;font-size: 18px;cursor: pointer;" name="arrow-dropup"
-                            *ngIf="!arrowDownDes" (click)="sortFunction(-1, 1, 'description');arrowDownDes=true;">
+                        <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownDes"
+                            (click)="sortFunction(-1, 1, 'description');arrowDownDes=true;">
                         </ion-icon>
                     </ion-col>
                     <ion-col>

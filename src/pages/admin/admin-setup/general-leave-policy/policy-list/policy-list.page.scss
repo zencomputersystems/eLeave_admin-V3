@@ -9,6 +9,11 @@
     padding-bottom: 1%;
     width: 100%;
   }
+  ion-col {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .container {
     background: white;
     min-height: 100%;
@@ -69,6 +74,7 @@
     font-size: 18px;
     padding-left: 10px;
     cursor: pointer;
+    position: absolute;
   }
   .edit-pencil-icon {
     width: 10px;

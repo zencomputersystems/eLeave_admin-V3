@@ -156,14 +156,16 @@
         <div *ngIf="!addCalendar ">
             <ion-row class="detailsRow" *ngFor="let holiday of events; let i=index">
                 <ion-col size="3">
-                    <p *ngIf="!editCalendar">{{holiday.day}}</p>
+                    <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" *ngIf="!editCalendar">
+                        {{holiday.day}}</p>
                     <mat-form-field *ngIf="editCalendar" style="width: 100%">
                         <input matInput [(value)]="holiday.day" disabled>
                     </mat-form-field>
                 </ion-col>
 
                 <ion-col size="3.5" class="colOfLeave">
-                    <p *ngIf="!editCalendar">{{holiday.start}}</p>
+                    <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" *ngIf="!editCalendar">
+                        {{holiday.start}}</p>
                     <mat-form-field *ngIf="editCalendar" style="width: 100%">
                         <input matInput [matDatepicker]="datePicker" [(value)]="holiday.start" required
                             (dateChange)="dateChanged($event.target.value, i)">
@@ -173,7 +175,8 @@
                 </ion-col>
 
                 <ion-col size="4" class="colOfLeave" style="color: #057dcd">
-                    <p *ngIf="!editCalendar">{{holiday.title}}</p>
+                    <p *ngIf="!editCalendar">
+                        {{holiday.title}}</p>
                     <mat-form-field *ngIf="editCalendar" style="width: 100%">
                         <input matInput [(value)]="holiday.title" (input)=" events[i].title = $event.target.value;">
                     </mat-form-field>

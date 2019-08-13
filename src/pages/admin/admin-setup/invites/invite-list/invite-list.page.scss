@@ -7,11 +7,17 @@
     color: #20291f;
     font-weight: 500;
   }
+  ion-col {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    align-self: center;
+  }
   .arrow {
     font-size: 18px;
     padding-left: 10px;
     cursor: pointer;
-    margin-top: -2px;
+    position: absolute;
   }
   .detailsRow {
     height: 55px;
@@ -25,7 +31,7 @@
   .avatar {
     width: 30px;
     height: 30px;
-    margin-top: -7px;
+    // margin-top: -7px;
   }
   .topPaginator {
     display: inline-block;

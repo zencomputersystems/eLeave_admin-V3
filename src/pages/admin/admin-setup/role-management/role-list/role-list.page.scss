@@ -9,6 +9,11 @@
     padding-bottom: 1%;
     width: 100%;
   }
+  ion-col {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .container {
     background: white;
     min-height: 100%;
@@ -26,10 +31,9 @@
   .textAssign {
     color: #057dcd;
     cursor: pointer;
-    margin-right: 3%;
     margin-top: 10px;
-    position: absolute;
-    right: 20px;
+    width: 100%;
+    text-align: right;
   }
   .paginator {
     color: #7a8589;
@@ -69,6 +73,7 @@
     font-size: 18px;
     padding-left: 10px;
     cursor: pointer;
+    position: absolute;
   }
   .edit-pencil-icon {
     width: 12px;
@@ -84,7 +89,7 @@
     cursor: pointer;
     position: absolute;
   }
-  .trash-icon{
+  .trash-icon {
     width: 12px;
     height: 12px;
     fill: #bebebe;
@@ -93,7 +98,7 @@
     position: absolute;
     margin-left: 30px;
   }
-  .trash-icon:hover{
+  .trash-icon:hover {
     width: 12px;
     height: 12px;
     fill: #f04141;
