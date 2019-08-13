@@ -13,7 +13,7 @@
                 CALENDAR PROFILE LIST</span>
             <mat-form-field appearance="outline" style="width: 94%;">
                 <mat-label>Please select calendar profile</mat-label>
-                <mat-select formControlName="calendar" required>
+                <mat-select formControlName="calendar" required (click)="ngOnInit()">
                     <mat-option *ngFor="let item of calendarList; let j=index" [value]="item.calendar_guid"
                         (click)="calendarSelected(item.calendar_guid)">
                         {{item.code}}</mat-option>

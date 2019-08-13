@@ -292,6 +292,7 @@ export class ManageHolidayPage implements OnInit {
                 this.restDay = [];
                 this.selectedWeekday = [];
                 this.editCalendarForm.reset();
+                this.getProfileList();
                 setTimeout(() => {
                     this.getPublicHolidayList();
                 }, 100);
@@ -452,6 +453,7 @@ export class ManageHolidayPage implements OnInit {
         this.leaveAPI.post_calendar_profile(newProfile).subscribe(
             response => {
                 this.showSpinner = false;
+                this.getProfileList();
             });
         this.restDay = [];
         this.selectedWeekday = [];
