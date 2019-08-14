@@ -19,7 +19,7 @@
   .avatar {
     width: 30px;
     height: 30px;
-    margin-top: -7px;
+    // margin-top: -7px;
   }
   .button-outline {
     --border-width: 1px;
@@ -31,6 +31,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    align-self: center;
   }
 
   // radio button

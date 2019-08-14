@@ -82,11 +82,18 @@ export class ApprovalOverridePage implements OnInit {
     public disableButton: boolean = true;
 
     /**
-     * show small spinner when loading
+     * show small spinner when loading after clicked submit button
      * @type {boolean}
      * @memberof ApprovalOverridePage
      */
     public showSmallSpinner: boolean = false;
+
+    /**
+     * show spinner after click selection of company & department
+     * @type {boolean}
+     * @memberof ApprovalOverridePage
+     */
+    public showSpinner: boolean = false;
 
     /**
      * users list from API
@@ -174,9 +181,11 @@ export class ApprovalOverridePage implements OnInit {
      * @memberof ApprovalOverridePage
      */
     selectedCompany(company_guid) {
+        this.showSpinner = true;
         this._companyId = company_guid;
         this.leaveAPI.get_company_details(company_guid).subscribe(list => {
             this.departmentList = list.departmentList;
+            this.showSpinner = false;
         })
     }
 
@@ -188,8 +197,10 @@ export class ApprovalOverridePage implements OnInit {
     selectedDepartment(departmentName) {
         this.filteredPendingList = [];
         this._filteredUserList = [];
+        this.showSpinner = true;
         this.apiService.get_user_profile_list().subscribe(list => {
             this._userList = list;
+            this.showSpinner = false;
             for (let i = 0; i < this._userList.length; i++) {
                 if (this._userList[i].department === departmentName && this._userList[i].companyId === this._companyId) {
                     this._filteredUserList.push(this._userList[i]);

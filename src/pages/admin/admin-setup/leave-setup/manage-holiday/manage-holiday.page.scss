@@ -9,6 +9,10 @@
     padding-right: 10px;
     cursor: pointer;
   }
+  .fa-calendar-times {
+    color: #f04141;
+    padding-right: 10px;
+  }
   .fa-trash-alt {
     cursor: pointer;
     font-size: 12px;
@@ -46,5 +50,14 @@
     padding-top: 1%;
     padding-bottom: 2%;
     width: 100%;
+  }
+  ::ng-deep .mat-select-value-text {
+    color: #7a8589;
+  }
+  ::ng-deep .mat-select-arrow {
+    color: #7a8589;
+  }
+  .button-outline {
+    --border-width: 1px;
   }
 }

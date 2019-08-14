@@ -59,6 +59,12 @@
   .detailsRow {
     height: 55px;
   }
+  ion-col {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    align-self: center;
+  }
   .divider {
     --min-height: none;
     padding-top: 1%;
@@ -68,7 +74,7 @@
   .avatar {
     width: 30px;
     height: 30px;
-    margin-top: -7px;
+    // margin-top: -7px;
   }
   .button-outline {
     --border-width: 1px;

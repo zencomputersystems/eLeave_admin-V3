@@ -1,4 +1,10 @@
-<div *ngIf="!editCalendar && !addCalendar" style="color: #057dcd; text-align: right;padding-top: 15px;">
+<div *ngIf="!editCalendar && !addCalendar && !deleteCalendar"
+    style="color: #057dcd; text-align: right;padding-top: 15px;">
+    <div (click)="deleteCalendar = true;showEditForm = false" style="display: inline-block; color: #f04141">
+        <i class="far fa-calendar-times"></i>
+        <span style="padding-right: 10px;cursor: pointer;">Delete calendar</span>
+    </div>
+    &nbsp;&nbsp;
     <div (click)="editCalendar = true;showEditForm = false" style="display: inline-block">
         <i class="far fa-edit personal"></i>
         <span style="padding-right: 10px;cursor: pointer;">Edit calendar</span>
@@ -11,7 +17,7 @@
 </div>
 
 <form [formGroup]="editCalendarForm">
-    <div style="text-align: right;" *ngIf="editCalendar && !showEditForm">
+    <div style="text-align: right;padding-top: 5px;padding-right: 10px;" *ngIf="editCalendar && !showEditForm">
         <ion-button fill="clear"
             (click)="editCalendar = false;addCalendar = false;editCalendarForm.reset();getPublicHolidayList();restDay = [];selectedWeekday = [];"
             style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
@@ -24,7 +30,20 @@
         </ion-button>
     </div>
 
-    <div style="text-align: right;" *ngIf="showEditForm">
+    <div style="text-align: right;padding-top: 5px;padding-right: 10px;" *ngIf="deleteCalendar">
+        <ion-button fill="clear"
+            (click)="editCalendar = false;addCalendar = false;deleteCalendar=false;editCalendarForm.reset();getPublicHolidayList();restDay = [];selectedWeekday = [];"
+            style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
+            cancel
+        </ion-button>
+        <div style="display: inline-block"></div>
+        <ion-button shape="round" fill="outline" (click)="deleteData()" [disabled]="!editCalendarForm.valid"
+            style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary">
+            delete
+        </ion-button>
+    </div>
+
+    <div style="text-align: right;padding-top: 5px;padding-right: 10px;" *ngIf="showEditForm">
         <ion-button fill="clear"
             (click)="addCalendar = false;editCalendar = false;showEditForm=false;getPublicHolidayList();addCalendarForm.reset(); restDay = [];selectedWeekday = [];"
             style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
@@ -39,7 +58,7 @@
         </ion-button>
     </div>
     <!------------------------------------- POST Added calendar  ------------------------------------>
-    <div style="text-align: right;" *ngIf="addCalendar">
+    <div style="text-align: right;padding-top: 5px;padding-right: 10px;" *ngIf="addCalendar">
         <ion-button fill="clear" (click)="addCalendar = false; addCalendarForm.reset();getPublicHolidayList();"
             style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
             cancel
@@ -64,13 +83,16 @@
     <div class="holidayView" [style.max-height.px]="height">
         <!------------------------------- Edit calendar ----------------------------------------->
         <div style="display:block; white-space: nowrap;" *ngIf="!showEditForm">
-            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="editCalendar">
+            <mat-form-field appearance="outline" [style.width.%]="editCalendar ? '47': '94'"
+                *ngIf="editCalendar || deleteCalendar">
                 <mat-label>Calendar profile</mat-label>
                 <mat-select class="selectLeave" formControlName="calendarProfile">
                     <mat-option *ngFor="let list of profileList; let i=index" [value]="list.calendar_guid"
                         (click)="selectProfile(list)">
                         {{list.code}}</mat-option>
                 </mat-select>
+                <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
+                margin-left: -50px;margin-top: -10px;"></ion-spinner>
                 <mat-error *ngIf="!editCalendarForm.calendarProfile" style="padding: 5px;padding-left: 0;">
                     Please select calendar profile</mat-error>
             </mat-form-field>
@@ -174,7 +196,7 @@
                     </mat-form-field>
                 </ion-col>
 
-                <ion-col size="4" class="colOfLeave" style="color: #057dcd">
+                <ion-col size="4" class="colOfLeave">
                     <p *ngIf="!editCalendar">
                         {{holiday.title}}</p>
                     <mat-form-field *ngIf="editCalendar" style="width: 100%">

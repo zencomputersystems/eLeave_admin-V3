@@ -97,6 +97,18 @@ export class LeaveAPIService {
     }
 
     /**
+     * Delete calendar profile
+     * @param {*} id
+     * @returns {Observable<any>}
+     * @memberof LeaveAPIService
+     */
+    delete_calendar_profile(id): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.http.delete(this.baseUrl + '/api/admin/holiday/calendar-profile/' + id, { headers: this.apiService.headers })
+            .pipe(map((res: Response) => res));
+    }
+
+    /**
      * Apply leave for employee 
      * @param {*} id
      * @param {*} data

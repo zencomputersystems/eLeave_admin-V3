@@ -5,7 +5,7 @@
 <div class="connectionsContainer" *ngIf="listView">
     <div class="topHeader">
         <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>
-        <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="endPoint();
+        <ion-searchbar mode="ios" class="searchbar" placeholder="Search by name" (ionClear)="endPoint();
         disableNextButton = false;disablePrevButton = true;listView=true;" (ionChange)="changeDetails($event)">
         </ion-searchbar>
         <div style="display: inline-block;white-space: nowrap;width: 66%;">
@@ -42,17 +42,17 @@
                 <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownId" (click)="sortId(true, -1, 1)">
                 </ion-icon>
             </ion-col>
-            <ion-col size="3">
+            <ion-col size="3.5">
                 <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
                 <ion-icon class="arrow" name="arrow-dropdown" (click)="sortName(false, 1, -1)" *ngIf="arrowDownName">
                 </ion-icon>
                 <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownName" (click)="sortName(true, -1, 1)">
                 </ion-icon>
             </ion-col>
-            <ion-col size="3">
+            <ion-col size="3.5">
                 <ion-label style="font-size: 12px;">DESIGNATION</ion-label>
             </ion-col>
-            <ion-col size="3">
+            <ion-col size="2">
                 <ion-label style="font-size: 12px;">STATUS</ion-label>
             </ion-col>
             <ion-col>
@@ -71,17 +71,17 @@
             <ion-col size="1">
                 <ion-label style="color:#7a8589; font-size: 13px;">{{item.staffNumber}}</ion-label>
             </ion-col>
-            <ion-col class="colOfLeave" size="3" style="color: #057dcd; font-size: 13px;">{{item.employeeName}}
+            <ion-col class="colOfLeave" size="3.5" style="color: #057dcd; font-size: 13px;">{{item.employeeName}}
             </ion-col>
-            <ion-col class="colOfLeave" size="3" style="color:#7a8589; font-size: 13px;">{{item.designation}}
+            <ion-col class="colOfLeave" size="3.5" style="color:#7a8589; font-size: 13px;">{{item.designation}}
             </ion-col>
-            <ion-col class="colOfLeave" size="3" style="color:#7a8589; font-size: 13px;">{{item.status}}
+            <ion-col class="colOfLeave" size="2" style="color:#7a8589; font-size: 13px;">{{item.status}}
             </ion-col>
             <ion-col>
-                <ion-icon name="refresh" style="color: #dfe3e6; cursor: pointer;"></ion-icon>
-                <i class="far fa-trash-alt" style="position: relative; top: -3.3px; cursor: pointer; ;font-size: 12px;color: #dfe3e6;padding-left: 10px;
+                <!-- <ion-icon name="refresh" style="color: #dfe3e6; cursor: pointer;"></ion-icon> -->
+                <i class="far fa-trash-alt" style="position: relative; top: -3.3px; cursor: pointer;font-size: 12px;color: #dfe3e6;padding-left: 10px;
                     padding-right: 10px;"></i>
-                <ion-icon name="more" style="color: #dfe3e6; cursor: pointer"></ion-icon>
+                <!-- <ion-icon name="more" style="color: #dfe3e6; cursor: pointer"></ion-icon> -->
             </ion-col>
             <ion-item class="divider" lines="full"></ion-item>
         </ion-row>
@@ -115,7 +115,7 @@
 <div class="connectionsContainer" *ngIf="gridView">
     <div class="topHeader">
         <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>
-        <ion-searchbar mode="ios" class="searchbar" placeholder="Search by ID or name" (ionClear)="endPoint();
+        <ion-searchbar mode="ios" class="searchbar" placeholder="Search by name" (ionClear)="endPoint();
         disableNextButton = false;disablePrevButton = true;gridView=true;" (ionChange)="changeDetails($event)">
         </ion-searchbar>
         <div style="display: inline-block;

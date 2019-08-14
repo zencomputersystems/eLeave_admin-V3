@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as _moment from 'moment';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -69,6 +69,13 @@ export class ManageHolidayPage implements OnInit {
      * @memberof ManageHolidayPage
      */
     public editCalendar: boolean = false;
+
+    /**
+     * show/hide delete calendar
+     * @type {boolean}
+     * @memberof ManageHolidayPage
+     */
+    public deleteCalendar: boolean = false;
 
     /**
      * Calendar profile list from API
@@ -329,6 +336,7 @@ export class ManageHolidayPage implements OnInit {
                         this.restDay.push(this.titlecasePipe.transform(this.personalProfile.rest[i].fullname));
                     }
                 }
+                this.editCalendarForm.patchValue({ dayControl: this.restDay });
             })
     }
 
@@ -463,6 +471,24 @@ export class ManageHolidayPage implements OnInit {
         setTimeout(() => {
             this.getPublicHolidayList();
         }, 100);
+    }
+
+    /**
+     * Delete calendar profile from list
+     * @memberof ManageHolidayPage
+     */
+    deleteData() {
+        this.showSpinner = true;
+        this.deleteCalendar = false;
+        this.reformatHolidayObject(this.events);
+        this.leaveAPI.delete_calendar_profile(this.selectedCalendarProfile.calendar_guid).subscribe(response => {
+            this.showSpinner = false;
+            this.editCalendarForm.reset();
+            this.getProfileList();
+            setTimeout(() => {
+                this.getPublicHolidayList();
+            }, 100);
+        })
     }
 
     /**

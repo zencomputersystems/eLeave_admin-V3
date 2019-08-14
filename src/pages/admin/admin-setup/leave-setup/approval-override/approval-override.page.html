@@ -30,6 +30,8 @@
                         {{department.department}}
                     </mat-option>
                 </mat-select>
+                <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
+                margin-left: -50px;margin-top: -10px;"></ion-spinner>
                 <mat-error>Department is <strong>required</strong></mat-error>
             </mat-form-field>
         </div>
@@ -63,16 +65,16 @@
     <div class="content" *ngIf="filteredPendingList.length > 0">
         <ion-row class="titleRow" nowrap>
             <ion-col size="0.7" style="padding-left: 10px;padding-right: 30px;">
-                <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;"
-                    [(ngModel)]="mainCheckbox" [indeterminate]="indeterminate" (click)="mainEvent()">
+                <ion-checkbox mode="ios" style="width: 20px; height: 20px;margin-top: 6px;" [(ngModel)]="mainCheckbox"
+                    [indeterminate]="indeterminate" (click)="mainEvent()">
                 </ion-checkbox>
             </ion-col>
             <ion-col size="2.5">
                 <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
-                <ion-icon class="arrow" name="arrow-dropdown" (click)="sortName(false, 1, -1)" *ngIf="arrowDownName">
+                <!-- <ion-icon class="arrow" name="arrow-dropdown" (click)="sortName(false, 1, -1)" *ngIf="arrowDownName">
                 </ion-icon>
                 <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownName" (click)="sortName(true, -1, 1)">
-                </ion-icon>
+                </ion-icon> -->
             </ion-col>
             <ion-col size="1.7">
                 <ion-label style="font-size: 12px;">LEAVE TYPE</ion-label>
