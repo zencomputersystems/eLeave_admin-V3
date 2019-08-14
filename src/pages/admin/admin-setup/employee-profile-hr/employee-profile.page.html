@@ -1,6 +1,7 @@
 <ion-header>
     <ion-toolbar class="toolbar2">
-        <div class="back-icon" [inlineSVG]="'assets/icon/option/arrow-pointing-to-left.svg'" (click)="toMyProfile()"></div>
+        <div class="back-icon" [inlineSVG]="'assets/icon/option/arrow-pointing-to-left.svg'" (click)="toMyProfile()">
+        </div>
         <ion-title style="display: inline-block;color: #20291f;font-size: 16px;" *ngIf="personalList">
             {{personalList.employeeName}}'s Profile
         </ion-title>
@@ -35,10 +36,11 @@
         <img src="assets/icon/picture.png">
     </ion-avatar>
     <mat-card-header *ngIf="employmentPersonalList">
-        <mat-card-subtitle style="color: #057dcd;white-space: nowrap; font-size: 24px;">
+        <mat-card-subtitle style="color: #057dcd;white-space: nowrap; font-size: 24px;letter-spacing: 0.3px;">
             {{personalList.employeeName}}
         </mat-card-subtitle>
-        <mat-card-subtitle style="white-space: nowrap;font-size: 12px;font-weight: 500;color: #20291f;">
+        <mat-card-subtitle
+            style="white-space: nowrap;font-size: 12px;font-weight: 500;color: #20291f;letter-spacing: 0.6px;">
             {{personalList.employeeDesignation | uppercase}}
         </mat-card-subtitle>
         <mat-card-subtitle *ngIf="employmentPersonalList" style="white-space: nowrap;font-size: 12px;color: #7a8589;">

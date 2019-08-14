@@ -78,10 +78,9 @@
             <ion-col class="colOfLeave" size="2" style="color:#7a8589; font-size: 13px;">{{item.status}}
             </ion-col>
             <ion-col>
-                <!-- <ion-icon name="refresh" style="color: #dfe3e6; cursor: pointer;"></ion-icon> -->
-                <i class="far fa-trash-alt" style="position: relative; top: -3.3px; cursor: pointer;font-size: 12px;color: #dfe3e6;padding-left: 10px;
-                    padding-right: 10px;"></i>
-                <!-- <ion-icon name="more" style="color: #dfe3e6; cursor: pointer"></ion-icon> -->
+                <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'"
+                    (click)="deleteUser(item.employeeName, item.userId)">
+                </div>
             </ion-col>
             <ion-item class="divider" lines="full"></ion-item>
         </ion-row>

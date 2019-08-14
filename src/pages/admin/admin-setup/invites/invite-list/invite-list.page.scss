@@ -89,6 +89,20 @@
     padding-left: 10px;
     cursor: pointer;
   }
+  .trash-icon {
+    width: 12px;
+    height: 12px;
+    fill: #bebebe;
+    cursor: pointer;
+    margin-left: 30px;
+  }
+  .trash-icon:hover {
+    width: 12px;
+    height: 12px;
+    fill: #f04141;
+    cursor: pointer;
+    margin-left: 30px;
+  }
   .formField {
     width: 70%;
     font-size: 12px;

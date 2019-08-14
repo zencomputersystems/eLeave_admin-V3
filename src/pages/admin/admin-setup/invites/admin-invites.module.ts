@@ -16,6 +16,8 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { InviteMorePage } from './inivite-more/invite-more.page';
 import { InviteListPage } from './invite-list/invite-list.page';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
+import { DeleteListConfirmationPage } from './delete-list-confirmation/delete-list-confirmation.page';
+import { MatDialogModule, MatButtonModule } from '@angular/material';
 
 
 const routes: Routes = [
@@ -39,8 +41,11 @@ const routes: Routes = [
         MatCardModule,
         InlineSVGModule,
         SpinnerModule,
+        MatDialogModule,
+        MatButtonModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [AdminInvitesPage, InviteMorePage, InviteListPage]
+    entryComponents: [DeleteListConfirmationPage],
+    declarations: [AdminInvitesPage, InviteMorePage, InviteListPage, DeleteListConfirmationPage]
 })
 export class AdminInvitesModule { }

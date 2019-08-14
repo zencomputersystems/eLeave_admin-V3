@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../leave-setup/date.adapter';
+import { employeeStatus } from './employee-profile.service';
 /**
  * Employee Profile Page
  * @export
@@ -49,14 +49,6 @@ export class EmployeeProfilePage implements OnInit {
     public numOfArray: boolean = false;
 
     /**
-     * Create subscription for execution of API
-     * @private
-     * @type {Subscription}
-     * @memberof EmployeeProfilePage
-     */
-    private subscription: Subscription = new Subscription();
-
-    /**
      * Return personal details content
      * @readonly
      * @memberof EmployeeProfilePage
@@ -84,7 +76,7 @@ export class EmployeeProfilePage implements OnInit {
     }
 
     ngOnInit() {
-        this.subscription = this.apiService.get_personal_details().subscribe(
+        this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
                 this.userId = this.list.id;
@@ -96,22 +88,14 @@ export class EmployeeProfilePage implements OnInit {
             },
             () => {
                 const userId = this.list.id;
-                this.subscription = this.apiService.get_employment_details(userId).subscribe(
+                this.apiService.get_employment_details(userId).subscribe(
                     data => {
                         this.employmentlist = data;
-                        console.log(this.employmentlist);
+                        this.employmentlist.employmentDetail.employmentStatus = employeeStatus[this.employmentlist.employmentDetail.employmentStatus]
                     }
                 )
             }
         );
-    }
-
-    /**
-     * Destroy subscription
-     * @memberof EmployeeProfilePage
-     */
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
     }
 
     /**

@@ -156,6 +156,18 @@ export class APIService {
     }
 
     /**
+     * Delete resigned user from user list
+     * @param {*} id
+     * @returns {Observable<any>}
+     * @memberof APIService
+     */
+    delete_user(id): Observable<any> {
+        this.headerAuthorization();
+        return this.http.delete(this.baseUrl + '/api/users/' + id, { headers: this.headers })
+            .pipe(map((res: Response) => res.json()));
+    }
+
+    /**
      * POST invited new user Id to endpoint
      * @param {*} userId
      * @returns {Observable<any>}
