@@ -79,4 +79,7 @@
     cursor: pointer;
     margin-left: 20%;
   }
+  .button-outline {
+    --border-width: 1px;
+  }
 }

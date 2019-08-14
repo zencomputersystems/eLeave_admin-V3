@@ -355,12 +355,10 @@ export class InviteListPage implements OnInit {
         dialog.afterClosed().subscribe(result => {
             if (result === id) {
                 this.apiService.delete_user(id).subscribe(response => {
-                    console.log(response);
                     this.endPoint();
                 })
             }
         });
-
     }
 
     /**

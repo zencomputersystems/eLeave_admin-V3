@@ -28,7 +28,7 @@
   </ion-menu>
   <ion-router-outlet id="fullSideMenuContent" class="fullRouterOutlet">
     <ion-toolbar class="toolbar1">
-      <ion-avatar style=" width: 32px; height: 32px; float: right; cursor:pointer" [matMenuTriggerFor]="menu">
+      <ion-avatar style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top: -5px;" [matMenuTriggerFor]="menu">
         <img src="assets/icon/picture.png">
       </ion-avatar>
       <mat-menu #menu="matMenu">
@@ -40,12 +40,12 @@
         {{personalList.employeeName}}
       </ion-label>
       <div class="verticalLine"></div>
-      <div style="width:15px; float: right; height: 20px"></div>
+      <!-- <div style="width:15px; float: right; height: 20px"></div>
       <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
       <div style="width: 12px; float:right; height: 20px"></div>
       <div class="edit-icon" [inlineSVG]="'assets/icon/top_header/action.svg'"></div>
       <div style="width:15px; float: left; height: 20px"></div>
-      <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
+      <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div> -->
     </ion-toolbar>
   </ion-router-outlet>
 </ion-split-pane>
@@ -79,7 +79,7 @@
   </ion-menu>
   <ion-router-outlet id="iconSideMenuContent" class="iconRouterOutlet">
     <ion-toolbar class="toolbar1">
-      <ion-avatar style=" width: 32px; height: 32px; float: right; cursor: pointer;" [matMenuTriggerFor]="menu">
+      <ion-avatar style=" width: 32px; height: 32px; float: right; cursor: pointer;margin-top:-5px" [matMenuTriggerFor]="menu">
         <img src="assets/icon/picture.png">
       </ion-avatar>
       <mat-menu #menu="matMenu">
@@ -91,12 +91,12 @@
         {{personalList.employeeName}}
       </ion-label>
       <div class="verticalLine"></div>
-      <div style="width:15px; float: right; height: 20px"></div>
+      <!-- <div style="width:15px; float: right; height: 20px"></div>
       <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
       <div style="width: 12px; float:right; height: 20px"></div>
       <div class="edit-icon" [inlineSVG]="'assets/icon/top_header/action.svg'"></div>
       <div style="width:15px; float: left; height: 20px"></div>
-      <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
+      <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div> -->
     </ion-toolbar>
   </ion-router-outlet>
 </ion-split-pane>

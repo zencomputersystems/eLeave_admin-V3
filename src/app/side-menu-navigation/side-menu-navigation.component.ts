@@ -82,13 +82,13 @@ export class SideMenuNavigationComponent implements OnInit {
       icon: 'inbox.svg'
     },
     {
-      title: 'Plan My Leave',
-      url: '/main/plan-my-leave',
+      title: 'Leave Setup',
+      url: '/main/leave-setup',
       icon: 'my_leave.svg'
     },
     {
-      title: 'Employee',
-      url: '/main/employee-directory',
+      title: 'Employee Setup',
+      url: '/main/employee-setup',
       icon: 'employee.svg'
     },
     {
@@ -97,7 +97,7 @@ export class SideMenuNavigationComponent implements OnInit {
       icon: 'page_admins.svg'
     },
     {
-      title: 'General Leave Policy',
+      title: 'General Policy',
       url: '/main/general-leave-policy',
       icon: 'policy.svg'
     },

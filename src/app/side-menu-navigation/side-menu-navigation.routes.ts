@@ -30,14 +30,14 @@ export const sideMenuNavigationRoutes: Routes = [
             { path: 'dashboard', component: EmployeeProfilePage },
             { path: 'inbox', component: AddEmployeePage }, // AddEmployeePage //EmployeeProfilePage
             {
-                path: 'plan-my-leave', component: LeaveSetup,
+                path: 'leave-setup', component: LeaveSetup,
                 children: [
                     { path: '', redirectTo: 'leave-setup', pathMatch: 'full' },
                     { path: 'leave-setup', component: SetupCalendarProfilePage }
                 ]
             },
             {
-                path: 'employee-directory', component: AdminInvitesPage,
+                path: 'employee-setup', component: AdminInvitesPage,
                 children: [
                     { path: '', redirectTo: 'invite-list', pathMatch: 'full' },
                     { path: 'invite-list', component: InviteListPage },
