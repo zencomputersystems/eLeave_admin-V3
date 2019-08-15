@@ -12,7 +12,7 @@
       <ion-avatar style="width: 70px; height: 70px; margin: 74px; margin-bottom: 0; margin-top: 31px;">
         <img src="assets/icon/logo.PNG">
       </ion-avatar>
-      <p style="display:flex; justify-content: center; color: #f9fafc;">ZeN</p>
+      <p style="display:flex; justify-content: center; color: #f9fafc;">ZEN Computer Systems</p>
       <ion-list>
         <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
           <ion-item lines="none" [routerLink]="[p.url]" (click)="activeRoute = appPages[i].url"
@@ -29,7 +29,7 @@
   <ion-router-outlet id="fullSideMenuContent" class="fullRouterOutlet">
     <ion-toolbar class="toolbar1">
       <ion-avatar style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top: -5px;" [matMenuTriggerFor]="menu">
-        <img src="assets/icon/picture.png">
+        <img src="assets/icon/avatar.jpg">
       </ion-avatar>
       <mat-menu #menu="matMenu">
         <button mat-menu-item >My Profile</button>
@@ -80,7 +80,7 @@
   <ion-router-outlet id="iconSideMenuContent" class="iconRouterOutlet">
     <ion-toolbar class="toolbar1">
       <ion-avatar style=" width: 32px; height: 32px; float: right; cursor: pointer;margin-top:-5px" [matMenuTriggerFor]="menu">
-        <img src="assets/icon/picture.png">
+        <img src="assets/icon/avatar.jpg">
       </ion-avatar>
       <mat-menu #menu="matMenu">
         <button mat-menu-item >My Profile</button>
