@@ -85,9 +85,12 @@ margin: 0 auto;">
                             {{item.name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error style="padding-top: 10px;" *ngIf="profileDetails.property.allowViewCalendar.value">
+                    <mat-error style="padding-top: 12px;" *ngIf="profileDetails.property.allowViewCalendar.value">
                         Option is <strong>required</strong>
                     </mat-error>
+                    <mat-hint style="padding-top: 12px;color:#f44336"
+                        *ngIf="profileDetails.property.allowViewCalendar.value && !profileDetails.property.allowViewCalendar.level">
+                        Option is <strong>required</strong></mat-hint>
                 </mat-form-field>
             </ion-list>
         </mat-card>
@@ -133,18 +136,22 @@ margin: 0 auto;">
                     [(ngModel)]="profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.value"
                     (ionChange)="checkEvent(leaveMngtKey, 1, 0)">
                 </ion-checkbox>
-                <mat-form-field appearance="outline" style="width: 76%">
-                    <mat-label>Leave Adjustmant</mat-label>
+                <mat-form-field appearance="outline" style="width: 76%"
+                    [class.my-class]="profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.value && !profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.level">
+                    <mat-label>Leave Adjustment</mat-label>
                     <mat-select [(ngModel)]="profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.level"
                         [disabled]="!profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.value" required>
                         <mat-option *ngFor="let item of viewReportList" [value]="item.value">
                             {{item.name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error style="padding-top: 10px;"
+                    <mat-error style="padding-top: 12px;"
                         *ngIf="profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.value">
                         Option is <strong>required</strong>
                     </mat-error>
+                    <mat-hint style="padding-top: 12px;color:#f44336"
+                        *ngIf="profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.value && !profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.level">
+                        Option is <strong>required</strong></mat-hint>
                 </mat-form-field>
             </ion-list>
             <ion-list lines="none" class="ionItem"
@@ -161,10 +168,13 @@ margin: 0 auto;">
                             {{item.name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error style="padding-top: 10px;"
+                    <mat-error style="padding-top: 12px;"
                         *ngIf="profileDetails.property.allowLeaveManagement.allowApplyOnBehalf.value">
                         Option is <strong>required</strong>
                     </mat-error>
+                    <mat-hint style="padding-top: 12px;color:#f44336"
+                        *ngIf="profileDetails.property.allowLeaveManagement.allowApplyOnBehalf.value && !profileDetails.property.allowLeaveManagement.allowApplyOnBehalf.level">
+                        Option is <strong>required</strong></mat-hint>
                 </mat-form-field>
             </ion-list>
             <ion-list lines="none" class="ionItem"
@@ -181,10 +191,13 @@ margin: 0 auto;">
                             {{item.name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error style="padding-top: 10px;"
+                    <mat-error style="padding-top: 12px;"
                         *ngIf="profileDetails.property.allowLeaveManagement.allowApprovalOverride.value">
                         Option is <strong>required</strong>
                     </mat-error>
+                    <mat-hint style="padding-top: 12px;color:#f44336"
+                        *ngIf="profileDetails.property.allowLeaveManagement.allowApprovalOverride.value && !profileDetails.property.allowLeaveManagement.allowApprovalOverride.level">
+                        Option is <strong>required</strong></mat-hint>
                 </mat-form-field>
             </ion-list>
         </mat-card>
@@ -215,10 +228,13 @@ margin: 0 auto;">
                             {{item.name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error style="padding-top: 10px;"
+                    <mat-error style="padding-top: 12px;"
                         *ngIf="profileDetails.property.allowProfileManagement.allowViewProfile.value">
                         Option is <strong>required</strong>
                     </mat-error>
+                    <mat-hint style="padding-top: 12px;color:#f44336"
+                        *ngIf="profileDetails.property.allowProfileManagement.allowViewProfile.value && !profileDetails.property.allowProfileManagement.allowViewProfile.level">
+                        Option is <strong>required</strong></mat-hint>
                 </mat-form-field>
             </ion-list>
             <ion-list lines="none" class="ionItem"
@@ -235,10 +251,13 @@ margin: 0 auto;">
                             {{item.name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error style="padding-top: 10px;"
+                    <mat-error style="padding-top: 12px;"
                         *ngIf="profileDetails.property.allowProfileManagement.allowEditProfile.value">
                         Option is <strong>required</strong>
                     </mat-error>
+                    <mat-hint style="padding-top: 12px;color:#f44336"
+                        *ngIf="profileDetails.property.allowProfileManagement.allowEditProfile.value && !profileDetails.property.allowProfileManagement.allowEditProfile.level">
+                        Option is <strong>required</strong></mat-hint>
                 </mat-form-field>
             </ion-list>
             <ion-list lines="none" class="ionItem"
@@ -255,10 +274,13 @@ margin: 0 auto;">
                             {{item.name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error style="padding-top: 10px;"
+                    <mat-error style="padding-top: 12px;"
                         *ngIf="profileDetails.property.allowProfileManagement.allowChangePassword.value">
                         Option is <strong>required</strong>
                     </mat-error>
+                    <mat-hint style="padding-top: 12px;color:#f44336"
+                        *ngIf="profileDetails.property.allowProfileManagement.allowChangePassword.value && !profileDetails.property.allowProfileManagement.allowChangePassword.level">
+                        Option is <strong>required</strong></mat-hint>
                 </mat-form-field>
             </ion-list>
             <ion-list lines="none" class="ionItem"
@@ -275,10 +297,13 @@ margin: 0 auto;">
                             {{item.name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error style="padding-top: 10px;"
+                    <mat-error style="padding-top: 12px;"
                         *ngIf="profileDetails.property.allowProfileManagement.allowProfileAdmin.value">
                         Option is <strong>required</strong>
                     </mat-error>
+                    <mat-hint style="padding-top: 12px;color:#f44336"
+                        *ngIf="profileDetails.property.allowProfileManagement.allowProfileAdmin.value && !profileDetails.property.allowProfileManagement.allowProfileAdmin.level">
+                        Option is <strong>required</strong></mat-hint>
                 </mat-form-field>
             </ion-list>
         </mat-card>
