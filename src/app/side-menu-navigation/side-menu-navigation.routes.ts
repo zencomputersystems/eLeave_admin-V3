@@ -32,8 +32,8 @@ export const sideMenuNavigationRoutes: Routes = [
             {
                 path: 'leave-setup', component: LeaveSetup,
                 children: [
-                    { path: '', redirectTo: 'leave-setup', pathMatch: 'full' },
-                    { path: 'leave-setup', component: SetupCalendarProfilePage }
+                    { path: '', redirectTo: 'tab', pathMatch: 'full' },
+                    { path: 'tab', component: SetupCalendarProfilePage }
                 ]
             },
             {

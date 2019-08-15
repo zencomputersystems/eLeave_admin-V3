@@ -48,24 +48,41 @@
   .column1 .leaveSetup {
     margin-top: 10px;
     vertical-align: middle;
+    box-shadow: none;
+    background: white;
   }
-  .column1 .reportView {
+  // .column1 .reportView {
+  //   margin-top: 20px;
+  //   margin-bottom: 20px;
+  //   vertical-align: middle;
+  //   box-shadow: none;
+  //   background: white;
+  // }
+  .column1 .calendarView {
     margin-top: 20px;
     margin-bottom: 20px;
     vertical-align: middle;
+    box-shadow: none;
+    background: white;
   }
   .column2 .leaveManagement {
     margin-top: 10px;
     vertical-align: middle;
+    box-shadow: none;
+    background: white;
   }
-  .column2 .calendarView {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    vertical-align: middle;
-  }
+  // .column2 .calendarView {
+  //   margin-top: 20px;
+  //   margin-bottom: 20px;
+  //   vertical-align: middle;
+  //   box-shadow: none;
+  //   background: white;
+  // }
   .column3 .profileManagement {
     margin-top: 10px;
     vertical-align: middle;
+    box-shadow: none;
+    background: white;
   }
 
   // content style

@@ -210,8 +210,8 @@ export class AssignCalendarPage implements OnInit {
             this.treeview.checklistSelection.clear();
             this.openSnackBar('submitted successfully');
         }, error => {
-            this.openSnackBar('submitted unsuccessfully');
-            window.location.href = '/login';
+                this.openSnackBar('submitted unsuccessfully');
+                window.location.href = '/login';
         });
     }
 

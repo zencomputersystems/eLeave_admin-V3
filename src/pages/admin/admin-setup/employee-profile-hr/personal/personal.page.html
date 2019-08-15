@@ -6,12 +6,12 @@
 <div style="text-align: right;" *ngIf="editProfile">
     <ion-button fill="clear" (click)="editProfile = false"
         style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-        cancel
+        Cancel
     </ion-button>
     <div style="display: inline-block"></div>
     <ion-button shape="round" fill="outline" (click)="patchAllData()"
         style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary">
-        save
+        Save
     </ion-button>
 </div>
 <ion-row class="detailsRow" *ngIf="personalList">
@@ -66,13 +66,11 @@
     <ion-col>
         <ion-label>BIRTHDATE</ion-label>
         <p *ngIf="!editProfile">{{personalList.personalDetail.dob}}</p>
-        <form [formGroup]="dateForm">
-            <mat-form-field *ngIf="editProfile" style="width:67%">
-                <input matInput [matDatepicker]="datePicker" formControlName="datepicker" required>
-                <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
-                <mat-datepicker #datePicker></mat-datepicker>
-            </mat-form-field>
-        </form>
+        <mat-form-field *ngIf="editProfile" style="width:67%">
+            <input matInput [matDatepicker]="datePicker" [formControl]="date" required>
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+        </mat-form-field>
     </ion-col>
     <ion-col>
         <ion-label>NRIC</ion-label>
@@ -133,15 +131,15 @@
     <ion-col>
         <ion-label>RESIDENTIAL ADDRESS</ion-label>
         <p style="display: inline" *ngIf="!editProfile">
-            {{personalList.personalDetail.residentialAddress1}},</p>
+            {{personalList.personalDetail.address1}},</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput placeholder="Address line 1" [(ngModel)]="list.personalDetail.residentialAddress1">
+            <input matInput placeholder="Address line 1" [(ngModel)]="list.personalDetail.address1">
         </mat-form-field>
         &nbsp;
         <p style="display: inline" *ngIf="!editProfile">
-            {{personalList.personalDetail.residentialAddress2}},</p>
+            {{personalList.personalDetail.address2}},</p>
         <mat-form-field *ngIf="editProfile">
-            <input matInput placeholder="Address line 2" [(ngModel)]="list.personalDetail.residentialAddress2">
+            <input matInput placeholder="Address line 2" [(ngModel)]="list.personalDetail.address2">
         </mat-form-field>
         &nbsp;
         <p style="display: inline" *ngIf="!editProfile">{{personalList.personalDetail.postcode}},</p>
@@ -190,12 +188,12 @@
         <div style="float: right;" *ngIf="showEditContact[index]">
             <ion-button fill="clear" (click)="editContact(index, false)"
                 style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-                cancel
+                Cancel
             </ion-button>
             <div style="display: inline-block"></div>
             <ion-button shape="round" fill="outline" (click)="patchAllData(); editContact(index, false)"
                 style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary">
-                save
+                Save
             </ion-button>
         </div>
     </ion-col>
@@ -238,13 +236,13 @@
             <div style="float: right;" *ngIf="showEditSpouse[index]">
                 <ion-button fill="clear" (click)="editSpouse(index, false)"
                     style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-                    cancel
+                    Cancel
                 </ion-button>
                 <div style="display: inline-block"></div>
                 <ion-button shape="round" fill="outline" (click)="patchAllData(); editSpouse(index, false)"
                     style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;"
                     color="primary">
-                    save
+                    Save
                 </ion-button>
             </div>
         </ion-col>
@@ -282,13 +280,13 @@
             <div style="float: right;" *ngIf="showEditChild[index]">
                 <ion-button fill="clear" (click)="editChild(index, false)"
                     style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-                    cancel
+                    Cancel
                 </ion-button>
                 <div style="display: inline-block"></div>
                 <ion-button shape="round" fill="outline" (click)="patchAllData(); editChild(index, false)"
                     style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;"
                     color="primary">
-                    save
+                    Save
                 </ion-button>
             </div>
         </ion-col>
@@ -362,12 +360,12 @@
         <div *ngIf="showEditEducation[index]" style="display: block;width: 99.1%;text-align: right;">
             <ion-button fill="clear" (click)="editEducation(index, false)"
                 style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-                cancel
+                Cancel
             </ion-button>
             <div style="display: inline-block"></div>
             <ion-button shape="round" fill="outline" (click)="patchAllData(); editEducation(index, false)"
                 style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary">
-                save
+                Save
             </ion-button>
         </div>
     </ion-row>

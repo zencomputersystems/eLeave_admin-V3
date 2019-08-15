@@ -154,7 +154,6 @@ export class ApprovalOverridePage implements OnInit {
 
     ngOnInit() {
         this.leaveAPI.get_company_list().subscribe(list => this.companyList = list)
-        this.leaveAPI.get_approval_override_list().subscribe(list => this._pendingList = list)
     }
 
     /**
@@ -187,6 +186,7 @@ export class ApprovalOverridePage implements OnInit {
             this.departmentList = list.departmentList;
             this.showSpinner = false;
         })
+        this.leaveAPI.get_approval_override_list().subscribe(list => this._pendingList = list)
     }
 
     /**

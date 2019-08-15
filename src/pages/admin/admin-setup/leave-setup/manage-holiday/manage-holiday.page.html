@@ -21,12 +21,12 @@
         <ion-button fill="clear"
             (click)="editCalendar = false;addCalendar = false;editCalendarForm.reset();getPublicHolidayList();restDay = [];selectedWeekday = [];"
             style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-            cancel
+            Cancel
         </ion-button>
         <div style="display: inline-block"></div>
         <ion-button shape="round" fill="outline" (click)="saveData()" [disabled]="!editCalendarForm.valid"
             style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary">
-            save
+            Save
         </ion-button>
     </div>
 
@@ -34,40 +34,40 @@
         <ion-button fill="clear"
             (click)="editCalendar = false;addCalendar = false;deleteCalendar=false;editCalendarForm.reset();getPublicHolidayList();restDay = [];selectedWeekday = [];"
             style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-            cancel
+            Cancel
         </ion-button>
         <div style="display: inline-block"></div>
         <ion-button shape="round" fill="outline" (click)="deleteData()" [disabled]="!editCalendarForm.valid"
             style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary">
-            delete
+            Delete
         </ion-button>
     </div>
 
     <div style="text-align: right;padding-top: 5px;padding-right: 10px;" *ngIf="showEditForm">
         <ion-button fill="clear"
-            (click)="addCalendar = false;editCalendar = false;showEditForm=false;getPublicHolidayList();addCalendarForm.reset(); restDay = [];selectedWeekday = [];"
+            (click)="addCalendar = false;editCalendar = false;showEditForm=false;getPublicHolidayList();profileName.reset(); restDay = [];selectedWeekday = [];"
             style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-            cancel
+            Cancel
         </ion-button>
         <div style="display: inline-block"></div>
         <ion-button shape="round" fill="outline"
             (click)="postData(); addCalendar = false;editCalendar = false;showEditForm=false;"
-            [disabled]="!addCalendarForm.valid"
+            [disabled]="!profileName.valid"
             style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary">
-            save
+            Save
         </ion-button>
     </div>
     <!------------------------------------- POST Added calendar  ------------------------------------>
     <div style="text-align: right;padding-top: 5px;padding-right: 10px;" *ngIf="addCalendar">
-        <ion-button fill="clear" (click)="addCalendar = false; addCalendarForm.reset();getPublicHolidayList();"
+        <ion-button fill="clear" (click)="addCalendar = false; profileName.reset();getPublicHolidayList();"
             style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-            cancel
+            Cancel
         </ion-button>
         <div style="display: inline-block"></div>
         <ion-button shape="round" fill="outline" (click)="callParamAPI(year, month); showEditForm= true"
             style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary"
-            [disabled]="!addCalendarForm.valid">
-            next
+            [disabled]="!profileName.valid">
+            Next
         </ion-button>
     </div>
 
@@ -111,55 +111,51 @@
         </div>
 
         <!------------------------------- add calendar ------------------------------------------>
-        <form [formGroup]="addCalendarForm">
-            <div style="display:block; white-space: nowrap;">
-                <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
-                    <mat-label>Calendar profile name</mat-label>
-                    <input matInput formControlName="profileName" required>
-                    <mat-error>Please enter profile name</mat-error>
-                </mat-form-field>
-                <span *ngIf="addCalendar">&nbsp;&nbsp;</span>
-                <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
-                    <mat-label>Rest day</mat-label>
-                    <mat-select class="selectLeave" multiple>
-                        <mat-option *ngFor="let day of weekdays; let j=index" [value]="day"
-                            (click)="restDaySelected(day)">
-                            {{day}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div style="display:block; white-space: nowrap;">
-                <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
-                    <mat-label>Country list</mat-label>
-                    <mat-select>
-                        <mat-option selected>None</mat-option>
-                        <mat-option *ngFor="let list of countryList; let i=index" [value]="list.iso"
-                            (click)="countryRegion = countryDB[list.iso].regions; countryIso = list.iso;">
-                            {{list.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <span *ngIf="addCalendar">&nbsp;&nbsp;</span>
-                <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
-                    <mat-label>Regions</mat-label>
-                    <mat-select>
-                        <mat-option selected>None</mat-option>
-                        <mat-option *ngFor="let list of countryRegion; let i=index" [value]="list.iso"
-                            (click)=" regionISO = list.iso">
-                            {{list.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div style="display:block; white-space: nowrap;">
-                <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
-                    <input matInput placeholder="Year(yyyy)" [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-                <span *ngIf="addCalendar">&nbsp;&nbsp;</span>
-                <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
-                    <input matInput placeholder="Month(mm)" [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-            </div>
-
-        </form>
+        <div style="display:block; white-space: nowrap;">
+            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
+                <mat-label>Calendar profile name</mat-label>
+                <input matInput [formControl]="profileName" required>
+                <mat-error>Please enter profile name</mat-error>
+            </mat-form-field>
+            <span *ngIf="addCalendar">&nbsp;&nbsp;</span>
+            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
+                <mat-label>Rest day</mat-label>
+                <mat-select class="selectLeave" multiple>
+                    <mat-option *ngFor="let day of weekdays; let j=index" [value]="day" (click)="restDaySelected(day)">
+                        {{day}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div style="display:block; white-space: nowrap;">
+            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
+                <mat-label>Country list</mat-label>
+                <mat-select>
+                    <mat-option selected>None</mat-option>
+                    <mat-option *ngFor="let list of countryList; let i=index" [value]="list.iso"
+                        (click)="countryRegion = countryDB[list.iso].regions; countryIso = list.iso;">
+                        {{list.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <span *ngIf="addCalendar">&nbsp;&nbsp;</span>
+            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
+                <mat-label>Regions</mat-label>
+                <mat-select>
+                    <mat-option selected>None</mat-option>
+                    <mat-option *ngFor="let list of countryRegion; let i=index" [value]="list.iso"
+                        (click)=" regionISO = list.iso">
+                        {{list.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div style="display:block; white-space: nowrap;">
+            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
+                <input matInput placeholder="Year(yyyy)" [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+            <span *ngIf="addCalendar">&nbsp;&nbsp;</span>
+            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
+                <input matInput placeholder="Month(mm)" [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+        </div>
 
         <ion-item class="divider" lines="full" *ngIf="editCalendar || addCalendar"></ion-item>
 

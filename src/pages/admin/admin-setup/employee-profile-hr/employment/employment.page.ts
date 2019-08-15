@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Validators, FormControl } from '@angular/forms';
 import * as _moment from 'moment';
 import { employeeStatus } from '../employee-profile.service';
-import { Subscription } from 'rxjs';
 const moment = _moment;
 
 /**
@@ -52,21 +51,21 @@ export class EmploymentPage implements OnInit {
      * @type {FormGroup}
      * @memberof EmploymentPage
      */
-    public dateJoinForm: FormGroup;
+    public dateJoin: any;
 
     /**
      * Tracks validity of date confirm
      * @type {FormGroup}
      * @memberof EmploymentPage
      */
-    public dateConfirmForm: FormGroup;
+    public dateConfirm: any;
 
     /**
      * Tracks validity of date resign
      * @type {FormGroup}
      * @memberof EmploymentPage
      */
-    public dateResignForm: FormGroup;
+    public dateResign: any;
 
     /**
      * Get company branch
@@ -74,14 +73,6 @@ export class EmploymentPage implements OnInit {
      * @memberof EmploymentPage
      */
     public branch: string;
-
-    /**
-     * For execution of API
-     * @private
-     * @type {Subscription}
-     * @memberof EmploymentPage
-     */
-    private _subscription: Subscription = new Subscription();
 
     /**
      * Return value from personal details
@@ -104,72 +95,44 @@ export class EmploymentPage implements OnInit {
     /**
      *Creates an instance of EmploymentPage.
      * @param {APIService} apiService
-     * @param {FormBuilder} _formBuilder
      * @memberof EmploymentPage
      */
-    constructor(private apiService: APIService, private _formBuilder: FormBuilder) {
+    constructor(private apiService: APIService) {
     }
 
     ngOnInit() {
-        this.dateJoinForm = this._formBuilder.group({
-            dateJoin: ['', Validators.required]
-        });
-        this.dateConfirmForm = this._formBuilder.group({
-            dateConfirm: ['', Validators.required]
-        });
-        this.dateResignForm = this._formBuilder.group({
-            dateResign: ['', Validators.required]
-        });
-        this._subscription = this.apiService.get_personal_details().subscribe(
+        this.apiService.get_personal_details().subscribe(
             (data: any[]) => {
                 this.list = data;
+                const userId = this.list.id;
+                this.getEmploymentDetailsById(userId);
             },
             error => {
                 if (error.status === 401) {
                     window.location.href = '/login';
                 }
-            },
-            () => {
-                const userId = this.list.id;
-                this.getEmploymentDetailsById(userId);
             });
     }
 
     /**
-     * Destroy the subscribed API 
+     * get employment details from requested ID
+     * @param {string} id
      * @memberof EmploymentPage
      */
-    ngOnDestroy() {
-        this._subscription.unsubscribe();
-    }
-
     getEmploymentDetailsById(id: string) {
-        this._subscription = this.apiService.get_employment_details(id).subscribe(
+        this.apiService.get_employment_details(id).subscribe(
             data => {
                 this.employmentlist = data;
+                this.dateJoin = new FormControl((this.employmentlist.employmentDetail.dateOfJoin), Validators.required);
                 this.employmentlist.employmentDetail.dateOfJoin = moment(this.employmentlist.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
+                this.dateConfirm = new FormControl((this.employmentlist.employmentDetail.dateOfConfirmation), Validators.required);
                 this.employmentlist.employmentDetail.dateOfConfirmation = moment(this.employmentlist.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
+                this.dateResign = new FormControl((this.employmentlist.employmentDetail.dateOfResign), Validators.required);
                 this.employmentlist.employmentDetail.dateOfResign = moment(this.employmentlist.employmentDetail.dateOfResign).format('DD-MM-YYYY');
-                this.data();
+                this.status = employeeStatus[this.employmentlist.employmentDetail.employmentStatus];
             })
     }
 
-    /**
-     * Create new form group for date join, confirm & resign
-     * @memberof EmploymentPage
-     */
-    data() {
-        this.dateJoinForm = new FormGroup({
-            dateJoin: new FormControl(new Date(moment(this.employmentlist.employmentDetail.dateOfJoin).format('DD-MM-YYYY'))),
-        })
-        this.dateConfirmForm = new FormGroup({
-            dateConfirm: new FormControl(new Date(moment(this.employmentlist.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY'))),
-        })
-        this.dateResignForm = new FormGroup({
-            dateResign: new FormControl(new Date(moment(this.employmentlist.employmentDetail.dateOfResign).format('DD-MM-YYYY'))),
-        })
-        this.status = employeeStatus[this.employmentlist.employmentDetail.employmentStatus];
-    }
 
     /**
      * Update employment details to API
@@ -188,25 +151,18 @@ export class EmploymentPage implements OnInit {
             "reportingTo": this.employmentlist.employmentDetail.reportingTo,
             "employmentType": this.employmentlist.employmentDetail.employmentType,
             "employmentStatus": employeeStatus[this.status],
-            "dateOfJoin": moment(this.dateJoinForm.value.dateJoin).format('YYYY-MM-DD'),
-            "dateOfConfirmation": moment(this.dateConfirmForm.value.dateConfirm).format('YYYY-MM-DD'),
-            "dateOfResign": moment(this.dateResignForm.value.dateResign).format('YYYY-MM-DD'),
+            "dateOfJoin": moment(this.dateJoin.value).format('YYYY-MM-DD'),
+            "dateOfConfirmation": moment(this.dateConfirm.value).format('YYYY-MM-DD'),
+            "dateOfResign": moment(this.dateResign.value).format('YYYY-MM-DD'),
             "bankAccountName": this.employmentlist.employmentDetail.bankAccountName,
             "bankAccountNumber": this.employmentlist.employmentDetail.bankAccountNumber,
             "epfNumber": this.employmentlist.employmentDetail.epfNumber,
             "incomeTaxNumber": this.employmentlist.employmentDetail.incomeTaxNumber,
         };
-        this._subscription = this.apiService.patch_employment_details(data).subscribe((val) => {
-            console.log("PATCH call successful value returned in body", val);
-        },
-            response => {
-                console.log("PATCH call in error", response);
-            },
-            () => {
-                console.log("The PATCH observable is now completed.");
-                const userId = this.list.id;
-                this.getEmploymentDetailsById(userId);
-            });
+        this.apiService.patch_employment_details(data).subscribe((val) => {
+            const userId = this.list.id;
+            this.getEmploymentDetailsById(userId);
+        });
     }
 
 

@@ -7,12 +7,12 @@
     <div style="text-align: right;" *ngIf="edit">
         <ion-button fill="clear" (click)="edit = false"
             style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-            cancel
+            Cancel
         </ion-button>
         <div style="display: inline-block"></div>
         <ion-button shape="round" fill="outline" (click)="patchEmploymentData();"
             style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary">
-            save
+            Save
         </ion-button>
     </div>
     <ion-row class="detailsRow">
@@ -97,37 +97,31 @@
         <ion-col>
             <ion-label>DATE OF HIRE</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.dateOfJoin}}</p>
-            <form [formGroup]="dateJoinForm">
-                <mat-form-field *ngIf="edit" style="width:67%">
-                    <input matInput [matDatepicker]="dateOfJoin" formControlName="dateJoin" required>
-                    <mat-datepicker-toggle matSuffix [for]="dateOfJoin"></mat-datepicker-toggle>
-                    <mat-datepicker #dateOfJoin></mat-datepicker>
-                </mat-form-field>
-            </form>
+            <mat-form-field *ngIf="edit" style="width:67%">
+                <input matInput [matDatepicker]="dateOfJoin" [formControl]="dateJoin" required>
+                <mat-datepicker-toggle matSuffix [for]="dateOfJoin"></mat-datepicker-toggle>
+                <mat-datepicker #dateOfJoin></mat-datepicker>
+            </mat-form-field>
         </ion-col>
         <ion-col>
             <ion-label>DATE OF CONFIRMATION</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.dateOfConfirmation}}</p>
-            <form [formGroup]="dateConfirmForm">
-                <mat-form-field *ngIf="edit" style="width:67%">
-                    <input matInput [matDatepicker]="dateOfConfirm" formControlName="dateConfirm" required>
-                    <mat-datepicker-toggle matSuffix [for]="dateOfConfirm"></mat-datepicker-toggle>
-                    <mat-datepicker #dateOfConfirm></mat-datepicker>
-                </mat-form-field>
-            </form>
+            <mat-form-field *ngIf="edit" style="width:67%">
+                <input matInput [matDatepicker]="dateOfConfirm" [formControl]="dateConfirm" required>
+                <mat-datepicker-toggle matSuffix [for]="dateOfConfirm"></mat-datepicker-toggle>
+                <mat-datepicker #dateOfConfirm></mat-datepicker>
+            </mat-form-field>
         </ion-col>
     </ion-row>
     <ion-row class="detailsRow">
         <ion-col>
             <ion-label>DATE OF TERMINATION</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.dateOfResign}}</p>
-            <form [formGroup]="dateResignForm">
-                <mat-form-field *ngIf="edit" style="width:67%">
-                    <input matInput [matDatepicker]="dateOfResign" formControlName="dateResign" required>
-                    <mat-datepicker-toggle matSuffix [for]="dateOfResign"></mat-datepicker-toggle>
-                    <mat-datepicker #dateOfResign></mat-datepicker>
-                </mat-form-field>
-            </form>
+            <mat-form-field *ngIf="edit" style="width:67%">
+                <input matInput [matDatepicker]="dateOfResign" [formControl]="dateResign" required>
+                <mat-datepicker-toggle matSuffix [for]="dateOfResign"></mat-datepicker-toggle>
+                <mat-datepicker #dateOfResign></mat-datepicker>
+            </mat-form-field>
         </ion-col>
         <ion-col>
             <ion-label>YEARS OF SERVICE</ion-label>

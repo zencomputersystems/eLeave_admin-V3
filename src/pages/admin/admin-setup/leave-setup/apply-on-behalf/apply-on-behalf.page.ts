@@ -505,10 +505,10 @@ export class ApplyOnBehalfPage implements OnInit {
                 this.clearArrayList();
                 this.showSelectedTree = false;
                 this._employeeId = [];
-                this.openSnackBar('submitted successfully. ');
+                this.openSnackBar('submitted successfully ');
                 if (response.status === 401) {
                     window.location.href = '/login';
-                    this.openSnackBar('submitted unsuccessfully. ' + response.message);
+                    this.openSnackBar('submitted unsuccessfully ' + response.message);
                 }
             });
     }

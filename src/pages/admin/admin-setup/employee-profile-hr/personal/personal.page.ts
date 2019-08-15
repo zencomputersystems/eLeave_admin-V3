@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormControl, FormBuilder, Validators } from '@angular/forms';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import * as _moment from 'moment';
 import { genderStatus, maritalStatus } from '../employee-profile.service';
+import { AppDateAdapter, APP_DATE_FORMATS } from '../../leave-setup/date.adapter';
 const moment = _moment;
+
 /**
  * Personal Page
  * @export
@@ -14,6 +17,9 @@ const moment = _moment;
     selector: 'app-personal',
     templateUrl: './personal.page.html',
     styleUrls: ['./personal.page.scss'],
+    providers: [
+        { provide: DateAdapter, useClass: AppDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
 })
 export class PersonalPage implements OnInit {
 
@@ -128,22 +134,11 @@ export class PersonalPage implements OnInit {
     public educationObj = { qualificationLevel: '', major: '', university: '', year: '' };
 
     /**
-     * Track birthdate value and validation
-     * @private
-     * @type {FormGroup}
+     * form control of birthdate
+     * @type {*}
      * @memberof PersonalPage
      */
-    private _date: FormGroup;
-
-    /**
-     * Return birthdate value
-     * @readonly
-     * @type {FormGroup}
-     * @memberof PersonalPage
-     */
-    get dateForm(): FormGroup {
-        return this._date;
-    }
+    public date: any;
 
     /**
      * Return Personal Details from API
@@ -157,10 +152,9 @@ export class PersonalPage implements OnInit {
     /**
      *Creates an instance of PersonalPage.
      * @param {APIService} apiService
-     * @param {FormBuilder} _formBuilder
      * @memberof PersonalPage
      */
-    constructor(private apiService: APIService, private _formBuilder: FormBuilder) {
+    constructor(private apiService: APIService) {
     }
 
     ngOnInit() {
@@ -171,11 +165,8 @@ export class PersonalPage implements OnInit {
                 this.getSpouseInit();
                 this.getChildInit();
                 this.getEducationInit();
+                this.date = new FormControl((this.list.personalDetail.dob), Validators.required);
                 this.list.personalDetail.dob = moment(this.list.personalDetail.dob).format('DD-MM-YYYY');
-                this._date = this._formBuilder.group({ datepicker: ['', Validators.required] });
-                this._date = new FormGroup({
-                    datepicker: new FormControl(new Date(moment(this.list.personalDetail.dob).format('DD-MM-YYYY'))),
-                })
             },
             error => {
                 if (error.status === 401) {
@@ -189,7 +180,7 @@ export class PersonalPage implements OnInit {
      * @memberof PersonalPage
      */
     getContactInit() {
-        const contact = this.list.personalDetail.emergencyContactNumber.contacts;
+        const contact = this.list.personalDetail.emergencyContact.contacts;
         if (contact !== undefined && !(contact instanceof Array)) {
             this.contactList.push(contact);
             for (let i = 0; i < this.contactList.length; i++) {
@@ -349,7 +340,7 @@ export class PersonalPage implements OnInit {
             "id": this.list.id,
             "nickname": this.list.personalDetail.nickname,
             "nric": this.list.personalDetail.nric.toString(),
-            "dob": moment(this._date.value.datepicker).format('YYYY-MM-DD'),
+            "dob": moment(this.date.value).format('YYYY-MM-DD'),
             "gender": genderStatus[this.list.personalDetail.gender],
             "maritalStatus": maritalStatus[this.list.personalDetail.maritalStatus],
             "race": this.list.personalDetail.race,
@@ -359,8 +350,8 @@ export class PersonalPage implements OnInit {
             "emailAddress": this.list.personalDetail.emailAddress,
             "workPhoneNumber": this.list.personalDetail.workPhoneNumber.toString(),
             "workEmailAddress": this.list.personalDetail.workEmailAddress,
-            "address1": this.list.personalDetail.residentialAddress1.toString(),
-            "address2": this.list.personalDetail.residentialAddress2.toString(),
+            "address1": this.list.personalDetail.address1.toString(),
+            "address2": this.list.personalDetail.address2.toString(),
             "postcode": this.list.personalDetail.postcode.toString(),
             "city": this.list.personalDetail.city,
             "state": this.list.personalDetail.state,

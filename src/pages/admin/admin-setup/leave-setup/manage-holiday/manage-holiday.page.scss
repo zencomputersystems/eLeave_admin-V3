@@ -60,4 +60,17 @@
   .button-outline {
     --border-width: 1px;
   }
+  // full calendar
+  ::ng-deep .fc-toolbar > * > :not(:first-child) {
+    text-transform: capitalize;
+  }
+  ::ng-deep .fc-button-group > .fc-button:not(:last-child) {
+    text-transform: capitalize;
+  }
+  ::ng-deep .fc-button-group > .fc-button:not(:first-child) {
+    text-transform: capitalize;
+  }
+  ::ng-deep .fc-button-group > .fc-button:not(:last-child) {
+    text-transform: capitalize;
+  }
 }
