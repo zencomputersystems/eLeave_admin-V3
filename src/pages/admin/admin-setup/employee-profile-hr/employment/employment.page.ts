@@ -75,6 +75,20 @@ export class EmploymentPage implements OnInit {
     public branch: string;
 
     /**
+     * user list details from API
+     * @type {*}
+     * @memberof EmploymentPage
+     */
+    public data: any;
+
+    /**
+     * filtered reporting name from employee id
+     * @type {string}
+     * @memberof EmploymentPage
+     */
+    public reportingName: string;
+
+    /**
      * Return value from personal details
      * @readonly
      * @memberof EmploymentPage
@@ -98,6 +112,7 @@ export class EmploymentPage implements OnInit {
      * @memberof EmploymentPage
      */
     constructor(private apiService: APIService) {
+
     }
 
     ngOnInit() {
@@ -123,6 +138,7 @@ export class EmploymentPage implements OnInit {
         this.apiService.get_employment_details(id).subscribe(
             data => {
                 this.employmentlist = data;
+                this.reporting();
                 this.dateJoin = new FormControl((this.employmentlist.employmentDetail.dateOfJoin), Validators.required);
                 this.employmentlist.employmentDetail.dateOfJoin = moment(this.employmentlist.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
                 this.dateConfirm = new FormControl((this.employmentlist.employmentDetail.dateOfConfirmation), Validators.required);
@@ -131,6 +147,21 @@ export class EmploymentPage implements OnInit {
                 this.employmentlist.employmentDetail.dateOfResign = moment(this.employmentlist.employmentDetail.dateOfResign).format('DD-MM-YYYY');
                 this.status = employeeStatus[this.employmentlist.employmentDetail.employmentStatus];
             })
+    }
+
+    /**
+     * filter employee reporting superior name
+     * @memberof EmploymentPage
+     */
+    reporting() {
+        this.apiService.get_user_profile_list().subscribe(data => {
+            this.data = data;
+            for (let i = 0; i < this.data.length; i++) {
+                if (this.data[i].userId === this.employmentlist.employmentDetail.reportingTo) {
+                    this.reportingName = this.data[i].employeeName;
+                }
+            }
+        })
     }
 
 

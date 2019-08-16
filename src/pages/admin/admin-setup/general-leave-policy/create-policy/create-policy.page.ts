@@ -355,7 +355,7 @@ export class CreatePolicyPage implements OnInit {
             this.email = false;
             this.message('saved successfully');
         }, error => {
-            window.location.href = '/login';
+            // window.location.href = '/login';
             this.message('saved unsuccessfully');
         });
     }
@@ -374,7 +374,7 @@ export class CreatePolicyPage implements OnInit {
             this.message('saved successfully');
             this.showSmallSpinner = false;
         }, error => {
-            window.location.href = '/login';
+            // window.location.href = '/login';
             this.message('saved unsuccessfully');
         })
     }

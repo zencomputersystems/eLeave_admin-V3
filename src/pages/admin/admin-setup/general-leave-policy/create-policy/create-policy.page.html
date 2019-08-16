@@ -46,7 +46,7 @@
                     <input matInput formControlName="everyoneLevel" required><span matSuffix>level</span>
                 </mat-form-field>
                 <mat-form-field style="font-size: 13px;width: 175px;color:#7a8589;padding-left: 53px;display:block"
-                    *ngIf="showEscalateDay">
+                    *ngIf="showEscalateDay || radioValue === 'Everyone'">
                     <mat-label>Escalate after</mat-label>
                     <input matInput formControlName="escalateAfterDays" required><span matSuffix>days</span>
                 </mat-form-field>

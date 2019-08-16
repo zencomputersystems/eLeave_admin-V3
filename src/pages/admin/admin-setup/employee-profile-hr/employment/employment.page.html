@@ -52,7 +52,7 @@
                 <img src="assets/icon/avatar.jpg">
             </ion-avatar>
             <p *ngIf="!edit" style="color: #057dcd; display: inline;position: absolute;top: 31px;left: 37px;">
-                {{employmentPersonalList.employmentDetail.reportingTo}}
+                {{reportingName}}
             </p>
             <mat-form-field *ngIf="edit" style="padding-left: 5px;">
                 <input matInput [(ngModel)]="employmentlist.employmentDetail.reportingTo">
