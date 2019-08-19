@@ -353,12 +353,22 @@ export class InviteListPage implements OnInit {
             data: { name: employeeName, value: id }
         });
         dialog.afterClosed().subscribe(result => {
-            if (result === id) {
-                this.apiService.delete_user(id).subscribe(response => {
-                    this.endPoint();
-                })
-            }
+            this.getResult(result, id);
         });
+    }
+
+    /**
+     * confirmation to delete user
+     * @param {string} result
+     * @param {string} id
+     * @memberof InviteListPage
+     */
+    getResult(result: string, id: string) {
+        if (result === id) {
+            this.apiService.delete_user(id).subscribe(response => {
+                this.endPoint();
+            })
+        }
     }
 
     /**
@@ -371,16 +381,27 @@ export class InviteListPage implements OnInit {
         const create = { index: index, itemId: item.id };
         const items = create;
         if (this.favouriteList.length > 0 && this.checkUserID(item.id)) {
-            for (let i = 0; i < this.favouriteList.length; i++) {
-                if (this.favouriteList[i].index == index && this.favouriteList[i].itemId == item.id) {
-                    this.favouriteList.splice(i, 1);
-                }
-            }
+            this.favouriteChecking(this.favouriteList, index, item);
         } else if (this.favouriteList.length > 0 && !this.checkUserID(item.id)) {
             this.favouriteList.push(items);
         } else {
             this.favouriteList.push(items);
         }
     };
+
+    /**
+     * checking star favourite
+     * @param {*} list
+     * @param {number} index
+     * @param {*} item
+     * @memberof InviteListPage
+     */
+    favouriteChecking(list: any, index: number, item: any) {
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].index == index && list[i].itemId == item.id) {
+                list.splice(i, 1);
+            }
+        }
+    }
 
 }

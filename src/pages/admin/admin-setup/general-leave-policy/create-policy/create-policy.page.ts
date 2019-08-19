@@ -1,10 +1,10 @@
 import { OnInit, Component } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { PolicyAPIService } from "../policy-api.service";
-import { LeaveAPIService } from "../../leave-setup/leave-api.service";
 import { MatSnackBar } from "@angular/material";
 import { SnackbarNotificationPage } from "../../leave-setup/snackbar-notification/snackbar-notification";
 import { ActivatedRoute } from "@angular/router";
+import { APIService } from "src/services/shared-service/api.service";
 
 /**
  * create new general leave policy & edit policy page
@@ -32,13 +32,6 @@ export class CreatePolicyPage implements OnInit {
      * @memberof CreatePolicyPage
      */
     public policyList: any;
-
-    /**
-     * show edit policy page when URL is edit-policy
-     * @type {boolean}
-     * @memberof CreatePolicyPage
-     */
-    public showEditPolicy: boolean = false;
 
     /**
      * show spinner during loading page
@@ -168,12 +161,12 @@ export class CreatePolicyPage implements OnInit {
     /**
      *Creates an instance of CreatePolicyPage.
      * @param {PolicyAPIService} policyApi
-     * @param {LeaveAPIService} leaveAPi
+     * @param {APIService} apiService
      * @param {MatSnackBar} snackbar
      * @param {ActivatedRoute} route
      * @memberof CreatePolicyPage
      */
-    constructor(private policyApi: PolicyAPIService, private leaveAPi: LeaveAPIService, private snackbar: MatSnackBar, private route: ActivatedRoute) {
+    constructor(private policyApi: PolicyAPIService, private apiService: APIService, private snackbar: MatSnackBar, private route: ActivatedRoute) {
         this.policyForm = new FormGroup(
             {
                 company: new FormControl(null, Validators.required),
@@ -189,15 +182,12 @@ export class CreatePolicyPage implements OnInit {
     }
 
     ngOnInit() {
-        if (this.route.routeConfig.path.includes('edit-policy')) {
-            this.route.params.subscribe(params => { this._companyGUID = params.id; });
-            this.showEditPolicy = true;
-            this.policyApi.get_general_leave_policy_id(this._companyGUID).subscribe(list => {
-                this.policyList = list;
-                this.editPolicyDetails();
-            })
-        }
-        this.leaveAPi.get_company_list().subscribe(data => {
+        this.route.params.subscribe(params => { this._companyGUID = params.id; });
+        this.policyApi.get_general_leave_policy_id(this._companyGUID).subscribe(list => {
+            this.policyList = list;
+            this.editPolicyDetails();
+        })
+        this.apiService.get_company_list().subscribe(data => {
             this.list = data;
             this.showContainer = true;
             this.showSpinner = false;
@@ -224,6 +214,14 @@ export class CreatePolicyPage implements OnInit {
         this.policyForm.controls.CFMonth.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.month;
         this.policyForm.controls.CFDay.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.day;
         this.yearEnd = this.policyList.PROPERTIES_XML.allowYearEndClosing.value;
+        this.editPolicy();
+    }
+
+    /**
+     * get the details from Id of company GUID
+     * @memberof CreatePolicyPage
+     */
+    editPolicy() {
         this.policyForm.controls.YEMonth.value = this.policyList.PROPERTIES_XML.allowYearEndClosing.month;
         this.policyForm.controls.YEDay.value = this.policyList.PROPERTIES_XML.allowYearEndClosing.day;
         this.policyForm.controls.YEChoice.value = this.policyList.PROPERTIES_XML.allowYearEndClosing.relativeYear;
@@ -328,6 +326,14 @@ export class CreatePolicyPage implements OnInit {
         this._data.forfeitCFLeave.value = this.CF;
         this._data.forfeitCFLeave.day = this.policyForm.controls.CFDay.value;
         this._data.forfeitCFLeave.month = this.policyForm.controls.CFMonth.value;
+        this.getYearEndClosing();
+    }
+
+    /**
+     * data that created to POST to backend API
+     * @memberof CreatePolicyPage
+     */
+    getYearEndClosing() {
         this._data.allowYearEndClosing = {};
         this._data.allowYearEndClosing.value = this.yearEnd;
         this._data.allowYearEndClosing.day = this.policyForm.controls.YEDay.value;
