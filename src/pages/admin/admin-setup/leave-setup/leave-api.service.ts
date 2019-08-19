@@ -173,4 +173,15 @@ export class LeaveAPIService {
         this.apiService.headerAuthorization();
         return this.apiService.patchApi(value, '/api/admin/approval-override');
     }
+
+    /**
+     * update leave adjustment number of day
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof LeaveAPIService
+     */
+    patch_leave_adjustment(data): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.patchApi(data, '/api/admin/leave-adjustment');
+    }
 }

@@ -30,6 +30,7 @@ import { ApplyOnBehalfPage } from './apply-on-behalf/apply-on-behalf.page';
 import { MatRadioModule, MatDialogModule } from '@angular/material';
 import { LeaveSetup } from './leave-setup';
 import { ApprovalOverridePage } from './approval-override/approval-override.page';
+import { LeaveAdjustmentPage } from './leave-adjustment/leave-adjustment.page';
 
 
 const routes: Routes = [
@@ -69,6 +70,6 @@ const routes: Routes = [
     providers: [EmployeeListDatabase],
     entryComponents: [SnackbarNotificationPage],
     declarations: [ManageHolidayPage, LeaveSetup, AssignCalendarPage, SnackbarNotificationPage,
-        SetupCalendarProfilePage, ApplyOnBehalfPage, ApprovalOverridePage]
+        SetupCalendarProfilePage, ApplyOnBehalfPage, ApprovalOverridePage, LeaveAdjustmentPage]
 })
 export class LeaveSetupModule { }

@@ -339,8 +339,9 @@ export class ApprovalOverridePage implements OnInit {
             "remark": this.approvalForm.controls.remark.value
         }
         this.leaveAPI.patch_approval_override(body).subscribe(response => {
-            this.notification('submitted successfully. ');
+            this.notification('submitted successfully ');
             this.filteredPendingList = [];
+            this.leaveTransactionGUID = [];
             this.showSmallSpinner = false;
             this.disableButton = true;
             this.filteredPendingList.forEach(element => {
