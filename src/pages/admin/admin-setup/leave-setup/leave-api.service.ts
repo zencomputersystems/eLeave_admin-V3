@@ -123,6 +123,16 @@ export class LeaveAPIService {
     }
 
     /**
+     * Get company list from API
+     * @returns {Observable<any>}
+     * @memberof LeaveAPIService
+     */
+    get_company_list(): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.getApi('/api/company');
+    }
+
+    /**
      * Request company details from given tenant ID
      * @param {*} tenantId
      * @returns {Observable<any>}

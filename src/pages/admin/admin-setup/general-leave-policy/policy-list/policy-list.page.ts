@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { APIService } from 'src/services/shared-service/api.service';
+import { LeaveAPIService } from '../../leave-setup/leave-api.service';
 
 /**
  * List for all leave policy
@@ -83,11 +83,11 @@ export class PolicyListPage implements OnInit {
      * @param {Router} router
      * @memberof PolicyListPage
      */
-    constructor(private router: Router, private apiService: APIService) { }
+    constructor(private router: Router, private leaveAPi: LeaveAPIService) { }
 
 
     ngOnInit() {
-        this.apiService.get_company_list().subscribe(data => {
+        this.leaveAPi.get_company_list().subscribe(data => {
             this.companyName = data;
             this.listOfPage(1);
             this.showSpinner = false;

@@ -377,7 +377,7 @@ export class ApplyOnBehalfPage implements OnInit {
      * @memberof ApplyLeavePage
      */
     ngOnInit() {
-        this.apiService.get_company_list().subscribe(
+        this.leaveAPI.get_company_list().subscribe(
             list => this.companyList = list);
         this.apiService.get_user_profile_list().subscribe(list =>
             this._userList = list

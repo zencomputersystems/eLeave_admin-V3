@@ -137,7 +137,7 @@ export class LeaveAdjustmentPage implements OnInit {
     }
 
     ngOnInit() {
-        this.apiService.get_company_list().subscribe(list => this.company = list);
+        this.leaveSetupAPI.get_company_list().subscribe(list => this.company = list);
         this.leaveSetupAPI.get_admin_leavetype().subscribe(list => this.leavetypeList = list);
     }
 

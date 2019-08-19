@@ -153,7 +153,7 @@ export class ApprovalOverridePage implements OnInit {
     }
 
     ngOnInit() {
-        this.apiService.get_company_list().subscribe(list => this.companyList = list)
+        this.leaveAPI.get_company_list().subscribe(list => this.companyList = list)
     }
 
     /**

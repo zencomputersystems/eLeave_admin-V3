@@ -178,16 +178,6 @@ export class APIService {
         return this.postApi(userId, '/api/invitation');
     }
 
-    /**
-     * Get company list from API
-     * @returns {Observable<any>}
-     * @memberof APIService
-     */
-    get_company_list(): Observable<any> {
-        this.headerAuthorization();
-        return this.getApi('/api/company');
-    }
-
 
 }
 
