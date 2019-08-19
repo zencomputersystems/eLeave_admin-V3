@@ -121,12 +121,12 @@ export class LeaveAdjustmentPage implements OnInit {
 
     /**
      *Creates an instance of LeaveAdjustmentPage.
-     * @param {LeaveAPIService} leaveAPI
+     * @param {LeaveAPIService} leaveSetupAPI
      * @param {APIService} apiService
      * @param {MatSnackBar} snackBar
      * @memberof LeaveAdjustmentPage
      */
-    constructor(private leaveAPI: LeaveAPIService, private apiService: APIService, private snackBar: MatSnackBar) {
+    constructor(private leaveSetupAPI: LeaveAPIService, private apiService: APIService, private snackBar: MatSnackBar) {
         this.adjustmentForm = new FormGroup({
             company: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),
@@ -137,8 +137,8 @@ export class LeaveAdjustmentPage implements OnInit {
     }
 
     ngOnInit() {
-        this.leaveAPI.get_company_list().subscribe(list => this.company = list);
-        this.leaveAPI.get_admin_leavetype().subscribe(list => this.leavetypeList = list);
+        this.leaveSetupAPI.get_company_list().subscribe(list => this.company = list);
+        this.leaveSetupAPI.get_admin_leavetype().subscribe(list => this.leavetypeList = list);
     }
 
     /**
@@ -149,14 +149,14 @@ export class LeaveAdjustmentPage implements OnInit {
     companySelected(guid) {
         this.showSpinner = true;
         this._companyGUID = guid;
-        this.leaveAPI.get_company_details(guid).subscribe(list => {
-            this.department = list.departmentList;
+        this.leaveSetupAPI.get_company_details(guid).subscribe(list => {
             this.showSpinner = false;
+            this.department = list.departmentList;
         })
     }
 
     /**
-     * select department & filter user list of selected department & company
+     * get user list from API
      * @param {*} name
      * @memberof LeaveAdjustmentPage
      */
@@ -166,13 +166,23 @@ export class LeaveAdjustmentPage implements OnInit {
         this.apiService.get_user_profile_list().subscribe(list => {
             this._userItems = list;
             this.showSpinner = false;
-            for (let i = 0; i < this._userItems.length; i++) {
-                if (this._userItems[i].department === name && this._userItems[i].companyId === this._companyGUID) {
-                    this.filteredUserItems.push(this._userItems[i]);
-                    this.filteredUserItems[this.filteredUserItems.length - 1].isChecked = false;
-                }
-            }
+            this.filterUserList(this._userItems, name);
         })
+    }
+
+    /**
+     * get user list to filter from selected compant & department
+     * @param {*} userList
+     * @param {string} name
+     * @memberof LeaveAdjustmentPage
+     */
+    filterUserList(userList: any, name: string) {
+        for (let i = 0; i < userList.length; i++) {
+            if (userList[i].department === name && userList[i].companyId === this._companyGUID) {
+                this.filteredUserItems.push(userList[i]);
+                this.filteredUserItems[this.filteredUserItems.length - 1].isChecked = false;
+            }
+        }
     }
 
     /**
@@ -273,7 +283,7 @@ export class LeaveAdjustmentPage implements OnInit {
             "userId": this._selectedUser,
             "reason": this.adjustmentForm.controls.reason.value
         };
-        this.leaveAPI.patch_leave_adjustment(data).subscribe(response => {
+        this.leaveSetupAPI.patch_leave_adjustment(data).subscribe(response => {
             this.openNotification('submitted successfully ');
             this.showSmallSpinner = false;
             this.filteredUserItems = [];
