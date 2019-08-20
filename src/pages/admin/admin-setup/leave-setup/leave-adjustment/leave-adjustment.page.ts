@@ -120,6 +120,14 @@ export class LeaveAdjustmentPage implements OnInit {
     private _selectedUser: any[] = [];
 
     /**
+     * value of days with symbol add or minus
+     * @private
+     * @type {number}
+     * @memberof LeaveAdjustmentPage
+     */
+    private _numberOfDays: number;
+
+    /**
      *Creates an instance of LeaveAdjustmentPage.
      * @param {LeaveAPIService} leaveSetupAPI
      * @param {APIService} apiService
@@ -132,7 +140,8 @@ export class LeaveAdjustmentPage implements OnInit {
             department: new FormControl('', Validators.required),
             leavetype: new FormControl('', Validators.required),
             reason: new FormControl('', Validators.required),
-            noOfDay: new FormControl('', Validators.required)
+            noOfDay: new FormControl('', Validators.required),
+            symbol: new FormControl('add', Validators.required)
         })
     }
 
@@ -168,6 +177,22 @@ export class LeaveAdjustmentPage implements OnInit {
             this.showSpinner = false;
             this.filterUserList(this._userItems, name);
         })
+    }
+
+    /**
+     * get entitled leave balance from requested userID 
+     * @param {*} leavetypeGUID
+     * @memberof LeaveAdjustmentPage
+     */
+    getLeaveEntitlement(leavetypeGUID) {
+        for (let i = 0; i < this.filteredUserItems.length; i++) {
+            this.leaveSetupAPI.get_entilement_details(this.filteredUserItems[i].userId).subscribe(data => {
+                for (let j = 0; j < data.length; j++) {
+                    if (data[j].LEAVE_TYPE_GUID === leavetypeGUID)
+                        this.filteredUserItems[i].entitlement = data[j].ENTITLED_DAYS;
+                }
+            })
+        }
     }
 
     /**
@@ -263,6 +288,11 @@ export class LeaveAdjustmentPage implements OnInit {
      * @memberof LeaveAdjustmentPage
      */
     getCheckedUser() {
+        if (this.adjustmentForm.controls.symbol.value === 'remove') {
+            this._numberOfDays = Number(-this.adjustmentForm.controls.noOfDay.value);
+        } else {
+            this._numberOfDays = Number(this.adjustmentForm.controls.noOfDay.value);
+        }
         this.filteredUserItems.forEach((element, i) => {
             if (element.isChecked) {
                 this._selectedUser.push(this.filteredUserItems[i].userId);
@@ -279,7 +309,7 @@ export class LeaveAdjustmentPage implements OnInit {
         this.showSmallSpinner = true;
         const data = {
             "leaveTypeId": this.adjustmentForm.controls.leavetype.value,
-            "noOfDays": Number(this.adjustmentForm.controls.noOfDay.value),
+            "noOfDays": this._numberOfDays,
             "userId": this._selectedUser,
             "reason": this.adjustmentForm.controls.reason.value
         };

@@ -45,7 +45,7 @@
                 <mat-select formControlName="leavetype" required>
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let leavetype of leavetypeList" [value]=leavetype.LEAVE_TYPE_GUID
-                        (click)="enableDisableSubmitButton(true)">
+                        (click)="enableDisableSubmitButton(true); getLeaveEntitlement(leavetype.LEAVE_TYPE_GUID)">
                         {{leavetype.CODE}}
                     </mat-option>
                 </mat-select>
@@ -53,14 +53,31 @@
             </mat-form-field>
         </div>
         <div style="display: block;width: 100%;">
-            <div style="width: 31%;display: inline-block;">
+            <div style="width: 10%;display: inline-block;">
                 <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
                     NO OF DAY</span>
                 <mat-form-field appearance="outline"
                     style="display: block;font-size: 13px;width: 100%;color:#7a8589;padding-left: 18px;">
+                    <mat-label>Symbol</mat-label>
+                    <mat-select formControlName="symbol" required>
+                        <mat-select-trigger>
+                            <mat-icon style="position: absolute;margin-top: -8px;">
+                                <i class="material-icons">{{adjustmentForm.controls.symbol.value}}</i></mat-icon>
+                        </mat-select-trigger>
+                        <mat-option value="add" (click)="enableDisableSubmitButton(true)">
+                            <mat-icon><i class="material-icons" style="display: flex;">add</i></mat-icon>
+                        </mat-option>
+                        <mat-option value="remove" (click)="enableDisableSubmitButton(true)">
+                            <mat-icon><i class="material-icons" style="display: flex;">remove</i></mat-icon>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div style="width: 21%;display: inline-block;">
+                <mat-form-field appearance="outline"
+                    style="display: block;font-size: 13px;width: 100%;color:#7a8589;padding-left: 5px;">
                     <mat-label>Please enter number of day</mat-label>
                     <input matInput formControlName="noOfDay" required (input)="enableDisableSubmitButton(true)">
-                    <mat-hint>Number of day can be in +ve or -ve value <br>(example: 1 or -1)</mat-hint>
                     <mat-error>No of day is <strong>required</strong></mat-error>
                 </mat-form-field>
             </div>
@@ -92,10 +109,10 @@
                 <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
             </ion-col>
             <ion-col size="3">
-                <ion-label style="font-size: 12px;">DEPARTMENT</ion-label>
-            </ion-col>
-            <ion-col size="2.5">
                 <ion-label style="font-size: 12px;">DESIGNATION</ion-label>
+            </ion-col>
+            <ion-col size="2" style="text-align: center;">
+                <ion-label style="font-size: 12px;">LEAVE ENTITLEMENT</ion-label>
             </ion-col>
         </ion-row>
         <ion-row class="detailsRow" *ngFor="let item of filteredUserItems; let i=index">
@@ -120,11 +137,11 @@
             </ion-col>
             <ion-col size="3" class="colOfLeave"
                 style="color:#7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                {{item.department}}
-            </ion-col>
-            <ion-col size="2.5" class="colOfLeave"
-                style="color:#7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                 {{item.designation}}
+            </ion-col>
+            <ion-col size="2" class="colOfLeave"
+                style="text-align: center;color:#7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                {{item.entitlement}}
             </ion-col>
             <ion-item class="divider" lines="full"></ion-item>
         </ion-row>

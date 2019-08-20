@@ -184,4 +184,17 @@ export class LeaveAPIService {
         this.apiService.headerAuthorization();
         return this.apiService.patchApi(data, '/api/admin/leave-adjustment');
     }
+
+    /**
+     * get requested user's entitlement details
+     * leave type, entitled day, balance, pending, taken
+     * @param {*} id
+     * @returns {Observable<any>}
+     * @memberof LeaveAPIService
+     */
+    get_entilement_details(id): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.getApiWithId('/api/leave-entitlement/', id);
+    }
+
 }
