@@ -28,11 +28,12 @@
   </ion-menu>
   <ion-router-outlet id="fullSideMenuContent" class="fullRouterOutlet">
     <ion-toolbar class="toolbar1">
-      <ion-avatar style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top: -5px;" [matMenuTriggerFor]="menu">
+      <ion-avatar style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top: -5px;"
+        [matMenuTriggerFor]="menu">
         <img src="assets/icon/avatar.jpg">
       </ion-avatar>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item >My Profile</button>
+        <button mat-menu-item>My Profile</button>
         <!-- (click)="router.navigate(['/main/employee-setup']);" -->
         <button mat-menu-item (click)="logout($event)">Logout</button>
       </mat-menu>
@@ -40,6 +41,10 @@
         {{personalList.employeeName}}
       </ion-label>
       <div class="verticalLine"></div>
+      <ion-label class="labelName" style="padding-right: 20px;" *ngIf="personalList">
+        Administrator
+      </ion-label>
+
       <!-- <div style="width:15px; float: right; height: 20px"></div>
       <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
       <div style="width: 12px; float:right; height: 20px"></div>
@@ -79,11 +84,12 @@
   </ion-menu>
   <ion-router-outlet id="iconSideMenuContent" class="iconRouterOutlet">
     <ion-toolbar class="toolbar1">
-      <ion-avatar style=" width: 32px; height: 32px; float: right; cursor: pointer;margin-top:-5px" [matMenuTriggerFor]="menu">
+      <ion-avatar style=" width: 32px; height: 32px; float: right; cursor: pointer;margin-top:-5px"
+        [matMenuTriggerFor]="menu">
         <img src="assets/icon/avatar.jpg">
       </ion-avatar>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item >My Profile</button>
+        <button mat-menu-item>My Profile</button>
         <!-- (click)="router.navigate(['/main/employee-setup']);" -->
         <button mat-menu-item (click)="logout($event)">Logout</button>
       </mat-menu>
@@ -91,6 +97,9 @@
         {{personalList.employeeName}}
       </ion-label>
       <div class="verticalLine"></div>
+      <ion-label class="labelName" style="padding-right: 20px;" *ngIf="personalList">
+        Administrator
+      </ion-label>
       <!-- <div style="width:15px; float: right; height: 20px"></div>
       <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
       <div style="width: 12px; float:right; height: 20px"></div>

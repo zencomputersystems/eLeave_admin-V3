@@ -115,7 +115,7 @@
     </ion-row>
     <ion-row class="detailsRow">
         <ion-col>
-            <ion-label>DATE OF TERMINATION</ion-label>
+            <ion-label>DATE OF RESIGNATION</ion-label>
             <p *ngIf="!edit">{{employmentPersonalList.employmentDetail.dateOfResign}}</p>
             <mat-form-field *ngIf="edit" style="width:67%">
                 <input matInput [matDatepicker]="dateOfResign" [formControl]="dateResign" required>
