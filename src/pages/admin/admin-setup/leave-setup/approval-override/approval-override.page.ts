@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LeaveAPIService } from '../leave-api.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { APIService } from 'src/services/shared-service/api.service';
 import { SnackbarNotificationPage } from '../snackbar-notification/snackbar-notification';
 import { MatSnackBar } from '@angular/material';
+import { ApprovalOverrideAPIService } from './approval-override-api.service';
 
 /**
  * override approval for pending leave applciation 
@@ -138,12 +138,11 @@ export class ApprovalOverridePage implements OnInit {
 
     /**
      *Creates an instance of ApprovalOverridePage.
-     * @param {LeaveAPIService} leaveAPI
-     * @param {APIService} apiService
+     * @param {ApprovalOverrideAPIService} approvalOverrideAPI
      * @param {MatSnackBar} snackBar
      * @memberof ApprovalOverridePage
      */
-    constructor(private leaveAPI: LeaveAPIService, private apiService: APIService, private snackBar: MatSnackBar) {
+    constructor(private approvalOverrideAPI: ApprovalOverrideAPIService, private snackBar: MatSnackBar) {
         this.approvalForm = new FormGroup({
             company: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),
@@ -153,7 +152,7 @@ export class ApprovalOverridePage implements OnInit {
     }
 
     ngOnInit() {
-        this.leaveAPI.get_company_list().subscribe(list => this.companyList = list)
+        this.approvalOverrideAPI.get_company_list().subscribe(list => this.companyList = list)
     }
 
     /**
@@ -182,11 +181,11 @@ export class ApprovalOverridePage implements OnInit {
     selectedCompany(company_guid) {
         this.showSpinner = true;
         this._companyId = company_guid;
-        this.leaveAPI.get_company_details(company_guid).subscribe(list => {
+        this.approvalOverrideAPI.get_company_detail(company_guid).subscribe(list => {
             this.departmentList = list.departmentList;
             this.showSpinner = false;
         })
-        this.leaveAPI.get_approval_override_list().subscribe(list => this._pendingList = list)
+        this.approvalOverrideAPI.get_approval_override_list().subscribe(list => this._pendingList = list)
     }
 
     /**
@@ -198,7 +197,7 @@ export class ApprovalOverridePage implements OnInit {
         this.filteredPendingList = [];
         this._filteredUserList = [];
         this.showSpinner = true;
-        this.apiService.get_user_profile_list().subscribe(list => {
+        this.approvalOverrideAPI.get_user_profile_list().subscribe(list => {
             this._userList = list;
             this.showSpinner = false;
             for (let i = 0; i < this._userList.length; i++) {
@@ -227,7 +226,7 @@ export class ApprovalOverridePage implements OnInit {
      * @memberof ApprovalOverridePage
      */
     getLeaveType(index: number, leaveTypeGuid: string) {
-        this.leaveAPI.get_admin_leavetype().subscribe(type => {
+        this.approvalOverrideAPI.get_admin_leavetype().subscribe(type => {
             this._leaveTypeList = type;
             for (let i = 0; i < this._leaveTypeList.length; i++) {
                 if (leaveTypeGuid === this._leaveTypeList[i].LEAVE_TYPE_GUID) {
@@ -338,7 +337,7 @@ export class ApprovalOverridePage implements OnInit {
             "status": this.approvalForm.controls.radio.value,
             "remark": this.approvalForm.controls.remark.value
         }
-        this.leaveAPI.patch_approval_override(body).subscribe(response => {
+        this.approvalOverrideAPI.patch_approval_override(body).subscribe(response => {
             this.notification('submitted successfully ');
             this.filteredPendingList = [];
             this.leaveTransactionGUID = [];

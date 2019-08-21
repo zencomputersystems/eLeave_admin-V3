@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { APIService } from 'src/services/shared-service/api.service';
 import { Subscription } from 'rxjs';
+import { AdminInvitesAPIService } from '../admin-invites-api.service';
 /**
  * Invite More Page
  * @export
@@ -72,14 +72,6 @@ export class InviteMorePage implements OnInit {
     private _inviteList: any = [];
 
     /**
-     * Add observable as disposable resource
-     * @private
-     * @type {Subscription}
-     * @memberof InviteMorePage
-     */
-    private _subscription: Subscription = new Subscription();
-
-    /**
      * To read component of searchbar
      * @type {*}
      * @memberof InviteMorePage
@@ -100,12 +92,12 @@ export class InviteMorePage implements OnInit {
      * @param {APIService} apiService
      * @memberof InviteMorePage
      */
-    constructor(private apiService: APIService) {
+    constructor(private inviteAPI: AdminInvitesAPIService) {
     }
 
     ngOnInit() {
         this.searchbar.setFocus();
-        this._subscription = this.apiService.get_user_profile_list().subscribe(
+        this.inviteAPI.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.employeeList = data;
                 this.filterList = data;
@@ -116,13 +108,6 @@ export class InviteMorePage implements OnInit {
                 }
             }
         );
-    }
-    /**
-     * Destroy or dispose subscription
-     * @memberof InviteMorePage
-     */
-    ngOnDestroy() {
-        this._subscription.unsubscribe();
     }
 
     /**
@@ -171,7 +156,7 @@ export class InviteMorePage implements OnInit {
      */
     reset(): void {
         this.showDropDown = false;
-        this._subscription = this.apiService.get_user_profile_list().subscribe(
+        this.inviteAPI.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.filterList = data;
             }
@@ -235,7 +220,7 @@ export class InviteMorePage implements OnInit {
         for (let i = 0; i < this.dataList.length; i++) {
             this._inviteList.push({ "id": this.dataList[i].id });
         }
-        this._subscription = this.apiService.post_user_invite(this._inviteList).subscribe(
+        this.inviteAPI.post_user_invite(this._inviteList).subscribe(
             (val) => {
                 console.log("PATCH call successful value returned in body", val);
             },

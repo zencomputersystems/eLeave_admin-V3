@@ -156,26 +156,15 @@ export class APIService {
     }
 
     /**
-     * Delete resigned user from user list
-     * @param {*} id
+     * This method is used to get any desired item
+     * department, designation, section, branch, bank, costcentre, country
+     * @param {*} item
      * @returns {Observable<any>}
      * @memberof APIService
      */
-    delete_user(id): Observable<any> {
+    get_master_list(item): Observable<any> {
         this.headerAuthorization();
-        return this.http.delete(this.baseUrl + '/api/users/' + id, { headers: this.headers })
-            .pipe(map((res: Response) => res.json()));
-    }
-
-    /**
-     * POST invited new user Id to endpoint
-     * @param {*} userId
-     * @returns {Observable<any>}
-     * @memberof APIService
-     */
-    post_user_invite(userId): Observable<any> {
-        this.headerAuthorization();
-        return this.postApi(userId, '/api/invitation');
+        return this.getApiWithId('/api/admin/master/', item);
     }
 
 

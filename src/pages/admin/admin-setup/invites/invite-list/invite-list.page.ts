@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { APIService } from 'src/services/shared-service/api.service';
 import { Router } from '@angular/router';
 import { DeleteListConfirmationPage } from '../delete-list-confirmation/delete-list-confirmation.page';
 import { MatDialog } from '@angular/material';
+import { AdminInvitesAPIService } from '../admin-invites-api.service';
 
 /**
  *
@@ -128,7 +128,7 @@ export class InviteListPage implements OnInit {
      * @param {Router} router
      * @memberof InviteListPage
      */
-    constructor(private apiService: APIService, public router: Router, public popUp: MatDialog) { }
+    constructor(private inviteAPI: AdminInvitesAPIService, public router: Router, public popUp: MatDialog) { }
 
     ngOnInit() {
         this.listView = false;
@@ -140,7 +140,7 @@ export class InviteListPage implements OnInit {
      * @memberof InviteListPage
      */
     endPoint() {
-        this.apiService.get_user_profile_list().subscribe(
+        this.inviteAPI.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
                 if (this.gridView) {
@@ -354,7 +354,7 @@ export class InviteListPage implements OnInit {
         });
         dialog.afterClosed().subscribe(result => {
             if (result === id) {
-                this.apiService.delete_user(id).subscribe(response => {
+                this.inviteAPI.delete_user(id).subscribe(response => {
                     this.endPoint();
                 })
             }

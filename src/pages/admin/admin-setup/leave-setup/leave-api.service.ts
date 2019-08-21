@@ -154,27 +154,6 @@ export class LeaveAPIService {
     }
 
     /**
-     * Get all the pending leave application list
-     * @returns {Observable<any>}
-     * @memberof LeaveAPIService
-     */
-    get_approval_override_list(): Observable<any> {
-        this.apiService.headerAuthorization();
-        return this.apiService.getApi('/api/admin/approval-override');
-    }
-
-    /**
-     * submit leave application status (approve, reject, cancel)
-     * @param {*} value
-     * @returns {Observable<any>}
-     * @memberof LeaveAPIService
-     */
-    patch_approval_override(value): Observable<any> {
-        this.apiService.headerAuthorization();
-        return this.apiService.patchApi(value, '/api/admin/approval-override');
-    }
-
-    /**
      * update leave adjustment number of day
      * @param {*} data
      * @returns {Observable<any>}
