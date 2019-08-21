@@ -289,9 +289,9 @@ export class LeaveAdjustmentPage implements OnInit {
      */
     getCheckedUser() {
         if (this.adjustmentForm.controls.symbol.value === 'remove') {
-            this._numberOfDays = Number(-this.adjustmentForm.controls.noOfDay.value);
+            this._numberOfDays = -this.adjustmentForm.controls.noOfDay.value;
         } else {
-            this._numberOfDays = Number(this.adjustmentForm.controls.noOfDay.value);
+            this._numberOfDays = this.adjustmentForm.controls.noOfDay.value;
         }
         this.filteredUserItems.forEach((element, i) => {
             if (element.isChecked) {
@@ -306,7 +306,6 @@ export class LeaveAdjustmentPage implements OnInit {
      */
     patchLeaveNumber() {
         this.getCheckedUser();
-        this.showSmallSpinner = true;
         const data = {
             "leaveTypeId": this.adjustmentForm.controls.leavetype.value,
             "noOfDays": this._numberOfDays,
@@ -317,6 +316,7 @@ export class LeaveAdjustmentPage implements OnInit {
             this.openNotification('submitted successfully ');
             this.showSmallSpinner = false;
             this.filteredUserItems = [];
+            this._selectedUser = [];
             this.filteredUserItems.forEach(element => {
                 element.isChecked = false;
             });

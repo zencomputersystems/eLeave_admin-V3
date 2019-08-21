@@ -15,10 +15,10 @@ import { RoleListPage } from 'src/pages/admin/admin-setup/role-management/role-l
 import { InviteListPage } from 'src/pages/admin/admin-setup/invites/invite-list/invite-list.page';
 import { AssignRolePage } from 'src/pages/admin/admin-setup/role-management/assign-role/assign-role.page';
 import { LeaveSetup } from 'src/pages/admin/admin-setup/leave-setup/leave-setup';
-import { SetupCalendarProfilePage } from 'src/pages/admin/admin-setup/leave-setup/setup-calendar-profile/setup-calendar-profile.page';
 import { GeneralLeavePolicyPage } from 'src/pages/admin/admin-setup/general-leave-policy/general-leave-policy.page';
 import { CreatePolicyPage } from 'src/pages/admin/admin-setup/general-leave-policy/create-policy/create-policy.page';
 import { PolicyListPage } from 'src/pages/admin/admin-setup/general-leave-policy/policy-list/policy-list.page';
+import { LeaveSetupTabPage } from 'src/pages/admin/admin-setup/leave-setup/leave-setup-tab/leave-setup-tab.page';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -33,7 +33,7 @@ export const sideMenuNavigationRoutes: Routes = [
                 path: 'leave-setup', component: LeaveSetup,
                 children: [
                     { path: '', redirectTo: 'tab', pathMatch: 'full' },
-                    { path: 'tab', component: SetupCalendarProfilePage }
+                    { path: 'tab', component: LeaveSetupTabPage }
                 ]
             },
             {

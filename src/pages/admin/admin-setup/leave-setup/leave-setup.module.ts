@@ -25,12 +25,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { EmployeeListDatabase } from './assign-calendar/assign-calendar-treeview.service';
-import { SetupCalendarProfilePage } from './setup-calendar-profile/setup-calendar-profile.page';
 import { ApplyOnBehalfPage } from './apply-on-behalf/apply-on-behalf.page';
 import { MatRadioModule, MatDialogModule } from '@angular/material';
 import { LeaveSetup } from './leave-setup';
 import { ApprovalOverridePage } from './approval-override/approval-override.page';
 import { LeaveAdjustmentPage } from './leave-adjustment/leave-adjustment.page';
+import { LeaveSetupTabPage } from './leave-setup-tab/leave-setup-tab.page';
+import { LeaveEntitlementByBatchPage } from './leave-entitlement-by-batch/leave-entitlement-by-batch.page';
 
 
 const routes: Routes = [
@@ -70,6 +71,6 @@ const routes: Routes = [
     providers: [EmployeeListDatabase],
     entryComponents: [SnackbarNotificationPage],
     declarations: [ManageHolidayPage, LeaveSetup, AssignCalendarPage, SnackbarNotificationPage,
-        SetupCalendarProfilePage, ApplyOnBehalfPage, ApprovalOverridePage, LeaveAdjustmentPage]
+        LeaveSetupTabPage, ApplyOnBehalfPage, ApprovalOverridePage, LeaveAdjustmentPage, LeaveEntitlementByBatchPage]
 })
 export class LeaveSetupModule { }
