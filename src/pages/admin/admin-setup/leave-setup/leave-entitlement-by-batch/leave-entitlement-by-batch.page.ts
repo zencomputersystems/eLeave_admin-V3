@@ -86,7 +86,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      * @type {boolean}
      * @memberof LeaveEntitlementByBatchPage
      */
-    public showCheckbox: boolean = false;
+    public hideAvatar: boolean = false;
 
     /**
      * show & hide spinner after clicked submit button
@@ -135,7 +135,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      */
     constructor(private leaveEntitlementAPI: LeaveEntitlementByBatchAPIService, private leaveAPI: LeaveAPIService, private snackBar: MatSnackBar) {
         this.entitlementBatch = new FormGroup({
-            company: new FormControl('', Validators.required),
+            tenant: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),
             leavetype: new FormControl('', Validators.required),
             entitlement_code: new FormControl('', Validators.required)
@@ -150,15 +150,15 @@ export class LeaveEntitlementByBatchPage implements OnInit {
 
     /**
      * select company & pass company guid to get department list
-     * @param {*} guid
+     * @param {*} company_guid
      * @memberof LeaveEntitlementByBatchPage
      */
-    companyClicked(guid: string) {
+    companyClicked(company_guid: string) {
         this.showSpinner = true;
-        this._company_GUID = guid;
-        this.leaveAPI.get_company_details(guid).subscribe(list => {
+        this._company_GUID = company_guid;
+        this.leaveAPI.get_company_details(company_guid).subscribe(item => {
+            this.departmentItems = item.departmentList;
             this.showSpinner = false;
-            this.departmentItems = list.departmentList;
         })
     }
 
@@ -212,13 +212,13 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      */
     mouseInOutEvent(mouseOver: boolean, checked: boolean) {
         if (checked && (this.checkMain || this.indeterminate)) {
-            this.showCheckbox = true;
+            this.hideAvatar = true;
         } else if (!checked && (this.checkMain || this.indeterminate)) {
-            this.showCheckbox = true;
+            this.hideAvatar = true;
         } else if (mouseOver && !checked && !this.indeterminate && !this.checkMain) {
-            this.showCheckbox = true;
+            this.hideAvatar = true;
         } else {
-            this.showCheckbox = false;
+            this.hideAvatar = false;
         }
     }
 
@@ -228,12 +228,12 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      */
     checkEvent() {
         setTimeout(() => {
-            this.filteredUser.forEach(item => {
-                item.isChecked = this.checkMain;
-                if (item.isChecked) {
-                    this.showCheckbox = true;
+            this.filteredUser.forEach(userList => {
+                userList.isChecked = this.checkMain;
+                if (userList.isChecked) {
+                    this.hideAvatar = true;
                 } else {
-                    this.showCheckbox = false;
+                    this.hideAvatar = false;
                 }
                 this.checkEnableDisableButton();
             });

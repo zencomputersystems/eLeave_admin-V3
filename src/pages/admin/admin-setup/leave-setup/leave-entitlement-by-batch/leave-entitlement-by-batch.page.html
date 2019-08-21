@@ -6,7 +6,7 @@
             <mat-form-field appearance="outline"
                 style="display: block;font-size: 13px;width: 100%;color:#7a8589;padding-left: 18px;">
                 <mat-label>Please select company tenant</mat-label>
-                <mat-select formControlName="company" required>
+                <mat-select formControlName="tenant" required>
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let company of companyItems" [value]=company.TENANT_COMPANY_GUID
                         (click)="companyClicked(company.TENANT_COMPANY_GUID);checkEnableDisableButton(true)">
@@ -95,8 +95,8 @@
                 <ion-avatar class="avatar" (mouseover)="mouseInOutEvent(true, item.isChecked)"
                     (mouseout)="mouseInOutEvent(false, item.isChecked)">
                     <img src="assets/icon/evans.jpg" style="margin-left: -4px;"
-                        [style.display]="showCheckbox ? 'none' : 'block'">
-                    <div class="checkboxOnAvatar" [style.display]="showCheckbox ? 'block' : 'none'">
+                        [style.display]="hideAvatar ? 'none' : 'block'">
+                    <div class="checkboxOnAvatar" [style.display]="hideAvatar ? 'block' : 'none'">
                         <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;margin-top: 7px;"
                             [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
                         </ion-checkbox>
