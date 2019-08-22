@@ -52,7 +52,7 @@
             <ion-col size="3.5">
                 <ion-label style="font-size: 12px;">DESIGNATION</ion-label>
             </ion-col>
-            <ion-col size="2">
+            <ion-col size="1.5">
                 <ion-label style="font-size: 12px;">STATUS</ion-label>
             </ion-col>
             <ion-col>
@@ -75,12 +75,19 @@
             </ion-col>
             <ion-col class="colOfLeave" size="3.5" style="color:#7a8589; font-size: 13px;">{{item.designation}}
             </ion-col>
-            <ion-col class="colOfLeave" size="2" style="color:#7a8589; font-size: 13px;">{{item.status}}
+            <ion-col class="colOfLeave" size="1.5" style="color:#7a8589; font-size: 13px;">{{item.status}}
             </ion-col>
             <ion-col>
-                <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'"
-                    (click)="deleteUser(item.employeeName, item.userId)">
-                </div>
+                <!-- <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'" [matMenuTriggerFor]="menu">
+                </div> -->
+                <ion-icon class="more" name="more" [matMenuTriggerFor]="menu"></ion-icon>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item style="color: #7a8589">Enable</button>
+                    <button mat-menu-item style="color: #7a8589">Disable</button>
+                    <button mat-menu-item style="color: #7a8589" (click)="deleteUser(item.employeeName, item.userId)">
+                        Delete
+                    </button>
+                </mat-menu>
             </ion-col>
             <ion-item class="divider" lines="full"></ion-item>
         </ion-row>

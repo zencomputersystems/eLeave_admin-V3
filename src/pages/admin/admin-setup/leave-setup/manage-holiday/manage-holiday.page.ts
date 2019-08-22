@@ -11,9 +11,9 @@ const moment = _moment;
 import { getDataSet, reduce } from "iso3166-2-db";
 import { MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 import { APP_DATE_FORMATS, AppDateAdapter } from '../date.adapter';
-import { LeaveAPIService } from '../leave-api.service';
-import { MatSnackBar } from '@angular/material';
-import { SnackbarNotificationPage } from '../snackbar-notification/snackbar-notification';
+import { MatDialog } from '@angular/material';
+import { ManageHolidayAPIService } from './manage-holiday-api.service';
+import { DeleteCalendarConfirmationPage } from '../delete-calendar-confirmation/delete-calendar-confirmation.page';
 
 /**
  * Manage holiday and rest day for employee
@@ -199,7 +199,7 @@ export class ManageHolidayPage implements OnInit {
      * @param {TitleCasePipe} titlecasePipe
      * @memberof ManageHolidayPage
      */
-    constructor(private leaveAPI: LeaveAPIService, private titlecasePipe: TitleCasePipe, private snackBar: MatSnackBar) {
+    constructor(private manageHolidayAPI: ManageHolidayAPIService, private titlecasePipe: TitleCasePipe, public displayDialog: MatDialog) {
     }
 
     ngOnInit() {
@@ -239,7 +239,7 @@ export class ManageHolidayPage implements OnInit {
      */
     getPublicHolidayList() {
         this.showSpinner = true;
-        this.leaveAPI.get_public_holiday_list().subscribe(
+        this.manageHolidayAPI.get_public_holiday_list().subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
                 this.list = data;
@@ -265,7 +265,7 @@ export class ManageHolidayPage implements OnInit {
      * @memberof ManageHolidayPage
      */
     getProfileList() {
-        this.leaveAPI.get_calendar_profile_list().subscribe(
+        this.manageHolidayAPI.get_calendar_profile_list().subscribe(
             (data: any[]) => {
                 this.profileList = data;
                 this.showSpinner = false;
@@ -293,10 +293,10 @@ export class ManageHolidayPage implements OnInit {
                 "rest": this.selectedWeekday
             }
         }
-        this.leaveAPI.patch_calendar_profile(body).subscribe(
+        this.manageHolidayAPI.patch_calendar_profile(body).subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
-                this.notification('submitted successfully ');
+                this.manageHolidayAPI.notification('submitted successfully ');
                 this.restDay = [];
                 this.selectedWeekday = [];
                 this.editCalendarForm.reset();
@@ -307,17 +307,7 @@ export class ManageHolidayPage implements OnInit {
             })
     }
 
-    /**
-     * Show notification after submit
-     * @param {string} text
-     * @memberof ManageHolidayPage
-     */
-    notification(text: string) {
-        this.snackBar.openFromComponent(SnackbarNotificationPage, {
-            duration: 3000,
-            data: text
-        });
-    }
+
 
     /**
      * Select calendar profile to pass the calendar Id to API
@@ -329,7 +319,7 @@ export class ManageHolidayPage implements OnInit {
         this.showSpinner = true;
         this.selectedCalendarProfile = list;
         this.restDay = [];
-        this.leaveAPI.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid).subscribe(
+        this.manageHolidayAPI.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid).subscribe(
             (data: any) => {
                 this.showSpinner = false;
                 this.personalProfile = data;
@@ -409,7 +399,7 @@ export class ManageHolidayPage implements OnInit {
         this.editCalendar = true;
         this.addCalendar = false;
         const params = { 'country': this.countryIso, 'location': this.regionISO, 'year': year, 'month': month, };
-        this.leaveAPI.get_public_holiday_list(params).subscribe(
+        this.manageHolidayAPI.get_public_holiday_list(params).subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
                 this.items = data;
@@ -473,10 +463,10 @@ export class ManageHolidayPage implements OnInit {
             "holiday": this.events,
             "rest": this.selectedWeekday
         }
-        this.leaveAPI.post_calendar_profile(newProfile).subscribe(
+        this.manageHolidayAPI.post_calendar_profile(newProfile).subscribe(
             response => {
                 this.showSpinner = false;
-                this.notification('submitted successfully ');
+                this.manageHolidayAPI.notification('submitted successfully ');
                 this.getProfileList();
             });
         this.restDay = [];
@@ -495,24 +485,28 @@ export class ManageHolidayPage implements OnInit {
         this.showSpinner = true;
         this.deleteCalendar = false;
         this.reformatHolidayObject(this.events);
-        this.leaveAPI.delete_calendar_profile(this.selectedCalendarProfile.calendar_guid).subscribe(response => {
-            this.showSpinner = false;
-            this.notification('deleted successfully ');
-            this.editCalendarForm.reset();
-            this.getProfileList();
-            setTimeout(() => {
-                this.getPublicHolidayList();
-            }, 100);
-        })
+        this.deleteCalendarProfile();
     }
 
     /**
-     * Calculate height
-     * @param {*} event
+     * Delete the calendar profile after confirm by admin
      * @memberof ManageHolidayPage
      */
-    onResize(event) {
-        this.height = (event.target.innerHeight - 153) - (5 / 100)
+    deleteCalendarProfile() {
+        const dialog = this.displayDialog.open(DeleteCalendarConfirmationPage, {
+            data: { name: this.selectedCalendarProfile.code, value: this.selectedCalendarProfile.calendar_guid }
+        });
+        dialog.afterClosed().subscribe(result => {
+            if (result === this.selectedCalendarProfile.calendar_guid) {
+                this.manageHolidayAPI.delete_calendar_profile(this.selectedCalendarProfile.calendar_guid).subscribe(response => {
+                    this.manageHolidayAPI.notification('deleted successfully ');
+                })
+            }
+            this.showSpinner = false;
+            this.editCalendarForm.reset();
+            this.getProfileList();
+            setTimeout(() => { this.getPublicHolidayList(); }, 100);
+        });
     }
 
 }

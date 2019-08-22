@@ -17,7 +17,7 @@ import { InviteMorePage } from './inivite-more/invite-more.page';
 import { InviteListPage } from './invite-list/invite-list.page';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { DeleteListConfirmationPage } from './delete-list-confirmation/delete-list-confirmation.page';
-import { MatDialogModule, MatButtonModule } from '@angular/material';
+import { MatDialogModule, MatButtonModule, MatMenuModule } from '@angular/material';
 
 
 const routes: Routes = [
@@ -43,6 +43,7 @@ const routes: Routes = [
         SpinnerModule,
         MatDialogModule,
         MatButtonModule,
+        MatMenuModule,
         RouterModule.forChild(routes)
     ],
     entryComponents: [DeleteListConfirmationPage],

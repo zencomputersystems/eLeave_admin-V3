@@ -126,9 +126,9 @@ export class RoleListPage implements OnInit {
      * @param {*} role_guid
      * @memberof RoleListPage
      */
-    delete(role_guid) {
+    delete(role_guid: string, role_name: string) {
         const dialogRef = this.dialog.open(DialogDeleteConfirmationPage, {
-            data: role_guid
+            data: { value: role_guid, name: role_name }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result === role_guid) {

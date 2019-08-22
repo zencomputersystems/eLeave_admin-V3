@@ -76,11 +76,11 @@ export class SideMenuNavigationComponent implements OnInit {
       url: '/main/dashboard',
       icon: 'dashboard.svg'
     },
-    {
-      title: 'Inbox',
-      url: '/main/inbox',
-      icon: 'inbox.svg'
-    },
+    // {
+    //   title: 'Inbox',
+    //   url: '/main/inbox',
+    //   icon: 'inbox.svg'
+    // },
     {
       title: 'Leave Setup',
       url: '/main/leave-setup',

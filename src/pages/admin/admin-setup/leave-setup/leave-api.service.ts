@@ -30,17 +30,6 @@ export class LeaveAPIService {
     }
 
     /**
-     * Get public holiday JSON data from endpoint calendarific
-     * @returns {Observable<any>}
-     * @memberof LeaveAPIService
-     */
-    get_public_holiday_list(param?): Observable<any> {
-        this.apiService.headerAuthorization();
-        return this.http.get(this.baseUrl + '/api/admin/holiday/calendar', { params: param, headers: this.apiService.headers })
-            .pipe(map((res: Response) => res.json()))
-    }
-
-    /**
      * Get all calendar profile list 
      * [{ "calendar_guid": "075f64d0-8cf1-11e9-805c-2f26cd7ad959", "code": "profile 1" }]
      * @returns {Observable<any>}
@@ -49,28 +38,6 @@ export class LeaveAPIService {
     get_calendar_profile_list(): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.getApi('/api/admin/holiday/calendar-profile');
-    }
-
-    /**
-     * Update calendar for specific calendar Id profile (each employee)
-     * @param {*} profileBody
-     * @returns {Observable<any>}
-     * @memberof LeaveAPIService
-     */
-    patch_calendar_profile(profileBody): Observable<any> {
-        this.apiService.headerAuthorization();
-        return this.apiService.patchApi(profileBody, '/api/admin/holiday/calendar-profile');
-    }
-
-    /**
-     * Setup new calendar profile with different holiday or rest day
-     * @param {*} newProfile
-     * @returns {Observable<any>}
-     * @memberof LeaveAPIService
-     */
-    post_calendar_profile(newProfile): Observable<any> {
-        this.apiService.headerAuthorization();
-        return this.apiService.postApi(newProfile, '/api/admin/holiday/calendar-profile');
     }
 
     /**
@@ -94,18 +61,6 @@ export class LeaveAPIService {
     patch_assign_calendar_profile(body): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.patchApi(body, '/api/admin/holiday/user-calendar');
-    }
-
-    /**
-     * Delete calendar profile
-     * @param {*} id
-     * @returns {Observable<any>}
-     * @memberof LeaveAPIService
-     */
-    delete_calendar_profile(id): Observable<any> {
-        this.apiService.headerAuthorization();
-        return this.http.delete(this.baseUrl + '/api/admin/holiday/calendar-profile/' + id, { headers: this.apiService.headers })
-            .pipe(map((res: Response) => res));
     }
 
     /**

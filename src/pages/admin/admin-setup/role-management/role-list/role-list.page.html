@@ -41,7 +41,7 @@
                         <div class="edit-pencil-icon" [inlineSVG]="'assets/icon/option/pencil.svg'"
                             (click)="getRoleId(role.role_guid)"></div>
                         <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'"
-                            (click)="delete(role.role_guid)"></div>
+                            (click)="delete(role.role_guid, role.code)"></div>
                     </ion-col>
                     <ion-item class="divider" lines="full"></ion-item>
                 </ion-row>

@@ -92,6 +92,19 @@ export class APIService {
     }
 
     /**
+     * DELETE endpoint 
+     * @param {string} value
+     * @param {string} add
+     * @returns
+     * @memberof APIService
+     */
+    deleteApi(value: string, add: string) {
+        return this.http.delete(this.baseUrl + add + value, { headers: this.headers })
+            .pipe(map((res: Response) => res.json()
+            ));
+    }
+
+    /**
      * Get personal details JSON data from API
      * @returns {Observable<any>}
      * @memberof APIService

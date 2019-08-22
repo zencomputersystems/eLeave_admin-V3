@@ -27,8 +27,8 @@ export const sideMenuNavigationRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-            { path: 'dashboard', component: EmployeeProfilePage },
-            { path: 'inbox', component: AddEmployeePage }, // AddEmployeePage //EmployeeProfilePage
+            { path: 'dashboard', component: PageNotFoundComponent },
+            // { path: 'inbox', component: AddEmployeePage }, // AddEmployeePage //EmployeeProfilePage
             {
                 path: 'leave-setup', component: LeaveSetup,
                 children: [

@@ -1,16 +1,12 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { APIService } from "src/services/shared-service/api.service";
 import { FormGroup, Validators, FormControl, FormArray } from "@angular/forms";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import listYear from '@fullcalendar/list';
 import { EventInput } from "@fullcalendar/core";
 import { FullCalendarComponent } from "@fullcalendar/angular";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { SnackbarNotificationPage } from "../snackbar-notification/snackbar-notification";
 import { EmployeeTreeview } from "./employee-treeview.service";
-import { LeaveAPIService } from "../leave-api.service";
-
+import { AssignCalendarAPIService } from "./assign-calendar-api.service";
 
 /**
  * Assign Calendar Page
@@ -111,13 +107,12 @@ export class AssignCalendarPage implements OnInit {
 
     /**
      *Creates an instance of AssignCalendarPage.
-     * @param {APIService} apiService
-     * @param {LeaveAPIService} leaveAPI
+     * @param {AssignCalendarAPIService} assignCalendarAPI
      * @param {MatSnackBar} snackBar
      * @param {EmployeeTreeview} treeview
      * @memberof AssignCalendarPage
      */
-    constructor(private apiService: APIService, private leaveAPI: LeaveAPIService, private snackBar: MatSnackBar, private treeview: EmployeeTreeview) {
+    constructor(private assignCalendarAPI: AssignCalendarAPIService, private treeview: EmployeeTreeview) {
     }
 
     ngOnInit() {
@@ -125,11 +120,11 @@ export class AssignCalendarPage implements OnInit {
             user: new FormArray([]),
             calendar: new FormControl('', Validators.required)
         })
-        this.apiService.get_user_profile_list().subscribe(
+        this.assignCalendarAPI.get_user_list().subscribe(
             data => {
                 this.userList = data;
             });
-        this.leaveAPI.get_calendar_profile_list().subscribe(
+        this.assignCalendarAPI.get_calendar_profile_list().subscribe(
             data => {
                 this.calendarList = data;
             });
@@ -149,7 +144,7 @@ export class AssignCalendarPage implements OnInit {
         this.showSpinner = true;
         this.selectedCalendarId = calendarId;
         this.disabledButton();
-        this.leaveAPI.get_personal_holiday_calendar(calendarId).subscribe(
+        this.assignCalendarAPI.get_personal_holiday_calendar(calendarId).subscribe(
             (data: any) => {
                 this.events = data.holiday;
                 for (let i = 0; i < this.events.length; i++) {
@@ -198,7 +193,7 @@ export class AssignCalendarPage implements OnInit {
                 this.employeeList.push(this.userList[index].userId);
             }
         }
-        this.leaveAPI.patch_assign_calendar_profile({
+        this.assignCalendarAPI.patch_assign_calendar_profile({
             "user_guid": this.employeeList,
             "calendar_guid": this.selectedCalendarId
         }).subscribe(response => {
@@ -208,24 +203,14 @@ export class AssignCalendarPage implements OnInit {
             this.showSelectedTree = false;
             this.showSpinner = false;
             this.treeview.checklistSelection.clear();
-            this.openSnackBar('submitted successfully');
+            this.assignCalendarAPI.openSnackBar('submitted successfully');
         }, error => {
-                this.openSnackBar('submitted unsuccessfully');
-                window.location.href = '/login';
+            this.assignCalendarAPI.openSnackBar('submitted unsuccessfully');
+            window.location.href = '/login';
         });
     }
 
-    /**
-     * Display message after submitted calendar profile
-     * @param {string} message
-     * @memberof AssignCalendarPage
-     */
-    openSnackBar(message: string) {
-        this.snackBar.openFromComponent(SnackbarNotificationPage, {
-            duration: 2500,
-            data: message
-        });
-    }
+
 
     /**
      * Closed div after clicked outside of div

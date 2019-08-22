@@ -71,7 +71,7 @@
         </ion-button>
     </div>
 
-    <div class='app-calendar' (window:resize)="onResize($event)">
+    <div class='app-calendar' (window:resize)="height = ($event.target.innerHeight - 153) - (5 / 100)">
         <full-calendar #calendar defaultView="dayGridMonth" [header]="{
                           left: 'prev,next today',
                           center: 'title',

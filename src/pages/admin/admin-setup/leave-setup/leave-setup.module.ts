@@ -32,6 +32,7 @@ import { ApprovalOverridePage } from './approval-override/approval-override.page
 import { LeaveAdjustmentPage } from './leave-adjustment/leave-adjustment.page';
 import { LeaveSetupTabPage } from './leave-setup-tab/leave-setup-tab.page';
 import { LeaveEntitlementByBatchPage } from './leave-entitlement-by-batch/leave-entitlement-by-batch.page';
+import { DeleteCalendarConfirmationPage } from './delete-calendar-confirmation/delete-calendar-confirmation.page';
 
 
 const routes: Routes = [
@@ -69,8 +70,8 @@ const routes: Routes = [
         RouterModule.forChild(routes)
     ],
     providers: [EmployeeListDatabase],
-    entryComponents: [SnackbarNotificationPage],
-    declarations: [ManageHolidayPage, LeaveSetup, AssignCalendarPage, SnackbarNotificationPage,
+    entryComponents: [SnackbarNotificationPage, DeleteCalendarConfirmationPage],
+    declarations: [ManageHolidayPage, LeaveSetup, AssignCalendarPage, SnackbarNotificationPage, DeleteCalendarConfirmationPage,
         LeaveSetupTabPage, ApplyOnBehalfPage, ApprovalOverridePage, LeaveAdjustmentPage, LeaveEntitlementByBatchPage]
 })
 export class LeaveSetupModule { }
