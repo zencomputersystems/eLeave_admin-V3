@@ -32,6 +32,18 @@ export class AdminInvitesAPIService {
         return this.apiService.postApi(userId, '/api/invitation');
     }
 
+
+    /**
+     * POST new user details to endpoint
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof AdminInvitesAPIService
+     */
+    post_userimport(data): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.postApi(data, '/api/userimport');
+    }
+
     /**
      * Delete resigned user from user list
      * @param {*} id
@@ -43,6 +55,8 @@ export class AdminInvitesAPIService {
         return this.http.delete(this.apiService.baseUrl + '/api/users/' + id, { headers: this.apiService.headers })
             .pipe(map((res: Response) => res.json()));
     }
+
+
 
     /**
      * get user list from api service

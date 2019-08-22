@@ -4,62 +4,97 @@
     <p style="text-align: center;color: #7a8589;font-size: 16px;padding-bottom: 3%;margin-top: 0;">
         Please enter the employee details below</p>
     <form [formGroup]="invitationForm">
-        <div style="display:block; white-space: nowrap;text-align: center;">
-            <mat-form-field appearance="outline" style="width: 40%;padding-top: 1%;">
-                <mat-label>FIRST NAME</mat-label>
-                <input matInput formControlName="firstName">
-                <mat-error *ngIf="!invitationForm.firstName" style="padding: 5px;padding-left: 0;">
-                    Please enter first name</mat-error>
-            </mat-form-field>
+        <div style="display:block; white-space: nowrap;width: 100%;margin-left: 30px;">
+            <div style="width: 50%;display: inline-block;">
+                <span style="font-size: 12px;color:#707070;padding-left: 3px;display: block">
+                    EMPLOYEE NAME</span>
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Please enter employee name</mat-label>
+                    <input matInput formControlName="name" required>
+                    <mat-error *ngIf="!invitationForm.name">
+                        Employee name is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
             &nbsp;&nbsp;
-            <mat-form-field appearance="outline" style="width: 40%;padding-top: 1%;">
-                <mat-label>LAST NAME</mat-label>
-                <input matInput formControlName="lastName">
-                <mat-error *ngIf="!invitationForm.lastName" style="padding: 5px;padding-left: 0;">
-                    Please enter last name</mat-error>
-            </mat-form-field>
+            <div style="width: 40%;display: inline-block;">
+                <span style="font-size: 12px;color:#707070;padding-left: 3px;display: block">
+                    NRIC </span>
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Please enter IC number</mat-label>
+                    <input matInput formControlName="IC">
+                    <mat-error *ngIf="!invitationForm.IC">
+                        IC number is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
         </div>
 
-        <div style="display:block; white-space: nowrap;text-align: center;">
-            <mat-form-field appearance="outline" style="width: 20%;padding-top: 1%;">
-                <mat-label>EMPLOYEE ID</mat-label>
-                <input matInput formControlName="id">
-                <mat-error *ngIf="!invitationForm.id" style="padding: 5px;padding-left: 0;">
-                    Please enter ID#</mat-error>
-            </mat-form-field>
+        <div style="display:block; white-space: nowrap;width: 100%;margin-left: 30px;">
+            <div style="width: 22%;display: inline-block;">
+                <span style="font-size: 12px;color:#707070;padding-left: 3px;display: block">
+                    EMPLOYEE ID </span>
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Please enter ID#</mat-label>
+                    <input matInput formControlName="id" required>
+                    <mat-error *ngIf="!invitationForm.id">
+                        ID# is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
             &nbsp;&nbsp;
-            <mat-form-field class="date" appearance="outline" style="width: 30%;padding-top: 1%;">
-                <mat-label>DATE OF HIRE</mat-label>
-                <input class="dateInput" matInput [matDatepicker]="picker1" formControlName="firstPicker" required>
-                <!-- (dateInput)="getValueFrom($event)" (dateChange)="onDateChange()" -->
-                <!-- <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle> -->
-                <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'" (click)="picker1.open()">
-                </div>
-                <mat-datepicker #picker1></mat-datepicker>
-                <mat-error *ngIf="!invitationForm.firstPicker" style="padding: 5px;padding-left: 0;">
-                    Invalid date</mat-error>
-            </mat-form-field>
+            <div style="width: 25.5%;display: inline-block;">
+                <span style="font-size: 12px;color:#707070;padding-left: 3px;display: block">
+                    DATE OF HIRE </span>
+                <mat-form-field class="date" appearance="outline" style="width: 100%;">
+                    <mat-label>Please enter date of hire</mat-label>
+                    <input class="dateInput" matInput [matDatepicker]="picker1" formControlName="joinDate" required>
+                    <!-- (dateInput)="getValueFrom($event)" (dateChange)="onDateChange()" -->
+                    <!-- <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle> -->
+                    <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'" (click)="picker1.open()">
+                    </div>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error *ngIf="!invitationForm.joinDate">
+                        Hire date is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
             &nbsp;&nbsp;
-            <mat-form-field appearance="outline" style="width: 27%;padding-top: 1%;">
-                <mat-label>DESIGNATION</mat-label>
-                <mat-select class="selectLeave" formControlName="designation">
-                    <mat-option *ngFor="let designationItem of designationList; let i=index"
-                        [value]="designationItem.DESIGNATION">
-                        <!-- (click)="getIndex(leave)" -->
-                        {{designationItem.DESIGNATION}}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="!invitationForm.designation" style="padding: 5px;padding-left: 0;">
-                    Please select a designation</mat-error>
-            </mat-form-field>
+            <div style="width: 40%;display: inline-block;">
+                <span style="font-size: 12px;color:#707070;padding-left: 3px;display: block">
+                    DESIGNATION </span>
+                <mat-form-field appearance="outline" style="width: 100%;padding-top: 1%;">
+                    <mat-label>Please enter designation</mat-label>
+                    <mat-select class="selectLeave" formControlName="designation" required>
+                        <mat-option *ngFor="let designationItem of designationList; let i=index"
+                            [value]="designationItem.DESIGNATION">
+                            <!-- (click)="getIndex(leave)" -->
+                            {{designationItem.DESIGNATION}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="!invitationForm.designation">
+                        Designation is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
         </div>
 
-        <div style="display:block; white-space: nowrap;text-align: center">
-            <mat-form-field appearance="outline" style="width: 82%;padding-top: 1%;">
-                <mat-label>EMAIL ADDRESS</mat-label>
-                <input matInput formControlName="email">
-                <mat-error *ngIf="!invitationForm.email" style="padding: 5px;padding-left: 0;">
-                    Invalid email</mat-error>
-            </mat-form-field>
+        <div style="display:block; white-space: nowrap;width: 100%;margin-left: 30px;">
+            <div style="width: 30%;display: inline-block;">
+                <span style="font-size: 12px;color:#707070;padding-left: 3px;display: block">
+                    EMAIL ADDRESS </span>
+                <mat-form-field appearance="outline" style="width: 100%">
+                    <mat-label>Please enter email address</mat-label>
+                    <input matInput formControlName="email" required>
+                    <mat-error *ngIf="!invitationForm.email">
+                        Email is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
+            &nbsp;&nbsp;
+            <div style="width: 31%;display: inline-block;">
+                <span style="font-size: 12px;color:#707070;padding-left: 3px;display: block">
+                    PERSONAL PHONE NUMBER </span>
+                <mat-form-field appearance="outline" style="width: 100%">
+                    <mat-label>Please enter phone number</mat-label>
+                    <input matInput formControlName="phone" required>
+                    <mat-error *ngIf="!invitationForm.phone">
+                        Phone number is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
         </div>
 
         <div style="text-align: right;padding-right: 7.5%;">
@@ -71,6 +106,10 @@
             <ion-button style="font-size: 12px;height: 30px;width: 160px;" color="primary"
                 [disabled]="invitationForm.invalid" (click)="sendInvitation()">SEND INVITATION
             </ion-button>
+            <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
+                *ngIf="showSmallSpinner">
+                <ion-spinner name="lines-small" color="primary"></ion-spinner>
+            </div>
         </div>
     </form>
 </div>
