@@ -4,13 +4,12 @@ import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: 'main', pathMatch: 'full' },
+  { path: '', component: LoginComponent },
 ];
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

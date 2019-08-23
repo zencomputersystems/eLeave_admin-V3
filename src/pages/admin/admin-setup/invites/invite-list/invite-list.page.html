@@ -8,15 +8,14 @@
         <ion-searchbar mode="ios" class="searchbar" placeholder="Search by name" (ionClear)="endPoint();
         disableNextButton = false;disablePrevButton = true;listView=true;" (ionChange)="changeDetails($event)">
         </ion-searchbar>
-        <div style="display: inline-block;white-space: nowrap;width: 66%;">
-            <div style="padding-top: 18px;display: inline-block;padding-left: 46%">
+        <div style="white-space: nowrap;margin-right: 7px;float: right;">
+            <div style="padding-top: 18px;display: inline-block;padding-left: 75px;padding-right: 15px;">
                 <i class="fas fa-bars" (click)="viewType(true, 6, 5)"
                     [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
                 <i class="fas fa-th" (click)="viewType(false, 8, 7)"
                     [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
             </div>
-            <div style="color: #7a8589;font-size: 12px;display: inline;
-                padding-left: 3%;">
+            <div style="color: #7a8589;font-size: 12px;display: inline;padding-left: 3%;">
                 <span style="padding-right: 10px;">Page</span>
                 <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
                     padding-right: 7px;">{{pageIndex}}</span>
@@ -124,17 +123,14 @@
         <ion-searchbar mode="ios" class="searchbar" placeholder="Search by name" (ionClear)="endPoint();
         disableNextButton = false;disablePrevButton = true;gridView=true;" (ionChange)="changeDetails($event)">
         </ion-searchbar>
-        <div style="display: inline-block;
-                    white-space: nowrap;
-                    width: 66%;">
-            <div style="padding-top: 18px;display: inline-block;padding-left: 46%">
+        <div style="white-space: nowrap;margin-right: 7px;float: right;">
+            <div style="padding-top: 18px;display: inline-block;padding-left: 75px;padding-right: 15px;">
                 <i class="fas fa-bars" (click)="viewType(true, 6, 5)"
                     [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
                 <i class="fas fa-th" (click)="viewType(false, 8, 7)"
                     [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
             </div>
-            <div style="color: #7a8589;font-size: 12px;display: inline;
-                        padding-left: 3%;">
+            <div style="color: #7a8589;font-size: 12px;display: inline;padding-left: 3%;">
                 <span style="padding-right: 10px;">Page</span>
                 <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
                             padding-right: 7px;">{{pageIndex}}</span>
