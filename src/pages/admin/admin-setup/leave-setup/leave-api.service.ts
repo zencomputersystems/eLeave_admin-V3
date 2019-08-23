@@ -3,6 +3,8 @@ import { Http, Response } from "@angular/http";
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
+import { MatSnackBar } from "@angular/material";
+import { SnackbarNotificationPage } from "./snackbar-notification/snackbar-notification";
 
 /**
  * Leave API endpoint
@@ -26,7 +28,7 @@ export class LeaveAPIService {
      * @param {Http} http
      * @memberof LeaveAPIService
      */
-    constructor(public http: Http, private apiService: APIService) {
+    constructor(public http: Http, private apiService: APIService, public snackBar: MatSnackBar) {
     }
 
     /**
@@ -129,6 +131,18 @@ export class LeaveAPIService {
     get_entilement_details(id): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.getApiWithId('/api/leave-entitlement/', id);
+    }
+
+    /**
+    * Show message of pass or fail after post data
+    * @param {string} message
+    * @memberof LeaveAPIService
+    */
+    openSnackBar(message: string) {
+        this.snackBar.openFromComponent(SnackbarNotificationPage, {
+            duration: 3000,
+            data: message
+        });
     }
 
 }

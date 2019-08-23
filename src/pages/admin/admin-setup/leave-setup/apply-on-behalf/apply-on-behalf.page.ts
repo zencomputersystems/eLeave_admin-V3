@@ -8,10 +8,8 @@ import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import * as _moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../date.adapter';
-import { SnackbarNotificationPage } from '../snackbar-notification/snackbar-notification';
 import { DayType } from './apply-on-behalf.service';
 import { LeaveAPIService } from '../leave-api.service';
 import { EmployeeTreeview } from '../assign-calendar/employee-treeview.service';
@@ -361,13 +359,11 @@ export class ApplyOnBehalfPage implements OnInit {
     /**
      *Creates an instance of ApplyOnBehalfPage.
      * @param {LeaveAPIService} leaveAPI
-     * @param {MatSnackBar} snackBar
      * @param {EmployeeTreeview} tree
      * @param {APIService} apiService
      * @memberof ApplyOnBehalfPage
      */
-    constructor(private leaveAPI: LeaveAPIService,
-        private snackBar: MatSnackBar, private tree: EmployeeTreeview, private apiService: APIService) {
+    constructor(private leaveAPI: LeaveAPIService, private tree: EmployeeTreeview, private apiService: APIService) {
         this.applyLeaveForm = this.formGroup();
     }
 
@@ -505,10 +501,10 @@ export class ApplyOnBehalfPage implements OnInit {
                 this.clearArrayList();
                 this.showSelectedTree = false;
                 this._employeeId = [];
-                this.openSnackBar('submitted successfully ');
+                this.leaveAPI.openSnackBar('submitted successfully ');
                 if (response.status === 401) {
                     window.location.href = '/login';
-                    this.openSnackBar('submitted unsuccessfully ' + response.message);
+                    this.leaveAPI.openSnackBar('submitted unsuccessfully ' + response.message);
                 }
             });
     }
@@ -905,18 +901,6 @@ export class ApplyOnBehalfPage implements OnInit {
                 this._employeeId.push(this._userList[j].userId);
             }
         }
-    }
-
-    /**
-     * Show message of pass or fail after post data
-     * @param {string} message
-     * @memberof ApplyLeavePage
-     */
-    openSnackBar(message: string) {
-        this.snackBar.openFromComponent(SnackbarNotificationPage, {
-            duration: 3000,
-            data: message
-        });
     }
 
 }

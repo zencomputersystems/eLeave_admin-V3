@@ -133,7 +133,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      * @param {MatSnackBar} snackBar
      * @memberof LeaveEntitlementByBatchPage
      */
-    constructor(private leaveEntitlementAPI: LeaveEntitlementByBatchAPIService, private leaveAPI: LeaveAPIService, private snackBar: MatSnackBar) {
+    constructor(private leaveEntitlementAPI: LeaveEntitlementByBatchAPIService, private leaveAPI: LeaveAPIService) {
         this.entitlementBatch = new FormGroup({
             tenant: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),
@@ -307,7 +307,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      * @memberof LeaveAdjustmentPage
      */
     openMsg(popUpText: string) {
-        this.snackBar.openFromComponent(SnackbarNotificationPage, {
+        this.leaveAPI.snackBar.openFromComponent(SnackbarNotificationPage, {
             duration: 5000,
             data: popUpText
         });

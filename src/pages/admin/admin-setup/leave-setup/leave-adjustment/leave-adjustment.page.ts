@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { LeaveAPIService } from "../leave-api.service";
 import { APIService } from "src/services/shared-service/api.service";
-import { MatSnackBar } from "@angular/material";
 import { SnackbarNotificationPage } from "../snackbar-notification/snackbar-notification";
 /**
  * leave adjusment page
@@ -134,7 +133,7 @@ export class LeaveAdjustmentPage implements OnInit {
      * @param {MatSnackBar} snackBar
      * @memberof LeaveAdjustmentPage
      */
-    constructor(private leaveSetupAPI: LeaveAPIService, private apiService: APIService, private snackBar: MatSnackBar) {
+    constructor(private leaveSetupAPI: LeaveAPIService, private apiService: APIService) {
         this.adjustmentForm = new FormGroup({
             company: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),
@@ -329,7 +328,7 @@ export class LeaveAdjustmentPage implements OnInit {
      * @memberof LeaveAdjustmentPage
      */
     openNotification(statement: string) {
-        this.snackBar.openFromComponent(SnackbarNotificationPage, {
+        this.leaveSetupAPI.snackBar.openFromComponent(SnackbarNotificationPage, {
             duration: 5000,
             data: statement
         });
