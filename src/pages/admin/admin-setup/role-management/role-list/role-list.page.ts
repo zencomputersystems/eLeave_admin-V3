@@ -132,7 +132,10 @@ export class RoleListPage implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result === role_guid) {
-                this.roleAPi.delete_role_profile(role_guid).subscribe(response => this.ngOnInit())
+                this.roleAPi.delete_role_profile(role_guid).subscribe(response => {
+                    this.ngOnInit();
+                    this.roleAPi.snackbarMsg('deleted successfully ');
+                })
             }
         });
     }

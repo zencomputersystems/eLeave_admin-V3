@@ -509,4 +509,24 @@ export class ManageHolidayPage implements OnInit {
         });
     }
 
+    /**
+     * confirmation pop up when clicked delete PH item 
+     * @param {number} index
+     * @param {*} event
+     * @param {string} title
+     * @memberof ManageHolidayPage
+     */
+    deletePH(index: number, event: any, title: string) {
+        const popup = this.displayDialog.open(DeleteCalendarConfirmationPage, {
+            data: { name: title, value: index }
+        });
+        popup.afterClosed().subscribe(result => {
+            if (result === index) {
+                setTimeout(() => {
+                    event.splice(index, 1);
+                }, 1000);
+            }
+        });
+    }
+
 }

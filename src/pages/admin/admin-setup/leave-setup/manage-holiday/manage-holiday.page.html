@@ -201,7 +201,7 @@
                 </ion-col>
                 <ion-col size="1.5" *ngIf="editCalendar"
                     style="display: flex;align-items: center;justify-content: center;">
-                    <i class="far fa-trash-alt" (click)="events.splice(i, 1);"></i>
+                    <i class="far fa-trash-alt" (click)="deletePH(i, events, holiday.title)"></i>
                 </ion-col>
                 <ion-item class="divider" lines="full"></ion-item>
             </ion-row>

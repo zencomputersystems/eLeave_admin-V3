@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RolesAPIService } from '../role-api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SnackbarNotificationPage } from '../../leave-setup/snackbar-notification/snackbar-notification';
-import { MatSnackBar } from '@angular/material';
 import { roleDetails, options } from '../role-details-data';
 
 /**
@@ -136,10 +134,10 @@ export class RoleRightsPage implements OnInit {
      *Creates an instance of RoleRightsPage.
      * @param {RolesAPIService} roleAPi
      * @param {ActivatedRoute} route
-     * @param {MatSnackBar} snackBar
+     * @param {Router} router
      * @memberof RoleRightsPage
      */
-    constructor(private roleAPi: RolesAPIService, private route: ActivatedRoute, private snackBar: MatSnackBar) {
+    constructor(private roleAPi: RolesAPIService, private route: ActivatedRoute, private router: Router) {
         route.params.subscribe(params => { this._roleId = params.id; });
         this.inputFormControl = new FormGroup({
             rolename: new FormControl('', Validators.required),
@@ -248,9 +246,9 @@ export class RoleRightsPage implements OnInit {
         };
         this.roleAPi.patch_role_profile(body).subscribe(response => {
             this.showSmallSpinner = false;
-            this.openSnackBar('saved successfully');
+            this.roleAPi.snackbarMsg('saved successfully');
         }, error => {
-            this.openSnackBar('saved unsuccessfully');
+            this.roleAPi.snackbarMsg('saved unsuccessfully');
             window.location.href = '/login';
         });
     }
@@ -269,10 +267,12 @@ export class RoleRightsPage implements OnInit {
                 this.showSmallSpinner = false;
                 this.defaultValue();
                 this.defaultProfileMngt();
-                this.openSnackBar('saved successfully');
+                this.roleAPi.snackbarMsg('saved successfully');
+                setTimeout(() => {
+                    this.router.navigate(['/main/role-management']);
+                }, 2000);
             }, error => {
-                this.openSnackBar('saved unsuccessfully');
-                window.location.href = '/login';
+                this.roleAPi.snackbarMsg('saved unsuccessfully');
             });
         } else {
             this.patchData();
@@ -313,18 +313,6 @@ export class RoleRightsPage implements OnInit {
         this.profileDetails.property.allowProfileManagement.allowChangePassword.level = '';
         this.profileDetails.property.allowProfileManagement.allowProfileAdmin.value = false;
         this.profileDetails.property.allowProfileManagement.allowProfileAdmin.level = '';
-    }
-
-    /**
-     * Show alert message after submit role details to API
-     * @param {string} message
-     * @memberof RoleRightsPage
-     */
-    openSnackBar(message: string) {
-        this.snackBar.openFromComponent(SnackbarNotificationPage, {
-            duration: 2500,
-            data: message
-        });
     }
 
 }

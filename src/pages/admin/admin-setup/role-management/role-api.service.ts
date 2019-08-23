@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { Http, Headers, Response } from "@angular/http";
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { MatSnackBar } from "@angular/material";
+import { SnackbarNotificationPage } from "../leave-setup/snackbar-notification/snackbar-notification";
 
 /**
  * Role API
@@ -31,7 +33,7 @@ export class RolesAPIService {
      * @param {Http} http
      * @memberof RolesAPIService
      */
-    constructor(public http: Http) {
+    constructor(public http: Http, private snackBar: MatSnackBar) {
     }
 
     /**
@@ -112,6 +114,17 @@ export class RolesAPIService {
         return this.http.patch(this.baseUrl + '/api/admin/role/user-role', id, { headers: this.headerApp });
     }
 
+    /**
+     * show delete confirmation after click Delete button
+     * @param {string} text
+     * @memberof RolesAPIService
+     */
+    snackbarMsg(text: string) {
+        this.snackBar.openFromComponent(SnackbarNotificationPage, {
+            duration: 3000,
+            data: text
+        });
+    }
 
 
 
