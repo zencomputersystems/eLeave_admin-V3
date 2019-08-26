@@ -165,7 +165,7 @@ export class APIService {
      */
     get_user_profile_list(): Observable<any> {
         this.headerAuthorization();
-        return this.getApi('/api/users');
+        return this.getApi('/api/users/admin');
     }
 
     /**

@@ -2,23 +2,117 @@
 <div style="width: 100%; height:100%; text-align: center;margin-top: -30px" *ngIf="showSpinner">
     <app-spinner></app-spinner>
 </div>
-<div class="connectionsContainer" *ngIf="listView">
-    <div class="topHeader">
-        <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>
-        <ion-searchbar mode="ios" class="searchbar" placeholder="Search by name" (ionClear)="endPoint();
+    <div class="connectionsContainer" *ngIf="listView">
+        <div class="topHeader">
+            <span class="numOfPeople" *ngIf="employeeList">{{employeeList.length}} people</span>
+            <ion-searchbar mode="ios" class="searchbar" placeholder="Search by name" (ionClear)="endPoint();
         disableNextButton = false;disablePrevButton = true;listView=true;" (ionChange)="changeDetails($event)">
-        </ion-searchbar>
-        <div style="white-space: nowrap;margin-right: 7px;float: right;">
-            <div style="padding-top: 18px;display: inline-block;padding-left: 75px;padding-right: 15px;">
-                <i class="fas fa-bars" (click)="viewType(true, 6, 5)"
-                    [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
-                <i class="fas fa-th" (click)="viewType(false, 8, 7)"
-                    [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
+            </ion-searchbar>
+            <div style="white-space: nowrap;margin-right: 7px;float: right;">
+                <div style="padding-top: 18px;display: inline-block;padding-left: 75px;padding-right: 15px;">
+                    <i class="fas fa-bars" (click)="viewType(true, 6, 5)"
+                        [style.color]="listView ? '#7a8589' : '#bebebe'"></i>
+                    <i class="fas fa-th" (click)="viewType(false, 8, 7)"
+                        [style.color]="gridView ? '#7a8589' : '#bebebe'"></i>
+                </div>
+                <div style="color: #7a8589;font-size: 12px;display: inline;padding-left: 3%;">
+                    <span style="padding-right: 10px;">Page</span>
+                    <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
+                    padding-right: 7px;">{{pageIndex}}</span>
+                    <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageIndex}}
+                    <i class="fas fa-angle-left" title="Previous page"
+                        style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
+                        (click)="clickToPrevPage(pageIndex-1)"></i>
+                    <i class="fas fa-angle-right" title="Next page"
+                        style="cursor:pointer; font-size: 15px;padding-left: 10px"
+                        (click)="clickToNextPage(pageIndex+1)"></i>
+                </div>
             </div>
-            <div style="color: #7a8589;font-size: 12px;display: inline;padding-left: 3%;">
+        </div>
+        <ion-content style="padding: 20px;height: calc( 100% - 118px);">
+            <ion-row class="titleRow">
+                <ion-col size="0.7">
+                    <ion-checkbox mode="ios" style="width: 20px; height: 20px;margin-top: 6px;" [(ngModel)]="mainCheck"
+                        [indeterminate]="indeterminateCheck" (click)="checkboxEvent()">
+                    </ion-checkbox>
+                </ion-col>
+                <ion-col size="1">
+                    <ion-label style="font-size: 12px;">ID</ion-label>
+                    <ion-icon class="arrow" name="arrow-dropdown" (click)="sortId(false, 1, -1)" *ngIf="arrowDownId">
+                    </ion-icon>
+                    <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownId" (click)="sortId(true, -1, 1)">
+                    </ion-icon>
+                </ion-col>
+                <ion-col size="3.5">
+                    <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
+                    <ion-icon class="arrow" name="arrow-dropdown" (click)="sortName(false, 1, -1)"
+                        *ngIf="arrowDownName">
+                    </ion-icon>
+                    <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownName" (click)="sortName(true, -1, 1)">
+                    </ion-icon>
+                </ion-col>
+                <ion-col size="3.5">
+                    <ion-label style="font-size: 12px;">DESIGNATION</ion-label>
+                </ion-col>
+                <ion-col size="1.5">
+                    <ion-label style="font-size: 12px;">STATUS</ion-label>
+                </ion-col>
+                <ion-col>
+                </ion-col>
+            </ion-row>
+            <ion-row class="detailsRow" *ngFor="let item of currentPageItems; let i=index">
+                <ion-col size="0.7">
+                    <ion-avatar class="avatar" (mouseover)="mouseHoverEvent(true, item.isChecked)"
+                        (mouseout)="mouseHoverEvent(false, item.isChecked)">
+                        <img src="assets/icon/evans.jpg" style="margin-left: -4px;"
+                            [style.display]="hideAvatar ? 'none' : 'block'">
+                        <div class="checkboxOnAvatar" [style.display]="hideAvatar ? 'block' : 'none'">
+                            <ion-checkbox mode="ios"
+                                style="width: 20px; height: 20px;position: absolute;margin-top: 7px;"
+                                [(ngModel)]="item.isChecked" (ionChange)="listEvent()">
+                            </ion-checkbox>
+                        </div>
+                    </ion-avatar>
+                </ion-col>
+                <ion-col size="1">
+                    <ion-label style="color:#7a8589; font-size: 13px;">{{item.staffNumber}}</ion-label>
+                </ion-col>
+                <ion-col class="colOfLeave" size="3.5" style="color: #057dcd; font-size: 13px;">{{item.employeeName}}
+                </ion-col>
+                <ion-col class="colOfLeave" size="3.5" style="color:#7a8589; font-size: 13px;">{{item.designation}}
+                </ion-col>
+                <ion-col class="colOfLeave" size="1.5" style="color:#7a8589; font-size: 13px;">{{item.status}}
+                </ion-col>
+                <ion-col>
+                    <!-- <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'" [matMenuTriggerFor]="menu">
+                </div> -->
+                    <ion-icon class="more" name="more" [matMenuTriggerFor]="menu"></ion-icon>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item style="color: #7a8589">Enable</button>
+                        <button mat-menu-item style="color: #7a8589">Disable</button>
+                        <button mat-menu-item style="color: #7a8589"
+                            (click)="deleteUser(item.employeeName, item.userId)">
+                            Delete
+                        </button>
+                    </mat-menu>
+                </ion-col>
+                <ion-item class="divider" lines="full"></ion-item>
+            </ion-row>
+        </ion-content>
+        <div style="padding-left: 45px;padding-right: 20px;display: inline-flex;width: 97%;min-width: 330px;">
+            <ion-button [disabled]="disablePrevButton" fill="outline" (click)="clickToPrevPage(pageIndex-1)"
+                style="font-size: 12px;height: 30px;width: 90px;" color="primary">
+                <ion-icon name="arrow-back"></ion-icon>Prev
+            </ion-button>
+            <div style="padding-left: 10px"></div>
+            <ion-button [disabled]="disableNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
+                (click)="clickToNextPage(pageIndex+1)">Next<ion-icon name="arrow-forward">
+                </ion-icon>
+            </ion-button>
+            <div class="paginator">
                 <span style="padding-right: 10px;">Page</span>
                 <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
-                    padding-right: 7px;">{{pageIndex}}</span>
+                padding-right: 7px;">{{pageIndex}}</span>
                 <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageIndex}}
                 <i class="fas fa-angle-left" title="Previous page"
                     style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
@@ -29,91 +123,6 @@
             </div>
         </div>
     </div>
-    <ion-content style="padding: 20px;height: calc( 100% - 130px);">
-        <ion-row class="titleRow">
-            <ion-col size="0.7" style="padding-left: 10px;">
-                <!-- <ion-checkbox mode="ios" style="width: 20px; height: 20px;"></ion-checkbox> -->
-            </ion-col>
-            <ion-col size="1">
-                <ion-label style="font-size: 12px;">ID</ion-label>
-                <ion-icon class="arrow" name="arrow-dropdown" (click)="sortId(false, 1, -1)" *ngIf="arrowDownId">
-                </ion-icon>
-                <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownId" (click)="sortId(true, -1, 1)">
-                </ion-icon>
-            </ion-col>
-            <ion-col size="3.5">
-                <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
-                <ion-icon class="arrow" name="arrow-dropdown" (click)="sortName(false, 1, -1)" *ngIf="arrowDownName">
-                </ion-icon>
-                <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownName" (click)="sortName(true, -1, 1)">
-                </ion-icon>
-            </ion-col>
-            <ion-col size="3.5">
-                <ion-label style="font-size: 12px;">DESIGNATION</ion-label>
-            </ion-col>
-            <ion-col size="1.5">
-                <ion-label style="font-size: 12px;">STATUS</ion-label>
-            </ion-col>
-            <ion-col>
-            </ion-col>
-        </ion-row>
-        <ion-row class="detailsRow" *ngFor="let item of currentPageItems; let i=index">
-            <ion-col size="0.7">
-                <ion-avatar class="avatar">
-                    <img src="assets/icon/evans.jpg">
-                    <!-- <div class="checkboxOnAvatar">
-                            <ion-checkbox mode="ios" style="width: 20px; height: 20px;">
-                            </ion-checkbox>
-                        </div> -->
-                </ion-avatar>
-            </ion-col>
-            <ion-col size="1">
-                <ion-label style="color:#7a8589; font-size: 13px;">{{item.staffNumber}}</ion-label>
-            </ion-col>
-            <ion-col class="colOfLeave" size="3.5" style="color: #057dcd; font-size: 13px;">{{item.employeeName}}
-            </ion-col>
-            <ion-col class="colOfLeave" size="3.5" style="color:#7a8589; font-size: 13px;">{{item.designation}}
-            </ion-col>
-            <ion-col class="colOfLeave" size="1.5" style="color:#7a8589; font-size: 13px;">{{item.status}}
-            </ion-col>
-            <ion-col>
-                <!-- <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'" [matMenuTriggerFor]="menu">
-                </div> -->
-                <ion-icon class="more" name="more" [matMenuTriggerFor]="menu"></ion-icon>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item style="color: #7a8589">Enable</button>
-                    <button mat-menu-item style="color: #7a8589">Disable</button>
-                    <button mat-menu-item style="color: #7a8589" (click)="deleteUser(item.employeeName, item.userId)">
-                        Delete
-                    </button>
-                </mat-menu>
-            </ion-col>
-            <ion-item class="divider" lines="full"></ion-item>
-        </ion-row>
-    </ion-content>
-    <div style="padding-left: 45px;padding-right: 20px;display: inline-flex;width: 97%;min-width: 330px;">
-        <ion-button [disabled]="disablePrevButton" fill="outline" (click)="clickToPrevPage(pageIndex-1)"
-            style="font-size: 12px;height: 30px;width: 90px;" color="primary">
-            <ion-icon name="arrow-back"></ion-icon>Prev
-        </ion-button>
-        <div style="padding-left: 10px"></div>
-        <ion-button [disabled]="disableNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
-            (click)="clickToNextPage(pageIndex+1)">Next<ion-icon name="arrow-forward">
-            </ion-icon>
-        </ion-button>
-        <div class="paginator">
-            <span style="padding-right: 10px;">Page</span>
-            <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
-                padding-right: 7px;">{{pageIndex}}</span>
-            <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{totalPageIndex}}
-            <i class="fas fa-angle-left" title="Previous page"
-                style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
-                (click)="clickToPrevPage(pageIndex-1)"></i>
-            <i class="fas fa-angle-right" title="Next page" style="cursor:pointer; font-size: 15px;padding-left: 10px"
-                (click)="clickToNextPage(pageIndex+1)"></i>
-        </div>
-    </div>
-</div>
 
 <!-------------------------------------------GRID VIEW------------------------------------------>
 
@@ -146,10 +155,10 @@
     </div>
 
 
-    <ion-content style="padding: 20px;height: calc( 100% - 130px);">
+    <ion-content style="padding: 20px;height: calc( 100% - 118px);">
         <mat-grid-list cols="4" rowHeight="230px" style="height: 111%">
             <mat-grid-tile *ngFor="let item of currentPageItems; let i=index">
-                <mat-card class="example-card" style="width: 98%;height: 98%;border-radius: 4px;
+                <mat-card class="example-card" style="width: 90%;height: 90%;border-radius: 4px;
                     border: solid 0.5px #dfe3e6;">
                     <i class="fas fa-star" (click)="saveAsFavourite(i,item)"
                         [style.color]="checkUserID(item.id) ? '#ffbb00' : '#dfe3e6'"></i>

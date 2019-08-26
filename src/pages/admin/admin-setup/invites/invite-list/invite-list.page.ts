@@ -123,9 +123,31 @@ export class InviteListPage implements OnInit {
     public showSpinner: boolean = true;
 
     /**
+     * main checkbox value
+     * @type {boolean}
+     * @memberof InviteListPage
+     */
+    public mainCheck: boolean = false;
+
+    /**
+     * main checkbox show indeterminate 
+     * @type {boolean}
+     * @memberof InviteListPage
+     */
+    public indeterminateCheck: boolean = false;
+
+    /**
+     * hover to hide avatar
+     * @type {boolean}
+     * @memberof InviteListPage
+     */
+    public hideAvatar: boolean = false;
+
+    /**
      *Creates an instance of InviteListPage.
-     * @param {APIService} apiService
+     * @param {AdminInvitesAPIService} inviteAPI
      * @param {Router} router
+     * @param {MatDialog} popUp
      * @memberof InviteListPage
      */
     constructor(private inviteAPI: AdminInvitesAPIService, public router: Router, public popUp: MatDialog) { }
@@ -382,5 +404,64 @@ export class InviteListPage implements OnInit {
             this.favouriteList.push(items);
         }
     };
+
+    /**
+     * main checkbox value
+     * @memberof InviteListPage
+     */
+    checkboxEvent() {
+        setTimeout(() => {
+            this.currentPageItems.forEach(value => {
+                value.isChecked = this.mainCheck;
+                if (value.isChecked) {
+                    this.hideAvatar = true;
+                } else {
+                    this.hideAvatar = false;
+                }
+            });
+        })
+    }
+
+    /**
+     * item checkbox value
+     * @memberof InviteListPage
+     */
+    listEvent() {
+        const totalNumber = this.currentPageItems.length;
+        let checkedLength = 0;
+        this.currentPageItems.map(item => {
+            if (item.isChecked) {
+                checkedLength++;
+            }
+        });
+        if (checkedLength > 0 && checkedLength < totalNumber) {
+            this.indeterminateCheck = true;
+            this.mainCheck = false;
+        } else if (checkedLength == totalNumber) {
+            this.mainCheck = true;
+            this.indeterminateCheck = false;
+        } else {
+            this.indeterminateCheck = false;
+            this.mainCheck = false;
+        }
+    }
+
+    /**
+     * mouse in/out event
+     * @param {*} value
+     * @param {*} checkedValue
+     * @memberof InviteListPage
+     */
+    mouseHoverEvent(value: boolean, checkedValue: boolean) {
+        if (checkedValue && (this.mainCheck || this.indeterminateCheck)) {
+            this.hideAvatar = true;
+        } else if (!checkedValue && (this.mainCheck || this.indeterminateCheck)) {
+            this.hideAvatar = true;
+        } else if (value && !checkedValue && !this.indeterminateCheck && !this.mainCheck) {
+            this.hideAvatar = true;
+        } else {
+            this.hideAvatar = false;
+        }
+    }
 
 }
