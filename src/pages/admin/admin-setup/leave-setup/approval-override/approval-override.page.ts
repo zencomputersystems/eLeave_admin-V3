@@ -176,12 +176,7 @@ export class ApprovalOverridePage implements OnInit {
                 this.filteredPendingList[this.filteredPendingList.length - 1].employeeName = this._filteredUserList[index].employeeName;
                 this.filteredPendingList[this.filteredPendingList.length - 1].isChecked = false;
                 this.getLeaveType(this.filteredPendingList.length - 1, this._pendingList[i].LEAVE_TYPE_GUID);
-            }
-        }
-        if (this.filteredPendingList.length > 0) {
-            this.showNoResult = false;
-        } else {
-            this.showNoResult = true;
+            } else { this.showNoResult = true; }
         }
     }
 
@@ -215,7 +210,7 @@ export class ApprovalOverridePage implements OnInit {
             for (let i = 0; i < this._userList.length; i++) {
                 if (this._userList[i].department === departmentName && this._userList[i].companyId === this._companyId) {
                     this._filteredUserList.push(this._userList[i]);
-                }
+                } else { this.showNoResult = true; }
             }
             this.checkPendingUserList();
         })
@@ -228,11 +223,6 @@ export class ApprovalOverridePage implements OnInit {
     checkPendingUserList() {
         for (let j = 0; j < this._filteredUserList.length; j++) {
             this.filterUserGUID(this._pendingList, this._filteredUserList[j].userId, j);
-        }
-        if (this._filteredUserList.length < 1) {
-            this.showNoResult = true;
-        } else {
-            this.showNoResult = false;
         }
     }
 
