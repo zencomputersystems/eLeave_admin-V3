@@ -60,11 +60,11 @@
     margin: 0 auto;
   }
   .topHeader {
-    width: 80%;
+    width: 94%;
     display: inline-block;
     padding-top: 15px;
     // padding-bottom: 15px;
-    margin-left: 15%;
+    margin-left: 1%;
   }
   .paginator {
     color: #7a8589;
@@ -122,10 +122,13 @@
     font-size: 12px;
   }
   .numOfPeople {
-    position: absolute;
-    left: 55px;
-    top: 91px;
+    // position: absolute;
+    // left: 55px;
+    // top: 91px;
+    float: left;
+    padding-top: 20px;
     color: #20291f;
+    width: 130px;
   }
   mat-card-subtitle {
     margin-bottom: 12px;

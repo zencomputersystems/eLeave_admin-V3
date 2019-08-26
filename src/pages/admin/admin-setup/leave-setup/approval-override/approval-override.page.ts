@@ -203,6 +203,9 @@ export class ApprovalOverridePage implements OnInit {
     selectedDepartment(departmentName) {
         this.filteredPendingList = [];
         this._filteredUserList = [];
+        this.leaveTransactionGUID = [];
+        this.mainCheckbox = false;
+        this.indeterminate = false;
         this.showSpinner = true;
         this.approvalOverrideAPI.get_user_profile_list().subscribe(list => {
             this._userList = list;
@@ -346,13 +349,8 @@ export class ApprovalOverridePage implements OnInit {
         }
         this.approvalOverrideAPI.patch_approval_override(body).subscribe(response => {
             this.notification('submitted successfully ');
-            this.filteredPendingList = [];
-            this.leaveTransactionGUID = [];
+            this.showNoResult = false;
             this.showSmallSpinner = false;
-            this.disableButton = true;
-            this.filteredPendingList.forEach(element => {
-                element.isChecked = false;
-            });
         });
     }
 
