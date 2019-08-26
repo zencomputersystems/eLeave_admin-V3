@@ -103,6 +103,13 @@ export class LeaveEntitlementByBatchPage implements OnInit {
     public showSpinner: boolean = false;
 
     /**
+     * show no result when user list is empty
+     * @type {boolean}
+     * @memberof LeaveEntitlementByBatchPage
+     */
+    public showNoResult: boolean = false;
+
+    /**
      * selected user from filtered user list
      * @private
      * @type {any[]}
@@ -190,6 +197,9 @@ export class LeaveEntitlementByBatchPage implements OnInit {
                 this.filteredUser[this.filteredUser.length - 1].isChecked = false;
             }
         }
+        if (this.filteredUser.length == 0) {
+            this.showNoResult = true;
+        } else { this.showNoResult = false; }
     }
 
     /**

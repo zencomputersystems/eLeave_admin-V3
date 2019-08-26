@@ -147,6 +147,10 @@
             <ion-item class="divider" lines="full"></ion-item>
         </ion-row>
     </div>
+    <div *ngIf="showNoResult" style="width: 100%; text-align:center;padding: 10px">
+        <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
+        <p style="font-size: 20px;color:#bebebe;padding-top:10px ">No Results Found</p>
+    </div>
     <div style="margin: 0 auto;padding: 20px;text-align: center;">
         <ion-button style="font-size: 12px;height: 30px;width: 110px;background: white;" color="primary"
             (click)="patchLeaveNumber();adjustmentForm.reset();showSmallSpinner = true;mainCheckBox=false;indeterminate=false;showCheckbox = false;"

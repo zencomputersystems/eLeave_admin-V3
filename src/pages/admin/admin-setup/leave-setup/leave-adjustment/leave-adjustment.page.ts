@@ -95,6 +95,13 @@ export class LeaveAdjustmentPage implements OnInit {
     public showSpinner: boolean = false;
 
     /**
+     * show no result when user list is empty
+     * @type {boolean}
+     * @memberof LeaveAdjustmentPage
+     */
+    public showNoResult: boolean = false;
+
+    /**
      * selected company guid
      * @private
      * @type {string}
@@ -206,6 +213,11 @@ export class LeaveAdjustmentPage implements OnInit {
                 this.filteredUserItems.push(userList[i]);
                 this.filteredUserItems[this.filteredUserItems.length - 1].isChecked = false;
             }
+        }
+        if (this.filteredUserItems.length > 0) {
+            this.showNoResult = false;
+        } else {
+            this.showNoResult = true;
         }
     }
 

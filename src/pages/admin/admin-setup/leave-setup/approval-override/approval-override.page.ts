@@ -96,6 +96,13 @@ export class ApprovalOverridePage implements OnInit {
     public showSpinner: boolean = false;
 
     /**
+     * show no result when user list is empty
+     * @type {boolean}
+     * @memberof ApprovalOverridePage
+     */
+    public showNoResult: boolean = false;
+
+    /**
      * users list from API
      * @private
      * @type {*}
@@ -171,6 +178,11 @@ export class ApprovalOverridePage implements OnInit {
                 this.getLeaveType(this.filteredPendingList.length - 1, this._pendingList[i].LEAVE_TYPE_GUID);
             }
         }
+        if (this.filteredPendingList.length > 0) {
+            this.showNoResult = false;
+        } else {
+            this.showNoResult = true;
+        }
     }
 
     /**
@@ -216,6 +228,11 @@ export class ApprovalOverridePage implements OnInit {
     checkPendingUserList() {
         for (let j = 0; j < this._filteredUserList.length; j++) {
             this.filterUserGUID(this._pendingList, this._filteredUserList[j].userId, j);
+        }
+        if (this._filteredUserList.length < 1) {
+            this.showNoResult = true;
+        } else {
+            this.showNoResult = false;
         }
     }
 
