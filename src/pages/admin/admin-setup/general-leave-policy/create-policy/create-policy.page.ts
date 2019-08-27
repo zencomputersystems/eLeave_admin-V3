@@ -271,7 +271,18 @@ export class CreatePolicyPage implements OnInit {
             for (let i = 1; i < dayCF + 1; i++) {
                 this.daysOfCF.push(i);
             }
-        } else {
+        }
+        this.monthYEChanged(model, year);
+    }
+
+    /**
+     * Get total number of days in a month if selection month is changed
+     * @param {string} model
+     * @param {number} [year]
+     * @memberof CreatePolicyPage
+     */
+    monthYEChanged(model: string, year?: number) {
+        if (model == 'monthYE') {
             const monthYE = this._monthArray.indexOf(this.policyForm.controls.YEMonth.value) + 1;
             let dayYE = this.getTotalDays(monthYE, this._nextYear - year);
             this.daysOfYE = [];
