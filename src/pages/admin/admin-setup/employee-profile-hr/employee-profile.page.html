@@ -2,8 +2,8 @@
     <ion-toolbar class="toolbar2">
         <div class="back-icon" [inlineSVG]="'assets/icon/option/arrow-pointing-to-left.svg'" (click)="toMyProfile()">
         </div>
-        <ion-title style="display: inline-block;color: #20291f;font-size: 16px;" *ngIf="personalList">
-            {{personalList.employeeName}}'s Profile
+        <ion-title style="display: inline-block;color: #20291f;font-size: 16px;" *ngIf="list">
+            {{list.employeeName}}'s Profile
         </ion-title>
         <!-- <div style="float: right; padding-right: 20px;">
             <i class="fab fa-facebook-f"></i>
@@ -17,10 +17,10 @@
     <ion-card-content>
         <mat-tab-group>
             <mat-tab label="Personal">
-                <app-personal></app-personal>
+                <app-personal *ngIf="list" [personalList]="list"></app-personal>
             </mat-tab>
             <mat-tab label="Employment">
-                <app-employment></app-employment>
+                <app-employment *ngIf="list" [employmentList]="list"></app-employment>
             </mat-tab>
             <mat-tab label="Leave entitlement">
                 <!-- content leave entitlement -->
@@ -30,29 +30,29 @@
     </ion-card-content>
 </ion-card>
 
-<mat-card class="rightCard" *ngIf="personalList">
+<mat-card class="rightCard" *ngIf="list">
     <i class="fas fa-star" (click)="clickAsFavourite()" [style.color]="numOfArray ? '#ffbb00' : '#dfe3e6'"></i>
     <ion-avatar style="margin: 0 auto;">
         <img src="assets/icon/chris.jpg">
     </ion-avatar>
-    <mat-card-header *ngIf="employmentPersonalList">
+    <mat-card-header *ngIf="list">
         <mat-card-subtitle style="color: #057dcd;white-space: nowrap; font-size: 24px;letter-spacing: 0.3px;">
-            {{personalList.employeeName}}
+            {{list.employeeName}}
         </mat-card-subtitle>
         <mat-card-subtitle
             style="white-space: nowrap;font-size: 12px;font-weight: 500;color: #20291f;letter-spacing: 0.6px;">
-            {{personalList.employeeDesignation | uppercase}}
+            {{list.employeeDesignation | uppercase}}
         </mat-card-subtitle>
-        <mat-card-subtitle *ngIf="employmentPersonalList" style="white-space: nowrap;font-size: 12px;color: #7a8589;">
-            {{employmentPersonalList.employmentDetail.employmentStatus}}
+        <mat-card-subtitle *ngIf="list" style="white-space: nowrap;font-size: 12px;color: #7a8589;">
+            {{list.employmentDetail.employmentStatus}}
         </mat-card-subtitle>
         <mat-card-subtitle style="white-space: nowrap;color: #7a8589;padding-top: 12px;">
             <div class="mail-icon" [inlineSVG]="'assets/icon/user_profile/mail.svg'"></div>
-            <span style="padding-left: 10px;">{{personalList.personalDetail.emailAddress}}</span>
+            <span style="padding-left: 10px;">{{list.personalDetail.emailAddress}}</span>
         </mat-card-subtitle>
         <mat-card-subtitle style="white-space: nowrap; color:#7a8589;padding-top: 5px;">
             <div class="marker-icon" [inlineSVG]="'assets/icon/user_profile/pin.svg'"></div>
-            <span style="padding-left:8px"> {{employmentPersonalList.employmentDetail.workLocation}}</span>
+            <span style="padding-left:8px"> {{list.employmentDetail.workLocation}}</span>
         </mat-card-subtitle>
     </mat-card-header>
     <!-- <div class="footer">
@@ -62,3 +62,6 @@
         </ion-button>
     </div> -->
 </mat-card>
+<div style="width: 100%; height:100%; text-align: center" *ngIf="showSpinner">
+    <app-spinner></app-spinner>
+</div>

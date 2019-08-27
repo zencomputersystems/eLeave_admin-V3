@@ -82,4 +82,7 @@
   .button-outline {
     --border-width: 1px;
   }
+  ::ng-deep .mat-select-value{
+    color: #7a8589
+  }
 }

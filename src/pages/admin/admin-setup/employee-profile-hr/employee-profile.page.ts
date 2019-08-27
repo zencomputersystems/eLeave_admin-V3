@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../leave-setup/date.adapter';
 import { employeeStatus } from './employee-profile.service';
+
 /**
  * Employee Profile Page
  * @export
@@ -35,13 +36,6 @@ export class EmployeeProfilePage implements OnInit {
     public userId: string;
 
     /**
-     * Get Employment details from API
-     * @type {*}
-     * @memberof EmployeeProfilePage
-     */
-    public employmentlist: any;
-
-    /**
      * Show star icon highlight or vice versa
      * @type {boolean}
      * @memberof EmployeeProfilePage
@@ -49,22 +43,11 @@ export class EmployeeProfilePage implements OnInit {
     public numOfArray: boolean = false;
 
     /**
-     * Return personal details content
-     * @readonly
+     * show spinner during load page
+     * @type {boolean}
      * @memberof EmployeeProfilePage
      */
-    get personalList() {
-        return this.list;
-    }
-
-    /**
-     * Return employment details content
-     * @readonly
-     * @memberof EmployeeProfilePage
-     */
-    get employmentPersonalList() {
-        return this.employmentlist;
-    }
+    public showSpinner: boolean = false;
 
     /**
      *Creates an instance of EmployeeProfilePage.
@@ -72,30 +55,23 @@ export class EmployeeProfilePage implements OnInit {
      * @param {Router} router
      * @memberof EmployeeProfilePage
      */
-    constructor(private apiService: APIService, private router: Router) {
+    constructor(private apiService: APIService, private router: Router, private route: ActivatedRoute) {
+        route.queryParams
+            .subscribe((params) => {
+                this.userId = params.GUID;
+                this.showSpinner = true;
+                this.apiService.get_user_profile_details(this.userId).subscribe(
+                    (data: any[]) => {
+                        this.showSpinner = false;
+                        this.list = data;
+                        this.list.employmentDetail.employmentStatus = employeeStatus[this.list.employmentDetail.employmentStatus];
+                    }
+                );
+            });
     }
 
     ngOnInit() {
-        this.apiService.get_personal_details().subscribe(
-            (data: any[]) => {
-                this.list = data;
-                this.userId = this.list.id;
-            },
-            error => {
-                if (error) {
-                    window.location.href = '/login';
-                }
-            },
-            () => {
-                const userId = this.list.id;
-                this.apiService.get_employment_details(userId).subscribe(
-                    data => {
-                        this.employmentlist = data;
-                        this.employmentlist.employmentDetail.employmentStatus = employeeStatus[this.employmentlist.employmentDetail.employmentStatus]
-                    }
-                )
-            }
-        );
+
     }
 
     /**

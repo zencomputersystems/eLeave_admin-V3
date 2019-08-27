@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { FormControl, FormBuilder, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import * as _moment from 'moment';
 import { genderStatus, maritalStatus } from '../employee-profile.service';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../../leave-setup/date.adapter';
+import { FormControl, Validators } from '@angular/forms';
 const moment = _moment;
 
 /**
@@ -24,11 +24,11 @@ const moment = _moment;
 export class PersonalPage implements OnInit {
 
     /**
-     * Get Persoanl details from API
+     * input value from employee-profile (requested userId details)
      * @type {*}
      * @memberof PersonalPage
      */
-    public list: any;
+    @Input() public personalList: any;
 
     /**
      * Empty array to save emergency contact
@@ -141,15 +141,6 @@ export class PersonalPage implements OnInit {
     public date: any;
 
     /**
-     * Return Personal Details from API
-     * @readonly
-     * @memberof PersonalPage
-     */
-    get personalList() {
-        return this.list;
-    }
-
-    /**
      *Creates an instance of PersonalPage.
      * @param {APIService} apiService
      * @memberof PersonalPage
@@ -158,21 +149,14 @@ export class PersonalPage implements OnInit {
     }
 
     ngOnInit() {
-        this.apiService.get_personal_details().subscribe(
-            (data: any[]) => {
-                this.list = data;
-                this.getContactInit();
-                this.getSpouseInit();
-                this.getChildInit();
-                this.getEducationInit();
-                this.date = new FormControl((this.list.personalDetail.dob), Validators.required);
-                this.list.personalDetail.dob = moment(this.list.personalDetail.dob).format('DD-MM-YYYY');
-            },
-            error => {
-                if (error.status === 401) {
-                    window.location.href = '/login';
-                }
-            });
+        if (this.personalList) {
+            this.getContactInit();
+            this.getSpouseInit();
+            this.getChildInit();
+            this.getEducationInit();
+            this.date = new FormControl((this.personalList.personalDetail.dob), Validators.required);
+            this.personalList.personalDetail.dob = moment(this.personalList.personalDetail.dob).format('DD-MM-YYYY');
+        }
     }
 
     /**
@@ -180,7 +164,7 @@ export class PersonalPage implements OnInit {
      * @memberof PersonalPage
      */
     getContactInit() {
-        const contact = this.list.personalDetail.emergencyContact.contacts;
+        const contact = this.personalList.personalDetail.emergencyContact.contacts;
         if (contact !== undefined && !(contact instanceof Array)) {
             this.contactList.push(contact);
             for (let i = 0; i < this.contactList.length; i++) {
@@ -203,7 +187,7 @@ export class PersonalPage implements OnInit {
      * @memberof PersonalPage
      */
     getSpouseInit() {
-        const spouse = this.list.personalDetail.family.spouse;
+        const spouse = this.personalList.personalDetail.family.spouse;
         if (spouse !== undefined && !(spouse instanceof Array)) {
             this.displayFamily = true;
             this.spouseList.push(spouse);
@@ -227,7 +211,7 @@ export class PersonalPage implements OnInit {
      * @memberof PersonalPage
      */
     getChildInit() {
-        const child = this.list.personalDetail.family.child;
+        const child = this.personalList.personalDetail.family.child;
         if (child !== undefined && !(child instanceof Array)) {
             this.displayFamily = true;
             this.childList.push(child);
@@ -250,7 +234,7 @@ export class PersonalPage implements OnInit {
      * @memberof PersonalPage
      */
     getEducationInit() {
-        const education = this.list.personalDetail.education.educationDetail;
+        const education = this.personalList.personalDetail.education.educationDetail;
         if (education !== undefined && !(education instanceof Array)) {
             this.displayEducation = true;
             this.educationList.push(education);
@@ -317,11 +301,10 @@ export class PersonalPage implements OnInit {
         this.editProfile = false;
         this.apiService.patch_personal_details(this.bindingData()).subscribe(
             (val) => {
-                this.apiService.get_personal_details().subscribe(
-                    (data: any[]) => {
-                        this.list = data;
-                        this.list.personalDetail.dob = moment(this.list.personalDetail.dob).format('DD-MM-YYYY');
-                    });
+                this.apiService.get_user_profile_details(this.personalList.userId).subscribe(data => {
+                    this.personalList = data;
+                    this.personalList.personalDetail.dob = moment(this.personalList.personalDetail.dob).format('DD-MM-YYYY');
+                })
             },
             response => {
                 if (response.status === 401) {
@@ -337,25 +320,25 @@ export class PersonalPage implements OnInit {
      */
     bindingData() {
         return {
-            "id": this.list.id,
-            "nickname": this.list.personalDetail.nickname,
-            "nric": this.list.personalDetail.nric.toString(),
+            "id": this.personalList.id,
+            "nickname": this.personalList.personalDetail.nickname,
+            "nric": this.personalList.personalDetail.nric.toString(),
             "dob": moment(this.date.value).format('YYYY-MM-DD'),
-            "gender": genderStatus[this.list.personalDetail.gender],
-            "maritalStatus": maritalStatus[this.list.personalDetail.maritalStatus],
-            "race": this.list.personalDetail.race,
-            "religion": this.list.personalDetail.religion,
-            "nationality": this.list.personalDetail.nationality,
-            "phoneNumber": this.list.personalDetail.phoneNumber.toString(),
-            "emailAddress": this.list.personalDetail.emailAddress,
-            "workPhoneNumber": this.list.personalDetail.workPhoneNumber.toString(),
-            "workEmailAddress": this.list.personalDetail.workEmailAddress,
-            "address1": this.list.personalDetail.address1.toString(),
-            "address2": this.list.personalDetail.address2.toString(),
-            "postcode": this.list.personalDetail.postcode.toString(),
-            "city": this.list.personalDetail.city,
-            "state": this.list.personalDetail.state,
-            "country": this.list.personalDetail.country,
+            "gender": genderStatus[this.personalList.personalDetail.gender],
+            "maritalStatus": maritalStatus[this.personalList.personalDetail.maritalStatus],
+            "race": this.personalList.personalDetail.race,
+            "religion": this.personalList.personalDetail.religion,
+            "nationality": this.personalList.personalDetail.nationality,
+            "phoneNumber": this.personalList.personalDetail.phoneNumber.toString(),
+            "emailAddress": this.personalList.personalDetail.emailAddress,
+            "workPhoneNumber": this.personalList.personalDetail.workPhoneNumber.toString(),
+            "workEmailAddress": this.personalList.personalDetail.workEmailAddress,
+            "address1": this.personalList.personalDetail.address1.toString(),
+            "address2": this.personalList.personalDetail.address2.toString(),
+            "postcode": this.personalList.personalDetail.postcode.toString(),
+            "city": this.personalList.personalDetail.city,
+            "state": this.personalList.personalDetail.state,
+            "country": this.personalList.personalDetail.country,
             "emergencyContact": { "contacts": this.contactList },
             "education": { "educationDetail": this.educationList },
             "family": {

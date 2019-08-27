@@ -18,6 +18,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { PersonalPage } from './personal/personal.page';
 import { EmploymentPage } from './employment/employment.page';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { SpinnerModule } from 'src/library/spinner/spinner.module';
 
 
 const routes: Routes = [
@@ -44,6 +45,7 @@ const routes: Routes = [
         HttpClientModule,
         MatDatepickerModule,
         ReactiveFormsModule,
+        SpinnerModule,
         RouterModule.forChild(routes)
     ],
     declarations: [EmployeeProfilePage, PersonalPage, EmploymentPage]

@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { APIService } from 'src/services/shared-service/api.service';
-import { SnackbarNotificationPage } from '../snackbar-notification/snackbar-notification';
-import { MatSnackBar } from '@angular/material';
 import { ApprovalOverrideAPIService } from './approval-override-api.service';
 
 /**
@@ -149,7 +146,7 @@ export class ApprovalOverridePage implements OnInit {
      * @param {MatSnackBar} snackBar
      * @memberof ApprovalOverridePage
      */
-    constructor(private approvalOverrideAPI: ApprovalOverrideAPIService, private snackBar: MatSnackBar) {
+    constructor(private approvalOverrideAPI: ApprovalOverrideAPIService) {
         this.approvalForm = new FormGroup({
             company: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),
@@ -208,12 +205,7 @@ export class ApprovalOverridePage implements OnInit {
         this.approvalOverrideAPI.get_user_profile_list().subscribe(list => {
             this._userList = list;
             this.showSpinner = false;
-            for (let i = 0; i < this._userList.length; i++) {
-                if (this._userList[i].department === departmentName && this._userList[i].companyId === this._companyId) {
-                    this._filteredUserList.push(this._userList[i]);
-                } else { this.showNoResult = true; }
-            }
-            this.checkPendingUserList();
+            this.checkPendingUserList(departmentName);
         })
     }
 
@@ -221,7 +213,14 @@ export class ApprovalOverridePage implements OnInit {
      * compare approval override list with user list of selected department
      * @memberof ApprovalOverridePage
      */
-    checkPendingUserList() {
+    checkPendingUserList(departmentName: string) {
+        for (let i = 0; i < this._userList.length; i++) {
+            if (this._userList[i].department === departmentName && this._userList[i].companyId === this._companyId) {
+                this._filteredUserList.push(this._userList[i]);
+            } else {
+                this.showNoResult = true;
+            }
+        }
         for (let j = 0; j < this._filteredUserList.length; j++) {
             this.filterUserGUID(this._pendingList, this._filteredUserList[j].userId, j);
         }
@@ -317,17 +316,7 @@ export class ApprovalOverridePage implements OnInit {
         }
     }
 
-    /**
-     * snackbar message after submit approval
-     * @param {string} text
-     * @memberof ApprovalOverridePage
-     */
-    notification(text: string) {
-        this.snackBar.openFromComponent(SnackbarNotificationPage, {
-            duration: 5000,
-            data: text
-        });
-    }
+
 
     /**
      * patch selected user pending approval application 
@@ -356,11 +345,11 @@ export class ApprovalOverridePage implements OnInit {
     submitData(body: any) {
         this.approvalOverrideAPI.patch_approval_override(body).subscribe(response => {
             if (this.approvalForm.controls.radio.value == 'APPROVED') {
-                this.notification('approved successfully ');
+                this.approvalOverrideAPI.notification('approved successfully ');
             } else if (this.approvalForm.controls.radio.value == 'REJECTED') {
-                this.notification('rejected successfully ');
+                this.approvalOverrideAPI.notification('rejected successfully ');
             } else {
-                this.notification('cancelled successfully ');
+                this.approvalOverrideAPI.notification('cancelled successfully ');
             }
             this.showNoResult = false;
             this.showSmallSpinner = false;

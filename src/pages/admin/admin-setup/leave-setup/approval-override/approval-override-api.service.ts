@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
 import { LeaveAPIService } from "../leave-api.service";
+import { MatSnackBar } from "@angular/material";
+import { SnackbarNotificationPage } from "../snackbar-notification/snackbar-notification";
 
 /**
  * Approval override API endpoint
@@ -19,7 +21,7 @@ export class ApprovalOverrideAPIService {
      * @param {LeaveAPIService} leaveAPI
      * @memberof ApprovalOverrideAPIService
      */
-    constructor(private apiService: APIService, private leaveAPI: LeaveAPIService) { }
+    constructor(private apiService: APIService, private leaveAPI: LeaveAPIService, public snackbar: MatSnackBar) { }
 
     /**
      * Get all the pending leave application list
@@ -77,6 +79,18 @@ export class ApprovalOverrideAPIService {
      */
     get_user_profile_list(): Observable<any> {
         return this.apiService.get_user_profile_list();
+    }
+
+    /**
+     * snackbar message after submit approval
+     * @param {string} text
+     * @memberof ApprovalOverrideAPIService
+     */
+    notification(text: string) {
+        this.snackbar.openFromComponent(SnackbarNotificationPage, {
+            duration: 5000,
+            data: text
+        });
     }
 
 

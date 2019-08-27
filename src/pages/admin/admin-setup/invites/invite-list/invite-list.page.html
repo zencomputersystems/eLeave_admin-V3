@@ -75,7 +75,9 @@
             <ion-col size="1">
                 <ion-label style="color:#7a8589; font-size: 13px;">{{item.staffNumber}}</ion-label>
             </ion-col>
-            <ion-col class="colOfLeave" size="3.5" style="color: #057dcd; font-size: 13px;">{{item.employeeName}}
+            <ion-col class="colOfLeave" size="3.5" style="color: #057dcd; font-size: 13px;cursor: pointer;"
+                (click)="router.navigate(['/main/employee-profile'], { queryParams: { GUID: item.userId, name: item.employeeName } });">
+                {{item.employeeName}}
             </ion-col>
             <ion-col class="colOfLeave" size="3.5" style="color:#7a8589; font-size: 13px;">{{item.designation}}
             </ion-col>
@@ -163,7 +165,9 @@
                         <img src="assets/icon/evans.jpg">
                     </ion-avatar>
                     <mat-card-header>
-                        <mat-card-subtitle style="color: #057dcd;white-space: nowrap">{{item.employeeName}}
+                        <mat-card-subtitle style="color: #057dcd;white-space: nowrap; cursor: pointer;"
+                            (click)="router.navigate(['/main/employee-profile'], { queryParams: { GUID: item.userId, name: item.employeeName } });">
+                            {{item.employeeName}}
                         </mat-card-subtitle>
                         <mat-card-subtitle> <i class="far fa-id-card"></i>
                             {{item.staffNumber}}</mat-card-subtitle>
