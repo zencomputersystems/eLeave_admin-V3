@@ -1,7 +1,6 @@
 import { OnInit, Component } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { PolicyAPIService } from "../policy-api.service";
-import { LeaveAPIService } from "../../leave-setup/leave-api.service";
 import { MatSnackBar } from "@angular/material";
 import { SnackbarNotificationPage } from "../../leave-setup/snackbar-notification/snackbar-notification";
 import { ActivatedRoute } from "@angular/router";
@@ -168,12 +167,11 @@ export class CreatePolicyPage implements OnInit {
     /**
      *Creates an instance of CreatePolicyPage.
      * @param {PolicyAPIService} policyApi
-     * @param {LeaveAPIService} leaveAPi
      * @param {MatSnackBar} snackbar
      * @param {ActivatedRoute} route
      * @memberof CreatePolicyPage
      */
-    constructor(private policyApi: PolicyAPIService, private leaveAPi: LeaveAPIService, private snackbar: MatSnackBar, private route: ActivatedRoute) {
+    constructor(private policyApi: PolicyAPIService, private snackbar: MatSnackBar, private route: ActivatedRoute) {
         this.policyForm = new FormGroup(
             {
                 company: new FormControl(null, Validators.required),
@@ -197,7 +195,7 @@ export class CreatePolicyPage implements OnInit {
                 this.editPolicyDetails();
             })
         }
-        this.leaveAPi.get_company_list().subscribe(data => {
+        this.policyApi.get_company_list().subscribe(data => {
             this.list = data;
             this.showContainer = true;
             this.showSpinner = false;
@@ -224,6 +222,15 @@ export class CreatePolicyPage implements OnInit {
         this.policyForm.controls.CFMonth.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.month;
         this.policyForm.controls.CFDay.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.day;
         this.yearEnd = this.policyList.PROPERTIES_XML.allowYearEndClosing.value;
+        this.editDetails();
+    }
+
+
+    /**
+     * get the details from Id of company GUID
+     * @memberof CreatePolicyPage
+     */
+    editDetails() {
         this.policyForm.controls.YEMonth.value = this.policyList.PROPERTIES_XML.allowYearEndClosing.month;
         this.policyForm.controls.YEDay.value = this.policyList.PROPERTIES_XML.allowYearEndClosing.day;
         this.policyForm.controls.YEChoice.value = this.policyList.PROPERTIES_XML.allowYearEndClosing.relativeYear;
@@ -328,6 +335,14 @@ export class CreatePolicyPage implements OnInit {
         this._data.forfeitCFLeave.value = this.CF;
         this._data.forfeitCFLeave.day = this.policyForm.controls.CFDay.value;
         this._data.forfeitCFLeave.month = this.policyForm.controls.CFMonth.value;
+        this.saveValue();
+    }
+
+    /**
+     * data that created to POST to backend API
+     * @memberof CreatePolicyPage
+     */
+    saveValue() {
         this._data.allowYearEndClosing = {};
         this._data.allowYearEndClosing.value = this.yearEnd;
         this._data.allowYearEndClosing.day = this.policyForm.controls.YEDay.value;
@@ -355,7 +370,6 @@ export class CreatePolicyPage implements OnInit {
             this.email = false;
             this.message('saved successfully');
         }, error => {
-            // window.location.href = '/login';
             this.message('saved unsuccessfully');
         });
     }

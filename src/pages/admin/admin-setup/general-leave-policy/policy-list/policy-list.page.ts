@@ -151,7 +151,6 @@ export class PolicyListPage implements OnInit {
             }
         }
         this.currentItems = pageItems;
-        console.log(this.currentItems);
     }
 
     /**

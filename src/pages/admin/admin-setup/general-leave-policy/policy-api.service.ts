@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
+import { LeaveAPIService } from "../leave-setup/leave-api.service";
 
 /**
  * API for policy
@@ -17,7 +18,7 @@ export class PolicyAPIService {
      * @param {APIService} apiService
      * @memberof PolicyAPIService
      */
-    constructor(private apiService: APIService) {
+    constructor(private apiService: APIService, private leaveAPi: LeaveAPIService) {
 
     }
 
@@ -62,6 +63,15 @@ export class PolicyAPIService {
     get_general_leave_policy_id(id): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.getApiWithId('/api/admin/general-leave-policy/', id);
+    }
+
+    /**
+    * return company list from leave api
+    * @returns {Observable<any>}
+    * @memberof PolicyAPIService
+    */
+    get_company_list(): Observable<any> {
+        return this.leaveAPi.get_company_list();
     }
 
 }
