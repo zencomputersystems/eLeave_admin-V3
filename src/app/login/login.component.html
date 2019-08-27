@@ -26,7 +26,7 @@
           <br>
           <br>
           <ion-checkbox (ionChange)="rememberMe($event, emailInput.value, passwordInput.value)" [checked]="valueOfCheck"
-            style="display: inline-flex;--size: 14px;" [disabled]="!formGroupValidation.valid"></ion-checkbox>
+            style="display: inline-flex;--size: 14px;z-index: 0;" [disabled]="!formGroupValidation.valid"></ion-checkbox>
           <span style="padding-left: 10px; color:#7a8589">Remember me</span>
           <ion-button shape="round" fill="solid" float-right style="margin-right: 7%; margin-top: -0.2%;font-size: 10px;
       height: 27px;" (click)="signIn(emailInput.value, passwordInput.value)" [disabled]="!formGroupValidation.valid">

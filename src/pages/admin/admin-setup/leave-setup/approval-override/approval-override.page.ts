@@ -185,7 +185,7 @@ export class ApprovalOverridePage implements OnInit {
      * @param {*} company_guid
      * @memberof ApprovalOverridePage
      */
-    selectedCompany(company_guid) {
+    selectedCompany(company_guid: string) {
         this.showSpinner = true;
         this._companyId = company_guid;
         this.approvalOverrideAPI.get_company_detail(company_guid).subscribe(list => {
@@ -200,12 +200,10 @@ export class ApprovalOverridePage implements OnInit {
      * @param {*} departmentName
      * @memberof ApprovalOverridePage
      */
-    selectedDepartment(departmentName) {
+    selectedDepartment(departmentName: string) {
         this.filteredPendingList = [];
         this._filteredUserList = [];
         this.leaveTransactionGUID = [];
-        this.mainCheckbox = false;
-        this.indeterminate = false;
         this.showSpinner = true;
         this.approvalOverrideAPI.get_user_profile_list().subscribe(list => {
             this._userList = list;
@@ -295,7 +293,7 @@ export class ApprovalOverridePage implements OnInit {
      * @param {*} isChecked
      * @memberof ApprovalOverridePage
      */
-    mouseEvent(value, isChecked) {
+    mouseEvent(value: boolean, isChecked: boolean) {
         if (isChecked && (this.mainCheckbox || this.indeterminate)) {
             this.displayCheckbox = true;
         } else if (!isChecked && (this.mainCheckbox || this.indeterminate)) {
@@ -347,10 +345,29 @@ export class ApprovalOverridePage implements OnInit {
             "status": this.approvalForm.controls.radio.value,
             "remark": this.approvalForm.controls.remark.value
         }
+        this.submitData(body);
+    }
+
+    /**
+     * patch data to the endpoint
+     * @param {*} body
+     * @memberof ApprovalOverridePage
+     */
+    submitData(body: any) {
         this.approvalOverrideAPI.patch_approval_override(body).subscribe(response => {
             this.notification('submitted successfully ');
             this.showNoResult = false;
             this.showSmallSpinner = false;
+            this.approvalForm.get('radio').reset();
+            this.approvalForm.get('remark').reset();
+            this.mainEvent();
+            for (let i = 0; i < this.filteredPendingList.length; i++) {
+                for (let j = 0; j < this.leaveTransactionGUID.length; j++) {
+                    if (this.filteredPendingList[i].LEAVE_TRANSACTION_GUID == this.leaveTransactionGUID[j]) {
+                        this.filteredPendingList.splice(i, 1);
+                    }
+                }
+            }
         });
     }
 

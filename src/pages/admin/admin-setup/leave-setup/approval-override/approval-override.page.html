@@ -26,7 +26,7 @@
                 <mat-select formControlName="department" required>
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let department of departmentList" [value]=department.department
-                        (click)="selectedDepartment(department.department);enableDisableButton(true)">
+                        (click)="selectedDepartment(department.department);enableDisableButton(true);mainCheckbox=false;indeterminate=false">
                         {{department.department}}
                     </mat-option>
                 </mat-select>
@@ -54,9 +54,9 @@
         border-radius: 5px;border-color: rgba(0, 0, 0, 0.12);width: 280px;margin-bottom: 40px;">
                 <mat-radio-group aria-label="Select an option" formControlName="radio" required
                     style="padding-left: 10px;white-space: nowrap;color: #7a8589;" (change)="enableDisableButton(true)">
-                    <mat-radio-button value="CANCEL">Cancel</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <mat-radio-button value="REJECT">Reject</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <mat-radio-button value="APPROVE">Approve</mat-radio-button>
+                    <mat-radio-button value="CANCELLED">Cancel</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <mat-radio-button value="REJECTED">Reject</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <mat-radio-button value="APPROVED">Approve</mat-radio-button>
                 </mat-radio-group>
             </div>
         </div>
@@ -151,8 +151,7 @@
     </div>
     <div style="margin: 0 auto;padding: 20px;text-align: center;">
         <ion-button style="font-size: 12px;height: 30px;width: 110px;background: white;" color="primary"
-            (click)="patchStatus();" [disabled]="disableButton">
-            <!-- approvalForm.reset();mainCheckbox=false;indeterminate=false -->
+            (click)="patchStatus();mainCheckbox=false;indeterminate=false" [disabled]="disableButton">
             SUBMIT
         </ion-button>
         <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
