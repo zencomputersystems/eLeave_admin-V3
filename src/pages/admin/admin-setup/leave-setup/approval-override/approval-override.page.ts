@@ -355,20 +355,34 @@ export class ApprovalOverridePage implements OnInit {
      */
     submitData(body: any) {
         this.approvalOverrideAPI.patch_approval_override(body).subscribe(response => {
-            this.notification('submitted successfully ');
+            if (this.approvalForm.controls.radio.value == 'APPROVED') {
+                this.notification('approved successfully ');
+            } else if (this.approvalForm.controls.radio.value == 'REJECTED') {
+                this.notification('rejected successfully ');
+            } else {
+                this.notification('cancelled successfully ');
+            }
             this.showNoResult = false;
             this.showSmallSpinner = false;
             this.approvalForm.get('radio').reset();
             this.approvalForm.get('remark').reset();
             this.mainEvent();
-            for (let i = 0; i < this.filteredPendingList.length; i++) {
-                for (let j = 0; j < this.leaveTransactionGUID.length; j++) {
-                    if (this.filteredPendingList[i].LEAVE_TRANSACTION_GUID == this.leaveTransactionGUID[j]) {
-                        this.filteredPendingList.splice(i, 1);
-                    }
+            this.deleteSubmittedItem();
+        });
+    }
+
+    /**
+     * delete submitted items
+     * @memberof ApprovalOverridePage
+     */
+    deleteSubmittedItem() {
+        for (let i = 0; i < this.filteredPendingList.length; i++) {
+            for (let j = 0; j < this.leaveTransactionGUID.length; j++) {
+                if (this.filteredPendingList[i].LEAVE_TRANSACTION_GUID == this.leaveTransactionGUID[j]) {
+                    this.filteredPendingList.splice(i, 1);
                 }
             }
-        });
+        }
     }
 
 
