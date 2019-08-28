@@ -109,11 +109,11 @@ export class InviteListPage implements OnInit {
      */
     public gridView: boolean = false;
 
-    /**
-     * Add as favourite list after clicked star icon
-     * @memberof InviteListPage
-     */
-    public favouriteList = [];
+    // /**
+    //  * Add as favourite list after clicked star icon
+    //  * @memberof InviteListPage
+    //  */
+    // public favouriteList = [];
 
     /**
      * Show spinner during loading
@@ -352,17 +352,17 @@ export class InviteListPage implements OnInit {
         }
     }
 
-    /**
-     * Check duplicate Id exist or not
-     * @param {string} ID
-     * @returns
-     * @memberof InviteListPage
-     */
-    checkUserID(ID: string) {
-        return this.favouriteList.some(function (el) {
-            return el.itemId === ID;
-        });
-    }
+    // /**
+    //  * Check duplicate Id exist or not
+    //  * @param {string} ID
+    //  * @returns
+    //  * @memberof InviteListPage
+    //  */
+    // checkUserID(ID: string) {
+    //     return this.favouriteList.some(function (el) {
+    //         return el.itemId === ID;
+    //     });
+    // }
 
     /**
      * Delete resigned employee from user list
@@ -383,27 +383,27 @@ export class InviteListPage implements OnInit {
         });
     }
 
-    /**
-     * Save highlighted star icon name card
-     * @param {number} index
-     * @param {*} item
-     * @memberof InviteListPage
-     */
-    saveAsFavourite(index: number, item: any) {
-        const create = { index: index, itemId: item.id };
-        const items = create;
-        if (this.favouriteList.length > 0 && this.checkUserID(item.id)) {
-            for (let i = 0; i < this.favouriteList.length; i++) {
-                if (this.favouriteList[i].index == index && this.favouriteList[i].itemId == item.id) {
-                    this.favouriteList.splice(i, 1);
-                }
-            }
-        } else if (this.favouriteList.length > 0 && !this.checkUserID(item.id)) {
-            this.favouriteList.push(items);
-        } else {
-            this.favouriteList.push(items);
-        }
-    };
+    // /**
+    //  * Save highlighted star icon name card
+    //  * @param {number} index
+    //  * @param {*} item
+    //  * @memberof InviteListPage
+    //  */
+    // saveAsFavourite(index: number, item: any) {
+    //     const create = { index: index, itemId: item.id };
+    //     const items = create;
+    //     if (this.favouriteList.length > 0 && this.checkUserID(item.id)) {
+    //         for (let i = 0; i < this.favouriteList.length; i++) {
+    //             if (this.favouriteList[i].index == index && this.favouriteList[i].itemId == item.id) {
+    //                 this.favouriteList.splice(i, 1);
+    //             }
+    //         }
+    //     } else if (this.favouriteList.length > 0 && !this.checkUserID(item.id)) {
+    //         this.favouriteList.push(items);
+    //     } else {
+    //         this.favouriteList.push(items);
+    //     }
+    // };
 
     /**
      * main checkbox value

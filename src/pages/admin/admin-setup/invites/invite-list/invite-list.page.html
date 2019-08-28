@@ -158,9 +158,17 @@
             <mat-grid-tile *ngFor="let item of currentPageItems; let i=index">
                 <mat-card class="example-card" style="width: 90%;height: 90%;border-radius: 4px;
                     border: solid 0.5px #dfe3e6;">
-                    <i class="fas fa-star" (click)="saveAsFavourite(i,item)"
-                        [style.color]="checkUserID(item.id) ? '#ffbb00' : '#dfe3e6'"></i>
-                    <ion-icon class="moreIcon" name="more"></ion-icon>
+                    <!-- <i class="fas fa-star" (click)="saveAsFavourite(i,item)"
+                        [style.color]="checkUserID(item.id) ? '#ffbb00' : '#dfe3e6'"></i> -->
+                    <ion-icon class="moreIcon" name="more" [matMenuTriggerFor]="menu"></ion-icon>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item style="color: #7a8589">Enable</button>
+                        <button mat-menu-item style="color: #7a8589">Disable</button>
+                        <button mat-menu-item style="color: #7a8589"
+                            (click)="deleteUser(item.employeeName, item.userId)">
+                            Delete
+                        </button>
+                    </mat-menu>
                     <ion-avatar style="margin: 0 auto;">
                         <img src="assets/icon/evans.jpg">
                     </ion-avatar>
