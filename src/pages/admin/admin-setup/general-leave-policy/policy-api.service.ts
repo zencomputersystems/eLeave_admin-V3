@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
 import { LeaveAPIService } from "../leave-setup/leave-api.service";
+import { MatSnackBar } from "@angular/material";
+import { SnackbarNotificationPage } from "../leave-setup/snackbar-notification/snackbar-notification";
 
 /**
  * API for policy
@@ -18,7 +20,7 @@ export class PolicyAPIService {
      * @param {APIService} apiService
      * @memberof PolicyAPIService
      */
-    constructor(private apiService: APIService, private leaveAPi: LeaveAPIService) {
+    constructor(private apiService: APIService, private leaveAPi: LeaveAPIService, public snackbar: MatSnackBar) {
 
     }
 
@@ -72,6 +74,18 @@ export class PolicyAPIService {
     */
     get_company_list(): Observable<any> {
         return this.leaveAPi.get_company_list();
+    }
+
+    /**
+     * show notifation snackbar after clicked create policy
+     * @param {string} message
+     * @memberof PolicyAPIService
+     */
+    message(message: string) {
+        this.snackbar.openFromComponent(SnackbarNotificationPage, {
+            duration: 2500,
+            data: message
+        });
     }
 
 }

@@ -356,7 +356,9 @@ export class ApprovalOverridePage implements OnInit {
             this.approvalForm.get('radio').reset();
             this.approvalForm.get('remark').reset();
             this.mainEvent();
-            this.deleteSubmittedItem();
+            for (let i = 0; i < this.filteredPendingList.length; i++) {
+                this.deleteSubmittedItem(i);
+            }
         });
     }
 
@@ -364,16 +366,12 @@ export class ApprovalOverridePage implements OnInit {
      * delete submitted items
      * @memberof ApprovalOverridePage
      */
-    deleteSubmittedItem() {
-        for (let i = 0; i < this.filteredPendingList.length; i++) {
-            for (let j = 0; j < this.leaveTransactionGUID.length; j++) {
-                if (this.filteredPendingList[i].LEAVE_TRANSACTION_GUID == this.leaveTransactionGUID[j]) {
-                    this.filteredPendingList.splice(i, 1);
-                }
+    deleteSubmittedItem(i: number) {
+        for (let j = 0; j < this.leaveTransactionGUID.length; j++) {
+            if (this.filteredPendingList[i].LEAVE_TRANSACTION_GUID == this.leaveTransactionGUID[j]) {
+                this.filteredPendingList.splice(i, 1);
             }
         }
     }
-
-
 
 }

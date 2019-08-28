@@ -62,8 +62,7 @@
                 <ion-item class="ionItem">
                     <ion-label>Forfeit carried forward leaves on:</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" (click)="CF = !CF" [(ngModel)]="CF"
-                        [checked]="CF"
-                        (ionChange)="checkEvent($event, policyForm.controls.CFMonth, policyForm.controls.CFDay)">
+                        [checked]="CF" (ionChange)="checkEventCF($event)">
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -100,8 +99,7 @@
                 <ion-item class="ionItem">
                     <ion-label>Allow year end closing after:</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="yearEnd" [checked]="yearEnd"
-                        (click)="yearEnd = !yearEnd"
-                        (ionChange)="checkEvent($event, policyForm.controls.YEMonth, policyForm.controls.YEDay, policyForm.controls.YEChoice)">
+                        (click)="yearEnd = !yearEnd" (ionChange)="checkEventYE($event)">
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -178,8 +176,8 @@
                 SAVE POLICY
             </ion-button>
             <div style="display: inline-block;margin-top: 8px;vertical-align: middle;" *ngIf="showSmallSpinner">
-                    <ion-spinner name="lines-small" color="primary"></ion-spinner>
-                </div>
+                <ion-spinner name="lines-small" color="primary"></ion-spinner>
+            </div>
         </div>
     </form>
 </div>

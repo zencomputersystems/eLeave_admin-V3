@@ -1,8 +1,6 @@
 import { OnInit, Component } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { PolicyAPIService } from "../policy-api.service";
-import { MatSnackBar } from "@angular/material";
-import { SnackbarNotificationPage } from "../../leave-setup/snackbar-notification/snackbar-notification";
 import { ActivatedRoute } from "@angular/router";
 
 /**
@@ -167,11 +165,10 @@ export class CreatePolicyPage implements OnInit {
     /**
      *Creates an instance of CreatePolicyPage.
      * @param {PolicyAPIService} policyApi
-     * @param {MatSnackBar} snackbar
      * @param {ActivatedRoute} route
      * @memberof CreatePolicyPage
      */
-    constructor(private policyApi: PolicyAPIService, private snackbar: MatSnackBar, private route: ActivatedRoute) {
+    constructor(private policyApi: PolicyAPIService, private route: ActivatedRoute) {
         this.policyForm = new FormGroup(
             {
                 company: new FormControl(null, Validators.required),
@@ -221,7 +218,6 @@ export class CreatePolicyPage implements OnInit {
         this.CF = this.policyList.PROPERTIES_XML.forfeitCFLeave.value;
         this.policyForm.controls.CFMonth.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.month;
         this.policyForm.controls.CFDay.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.day;
-        this.yearEnd = this.policyList.PROPERTIES_XML.allowYearEndClosing.value;
         this.editDetails();
     }
 
@@ -231,6 +227,7 @@ export class CreatePolicyPage implements OnInit {
      * @memberof CreatePolicyPage
      */
     editDetails() {
+        this.yearEnd = this.policyList.PROPERTIES_XML.allowYearEndClosing.value;
         this.policyForm.controls.YEMonth.value = this.policyList.PROPERTIES_XML.allowYearEndClosing.month;
         this.policyForm.controls.YEDay.value = this.policyList.PROPERTIES_XML.allowYearEndClosing.day;
         this.policyForm.controls.YEChoice.value = this.policyList.PROPERTIES_XML.allowYearEndClosing.relativeYear;
@@ -306,26 +303,34 @@ export class CreatePolicyPage implements OnInit {
     }
 
     /**
-     * When ion-checkbox is clicked, the selection/input form is enable/disable
-     * @param {*} event
-     * @param {*} enabledMonth
-     * @param {*} enabledDay
-     * @param {*} [enabledYr]
+     * Carried forward check event
+     * @param {*} evt
      * @memberof CreatePolicyPage
      */
-    checkEvent(event, enabledMonth, enabledDay, enabledYr?: any) {
-        if (event.detail.checked) {
-            enabledMonth.enable();
-            enabledDay.enable();
-            if (enabledYr != undefined) {
-                enabledYr.enable();
-            }
+    checkEventCF(evt: any) {
+        if (evt.detail.checked) {
+            this.policyForm.controls.CFMonth.enable();
+            this.policyForm.controls.CFDay.enable();
         } else {
-            enabledMonth.disable();
-            enabledDay.disable();
-            if (enabledYr != undefined) {
-                enabledYr.disable();
-            }
+            this.policyForm.controls.CFMonth.disable();
+            this.policyForm.controls.CFDay.disable();
+        }
+    }
+
+    /**
+     * Year end check event
+     * @param {*} event
+     * @memberof CreatePolicyPage
+     */
+    checkEventYE(event: any) {
+        if (event.detail.checked) {
+            this.policyForm.controls.YEMonth.enable();
+            this.policyForm.controls.YEDay.enable();
+            this.policyForm.controls.YEChoice.enable();
+        } else {
+            this.policyForm.controls.YEMonth.disable();
+            this.policyForm.controls.YEDay.disable();
+            this.policyForm.controls.YEChoice.disable();
         }
     }
 
@@ -379,9 +384,9 @@ export class CreatePolicyPage implements OnInit {
             this.yearEnd = false;
             this.onBehalf = false;
             this.email = false;
-            this.message('saved successfully');
+            this.policyApi.message('saved successfully');
         }, error => {
-            this.message('saved unsuccessfully');
+            this.policyApi.message('saved unsuccessfully');
         });
     }
     /**
@@ -396,23 +401,11 @@ export class CreatePolicyPage implements OnInit {
             'data': this._data
         }
         this.policyApi.patch_general_leave_policy(data).subscribe(response => {
-            this.message('saved successfully');
+            this.policyApi.message('saved successfully');
             this.showSmallSpinner = false;
         }, error => {
-            // window.location.href = '/login';
-            this.message('saved unsuccessfully');
+            this.policyApi.message('saved unsuccessfully');
         })
     }
 
-    /**
-     * show notifation snackbar after clicked create policy
-     * @param {string} message
-     * @memberof CreatePolicyPage
-     */
-    message(message: string) {
-        this.snackbar.openFromComponent(SnackbarNotificationPage, {
-            duration: 2500,
-            data: message
-        });
-    }
 }
