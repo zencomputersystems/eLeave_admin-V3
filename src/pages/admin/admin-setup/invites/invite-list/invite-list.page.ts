@@ -141,7 +141,7 @@ export class InviteListPage implements OnInit {
      * @type {boolean}
      * @memberof InviteListPage
      */
-    public hideAvatar: boolean = false;
+    public hideAvatar: boolean[] = [];
 
     /**
      *Creates an instance of InviteListPage.
@@ -410,13 +410,14 @@ export class InviteListPage implements OnInit {
      * @memberof InviteListPage
      */
     checkboxEvent() {
+        this.hideAvatar.splice(0, this.hideAvatar.length);
         setTimeout(() => {
-            this.currentPageItems.forEach(value => {
+            this.list.forEach(value => {
                 value.isChecked = this.mainCheck;
                 if (value.isChecked) {
-                    this.hideAvatar = true;
+                    this.hideAvatar.push(true);
                 } else {
-                    this.hideAvatar = false;
+                    this.hideAvatar.push(false);
                 }
             });
         })
@@ -427,11 +428,12 @@ export class InviteListPage implements OnInit {
      * @memberof InviteListPage
      */
     listEvent() {
-        const totalNumber = this.currentPageItems.length;
+        const totalNumber = this.list.length;
         let checkedLength = 0;
-        this.currentPageItems.map(item => {
+        this.list.map(item => {
             if (item.isChecked) {
                 checkedLength++;
+                this.hideAvatar.push(true);
             }
         });
         if (checkedLength > 0 && checkedLength < totalNumber) {
@@ -448,19 +450,23 @@ export class InviteListPage implements OnInit {
 
     /**
      * mouse in/out event
-     * @param {*} value
-     * @param {*} checkedValue
+     * @param {number} idx
+     * @param {boolean} value
+     * @param {boolean} checkedValue
      * @memberof InviteListPage
      */
-    mouseHoverEvent(value: boolean, checkedValue: boolean) {
+    mouseHoverEvent(idx: number, value: boolean, checkedValue: boolean) {
         if (checkedValue && (this.mainCheck || this.indeterminateCheck)) {
-            this.hideAvatar = true;
+            this.hideAvatar.splice(0, this.hideAvatar.length);
+            this.list.map(value => { this.hideAvatar.push(true); });
         } else if (!checkedValue && (this.mainCheck || this.indeterminateCheck)) {
-            this.hideAvatar = true;
+            this.hideAvatar.splice(0, this.hideAvatar.length);
+            this.list.map(value => { this.hideAvatar.push(true); });
         } else if (value && !checkedValue && !this.indeterminateCheck && !this.mainCheck) {
-            this.hideAvatar = true;
+            this.hideAvatar.splice(idx, 1, true);
         } else {
-            this.hideAvatar = false;
+            this.hideAvatar.splice(0, this.hideAvatar.length);
+            this.list.map(value => { this.hideAvatar.push(false); });
         }
     }
 

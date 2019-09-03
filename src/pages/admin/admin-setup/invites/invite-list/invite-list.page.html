@@ -61,11 +61,11 @@
         </ion-row>
         <ion-row class="detailsRow" *ngFor="let item of currentPageItems; let i=index">
             <ion-col size="0.7">
-                <ion-avatar class="avatar" (mouseover)="mouseHoverEvent(true, item.isChecked)"
-                    (mouseout)="mouseHoverEvent(false, item.isChecked)">
+                <ion-avatar class="avatar" (mouseover)="mouseHoverEvent(i, true, item.isChecked)"
+                    (mouseout)="mouseHoverEvent(i, false, item.isChecked)">
                     <img src="assets/icon/evans.jpg" style="margin-left: -4px;"
-                        [style.display]="hideAvatar ? 'none' : 'block'">
-                    <div class="checkboxOnAvatar" [style.display]="hideAvatar ? 'block' : 'none'">
+                        [style.display]="hideAvatar[i] ? 'none' : 'block'">
+                    <div class="checkboxOnAvatar" [style.display]="hideAvatar[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;margin-top: 7px;"
                             [(ngModel)]="item.isChecked" (ionChange)="listEvent()">
                         </ion-checkbox>

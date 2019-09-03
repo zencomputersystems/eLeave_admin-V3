@@ -89,14 +89,17 @@
             <ion-col size="4">
                 <ion-label style="font-size: 12px;">DESIGNATION</ion-label>
             </ion-col>
+            <ion-col size="2">
+                <ion-label style="font-size: 12px;">STATUS</ion-label>
+            </ion-col>
         </ion-row>
         <ion-row class="detailsRow" *ngFor="let item of filteredUser; let i=index">
             <ion-col size="0.7" style="padding-left: 10px;padding-right: 30px;">
-                <ion-avatar class="avatar" (mouseover)="mouseInOutEvent(true, item.isChecked)"
-                    (mouseout)="mouseInOutEvent(false, item.isChecked)">
+                <ion-avatar class="avatar" (mouseover)="mouseInOutEvent(i, true, item.isChecked)"
+                    (mouseout)="mouseInOutEvent(i, false, item.isChecked)">
                     <img src="assets/icon/evans.jpg" style="margin-left: -4px;"
-                        [style.display]="hideAvatar ? 'none' : 'block'">
-                    <div class="checkboxOnAvatar" [style.display]="hideAvatar ? 'block' : 'none'">
+                        [style.display]="hideAvatar[i] ? 'none' : 'block'">
+                    <div class="checkboxOnAvatar" [style.display]="hideAvatar[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;margin-top: 7px;"
                             [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
                         </ion-checkbox>
@@ -113,6 +116,10 @@
             <ion-col size="4" class="colOfLeave"
                 style="color:#7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                 {{item.designation}}
+            </ion-col>
+            <ion-col size="2" class="colOfLeave"
+                style="color:#7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                {{item.status}}
             </ion-col>
             <ion-item class="divider" lines="full"></ion-item>
         </ion-row>

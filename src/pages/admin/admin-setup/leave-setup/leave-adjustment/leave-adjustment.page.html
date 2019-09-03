@@ -118,11 +118,11 @@
         </ion-row>
         <ion-row class="detailsRow" *ngFor="let item of filteredUserItems; let i=index">
             <ion-col size="0.7" style="padding-left: 10px;padding-right: 30px;">
-                <ion-avatar class="avatar" (mouseover)="hoverEvent(true, item.isChecked)"
-                    (mouseout)="hoverEvent(false, item.isChecked)">
+                <ion-avatar class="avatar" (mouseover)="hoverEvent(i, true, item.isChecked)"
+                    (mouseout)="hoverEvent(i, false, item.isChecked)">
                     <img src="assets/icon/evans.jpg" style="margin-left: -4px;"
-                        [style.display]="showCheckbox ? 'none' : 'block'">
-                    <div class="checkboxOnAvatar" [style.display]="showCheckbox ? 'block' : 'none'">
+                        [style.display]="showCheckbox[i] ? 'none' : 'block'">
+                    <div class="checkboxOnAvatar" [style.display]="showCheckbox[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;margin-top: 7px;"
                             [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
                         </ion-checkbox>

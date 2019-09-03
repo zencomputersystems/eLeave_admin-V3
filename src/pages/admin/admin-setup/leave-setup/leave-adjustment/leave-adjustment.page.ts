@@ -78,7 +78,7 @@ export class LeaveAdjustmentPage implements OnInit {
      * @type {boolean}
      * @memberof LeaveAdjustmentPage
      */
-    public showCheckbox: boolean = false;
+    public showCheckbox: boolean[] = [];
 
     /**
      * show/hide spinner when submit button is clicked
@@ -211,6 +211,7 @@ export class LeaveAdjustmentPage implements OnInit {
         for (let i = 0; i < userList.length; i++) {
             if (userList[i].department === name && userList[i].companyId === this._companyGUID) {
                 this.filteredUserItems.push(userList[i]);
+                this.showCheckbox.push(false);
                 this.filteredUserItems[this.filteredUserItems.length - 1].isChecked = false;
             }
         }
@@ -235,19 +236,23 @@ export class LeaveAdjustmentPage implements OnInit {
 
     /**
      * mouse hover to show/hide checkbox
+     * @param {number} i
      * @param {boolean} mouseIn
      * @param {boolean} isChecked
      * @memberof LeaveAdjustmentPage
      */
-    hoverEvent(mouseIn: boolean, isChecked: boolean) {
+    hoverEvent(i: number, mouseIn: boolean, isChecked: boolean) {
         if (isChecked && (this.mainCheckBox || this.indeterminate)) {
-            this.showCheckbox = true;
+            this.showCheckbox.splice(0, this.showCheckbox.length);
+            this.filteredUserItems.map(value => { this.showCheckbox.push(true); });
         } else if (!isChecked && (this.mainCheckBox || this.indeterminate)) {
-            this.showCheckbox = true;
+            this.showCheckbox.splice(0, this.showCheckbox.length);
+            this.filteredUserItems.map(item => { this.showCheckbox.push(true); });
         } else if (mouseIn && !isChecked && !this.indeterminate && !this.mainCheckBox) {
-            this.showCheckbox = true;
+            this.showCheckbox.splice(i, 1, true);
         } else {
-            this.showCheckbox = false;
+            this.showCheckbox.splice(0, this.showCheckbox.length);
+            this.filteredUserItems.map(item => { this.showCheckbox.push(false); });
         }
     }
 
@@ -256,13 +261,14 @@ export class LeaveAdjustmentPage implements OnInit {
      * @memberof LeaveAdjustmentPage
      */
     mainCheckboxEvent() {
+        this.showCheckbox.splice(0, this.showCheckbox.length);
         setTimeout(() => {
             this.filteredUserItems.forEach(item => {
                 item.isChecked = this.mainCheckBox;
                 if (item.isChecked) {
-                    this.showCheckbox = true;
+                    this.showCheckbox.push(true);
                 } else {
-                    this.showCheckbox = false;
+                    this.showCheckbox.push(false);
                 }
                 this.enableDisableSubmitButton();
             });
@@ -279,6 +285,7 @@ export class LeaveAdjustmentPage implements OnInit {
         this.filteredUserItems.map(item => {
             if (item.isChecked) {
                 ischecked++;
+                this.showCheckbox.push(true);
             }
         });
         if (ischecked > 0 && ischecked < totalLength) {

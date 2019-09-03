@@ -62,7 +62,7 @@ export class ApprovalOverridePage implements OnInit {
      * @type {boolean}
      * @memberof ApprovalOverridePage
      */
-    public displayCheckbox: boolean = false;
+    public displayCheckbox: boolean[] = [];
 
     /**
      * selected pending application's leaveTransactionGUID to patch to API 
@@ -170,6 +170,7 @@ export class ApprovalOverridePage implements OnInit {
         for (let i = 0; i < list.length; i++) {
             if (list[i].USER_GUID === obj) {
                 this.filteredPendingList.push(this._pendingList[i]);
+                this.displayCheckbox.push(false);
                 this.filteredPendingList[this.filteredPendingList.length - 1].employeeName = this._filteredUserList[index].employeeName;
                 this.filteredPendingList[this.filteredPendingList.length - 1].isChecked = false;
                 this.getLeaveType(this.filteredPendingList.length - 1, this._pendingList[i].LEAVE_TYPE_GUID);
@@ -248,13 +249,14 @@ export class ApprovalOverridePage implements OnInit {
      * @memberof ApprovalOverridePage
      */
     mainEvent() {
+        this.displayCheckbox.splice(0, this.displayCheckbox.length);
         setTimeout(() => {
             this.filteredPendingList.forEach(item => {
                 item.isChecked = this.mainCheckbox;
                 if (item.isChecked) {
-                    this.displayCheckbox = true;
+                    this.displayCheckbox.push(true);
                 } else {
-                    this.displayCheckbox = false;
+                    this.displayCheckbox.push(false);
                 }
                 this.enableDisableButton();
             });
@@ -271,6 +273,7 @@ export class ApprovalOverridePage implements OnInit {
         this.filteredPendingList.map(item => {
             if (item.isChecked) {
                 checkedItem++;
+                this.displayCheckbox.push(true);
             }
         });
         if (checkedItem > 0 && checkedItem < total) {
@@ -292,15 +295,18 @@ export class ApprovalOverridePage implements OnInit {
      * @param {*} isChecked
      * @memberof ApprovalOverridePage
      */
-    mouseEvent(value: boolean, isChecked: boolean) {
+    mouseEvent(value: boolean, index: number, isChecked: boolean) {
         if (isChecked && (this.mainCheckbox || this.indeterminate)) {
-            this.displayCheckbox = true;
+            this.displayCheckbox.splice(0, this.displayCheckbox.length);
+            this.filteredPendingList.map(value => { this.displayCheckbox.push(true); });
         } else if (!isChecked && (this.mainCheckbox || this.indeterminate)) {
-            this.displayCheckbox = true;
+            this.displayCheckbox.splice(0, this.displayCheckbox.length);
+            this.filteredPendingList.map(item => { this.displayCheckbox.push(true); });
         } else if (value && !isChecked && !this.indeterminate && !this.mainCheckbox) {
-            this.displayCheckbox = true;
+            this.displayCheckbox.splice(index, 1, true);
         } else {
-            this.displayCheckbox = false;
+            this.displayCheckbox.splice(0, this.displayCheckbox.length);
+            this.filteredPendingList.map(item => { this.displayCheckbox.push(false); });
         }
     }
 

@@ -86,7 +86,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      * @type {boolean}
      * @memberof LeaveEntitlementByBatchPage
      */
-    public hideAvatar: boolean = false;
+    public hideAvatar: boolean[] = [];
 
     /**
      * show & hide spinner after clicked submit button
@@ -194,6 +194,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
         for (let i = 0; i < list.length; i++) {
             if (list[i].department === name && list[i].companyId === this._company_GUID) {
                 this.filteredUser.push(list[i]);
+                this.hideAvatar.push(false);
                 this.filteredUser[this.filteredUser.length - 1].isChecked = false;
             }
         }
@@ -216,19 +217,23 @@ export class LeaveEntitlementByBatchPage implements OnInit {
 
     /**
      * mouse hover to show/hide checkbox
+     * @param {number} index
      * @param {boolean} mouseOver
      * @param {boolean} checked
      * @memberof LeaveEntitlementByBatchPage
      */
-    mouseInOutEvent(mouseOver: boolean, checked: boolean) {
+    mouseInOutEvent(index: number, mouseOver: boolean, checked: boolean) {
         if (checked && (this.checkMain || this.indeterminate)) {
-            this.hideAvatar = true;
+            this.hideAvatar.splice(0, this.hideAvatar.length);
+            this.filteredUser.map(item => { this.hideAvatar.push(true); });
         } else if (!checked && (this.checkMain || this.indeterminate)) {
-            this.hideAvatar = true;
+            this.hideAvatar.splice(0, this.hideAvatar.length);
+            this.filteredUser.map(item => { this.hideAvatar.push(true); });
         } else if (mouseOver && !checked && !this.indeterminate && !this.checkMain) {
-            this.hideAvatar = true;
+            this.hideAvatar.splice(index, 1, true);
         } else {
-            this.hideAvatar = false;
+            this.hideAvatar.splice(0, this.hideAvatar.length);
+            this.filteredUser.map(item => { this.hideAvatar.push(false); });
         }
     }
 
@@ -238,12 +243,13 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      */
     checkEvent() {
         setTimeout(() => {
+            this.hideAvatar.splice(0, this.hideAvatar.length);
             this.filteredUser.forEach(userList => {
                 userList.isChecked = this.checkMain;
                 if (userList.isChecked) {
-                    this.hideAvatar = true;
+                    this.hideAvatar.push(true);
                 } else {
-                    this.hideAvatar = false;
+                    this.hideAvatar.push(false);
                 }
                 this.checkEnableDisableButton();
             });
@@ -260,6 +266,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
         this.filteredUser.map(item => {
             if (item.isChecked) {
                 checked++;
+                this.hideAvatar.push(true);
             }
         });
         if (checked > 0 && checked < length) {
