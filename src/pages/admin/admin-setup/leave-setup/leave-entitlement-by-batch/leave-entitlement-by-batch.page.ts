@@ -228,7 +228,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
             this.filteredUser.map(item => { this.hideAvatar.push(true); });
         } else if (!checked && (this.checkMain || this.indeterminate)) {
             this.hideAvatar.splice(0, this.hideAvatar.length);
-            this.filteredUser.map(item => { this.hideAvatar.push(true); });
+            this.filteredUser.map(() => { this.hideAvatar.push(true); });
         } else if (mouseOver && !checked && !this.indeterminate && !this.checkMain) {
             this.hideAvatar.splice(index, 1, true);
         } else {

@@ -300,8 +300,8 @@ export class ApprovalOverridePage implements OnInit {
             this.displayCheckbox.splice(0, this.displayCheckbox.length);
             this.filteredPendingList.map(value => { this.displayCheckbox.push(true); });
         } else if (!isChecked && (this.mainCheckbox || this.indeterminate)) {
-            this.displayCheckbox.splice(0, this.displayCheckbox.length);
-            this.filteredPendingList.map(item => { this.displayCheckbox.push(true); });
+            this.displayCheckbox = [];
+            this.filteredPendingList.map(() => { this.displayCheckbox.push(true); });
         } else if (value && !isChecked && !this.indeterminate && !this.mainCheckbox) {
             this.displayCheckbox.splice(index, 1, true);
         } else {

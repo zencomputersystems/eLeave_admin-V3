@@ -410,7 +410,7 @@ export class InviteListPage implements OnInit {
      * @memberof InviteListPage
      */
     checkboxEvent() {
-        this.hideAvatar.splice(0, this.hideAvatar.length);
+        this.hideAvatar = [];
         setTimeout(() => {
             this.list.forEach(value => {
                 value.isChecked = this.mainCheck;
@@ -457,15 +457,15 @@ export class InviteListPage implements OnInit {
      */
     mouseHoverEvent(idx: number, value: boolean, checkedValue: boolean) {
         if (checkedValue && (this.mainCheck || this.indeterminateCheck)) {
-            this.hideAvatar.splice(0, this.hideAvatar.length);
+            this.hideAvatar = [];
             this.list.map(value => { this.hideAvatar.push(true); });
         } else if (!checkedValue && (this.mainCheck || this.indeterminateCheck)) {
-            this.hideAvatar.splice(0, this.hideAvatar.length);
-            this.list.map(value => { this.hideAvatar.push(true); });
+            this.hideAvatar = [];
+            this.list.map(() => { this.hideAvatar.push(true); });
         } else if (value && !checkedValue && !this.indeterminateCheck && !this.mainCheck) {
             this.hideAvatar.splice(idx, 1, true);
         } else {
-            this.hideAvatar.splice(0, this.hideAvatar.length);
+            this.hideAvatar = [];
             this.list.map(value => { this.hideAvatar.push(false); });
         }
     }

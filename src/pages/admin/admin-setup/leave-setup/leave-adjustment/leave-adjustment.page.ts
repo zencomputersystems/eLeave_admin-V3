@@ -243,7 +243,7 @@ export class LeaveAdjustmentPage implements OnInit {
      */
     hoverEvent(i: number, mouseIn: boolean, isChecked: boolean) {
         if (isChecked && (this.mainCheckBox || this.indeterminate)) {
-            this.showCheckbox.splice(0, this.showCheckbox.length);
+            this.showCheckbox = [];
             this.filteredUserItems.map(value => { this.showCheckbox.push(true); });
         } else if (!isChecked && (this.mainCheckBox || this.indeterminate)) {
             this.showCheckbox.splice(0, this.showCheckbox.length);
