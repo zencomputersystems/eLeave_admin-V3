@@ -393,7 +393,8 @@ export class InviteListPage implements OnInit {
                 this.inviteAPI.delete_user(id).subscribe(response => {
                     this.endPoint();
                 })
-            } else {
+            }
+            if (result && name == 'disable') {
                 this.disableUser(employeeName, id);
             }
         });
