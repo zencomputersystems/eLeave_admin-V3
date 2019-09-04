@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { DeleteListConfirmationPage } from '../delete-list-confirmation/delete-list-confirmation.page';
 import { MatDialog } from '@angular/material';
 import { AdminInvitesAPIService } from '../admin-invites-api.service';
+import { DateDialogPage } from '../date-dialog/date-dialog.page';
+import * as _moment from 'moment';
+const moment = _moment;
 
 /**
  *
@@ -123,6 +126,13 @@ export class InviteListPage implements OnInit {
     public showSpinner: boolean = true;
 
     /**
+     * hide content during loading
+     * @type {boolean}
+     * @memberof InviteListPage
+     */
+    public showContent: boolean = false;
+
+    /**
      * main checkbox value
      * @type {boolean}
      * @memberof InviteListPage
@@ -165,6 +175,7 @@ export class InviteListPage implements OnInit {
         this.inviteAPI.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
+                this.showContent = true;
                 if (this.gridView) {
                     this.listView = false;
                 } else {
@@ -365,22 +376,51 @@ export class InviteListPage implements OnInit {
     // }
 
     /**
-     * Delete resigned employee from user list
+     * manage employee status 
+     * @param {string} employeeName
+     * @param {string} id
+     * @param {string} name
+     * @memberof InviteListPage
+     */
+    setUserStatus(employeeName: string, id: string, name: string) {
+        const deleteDialog = this.popUp.open(DeleteListConfirmationPage, {
+            data: { name: employeeName, value: id, action: name }
+        });
+        deleteDialog.afterClosed().subscribe(result => {
+            if (result === id && name == 'delete') {
+                this.showSpinner = true;
+                this.showContent = false;
+                this.inviteAPI.delete_user(id).subscribe(response => {
+                    this.endPoint();
+                })
+            } else {
+                this.disableUser(employeeName, id);
+            }
+        });
+    }
+
+    /**
+     * disable user and set expiration date 
      * @param {string} employeeName
      * @param {string} id
      * @memberof InviteListPage
      */
-    deleteUser(employeeName: string, id: string) {
-        const dialog = this.popUp.open(DeleteListConfirmationPage, {
-            data: { name: employeeName, value: id }
+    disableUser(employeeName: string, id: string) {
+        const disableDialog = this.popUp.open(DateDialogPage, {
+            data: { name: employeeName, value: id, action: name }
         });
-        dialog.afterClosed().subscribe(result => {
-            if (result === id) {
-                this.inviteAPI.delete_user(id).subscribe(response => {
+        disableDialog.afterClosed().subscribe(value => {
+            if (value) {
+                this.showSpinner = true;
+                this.showContent = false;
+                this.inviteAPI.disable_user({
+                    "user_guid": id,
+                    "resign_date": moment(value).format('YYYY-MM-DD'),
+                }).subscribe(response => {
                     this.endPoint();
                 })
             }
-        });
+        })
     }
 
     // /**

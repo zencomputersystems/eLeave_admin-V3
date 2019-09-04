@@ -17,7 +17,8 @@ import { InviteMorePage } from './inivite-more/invite-more.page';
 import { InviteListPage } from './invite-list/invite-list.page';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { DeleteListConfirmationPage } from './delete-list-confirmation/delete-list-confirmation.page';
-import { MatDialogModule, MatButtonModule, MatMenuModule } from '@angular/material';
+import { MatDialogModule, MatButtonModule, MatMenuModule, MatDatepickerModule } from '@angular/material';
+import { DateDialogPage } from './date-dialog/date-dialog.page';
 
 
 const routes: Routes = [
@@ -44,9 +45,10 @@ const routes: Routes = [
         MatDialogModule,
         MatButtonModule,
         MatMenuModule,
+        MatDatepickerModule,
         RouterModule.forChild(routes)
     ],
-    entryComponents: [DeleteListConfirmationPage],
-    declarations: [AdminInvitesPage, InviteMorePage, InviteListPage, DeleteListConfirmationPage]
+    entryComponents: [DeleteListConfirmationPage, DateDialogPage],
+    declarations: [AdminInvitesPage, InviteMorePage, InviteListPage, DeleteListConfirmationPage, DateDialogPage]
 })
 export class AdminInvitesModule { }

@@ -27,7 +27,7 @@ export class AdminInvitesAPIService {
      * @returns {Observable<any>}
      * @memberof AdminInvitesAPIService
      */
-    post_user_invite(userId): Observable<any> {
+    post_user_invite(userId: string): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.postApi(userId, '/api/invitation');
     }
@@ -39,7 +39,7 @@ export class AdminInvitesAPIService {
      * @returns {Observable<any>}
      * @memberof AdminInvitesAPIService
      */
-    post_userimport(data): Observable<any> {
+    post_userimport(data: any): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.postApi(data, '/api/userimport');
     }
@@ -50,13 +50,22 @@ export class AdminInvitesAPIService {
      * @returns {Observable<any>}
      * @memberof AdminInvitesAPIService
      */
-    delete_user(id): Observable<any> {
+    delete_user(id: string): Observable<any> {
         this.apiService.headerAuthorization();
         return this.http.delete(this.apiService.baseUrl + '/api/users/' + id, { headers: this.apiService.headers })
             .pipe(map((res: Response) => res.json()));
     }
 
-
+    /**
+     * set user to disable(inactive) on a specific date
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof AdminInvitesAPIService
+     */
+    disable_user(data: any): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.postApi(data, '/api/users/disable');
+    }
 
     /**
      * get user list from api service
