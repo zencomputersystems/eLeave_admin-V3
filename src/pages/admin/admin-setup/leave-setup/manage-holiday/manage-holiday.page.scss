@@ -73,4 +73,7 @@
   ::ng-deep .fc-button-group > .fc-button:not(:last-child) {
     text-transform: capitalize;
   }
+  ::ng-deep .fc-event-container{
+    cursor: pointer;
+  }
 }

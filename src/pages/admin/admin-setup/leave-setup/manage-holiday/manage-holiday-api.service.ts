@@ -92,6 +92,16 @@ export class ManageHolidayAPIService {
     }
 
     /**
+     * get all employee onleave list
+     * @returns {Observable<any>}
+     * @memberof ManageHolidayAPIService
+     */
+    get_calendar_onleave_list(date: any): Observable<any> {
+        return this.api.http.get(this.api.baseUrl + '/api/employee/calendar-leave-list', { params: date, headers: this.api.headers })
+            .pipe(map((response: Response) => response.json()))
+    }
+
+    /**
     * Show notification after submit
     * @param {string} text
     * @memberof ManageHolidayAPIService

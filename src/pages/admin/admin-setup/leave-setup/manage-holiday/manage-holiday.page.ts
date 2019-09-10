@@ -185,6 +185,27 @@ export class ManageHolidayPage implements OnInit {
         */
     public countryDB;
 
+    /**
+     * end date
+     * @type {*}
+     * @memberof ManageHolidayPage
+     */
+    public endDate: any;
+
+    /**
+     * get AM/PM slot
+     * @type {*}
+     * @memberof ManageHolidayPage
+     */
+    public timeslot: any;
+
+    /**
+     * event show in calendar
+     * @type {*}
+     * @memberof ManageHolidayPage
+     */
+    public leaveEvent: any;
+
     /** 
      * Get Height of calendar when window resize to set in holiday view
      * @type {number}
@@ -240,24 +261,57 @@ export class ManageHolidayPage implements OnInit {
     getPublicHolidayList() {
         this.showSpinner = true;
         this.manageHolidayAPI.get_public_holiday_list().subscribe(
-            (data: any[]) => {
+            (data: any) => {
                 this.showSpinner = false;
                 this.list = data;
                 this.events = [];
+                this.leaveEvent = [];
                 for (let i = 0; i < this.list.response.holidays.length; i++) {
                     this.createHolidayList(this.list.response.holidays[i].date.iso, this.list.response.holidays[i].name);
                 }
-                setTimeout(() => {
-                    let calendarView = this.calendar.getApi();
-                    calendarView.render();
-                }, 100);
-            },
-            error => {
-                if (error) {
-                    window.location.href = '/login';
-                }
+                this.manageHolidayAPI.get_calendar_onleave_list({ 'startdate ': '2019-01-01', 'enddate': '2019-12-31' }).subscribe(onLeaveList => {
+                    this.leaveEvent = this.events.concat(onLeaveList);
+                    this.getEmployeeLeaveList(this.leaveEvent);
+                })
+            });
+    }
+
+    /**
+     * display onleave & public holiday event in calendar
+     * @param {*} list
+     * @memberof ManageHolidayPage
+     */
+    getEmployeeLeaveList(list: any) {
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].CODE != undefined) {
+                this.leaveEvent[i].start = moment(list[i].START_DATE).format('YYYY-MM-DD');
+                this.leaveEvent[i].end = moment(list[i].END_DATE).add(1, "days").format("YYYY-MM-DD");
+                this.leaveEvent[i].title = list[i].FULLNAME + ' ' + '(' + (list[i].CODE) + ')';
+                this.checkAllDay(list, i);
+            } else {
+                this.leaveEvent[i].start = (moment(list[i].start).format('YYYY-MM-DD'));
+                this.leaveEvent[i].end = moment(list[i].end).format('YYYY-MM-DD');
+                this.leaveEvent[i].allDay = true;
             }
-        );
+        }
+        setTimeout(() => {
+            let calendarView = this.calendar.getApi();
+            calendarView.render();
+        }, 100);
+    }
+
+    /**
+     * check either is all day or half day
+     * @param {*} list
+     * @param {number} index
+     * @memberof ManageHolidayPage
+     */
+    checkAllDay(list: any, index: number) {
+        if (list[index].TIME_SLOT) {
+            this.leaveEvent[index].allDay = false;
+        } else {
+            this.leaveEvent[index].allDay = true;
+        }
     }
 
     /**
@@ -412,11 +466,11 @@ export class ManageHolidayPage implements OnInit {
 
     /**
      * Push objects to array of event holidays
-     * @param {*} dateIso
-     * @param {*} name
+     * @param {string} dateIso
+     * @param {string} name
      * @memberof ManageHolidayPage
      */
-    createHolidayList(dateIso, name) {
+    createHolidayList(dateIso: string, name: string) {
         this.events.push({
             "start": moment(dateIso).format('YYYY-MM-DD'),
             "str": moment(dateIso).format('DD-MM-YYYY'),
@@ -424,8 +478,8 @@ export class ManageHolidayPage implements OnInit {
             "title": name,
             "day": this.getWeekDay(new Date(dateIso)),
             "allDay": true,
-            "backgroundColor": "#283593",
-            "borderColor": "#283593"
+            "backgroundColor": "#c2185b",
+            "borderColor": "#c2185b"
         });
     }
 
@@ -527,6 +581,24 @@ export class ManageHolidayPage implements OnInit {
                 }, 1000);
             }
         });
+    }
+
+    /**
+     * when event is clicked
+     * show 'All Day' || 'Half Day'
+     * @param {*} clicked
+     * @memberof CalendarViewPage
+     */
+    onEventClick(clicked: any) {
+        if (clicked.event.end) {
+            this.endDate = moment(clicked.event.end).subtract(1, "days").format("YYYY-MM-DD");
+        }
+        if (clicked.event._def.extendedProps.TIME_SLOT) {
+            this.timeslot = 'Half Day' + '(' + clicked.event._def.extendedProps.TIME_SLOT + ')';
+        }
+        if (clicked.event._def.extendedProps.TIME_SLOT == null) {
+            this.timeslot = 'All Day';
+        }
     }
 
 }
