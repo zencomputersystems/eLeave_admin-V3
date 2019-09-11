@@ -3,7 +3,6 @@ import { LeaveEntitlementByBatchAPIService } from './leave-entitlement-by-batch-
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LeaveAPIService } from '../leave-api.service';
 import { SnackbarNotificationPage } from '../snackbar-notification/snackbar-notification';
-import { MatSnackBar } from '@angular/material';
 
 /**
  * assign leave entitlement according leave type
@@ -137,7 +136,6 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      *Creates an instance of LeaveEntitlementByBatchPage.
      * @param {LeaveEntitlementByBatchAPIService} leaveEntitlementAPI
      * @param {LeaveAPIService} leaveAPI
-     * @param {MatSnackBar} snackBar
      * @memberof LeaveEntitlementByBatchPage
      */
     constructor(private leaveEntitlementAPI: LeaveEntitlementByBatchAPIService, private leaveAPI: LeaveAPIService) {

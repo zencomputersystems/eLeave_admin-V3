@@ -1,0 +1,217 @@
+<div style="margin-top: 4%;" *ngIf="showDetailPage">
+    <form [formGroup]="workingHourForm">
+        <div style="display: inline-block;width: 31%;">
+            <span style="padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
+                WORKING HOUR PROFILE NAME</span>
+            <mat-form-field appearance="outline"
+                style="display: block;font-size: 13px;width: 100%;color:#7a8589;padding-left: 18px;">
+                <mat-label>Working hour profile name</mat-label>
+                <input matInput formControlName="profileName" required>
+                <mat-error>Working hour profile name is <strong>required</strong></mat-error>
+            </mat-form-field>
+        </div>
+        &nbsp;&nbsp;
+        <div style="display: inline-block;width: 31%;">
+            <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
+                DESCRIPTION</span>
+            <mat-form-field appearance="outline"
+                style="display: block;font-size: 13px;width: 100%;color:#7a8589;padding-left: 18px;">
+                <mat-label>Working hour profile description</mat-label>
+                <input matInput formControlName="description" required>
+                <mat-error>Description is <strong>required</strong></mat-error>
+            </mat-form-field>
+        </div>
+        &nbsp;&nbsp;
+        <div style="width: 31%;display: inline-block;">
+            <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
+                WORKING TIME</span>
+            <mat-form-field appearance="outline"
+                style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                <mat-label>Start time</mat-label>
+                <input style="cursor: pointer" matInput [ngxTimepicker]="startpicker" formControlName="startpicker"
+                    required>
+                <!-- <ngx-material-timepicker-toggle [for]="startpicker"></ngx-material-timepicker-toggle> -->
+                <ngx-material-timepicker #startpicker [enableKeyboardInput]="true"></ngx-material-timepicker>
+                <mat-error>Start time is <strong>required</strong></mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline"
+                style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                <mat-label>End time</mat-label>
+                <input style="cursor: pointer" matInput [ngxTimepicker]="endpicker" formControlName="endpicker"
+                    required>
+                <!-- <ngx-material-timepicker-toggle [for]="endpicker"></ngx-material-timepicker-toggle> -->
+                <ngx-material-timepicker #endpicker [enableKeyboardInput]="true"></ngx-material-timepicker>
+                <mat-error>End time is <strong>required</strong></mat-error>
+            </mat-form-field>
+        </div>
+
+        <div style="display: block;width: 100%;">
+            <div style="width: 31%;display: inline-block;">
+                <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
+                    HALF DAY TIME (AM)</span>
+                <mat-form-field appearance="outline"
+                    style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                    <mat-label>Start time</mat-label>
+                    <input style="cursor: pointer" matInput [ngxTimepicker]="starthalfdayAMpicker"
+                        formControlName="starthalfdayAMpicker" required>
+                    <!-- <ngx-material-timepicker-toggle [for]="starthalfdayAMpicker"></ngx-material-timepicker-toggle> -->
+                    <ngx-material-timepicker #starthalfdayAMpicker [enableKeyboardInput]="true">
+                    </ngx-material-timepicker>
+                    <mat-error>Start time (AM) is <strong>required</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline"
+                    style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                    <mat-label>End time</mat-label>
+                    <input style="cursor: pointer" matInput [ngxTimepicker]="endhalfdayAMpicker"
+                        formControlName="endhalfdayAMpicker" required>
+                    <!-- <ngx-material-timepicker-toggle [for]="endhalfdayAMpicker"></ngx-material-timepicker-toggle> -->
+                    <ngx-material-timepicker #endhalfdayAMpicker [enableKeyboardInput]="true"></ngx-material-timepicker>
+                    <mat-error>End time (AM) is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
+            &nbsp;&nbsp;
+            <div style="width: 31%;display: inline-block;">
+                <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
+                    HALF DAY TIME (PM)</span>
+                <mat-form-field appearance="outline"
+                    style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                    <mat-label>Start time</mat-label>
+                    <input style="cursor: pointer" matInput [ngxTimepicker]="starthalfdayPMpicker"
+                        formControlName="starthalfdayPMpicker" required>
+                    <!-- <ngx-material-timepicker-toggle [for]="starthalfdayPMpicker"></ngx-material-timepicker-toggle> -->
+                    <ngx-material-timepicker #starthalfdayPMpicker [enableKeyboardInput]="true">
+                    </ngx-material-timepicker>
+                    <mat-error>Start time (PM) is <strong>required</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline"
+                    style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                    <mat-label>End time</mat-label>
+                    <input style="cursor: pointer" matInput [ngxTimepicker]="endhalfdayPMpicker"
+                        formControlName="endhalfdayPMpicker" required>
+                    <!-- <ngx-material-timepicker-toggle [for]="endhalfdayPMpicker"></ngx-material-timepicker-toggle> -->
+                    <ngx-material-timepicker #endhalfdayPMpicker [enableKeyboardInput]="true"></ngx-material-timepicker>
+                    <mat-error>End time (PM) is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
+            &nbsp;&nbsp;
+            <div style="width: 31%;display: inline-block;">
+                <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
+                    QUARTER DAY TIME (Q1)</span>
+                <mat-form-field appearance="outline"
+                    style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                    <mat-label>Start time</mat-label>
+                    <input style="cursor: pointer" matInput [ngxTimepicker]="startQ1picker"
+                        formControlName="startQ1picker" required>
+                    <!-- <ngx-material-timepicker-toggle [for]="startQ1picker"></ngx-material-timepicker-toggle> -->
+                    <ngx-material-timepicker #startQ1picker [enableKeyboardInput]="true">
+                    </ngx-material-timepicker>
+                    <mat-error>Start time (Q1) is <strong>required</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline"
+                    style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                    <mat-label>End time</mat-label>
+                    <input style="cursor: pointer" matInput [ngxTimepicker]="endQ1picker" formControlName="endQ1picker"
+                        required>
+                    <!-- <ngx-material-timepicker-toggle [for]="endQ1picker"></ngx-material-timepicker-toggle> -->
+                    <ngx-material-timepicker #endQ1picker [enableKeyboardInput]="true"></ngx-material-timepicker>
+                    <mat-error>End time (Q1) is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div style="display: block;width: 100%;">
+            <div style="width: 31%;display: inline-block;">
+                <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
+                    QUARTER DAY TIME (Q2)</span>
+                <mat-form-field appearance="outline"
+                    style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                    <mat-label>Start time</mat-label>
+                    <input style="cursor: pointer" matInput [ngxTimepicker]="startQ2picker"
+                        formControlName="startQ2picker" required>
+                    <!-- <ngx-material-timepicker-toggle [for]="startQ2picker"></ngx-material-timepicker-toggle> -->
+                    <ngx-material-timepicker #startQ2picker [enableKeyboardInput]="true">
+                    </ngx-material-timepicker>
+                    <mat-error>Start time (Q2) is <strong>required</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline"
+                    style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                    <mat-label>End time</mat-label>
+                    <input style="cursor: pointer" matInput [ngxTimepicker]="endQ2picker" formControlName="endQ2picker"
+                        required>
+                    <!-- <ngx-material-timepicker-toggle [for]="endQ2picker"></ngx-material-timepicker-toggle> -->
+                    <ngx-material-timepicker #endQ2picker [enableKeyboardInput]="true"></ngx-material-timepicker>
+                    <mat-error>End time (Q2) is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
+            &nbsp;&nbsp;
+            <div style="width: 31%;display: inline-block;">
+                <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
+                    QUARTER DAY TIME (Q3)</span>
+                <mat-form-field appearance="outline"
+                    style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                    <mat-label>Start time</mat-label>
+                    <input style="cursor: pointer" matInput [ngxTimepicker]="startQ3picker"
+                        formControlName="startQ3picker" required>
+                    <!-- <ngx-material-timepicker-toggle [for]="startQ3picker"></ngx-material-timepicker-toggle> -->
+                    <ngx-material-timepicker #startQ3picker [enableKeyboardInput]="true">
+                    </ngx-material-timepicker>
+                    <mat-error>Start time (Q3) is <strong>required</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline"
+                    style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                    <mat-label>End time</mat-label>
+                    <input style="cursor: pointer" matInput [ngxTimepicker]="endQ3picker" formControlName="endQ3picker"
+                        required>
+                    <!-- <ngx-material-timepicker-toggle [for]="endQ3picker"></ngx-material-timepicker-toggle> -->
+                    <ngx-material-timepicker #endQ3picker [enableKeyboardInput]="true"></ngx-material-timepicker>
+                    <mat-error>End time (Q3) is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
+            &nbsp;&nbsp;
+            <div style="width: 31%;display: inline-block;">
+                <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
+                    QUARTER DAY TIME (Q4)</span>
+                <mat-form-field appearance="outline"
+                    style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                    <mat-label>Start time</mat-label>
+                    <input style="cursor: pointer" matInput [ngxTimepicker]="startQ4picker"
+                        formControlName="startQ4picker" required>
+                    <!-- <ngx-material-timepicker-toggle [for]="startQ4picker"></ngx-material-timepicker-toggle> -->
+                    <ngx-material-timepicker #startQ4picker [enableKeyboardInput]="true">
+                    </ngx-material-timepicker>
+                    <mat-error>Start time (Q4) is <strong>required</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline"
+                    style="display: inline-block;font-size: 13px;width: 50%;color:#7a8589;padding-left: 18px;">
+                    <mat-label>End time</mat-label>
+                    <input style="cursor: pointer" matInput [ngxTimepicker]="endQ4picker" formControlName="endQ4picker"
+                        required>
+                    <!-- <ngx-material-timepicker-toggle [for]="endQ4picker"></ngx-material-timepicker-toggle> -->
+                    <ngx-material-timepicker #endQ4picker [enableKeyboardInput]="true"></ngx-material-timepicker>
+                    <mat-error>End time (Q4) is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+
+    <div style="margin: 0 auto;padding: 20px;text-align: center;">
+        <ion-button style="font-size: 12px;height: 30px;width: 110px;background: white;" color="primary"
+            (click)="hideDetailPage(false)">
+            BACK
+        </ion-button>
+        <ion-button *ngIf="showDetailPage && id==''"
+            style="font-size: 12px;height: 30px;width: 110px;background: white;" color="primary"
+            (click)="postWorkingHourSetup();workingHourForm.reset();" [disabled]="!workingHourForm.valid">
+            SUBMIT
+        </ion-button>
+        <ion-button *ngIf="showDetailPage && id != ''"
+            style="font-size: 12px;height: 30px;width: 110px;background: white;" color="primary"
+            (click)="postWorkingHourSetup();" [disabled]="!workingHourForm.valid">
+            SAVE
+        </ion-button>
+        <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
+            *ngIf="showSmallSpinner">
+            <ion-spinner name="lines-small" color="primary"></ion-spinner>
+        </div>
+    </div>
+</div>

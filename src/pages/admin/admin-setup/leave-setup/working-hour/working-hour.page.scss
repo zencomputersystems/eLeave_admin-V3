@@ -1,0 +1,74 @@
+:host {
+  .titleRow {
+    padding-bottom: 10px;
+    color: #20291f;
+  }
+  .divider {
+    --min-height: none;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    width: 100%;
+  }
+  .detailsRow {
+    height: 55px;
+  }
+  .content {
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+  .avatar {
+    width: 30px;
+    height: 30px;
+    // margin-top: -7px;
+  }
+  .button-outline {
+    --border-width: 1px;
+  }
+  ::ng-deep .mat-select-value-text {
+    color: #7a8589;
+  }
+  ion-col {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    align-self: center;
+  }
+  .search-icon {
+    width: 30px;
+    height: 30px;
+    fill: #bebebe;
+    margin: 0 auto;
+  }
+  ::ng-deep ngx-material-timepicker-toggle {
+    width: 30px;
+    height: 0px;
+    margin-top: -22px;
+    float: right;
+  }
+  ::ng-deep ngx-material-timepicker-toggle > button > svg {
+    fill: #7a8589;
+  }
+  ::ng-deep .timepicker {
+    .timepicker__header {
+      background-color: #057dcd !important;
+    }
+    .clock-face__clock-hand {
+      background-color: #057dcd !important;
+      // &::after {
+      //   background-color: #cd0526 !important;
+      // }
+
+      // &::before {
+      //   border-color: #afcd05 !important;
+      // }
+    }
+    .clock-face__number {
+      > span.active {
+        background-color: #057dcd !important;
+      }
+    }
+    .timepicker-button {
+      color: #057dcd !important;
+    }
+  }
+}

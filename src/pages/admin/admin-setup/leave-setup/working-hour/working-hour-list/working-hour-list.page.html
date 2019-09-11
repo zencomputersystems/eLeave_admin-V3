@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="cardContent">
+        <ion-card-content *ngIf="!showDetailPage">
+            <div class="textAssign" (click)="assignRole()">
+                <!-- <i class="fas fa-tasks" style="font-size: 14px;"></i>
+                <span style="padding-left: 10px;">Assign</span> -->
+                <i class="material-icons" style="padding-right: 5px; color: #057dcd; cursor: pointer;">add</i>
+                <ion-label class="label" style="font-size: 14px; color: #057dcd;float: right;
+            margin-top: 2px;cursor: pointer" (click)="showDetailPage=true;id=''">
+                    Create</ion-label>
+            </div>
+            <div style="margin-top: 2%">
+                <ion-row class="titleRow">
+                    <ion-col size="3">
+                        <ion-label class="titleLabel">PROFILE NAME</ion-label>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-label class="titleLabel">DESCRIPTION</ion-label>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-label class="titleLabel">WORKING HOUR</ion-label>
+                    </ion-col>
+                    <ion-col>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="detailsRow" *ngFor="let item of list">
+                    <ion-col size="3">
+                        <ion-label class="colOfLeave">{{item.code}}</ion-label>
+                    </ion-col>
+                    <ion-col size="4" class="colOfLeave">{{item.description}}
+                    </ion-col>
+                    <ion-col size="3" class="colOfLeave">{{item.strtime}} - {{item.endtime}}
+                    </ion-col>
+                    <ion-col>
+                        <div class="edit-pencil-icon" [inlineSVG]="'assets/icon/option/pencil.svg'"
+                            (click)="showDetailPage = true;id=item.working_hours_guid">
+                        </div>
+                        <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'"></div>
+                        <!-- (click)="deleteWorkingHrProfile(item.working_hours_guid, item.code)" -->
+                    </ion-col>
+                    <ion-item class="divider" lines="full"></ion-item>
+                </ion-row>
+            </div>
+        </ion-card-content>
+
+        <ion-card-content *ngIf="showDetailPage">
+            <app-working-hour [showDetailPage]="showDetailPage" [id]="id" (valueChange)="valueChanged($event)">
+            </app-working-hour>
+        </ion-card-content>
+    </div>
+</div>

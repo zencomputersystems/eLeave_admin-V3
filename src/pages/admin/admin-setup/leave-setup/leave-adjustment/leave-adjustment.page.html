@@ -98,7 +98,7 @@
 
     <div class="content" *ngIf="filteredUserItems.length > 0">
         <ion-row class="titleRow" nowrap>
-            <ion-col size="0.7" style="padding-left: 10px;padding-right: 30px;">
+            <ion-col size="0.7" style="padding-left: 10px;padding-right: 30px;text-overflow: initial;">
                 <ion-checkbox mode="ios" style="width: 20px; height: 20px;margin-top: 6px;" [(ngModel)]="mainCheckBox"
                     [indeterminate]="indeterminate" (click)="mainCheckboxEvent()">
                 </ion-checkbox>

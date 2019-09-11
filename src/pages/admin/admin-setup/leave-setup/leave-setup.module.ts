@@ -33,6 +33,9 @@ import { LeaveAdjustmentPage } from './leave-adjustment/leave-adjustment.page';
 import { LeaveSetupTabPage } from './leave-setup-tab/leave-setup-tab.page';
 import { LeaveEntitlementByBatchPage } from './leave-entitlement-by-batch/leave-entitlement-by-batch.page';
 import { DeleteCalendarConfirmationPage } from './delete-calendar-confirmation/delete-calendar-confirmation.page';
+import { WorkingHourPage } from './working-hour/working-hour.page';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { WorkingHourListPage } from './working-hour/working-hour-list/working-hour-list.page';
 
 
 const routes: Routes = [
@@ -67,11 +70,12 @@ const routes: Routes = [
         ClickOutsideModule,
         MatRadioModule,
         MatDialogModule,
+        NgxMaterialTimepickerModule,
         RouterModule.forChild(routes)
     ],
     providers: [EmployeeListDatabase],
     entryComponents: [SnackbarNotificationPage, DeleteCalendarConfirmationPage],
     declarations: [ManageHolidayPage, LeaveSetup, AssignCalendarPage, SnackbarNotificationPage, DeleteCalendarConfirmationPage,
-        LeaveSetupTabPage, ApplyOnBehalfPage, ApprovalOverridePage, LeaveAdjustmentPage, LeaveEntitlementByBatchPage]
+        LeaveSetupTabPage, ApplyOnBehalfPage, ApprovalOverridePage, LeaveAdjustmentPage, LeaveEntitlementByBatchPage, WorkingHourPage, WorkingHourListPage]
 })
 export class LeaveSetupModule { }
