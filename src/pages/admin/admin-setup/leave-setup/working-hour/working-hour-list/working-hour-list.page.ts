@@ -1,5 +1,7 @@
 import { OnInit, Component } from "@angular/core";
 import { WorkingHourAPIService } from "../working-hour-api.service";
+import { MatDialog } from "@angular/material";
+import { DialogDeleteConfirmationPage } from "../../../role-management/dialog-delete-confirmation/dialog-delete-confirmation.page";
 
 /**
  * working hour profile list page
@@ -31,9 +33,10 @@ export class WorkingHourListPage implements OnInit {
     /**
      *Creates an instance of WorkingHourListPage.
      * @param {WorkingHourAPIService} workingHrAPI
+     * @param {MatDialog} dialog
      * @memberof WorkingHourListPage
      */
-    constructor(private workingHrAPI: WorkingHourAPIService) {
+    constructor(private workingHrAPI: WorkingHourAPIService, public dialog: MatDialog) {
     }
 
     async ngOnInit() {
@@ -53,5 +56,25 @@ export class WorkingHourListPage implements OnInit {
     valueChanged(value) {
         this.showDetailPage = value;
         this.ngOnInit();
+    }
+
+    /**
+     * delete working hour profile
+     * @param {string} working_hour_guid
+     * @param {string} name
+     * @memberof WorkingHourListPage
+     */
+    deleteWorkingHrProfile(working_hour_guid: string, name: string) {
+        const dialogRef = this.dialog.open(DialogDeleteConfirmationPage, {
+            data: { value: working_hour_guid, name: name }
+        });
+        dialogRef.afterClosed().subscribe(val => {
+            if (val === working_hour_guid) {
+                this.workingHrAPI.delete_working_hours_profile(working_hour_guid).subscribe(response => {
+                    this.ngOnInit();
+                    this.workingHrAPI.showPopUp('deleted successfully ');
+                })
+            }
+        });
     }
 }

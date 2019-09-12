@@ -3,6 +3,7 @@ import { Http } from "@angular/http";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
 import { MatSnackBar } from "@angular/material";
+import { SnackbarNotificationPage } from "../snackbar-notification/snackbar-notification";
 
 /**
  * Working hour profile API
@@ -23,7 +24,6 @@ export class WorkingHourAPIService {
      */
     constructor(public http: Http, private apiService: APIService, public snackBar: MatSnackBar) {
     }
-
 
     /**
      * get all list of working hour profile
@@ -64,6 +64,27 @@ export class WorkingHourAPIService {
         return this.apiService.patchApi(data, '/api/admin/working-hours/working-hours-profile');
     }
 
+    /**
+     * delete selected working hour profile
+     * @param {string} id
+     * @returns {Observable<any>}
+     * @memberof WorkingHourAPIService
+     */
+    delete_working_hours_profile(id: string): Observable<any> {
+        return this.apiService.deleteApi(id, '/api/admin/working-hours/working-hours-profile/');
+    }
+
+    /**
+     * show pop up snackbar
+     * @param {string} txt
+     * @memberof WorkingHourAPIService
+     */
+    showPopUp(txt: string) {
+        this.snackBar.openFromComponent(SnackbarNotificationPage, {
+            duration: 5000,
+            data: txt
+        });
+    }
 
 
 }

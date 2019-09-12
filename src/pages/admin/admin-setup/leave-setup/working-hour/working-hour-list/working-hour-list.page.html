@@ -35,8 +35,8 @@
                         <div class="edit-pencil-icon" [inlineSVG]="'assets/icon/option/pencil.svg'"
                             (click)="showDetailPage = true;id=item.working_hours_guid">
                         </div>
-                        <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'"></div>
-                        <!-- (click)="deleteWorkingHrProfile(item.working_hours_guid, item.code)" -->
+                        <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'"
+                            (click)="deleteWorkingHrProfile(item.working_hours_guid, item.code)"></div>
                     </ion-col>
                     <ion-item class="divider" lines="full"></ion-item>
                 </ion-row>
