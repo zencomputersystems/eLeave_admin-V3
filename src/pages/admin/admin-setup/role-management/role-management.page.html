@@ -4,9 +4,10 @@
             Roles
         </ion-title>
         <div style="float: right; padding-right: 20px;">
-            <i class="material-icons" style="padding-right: 5px; color: #057dcd; cursor: pointer;">add</i>
-            <ion-label class="label" style="font-size: 14px; color: #057dcd;float: right;
-            margin-top: 5px;padding-right: 10px;cursor: pointer"
+            <div style="width: 16px;height: 20px;fill: #057dcd;float: left;" [inlineSVG]="'assets/icon/option/add.svg'">
+            </div>
+            <ion-label class="label" style="font-size: 14px; color: #057dcd;
+            margin-top: 2px;padding-right: 10px;cursor: pointer;padding-left: 10px;"
                 (click)="router.navigate(['/main/role-management/create-new-role']);">
                 Create role</ion-label>
         </div>

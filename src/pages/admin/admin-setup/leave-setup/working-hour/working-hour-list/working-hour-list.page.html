@@ -1,13 +1,20 @@
 <div class="container">
     <div class="cardContent">
         <ion-card-content *ngIf="!showDetailPage">
-            <div class="textAssign" (click)="assignRole()">
-                <!-- <i class="fas fa-tasks" style="font-size: 14px;"></i>
-                <span style="padding-left: 10px;">Assign</span> -->
-                <i class="material-icons" style="padding-right: 5px; color: #057dcd; cursor: pointer;">add</i>
-                <ion-label class="label" style="font-size: 14px; color: #057dcd;float: right;
-            margin-top: 2px;cursor: pointer" (click)="showDetailPage=true;id=''">
-                    Create</ion-label>
+            <div style="color: #057dcd;text-align: right;padding-top: 15px;">
+                <div style="display: inline-block;">
+                    <div class="user-icon" [inlineSVG]="'assets/icon/option/user.svg'"></div>
+                    <ion-label class="label" style="font-size: 14px; color: #057dcd;
+                    margin-top: 2px;cursor: pointer;padding-left: 10px;padding-right: 10px;" (click)="showDetailPage=true;id=''">
+                        Assign</ion-label>
+                </div>
+                &nbsp;&nbsp;
+                <div class="textAssign" style="display: inline-block;">
+                    <div class="user-icon" [inlineSVG]="'assets/icon/option/add.svg'"></div>
+                    <ion-label class="label" style="font-size: 14px; color: #057dcd;
+            margin-top: 2px;cursor: pointer;padding-left: 10px;" (click)="showDetailPage=true;id=''">
+                        Create</ion-label>
+                </div>
             </div>
             <div style="margin-top: 2%">
                 <ion-row class="titleRow">

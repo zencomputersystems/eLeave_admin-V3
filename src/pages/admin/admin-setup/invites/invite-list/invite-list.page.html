@@ -103,13 +103,18 @@
     </ion-content>
     <div style="padding-right: 20px;display: inline-flex;width: 97%;min-width: 330px;">
         <ion-button [disabled]="disablePrevButton" fill="outline" (click)="clickToPrevPage(pageIndex-1)"
-            style="font-size: 12px;height: 30px;width: 90px;" color="primary">
-            <ion-icon name="arrow-back"></ion-icon>Prev
+            style="text-transform: capitalize;font-size: 12px;height: 30px;width: 90px;" color="primary">
+            <div style="width: 12px;height: 12px;fill: #057dcd;float: left;cursor: pointer;"
+                [inlineSVG]="'assets/icon/option/arrow-pointing-to-left.svg'">
+            </div><span style="padding-left: 5px; padding-right: 5px">Prev</span>
         </ion-button>
         <div style="padding-left: 10px"></div>
-        <ion-button [disabled]="disableNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
-            (click)="clickToNextPage(pageIndex+1)">Next<ion-icon name="arrow-forward">
-            </ion-icon>
+        <ion-button [disabled]="disableNextButton" style="text-transform: capitalize;font-size: 12px;height: 30px;width: 90px;" color="primary"
+            (click)="clickToNextPage(pageIndex+1)"><span style="padding-right: 10px;padding-left: 5px">Next</span>
+            <!-- <ion-icon name="arrow-forward"></ion-icon> -->
+            <div style="width: 12px;height: 12px;fill: white;float: left;cursor: pointer;"
+                [inlineSVG]="'assets/icon/option/arrow-pointing-to-right.svg'">
+            </div>
         </ion-button>
         <div class="paginator">
             <span style="padding-right: 10px;">Page</span>
@@ -202,13 +207,20 @@
 
     <div style="padding-right: 20px;display: inline-flex;width: 97%;min-width: 330px;">
         <ion-button [disabled]="disablePrevButton" fill="outline" (click)="clickToPrevPage(pageIndex-1)"
-            style="font-size: 12px;height: 30px;width: 90px;" color="primary">
-            <ion-icon name="arrow-back"></ion-icon>Prev
+            style="font-size: 12px;height: 30px;width: 90px;text-transform: capitalize;" color="primary">
+            <!-- <ion-icon name="arrow-back"></ion-icon> -->
+            <div style="width: 12px;height: 12px;fill: #057dcd;float: left;cursor: pointer;"
+                [inlineSVG]="'assets/icon/option/arrow-pointing-to-left.svg'">
+            </div>
+            <span style="padding-left: 10px;padding-right: 5px">Prev</span>
         </ion-button>
         <div style="padding-left: 10px"></div>
-        <ion-button [disabled]="disableNextButton" style="font-size: 12px;height: 30px;width: 90px;" color="primary"
-            (click)="clickToNextPage(pageIndex+1)">Next<ion-icon name="arrow-forward">
-            </ion-icon>
+        <ion-button [disabled]="disableNextButton" style="text-transform: capitalize;font-size: 12px;height: 30px;width: 90px;" color="primary"
+            (click)="clickToNextPage(pageIndex+1)"><span style="padding-right: 10px;padding-left: 5px">Next</span>
+            <!-- <ion-icon name="arrow-forward"> </ion-icon>-->
+            <div style="width: 12px;height: 12px;fill: white;float: left;cursor: pointer;"
+                [inlineSVG]="'assets/icon/option/arrow-pointing-to-right.svg'">
+            </div>
         </ion-button>
         <div class="paginator">
             <span style="padding-right: 10px;">Page</span>

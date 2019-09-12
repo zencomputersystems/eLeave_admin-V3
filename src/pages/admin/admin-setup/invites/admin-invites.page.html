@@ -4,11 +4,11 @@
             Employee Setup
         </ion-title>
         <div style="float: right; padding-right: 20px;">
-            <i class="material-icons" style="padding-right: 5px; color: #057dcd; cursor: pointer;">add</i>
-            <!-- <i class="material-icons"
-                style="padding-left: 10px; color: #7a8589; float: right;cursor: pointer">more_horiz</i> -->
+            <div style="width: 16px;height: 25px;fill: #057dcd;float: left;cursor: pointer;"
+                [inlineSVG]="'assets/icon/option/add.svg'">
+            </div>
             <ion-label class="label" style="font-size: 14px; color: #057dcd;float: right;
-            margin-top: 5px;padding-right: 10px;cursor: pointer"
+            margin-top: 5px;padding-right: 10px;padding-left: 10px;cursor: pointer"
                 (click)="router.navigate(['/main/employee-setup/invite-more']);">
                 Invite more</ion-label>
         </div>

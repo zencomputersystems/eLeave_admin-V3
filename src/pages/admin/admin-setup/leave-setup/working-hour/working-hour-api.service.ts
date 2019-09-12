@@ -75,6 +75,16 @@ export class WorkingHourAPIService {
     }
 
     /**
+     * assign working hour profile to user
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof WorkingHourAPIService
+     */
+    patch_user_working_hours(data: any): Observable<any> {
+        return this.apiService.deleteApi(data, '/api/admin/working-hours/user-working-hours');
+    }
+
+    /**
      * show pop up snackbar
      * @param {string} txt
      * @memberof WorkingHourAPIService

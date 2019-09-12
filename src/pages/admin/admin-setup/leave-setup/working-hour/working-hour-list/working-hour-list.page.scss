@@ -24,9 +24,16 @@
   .textAssign {
     color: #057dcd;
     cursor: pointer;
-    margin-top: 10px;
-    width: 100%;
-    text-align: right;
+    // margin-top: 10px;
+    // width: 100%;
+    // text-align: right;
+  }
+  .user-icon {
+    width: 16px;
+    height: 20px;
+    fill: #057dcd;
+    float: left;
+    // margin: 0 auto;
   }
   .paginator {
     color: #7a8589;

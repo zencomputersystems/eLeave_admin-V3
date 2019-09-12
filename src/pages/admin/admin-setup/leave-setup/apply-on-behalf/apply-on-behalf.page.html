@@ -206,10 +206,9 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-
-            <ion-icon class="addIcon" name="add" *ngIf="showAddIcon" (click)="addFormField()">
-            </ion-icon>
-            <mat-hint style="font-size: 75%;display: block;padding: 5px;padding-top: 0;">
+            <div class="addIcon" [inlineSVG]="'assets/icon/option/add.svg'" *ngIf="showAddIcon"
+                (click)="addFormField()"></div>
+            <mat-hint style="font-size: 75%;display: block;padding: 5px;padding-top: 2px;">
                 Please ignore day types selection if not considered other options (half/quarter)
             </mat-hint>
         </div>

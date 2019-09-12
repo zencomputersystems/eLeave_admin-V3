@@ -125,19 +125,35 @@ export class WorkingHourPage implements OnInit, OnChanges {
         this._data.description = this.workingHourForm.controls.description.value;
         this._data.property.fullday.start_time = moment(this.workingHourForm.controls.startpicker.value, ["h:mm A"]).format("HH:mm");
         this._data.property.fullday.end_time = moment(this.workingHourForm.controls.endpicker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.halfday.AM.start_time = moment(this.workingHourForm.controls.starthalfdayAMpicker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.halfday.AM.end_time = moment(this.workingHourForm.controls.endhalfdayAMpicker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.halfday.PM.start_time = moment(this.workingHourForm.controls.starthalfdayPMpicker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.halfday.PM.end_time = moment(this.workingHourForm.controls.endhalfdayPMpicker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.quarterday.Q1.start_time = moment(this.workingHourForm.controls.startQ1picker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.quarterday.Q1.end_time = moment(this.workingHourForm.controls.endQ1picker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.quarterday.Q2.start_time = moment(this.workingHourForm.controls.startQ2picker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.quarterday.Q2.end_time = moment(this.workingHourForm.controls.endQ2picker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.quarterday.Q3.start_time = moment(this.workingHourForm.controls.startQ3picker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.quarterday.Q3.end_time = moment(this.workingHourForm.controls.endQ3picker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.quarterday.Q4.start_time = moment(this.workingHourForm.controls.startQ4picker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.quarterday.Q4.end_time = moment(this.workingHourForm.controls.endQ4picker.value, ["h:mm A"]).format("HH:mm");
+        this._data.property.halfday.AM.start_time = this.workingHourForm.controls.starthalfdayAMpicker.value;
+        this._data.property.halfday.AM.end_time = this.workingHourForm.controls.endhalfdayAMpicker.value;
+        this._data.property.halfday.PM.start_time = this.workingHourForm.controls.starthalfdayPMpicker.value;
+        this._data.property.halfday.PM.end_time = this.workingHourForm.controls.endhalfdayPMpicker.value;
+        this.postQuarterDay();
+        Object.keys(this._data.property.halfday).map(key => {
+            this._data.property.halfday[key].start_time = moment(this._data.property.halfday[key].start_time, ["h:mm A"]).format("HH:mm");
+            this._data.property.halfday[key].end_time = moment(this._data.property.halfday[key].end_time, ["h:mm A"]).format("HH:mm");
+        });
         this.patchWorkingHourSetup(this._data);
+    }
+
+    /**
+     * get quarter day data before send to endpoint
+     * @memberof WorkingHourPage
+     */
+    postQuarterDay() {
+        this._data.property.quarterday.Q1.start_time = this.workingHourForm.controls.startQ1picker.value;
+        this._data.property.quarterday.Q1.end_time = this.workingHourForm.controls.endQ1picker.value;
+        this._data.property.quarterday.Q2.start_time = this.workingHourForm.controls.startQ2picker.value;
+        this._data.property.quarterday.Q2.end_time = this.workingHourForm.controls.endQ2picker.value;
+        this._data.property.quarterday.Q3.start_time = this.workingHourForm.controls.startQ3picker.value;
+        this._data.property.quarterday.Q3.end_time = this.workingHourForm.controls.endQ3picker.value;
+        this._data.property.quarterday.Q4.start_time = this.workingHourForm.controls.startQ4picker.value;
+        this._data.property.quarterday.Q4.end_time = this.workingHourForm.controls.endQ4picker.value;
+        Object.keys(this._data.property.quarterday).map(objKey => {
+            this._data.property.quarterday[objKey].start_time = moment(this._data.property.quarterday[objKey].start_time, ["h:mm A"]).format("HH:mm");
+            this._data.property.quarterday[objKey].end_time = moment(this._data.property.quarterday[objKey].end_time, ["h:mm A"]).format("HH:mm");
+        });
     }
 
     /**
