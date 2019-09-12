@@ -121,8 +121,8 @@ export class WorkingHourPage implements OnInit, OnChanges {
             "description": this.workingHourForm.controls.description.value,
             "property": {
                 "fullday": {
-                    "start_time": this.format(this.workingHourForm.controls.startpicker.value),
-                    "end_time": this.format(this.workingHourForm.controls.endpicker.value)
+                    "start_time": moment(this.workingHourForm.controls.startpicker.value, ["h:mm A"]).format("HH:mm"),
+                    "end_time": moment(this.workingHourForm.controls.endpicker.value, ["h:mm A"]).format("HH:mm")
                 },
                 "halfday": {
                     "AM": {

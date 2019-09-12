@@ -37,7 +37,7 @@ export class WorkingHourListPage implements OnInit {
     }
 
     async ngOnInit() {
-        this.list = await this.workingHrAPI.get_working_hours_profile().toPromise();
+        this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
         for (let i = 0; i < this.list.length; i++) {
             let details = await this.workingHrAPI.get_working_hours_details(this.list[i].working_hours_guid).toPromise();
             this.list[i].strtime = details.property.fullday.start_time;
