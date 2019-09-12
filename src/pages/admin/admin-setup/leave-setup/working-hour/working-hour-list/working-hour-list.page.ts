@@ -1,6 +1,12 @@
-import { OnInit, Component, Input } from "@angular/core";
+import { OnInit, Component } from "@angular/core";
 import { WorkingHourAPIService } from "../working-hour-api.service";
 
+/**
+ * working hour profile list page
+ * @export
+ * @class WorkingHourListPage
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'app-working-hour-list',
     templateUrl: './working-hour-list.page.html',
@@ -8,8 +14,25 @@ import { WorkingHourAPIService } from "../working-hour-api.service";
 })
 export class WorkingHourListPage implements OnInit {
 
+    /**
+     * get profile list from endpoint
+     * @type {*}
+     * @memberof WorkingHourListPage
+     */
     public list: any;
+
+    /**
+     * show/hide details page
+     * @type {boolean}
+     * @memberof WorkingHourListPage
+     */
     public showDetailPage: boolean = false;
+
+    /**
+     *Creates an instance of WorkingHourListPage.
+     * @param {WorkingHourAPIService} workingHrAPI
+     * @memberof WorkingHourListPage
+     */
     constructor(private workingHrAPI: WorkingHourAPIService) {
     }
 
@@ -22,6 +45,11 @@ export class WorkingHourListPage implements OnInit {
         }
     }
 
+    /**
+     * show/hide details page (value from child component)
+     * @param {*} value
+     * @memberof WorkingHourListPage
+     */
     valueChanged(value) {
         this.showDetailPage = value;
         this.ngOnInit();

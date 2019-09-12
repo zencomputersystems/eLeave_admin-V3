@@ -6,6 +6,13 @@ import { MatSnackBar } from "@angular/material";
 import { SnackbarNotificationPage } from "../snackbar-notification/snackbar-notification";
 const moment = _moment;
 
+/**
+ * create or update working hour profile
+ * @export
+ * @class WorkingHourPage
+ * @implements {OnInit}
+ * @implements {OnChanges}
+ */
 @Component({
     selector: 'app-working-hour',
     templateUrl: './working-hour.page.html',
@@ -13,13 +20,46 @@ const moment = _moment;
 })
 export class WorkingHourPage implements OnInit, OnChanges {
 
+    /**
+     * form group use in validate value 
+     * @type {*}
+     * @memberof WorkingHourPage
+     */
     public workingHourForm: any;
-    public showSpinner: boolean = false;
+
+    /**
+     * show loading small spinner when clicked submit button
+     * @type {boolean}
+     * @memberof WorkingHourPage
+     */
     public showSmallSpinner: boolean = false;
+
+    /**
+     * show/hide this page
+     * @type {boolean}
+     * @memberof WorkingHourPage
+     */
     @Input() showDetailPage: boolean = true;
+
+    /** 
+     * get value of clicked working_hour_guid from parent page
+     * @type {string}
+     * @memberof WorkingHourPage
+     */
     @Input() id: string;
+
+    /**
+     * emit value to hide this page after clicked back button
+     * @memberof WorkingHourPage
+     */
     @Output() valueChange = new EventEmitter();
 
+    /**
+     *Creates an instance of WorkingHourPage.
+     * @param {WorkingHourAPIService} workingHourAPI
+     * @param {MatSnackBar} snackbar
+     * @memberof WorkingHourPage
+     */
     constructor(private workingHourAPI: WorkingHourAPIService, private snackbar: MatSnackBar) {
         this.workingHourForm = new FormGroup({
             profileName: new FormControl('', Validators.required),
@@ -67,10 +107,13 @@ export class WorkingHourPage implements OnInit, OnChanges {
                 startQ4picker: detail.property.quarterday.Q4.start_time,
                 endQ4picker: detail.property.quarterday.Q4.end_time
             });
-            console.log(detail.property.fullday.start_time, detail.property.fullday.end_time);
         }
     }
 
+    /**
+     * get data before send to endpoint
+     * @memberof WorkingHourPage
+     */
     postWorkingHourSetup() {
         this.showSmallSpinner = true;
         const body = {
@@ -78,62 +121,79 @@ export class WorkingHourPage implements OnInit, OnChanges {
             "description": this.workingHourForm.controls.description.value,
             "property": {
                 "fullday": {
-                    "start_time": moment(this.workingHourForm.controls.startpicker.value, ["h:mm A"]).format("HH:mm"),
-                    "end_time": moment(this.workingHourForm.controls.endpicker.value, ["h:mm A"]).format("HH:mm")
+                    "start_time": this.format(this.workingHourForm.controls.startpicker.value),
+                    "end_time": this.format(this.workingHourForm.controls.endpicker.value)
                 },
                 "halfday": {
                     "AM": {
-                        "start_time": moment(this.workingHourForm.controls.starthalfdayAMpicker.value, ["h:mm A"]).format("HH:mm"),
-                        "end_time": moment(this.workingHourForm.controls.endhalfdayAMpicker.value, ["h:mm A"]).format("HH:mm")
+                        "start_time": this.format(this.workingHourForm.controls.starthalfdayAMpicker.value),
+                        "end_time": this.format(this.workingHourForm.controls.endhalfdayAMpicker.value)
                     },
                     "PM": {
-                        "start_time": moment(this.workingHourForm.controls.starthalfdayPMpicker.value, ["h:mm A"]).format("HH:mm"),
-                        "end_time": moment(this.workingHourForm.controls.endhalfdayPMpicker.value, ["h:mm A"]).format("HH:mm")
+                        "start_time": this.format(this.workingHourForm.controls.starthalfdayPMpicker.value),
+                        "end_time": this.format(this.workingHourForm.controls.endhalfdayPMpicker.value)
                     }
                 },
                 "quarterday": {
                     "Q1": {
-                        "start_time": moment(this.workingHourForm.controls.startQ1picker.value, ["h:mm A"]).format("HH:mm"),
-                        "end_time": moment(this.workingHourForm.controls.endQ1picker.value, ["h:mm A"]).format("HH:mm")
+                        "start_time": this.format(this.workingHourForm.controls.startQ1picker.value),
+                        "end_time": this.format(this.workingHourForm.controls.endQ1picker.value)
                     },
                     "Q2": {
-                        "start_time": moment(this.workingHourForm.controls.startQ2picker.value, ["h:mm A"]).format("HH:mm"),
-                        "end_time": moment(this.workingHourForm.controls.endQ2picker.value, ["h:mm A"]).format("HH:mm")
+                        "start_time": this.format(this.workingHourForm.controls.startQ2picker.value),
+                        "end_time": this.format(this.workingHourForm.controls.endQ2picker.value)
                     },
                     "Q3": {
-                        "start_time": moment(this.workingHourForm.controls.startQ3picker.value, ["h:mm A"]).format("HH:mm"),
-                        "end_time": moment(this.workingHourForm.controls.endQ3picker.value, ["h:mm A"]).format("HH:mm")
+                        "start_time": this.format(this.workingHourForm.controls.startQ3picker.value),
+                        "end_time": this.format(this.workingHourForm.controls.endQ3picker.value)
                     },
                     "Q4": {
-                        "start_time": moment(this.workingHourForm.controls.startQ4picker.value, ["h:mm A"]).format("HH:mm"),
-                        "end_time": moment(this.workingHourForm.controls.endQ4picker.value, ["h:mm A"]).format("HH:mm")
+                        "start_time": this.format(this.workingHourForm.controls.startQ4picker.value),
+                        "end_time": this.format(this.workingHourForm.controls.endQ4picker.value)
                     }
                 }
             }
         }
-        console.log(body);
         this.patchWorkingHourSetup(body);
     }
 
+    /**
+     * format the time to 24 hour before patch or post to endpoint
+     * @param {*} value
+     * @returns
+     * @memberof WorkingHourPage
+     */
+    format(value: any) {
+        return moment(value, ["h:mm A"]).format("HH:mm")
+    }
+
+    /**
+     * update or create data of working hour profile
+     * @param {*} body
+     * @memberof WorkingHourPage
+     */
     patchWorkingHourSetup(body: any) {
         if (this.id != '') {
             this.workingHourAPI.patch_working_hours({
                 "working_hours_guid": this.id,
                 "data": body
             }).subscribe(res => {
-                console.log(res);
                 this.showPopUp('submitted successfully ');
                 this.showSmallSpinner = false;
             })
         } else {
             this.workingHourAPI.post_working_hours(body).subscribe(response => {
-                console.log(response);
                 this.showPopUp('submitted successfully ');
                 this.showSmallSpinner = false;
             })
         }
     }
 
+    /**
+     * click back to hide the details page
+     * @param {boolean} value
+     * @memberof WorkingHourPage
+     */
     hideDetailPage(value: boolean) {
         this.valueChange.emit(value);
     }
