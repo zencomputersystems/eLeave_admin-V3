@@ -129,11 +129,12 @@ export class WorkingHourPage implements OnInit, OnChanges {
         this._data.property.halfday.AM.end_time = this.workingHourForm.controls.endhalfdayAMpicker.value;
         this._data.property.halfday.PM.start_time = this.workingHourForm.controls.starthalfdayPMpicker.value;
         this._data.property.halfday.PM.end_time = this.workingHourForm.controls.endhalfdayPMpicker.value;
-        this.postQuarterDay();
-        Object.keys(this._data.property.halfday).map(key => {
-            this._data.property.halfday[key].start_time = moment(this._data.property.halfday[key].start_time, ["h:mm A"]).format("HH:mm");
-            this._data.property.halfday[key].end_time = moment(this._data.property.halfday[key].end_time, ["h:mm A"]).format("HH:mm");
+        Object.keys(this._data.property.halfday).map(ampm => {
+            Object.keys(this._data.property.halfday[ampm]).map(startend => {
+                this._data.property.halfday[ampm][startend] = moment(this._data.property.halfday[ampm][startend], ["h:mm A"]).format("HH:mm");
+            })
         });
+        this.postQuarterDay();
         this.patchWorkingHourSetup(this._data);
     }
 
@@ -151,8 +152,9 @@ export class WorkingHourPage implements OnInit, OnChanges {
         this._data.property.quarterday.Q4.start_time = this.workingHourForm.controls.startQ4picker.value;
         this._data.property.quarterday.Q4.end_time = this.workingHourForm.controls.endQ4picker.value;
         Object.keys(this._data.property.quarterday).map(objKey => {
-            this._data.property.quarterday[objKey].start_time = moment(this._data.property.quarterday[objKey].start_time, ["h:mm A"]).format("HH:mm");
-            this._data.property.quarterday[objKey].end_time = moment(this._data.property.quarterday[objKey].end_time, ["h:mm A"]).format("HH:mm");
+            Object.keys(this._data.property.quarterday[objKey]).map(endstart => {
+                this._data.property.quarterday[objKey][endstart] = moment(this._data.property.quarterday[objKey][endstart], ["h:mm A"]).format("HH:mm");
+            })
         });
     }
 

@@ -31,6 +31,13 @@ export class WorkingHourListPage implements OnInit {
     public showDetailPage: boolean = false;
 
     /**
+     * show loading spinner before reach the page
+     * @type {boolean}
+     * @memberof WorkingHourListPage
+     */
+    public showSpinner: boolean = false;
+
+    /**
      *Creates an instance of WorkingHourListPage.
      * @param {WorkingHourAPIService} workingHrAPI
      * @param {MatDialog} dialog
@@ -40,12 +47,14 @@ export class WorkingHourListPage implements OnInit {
     }
 
     async ngOnInit() {
+        this.showSpinner = true;
         this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
         for (let i = 0; i < this.list.length; i++) {
             let details = await this.workingHrAPI.get_working_hours_details(this.list[i].working_hours_guid).toPromise();
             this.list[i].strtime = details.property.fullday.start_time;
             this.list[i].endtime = details.property.fullday.end_time;
         }
+        this.showSpinner = false;
     }
 
     /**
