@@ -303,28 +303,38 @@ export class CreatePolicyPage implements OnInit {
     }
 
     /**
-     * When ion-checkbox is clicked, the selection/input form is enable/disable
-     * @param {*} event
-     * @param {*} enabledMonth
-     * @param {*} enabledDay
-     * @param {*} [enabledYr]
+     * enable/disable mat form field of carry forward selection
+     * @param {*} val
      * @memberof CreatePolicyPage
      */
-    checkEvent(event, enabledMonth, enabledDay, enabledYr?: any) {
-        if (event.detail.checked) {
-            enabledMonth.enable();
-            enabledDay.enable();
-            if (enabledYr != undefined) {
-                enabledYr.enable();
-            }
+    checkEventCF(val: any) {
+        if (val.detail.checked) {
+            this.policyForm.controls.CFMonth.enable();
+            this.policyForm.controls.CFDay.enable();
         } else {
-            enabledMonth.disable();
-            enabledDay.disable();
-            if (enabledYr != undefined) {
-                enabledYr.disable();
-            }
+            this.policyForm.controls.CFMonth.disable();
+            this.policyForm.controls.CFDay.disable();
         }
     }
+
+
+    /**
+     * enable/disable mat form field of year end closing selection
+     * @param {*} event
+     * @memberof CreatePolicyPage
+     */
+    checkEventYr(event: any) {
+        if (event.detail.checked) {
+            this.policyForm.controls.YEMonth.enable();
+            this.policyForm.controls.YEDay.enable();
+            this.policyForm.controls.YEChoice.enable();
+        } else {
+            this.policyForm.controls.YEMonth.disable();
+            this.policyForm.controls.YEDay.disable();
+            this.policyForm.controls.YEChoice.disable();
+        }
+    }
+
 
     /**
      * data that created to POST to backend API
