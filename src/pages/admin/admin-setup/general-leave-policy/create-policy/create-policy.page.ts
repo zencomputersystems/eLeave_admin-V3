@@ -31,13 +31,6 @@ export class CreatePolicyPage implements OnInit {
     public policyList: any;
 
     /**
-     * show edit policy page when URL is edit-policy
-     * @type {boolean}
-     * @memberof CreatePolicyPage
-     */
-    public showEditPolicy: boolean = false;
-
-    /**
      * show spinner during loading page
      * @type {boolean}
      * @memberof CreatePolicyPage
@@ -184,14 +177,11 @@ export class CreatePolicyPage implements OnInit {
     }
 
     ngOnInit() {
-        if (this.route.routeConfig.path.includes('edit-policy')) {
-            this.route.params.subscribe(params => { this._companyGUID = params.id; });
-            this.showEditPolicy = true;
-            this.policyApi.get_general_leave_policy_id(this._companyGUID).subscribe(list => {
-                this.policyList = list;
-                this.editPolicyDetails();
-            })
-        }
+        this.route.params.subscribe(params => { this._companyGUID = params.id; });
+        this.policyApi.get_general_leave_policy_id(this._companyGUID).subscribe(list => {
+            this.policyList = list;
+            this.editPolicyDetails();
+        })
         this.policyApi.get_company_list().subscribe(data => {
             this.list = data;
             this.showContainer = true;
@@ -372,26 +362,6 @@ export class CreatePolicyPage implements OnInit {
     }
 
     /**
-     * POST data to backend API
-     * @memberof CreatePolicyPage
-     */
-    createPolicy() {
-        this.getValue();
-        this.showSmallSpinner = true;
-        this.policyApi.post_general_leave_policy(this._data).subscribe(success => {
-            this.showSmallSpinner = false;
-            this.policyForm.reset();
-            this.radioValue = null;
-            this.CF = false;
-            this.yearEnd = false;
-            this.onBehalf = false;
-            this.email = false;
-            this.policyApi.message('saved successfully');
-        }, error => {
-            this.policyApi.message('saved unsuccessfully');
-        });
-    }
-    /**
      * Update the policy details and PATCH to endpoint
      * @memberof CreatePolicyPage
      */
@@ -405,8 +375,6 @@ export class CreatePolicyPage implements OnInit {
         this.policyApi.patch_general_leave_policy(data).subscribe(response => {
             this.policyApi.message('saved successfully');
             this.showSmallSpinner = false;
-        }, error => {
-            this.policyApi.message('saved unsuccessfully');
         })
     }
 
