@@ -36,7 +36,6 @@ import { DeleteCalendarConfirmationPage } from './delete-calendar-confirmation/d
 import { WorkingHourPage } from './working-hour/working-hour.page';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { WorkingHourListPage } from './working-hour/working-hour-list/working-hour-list.page';
-import { AssignWorkingHourPage } from './working-hour/assign-working-hour/assign-working-hour.page';
 
 
 const routes: Routes = [
@@ -78,6 +77,6 @@ const routes: Routes = [
     entryComponents: [SnackbarNotificationPage, DeleteCalendarConfirmationPage],
     declarations: [ManageHolidayPage, LeaveSetup, AssignCalendarPage, SnackbarNotificationPage, DeleteCalendarConfirmationPage,
         LeaveSetupTabPage, ApplyOnBehalfPage, ApprovalOverridePage, LeaveAdjustmentPage, LeaveEntitlementByBatchPage, WorkingHourPage,
-        WorkingHourListPage, AssignWorkingHourPage]
+        WorkingHourListPage]
 })
 export class LeaveSetupModule { }
