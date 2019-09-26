@@ -14,6 +14,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
     // public baseUrl: string = "http://zencore.southeastasia.cloudapp.azure.com:3000";
+
+    /**
+     * server address
+     * @type {string}
+     * @memberof AuthService
+     */
     public baseUrl: string = "http://zencore.zen.com.my:3000";
 
     /**
@@ -41,6 +47,11 @@ export class AuthService {
 
     // simulate jwt token is valid
     // https://github.com/theo4u/angular4-auth/blob/master/src/app/helpers/jwt-helper.ts
+    /**
+     * check token expired
+     * @returns {boolean}
+     * @memberof AuthService
+     */
     isTokenExpired(): boolean {
         return false;
     }

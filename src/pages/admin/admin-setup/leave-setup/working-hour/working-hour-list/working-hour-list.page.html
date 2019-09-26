@@ -6,20 +6,24 @@
 </div>
 <div class="container" *ngIf="!showSpinner">
     <div class="cardContent">
-        <ion-card-content *ngIf="!showDetailPage">
+        <ion-card-content *ngIf="showListPage">
             <div style="color: #057dcd;text-align: right;padding-top: 15px;">
-                <div style="display: inline-block;">
-                    <div class="user-icon" [inlineSVG]="'assets/icon/option/user.svg'"></div>
-                    <ion-label class="label" style="font-size: 14px; color: #057dcd;
+                <div style="display: inline-block;cursor: pointer;">
+                    <div class="user-icon" [inlineSVG]="'assets/icon/option/user.svg'"
+                        (click)="showAssignPage=true;showDetailPage=false;showListPage=false">
+                    </div>
+                    <ion-label class=" label" style="font-size: 14px; color: #057dcd;
                     margin-top: 2px;cursor: pointer;padding-left: 10px;padding-right: 10px;"
-                        (click)="showDetailPage=true;id=''">
+                        (click)="showAssignPage=true;showDetailPage=false;showListPage=false">
                         Assign</ion-label>
                 </div>
                 &nbsp;&nbsp;
                 <div class="textAssign" style="display: inline-block;">
-                    <div class="user-icon" [inlineSVG]="'assets/icon/option/add.svg'"></div>
+                    <div class="user-icon" [inlineSVG]="'assets/icon/option/add.svg'"
+                        (click)="showDetailPage=true;id='';showAssignPage=false;showListPage=false"></div>
                     <ion-label class="label" style="font-size: 14px; color: #057dcd;
-            margin-top: 2px;cursor: pointer;padding-left: 10px;" (click)="showDetailPage=true;id=''">
+            margin-top: 2px;cursor: pointer;padding-left: 10px;"
+                        (click)="showDetailPage=true;id='';showAssignPage=false;showListPage=false">
                         Create</ion-label>
                 </div>
             </div>
@@ -58,8 +62,13 @@
         </ion-card-content>
 
         <ion-card-content *ngIf="showDetailPage">
-            <app-working-hour [showDetailPage]="showDetailPage" [id]="id" (valueChange)="valueChanged($event)">
+            <app-working-hour [showDetailPage]="showDetailPage" [id]="id" (valueChange)="valueChanged($event, 'edit')">
             </app-working-hour>
+        </ion-card-content>
+
+        <ion-card-content *ngIf="showAssignPage">
+            <app-assign-working-hour [showAssignPage]="showAssignPage" (backToList)="valueChanged($event, 'assign')">
+            </app-assign-working-hour>
         </ion-card-content>
     </div>
 </div>

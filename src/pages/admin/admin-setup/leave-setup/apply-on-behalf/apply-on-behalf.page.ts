@@ -352,6 +352,12 @@ export class ApplyOnBehalfPage implements OnInit {
      */
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
+    /**
+     * get day types of form array
+     * @readonly
+     * @type {FormArray}
+     * @memberof ApplyOnBehalfPage
+     */
     get dayTypes(): FormArray {
         return this.applyLeaveForm.get('dayTypes') as FormArray;
     }

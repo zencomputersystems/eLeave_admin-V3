@@ -31,6 +31,20 @@ export class WorkingHourListPage implements OnInit {
     public showDetailPage: boolean = false;
 
     /**
+     * show/hide assign page
+     * @type {boolean}
+     * @memberof WorkingHourListPage
+     */
+    public showAssignPage: boolean = false;
+
+    /**
+     * show/hide list page
+     * @type {boolean}
+     * @memberof WorkingHourListPage
+     */
+    public showListPage: boolean = true;
+
+    /**
      * show loading spinner before reach the page
      * @type {boolean}
      * @memberof WorkingHourListPage
@@ -62,8 +76,13 @@ export class WorkingHourListPage implements OnInit {
      * @param {*} value
      * @memberof WorkingHourListPage
      */
-    valueChanged(value) {
-        this.showDetailPage = value;
+    valueChanged(value, action: string) {
+        if (action == 'edit') {
+            this.showDetailPage = value;
+        } else {
+            this.showAssignPage = value;
+        }
+        this.showListPage = true;
         this.ngOnInit();
     }
 

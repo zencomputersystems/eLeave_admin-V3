@@ -37,12 +37,18 @@ export class AddOneEmployeePage implements OnInit {
      */
     public invitationForm;
 
+    /**
+     * show spinner during loading
+     * @type {boolean}
+     * @memberof AddOneEmployeePage
+     */
     public showSmallSpinner: boolean = false;
 
     /**
      *Creates an instance of AddOneEmployeePage.
      * @param {APIService} apiService
      * @param {MatDialogRef<AddOneEmployeePage>} dialogAddOneEmployee
+     * @param {AdminInvitesAPIService} adminInvite
      * @memberof AddOneEmployeePage
      */
     constructor(private apiService: APIService, public dialogAddOneEmployee: MatDialogRef<AddOneEmployeePage>, private adminInvite: AdminInvitesAPIService) {

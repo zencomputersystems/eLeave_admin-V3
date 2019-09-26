@@ -13,10 +13,17 @@ import { Injectable } from "@angular/core";
     providedIn: 'root'
 })
 export class EmployeeTreeview {
-    /** Map from flat node to nested node. This helps us finding the nested node to be modified */
+
+    /** 
+    * Map from flat node to nested node. This helps us finding the nested node to be modified
+    * @memberof EmployeeTreeview
+    */
     flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
 
-    /** Map from nested node to flattened node. This helps us to keep the same object for selection */
+    /**
+     * Map from nested node to flattened node. This helps us to keep the same object for selection
+     * @memberof EmployeeTreeview
+     */
     nestedNodeMap = new Map<TodoItemNode, TodoItemFlatNode>();
 
     /**
@@ -135,7 +142,11 @@ export class EmployeeTreeview {
         this.checkAllParentsSelection(node);
     }
 
-    /* Checks all the parents when a leaf node is selected/unselected */
+    /**
+     * Checks all the parents when a leaf node is selected/unselected
+     * @param {TodoItemFlatNode} node
+     * @memberof EmployeeTreeview
+     */
     checkAllParentsSelection(node: TodoItemFlatNode): void {
         let parent: TodoItemFlatNode | null = this.getParentNode(node);
         while (parent) {
@@ -158,7 +169,12 @@ export class EmployeeTreeview {
         }
     }
 
-    /* Get the parent node of a node */
+    /**
+     * Get the parent node of a node
+     * @param {TodoItemFlatNode} node
+     * @returns {(TodoItemFlatNode | null)}
+     * @memberof EmployeeTreeview
+     */
     getParentNode(node: TodoItemFlatNode): TodoItemFlatNode | null {
         const currentLevel = this.getLevel(node);
 

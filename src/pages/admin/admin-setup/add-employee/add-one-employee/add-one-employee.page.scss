@@ -29,6 +29,10 @@
   ::ng-deep .mat-select-arrow {
     color: #7a8589;
   }
+  ::ng-deep .mat-select-panel .mat-option {
+    font-size: 14px !important;
+    color: #7a8589;
+  }
   input {
     font-size: 14px;
     color: #7a8589;

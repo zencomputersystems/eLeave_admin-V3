@@ -28,7 +28,7 @@ export const sideMenuNavigationRoutes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: PageNotFoundComponent },
-            // { path: 'inbox', component: AddEmployeePage }, // AddEmployeePage //EmployeeProfilePage
+            { path: 'inbox', component: AddEmployeePage }, // AddEmployeePage //EmployeeProfilePage
             {
                 path: 'leave-setup', component: LeaveSetup,
                 children: [
@@ -59,7 +59,6 @@ export const sideMenuNavigationRoutes: Routes = [
                 children: [
                     { path: '', redirectTo: 'policy-list', pathMatch: 'full' },
                     { path: 'policy-list', component: PolicyListPage },
-                    { path: 'create-policy', component: CreatePolicyPage },
                     { path: 'edit-policy/:id', component: CreatePolicyPage }
                 ]
             },
