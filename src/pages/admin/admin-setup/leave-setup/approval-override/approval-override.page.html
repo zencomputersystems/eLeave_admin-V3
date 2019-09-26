@@ -9,7 +9,7 @@
                 <mat-select formControlName="company" required>
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let company of companyList" [value]=company.TENANT_COMPANY_GUID
-                        (click)="selectedCompany(company.TENANT_COMPANY_GUID);enableDisableButton(true)">
+                        (click)="selectedCompany(company.TENANT_COMPANY_GUID);enableDisableButton()">
                         {{company.NAME}}
                     </mat-option>
                 </mat-select>
@@ -26,7 +26,7 @@
                 <mat-select formControlName="department" required>
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let department of departmentList" [value]=department.department
-                        (click)="selectedDepartment(department.department);enableDisableButton(true);mainCheckbox=false;indeterminate=false">
+                        (click)="selectedDepartment(department.department);enableDisableButton();mainCheckbox=false;indeterminate=false">
                         {{department.department}}
                     </mat-option>
                 </mat-select>
@@ -42,7 +42,7 @@
             <mat-form-field appearance="outline"
                 style="display: block;font-size: 13px;width: 100%;color:#7a8589;padding-left: 18px;">
                 <mat-label>Please enter remark</mat-label>
-                <input matInput formControlName="remark" required (input)="enableDisableButton(true)">
+                <input matInput formControlName="remark" required (input)="enableDisableButton()">
                 <mat-error>Remark is <strong>required</strong></mat-error>
             </mat-form-field>
         </div>
@@ -53,7 +53,7 @@
         border: 1px solid var(--ion-item-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.13))));
         border-radius: 5px;border-color: rgba(0, 0, 0, 0.12);width: 280px;margin-bottom: 40px;">
                 <mat-radio-group aria-label="Select an option" formControlName="radio" required
-                    style="padding-left: 10px;white-space: nowrap;color: #7a8589;" (change)="enableDisableButton(true)">
+                    style="padding-left: 10px;white-space: nowrap;color: #7a8589;" (change)="enableDisableButton()">
                     <mat-radio-button value="CANCELLED">Cancel</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
                     <mat-radio-button value="REJECTED">Reject</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
                     <mat-radio-button value="APPROVED">Approve</mat-radio-button>

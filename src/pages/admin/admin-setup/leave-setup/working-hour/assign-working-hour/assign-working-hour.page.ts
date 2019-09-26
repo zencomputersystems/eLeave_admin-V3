@@ -36,7 +36,7 @@ export class AssignWorkingHourPage implements OnInit {
      * @type {*}
      * @memberof AssignWorkingHourPage
      */
-    public department: any;
+    public departmentItems: any;
 
     /**
      * leavetype list from API
@@ -168,8 +168,8 @@ export class AssignWorkingHourPage implements OnInit {
         this.showSpinner = true;
         this._companyID = id;
         this.leaveSetupAPI.get_company_details(id).subscribe(list => {
+            this.departmentItems = list.departmentList;
             this.showSpinner = false;
-            this.department = list.departmentList;
         })
     }
 
@@ -206,16 +206,16 @@ export class AssignWorkingHourPage implements OnInit {
 
     /**
      * get user list to filter from selected compant & department
-     * @param {*} list
+     * @param {*} data
      * @param {string} employeeName
      * @memberof AssignWorkingHourPage
      */
-    filterUser(list: any, employeeName: string) {
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].department === employeeName && list[i].companyId === this._companyID) {
-                this.filteredUser.push(list[i]);
-                this.showTickbox.push(false);
+    filterUser(data: any, employeeName: string) {
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].department === employeeName && data[i].companyId === this._companyID) {
+                this.filteredUser.push(data[i]);
                 this.filteredUser[this.filteredUser.length - 1].isChecked = false;
+                this.showTickbox.push(false);
             }
         }
         if (this.filteredUser.length > 0) {
