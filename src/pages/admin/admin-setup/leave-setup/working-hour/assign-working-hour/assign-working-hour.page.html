@@ -1,5 +1,5 @@
 <div style="margin-top: 4%;" *ngIf="showAssignPage">
-    <form [formGroup]="adjustmentForm">
+    <form [formGroup]="workingHrForm">
         <div style="width: 31%;display: inline-block;">
             <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
                 WORKING HOUR PROFILE NAME</span>
@@ -9,7 +9,8 @@
                 <mat-select formControlName="profile" required>
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let item of workingHrProfileList" [value]=item.working_hours_guid
-                        (click)="enableDisableSubmitButton(true); getLeaveEntitlement(item.working_hours_guid)">
+                        (click)="enableDisableSubmitButton(true); ">
+                        <!-- getWorkingProfile(item.working_hours_guid) -->
                         {{item.code}}
                     </mat-option>
                 </mat-select>
@@ -26,7 +27,7 @@
                 <mat-select formControlName="company" required>
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let company of company" [value]=company.TENANT_COMPANY_GUID
-                        (click)="companySelected(company.TENANT_COMPANY_GUID);enableDisableSubmitButton(true)">
+                        (click)="companyList(company.TENANT_COMPANY_GUID);enableDisableSubmitButton(true)">
                         {{company.NAME}}
                     </mat-option>
                 </mat-select>
@@ -43,7 +44,7 @@
                 <mat-select formControlName="department" required>
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let department of department" [value]=department.department
-                        (click)="departmentSelected(department.department);enableDisableSubmitButton(true)">
+                        (click)="departmentList(department.department);enableDisableSubmitButton(true)">
                         {{department.department}}
                     </mat-option>
                 </mat-select>
@@ -54,11 +55,11 @@
         </div>
     </form>
 
-    <div class="content" *ngIf="filteredUserItems.length > 0">
+    <div class="content" *ngIf="filteredUser.length > 0">
         <ion-row class="titleRow" nowrap>
             <ion-col align-self-start size="1" style="padding-left: 10px;padding-right: 30px;text-overflow: initial;">
                 <ion-checkbox mode="ios" style="width: 20px; height: 20px;margin-top: 6px;" [(ngModel)]="mainCheckBox"
-                    [indeterminate]="indeterminate" (click)="mainCheckboxEvent()">
+                    [indeterminate]="indeterminate" (click)="checkMainEvent()">
                 </ion-checkbox>
             </ion-col>
             <ion-col size="1" align-self-center>
@@ -68,15 +69,15 @@
                 <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
             </ion-col>
         </ion-row>
-        <ion-row class="detailsRow" *ngFor="let item of filteredUserItems; let i=index" nowrap>
+        <ion-row class="detailsRow" *ngFor="let item of filteredUser; let i=index" nowrap>
             <ion-col align-self-start size="1" style="padding-left: 10px;padding-right: 30px;">
-                <ion-avatar class="avatar" (mouseover)="hoverEvent(i, true, item.isChecked)"
-                    (mouseout)="hoverEvent(i, false, item.isChecked)">
+                <ion-avatar class="avatar" (mouseover)="mouseEvent(i, true, item.isChecked)"
+                    (mouseout)="mouseEvent(i, false, item.isChecked)">
                     <img src="assets/icon/evans.jpg" style="margin-left: -4px;"
-                        [style.display]="showCheckbox[i] ? 'none' : 'block'">
-                    <div class="checkboxOnAvatar" [style.display]="showCheckbox[i] ? 'block' : 'none'">
+                        [style.display]="showTickbox[i] ? 'none' : 'block'">
+                    <div class="checkboxOnAvatar" [style.display]="showTickbox[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;margin-top: 7px;"
-                            [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                            [(ngModel)]="item.isChecked" (ionChange)="checkItemsEvent()">
                         </ion-checkbox>
                     </div>
                 </ion-avatar>
@@ -91,7 +92,7 @@
             <ion-item class="divider" lines="full"></ion-item>
         </ion-row>
     </div>
-    <div *ngIf="showNoResult" style="width: 100%; text-align:center;padding: 10px">
+    <div *ngIf="showNoSearchFound" style="width: 100%; text-align:center;padding: 10px">
         <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
         <p style="font-size: 20px;color:#bebebe;padding-top:10px ">No Results Found</p>
     </div>
@@ -101,12 +102,12 @@
             BACK
         </ion-button>
         <ion-button style="font-size: 12px;height: 30px;width: 110px;background: white;" color="primary"
-            (click)="patchLeaveNumber();adjustmentForm.reset();showSmallSpinner = true;mainCheckBox=false;indeterminate=false;showCheckbox = false;"
-            [disabled]="disableSubmitButton">
+            (click)="workingHrForm.reset();smallSpinner = true;mainCheckBox=false;indeterminate=false;showTickbox = false;"
+            [disabled]="submitButton">
             SUBMIT
         </ion-button>
         <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
-            *ngIf="showSmallSpinner">
+            *ngIf="smallSpinner">
             <ion-spinner name="lines-small" color="primary"></ion-spinner>
         </div>
     </div>

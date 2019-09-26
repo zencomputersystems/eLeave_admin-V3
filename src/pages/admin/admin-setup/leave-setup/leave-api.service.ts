@@ -62,7 +62,7 @@ export class LeaveAPIService {
      */
     patch_assign_calendar_profile(body): Observable<any> {
         this.apiService.headerAuthorization();
-        return this.apiService.patchApi(body, '/api/admin/holiday/user-calendar');
+        return this.apiService.patchApi(body, '/api/admin/holiday/calendar-profile/user-calendar');
     }
 
     /**
