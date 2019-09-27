@@ -8,14 +8,14 @@ import { IonicModule } from '@ionic/angular';
 import { SideMenuNavigationComponent } from './side-menu-navigation.component';
 import { AuthGuard } from 'src/services/shared-service/guards/auth-guard.service';
 import { sideMenuNavigationRoutes } from './side-menu-navigation.routes';
-import { AdminInvitesModule } from 'src/pages/admin/admin-setup/invites/admin-invites.module';
-import { EmployeeProfileModule } from 'src/pages/admin/admin-setup/employee-profile-hr/employee-profile.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
-import { AddEmployeeModule } from 'src/pages/admin/admin-setup/add-employee/add-employee.module';
-import { RoleManagementModule } from 'src/pages/admin/admin-setup/role-management/role-management.module';
-import { LeaveSetupModule } from 'src/pages/admin/admin-setup/leave-setup/leave-setup.module';
-import { GeneralLeavePolicyModule } from 'src/pages/admin/admin-setup/general-leave-policy/general-leave-policy.module';
+import { AdminInvitesModule } from '../admin-setup/invites/admin-invites.module';
+import { EmployeeProfileModule } from '../admin-setup/employee-profile-hr/employee-profile.module';
+import { AddEmployeeModule } from '../admin-setup/add-employee/add-employee.module';
+import { LeaveSetupModule } from '../admin-setup/leave-setup/leave-setup.module';
+import { RoleManagementModule } from '../admin-setup/role-management/role-management.module';
+import { GeneralLeavePolicyModule } from '../admin-setup/general-leave-policy/general-leave-policy.module';
 
 @NgModule({
     imports: [
