@@ -7,7 +7,7 @@ import { MAT_SNACK_BAR_DATA } from "@angular/material/snack-bar";
  */
 @Component({
   selector: 'app-snackbar-notification',
-  templateUrl: './snackbar-notification.html',
+  templateUrl: './snackbar-notification.component.html',
   styles: [`
       .alertSuccess {
         color: #48c353;
@@ -20,9 +20,9 @@ import { MAT_SNACK_BAR_DATA } from "@angular/material/snack-bar";
 export class SnackbarNotificationComponent {
 
   /**
-   *Creates an instance of NotificationPage.
+   *Creates an instance of SnackbarNotificationComponent.
    * @param {*} data
-   * @memberof NotificationPage
+   * @memberof SnackbarNotificationComponent
    */
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {
   }
