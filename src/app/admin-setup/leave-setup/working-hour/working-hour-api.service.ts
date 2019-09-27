@@ -3,7 +3,7 @@ import { Http } from "@angular/http";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
 import { MatSnackBar } from "@angular/material";
-import { SnackbarNotificationComponent } from "../snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "../snackbar-notification/snackbar-notification.component";
 
 /**
  * Working hour profile API

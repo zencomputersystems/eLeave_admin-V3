@@ -3,7 +3,7 @@ import { Http, Headers, Response } from "@angular/http";
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { MatSnackBar } from "@angular/material";
-import { SnackbarNotificationComponent } from "../leave-setup/snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "../leave-setup/snackbar-notification/snackbar-notification.component";
 
 /**
  * Role API

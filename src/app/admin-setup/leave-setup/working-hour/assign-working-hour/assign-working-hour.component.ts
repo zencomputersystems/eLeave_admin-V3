@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { APIService } from "src/services/shared-service/api.service";
 import { LeaveApiService } from "../../leave-api.service";
-import { SnackbarNotificationComponent } from "../../snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "../../snackbar-notification/snackbar-notification.component";
 import { WorkingHourApiService } from "../working-hour-api.service";
 /**
  * assign working hour profile to user

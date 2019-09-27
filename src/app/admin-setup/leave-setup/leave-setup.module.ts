@@ -19,7 +19,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AssignCalendarComponent } from './assign-calendar/assign-calendar.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-notification';
+import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-notification.component';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';

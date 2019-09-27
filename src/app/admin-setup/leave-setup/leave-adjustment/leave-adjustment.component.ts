@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { LeaveApiService } from "../leave-api.service";
 import { APIService } from "src/services/shared-service/api.service";
-import { SnackbarNotificationComponent } from "../snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "../snackbar-notification/snackbar-notification.component";
 /**
  * leave adjusment page
  * @export

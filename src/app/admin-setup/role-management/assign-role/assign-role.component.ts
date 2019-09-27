@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { RoleApiService } from "../role-api.service";
 import { EmployeeTreeviewService } from "../../leave-setup/assign-calendar/employee-treeview.service";
 import { APIService } from "src/services/shared-service/api.service";
-import { SnackbarNotificationComponent } from "../../leave-setup/snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "../../leave-setup/snackbar-notification/snackbar-notification.component";
 import { MatSnackBar } from "@angular/material";
 
 /**

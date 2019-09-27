@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LeaveEntitlementByBatchApiService } from './leave-entitlement-by-batch-api.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LeaveApiService } from '../leave-api.service';
-import { SnackbarNotificationComponent } from '../snackbar-notification/snackbar-notification';
+import { SnackbarNotificationComponent } from '../snackbar-notification/snackbar-notification.component';
 
 /**
  * assign leave entitlement according leave type

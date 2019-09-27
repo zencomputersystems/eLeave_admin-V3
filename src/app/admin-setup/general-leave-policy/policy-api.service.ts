@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
 import { LeaveApiService } from "../leave-setup/leave-api.service";
 import { MatSnackBar } from "@angular/material";
-import { SnackbarNotificationComponent } from "../leave-setup/snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "../leave-setup/snackbar-notification/snackbar-notification.component";
 
 /**
  * API for policy

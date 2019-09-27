@@ -3,7 +3,7 @@ import { APIService } from 'src/services/shared-service/api.service';
 import { Observable } from 'rxjs';
 import { LeaveApiService } from '../leave-api.service';
 import { MatSnackBar } from '@angular/material';
-import { SnackbarNotificationComponent } from '../snackbar-notification/snackbar-notification';
+import { SnackbarNotificationComponent } from '../snackbar-notification/snackbar-notification.component';
 
 /**
  * assign calendar API

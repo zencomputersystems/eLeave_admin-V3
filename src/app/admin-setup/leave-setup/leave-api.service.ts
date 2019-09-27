@@ -4,7 +4,7 @@ import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
 import { MatSnackBar } from "@angular/material";
-import { SnackbarNotificationComponent } from "./snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "./snackbar-notification/snackbar-notification.component";
 
 /**
  * Leave API endpoint
