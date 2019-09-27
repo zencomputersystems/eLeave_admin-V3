@@ -3,7 +3,7 @@ import { MAT_SNACK_BAR_DATA } from "@angular/material/snack-bar";
 /**
  * Show notification after submit
  * @export
- * @class SnackbarNotificationPage
+ * @class SnackbarNotificationComponent
  */
 @Component({
   selector: 'app-snackbar-notification',
@@ -17,7 +17,7 @@ import { MAT_SNACK_BAR_DATA } from "@angular/material/snack-bar";
       }
     `],
 })
-export class SnackbarNotificationPage {
+export class SnackbarNotificationComponent {
 
   /**
    *Creates an instance of NotificationPage.

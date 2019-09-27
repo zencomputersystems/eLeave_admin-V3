@@ -10,7 +10,7 @@ const moment = _moment;
 /**
  * Personal Page
  * @export
- * @class PersonalPage
+ * @class PersonalComponent
  * @implements {OnInit}
  */
 @Component({
@@ -21,47 +21,47 @@ const moment = _moment;
         { provide: DateAdapter, useClass: AppDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
 })
-export class PersonalPage implements OnInit {
+export class PersonalComponent implements OnInit {
 
     /**
      * input value from employee-profile (requested userId details)
      * @type {*}
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     @Input() public personalList: any;
 
     /**
      * Empty array to save emergency contact
      * @type {*}
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public contactList: any = [];
 
     /**
      * Empty array to save spouse details
      * @type {*}
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public spouseList: any = [];
 
     /**
      * Empty array to save child details
      * @type {*}
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public childList: any = [];
 
     /**
      * Empty array to save education details
      * @type {*}
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public educationList: any = [];
 
     /**
      * Show or hide edit profile
      * @type {boolean}
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public editProfile: boolean = false;
 
@@ -69,7 +69,7 @@ export class PersonalPage implements OnInit {
      * Show or hide family details
      * Default is hide if no info to show
      * @type {boolean}
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public displayFamily: boolean = false;
 
@@ -77,73 +77,73 @@ export class PersonalPage implements OnInit {
      * Show or hide education details
      * Default is hide if no info to show
      * @type {boolean}
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public displayEducation: boolean = false;
 
     /**
      * Show edit emergency contact form field
      * @type {boolean[]}
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public showEditContact: boolean[] = [];
 
     /**
      * Show edit spouse form field
      * @type {boolean[]}
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public showEditSpouse: boolean[] = [];
 
     /**
      * Show edit child form field
      * @type {boolean[]}
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public showEditChild: boolean[] = [];
 
     /**
      * Show edit education form field
      * @type {boolean[]}
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public showEditEducation: boolean[] = [];
 
     /**
      * Object format of emergency contact
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public contactObj = { contactName: '', contactNumber: '' };
 
     /**
      * Object format of spouse details
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public spouseObj = { spouseName: '', spouseIdentificationNumber: '' };
 
     /**
      * Object format of child details
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public childObj = { childName: '', childIdentificationNumber: '' };
 
     /**
      * Object format of education details
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public educationObj = { qualificationLevel: '', major: '', university: '', year: '' };
 
     /**
      * form control of birthdate
      * @type {*}
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     public date: any;
 
     /**
-     *Creates an instance of PersonalPage.
+     *Creates an instance of PersonalComponent.
      * @param {APIService} apiService
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     constructor(private apiService: APIService) {
     }
@@ -161,7 +161,7 @@ export class PersonalPage implements OnInit {
 
     /**
      * To show emergency contact info
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     getContactInit() {
         const contact = this.personalList.personalDetail.emergencyContact.contacts;
@@ -184,7 +184,7 @@ export class PersonalPage implements OnInit {
 
     /**
      * To show spouse info
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     getSpouseInit() {
         const spouse = this.personalList.personalDetail.family.spouse;
@@ -208,7 +208,7 @@ export class PersonalPage implements OnInit {
 
     /**
      * To show child info
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     getChildInit() {
         const child = this.personalList.personalDetail.family.child;
@@ -231,7 +231,7 @@ export class PersonalPage implements OnInit {
 
     /**
      * To show education info
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     getEducationInit() {
         const education = this.personalList.personalDetail.education.educationDetail;
@@ -257,7 +257,7 @@ export class PersonalPage implements OnInit {
      * To create new form field input
      * @param {*} list
      * @param {*} obj
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     addList(list, obj) {
         if (list === undefined) {
@@ -274,7 +274,7 @@ export class PersonalPage implements OnInit {
      * Show required object format of each details 
      * @param {*} addList
      * @param {*} object
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     objectList(addList, object) {
         if (object === this.contactObj) { this.contactList = addList; }
@@ -286,7 +286,7 @@ export class PersonalPage implements OnInit {
      * Remove item from clicked list
      * @param {number} index
      * @param {*} list
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     removeItem(index: number, list: any) {
         list.splice(index, 1);
@@ -295,7 +295,7 @@ export class PersonalPage implements OnInit {
 
     /**
      * Update personal details to API
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     patchAllData() {
         this.editProfile = false;
@@ -316,7 +316,7 @@ export class PersonalPage implements OnInit {
     /**
      * body content that need to POST to API 
      * @returns
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     bindingData() {
         return {
@@ -352,7 +352,7 @@ export class PersonalPage implements OnInit {
      * Edit emergency contact 
      * @param {*} index
      * @param {*} value
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     editContact(index, value) {
         for (let i = 0; i < this.contactList.length; i++) {
@@ -367,7 +367,7 @@ export class PersonalPage implements OnInit {
      * Edit spouse details
      * @param {*} index
      * @param {*} value
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     editSpouse(index, value) {
         for (let i = 0; i < this.spouseList.length; i++) {
@@ -382,7 +382,7 @@ export class PersonalPage implements OnInit {
      * Edit child details
      * @param {*} index
      * @param {*} value
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     editChild(index, value) {
         for (let i = 0; i < this.childList.length; i++) {
@@ -397,7 +397,7 @@ export class PersonalPage implements OnInit {
      * Edit education details
      * @param {*} index
      * @param {*} value
-     * @memberof PersonalPage
+     * @memberof PersonalComponent
      */
     editEducation(index, value) {
         for (let i = 0; i < this.educationList.length; i++) {

@@ -4,29 +4,29 @@ import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
 import { MatSnackBar } from "@angular/material";
-import { SnackbarNotificationPage } from "./snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "./snackbar-notification/snackbar-notification";
 
 /**
  * Leave API endpoint
  * @export
- * @class LeaveAPIService
+ * @class LeaveApiService
  */
 @Injectable({
     providedIn: 'root'
 })
-export class LeaveAPIService {
+export class LeaveApiService {
 
     /**
      * main url of server
      * @type {string}
-     * @memberof LeaveAPIService
+     * @memberof LeaveApiService
      */
     public baseUrl: string = "http://zencore.zen.com.my:3000";
 
     /**
-     *Creates an instance of LeaveAPIService.
+     *Creates an instance of LeaveApiService.
      * @param {Http} http
-     * @memberof LeaveAPIService
+     * @memberof LeaveApiService
      */
     constructor(public http: Http, private apiService: APIService, public snackBar: MatSnackBar) {
     }
@@ -35,7 +35,7 @@ export class LeaveAPIService {
      * Get all calendar profile list 
      * [{ "calendar_guid": "075f64d0-8cf1-11e9-805c-2f26cd7ad959", "code": "profile 1" }]
      * @returns {Observable<any>}
-     * @memberof LeaveAPIService
+     * @memberof LeaveApiService
      */
     get_calendar_profile_list(): Observable<any> {
         this.apiService.headerAuthorization();
@@ -47,7 +47,7 @@ export class LeaveAPIService {
      * restday and public holiday
      * @param {*} id
      * @returns {Observable<any>}
-     * @memberof LeaveAPIService
+     * @memberof LeaveApiService
      */
     get_personal_holiday_calendar(id): Observable<any> {
         this.apiService.headerAuthorization();
@@ -58,7 +58,7 @@ export class LeaveAPIService {
      * Assign calendar profile to employee
      * @param {*} body
      * @returns {Observable<any>}
-     * @memberof LeaveAPIService
+     * @memberof LeaveApiService
      */
     patch_assign_calendar_profile(body): Observable<any> {
         this.apiService.headerAuthorization();
@@ -70,7 +70,7 @@ export class LeaveAPIService {
      * @param {*} id
      * @param {*} data
      * @returns {Observable<any>}
-     * @memberof LeaveAPIService
+     * @memberof LeaveApiService
      */
     post_apply_leave_onBehalf(data): Observable<any> {
         this.apiService.headerAuthorization();
@@ -82,7 +82,7 @@ export class LeaveAPIService {
     /**
      * Get company list from API
      * @returns {Observable<any>}
-     * @memberof LeaveAPIService
+     * @memberof LeaveApiService
      */
     get_company_list(): Observable<any> {
         this.apiService.headerAuthorization();
@@ -93,7 +93,7 @@ export class LeaveAPIService {
      * Request company details from given tenant ID
      * @param {*} tenantId
      * @returns {Observable<any>}
-     * @memberof LeaveAPIService
+     * @memberof LeaveApiService
      */
     get_company_details(tenantId): Observable<any> {
         this.apiService.headerAuthorization();
@@ -103,7 +103,7 @@ export class LeaveAPIService {
     /**
      * Get leavetype details list
      * @returns {Observable<any>}
-     * @memberof LeaveAPIService
+     * @memberof LeaveApiService
      */
     get_admin_leavetype(): Observable<any> {
         this.apiService.headerAuthorization();
@@ -114,7 +114,7 @@ export class LeaveAPIService {
      * update leave adjustment number of day
      * @param {*} data
      * @returns {Observable<any>}
-     * @memberof LeaveAPIService
+     * @memberof LeaveApiService
      */
     patch_leave_adjustment(data): Observable<any> {
         this.apiService.headerAuthorization();
@@ -126,7 +126,7 @@ export class LeaveAPIService {
      * leave type, entitled day, balance, pending, taken
      * @param {*} id
      * @returns {Observable<any>}
-     * @memberof LeaveAPIService
+     * @memberof LeaveApiService
      */
     get_entilement_details(id): Observable<any> {
         this.apiService.headerAuthorization();
@@ -136,10 +136,10 @@ export class LeaveAPIService {
     /**
     * Show message of pass or fail after post data
     * @param {string} message
-    * @memberof LeaveAPIService
+    * @memberof LeaveApiService
     */
     openSnackBar(message: string) {
-        this.snackBar.openFromComponent(SnackbarNotificationPage, {
+        this.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 3000,
             data: message
         });

@@ -1,13 +1,13 @@
 import { OnInit, Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from "@angular/core";
 import { FormGroup, Validators, FormControl } from "@angular/forms";
-import { WorkingHourAPIService } from "./working-hour-api.service";
+import { WorkingHourApiService } from "./working-hour-api.service";
 import * as _moment from 'moment';
 const moment = _moment;
 
 /**
  * create or update working hour profile
  * @export
- * @class WorkingHourPage
+ * @class WorkingHourComponent
  * @implements {OnInit}
  * @implements {OnChanges}
  */
@@ -16,19 +16,19 @@ const moment = _moment;
     templateUrl: './working-hour.component.html',
     styleUrls: ['./working-hour.component.scss'],
 })
-export class WorkingHourPage implements OnInit, OnChanges {
+export class WorkingHourComponent implements OnInit, OnChanges {
 
     /**
      * form group use in validate value 
      * @type {*}
-     * @memberof WorkingHourPage
+     * @memberof WorkingHourComponent
      */
     public workingHourForm: any;
 
     /**
      * show loading small spinner when clicked submit button
      * @type {boolean}
-     * @memberof WorkingHourPage
+     * @memberof WorkingHourComponent
      */
     public showSmallSpinner: boolean = false;
 
@@ -36,36 +36,36 @@ export class WorkingHourPage implements OnInit, OnChanges {
      * details from requested id
      * @private
      * @type {*}
-     * @memberof WorkingHourPage
+     * @memberof WorkingHourComponent
      */
     private _data: any;
 
     /**
      * show/hide this page
      * @type {boolean}
-     * @memberof WorkingHourPage
+     * @memberof WorkingHourComponent
      */
     @Input() showDetailPage: boolean = true;
 
     /** 
      * get value of clicked working_hour_guid from parent page
      * @type {string}
-     * @memberof WorkingHourPage
+     * @memberof WorkingHourComponent
      */
     @Input() id: string;
 
     /**
      * emit value to hide this page after clicked back button
-     * @memberof WorkingHourPage
+     * @memberof WorkingHourComponent
      */
     @Output() valueChange = new EventEmitter();
 
     /**
-     *Creates an instance of WorkingHourPage.
-     * @param {WorkingHourAPIService} workingHourAPI
-     * @memberof WorkingHourPage
+     *Creates an instance of WorkingHourComponent.
+     * @param {WorkingHourApiService} workingHourAPI
+     * @memberof WorkingHourComponent
      */
-    constructor(private workingHourAPI: WorkingHourAPIService) {
+    constructor(private workingHourAPI: WorkingHourApiService) {
         this.workingHourForm = new FormGroup({
             profileName: new FormControl('', Validators.required),
             description: new FormControl('', Validators.required),
@@ -117,7 +117,7 @@ export class WorkingHourPage implements OnInit, OnChanges {
 
     /**
      * get data before send to endpoint
-     * @memberof WorkingHourPage
+     * @memberof WorkingHourComponent
      */
     postWorkingHourSetup() {
         this.showSmallSpinner = true;
@@ -140,7 +140,7 @@ export class WorkingHourPage implements OnInit, OnChanges {
 
     /**
      * get quarter day data before send to endpoint
-     * @memberof WorkingHourPage
+     * @memberof WorkingHourComponent
      */
     postQuarterDay() {
         this._data.property.quarterday.Q1.start_time = this.workingHourForm.controls.startQ1picker.value;
@@ -161,7 +161,7 @@ export class WorkingHourPage implements OnInit, OnChanges {
     /**
      * update or create data of working hour profile
      * @param {*} body
-     * @memberof WorkingHourPage
+     * @memberof WorkingHourComponent
      */
     patchWorkingHourSetup(body: any) {
         if (this.id != '') {
@@ -183,7 +183,7 @@ export class WorkingHourPage implements OnInit, OnChanges {
     /**
      * click back to hide the details page
      * @param {boolean} value
-     * @memberof WorkingHourPage
+     * @memberof WorkingHourComponent
      */
     hideDetailPage(value: boolean) {
         this.valueChange.emit(value);

@@ -1,12 +1,12 @@
 import { OnInit, Component } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { PolicyAPIService } from "../policy-api.service";
+import { PolicyApiService } from "../policy-api.service";
 import { ActivatedRoute } from "@angular/router";
 
 /**
  * create new general leave policy & edit policy page
  * @export
- * @class CreatePolicyPage
+ * @class CreatePolicyComponent
  * @implements {OnInit}
  */
 @Component({
@@ -14,47 +14,47 @@ import { ActivatedRoute } from "@angular/router";
     templateUrl: './create-policy.component.html',
     styleUrls: ['./create-policy.component.scss'],
 })
-export class CreatePolicyPage implements OnInit {
+export class CreatePolicyComponent implements OnInit {
 
     /**
      * company list from API
      * @type {*}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public list: any;
 
     /**
      * All tenant policy list and details
      * @type {*}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public policyList: any;
 
     /**
      * show spinner during loading page
      * @type {boolean}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public showSpinner: boolean = true;
 
     /**
      * hide container during loading page
      * @type {boolean}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public showContainer: boolean = false;
 
     /**
      * mat radio button value 
      * @type {*}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public radioValue: any;
 
     /**
      * number of escalation day 
      * @type {boolean}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public showEscalateDay: boolean = false;
 
@@ -62,7 +62,7 @@ export class CreatePolicyPage implements OnInit {
      * array list of days in a selected month in carried forward field
      * eg: 1 to 30
      * @type {number[]}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public daysOfCF: number[];
 
@@ -70,56 +70,56 @@ export class CreatePolicyPage implements OnInit {
      * array list of days in a selected month in year end closing field
      * eg: 1 to 30
      * @type {number[]}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public daysOfYE: number[];
 
     /**
      * carried forward checkbox value
      * @type {boolean}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public CF: boolean = false;
 
     /**
      * year end closing checkbox value
      * @type {boolean}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public yearEnd: boolean = false;
 
     /**
      * apply on behalf checkbox value
      * @type {boolean}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public onBehalf: boolean = false;
 
     /**
      * email checkbox value
      * @type {boolean}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public email: boolean = false;
 
     /**
      * validation form value
      * @type {*}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public policyForm: any;
 
     /**
      * show loading spinner when clicked on create policy to API
      * @type {boolean}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     public showSmallSpinner: boolean = false;
 
     /**
      * to get index of selected month 
      * @private
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     private _monthArray = ['January', 'February', 'March', 'April', 'May', 'Jun', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -127,7 +127,7 @@ export class CreatePolicyPage implements OnInit {
      * next year number
      * eg: 2020
      * @private
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     private _nextYear = new Date().getFullYear() + 1;
 
@@ -135,7 +135,7 @@ export class CreatePolicyPage implements OnInit {
      * empty object 
      * @private
      * @type {*}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     private _data: any = {};
 
@@ -143,7 +143,7 @@ export class CreatePolicyPage implements OnInit {
      * Selected policy GUID (to patch to endpoint)
      * @private
      * @type {string}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     private _policyGUID: string;
 
@@ -151,17 +151,17 @@ export class CreatePolicyPage implements OnInit {
      * company guid id from url parameter
      * @private
      * @type {string}
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     private _companyGUID: string;
 
     /**
-     *Creates an instance of CreatePolicyPage.
-     * @param {PolicyAPIService} policyApi
+     *Creates an instance of CreatePolicyComponent.
+     * @param {PolicyApiService} policyApi
      * @param {ActivatedRoute} route
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
-    constructor(private policyApi: PolicyAPIService, private route: ActivatedRoute) {
+    constructor(private policyApi: PolicyApiService, private route: ActivatedRoute) {
         this.policyForm = new FormGroup(
             {
                 company: new FormControl(null, Validators.required),
@@ -193,7 +193,7 @@ export class CreatePolicyPage implements OnInit {
 
     /**
      * get the details from Id of company GUID
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     editPolicyDetails() {
         this._policyGUID = this.policyList.MAIN_GENERAL_POLICY_GUID;
@@ -214,7 +214,7 @@ export class CreatePolicyPage implements OnInit {
 
     /**
      * get the details from Id of company GUID
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     editDetails() {
         this.yearEnd = this.policyList.PROPERTIES_XML.allowYearEndClosing.value;
@@ -237,7 +237,7 @@ export class CreatePolicyPage implements OnInit {
      * @param {*} month
      * @param {*} year
      * @returns
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     getTotalDays(month, year) {
         return new Date(year, month, 0).getDate();
@@ -247,7 +247,7 @@ export class CreatePolicyPage implements OnInit {
      * Get total number of days in a month if selection month is changed
      * @param {string} model
      * @param {number} [year]
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     monthChanged(model: string, year?: number) {
         if (year == undefined || this.policyForm.controls.YEChoice.value == 'Next year') { year = 0 } else { year = 1 }
@@ -266,7 +266,7 @@ export class CreatePolicyPage implements OnInit {
      * Get total number of days in a month if selection month is changed
      * @param {string} model
      * @param {number} [year]
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     monthYEChanged(model: string, year?: number) {
         if (model == 'monthYE') {
@@ -282,7 +282,7 @@ export class CreatePolicyPage implements OnInit {
     /**
      * Get total number of days in a month if selection year is changed
      * @param {*} event
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     yearChanged(value) {
         if (value == 'This year') {
@@ -295,7 +295,7 @@ export class CreatePolicyPage implements OnInit {
     /**
      * enable/disable mat form field of carry forward selection
      * @param {*} val
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     checkEventCF(val: any) {
         if (val.detail.checked) {
@@ -311,7 +311,7 @@ export class CreatePolicyPage implements OnInit {
     /**
      * enable/disable mat form field of year end closing selection
      * @param {*} event
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     checkEventYr(event: any) {
         if (event.detail.checked) {
@@ -328,7 +328,7 @@ export class CreatePolicyPage implements OnInit {
 
     /**
      * data that created to POST to backend API
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     getValue() {
         this._data.approvalConfirmation = {};
@@ -348,7 +348,7 @@ export class CreatePolicyPage implements OnInit {
 
     /**
      * data that created to POST to backend API
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     saveValue() {
         this._data.allowYearEndClosing = {};
@@ -363,7 +363,7 @@ export class CreatePolicyPage implements OnInit {
 
     /**
      * Update the policy details and PATCH to endpoint
-     * @memberof CreatePolicyPage
+     * @memberof CreatePolicyComponent
      */
     savePolicy() {
         this.showSmallSpinner = true;

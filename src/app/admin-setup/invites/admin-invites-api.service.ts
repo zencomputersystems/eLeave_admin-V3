@@ -7,17 +7,17 @@ import { map } from 'rxjs/operators';
 /**
  * invite more API used
  * @export
- * @class AdminInvitesAPIService
+ * @class AdminInvitesApiService
  */
 @Injectable({
     providedIn: 'root'
 })
-export class AdminInvitesAPIService {
+export class AdminInvitesApiService {
 
     /**
-     *Creates an instance of AdminInvitesAPIService.
+     *Creates an instance of AdminInvitesApiService.
      * @param {APIService} apiService
-     * @memberof AdminInvitesAPIService
+     * @memberof AdminInvitesApiService
      */
     constructor(private apiService: APIService, public http: Http) { }
 
@@ -25,7 +25,7 @@ export class AdminInvitesAPIService {
      * POST invited new user Id to endpoint
      * @param {*} userId
      * @returns {Observable<any>}
-     * @memberof AdminInvitesAPIService
+     * @memberof AdminInvitesApiService
      */
     post_user_invite(userId: string): Observable<any> {
         this.apiService.headerAuthorization();
@@ -37,7 +37,7 @@ export class AdminInvitesAPIService {
      * POST new user details to endpoint
      * @param {*} data
      * @returns {Observable<any>}
-     * @memberof AdminInvitesAPIService
+     * @memberof AdminInvitesApiService
      */
     post_userimport(data: any): Observable<any> {
         this.apiService.headerAuthorization();
@@ -48,7 +48,7 @@ export class AdminInvitesAPIService {
      * Delete resigned user from user list
      * @param {*} id
      * @returns {Observable<any>}
-     * @memberof AdminInvitesAPIService
+     * @memberof AdminInvitesApiService
      */
     delete_user(id: string): Observable<any> {
         this.apiService.headerAuthorization();
@@ -60,7 +60,7 @@ export class AdminInvitesAPIService {
      * set user to disable(inactive) on a specific date
      * @param {*} data
      * @returns {Observable<any>}
-     * @memberof AdminInvitesAPIService
+     * @memberof AdminInvitesApiService
      */
     disable_user(data: any): Observable<any> {
         this.apiService.headerAuthorization();
@@ -70,7 +70,7 @@ export class AdminInvitesAPIService {
     /**
      * get user list from api service
      * @returns {Observable<any>}
-     * @memberof AdminInvitesAPIService
+     * @memberof AdminInvitesApiService
      */
     get_user_profile_list(): Observable<any> {
         return this.apiService.get_user_profile_list();

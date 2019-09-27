@@ -5,14 +5,14 @@ import timeGrigPlugin from '@fullcalendar/timegrid';
 import listYear from '@fullcalendar/list';
 import { EventInput } from "@fullcalendar/core";
 import { FullCalendarComponent } from "@fullcalendar/angular";
-import { EmployeeTreeview } from "./employee-treeview.service";
-import { AssignCalendarAPIService } from "./assign-calendar-api.service";
+import { EmployeeTreeviewService } from "./employee-treeview.service";
+import { AssignCalendarApiService } from "./assign-calendar-api.service";
 
 /**
  * Assign Calendar Page
  * Admin assign employee's calendar profile in this page
  * @export
- * @class AssignCalendarPage
+ * @class AssignCalendarComponent
  * @implements {OnInit}
  */
 @Component({
@@ -20,7 +20,7 @@ import { AssignCalendarAPIService } from "./assign-calendar-api.service";
     templateUrl: './assign-calendar.component.html',
     styleUrls: ['./assign-calendar.component.scss'],
 })
-export class AssignCalendarPage implements OnInit {
+export class AssignCalendarComponent implements OnInit {
 
     /**
       * This is local property for Full Calendar Component
@@ -32,35 +32,35 @@ export class AssignCalendarPage implements OnInit {
     /**
      * Calendar profile list that show in options of selection
      * @type {*}
-     * @memberof AssignCalendarPage
+     * @memberof AssignCalendarComponent
      */
     public calendarList: any;
 
     /**
    * Users list that show in options of selection
    * @type {*}
-   * @memberof AssignCalendarPage
+   * @memberof AssignCalendarComponent
    */
     public userList: any;
 
     /**
      * Array list of selected employees ID
      * @type {any[]}
-     * @memberof AssignCalendarPage
+     * @memberof AssignCalendarComponent
      */
     public employeeList: any[] = [];
 
     /**
      * Value of selected ID
      * @type {string}
-     * @memberof AssignCalendarPage
+     * @memberof AssignCalendarComponent
      */
     public selectedCalendarId: string;
 
     /**
      * Track value and validity of user and calendar select input
      * @type {FormGroup}
-     * @memberof AssignCalendarPage
+     * @memberof AssignCalendarComponent
      */
     public assignCalendarForm: FormGroup;
 
@@ -80,39 +80,39 @@ export class AssignCalendarPage implements OnInit {
     /**
      * Events that show in Calendar
      * @type {EventInput[]}
-     * @memberof AssignCalendarPage
+     * @memberof AssignCalendarComponent
      */
     public events: EventInput[];
 
     /**
      * Click to show dropdown of treeview checkbox list
      * @type {boolean}
-     * @memberof AssignCalendarPage
+     * @memberof AssignCalendarComponent
      */
     public showTreeDropdown: boolean = false;
 
     /**
      * Show treeview selected value after close dropdown
      * @type {boolean}
-     * @memberof AssignCalendarPage
+     * @memberof AssignCalendarComponent
      */
     public showSelectedTree: boolean = false;
 
     /**
      * Enable or disable submit button
      * @type {boolean}
-     * @memberof AssignCalendarPage
+     * @memberof AssignCalendarComponent
      */
     public disabledSubmitButton: boolean = true;
 
     /**
-     *Creates an instance of AssignCalendarPage.
-     * @param {AssignCalendarAPIService} assignCalendarAPI
+     *Creates an instance of AssignCalendarComponent.
+     * @param {AssignCalendarApiService} assignCalendarAPI
      * @param {MatSnackBar} snackBar
-     * @param {EmployeeTreeview} treeview
-     * @memberof AssignCalendarPage
+     * @param {EmployeeTreeviewService} treeview
+     * @memberof AssignCalendarComponent
      */
-    constructor(private assignCalendarAPI: AssignCalendarAPIService, private treeview: EmployeeTreeview) {
+    constructor(private assignCalendarAPI: AssignCalendarApiService, private treeview: EmployeeTreeviewService) {
     }
 
     ngOnInit() {
@@ -138,7 +138,7 @@ export class AssignCalendarPage implements OnInit {
      * To get selected calendar ID
      * Show events in calendar
      * @param {*} calendarId
-     * @memberof AssignCalendarPage
+     * @memberof AssignCalendarComponent
      */
     calendarSelected(calendarId) {
         this.showSpinner = true;
@@ -161,7 +161,7 @@ export class AssignCalendarPage implements OnInit {
      * @param {*} array
      * @param {*} obj
      * @returns
-     * @memberof AssignCalendarPage
+     * @memberof AssignCalendarComponent
      */
     checkIdExist(array: any, obj: any) {
         for (let j = 0; j < array.length; j++) {
@@ -174,7 +174,7 @@ export class AssignCalendarPage implements OnInit {
 
     /**
      * Disable or enable the submit button
-     * @memberof AssignCalendarPage
+     * @memberof AssignCalendarComponent
      */
     disabledButton() {
         if (this.assignCalendarForm.controls.calendar.value != null && this.assignCalendarForm.controls.user.value.length > 0) {
@@ -184,7 +184,7 @@ export class AssignCalendarPage implements OnInit {
 
     /**
      * To assign calendar profile of selected employee to API
-     * @memberof AssignCalendarPage
+     * @memberof AssignCalendarComponent
      */
     submitData() {
         for (let i = 0; i < this.assignCalendarForm.controls.user.value.length; i++) {
@@ -217,7 +217,7 @@ export class AssignCalendarPage implements OnInit {
      * Push all items to array if they have checked
      * Clear array if no item checked
      * @param {*} event
-     * @memberof AssignCalendarPage
+     * @memberof AssignCalendarComponent
      */
     clickOutside(event) {
         if (!event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix") && !event.target.className.includes("inputDropdown")) {

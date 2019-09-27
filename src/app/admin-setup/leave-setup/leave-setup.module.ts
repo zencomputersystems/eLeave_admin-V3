@@ -13,36 +13,36 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar
-import { ManageHolidayPage } from './manage-holiday/manage-holiday.component';
+import { ManageHolidayComponent } from './manage-holiday/manage-holiday.component';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { AssignCalendarPage } from './assign-calendar/assign-calendar.component';
+import { AssignCalendarComponent } from './assign-calendar/assign-calendar.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { SnackbarNotificationPage } from './snackbar-notification/snackbar-notification';
+import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-notification';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { ClickOutsideModule } from 'ng-click-outside';
-import { EmployeeListDatabase } from './assign-calendar/assign-calendar-treeview.service';
-import { ApplyOnBehalfPage } from './apply-on-behalf/apply-on-behalf.component';
+import { AssignCalendarTreeviewService } from './assign-calendar/assign-calendar-treeview.service';
+import { ApplyOnBehalfComponent } from './apply-on-behalf/apply-on-behalf.component';
 import { MatRadioModule, MatDialogModule } from '@angular/material';
-import { LeaveSetup } from './leave-setup';
-import { ApprovalOverridePage } from './approval-override/approval-override.component';
-import { LeaveAdjustmentPage } from './leave-adjustment/leave-adjustment.component';
-import { LeaveSetupTabPage } from './leave-setup-tab/leave-setup-tab.component';
-import { LeaveEntitlementByBatchPage } from './leave-entitlement-by-batch/leave-entitlement-by-batch.component';
-import { DeleteCalendarConfirmationPage } from './delete-calendar-confirmation/delete-calendar-confirmation.component';
-import { WorkingHourPage } from './working-hour/working-hour.component';
+import { LeaveSetupComponent } from './leave-setup.component';
+import { ApprovalOverrideComponent } from './approval-override/approval-override.component';
+import { LeaveAdjustmentComponent } from './leave-adjustment/leave-adjustment.component';
+import { LeaveSetupTabComponent } from './leave-setup-tab/leave-setup-tab.component';
+import { LeaveEntitlementByBatchComponent } from './leave-entitlement-by-batch/leave-entitlement-by-batch.component';
+import { DeleteCalendarConfirmationComponent } from './delete-calendar-confirmation/delete-calendar-confirmation.component';
+import { WorkingHourComponent } from './working-hour/working-hour.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { WorkingHourListPage } from './working-hour/working-hour-list/working-hour-list.component';
-import { AssignWorkingHourPage } from './working-hour/assign-working-hour/assign-working-hour.component';
+import { WorkingHourListComponent } from './working-hour/working-hour-list/working-hour-list.component';
+import { AssignWorkingHourComponent } from './working-hour/assign-working-hour/assign-working-hour.component';
 
 
 const routes: Routes = [
     {
         path: '',
-        component: LeaveSetup
+        component: LeaveSetupComponent
     }
 ];
 
@@ -74,10 +74,10 @@ const routes: Routes = [
         NgxMaterialTimepickerModule,
         RouterModule.forChild(routes)
     ],
-    providers: [EmployeeListDatabase],
-    entryComponents: [SnackbarNotificationPage, DeleteCalendarConfirmationPage],
-    declarations: [ManageHolidayPage, LeaveSetup, AssignCalendarPage, SnackbarNotificationPage, DeleteCalendarConfirmationPage,
-        LeaveSetupTabPage, ApplyOnBehalfPage, ApprovalOverridePage, LeaveAdjustmentPage, LeaveEntitlementByBatchPage, WorkingHourPage,
-        WorkingHourListPage, AssignWorkingHourPage]
+    providers: [AssignCalendarTreeviewService],
+    entryComponents: [SnackbarNotificationComponent, DeleteCalendarConfirmationComponent],
+    declarations: [ManageHolidayComponent, LeaveSetupComponent, AssignCalendarComponent, SnackbarNotificationComponent, DeleteCalendarConfirmationComponent,
+        LeaveSetupTabComponent, ApplyOnBehalfComponent, ApprovalOverrideComponent, LeaveAdjustmentComponent, LeaveEntitlementByBatchComponent, WorkingHourComponent,
+        WorkingHourListComponent, AssignWorkingHourComponent]
 })
 export class LeaveSetupModule { }

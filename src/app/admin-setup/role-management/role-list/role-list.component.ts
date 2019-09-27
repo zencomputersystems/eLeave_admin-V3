@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RolesAPIService } from '../role-api.service';
+import { RoleApiService } from '../role-api.service';
 import { MatDialog } from '@angular/material';
-import { DialogDeleteConfirmationPage } from '../dialog-delete-confirmation/dialog-delete-confirmation.component';
+import { DialogDeleteConfirmationComponent } from '../dialog-delete-confirmation/dialog-delete-confirmation.component';
 
 /**
  * Show list of role
  * @export
- * @class RoleListPage
+ * @class RoleListComponent
  * @implements {OnInit}
  */
 @Component({
@@ -15,26 +15,26 @@ import { DialogDeleteConfirmationPage } from '../dialog-delete-confirmation/dial
     templateUrl: './role-list.component.html',
     styleUrls: ['./role-list.component.scss'],
 })
-export class RoleListPage implements OnInit {
+export class RoleListComponent implements OnInit {
 
     /**
      * Role items get from API
      * @type {*}
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     public roleList: any;
 
     /**
      * Show loading spinner
      * @type {boolean}
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     public showSpinner: boolean = true;
 
     /**
      * Content in page is hide during loading
      * @type {boolean}
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     public showContent: boolean = false;
 
@@ -48,52 +48,52 @@ export class RoleListPage implements OnInit {
     /**
      * To show arrow up or down icon for Description column
      * @type {boolean}
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     public arrowDownDes: boolean = true;
 
     /**
      * Page number on current page
      * @type {number}
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     public pageIndex: number;
 
     /**
      * Total page number 
      * @type {number}
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     public sumPageIndex: number;
 
     /**
      * Items of the current showing page
      * @type {*}
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     public currentItems: any;
 
     /**
      * Value of disable next button
      * @type {boolean}
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     public disabledNextButton: boolean;
 
     /**
      * Value of disable previous button
      * @type {boolean}
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     public disabledPrevButton: boolean;
 
     /**
-     *Creates an instance of RoleListPage.
-     * @param {RolesAPIService} roleAPi
+     *Creates an instance of RoleListComponent.
+     * @param {RoleApiService} roleAPi
      * @param {Router} router
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
-    constructor(private roleAPi: RolesAPIService, private router: Router, public dialog: MatDialog) { }
+    constructor(private roleAPi: RoleApiService, private router: Router, public dialog: MatDialog) { }
 
 
     ngOnInit() {
@@ -115,7 +115,7 @@ export class RoleListPage implements OnInit {
     /**
      * Pass role id to route to edit role details page
      * @param {*} roleId
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     getRoleId(roleId) {
         this.router.navigate(['/main/role-management/role-rights', roleId]);
@@ -124,10 +124,10 @@ export class RoleListPage implements OnInit {
     /**
      * delete confirmation pop up dialog message
      * @param {*} role_guid
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     delete(role_guid: string, role_name: string) {
-        const dialogRef = this.dialog.open(DialogDeleteConfirmationPage, {
+        const dialogRef = this.dialog.open(DialogDeleteConfirmationComponent, {
             data: { value: role_guid, name: role_name }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -142,7 +142,7 @@ export class RoleListPage implements OnInit {
 
     /**
      * Go to assign role page
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     assignRole() {
         this.router.navigate(['/main/role-management/assign-role']);
@@ -153,7 +153,7 @@ export class RoleListPage implements OnInit {
      * @param {number} ascValue
      * @param {number} desValue
      * @param {*} variable
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     sortFunction(ascValue: number, desValue: number, variable: any) {
         this.roleList.sort(function (a, b) {
@@ -175,7 +175,7 @@ export class RoleListPage implements OnInit {
     /**
      * Calculate number of item show in each page
      * @param {number} i
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     renderItemPerPage(i: number) {
         let totalItem;
@@ -200,7 +200,7 @@ export class RoleListPage implements OnInit {
     /**
      * Click to display next page of rendered items
      * @param {number} i
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     onClickNextPage(i: number) {
         if (!(i > this.sumPageIndex)) {
@@ -212,7 +212,7 @@ export class RoleListPage implements OnInit {
     /**
      * Click to display previous page of rendered items
      * @param {number} i
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     onClickPrevPage(i: number) {
         if (!(i < 1)) {
@@ -223,7 +223,7 @@ export class RoleListPage implements OnInit {
 
     /**
      * Enable or disable next button
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     nextButton() {
         if (this.pageIndex === this.sumPageIndex) {
@@ -239,7 +239,7 @@ export class RoleListPage implements OnInit {
 
     /**
      * Enable or disable previous button
-     * @memberof RoleListPage
+     * @memberof RoleListComponent
      */
     prevButton() {
         if (this.pageIndex < 2) {

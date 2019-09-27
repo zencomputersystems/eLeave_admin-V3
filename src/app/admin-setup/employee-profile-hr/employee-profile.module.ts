@@ -12,11 +12,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
-import { EmployeeProfilePage } from './employee-profile.component';
+import { EmployeeProfileComponent } from './employee-profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InlineSVGModule } from 'ng-inline-svg';
-import { PersonalPage } from './personal/personal.component';
-import { EmploymentPage } from './employment/employment.component';
+import { PersonalComponent } from './personal/personal.component';
+import { EmploymentComponent } from './employment/employment.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
 
@@ -24,7 +24,7 @@ import { SpinnerModule } from 'src/library/spinner/spinner.module';
 const routes: Routes = [
     {
         path: '',
-        component: EmployeeProfilePage
+        component: EmployeeProfileComponent
     }
 ];
 
@@ -48,6 +48,6 @@ const routes: Routes = [
         SpinnerModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [EmployeeProfilePage, PersonalPage, EmploymentPage]
+    declarations: [EmployeeProfileComponent, PersonalComponent, EmploymentComponent]
 })
 export class EmployeeProfileModule { }

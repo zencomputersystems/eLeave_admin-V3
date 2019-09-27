@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 /**
  * Admin leave setup tab content
  * @export
- * @class LeaveSetupTabPage
+ * @class LeaveSetupTabComponent
  * @implements {OnInit}
  */
 @Component({
@@ -11,11 +11,11 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './leave-setup-tab.component.html',
     styleUrls: ['./leave-setup-tab.component.scss'],
 })
-export class LeaveSetupTabPage implements OnInit {
+export class LeaveSetupTabComponent implements OnInit {
 
     /**
-     *Creates an instance of LeaveSetupTabPage.
-     * @memberof LeaveSetupTabPage
+     *Creates an instance of LeaveSetupTabComponent.
+     * @memberof LeaveSetupTabComponent
      */
     constructor() { }
 

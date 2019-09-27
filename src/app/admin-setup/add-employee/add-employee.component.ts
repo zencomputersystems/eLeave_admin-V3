@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BulkImportPage } from './bulk-import/bulk-import.component';
-import { AddOneEmployeePage } from './add-one-employee/add-one-employee.component';
+import { BulkImportComponent } from './bulk-import/bulk-import.component';
+import { AddOneEmployeeComponent } from './add-one-employee/add-one-employee.component';
 /**
  * Add Employee Page
  * @export
- * @class AddEmployeePage
+ * @class AddEmployeeComponent
  * @implements {OnInit}
  */
 @Component({
@@ -13,12 +13,12 @@ import { AddOneEmployeePage } from './add-one-employee/add-one-employee.componen
     templateUrl: './add-employee.component.html',
     styleUrls: ['./add-employee.component.scss'],
 })
-export class AddEmployeePage implements OnInit {
+export class AddEmployeeComponent implements OnInit {
 
     /**
-     *Creates an instance of AddEmployeePage.
+     *Creates an instance of AddEmployeeComponent.
      * @param {MatDialog} dialog
-     * @memberof AddEmployeePage
+     * @memberof AddEmployeeComponent
      */
     constructor(public dialog: MatDialog) {
     }
@@ -28,24 +28,24 @@ export class AddEmployeePage implements OnInit {
     }
 
     /**
-     * To open pop up from AddOneEmployeePage component
-     * @memberof AddEmployeePage
+     * To open pop up from AddOneEmployeeComponent component
+     * @memberof AddEmployeeComponent
      */
     openAddOneEmployee() {
-        this.dialog.open(AddOneEmployeePage);
+        this.dialog.open(AddOneEmployeeComponent);
     }
 
     /**
-     * To open pop up from BulkImportPage component
-     * @memberof AddEmployeePage
+     * To open pop up from BulkImportComponent component
+     * @memberof AddEmployeeComponent
      */
     openBulkImport() {
-        this.dialog.open(BulkImportPage);
+        this.dialog.open(BulkImportComponent);
     }
 
     /**
      * To download CSV employee data Template 
-     * @memberof AddEmployeePage
+     * @memberof AddEmployeeComponent
      */
     downloadFile() {
         const blob = new Blob([`STAFF_EMAIL,STAFF_ID,FULLNAME,NICKNAME,NRIC,DOB,GENDER,PHONE_NUMBER,COMPANY_NUMBER,MARITAL_STATUS,ADDRESS,POSTCODE,CITY,STATE,COUNTRY,DESIGNATION,DEPARTMENT,COST_CENTRE,BRANCH,DIVISION,COMPANY,JOIN_DATE,CONFIRMATION_DATE,RESIGNATION_DATE

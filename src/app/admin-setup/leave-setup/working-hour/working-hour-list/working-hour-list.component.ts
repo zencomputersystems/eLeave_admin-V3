@@ -1,12 +1,12 @@
 import { OnInit, Component } from "@angular/core";
-import { WorkingHourAPIService } from "../working-hour-api.service";
+import { WorkingHourApiService } from "../working-hour-api.service";
 import { MatDialog } from "@angular/material";
-import { DialogDeleteConfirmationPage } from "src/app/admin-setup/role-management/dialog-delete-confirmation/dialog-delete-confirmation.component";
+import { DialogDeleteConfirmationComponent } from "src/app/admin-setup/role-management/dialog-delete-confirmation/dialog-delete-confirmation.component";
 
 /**
  * working hour profile list page
  * @export
- * @class WorkingHourListPage
+ * @class WorkingHourListComponent
  * @implements {OnInit}
  */
 @Component({
@@ -14,50 +14,50 @@ import { DialogDeleteConfirmationPage } from "src/app/admin-setup/role-managemen
     templateUrl: './working-hour-list.component.html',
     styleUrls: ['./working-hour-list.component.scss'],
 })
-export class WorkingHourListPage implements OnInit {
+export class WorkingHourListComponent implements OnInit {
 
     /**
      * get profile list from endpoint
      * @type {*}
-     * @memberof WorkingHourListPage
+     * @memberof WorkingHourListComponent
      */
     public list: any;
 
     /**
      * show/hide details page
      * @type {boolean}
-     * @memberof WorkingHourListPage
+     * @memberof WorkingHourListComponent
      */
     public showDetailPage: boolean = false;
 
     /**
      * show/hide assign page
      * @type {boolean}
-     * @memberof WorkingHourListPage
+     * @memberof WorkingHourListComponent
      */
     public showAssignPage: boolean = false;
 
     /**
      * show/hide list page
      * @type {boolean}
-     * @memberof WorkingHourListPage
+     * @memberof WorkingHourListComponent
      */
     public showListPage: boolean = true;
 
     /**
      * show loading spinner before reach the page
      * @type {boolean}
-     * @memberof WorkingHourListPage
+     * @memberof WorkingHourListComponent
      */
     public showSpinner: boolean = false;
 
     /**
-     *Creates an instance of WorkingHourListPage.
-     * @param {WorkingHourAPIService} workingHrAPI
+     *Creates an instance of WorkingHourListComponent.
+     * @param {WorkingHourApiService} workingHrAPI
      * @param {MatDialog} dialog
-     * @memberof WorkingHourListPage
+     * @memberof WorkingHourListComponent
      */
-    constructor(private workingHrAPI: WorkingHourAPIService, public dialog: MatDialog) {
+    constructor(private workingHrAPI: WorkingHourApiService, public dialog: MatDialog) {
     }
 
     async ngOnInit() {
@@ -74,7 +74,7 @@ export class WorkingHourListPage implements OnInit {
     /**
      * show/hide details page (value from child component)
      * @param {*} value
-     * @memberof WorkingHourListPage
+     * @memberof WorkingHourListComponent
      */
     valueChanged(value, action: string) {
         if (action == 'edit') {
@@ -90,10 +90,10 @@ export class WorkingHourListPage implements OnInit {
      * delete working hour profile
      * @param {string} working_hour_guid
      * @param {string} name
-     * @memberof WorkingHourListPage
+     * @memberof WorkingHourListComponent
      */
     deleteWorkingHrProfile(working_hour_guid: string, name: string) {
-        const dialogRef = this.dialog.open(DialogDeleteConfirmationPage, {
+        const dialogRef = this.dialog.open(DialogDeleteConfirmationComponent, {
             data: { value: working_hour_guid, name: name }
         });
         dialogRef.afterClosed().subscribe(val => {

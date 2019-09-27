@@ -1,4 +1,4 @@
-import { TodoItemFlatNode, TodoItemNode, EmployeeListDatabase } from "./assign-calendar-treeview.service";
+import { TodoItemFlatNode, TodoItemNode, AssignCalendarTreeviewService } from "./assign-calendar-treeview.service";
 import { FlatTreeControl } from "@angular/cdk/tree";
 import { MatTreeFlattener, MatTreeFlatDataSource } from "@angular/material";
 import { SelectionModel } from "@angular/cdk/collections";
@@ -7,22 +7,22 @@ import { Injectable } from "@angular/core";
 /**
  * Employee Treeview 
  * @export
- * @class EmployeeTreeview
+ * @class EmployeeTreeviewService
  */
 @Injectable({
     providedIn: 'root'
 })
-export class EmployeeTreeview {
+export class EmployeeTreeviewService {
 
     /** 
     * Map from flat node to nested node. This helps us finding the nested node to be modified
-    * @memberof EmployeeTreeview
+    * @memberof EmployeeTreeviewService
     */
     flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
 
     /**
      * Map from nested node to flattened node. This helps us to keep the same object for selection
-     * @memberof EmployeeTreeview
+     * @memberof EmployeeTreeviewService
      */
     nestedNodeMap = new Map<TodoItemNode, TodoItemFlatNode>();
 
@@ -51,11 +51,11 @@ export class EmployeeTreeview {
     checklistSelection = new SelectionModel<TodoItemFlatNode>(true /* multiple */);
 
     /**
-     *Creates an instance of EmployeeTreeview.
-     * @param {EmployeeListDatabase} database
-     * @memberof EmployeeTreeview
+     *Creates an instance of EmployeeTreeviewService.
+     * @param {AssignCalendarTreeviewService} database
+     * @memberof EmployeeTreeviewService
      */
-    constructor(private database: EmployeeListDatabase) {
+    constructor(private database: AssignCalendarTreeviewService) {
         this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
             this.isExpandable, this.getChildren);
         this.treeControl = new FlatTreeControl<TodoItemFlatNode>(this.getLevel, this.isExpandable);
@@ -145,7 +145,7 @@ export class EmployeeTreeview {
     /**
      * Checks all the parents when a leaf node is selected/unselected
      * @param {TodoItemFlatNode} node
-     * @memberof EmployeeTreeview
+     * @memberof EmployeeTreeviewService
      */
     checkAllParentsSelection(node: TodoItemFlatNode): void {
         let parent: TodoItemFlatNode | null = this.getParentNode(node);
@@ -173,7 +173,7 @@ export class EmployeeTreeview {
      * Get the parent node of a node
      * @param {TodoItemFlatNode} node
      * @returns {(TodoItemFlatNode | null)}
-     * @memberof EmployeeTreeview
+     * @memberof EmployeeTreeviewService
      */
     getParentNode(node: TodoItemFlatNode): TodoItemFlatNode | null {
         const currentLevel = this.getLevel(node);

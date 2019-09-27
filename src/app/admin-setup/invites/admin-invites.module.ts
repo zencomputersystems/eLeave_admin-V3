@@ -11,20 +11,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
-import { AdminInvitesPage } from './admin-invites.component';
+import { AdminInvitesComponent } from './admin-invites.component';
 import { InlineSVGModule } from 'ng-inline-svg';
-import { InviteMorePage } from './invite-more/invite-more.component';
-import { InviteListPage } from './invite-list/invite-list.component';
+import { InviteMoreComponent } from './invite-more/invite-more.component';
+import { InviteListComponent } from './invite-list/invite-list.component';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
-import { DeleteListConfirmationPage } from './delete-list-confirmation/delete-list-confirmation.component';
+import { DeleteListConfirmationComponent } from './delete-list-confirmation/delete-list-confirmation.component';
 import { MatDialogModule, MatButtonModule, MatMenuModule, MatDatepickerModule } from '@angular/material';
-import { DateDialogPage } from './date-dialog/date-dialog.component';
+import { DateDialogComponent } from './date-dialog/date-dialog.component';
 
 
 const routes: Routes = [
     {
         path: '',
-        component: AdminInvitesPage
+        component: AdminInvitesComponent
     }
 ];
 
@@ -48,7 +48,7 @@ const routes: Routes = [
         MatDatepickerModule,
         RouterModule.forChild(routes)
     ],
-    entryComponents: [DeleteListConfirmationPage, DateDialogPage],
-    declarations: [AdminInvitesPage, InviteMorePage, InviteListPage, DeleteListConfirmationPage, DateDialogPage]
+    entryComponents: [DeleteListConfirmationComponent, DateDialogComponent],
+    declarations: [AdminInvitesComponent, InviteMoreComponent, InviteListComponent, DeleteListConfirmationComponent, DateDialogComponent]
 })
 export class AdminInvitesModule { }

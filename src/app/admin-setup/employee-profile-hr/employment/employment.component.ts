@@ -8,7 +8,7 @@ const moment = _moment;
 /**
  * Page of Employment Page
  * @export
- * @class EmploymentPage
+ * @class EmploymentComponent
  * @implements {OnInit}
  */
 @Component({
@@ -16,61 +16,61 @@ const moment = _moment;
     templateUrl: './employment.component.html',
     styleUrls: ['./employment.component.scss'],
 })
-export class EmploymentPage implements OnInit {
+export class EmploymentComponent implements OnInit {
 
     /**
    * input value from employee-profile (requested userId details)
    * @type {*}
-   * @memberof EmploymentPage
+   * @memberof EmploymentComponent
    */
     @Input() public employmentList: any;
 
     /**
      * Show edit form field or vice versa
      * @type {boolean}
-     * @memberof EmploymentPage
+     * @memberof EmploymentComponent
      */
     public edit: boolean = false;
 
     /**
      * Get employment status from enum 
      * @type {*}
-     * @memberof EmploymentPage
+     * @memberof EmploymentComponent
      */
     public status: any;
 
     /**
      * Tracks validity of date join
      * @type {FormGroup}
-     * @memberof EmploymentPage
+     * @memberof EmploymentComponent
      */
     public dateJoin: any;
 
     /**
      * Tracks validity of date confirm
      * @type {FormGroup}
-     * @memberof EmploymentPage
+     * @memberof EmploymentComponent
      */
     public dateConfirm: any;
 
     /**
      * Tracks validity of date resign
      * @type {FormGroup}
-     * @memberof EmploymentPage
+     * @memberof EmploymentComponent
      */
     public dateResign: any;
 
     /**
      * Get company branch
      * @type {string}
-     * @memberof EmploymentPage
+     * @memberof EmploymentComponent
      */
     public branch: string;
 
     /**
-     *Creates an instance of EmploymentPage.
+     *Creates an instance of EmploymentComponent.
      * @param {APIService} apiService
-     * @memberof EmploymentPage
+     * @memberof EmploymentComponent
      */
     constructor(private apiService: APIService) {
     }
@@ -87,7 +87,7 @@ export class EmploymentPage implements OnInit {
 
     /**
      * Update employment details to API
-     * @memberof EmploymentPage
+     * @memberof EmploymentComponent
      */
     patchEmploymentData() {
         this.edit = false;
@@ -117,7 +117,7 @@ export class EmploymentPage implements OnInit {
     /**
      * patch employement details to endpoint
      * @param {*} data
-     * @memberof EmploymentPage
+     * @memberof EmploymentComponent
      */
     patchData(data: any) {
         this.apiService.patch_employment_details(data).subscribe((val) => {

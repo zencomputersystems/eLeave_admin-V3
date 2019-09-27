@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AdminInvitesAPIService } from '../admin-invites-api.service';
+import { AdminInvitesApiService } from '../admin-invites-api.service';
 /**
  * Invite More Page
  * @export
- * @class InviteMorePage
+ * @class InviteMoreComponent
  * @implements {OnInit}
  */
 @Component({
@@ -12,54 +12,54 @@ import { AdminInvitesAPIService } from '../admin-invites-api.service';
     templateUrl: './invite-more.component.html',
     styleUrls: ['./invite-more.component.scss'],
 })
-export class InviteMorePage implements OnInit {
+export class InviteMoreComponent implements OnInit {
 
     /**
      * Get user profile list details
      * @type {*}
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     public employeeList: any;
 
     /**
      * Get user profile list details
      * @type {*}
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     public filterList: any;
 
     /**
      * Get key in text value from input searchbar
      * @type {string}
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     public inputValue: string;
 
     /**
      * Show filtered name content
      * @type {boolean}
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     public showDropDown: boolean;
 
     /**
      * Show or hide chips of selected name
      * @type {boolean}
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     public showChips: boolean;
 
     /**
      * Overall name list use to send out invitation
      * @type {*}
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     public dataList: any = [];
 
     /**
      * Selected name from searched value
      * @type {*}
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     public dataSelected: any = [];
 
@@ -67,32 +67,32 @@ export class InviteMorePage implements OnInit {
      * User Id list to POST in API
      * @private
      * @type {*}
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     private _inviteList: any = [];
 
     /**
      * To read component of searchbar
      * @type {*}
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     @ViewChild('searchbar') searchbar: any;
 
     /**
      * Return profile list content
      * @readonly
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     public get personalList() {
         return this.employeeList;
     }
 
     /**
-     *Creates an instance of InviteMorePage.
+     *Creates an instance of InviteMoreComponent.
      * @param {APIService} apiService
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
-    constructor(private inviteAPI: AdminInvitesAPIService) {
+    constructor(private inviteAPI: AdminInvitesApiService) {
     }
 
     ngOnInit() {
@@ -113,7 +113,7 @@ export class InviteMorePage implements OnInit {
     /**
      * To filter value entered from searchbar
      * @param {*} text
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     filterDetails(text: any) {
         if (text && text.trim() != '') {
@@ -128,7 +128,7 @@ export class InviteMorePage implements OnInit {
      * To filter value
      * To reset empty searchbar
      * @param {*} text
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     getInputValue(text: any) {
         this.inputValue = text.srcElement.value;
@@ -142,7 +142,7 @@ export class InviteMorePage implements OnInit {
 
     /**
      * To clear text after clicked on icon
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     deleteSearchText() {
         this.inputValue = null;
@@ -152,7 +152,7 @@ export class InviteMorePage implements OnInit {
 
     /**
      * Get user profile list when the searchbar is empty
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     reset(): void {
         this.showDropDown = false;
@@ -166,7 +166,7 @@ export class InviteMorePage implements OnInit {
     /**
      * Update the clicked name list to show on searchbar
      * @param {*} valueSelected
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     updateTextBox(valueSelected: any) {
         this.showChips = true;
@@ -184,7 +184,7 @@ export class InviteMorePage implements OnInit {
      * Delete name from invitation list content after clicked on trash icon
      * @param {number} index
      * @param {*} data
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     removeContact(index: number, data: any) {
         this.dataList.splice(index, 1);
@@ -195,7 +195,7 @@ export class InviteMorePage implements OnInit {
      * To delete chip name after clicked icon
      * @param {number} index
      * @param {*} data
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     deleteChip(index: number, data: any) {
         this.dataSelected.splice(index, 1);
@@ -204,7 +204,7 @@ export class InviteMorePage implements OnInit {
 
     /**
      * To add the selected chips name to invitation list
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     addSelectedContact() {
         this.showChips = false;
@@ -214,7 +214,7 @@ export class InviteMorePage implements OnInit {
 
     /**
      * Send invitation list to API
-     * @memberof InviteMorePage
+     * @memberof InviteMoreComponent
      */
     sendInvitation() {
         for (let i = 0; i < this.dataList.length; i++) {

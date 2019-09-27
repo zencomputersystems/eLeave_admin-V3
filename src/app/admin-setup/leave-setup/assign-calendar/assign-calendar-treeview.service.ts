@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
-import { LeaveAPIService } from "../leave-api.service";
+import { LeaveApiService } from "../leave-api.service";
 
 /**
  * Node for to-do item
@@ -53,27 +53,27 @@ export class TodoItemFlatNode {
  * Each node in Json object represents a to-do item or a category.
  * If a node is a category, it has children items and new items can be added under the category.
  * @export
- * @class EmployeeListDatabase
+ * @class AssignCalendarTreeviewService
  */
 @Injectable()
-export class EmployeeListDatabase {
+export class AssignCalendarTreeviewService {
 
     /**
      * A subject use to observe value of item & children
-     * @memberof EmployeeListDatabase
+     * @memberof AssignCalendarTreeviewService
      */
     public dataChange = new BehaviorSubject<TodoItemNode[]>([]);
 
     /**
      * Get user list from API
      * @type {*}
-     * @memberof EmployeeListDatabase
+     * @memberof AssignCalendarTreeviewService
      */
     public list: any;
 
     /**
      * Object value for nested tree list
-     * @memberof EmployeeListDatabase
+     * @memberof AssignCalendarTreeviewService
      */
     public objectTree = {};
 
@@ -83,16 +83,16 @@ export class EmployeeListDatabase {
      * Return data of children and item
      * @readonly
      * @type {TodoItemNode[]}
-     * @memberof EmployeeListDatabase
+     * @memberof AssignCalendarTreeviewService
      */
     get data(): TodoItemNode[] { return this.dataChange.value; }
 
     /**
-     *Creates an instance of EmployeeListDatabase.
+     *Creates an instance of AssignCalendarTreeviewService.
      * @param {APIService} apiService
-     * @memberof EmployeeListDatabase
+     * @memberof AssignCalendarTreeviewService
      */
-    constructor(private apiService: APIService, private leaveAPI: LeaveAPIService) {
+    constructor(private apiService: APIService, private leaveAPI: LeaveApiService) {
         this.apiService.get_user_profile_list().subscribe(
             list => {
                 this.list = list;
@@ -126,7 +126,7 @@ export class EmployeeListDatabase {
 
     /**
      * Initialize builded tree nodes from JSON list
-     * @memberof EmployeeListDatabase
+     * @memberof AssignCalendarTreeviewService
      */
     initialize() {
         // Build the tree nodes from Json object. The result is a list of `TodoItemNode` with nested

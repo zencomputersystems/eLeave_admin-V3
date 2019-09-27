@@ -3,24 +3,24 @@ import { Http } from "@angular/http";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
 import { MatSnackBar } from "@angular/material";
-import { SnackbarNotificationPage } from "../snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "../snackbar-notification/snackbar-notification";
 
 /**
  * Working hour profile API
  * @export
- * @class WorkingHourAPIService
+ * @class WorkingHourApiService
  */
 @Injectable({
     providedIn: 'root'
 })
-export class WorkingHourAPIService {
+export class WorkingHourApiService {
 
     /**
-     *Creates an instance of WorkingHourAPIService.
+     *Creates an instance of WorkingHourApiService.
      * @param {Http} http
      * @param {APIService} apiService
      * @param {MatSnackBar} snackBar
-     * @memberof WorkingHourAPIService
+     * @memberof WorkingHourApiService
      */
     constructor(public http: Http, private apiService: APIService, public snackBar: MatSnackBar) {
     }
@@ -28,7 +28,7 @@ export class WorkingHourAPIService {
     /**
      * get all list of working hour profile
      * @returns {Observable<any>}
-     * @memberof WorkingHourAPIService
+     * @memberof WorkingHourApiService
      */
     get_working_hours_profile_list(): Observable<any> {
         return this.apiService.getApi('/api/admin/working-hours/working-hours-profile');
@@ -38,7 +38,7 @@ export class WorkingHourAPIService {
      * get details from requested working hour profile id
      * @param {string} id
      * @returns {Observable<any>}
-     * @memberof WorkingHourAPIService
+     * @memberof WorkingHourApiService
      */
     get_working_hours_details(id: string): Observable<any> {
         return this.apiService.getApiWithId('/api/admin/working-hours/', id);
@@ -48,7 +48,7 @@ export class WorkingHourAPIService {
      * post data to create new working hour profile
      * @param {*} body
      * @returns {Observable<any>}
-     * @memberof WorkingHourAPIService
+     * @memberof WorkingHourApiService
      */
     post_working_hours(body: any): Observable<any> {
         return this.apiService.postApi(body, '/api/admin/working-hours/working-hours-profile');
@@ -58,7 +58,7 @@ export class WorkingHourAPIService {
      * udpate details of selected working profile
      * @param {*} data
      * @returns {Observable<any>}
-     * @memberof WorkingHourAPIService
+     * @memberof WorkingHourApiService
      */
     patch_working_hours(data: any): Observable<any> {
         return this.apiService.patchApi(data, '/api/admin/working-hours/working-hours-profile');
@@ -68,7 +68,7 @@ export class WorkingHourAPIService {
      * delete selected working hour profile
      * @param {string} id
      * @returns {Observable<any>}
-     * @memberof WorkingHourAPIService
+     * @memberof WorkingHourApiService
      */
     delete_working_hours_profile(id: string): Observable<any> {
         return this.apiService.deleteApi(id, '/api/admin/working-hours/working-hours-profile/');
@@ -78,7 +78,7 @@ export class WorkingHourAPIService {
      * assign working hour profile to user
      * @param {*} data
      * @returns {Observable<any>}
-     * @memberof WorkingHourAPIService
+     * @memberof WorkingHourApiService
      */
     patch_user_working_hours(data: any): Observable<any> {
         return this.apiService.deleteApi(data, '/api/admin/working-hours/user-working-hours');
@@ -87,10 +87,10 @@ export class WorkingHourAPIService {
     /**
      * show pop up snackbar
      * @param {string} txt
-     * @memberof WorkingHourAPIService
+     * @memberof WorkingHourApiService
      */
     showPopUp(txt: string) {
-        this.snackBar.openFromComponent(SnackbarNotificationPage, {
+        this.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 5000,
             data: txt
         });

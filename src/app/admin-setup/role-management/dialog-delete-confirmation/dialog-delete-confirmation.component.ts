@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 /**
  * Pop up dialog page
  * @export
- * @class DialogDeleteConfirmationPage
+ * @class DialogDeleteConfirmationComponent
  */
 @Component({
     selector: 'dialog-delete-confirmation',
@@ -12,22 +12,22 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
     styleUrls: ['./dialog-delete-confirmation.component.scss'],
 
 })
-export class DialogDeleteConfirmationPage {
+export class DialogDeleteConfirmationComponent {
 
     /**
-     *Creates an instance of DialogDeleteConfirmationPage.
-     * @param {MatDialogRef<DialogDeleteConfirmationPage>} dialogRef
+     *Creates an instance of DialogDeleteConfirmationComponent.
+     * @param {MatDialogRef<DialogDeleteConfirmationComponent>} dialogRef
      * @param {*} data
-     * @memberof DialogDeleteConfirmationPage
+     * @memberof DialogDeleteConfirmationComponent
      */
     constructor(
-        public dialogRef: MatDialogRef<DialogDeleteConfirmationPage>,
+        public dialogRef: MatDialogRef<DialogDeleteConfirmationComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
     /**
      * click on cancel button to close pop up dialog
-     * @memberof DialogDeleteConfirmationPage
+     * @memberof DialogDeleteConfirmationComponent
      */
     onCancelClick(): void {
         this.dialogRef.close();

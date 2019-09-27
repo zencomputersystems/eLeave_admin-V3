@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 /**
  * Admin Invites Page
  * @export
- * @class AdminInvitesPage
+ * @class AdminInvitesComponent
  * @implements {OnInit}
  */
 @Component({
@@ -11,12 +11,12 @@ import { Router } from '@angular/router';
     templateUrl: './admin-invites.component.html',
     styleUrls: ['./admin-invites.component.scss'],
 })
-export class AdminInvitesPage implements OnInit {
+export class AdminInvitesComponent implements OnInit {
 
     /**
-     *Creates an instance of AdminInvitesPage.
+     *Creates an instance of AdminInvitesComponent.
      * @param {Router} router
-     * @memberof AdminInvitesPage
+     * @memberof AdminInvitesComponent
      */
     constructor(public router: Router) { }
 

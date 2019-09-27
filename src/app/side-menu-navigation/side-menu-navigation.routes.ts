@@ -2,20 +2,20 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from 'src/services/shared-service/guards/auth-guard.service';
 import { SideMenuNavigationComponent } from './side-menu-navigation.component';
 import { PageNotFoundComponent } from '../page-not-found.component';
-import { AddEmployeePage } from '../admin-setup/add-employee/add-employee.component';
-import { LeaveSetup } from '../admin-setup/leave-setup/leave-setup';
-import { LeaveSetupTabPage } from '../admin-setup/leave-setup/leave-setup-tab/leave-setup-tab.component';
-import { AdminInvitesPage } from '../admin-setup/invites/admin-invites.component';
-import { InviteListPage } from '../admin-setup/invites/invite-list/invite-list.component';
-import { InviteMorePage } from '../admin-setup/invites/invite-more/invite-more.component';
-import { RoleManagementPage } from '../admin-setup/role-management/role-management.component';
-import { RoleListPage } from '../admin-setup/role-management/role-list/role-list.component';
-import { RoleRightsPage } from '../admin-setup/role-management/role-rights/role-rights.component';
-import { AssignRolePage } from '../admin-setup/role-management/assign-role/assign-role.component';
-import { GeneralLeavePolicyPage } from '../admin-setup/general-leave-policy/general-leave-policy.component';
-import { PolicyListPage } from '../admin-setup/general-leave-policy/policy-list/policy-list.component';
-import { CreatePolicyPage } from '../admin-setup/general-leave-policy/create-policy/create-policy.component';
-import { EmployeeProfilePage } from '../admin-setup/employee-profile-hr/employee-profile.component';
+import { AddEmployeeComponent } from '../admin-setup/add-employee/add-employee.component';
+import { LeaveSetupComponent } from '../admin-setup/leave-setup/leave-setup.component';
+import { LeaveSetupTabComponent } from '../admin-setup/leave-setup/leave-setup-tab/leave-setup-tab.component';
+import { AdminInvitesComponent } from '../admin-setup/invites/admin-invites.component';
+import { InviteListComponent } from '../admin-setup/invites/invite-list/invite-list.component';
+import { InviteMoreComponent } from '../admin-setup/invites/invite-more/invite-more.component';
+import { RoleManagementComponent } from '../admin-setup/role-management/role-management.component';
+import { RoleListComponent } from '../admin-setup/role-management/role-list/role-list.component';
+import { RoleRightsComponent } from '../admin-setup/role-management/role-rights/role-rights.component';
+import { AssignRoleComponent } from '../admin-setup/role-management/assign-role/assign-role.component';
+import { GeneralLeavePolicyComponent } from '../admin-setup/general-leave-policy/general-leave-policy.component';
+import { PolicyListComponent } from '../admin-setup/general-leave-policy/policy-list/policy-list.component';
+import { CreatePolicyComponent } from '../admin-setup/general-leave-policy/create-policy/create-policy.component';
+import { EmployeeProfileComponent } from '../admin-setup/employee-profile-hr/employee-profile.component';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -25,41 +25,41 @@ export const sideMenuNavigationRoutes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: PageNotFoundComponent },
-            { path: 'inbox', component: AddEmployeePage }, // AddEmployeePage //EmployeeProfilePage
+            { path: 'inbox', component: AddEmployeeComponent }, // AddEmployeeComponent //EmployeeProfileComponent
             {
-                path: 'leave-setup', component: LeaveSetup,
+                path: 'leave-setup', component: LeaveSetupComponent,
                 children: [
                     { path: '', redirectTo: 'tab', pathMatch: 'full' },
-                    { path: 'tab', component: LeaveSetupTabPage }
+                    { path: 'tab', component: LeaveSetupTabComponent }
                 ]
             },
             {
-                path: 'employee-setup', component: AdminInvitesPage,
+                path: 'employee-setup', component: AdminInvitesComponent,
                 children: [
                     { path: '', redirectTo: 'invite-list', pathMatch: 'full' },
-                    { path: 'invite-list', component: InviteListPage },
-                    { path: 'invite-more', component: InviteMorePage },
+                    { path: 'invite-list', component: InviteListComponent },
+                    { path: 'invite-more', component: InviteMoreComponent },
                 ]
             },
             {
-                path: 'role-management', component: RoleManagementPage,
+                path: 'role-management', component: RoleManagementComponent,
                 children: [
                     { path: '', redirectTo: 'role-list', pathMatch: 'full' },
-                    { path: 'role-list', component: RoleListPage },
-                    { path: 'role-rights/:id', component: RoleRightsPage },
-                    { path: 'create-new-role', component: RoleRightsPage },
-                    { path: 'assign-role', component: AssignRolePage }
+                    { path: 'role-list', component: RoleListComponent },
+                    { path: 'role-rights/:id', component: RoleRightsComponent },
+                    { path: 'create-new-role', component: RoleRightsComponent },
+                    { path: 'assign-role', component: AssignRoleComponent }
                 ]
             },
             {
-                path: 'general-leave-policy', component: GeneralLeavePolicyPage,
+                path: 'general-leave-policy', component: GeneralLeavePolicyComponent,
                 children: [
                     { path: '', redirectTo: 'policy-list', pathMatch: 'full' },
-                    { path: 'policy-list', component: PolicyListPage },
-                    { path: 'edit-policy/:id', component: CreatePolicyPage }
+                    { path: 'policy-list', component: PolicyListComponent },
+                    { path: 'edit-policy/:id', component: CreatePolicyComponent }
                 ]
             },
-            { path: 'employee-profile', component: EmployeeProfilePage }
+            { path: 'employee-profile', component: EmployeeProfileComponent }
         ]
     },
     { path: '**', component: PageNotFoundComponent },

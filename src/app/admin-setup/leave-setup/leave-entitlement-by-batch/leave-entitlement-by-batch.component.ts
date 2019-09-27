@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { LeaveEntitlementByBatchAPIService } from './leave-entitlement-by-batch-api.service';
+import { LeaveEntitlementByBatchApiService } from './leave-entitlement-by-batch-api.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LeaveAPIService } from '../leave-api.service';
-import { SnackbarNotificationPage } from '../snackbar-notification/snackbar-notification';
+import { LeaveApiService } from '../leave-api.service';
+import { SnackbarNotificationComponent } from '../snackbar-notification/snackbar-notification';
 
 /**
  * assign leave entitlement according leave type
  * @export
- * @class LeaveEntitlementByBatchPage
+ * @class LeaveEntitlementByBatchComponent
  * @implements {OnInit}
  */
 @Component({
@@ -15,96 +15,96 @@ import { SnackbarNotificationPage } from '../snackbar-notification/snackbar-noti
     templateUrl: './leave-entitlement-by-batch.component.html',
     styleUrls: ['./leave-entitlement-by-batch.component.scss'],
 })
-export class LeaveEntitlementByBatchPage implements OnInit {
+export class LeaveEntitlementByBatchComponent implements OnInit {
 
     /**
      * get entitlement list from API
      * @type {*}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     public entitlementList: any;
 
     /**
      * form group validation
      * @type {*}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     public entitlementBatch: any;
 
     /**
      * get company list from API
      * @type {*}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     public companyItems: any;
 
     /**
      * get department list from selected company
      * @type {*}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     public departmentItems: any;
 
     /**
      * get all leave type from API
      * @type {*}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     public leavetypeItems: any;
 
     /**
      * get user from selected company & department
      * @type {any[]}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     public filteredUser: any[] = [];
 
     /**
      * enable/disable the submit button
      * @type {boolean}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     public disableSubmit: boolean = true;
 
     /**
      * checked value of main checkbox
      * @type {boolean}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     public checkMain: boolean;
 
     /**
      * indeterminate value of main checkbox
      * @type {boolean}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     public indeterminate: boolean;
 
     /**
      * show/hide checkbox 
      * @type {boolean}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     public hideAvatar: boolean[] = [];
 
     /**
      * show & hide spinner after clicked submit button
      * @type {boolean}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     public showSmallSpinner: boolean = false;
 
     /**
      * show & hide spinner after selected company & department
      * @type {boolean}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     public showSpinner: boolean = false;
 
     /**
      * show no result when user list is empty
      * @type {boolean}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     public showNoResult: boolean = false;
 
@@ -112,7 +112,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      * selected user from filtered user list
      * @private
      * @type {any[]}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     private _selected_User: any[] = [];
 
@@ -120,7 +120,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      * selected company ID from list
      * @private
      * @type {string}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     private _company_GUID: string;
 
@@ -128,17 +128,17 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      * get user list from API
      * @private
      * @type {*}
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     private _user_Items: any;
 
     /**
-     *Creates an instance of LeaveEntitlementByBatchPage.
-     * @param {LeaveEntitlementByBatchAPIService} leaveEntitlementAPI
-     * @param {LeaveAPIService} leaveAPI
-     * @memberof LeaveEntitlementByBatchPage
+     *Creates an instance of LeaveEntitlementByBatchComponent.
+     * @param {LeaveEntitlementByBatchApiService} leaveEntitlementAPI
+     * @param {LeaveApiService} leaveAPI
+     * @memberof LeaveEntitlementByBatchComponent
      */
-    constructor(private leaveEntitlementAPI: LeaveEntitlementByBatchAPIService, private leaveAPI: LeaveAPIService) {
+    constructor(private leaveEntitlementAPI: LeaveEntitlementByBatchApiService, private leaveAPI: LeaveApiService) {
         this.entitlementBatch = new FormGroup({
             tenant: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),
@@ -156,7 +156,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
     /**
      * select company & pass company guid to get department list
      * @param {*} company_guid
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     companyClicked(company_guid: string) {
         this.showSpinner = true;
@@ -170,7 +170,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
     /**
      * get user list from API
      * @param {*} name
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     departmentClicked(name: string) {
         this.filteredUser = [];
@@ -186,7 +186,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      * get user list to filter from selected compant & department
      * @param {*} list
      * @param {string} name
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     filterUser(list: any, name: string) {
         for (let i = 0; i < list.length; i++) {
@@ -203,7 +203,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
 
     /**
      * checking to enable/disable submit button
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     checkEnableDisableButton() {
         if (this.entitlementBatch.valid && (this.checkMain || this.indeterminate)) {
@@ -218,7 +218,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      * @param {number} index
      * @param {boolean} mouseOver
      * @param {boolean} checked
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     mouseInOutEvent(index: number, mouseOver: boolean, checked: boolean) {
         if (checked && (this.checkMain || this.indeterminate)) {
@@ -237,7 +237,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
 
     /**
      * check main checkbox to check all sub checkbox
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     checkEvent() {
         setTimeout(() => {
@@ -256,7 +256,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
 
     /**
      * check sub checkbox to make changing in main checkbox (interminate/checkMain)
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     subEvent() {
         const length = this.filteredUser.length;
@@ -282,7 +282,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
 
     /**
      * get selected user from list
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     checkedUserList() {
         this.filteredUser.forEach((element, i) => {
@@ -295,7 +295,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
 
     /**
      * post leave entitlement by batch
-     * @memberof LeaveEntitlementByBatchPage
+     * @memberof LeaveEntitlementByBatchComponent
      */
     postLeaveEntitlement() {
         this.checkedUserList();
@@ -322,7 +322,7 @@ export class LeaveEntitlementByBatchPage implements OnInit {
      * @memberof LeaveAdjustmentPage
      */
     openMsg(popUpText: string) {
-        this.leaveAPI.snackBar.openFromComponent(SnackbarNotificationPage, {
+        this.leaveAPI.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 5000,
             data: popUpText
         });

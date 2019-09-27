@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 /**
  * Role Management page
  * @export
- * @class RoleManagementPage
+ * @class RoleManagementComponent
  * @implements {OnInit}
  */
 @Component({
@@ -12,12 +12,12 @@ import { Router } from '@angular/router';
     templateUrl: './role-management.component.html',
     styleUrls: ['./role-management.component.scss'],
 })
-export class RoleManagementPage implements OnInit {
+export class RoleManagementComponent implements OnInit {
 
     /**
-     *Creates an instance of RoleManagementPage.
+     *Creates an instance of RoleManagementComponent.
      * @param {Router} router
-     * @memberof RoleManagementPage
+     * @memberof RoleManagementComponent
      */
     constructor(private router: Router) {
 

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DeleteListConfirmationPage } from '../delete-list-confirmation/delete-list-confirmation.component';
+import { DeleteListConfirmationComponent } from '../delete-list-confirmation/delete-list-confirmation.component';
 import { MatDialog } from '@angular/material';
-import { AdminInvitesAPIService } from '../admin-invites-api.service';
-import { DateDialogPage } from '../date-dialog/date-dialog.component';
+import { AdminInvitesApiService } from '../admin-invites-api.service';
+import { DateDialogComponent } from '../date-dialog/date-dialog.component';
 import * as _moment from 'moment';
 const moment = _moment;
 
@@ -11,7 +11,7 @@ const moment = _moment;
  *
  * Invite List Page
  * @export
- * @class InviteListPage
+ * @class InviteListComponent
  * @implements {OnInit}
  */
 @Component({
@@ -19,148 +19,148 @@ const moment = _moment;
     templateUrl: './invite-list.component.html',
     styleUrls: ['./invite-list.component.scss'],
 })
-export class InviteListPage implements OnInit {
+export class InviteListComponent implements OnInit {
 
     /**
      * Get user profile list from API
      * @type {*}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public list: any;
 
     /**
      * To show arrow up or down icon for Name column
      * @type {boolean}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public arrowDownName: boolean = true;
 
     /**
      * To show arrow up or down icon for Id column
      * @type {boolean}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public arrowDownId: boolean = true;
 
     /**
      * Total number of users profile list
      * @type {number}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public totalItem: number;
 
     /**
      * Set the page items of each page
      * @type {number}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public itemsPerPage: number = 6;
 
     /**
      * Use for range calculation
      * @type {number}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public startEndNumber: number = 5;
 
     /**
      * Page number
      * @type {number}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public pageIndex: number;
 
     /**
      * Total page number 
      * @type {number}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public totalPageIndex: number;
 
     /**
      * Get current page items
      * @type {*}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public currentPageItems: any;
 
     /**
      * Enable or disable next button
      * @type {boolean}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public disableNextButton: boolean;
 
     /**
      * Enable or disable previous button
      * @type {boolean}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public disablePrevButton: boolean = true;
 
     /**
      * To show user profile list in list view
      * @type {boolean}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public listView: boolean = false;
 
     /**
      * To show user profile list in grid view
      * @type {boolean}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public gridView: boolean = false;
 
     // /**
     //  * Add as favourite list after clicked star icon
-    //  * @memberof InviteListPage
+    //  * @memberof InviteListComponent
     //  */
     // public favouriteList = [];
 
     /**
      * Show spinner during loading
      * @type {boolean}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public showSpinner: boolean = true;
 
     /**
      * hide content during loading
      * @type {boolean}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public showContent: boolean = false;
 
     /**
      * main checkbox value
      * @type {boolean}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public mainCheck: boolean = false;
 
     /**
      * main checkbox show indeterminate 
      * @type {boolean}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public indeterminateCheck: boolean = false;
 
     /**
      * hover to hide avatar
      * @type {boolean}
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     public hideAvatar: boolean[] = [];
 
     /**
-     *Creates an instance of InviteListPage.
-     * @param {AdminInvitesAPIService} inviteAPI
+     *Creates an instance of InviteListComponent.
+     * @param {AdminInvitesApiService} inviteAPI
      * @param {Router} router
      * @param {MatDialog} popUp
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
-    constructor(private inviteAPI: AdminInvitesAPIService, public router: Router, public popUp: MatDialog) { }
+    constructor(private inviteAPI: AdminInvitesApiService, public router: Router, public popUp: MatDialog) { }
 
     ngOnInit() {
         this.listView = false;
@@ -169,7 +169,7 @@ export class InviteListPage implements OnInit {
 
     /**
      * Get user profile list from API
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     endPoint() {
         this.inviteAPI.get_user_profile_list().subscribe(
@@ -198,7 +198,7 @@ export class InviteListPage implements OnInit {
      * @param {boolean} list
      * @param {number} pageItems
      * @param {number} range
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     viewType(list: boolean, pageItems: number, range: number) {
         this.listView = list;
@@ -216,7 +216,7 @@ export class InviteListPage implements OnInit {
      * @param {*} data
      * @param {number} itemEachPage
      * @param {*} startEndNumber
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     loopItemsPerPage(index: number) {
         this.pageIndex = index;
@@ -237,7 +237,7 @@ export class InviteListPage implements OnInit {
 
     /**
      * Enable or disable the next button
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     enableDisableNextButton() {
         if (this.pageIndex === this.totalPageIndex) {
@@ -253,7 +253,7 @@ export class InviteListPage implements OnInit {
 
     /**
      * Enable or disable the previous button
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     enableDisablePrevButton() {
         if (this.pageIndex < 2) {
@@ -270,7 +270,7 @@ export class InviteListPage implements OnInit {
     /**
      * Show calculated content items after clicked next button
      * @param {number} index
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     clickToNextPage(index: number) {
         if (!(index > this.totalPageIndex)) {
@@ -282,7 +282,7 @@ export class InviteListPage implements OnInit {
     /**
      * Show calculated content items after clicked previous button
      * @param {number} index
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     clickToPrevPage(index: number) {
         if (!(index < 1)) {
@@ -296,7 +296,7 @@ export class InviteListPage implements OnInit {
      * @param {boolean} booleanValue
      * @param {number} ascValue
      * @param {number} desValue
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     sortName(booleanValue: boolean, ascValue: number, desValue: number) {
         this.arrowDownName = booleanValue;
@@ -316,7 +316,7 @@ export class InviteListPage implements OnInit {
      * @param {boolean} value
      * @param {number} asc
      * @param {number} des
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     sortId(value: boolean, asc: number, des: number) {
         this.arrowDownId = value;
@@ -334,7 +334,7 @@ export class InviteListPage implements OnInit {
     /**
      * Filter text key in from searchbar 
      * @param {*} text
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     filter(text: any) {
         if (text && text.trim() != '') {
@@ -351,7 +351,7 @@ export class InviteListPage implements OnInit {
     /**
      * To filter entered text
      * @param {*} text
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     changeDetails(text: any) {
         if (text.srcElement.value === '') {
@@ -367,7 +367,7 @@ export class InviteListPage implements OnInit {
     //  * Check duplicate Id exist or not
     //  * @param {string} ID
     //  * @returns
-    //  * @memberof InviteListPage
+    //  * @memberof InviteListComponent
     //  */
     // checkUserID(ID: string) {
     //     return this.favouriteList.some(function (el) {
@@ -380,10 +380,10 @@ export class InviteListPage implements OnInit {
      * @param {string} employeeName
      * @param {string} id
      * @param {string} name
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     setUserStatus(employeeName: string, id: string, name: string) {
-        const deleteDialog = this.popUp.open(DeleteListConfirmationPage, {
+        const deleteDialog = this.popUp.open(DeleteListConfirmationComponent, {
             data: { name: employeeName, value: id, action: name }
         });
         deleteDialog.afterClosed().subscribe(result => {
@@ -404,10 +404,10 @@ export class InviteListPage implements OnInit {
      * disable user and set expiration date 
      * @param {string} employeeName
      * @param {string} id
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     disableUser(employeeName: string, id: string) {
-        const disableDialog = this.popUp.open(DateDialogPage, {
+        const disableDialog = this.popUp.open(DateDialogComponent, {
             data: { name: employeeName, value: id, action: name }
         });
         disableDialog.afterClosed().subscribe(value => {
@@ -428,7 +428,7 @@ export class InviteListPage implements OnInit {
     //  * Save highlighted star icon name card
     //  * @param {number} index
     //  * @param {*} item
-    //  * @memberof InviteListPage
+    //  * @memberof InviteListComponent
     //  */
     // saveAsFavourite(index: number, item: any) {
     //     const create = { index: index, itemId: item.id };
@@ -448,7 +448,7 @@ export class InviteListPage implements OnInit {
 
     /**
      * main checkbox value
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     checkboxEvent() {
         this.hideAvatar = [];
@@ -466,7 +466,7 @@ export class InviteListPage implements OnInit {
 
     /**
      * item checkbox value
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     listEvent() {
         const totalNumber = this.list.length;
@@ -494,7 +494,7 @@ export class InviteListPage implements OnInit {
      * @param {number} idx
      * @param {boolean} value
      * @param {boolean} checkedValue
-     * @memberof InviteListPage
+     * @memberof InviteListComponent
      */
     mouseHoverEvent(idx: number, value: boolean, checkedValue: boolean) {
         if (checkedValue && (this.mainCheck || this.indeterminateCheck)) {

@@ -1,32 +1,32 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
-import { LeaveAPIService } from "../leave-api.service";
+import { LeaveApiService } from "../leave-api.service";
 import { MatSnackBar } from "@angular/material";
-import { SnackbarNotificationPage } from "../snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "../snackbar-notification/snackbar-notification";
 
 /**
  * Approval override API endpoint
  * @export
- * @class ApprovalOverrideAPIService
+ * @class ApprovalOverrideApiService
  */
 @Injectable({
     providedIn: 'root'
 })
-export class ApprovalOverrideAPIService {
+export class ApprovalOverrideApiService {
 
     /**
-     *Creates an instance of ApprovalOverrideAPIService.
+     *Creates an instance of ApprovalOverrideApiService.
      * @param {APIService} apiService
-     * @param {LeaveAPIService} leaveAPI
-     * @memberof ApprovalOverrideAPIService
+     * @param {LeaveApiService} leaveAPI
+     * @memberof ApprovalOverrideApiService
      */
-    constructor(private apiService: APIService, private leaveAPI: LeaveAPIService, public snackbar: MatSnackBar) { }
+    constructor(private apiService: APIService, private leaveAPI: LeaveApiService, public snackbar: MatSnackBar) { }
 
     /**
      * Get all the pending leave application list
      * @returns {Observable<any>}
-     * @memberof ApprovalOverrideAPIService
+     * @memberof ApprovalOverrideApiService
      */
     get_approval_override_list(): Observable<any> {
         this.apiService.headerAuthorization();
@@ -37,7 +37,7 @@ export class ApprovalOverrideAPIService {
      * submit leave application status (approve, reject, cancel)
      * @param {*} value
      * @returns {Observable<any>}
-     * @memberof ApprovalOverrideAPIService
+     * @memberof ApprovalOverrideApiService
      */
     patch_approval_override(value): Observable<any> {
         this.apiService.headerAuthorization();
@@ -47,7 +47,7 @@ export class ApprovalOverrideAPIService {
     /**
      * return company list from leave api
      * @returns {Observable<any>}
-     * @memberof ApprovalOverrideAPIService
+     * @memberof ApprovalOverrideApiService
      */
     get_company_list(): Observable<any> {
         return this.leaveAPI.get_company_list();
@@ -57,7 +57,7 @@ export class ApprovalOverrideAPIService {
      * get company details from leave api service
      * @param {*} tenant_Id
      * @returns {Observable<any>}
-     * @memberof ApprovalOverrideAPIService
+     * @memberof ApprovalOverrideApiService
      */
     get_company_detail(tenant_Id): Observable<any> {
         return this.leaveAPI.get_company_details(tenant_Id);
@@ -66,7 +66,7 @@ export class ApprovalOverrideAPIService {
     /**
      * get leave type list from leave api
      * @returns {Observable<any>}
-     * @memberof ApprovalOverrideAPIService
+     * @memberof ApprovalOverrideApiService
      */
     get_admin_leavetype(): Observable<any> {
         return this.leaveAPI.get_admin_leavetype();
@@ -75,7 +75,7 @@ export class ApprovalOverrideAPIService {
     /**
      * get user list from api service
      * @returns {Observable<any>}
-     * @memberof ApprovalOverrideAPIService
+     * @memberof ApprovalOverrideApiService
      */
     get_user_profile_list(): Observable<any> {
         return this.apiService.get_user_profile_list();
@@ -84,10 +84,10 @@ export class ApprovalOverrideAPIService {
     /**
      * snackbar message after submit approval
      * @param {string} text
-     * @memberof ApprovalOverrideAPIService
+     * @memberof ApprovalOverrideApiService
      */
     notification(text: string) {
-        this.snackbar.openFromComponent(SnackbarNotificationPage, {
+        this.snackbar.openFromComponent(SnackbarNotificationComponent, {
             duration: 5000,
             data: text
         });

@@ -3,42 +3,42 @@ import { Http, Headers, Response } from "@angular/http";
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { MatSnackBar } from "@angular/material";
-import { SnackbarNotificationPage } from "../leave-setup/snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "../leave-setup/snackbar-notification/snackbar-notification";
 
 /**
  * Role API
  * @export
- * @class RolesAPIService
+ * @class RoleApiService
  */
 @Injectable({
     providedIn: 'root'
 })
-export class RolesAPIService {
+export class RoleApiService {
 
     /**
      * header authorization value 
-     * @memberof RolesAPIService
+     * @memberof RoleApiService
      */
     public headerApp = new Headers();
 
     /**
      * main url of server
      * @type {string}
-     * @memberof RolesAPIService
+     * @memberof RoleApiService
      */
     public baseUrl: string = "http://zencore.zen.com.my:3000";
 
     /**
-     *Creates an instance of RolesAPIService.
+     *Creates an instance of RoleApiService.
      * @param {Http} http
-     * @memberof RolesAPIService
+     * @memberof RoleApiService
      */
     constructor(public http: Http, private snackBar: MatSnackBar) {
     }
 
     /**
      * Method used to append authorize token
-     * @memberof RolesAPIService
+     * @memberof RoleApiService
      */
     authorization() {
         if (this.headerApp["_headers"].size < 1) {
@@ -49,7 +49,7 @@ export class RolesAPIService {
     /**
      * Role profile list
      * @returns {Observable<any>}
-     * @memberof RolesAPIService
+     * @memberof RoleApiService
      */
     get_role_profile_list(): Observable<any> {
         this.authorization();
@@ -61,7 +61,7 @@ export class RolesAPIService {
      * Role rights request from Id
      * @param {*} id
      * @returns {Observable<any>}
-     * @memberof RolesAPIService
+     * @memberof RoleApiService
      */
     get_role_details_profile(id): Observable<any> {
         this.authorization();
@@ -73,7 +73,7 @@ export class RolesAPIService {
      * Update role rights for desired role
      * @param {*} body
      * @returns {Observable<any>}
-     * @memberof RolesAPIService
+     * @memberof RoleApiService
      */
     patch_role_profile(body): Observable<any> {
         this.authorization();
@@ -84,7 +84,7 @@ export class RolesAPIService {
      * create new role and it rights/permission
      * @param {*} data
      * @returns {Observable<any>}
-     * @memberof RolesAPIService
+     * @memberof RoleApiService
      */
     post_role_profile(data): Observable<any> {
         this.authorization();
@@ -95,7 +95,7 @@ export class RolesAPIService {
      * delete role and its all details from database
      * @param {*} roleId
      * @returns {Observable<any>}
-     * @memberof RolesAPIService
+     * @memberof RoleApiService
      */
     delete_role_profile(roleId): Observable<any> {
         this.authorization();
@@ -107,7 +107,7 @@ export class RolesAPIService {
      * assign role profile to employee
      * @param {*} id
      * @returns {Observable<any>}
-     * @memberof RolesAPIService
+     * @memberof RoleApiService
      */
     patch_user_profile(id): Observable<any> {
         this.authorization();
@@ -117,10 +117,10 @@ export class RolesAPIService {
     /**
      * show delete confirmation after click Delete button
      * @param {string} text
-     * @memberof RolesAPIService
+     * @memberof RoleApiService
      */
     snackbarMsg(text: string) {
-        this.snackBar.openFromComponent(SnackbarNotificationPage, {
+        this.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 3000,
             data: text
         });

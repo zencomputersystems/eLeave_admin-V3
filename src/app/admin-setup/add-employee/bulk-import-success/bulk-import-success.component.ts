@@ -3,7 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 /**
  * Bulk Import Success Page
  * @export
- * @class BulkImportSuccessPage
+ * @class BulkImportSuccessComponent
  * @implements {OnInit}
  */
 @Component({
@@ -11,26 +11,26 @@ import { MatDialogRef } from '@angular/material/dialog';
     templateUrl: './bulk-import-success.component.html',
     styleUrls: ['./bulk-import-success.component.scss'],
 })
-export class BulkImportSuccessPage implements OnInit {
+export class BulkImportSuccessComponent implements OnInit {
 
     /**
      * Loading spinner style name
-     * @memberof BulkImportSuccessPage
+     * @memberof BulkImportSuccessComponent
      */
     public spinnerName = "dots";
 
     /**
      * Show or hide spinner
-     * @memberof BulkImportSuccessPage
+     * @memberof BulkImportSuccessComponent
      */
     public showSpinner = true;
 
     /**
-     *Creates an instance of BulkImportSuccessPage.
-     * @param {MatDialogRef<BulkImportSuccessPage>} dialogRef
-     * @memberof BulkImportSuccessPage
+     *Creates an instance of BulkImportSuccessComponent.
+     * @param {MatDialogRef<BulkImportSuccessComponent>} dialogRef
+     * @memberof BulkImportSuccessComponent
      */
-    constructor(public dialogRef: MatDialogRef<BulkImportSuccessPage>,
+    constructor(public dialogRef: MatDialogRef<BulkImportSuccessComponent>,
     ) {
     }
 

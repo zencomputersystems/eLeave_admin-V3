@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 /**
  * pop up date selection
  * @export
- * @class DateDialogPage
+ * @class DateDialogComponent
  */
 @Component({
     selector: 'date-dialog',
@@ -12,29 +12,29 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
     styleUrls: ['./date-dialog.component.scss'],
 
 })
-export class DateDialogPage {
+export class DateDialogComponent {
 
     /**
      * date selected
      * @type {Date}
-     * @memberof DateDialogPage
+     * @memberof DateDialogComponent
      */
     public date: Date;
 
     /**
-     *Creates an instance of DateDialogPage.
-     * @param {MatDialogRef<DateDialogPage>} dialog
+     *Creates an instance of DateDialogComponent.
+     * @param {MatDialogRef<DateDialogComponent>} dialog
      * @param {*} data
-     * @memberof DateDialogPage
+     * @memberof DateDialogComponent
      */
     constructor(
-        public dialog: MatDialogRef<DateDialogPage>,
+        public dialog: MatDialogRef<DateDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
     /**
      * click cancel to close pop up dialog
-     * @memberof DateDialogPage
+     * @memberof DateDialogComponent
      */
     cancelClick(): void {
         this.dialog.close();
@@ -44,7 +44,7 @@ export class DateDialogPage {
     /** 
      * get selected date value from datepicker
      * @param {*} event
-     * @memberof DateDialogPage
+     * @memberof DateDialogComponent
      */
     expirationDateChange(event) {
         this.date = event.value;

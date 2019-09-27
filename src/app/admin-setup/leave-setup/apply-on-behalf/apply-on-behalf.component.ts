@@ -11,8 +11,8 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../date.adapter';
 import { DayType } from './apply-on-behalf.service';
-import { LeaveAPIService } from '../leave-api.service';
-import { EmployeeTreeview } from '../assign-calendar/employee-treeview.service';
+import { LeaveApiService } from '../leave-api.service';
+import { EmployeeTreeviewService } from '../assign-calendar/employee-treeview.service';
 const moment = _moment;
 /**
  * Apply Leave Page
@@ -28,7 +28,7 @@ const moment = _moment;
         { provide: DateAdapter, useClass: AppDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
 })
-export class ApplyOnBehalfPage implements OnInit {
+export class ApplyOnBehalfComponent implements OnInit {
     /**
      * Local property for leave entitlement details
      * @type {*}
@@ -116,7 +116,7 @@ export class ApplyOnBehalfPage implements OnInit {
      * company list from API
      *
      * @type {*}
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     public companyList: any;
 
@@ -124,42 +124,42 @@ export class ApplyOnBehalfPage implements OnInit {
     /**
      * department list get from selected company
      * @type {*}
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     public departmentlist: any = [];
 
     /**
      * show/hide the tree view 
      * @type {boolean}
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     public showTreeDropdown: boolean = false;
 
     /**
      * show selected tree value after clicked outside the div
      * @type {boolean}
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     public showSelectedTree: boolean = false;
 
     /**
      * radio button value
      * @type {string}
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     public radioOption: string = '1';
 
     /**
      * list of leave types
      * @type {*}
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     public leaveTypes: any;
 
     /**
      * show loading spinner
      * @type {boolean}
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     public showSpinner: boolean = false;
 
@@ -167,7 +167,7 @@ export class ApplyOnBehalfPage implements OnInit {
      * company Id get from selected company list
      * @private
      * @type {string}
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     private _selectedCompanyId: string;
 
@@ -176,7 +176,7 @@ export class ApplyOnBehalfPage implements OnInit {
      * selected tree item
      * @private
      * @type {*}
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     private _employeeTree: any = [];
 
@@ -184,14 +184,14 @@ export class ApplyOnBehalfPage implements OnInit {
      * user guid from selected employee (option == 1)
      * @private
      * @type {string}
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     private guid: string;
     /**
      * selected user id
      * @private
      * @type {string[]}
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     private _employeeId: string[] = [];
 
@@ -356,20 +356,20 @@ export class ApplyOnBehalfPage implements OnInit {
      * get day types of form array
      * @readonly
      * @type {FormArray}
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     get dayTypes(): FormArray {
         return this.applyLeaveForm.get('dayTypes') as FormArray;
     }
 
     /**
-     *Creates an instance of ApplyOnBehalfPage.
-     * @param {LeaveAPIService} leaveAPI
-     * @param {EmployeeTreeview} tree
+     *Creates an instance of ApplyOnBehalfComponent.
+     * @param {LeaveApiService} leaveAPI
+     * @param {EmployeeTreeviewService} tree
      * @param {APIService} apiService
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
-    constructor(private leaveAPI: LeaveAPIService, private tree: EmployeeTreeview, private apiService: APIService) {
+    constructor(private leaveAPI: LeaveApiService, private tree: EmployeeTreeviewService, private apiService: APIService) {
         this.applyLeaveForm = this.formGroup();
     }
 
@@ -839,7 +839,7 @@ export class ApplyOnBehalfPage implements OnInit {
     /**
      * pass selected companyId to get department list
      * @param {*} selectedCompanyId
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     selectedCompany(selectedCompanyId) {
         this.departmentlist = [];
@@ -858,7 +858,7 @@ export class ApplyOnBehalfPage implements OnInit {
     /**
      * get selected employee's user profile details
      * @param {string} name
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     getSelectedEmployee(name: string) {
         this.showSpinner = true;
@@ -878,7 +878,7 @@ export class ApplyOnBehalfPage implements OnInit {
     /**
      * close treeview div & get the selected  value
      * @param {*} evt
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     clickOutside(evt) {
         if (!evt.target.className.includes("material-icons") && !evt.target.className.includes("dropdownDiv") && !evt.target.className.includes("mat-form-field-infix")) {
@@ -899,7 +899,7 @@ export class ApplyOnBehalfPage implements OnInit {
      * filter employee name that exist in user list
      * @param {*} array
      * @param {*} obj
-     * @memberof ApplyOnBehalfPage
+     * @memberof ApplyOnBehalfComponent
      */
     checkIdExist(array: any, obj: any) {
         for (let j = 0; j < array.length; j++) {

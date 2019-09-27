@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { APIService } from "src/services/shared-service/api.service";
-import { LeaveAPIService } from "../../leave-api.service";
-import { SnackbarNotificationPage } from "../../snackbar-notification/snackbar-notification";
-import { WorkingHourAPIService } from "../working-hour-api.service";
+import { LeaveApiService } from "../../leave-api.service";
+import { SnackbarNotificationComponent } from "../../snackbar-notification/snackbar-notification";
+import { WorkingHourApiService } from "../working-hour-api.service";
 /**
  * assign working hour profile to user
  * @export
- * @class AssignWorkingHourPage
+ * @class AssignWorkingHourComponent
  * @implements {OnInit}
  */
 @Component({
@@ -15,40 +15,40 @@ import { WorkingHourAPIService } from "../working-hour-api.service";
     templateUrl: './assign-working-hour.component.html',
     styleUrls: ['./assign-working-hour.component.scss'],
 })
-export class AssignWorkingHourPage implements OnInit {
+export class AssignWorkingHourComponent implements OnInit {
 
     /**
      * validation group 
      * @type {*}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     public workingHrForm: any;
 
     /**
      * company list from API
      * @type {*}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     public company: any;
 
     /**
      * department list from API
      * @type {*}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     public departmentItems: any;
 
     /**
      * leavetype list from API
      * @type {*}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     public workingHrProfileList: any;
 
     /**
      * filter users from selected company and department
      * @type {any[]}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     public filteredUser: any[] = [];
 
@@ -56,49 +56,49 @@ export class AssignWorkingHourPage implements OnInit {
     /**
      * enable/disable submit button according required item
      * @type {boolean}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     public submitButton: boolean = true;
 
     /**
      * value of main checkbox
      * @type {boolean}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     public checkboxVal: boolean;
 
     /**
      * value of indeterminate in main checkbox
      * @type {boolean}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     public line: boolean;
 
     /**
      * hover value of show/hide checkbox
      * @type {boolean}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     public showTickbox: boolean[] = [];
 
     /**
      * show/hide spinner when submit button is clicked
      * @type {boolean}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     public smallSpinner: boolean = false;
 
     /**
      * show/hide spinner when company & department selection is clicked
      * @type {boolean}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     public showSpinner: boolean = false;
 
     /**
      * show no result when user list is empty
      * @type {boolean}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     public showNoSearchFound: boolean = false;
 
@@ -106,7 +106,7 @@ export class AssignWorkingHourPage implements OnInit {
      * selected company guid
      * @private
      * @type {string}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     private _companyID: string;
 
@@ -114,7 +114,7 @@ export class AssignWorkingHourPage implements OnInit {
      * user list from API
      * @private
      * @type {*}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     private _userItem: any;
 
@@ -122,31 +122,31 @@ export class AssignWorkingHourPage implements OnInit {
      * selected user details from user list
      * @private
      * @type {any[]}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     private _selectedUserItem: any[] = [];
 
     /**
      * show assign page input
      * @type {boolean}
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     @Input() showAssignPage: boolean = true;
 
     /**
      * emit value to hide this page after clicked back button
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     @Output() backToList = new EventEmitter();
 
     /**
-     *Creates an instance of AssignWorkingHourPage.
-     * @param {LeaveAPIService} leaveSetupAPI
+     *Creates an instance of AssignWorkingHourComponent.
+     * @param {LeaveApiService} leaveSetupAPI
      * @param {APIService} apiService
      * @param {MatSnackBar} snackBar
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
-    constructor(private leaveSetupAPI: LeaveAPIService, private apiService: APIService, private workingHrAPI: WorkingHourAPIService) {
+    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService, private workingHrAPI: WorkingHourApiService) {
         this.workingHrForm = new FormGroup({
             profile: new FormControl('', Validators.required),
             company: new FormControl('', Validators.required),
@@ -162,7 +162,7 @@ export class AssignWorkingHourPage implements OnInit {
     /**
      * select company & pass company guid to get department list
      * @param {*} id
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     companyList(id: string) {
         this.showSpinner = true;
@@ -176,7 +176,7 @@ export class AssignWorkingHourPage implements OnInit {
     /**
      * get user list from API
      * @param {*} employeeName
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     departmentList(employeeName: string) {
         this.filteredUser = [];
@@ -191,7 +191,7 @@ export class AssignWorkingHourPage implements OnInit {
     /**
      * get entitled leave balance from requested userID 
      * @param {*} workingHrGUID
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     // getWorkingProfile(workingHrGUID) {
     //     for (let i = 0; i < this.filteredUserItems.length; i++) {
@@ -208,7 +208,7 @@ export class AssignWorkingHourPage implements OnInit {
      * get user list to filter from selected compant & department
      * @param {*} data
      * @param {string} employeeName
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     filterUser(data: any, employeeName: string) {
         for (let i = 0; i < data.length; i++) {
@@ -227,7 +227,7 @@ export class AssignWorkingHourPage implements OnInit {
 
     /**
      * checking to enable/disable submit button
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     enableDisableSubmitButton() {
         if (this.workingHrForm.valid && (this.checkboxVal || this.line)) {
@@ -242,7 +242,7 @@ export class AssignWorkingHourPage implements OnInit {
      * @param {number} index
      * @param {boolean} inOut
      * @param {boolean} check
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     mouseEvent(index: number, inOut: boolean, check: boolean) {
         if (check && (this.checkboxVal || this.line)) {
@@ -261,7 +261,7 @@ export class AssignWorkingHourPage implements OnInit {
 
     /**
      * check main checkbox to check all sub checkbox
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     checkMainEvent() {
         this.showTickbox.splice(0, this.showTickbox.length);
@@ -280,7 +280,7 @@ export class AssignWorkingHourPage implements OnInit {
 
     /**
      * check sub checkbox to make changing in main checkbox (interminate/mainCheckBox)
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     checkItemsEvent() {
         const total = this.filteredUser.length;
@@ -307,10 +307,10 @@ export class AssignWorkingHourPage implements OnInit {
     /**
      * show pop up snackbar
      * @param {string} statement
-     * @memberof AssignWorkingHourPage
+     * @memberof AssignWorkingHourComponent
      */
     openNotification(statement: string) {
-        this.leaveSetupAPI.snackBar.openFromComponent(SnackbarNotificationPage, {
+        this.leaveSetupAPI.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 5000,
             data: statement
         });

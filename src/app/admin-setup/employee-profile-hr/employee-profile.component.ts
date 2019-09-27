@@ -8,7 +8,7 @@ import { employeeStatus } from './employee-profile.service';
 /**
  * Employee Profile Page
  * @export
- * @class EmployeeProfilePage
+ * @class EmployeeProfileComponent
  * @implements {OnInit}
  */
 @Component({
@@ -19,41 +19,41 @@ import { employeeStatus } from './employee-profile.service';
         { provide: DateAdapter, useClass: AppDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
 })
-export class EmployeeProfilePage implements OnInit {
+export class EmployeeProfileComponent implements OnInit {
 
     /**
      * Get personal details from API
      * @type {*}
-     * @memberof EmployeeProfilePage
+     * @memberof EmployeeProfileComponent
      */
     public list: any;
 
     /**
      * Get user Id from API
      * @type {string}
-     * @memberof EmployeeProfilePage
+     * @memberof EmployeeProfileComponent
      */
     public userId: string;
 
     /**
      * Show star icon highlight or vice versa
      * @type {boolean}
-     * @memberof EmployeeProfilePage
+     * @memberof EmployeeProfileComponent
      */
     public numOfArray: boolean = false;
 
     /**
      * show spinner during load page
      * @type {boolean}
-     * @memberof EmployeeProfilePage
+     * @memberof EmployeeProfileComponent
      */
     public showSpinner: boolean = false;
 
     /**
-     *Creates an instance of EmployeeProfilePage.
+     *Creates an instance of EmployeeProfileComponent.
      * @param {APIService} apiService
      * @param {Router} router
-     * @memberof EmployeeProfilePage
+     * @memberof EmployeeProfileComponent
      */
     constructor(private apiService: APIService, private router: Router, private route: ActivatedRoute) {
         route.queryParams
@@ -76,7 +76,7 @@ export class EmployeeProfilePage implements OnInit {
 
     /**
      * To change star icon color when clicked
-     * @memberof EmployeeProfilePage
+     * @memberof EmployeeProfileComponent
      */
     clickAsFavourite() {
         if (this.numOfArray) {
@@ -88,7 +88,7 @@ export class EmployeeProfilePage implements OnInit {
 
     /**
      * Route to personal details page
-     * @memberof EmployeeProfilePage
+     * @memberof EmployeeProfileComponent
      */
     toMyProfile() {
         this.router.navigate(['/main/employee-setup']);

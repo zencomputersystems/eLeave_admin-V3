@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ApprovalOverrideAPIService } from './approval-override-api.service';
+import { ApprovalOverrideApiService } from './approval-override-api.service';
 
 /**
  * override approval for pending leave applciation 
  * @export
- * @class ApprovalOverridePage
+ * @class ApprovalOverrideComponent
  * @implements {OnInit}
  */
 @Component({
@@ -13,89 +13,89 @@ import { ApprovalOverrideAPIService } from './approval-override-api.service';
     templateUrl: './approval-override.component.html',
     styleUrls: ['./approval-override.component.scss'],
 })
-export class ApprovalOverridePage implements OnInit {
+export class ApprovalOverrideComponent implements OnInit {
 
     /**
      * company list from API
      * @type {*}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     public companyList: any;
 
     /**
      * department list from API
      * @type {*}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     public departmentList: any;
 
     /**
      * validation for form field
      * @type {*}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     public approvalForm: any;
 
     /**
      * list of pending approval application, filtered from selected company & department
      * @type {*}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     public filteredPendingList: any = [];
 
     /**
      * main checkbox value
      * @type {boolean}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     public mainCheckbox: boolean;
 
     /**
      * indetermine value of checkbox
      * @type {boolean}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     public indeterminate: boolean;
 
     /**
      * show /hide checkbox & vice versa for avatar
      * @type {boolean}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     public displayCheckbox: boolean[] = [];
 
     /**
      * selected pending application's leaveTransactionGUID to patch to API 
      * @type {string[]}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     public leaveTransactionGUID: string[] = [];
 
     /**
      * enable/disable submit button
      * @type {boolean}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     public disableButton: boolean = true;
 
     /**
      * show small spinner when loading after clicked submit button
      * @type {boolean}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     public showSmallSpinner: boolean = false;
 
     /**
      * show spinner after click selection of company & department
      * @type {boolean}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     public showSpinner: boolean = false;
 
     /**
      * show no result when user list is empty
      * @type {boolean}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     public showNoResult: boolean = false;
 
@@ -103,7 +103,7 @@ export class ApprovalOverridePage implements OnInit {
      * users list from API
      * @private
      * @type {*}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     private _userList: any;
 
@@ -111,7 +111,7 @@ export class ApprovalOverridePage implements OnInit {
      * pending approval application list
      * @private
      * @type {*}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     private _pendingList: any;
 
@@ -120,7 +120,7 @@ export class ApprovalOverridePage implements OnInit {
      * to get department list from this id
      * @private
      * @type {string}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     private _companyId: string;
 
@@ -128,7 +128,7 @@ export class ApprovalOverridePage implements OnInit {
      * user list from selected department
      * @private
      * @type {*}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     private _filteredUserList: any = [];
 
@@ -136,17 +136,17 @@ export class ApprovalOverridePage implements OnInit {
      * leave type list from API
      * @private
      * @type {*}
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     private _leaveTypeList: any;
 
     /**
-     *Creates an instance of ApprovalOverridePage.
-     * @param {ApprovalOverrideAPIService} approvalOverrideAPI
+     *Creates an instance of ApprovalOverrideComponent.
+     * @param {ApprovalOverrideApiService} approvalOverrideAPI
      * @param {MatSnackBar} snackBar
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
-    constructor(private approvalOverrideAPI: ApprovalOverrideAPIService) {
+    constructor(private approvalOverrideAPI: ApprovalOverrideApiService) {
         this.approvalForm = new FormGroup({
             company: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),
@@ -164,7 +164,7 @@ export class ApprovalOverridePage implements OnInit {
      * @param {*} list
      * @param {*} obj
      * @param {number} index
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     filterUserGUID(list: any, obj: any, index: number) {
         for (let i = 0; i < list.length; i++) {
@@ -181,7 +181,7 @@ export class ApprovalOverridePage implements OnInit {
     /**
      * selected company id to get department list
      * @param {*} company_guid
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     selectedCompany(company_guid: string) {
         this.showSpinner = true;
@@ -196,7 +196,7 @@ export class ApprovalOverridePage implements OnInit {
     /**
      * selected department name to get user list
      * @param {*} departmentName
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     selectedDepartment(departmentName: string) {
         this.filteredPendingList = [];
@@ -212,7 +212,7 @@ export class ApprovalOverridePage implements OnInit {
 
     /**
      * compare approval override list with user list of selected department
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     checkPendingUserList(departmentName: string) {
         for (let i = 0; i < this._userList.length; i++) {
@@ -231,7 +231,7 @@ export class ApprovalOverridePage implements OnInit {
      * get leave type name from id
      * @param {number} index
      * @param {string} leaveTypeGuid
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     getLeaveType(index: number, leaveTypeGuid: string) {
         this.approvalOverrideAPI.get_admin_leavetype().subscribe(type => {
@@ -246,7 +246,7 @@ export class ApprovalOverridePage implements OnInit {
 
     /**
      * value of main checkbox & indetermine
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     mainEvent() {
         this.displayCheckbox.splice(0, this.displayCheckbox.length);
@@ -265,7 +265,7 @@ export class ApprovalOverridePage implements OnInit {
 
     /**
      * value of clicked sub checkbox
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     subEvent() {
         const total = this.filteredPendingList.length;
@@ -293,7 +293,7 @@ export class ApprovalOverridePage implements OnInit {
      * hover event for checkbox & avatar
      * @param {*} value
      * @param {*} isChecked
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     mouseEvent(value: boolean, index: number, isChecked: boolean) {
         if (isChecked && (this.mainCheckbox || this.indeterminate)) {
@@ -312,7 +312,7 @@ export class ApprovalOverridePage implements OnInit {
 
     /**
      * enable/disable submit button
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     enableDisableButton() {
         if (this.approvalForm.valid && (this.mainCheckbox || this.indeterminate)) {
@@ -326,7 +326,7 @@ export class ApprovalOverridePage implements OnInit {
 
     /**
      * patch selected user pending approval application 
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     patchStatus() {
         this.showSmallSpinner = true;
@@ -346,7 +346,7 @@ export class ApprovalOverridePage implements OnInit {
     /**
      * patch data to the endpoint
      * @param {*} body
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     submitData(body: any) {
         this.approvalOverrideAPI.patch_approval_override(body).subscribe(response => {
@@ -370,7 +370,7 @@ export class ApprovalOverridePage implements OnInit {
 
     /**
      * delete submitted items
-     * @memberof ApprovalOverridePage
+     * @memberof ApprovalOverrideComponent
      */
     deleteSubmittedItem(i: number) {
         for (let j = 0; j < this.leaveTransactionGUID.length; j++) {

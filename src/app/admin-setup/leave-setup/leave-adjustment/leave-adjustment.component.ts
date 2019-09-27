@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { LeaveAPIService } from "../leave-api.service";
+import { LeaveApiService } from "../leave-api.service";
 import { APIService } from "src/services/shared-service/api.service";
-import { SnackbarNotificationPage } from "../snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "../snackbar-notification/snackbar-notification";
 /**
  * leave adjusment page
  * @export
- * @class LeaveAdjustmentPage
+ * @class LeaveAdjustmentComponent
  * @implements {OnInit}
  */
 @Component({
@@ -14,40 +14,40 @@ import { SnackbarNotificationPage } from "../snackbar-notification/snackbar-noti
     templateUrl: './leave-adjustment.component.html',
     styleUrls: ['./leave-adjustment.component.scss'],
 })
-export class LeaveAdjustmentPage implements OnInit {
+export class LeaveAdjustmentComponent implements OnInit {
 
     /**
      * validation group 
      * @type {*}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     public adjustmentForm: any;
 
     /**
      * company list from API
      * @type {*}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     public company: any;
 
     /**
      * department list from API
      * @type {*}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     public department: any;
 
     /**
      * leavetype list from API
      * @type {*}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     public leavetypeList: any;
 
     /**
      * filter users from selected company and department
      * @type {any[]}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     public filteredUserItems: any[] = [];
 
@@ -55,49 +55,49 @@ export class LeaveAdjustmentPage implements OnInit {
     /**
      * enable/disable submit button according required item
      * @type {boolean}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     public disableSubmitButton: boolean = true;
 
     /**
      * value of main checkbox
      * @type {boolean}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     public mainCheckBox: boolean;
 
     /**
      * value of indeterminate in main checkbox
      * @type {boolean}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     public indeterminate: boolean;
 
     /**
      * hover value of show/hide checkbox
      * @type {boolean}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     public showCheckbox: boolean[] = [];
 
     /**
      * show/hide spinner when submit button is clicked
      * @type {boolean}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     public showSmallSpinner: boolean = false;
 
     /**
      * show/hide spinner when company & department selection is clicked
      * @type {boolean}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     public showSpinner: boolean = false;
 
     /**
      * show no result when user list is empty
      * @type {boolean}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     public showNoResult: boolean = false;
 
@@ -105,7 +105,7 @@ export class LeaveAdjustmentPage implements OnInit {
      * selected company guid
      * @private
      * @type {string}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     private _companyGUID: string;
 
@@ -113,7 +113,7 @@ export class LeaveAdjustmentPage implements OnInit {
      * user list from API
      * @private
      * @type {*}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     private _userItems: any;
 
@@ -121,7 +121,7 @@ export class LeaveAdjustmentPage implements OnInit {
      * selected user details from user list
      * @private
      * @type {any[]}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     private _selectedUser: any[] = [];
 
@@ -129,18 +129,18 @@ export class LeaveAdjustmentPage implements OnInit {
      * value of days with symbol add or minus
      * @private
      * @type {number}
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     private _numberOfDays: number;
 
     /**
-     *Creates an instance of LeaveAdjustmentPage.
-     * @param {LeaveAPIService} leaveSetupAPI
+     *Creates an instance of LeaveAdjustmentComponent.
+     * @param {LeaveApiService} leaveSetupAPI
      * @param {APIService} apiService
      * @param {MatSnackBar} snackBar
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
-    constructor(private leaveSetupAPI: LeaveAPIService, private apiService: APIService) {
+    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService) {
         this.adjustmentForm = new FormGroup({
             company: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),
@@ -159,7 +159,7 @@ export class LeaveAdjustmentPage implements OnInit {
     /**
      * select company & pass company guid to get department list
      * @param {*} guid
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     companySelected(guid) {
         this.showSpinner = true;
@@ -173,7 +173,7 @@ export class LeaveAdjustmentPage implements OnInit {
     /**
      * get user list from API
      * @param {*} name
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     departmentSelected(name) {
         this.filteredUserItems = [];
@@ -188,7 +188,7 @@ export class LeaveAdjustmentPage implements OnInit {
     /**
      * get entitled leave balance from requested userID 
      * @param {*} leavetypeGUID
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     getLeaveEntitlement(leavetypeGUID) {
         for (let i = 0; i < this.filteredUserItems.length; i++) {
@@ -205,7 +205,7 @@ export class LeaveAdjustmentPage implements OnInit {
      * get user list to filter from selected compant & department
      * @param {*} userList
      * @param {string} name
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     filterUserList(userList: any, name: string) {
         for (let i = 0; i < userList.length; i++) {
@@ -224,7 +224,7 @@ export class LeaveAdjustmentPage implements OnInit {
 
     /**
      * checking to enable/disable submit button
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     enableDisableSubmitButton() {
         if (this.adjustmentForm.valid && (this.mainCheckBox || this.indeterminate)) {
@@ -239,7 +239,7 @@ export class LeaveAdjustmentPage implements OnInit {
      * @param {number} i
      * @param {boolean} mouseIn
      * @param {boolean} isChecked
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     hoverEvent(i: number, mouseIn: boolean, isChecked: boolean) {
         if (isChecked && (this.mainCheckBox || this.indeterminate)) {
@@ -258,7 +258,7 @@ export class LeaveAdjustmentPage implements OnInit {
 
     /**
      * check main checkbox to check all sub checkbox
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     mainCheckboxEvent() {
         this.showCheckbox.splice(0, this.showCheckbox.length);
@@ -277,7 +277,7 @@ export class LeaveAdjustmentPage implements OnInit {
 
     /**
      * check sub checkbox to make changing in main checkbox (interminate/mainCheckBox)
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     subEvent() {
         const totalLength = this.filteredUserItems.length;
@@ -303,7 +303,7 @@ export class LeaveAdjustmentPage implements OnInit {
 
     /**
      * get selected user from list
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     getCheckedUser() {
         if (this.adjustmentForm.controls.symbol.value === 'remove') {
@@ -320,7 +320,7 @@ export class LeaveAdjustmentPage implements OnInit {
 
     /**
      * patch the leave adjustment day to API
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     patchLeaveNumber() {
         this.getCheckedUser();
@@ -344,10 +344,10 @@ export class LeaveAdjustmentPage implements OnInit {
     /**
      * show pop up snackbar
      * @param {string} statement
-     * @memberof LeaveAdjustmentPage
+     * @memberof LeaveAdjustmentComponent
      */
     openNotification(statement: string) {
-        this.leaveSetupAPI.snackBar.openFromComponent(SnackbarNotificationPage, {
+        this.leaveSetupAPI.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 5000,
             data: statement
         });

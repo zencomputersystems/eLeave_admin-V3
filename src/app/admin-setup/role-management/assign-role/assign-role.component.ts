@@ -1,16 +1,16 @@
 import { Component, OnInit } from "@angular/core";
 import { roleDetails, options } from "../role-details-data";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { RolesAPIService } from "../role-api.service";
-import { EmployeeTreeview } from "../../leave-setup/assign-calendar/employee-treeview.service";
+import { RoleApiService } from "../role-api.service";
+import { EmployeeTreeviewService } from "../../leave-setup/assign-calendar/employee-treeview.service";
 import { APIService } from "src/services/shared-service/api.service";
-import { SnackbarNotificationPage } from "../../leave-setup/snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "../../leave-setup/snackbar-notification/snackbar-notification";
 import { MatSnackBar } from "@angular/material";
 
 /**
  * Assign role to employee
  * @export
- * @class AssignRolePage
+ * @class AssignRoleComponent
  * @implements {OnInit}
  */
 @Component({
@@ -18,20 +18,20 @@ import { MatSnackBar } from "@angular/material";
     templateUrl: './assign-role.component.html',
     styleUrls: ['./assign-role.component.scss'],
 })
-export class AssignRolePage implements OnInit {
+export class AssignRoleComponent implements OnInit {
 
     /**
      * role details from API
      * code, description & property
      * @type {*}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public data: any;
 
     /**
      * role profile list from API
      * @type {*}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public list: any;
 
@@ -39,63 +39,63 @@ export class AssignRolePage implements OnInit {
      * users list details from API 
      * from api/users
      * @type {*}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public users: any;
 
     /**
      * Loading spinner after reload
      * @type {boolean}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public showSpinner: boolean = true;
 
     /**
      * small spinner loading when requested API
      * @type {boolean}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public showSmallSpinner: boolean = false;
 
     /**
      * hide content during loading
      * @type {boolean}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public showContent: boolean = false;
 
     /**
      * show indeterminate in checkbox
      * @type {boolean[]}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public indeterminate: boolean[] = [false, false, false];
 
     /**
      * main checkbox is selected
      * @type {boolean[]}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public allowAll: boolean[] = [false, false, false];
 
     /**
      * option list from select input
      * @type {*}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public viewReportList: any;
 
     /**
      * leave setup checked value
      * @type {*}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public getLeaveSetupKey: any;
 
     /**
      * leave management checked value
      * @type {*}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public getLeaveMngtKey: any;
 
@@ -103,67 +103,67 @@ export class AssignRolePage implements OnInit {
      * profile management checked value
      *
      * @type {*}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public getProfileMngtKey: any;
 
     /**
      * view calendar checked value
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public getCalendarKey = [];
 
     /**
      * view report checked value
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public getReportKey = [];
 
     /**
      * form control of role
      * @type {FormGroup}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public assignRoleForm: FormGroup;
 
     /**
      * selected employee name (checkbox)
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public employeeNameList = [];
 
     /**
      * rolename value from API
      * @type {string}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public rolename: string;
 
     /**
      * description value from API
      * @type {string}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public description: string;
 
     /**
      * checked employee Id 
      * @type {string[]}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public userList: string[] = [];
 
     /**
      *enable/disable submit button
      * @type {boolean}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public submitButton: boolean = true;
 
     /**
      * Click to show dropdown of treeview checkbox list
      * @type {boolean}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     public displayDivDropdown: boolean = false;
 
@@ -178,19 +178,19 @@ export class AssignRolePage implements OnInit {
      * selected role from option list
      * @private
      * @type {string}
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     private _roleId: string;
 
     /**
-     *Creates an instance of AssignRolePage.
+     *Creates an instance of AssignRoleComponent.
      * @param {MatSnackBar} snackBar
-     * @param {RolesAPIService} roleAPi
+     * @param {RoleApiService} roleAPi
      * @param {APIService} apiService
-     * @param {EmployeeTreeview} treeview
-     * @memberof AssignRolePage
+     * @param {EmployeeTreeviewService} treeview
+     * @memberof AssignRoleComponent
      */
-    constructor(private snackBar: MatSnackBar, private roleAPi: RolesAPIService, private apiService: APIService, private treeview: EmployeeTreeview) {
+    constructor(private snackBar: MatSnackBar, private roleAPi: RoleApiService, private apiService: APIService, private treeview: EmployeeTreeviewService) {
         this.assignRoleForm = new FormGroup(
             { role: new FormControl(null, Validators.required) });
     }
@@ -214,7 +214,7 @@ export class AssignRolePage implements OnInit {
 
     /**
      * Initial value for role details 
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     getInit() {
         this.showSpinner = false;
@@ -229,7 +229,7 @@ export class AssignRolePage implements OnInit {
 
     /**
      * checked event value from checkbox 
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     getChildCheckedValue() {
         this.childCheckbox(this.getLeaveSetupKey, 0);
@@ -244,7 +244,7 @@ export class AssignRolePage implements OnInit {
      * @param {*} list
      * @param {number} [mainIndex]
      * @param {number} [childIndex]
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     childCheckbox(list: any, mainIndex?: number, childIndex?: number) {
         const itemsNum = list.length;
@@ -270,7 +270,7 @@ export class AssignRolePage implements OnInit {
      * Push all items to array if they have checked
      * Clear array if no item checked
      * @param {*} event
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     clickToCloseDiv(event) {
         if (!event.target.className.includes("dropdown") && !event.target.className.includes("material-icons.dropdown-icon") && !event.target.className.includes("mat-form-field-infix")) {
@@ -293,7 +293,7 @@ export class AssignRolePage implements OnInit {
      * role is selected from list 
      * pass role id to API and get role details
      * @param {*} roleGuid
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     roleSelected(roleGuid) {
         this.showSmallSpinner = true;
@@ -311,7 +311,7 @@ export class AssignRolePage implements OnInit {
 
     /**
      * method to enable/disable submit button
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     disabledSubmit() {
         if (this.employeeNameList.length > 0 && this.assignRoleForm.controls.role.value != null) {
@@ -324,7 +324,7 @@ export class AssignRolePage implements OnInit {
      * @param {*} list
      * @param {*} nameObj
      * @returns
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     checkNameExist(list: any, nameObj: any) {
         for (let j = 0; j < list.length; j++) {
@@ -337,7 +337,7 @@ export class AssignRolePage implements OnInit {
 
     /**
      * push selected role Id to Array
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     pushUserId() {
         for (let i = 0; i < this.employeeNameList.length; i++) {
@@ -350,7 +350,7 @@ export class AssignRolePage implements OnInit {
 
     /**
      * patch the assigned data to employee to API
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     assignData() {
         this.pushUserId();
@@ -374,10 +374,10 @@ export class AssignRolePage implements OnInit {
     /**
      * Display message after assigned role to employee
      * @param {string} message
-     * @memberof AssignRolePage
+     * @memberof AssignRoleComponent
      */
     alertMessage(message: string) {
-        this.snackBar.openFromComponent(SnackbarNotificationPage, {
+        this.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 2500,
             data: message
         });

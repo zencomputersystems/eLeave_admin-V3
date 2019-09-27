@@ -1,26 +1,26 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
-import { LeaveAPIService } from "../leave-setup/leave-api.service";
+import { LeaveApiService } from "../leave-setup/leave-api.service";
 import { MatSnackBar } from "@angular/material";
-import { SnackbarNotificationPage } from "../leave-setup/snackbar-notification/snackbar-notification";
+import { SnackbarNotificationComponent } from "../leave-setup/snackbar-notification/snackbar-notification";
 
 /**
  * API for policy
  * @export
- * @class PolicyAPIService
+ * @class PolicyApiService
  */
 @Injectable({
     providedIn: 'root'
 })
-export class PolicyAPIService {
+export class PolicyApiService {
 
     /**
-     *Creates an instance of PolicyAPIService.
+     *Creates an instance of PolicyApiService.
      * @param {APIService} apiService
-     * @memberof PolicyAPIService
+     * @memberof PolicyApiService
      */
-    constructor(private apiService: APIService, private leaveAPi: LeaveAPIService, public snackbar: MatSnackBar) {
+    constructor(private apiService: APIService, private leaveAPi: LeaveApiService, public snackbar: MatSnackBar) {
 
     }
 
@@ -28,7 +28,7 @@ export class PolicyAPIService {
      * create new policy for tenant
      * @param {*} value
      * @returns {Observable<any>}
-     * @memberof PolicyAPIService
+     * @memberof PolicyApiService
      */
     post_general_leave_policy(value): Observable<any> {
         this.apiService.headerAuthorization();
@@ -38,7 +38,7 @@ export class PolicyAPIService {
     /**
      * get all tenant policy list 
      * @returns {Observable<any>}
-     * @memberof PolicyAPIService
+     * @memberof PolicyApiService
      */
     get_general_leave_policy_list(): Observable<any> {
         this.apiService.headerAuthorization();
@@ -49,7 +49,7 @@ export class PolicyAPIService {
      * update the selected tenant policy
      * @param {*} data
      * @returns {Observable<any>}
-     * @memberof PolicyAPIService
+     * @memberof PolicyApiService
      */
     patch_general_leave_policy(data): Observable<any> {
         this.apiService.headerAuthorization();
@@ -60,7 +60,7 @@ export class PolicyAPIService {
      * get general leave policy details from specific Id
      * @param {*} id
      * @returns {Observable<any>}
-     * @memberof PolicyAPIService
+     * @memberof PolicyApiService
      */
     get_general_leave_policy_id(id): Observable<any> {
         this.apiService.headerAuthorization();
@@ -70,7 +70,7 @@ export class PolicyAPIService {
     /**
     * return company list from leave api
     * @returns {Observable<any>}
-    * @memberof PolicyAPIService
+    * @memberof PolicyApiService
     */
     get_company_list(): Observable<any> {
         return this.leaveAPi.get_company_list();
@@ -79,10 +79,10 @@ export class PolicyAPIService {
     /**
      * show notifation snackbar after clicked create policy
      * @param {string} message
-     * @memberof PolicyAPIService
+     * @memberof PolicyApiService
      */
     message(message: string) {
-        this.snackbar.openFromComponent(SnackbarNotificationPage, {
+        this.snackbar.openFromComponent(SnackbarNotificationComponent, {
             duration: 2500,
             data: message
         });

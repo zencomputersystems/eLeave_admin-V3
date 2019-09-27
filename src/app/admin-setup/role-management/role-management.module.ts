@@ -17,21 +17,21 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { RoleManagementPage } from './role-management.component';
-import { RoleRightsPage } from './role-rights/role-rights.component';
-import { RoleListPage } from './role-list/role-list.component';
+import { RoleManagementComponent } from './role-management.component';
+import { RoleRightsComponent } from './role-rights/role-rights.component';
+import { RoleListComponent } from './role-list/role-list.component';
 import { LeaveSetupModule } from '../leave-setup/leave-setup.module';
-import { AssignRolePage } from './assign-role/assign-role.component';
-import { EmployeeListDatabase } from '../leave-setup/assign-calendar/assign-calendar-treeview.service';
+import { AssignRoleComponent } from './assign-role/assign-role.component';
+import { AssignCalendarTreeviewService } from '../leave-setup/assign-calendar/assign-calendar-treeview.service';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { MatDialogModule } from '@angular/material';
-import { DialogDeleteConfirmationPage } from './dialog-delete-confirmation/dialog-delete-confirmation.component';
+import { DialogDeleteConfirmationComponent } from './dialog-delete-confirmation/dialog-delete-confirmation.component';
 
 
 const routes: Routes = [
     {
         path: '',
-        component: RoleManagementPage
+        component: RoleManagementComponent
     }
 ];
 
@@ -59,8 +59,8 @@ const routes: Routes = [
         MatDialogModule,
         RouterModule.forChild(routes)
     ],
-    providers: [EmployeeListDatabase],
-    entryComponents: [DialogDeleteConfirmationPage],
-    declarations: [RoleManagementPage, RoleRightsPage, RoleListPage, AssignRolePage, DialogDeleteConfirmationPage]
+    providers: [AssignCalendarTreeviewService],
+    entryComponents: [DialogDeleteConfirmationComponent],
+    declarations: [RoleManagementComponent, RoleRightsComponent, RoleListComponent, AssignRoleComponent, DialogDeleteConfirmationComponent]
 })
 export class RoleManagementModule { }

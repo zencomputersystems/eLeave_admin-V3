@@ -4,28 +4,28 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 /**
  * Delete invite name list confirmation pop up
  * @export
- * @class DeleteCalendarConfirmationPage
+ * @class DeleteCalendarConfirmationComponent
  */
 @Component({
     selector: 'delete-calendar-confirmation',
     templateUrl: 'delete-calendar-confirmation.component.html',
 })
-export class DeleteCalendarConfirmationPage {
+export class DeleteCalendarConfirmationComponent {
 
     /**
-     *Creates an instance of DeleteCalendarConfirmationPage.
-     * @param {MatDialogRef<DeleteCalendarConfirmationPage>} dialog
+     *Creates an instance of DeleteCalendarConfirmationComponent.
+     * @param {MatDialogRef<DeleteCalendarConfirmationComponent>} dialog
      * @param {*} data
-     * @memberof DeleteCalendarConfirmationPage
+     * @memberof DeleteCalendarConfirmationComponent
      */
     constructor(
-        public dialog: MatDialogRef<DeleteCalendarConfirmationPage>,
+        public dialog: MatDialogRef<DeleteCalendarConfirmationComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
     /**
      * click cancel to close pop up dialog
-     * @memberof DeleteCalendarConfirmationPage
+     * @memberof DeleteCalendarConfirmationComponent
      */
     cancel(): void {
         this.dialog.close();

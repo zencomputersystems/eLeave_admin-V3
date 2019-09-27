@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LeaveAPIService } from '../../leave-setup/leave-api.service';
+import { LeaveApiService } from '../../leave-setup/leave-api.service';
 
 /**
  * List for all leave policy
  * @export
- * @class PolicyListPage
+ * @class PolicyListComponent
  * @implements {OnInit}
  */
 @Component({
@@ -13,77 +13,77 @@ import { LeaveAPIService } from '../../leave-setup/leave-api.service';
     templateUrl: './policy-list.component.html',
     styleUrls: ['./policy-list.component.scss'],
 })
-export class PolicyListPage implements OnInit {
+export class PolicyListComponent implements OnInit {
 
     /**
      * Role items get from API
      * @type {*}
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     public companyName: any;
 
     /**
      * Show loading spinner
      * @type {boolean}
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     public showSpinner: boolean = true;
 
     /**
      * Content in page is hide during loading
      * @type {boolean}
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     public showPage: boolean = false;
 
     /**
      * To show arrow up or down icon for Name column
      * @type {boolean}
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     public arrowDownName: boolean = true;
 
     /**
      * Page number on current page
      * @type {number}
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     public pageIndex: number;
 
     /**
      * Total page number 
      * @type {number}
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     public totalPageNum: number;
 
     /**
      * Items of the current showing page
      * @type {*}
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     public currentItems: any;
 
     /**
      * Value of disable next button
      * @type {boolean}
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     public disableNextButton: boolean;
 
     /**
      * Value of disable previous button
      * @type {boolean}
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     public disablePrevButton: boolean;
 
     /**
-     *Creates an instance of PolicyListPage.
+     *Creates an instance of PolicyListComponent.
      * @param {Router} router
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
-    constructor(private router: Router, private leaveAPi: LeaveAPIService) { }
+    constructor(private router: Router, private leaveAPi: LeaveApiService) { }
 
 
     ngOnInit() {
@@ -104,7 +104,7 @@ export class PolicyListPage implements OnInit {
     /**
      * Pass tenant company guid to route to edit policy details page
      * @param {*} id
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     getCompanyId(id) {
         this.router.navigate(['/main/general-leave-policy/edit-policy', id]);
@@ -115,7 +115,7 @@ export class PolicyListPage implements OnInit {
      * Sort ascending /descending order of company name column
      * @param {number} val1
      * @param {number} val2
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     nameSorting(val1: number, val2: number) {
         this.companyName.sort(function (a, b) {
@@ -131,7 +131,7 @@ export class PolicyListPage implements OnInit {
     /**
      * Calculate number of item show in each page
      * @param {number} i
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     listOfPage(i: number) {
         let totalNum;
@@ -156,7 +156,7 @@ export class PolicyListPage implements OnInit {
     /**
      * Click to display next page of rendered items
      * @param {number} i
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     nextPage(i: number) {
         if (!(i > this.totalPageNum)) {
@@ -168,7 +168,7 @@ export class PolicyListPage implements OnInit {
     /**
      * Click to display previous page of rendered items
      * @param {number} i
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     prevPage(i: number) {
         if (!(i < 1)) {
@@ -179,7 +179,7 @@ export class PolicyListPage implements OnInit {
 
     /**
      * Enable or disable next button
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     buttonNext() {
         if (this.pageIndex > 1) {
@@ -195,7 +195,7 @@ export class PolicyListPage implements OnInit {
 
     /**
      * Enable or disable previous button
-     * @memberof PolicyListPage
+     * @memberof PolicyListComponent
      */
     buttonPrev() {
         if (this.pageIndex < this.totalPageNum) {

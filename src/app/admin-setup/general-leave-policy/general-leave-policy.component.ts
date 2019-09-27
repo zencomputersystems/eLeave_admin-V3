@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 /**
  * main page of General Leave Policy Page 
  * @export
- * @class GeneralLeavePolicyPage
+ * @class GeneralLeavePolicyComponent
  * @implements {OnInit}
  */
 @Component({
@@ -12,12 +12,12 @@ import { Router } from "@angular/router";
     templateUrl: './general-leave-policy.component.html',
     styleUrls: ['./general-leave-policy.component.scss'],
 })
-export class GeneralLeavePolicyPage implements OnInit {
+export class GeneralLeavePolicyComponent implements OnInit {
 
     /**
-     *Creates an instance of GeneralLeavePolicyPage.
+     *Creates an instance of GeneralLeavePolicyComponent.
      * @param {Router} router
-     * @memberof GeneralLeavePolicyPage
+     * @memberof GeneralLeavePolicyComponent
      */
     constructor(private router: Router) { }
 

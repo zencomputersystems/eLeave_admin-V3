@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RolesAPIService } from '../role-api.service';
+import { RoleApiService } from '../role-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { roleDetails, options } from '../role-details-data';
@@ -7,7 +7,7 @@ import { roleDetails, options } from '../role-details-data';
 /**
  * Manage rights/permission for each role
  * @export
- * @class RoleRightsPage
+ * @class RoleRightsComponent
  * @implements {OnInit}
  */
 @Component({
@@ -15,101 +15,101 @@ import { roleDetails, options } from '../role-details-data';
     templateUrl: './role-rights.component.html',
     styleUrls: ['./role-rights.component.scss'],
 })
-export class RoleRightsPage implements OnInit {
+export class RoleRightsComponent implements OnInit {
 
     /**
      * Role details from each roleID 
      * @type {*}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public profileDetails: any;
 
     /**
      * SHow/hide Loading spinner 
      * @type {boolean}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public showSpinner: boolean = true;
 
     /**
      * Show/hide small Spinner when await for requested list from API
      * @type {boolean}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public showSmallSpinner: boolean = false;
 
     /**
      * Show clear & submit button in create-new-role path only
      * @type {boolean}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public showButtons: boolean = false;
 
     /**
      * Show content after the details loaded from API
      * @type {boolean}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public showContent: boolean = false;
 
     /**
      * Value of checkbox (either indeterminate or vice versa)
      * @type {boolean[]}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public isIndeterminate: boolean[] = [false, false, false];
 
     /**
      * Value of main checkbox (either true or vice versa)
      * @type {boolean[]}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public mainCheckbox: boolean[] = [false, false, false];
 
     /**
      * Options in select input
      * @type {*}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public viewReportList: any;
 
     /**
      * checked value for all leave setup child in array
      * @type {*}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public leaveSetupKey: any;
 
     /**
      * checked value for all leave management child in array
      * @type {*}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public leaveMngtKey: any;
 
     /**
      * checked value for all profile management child in array
      * @type {*}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public profileMngtKey: any;
 
     /**
      * checked value of view calendar
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public calendarKey = [];
 
     /**
      * checked value of view report
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public reportKey = [];
 
     /**
      * form group of input rolename & description
      * @type {*}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     public inputFormControl: any;
 
@@ -118,7 +118,7 @@ export class RoleRightsPage implements OnInit {
      * used for request role profile details
      * @private
      * @type {string}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     private _roleId: string;
 
@@ -126,18 +126,18 @@ export class RoleRightsPage implements OnInit {
      * code, description, property to send to API
      * @private
      * @type {*}
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     private _body: any = {};
 
     /**
-     *Creates an instance of RoleRightsPage.
-     * @param {RolesAPIService} roleAPi
+     *Creates an instance of RoleRightsComponent.
+     * @param {RoleApiService} roleAPi
      * @param {ActivatedRoute} route
      * @param {Router} router
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
-    constructor(private roleAPi: RolesAPIService, private route: ActivatedRoute, private router: Router) {
+    constructor(private roleAPi: RoleApiService, private route: ActivatedRoute, private router: Router) {
         route.params.subscribe(params => { this._roleId = params.id; });
         this.inputFormControl = new FormGroup({
             rolename: new FormControl('', Validators.required),
@@ -169,7 +169,7 @@ export class RoleRightsPage implements OnInit {
 
     /**
      * Initial value for role details 
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     initCheckedValue() {
         this.showSpinner = false;
@@ -184,7 +184,7 @@ export class RoleRightsPage implements OnInit {
 
     /**
      * get initial checked value of property 
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     callCheckEvent() {
         this.checkEvent(this.leaveSetupKey, 0);
@@ -198,7 +198,7 @@ export class RoleRightsPage implements OnInit {
      * Click to select main checkbox, following by child checkbox
      * @param {*} list
      * @param {number} index
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     checkMaster(list, index: number) {
         setTimeout(() => {
@@ -214,7 +214,7 @@ export class RoleRightsPage implements OnInit {
      * @param {*} list
      * @param {number} [masterIndex]
      * @param {number} [index]
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     checkEvent(list: any, masterIndex?: number, index?: number) {
         const totalItems = list.length;
@@ -237,7 +237,7 @@ export class RoleRightsPage implements OnInit {
 
     /**
      * edit role details to send to API
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     patchData() {
         const body = {
@@ -256,7 +256,7 @@ export class RoleRightsPage implements OnInit {
     /**
      * Submit/save value to send to API
      * POST/PATCH
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     save() {
         this._body["code"] = this.inputFormControl.value.rolename;
@@ -281,7 +281,7 @@ export class RoleRightsPage implements OnInit {
 
     /**
      * set the value to default (checkbox value to false, level to empty)
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     defaultValue() {
         this.profileDetails.property.allowLeaveSetup.allowLeaveTypeSetup.value = false;
@@ -302,7 +302,7 @@ export class RoleRightsPage implements OnInit {
 
     /**
      * set the value to default (checkbox value to false, level to empty)
-     * @memberof RoleRightsPage
+     * @memberof RoleRightsComponent
      */
     defaultProfileMngt() {
         this.profileDetails.property.allowProfileManagement.allowViewProfile.value = false;

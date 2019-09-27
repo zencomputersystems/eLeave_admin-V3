@@ -6,18 +6,18 @@ import { APIService } from "src/services/shared-service/api.service";
 /**
  * API for leave entitlement by batch
  * @export
- * @class LeaveEntitlementByBatchAPIService
+ * @class LeaveEntitlementByBatchApiService
  */
 @Injectable({
     providedIn: 'root'
 })
-export class LeaveEntitlementByBatchAPIService {
+export class LeaveEntitlementByBatchApiService {
 
     /**
-     *Creates an instance of LeaveEntitlementByBatchAPIService.
+     *Creates an instance of LeaveEntitlementByBatchApiService.
      * @param {Http} http
      * @param {APIService} apiService
-     * @memberof LeaveEntitlementByBatchAPIService
+     * @memberof LeaveEntitlementByBatchApiService
      */
     constructor(public http: Http, private apiService: APIService) {
     }
@@ -25,7 +25,7 @@ export class LeaveEntitlementByBatchAPIService {
     /**
      * Get list of leave entitlement for this tenant
      * @returns {Observable<any>}
-     * @memberof LeaveEntitlementByBatchAPIService
+     * @memberof LeaveEntitlementByBatchApiService
      */
     get_leavetype_entitlement(): Observable<any> {
         this.apiService.headerAuthorization();
@@ -36,7 +36,7 @@ export class LeaveEntitlementByBatchAPIService {
      * Assign leave entitlement to user
      * @param {*} value
      * @returns {Observable<any>}
-     * @memberof LeaveEntitlementByBatchAPIService
+     * @memberof LeaveEntitlementByBatchApiService
      */
     post_leave_entitlement(value): Observable<any> {
         this.apiService.headerAuthorization();
@@ -46,7 +46,7 @@ export class LeaveEntitlementByBatchAPIService {
     /**
      * return user list from API service
      * @returns
-     * @memberof LeaveEntitlementByBatchAPIService
+     * @memberof LeaveEntitlementByBatchApiService
      */
     get_user_list() {
         return this.apiService.get_user_profile_list();
