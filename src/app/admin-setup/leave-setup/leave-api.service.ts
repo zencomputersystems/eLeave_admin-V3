@@ -51,7 +51,7 @@ export class LeaveApiService {
      */
     get_personal_holiday_calendar(id): Observable<any> {
         this.apiService.headerAuthorization();
-        return this.apiService.getApiWithId('/api/admin/holiday/', id);
+        return this.apiService.getApi('/api/admin/holiday/calendar-profile/days/' + id + '/' + 2019);
     }
 
     /**
