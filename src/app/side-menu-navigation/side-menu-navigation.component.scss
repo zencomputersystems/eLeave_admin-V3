@@ -17,15 +17,15 @@
     color: #abacaf;
   }
   .item:hover {
-    --background: #363942;
-    border-left: 2px solid #057dcd;
+    --background: rgba(0, 0, 0, 0.1);
+    border-left: 2px solid #a3a0fb;
   }
   .background-highlight {
-    --background: #363942;
-    border-left: 2px solid #057dcd;
+    --background: rgba(0, 0, 0, 0.1);
+    border-left: 2px solid #a3a0fb;
   }
   ion-label {
-    color: #abacaf;
+    color: #ffffff;
     padding-left: 20px;
   }
   // ion-label:hover {
@@ -38,7 +38,7 @@
     fill: #f9fafc;
   }
   .my-icon {
-    fill: #abacaf;
+    fill: #a5a4bf;
     width: 20px;
     height: 20px;
   }
@@ -60,12 +60,12 @@
     cursor: pointer;
   }
   .fullMenuContent {
-    --ion-background-color: #2d3037;
+    --ion-background-color: #43425d;
     --width: 218px;
     width: 218px;
   }
   .iconMenuContent {
-    --ion-background-color: #2d3037;
+    --ion-background-color: #43425d;
     --width: 35px;
   }
   .fullSideMenuContent {
@@ -110,5 +110,13 @@
     color: #7a8589;
     padding-right: 10px;
     padding-top: 4px;
+  }
+  mat-chip {
+    max-width: 93px;
+    min-height: 20px;
+    min-width: 93px;
+  }
+  .mat-chip.mat-standard-chip {
+    background-color: #43425d;
   }
 }

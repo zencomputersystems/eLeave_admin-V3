@@ -60,6 +60,8 @@ export const sideMenuNavigationRoutes: Routes = [
                     { path: 'edit-policy/:id', component: CreatePolicyComponent }
                 ]
             },
+            { path: 'apply-on-behalf', component: PageNotFoundComponent },
+            { path: 'approval-override', component: PageNotFoundComponent },
             { path: 'employee-profile', component: EmployeeProfileComponent }
         ]
     },

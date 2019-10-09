@@ -32,6 +32,8 @@
         [matMenuTriggerFor]="menu">
         <img src="assets/icon/chris.jpg">
       </ion-avatar>
+      <div style="float: right;margin-top: 7px;margin-right: 5px;cursor: pointer;" [matMenuTriggerFor]="menu"><img
+          src="assets/icon/top_header/Path 26@3x.png" style="width: 8px;height: 5px;float: right;"></div>
       <mat-menu #menu="matMenu">
         <button mat-menu-item>My Profile</button>
         <!-- (click)="router.navigate(['/main/employee-setup']);" -->
@@ -41,9 +43,13 @@
         {{personalList.employeeName}}
       </ion-label>
       <div class="verticalLine"></div>
-      <ion-label class="labelName" style="padding-right: 20px;" *ngIf="personalList">
-        Administrator
-      </ion-label>
+      <div style="padding-right: 20px;float: right;" *ngIf="personalList">
+        <mat-chip>
+          <p
+            style="white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
+            Human Resource</p>
+        </mat-chip>
+      </div>
 
       <!-- <div style="width:15px; float: right; height: 20px"></div>
       <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
@@ -88,6 +94,8 @@
         [matMenuTriggerFor]="menu">
         <img src="assets/icon/chris.jpg">
       </ion-avatar>
+      <div style="float: right;margin-top: 7px;margin-right: 5px;cursor: pointer;" [matMenuTriggerFor]="menu"><img
+          src="assets/icon/top_header/Path 26@3x.png" style="width: 8px;height: 5px;float: right;"></div>
       <mat-menu #menu="matMenu">
         <button mat-menu-item>My Profile</button>
         <!-- (click)="router.navigate(['/main/employee-setup']);" -->
@@ -97,9 +105,13 @@
         {{personalList.employeeName}}
       </ion-label>
       <div class="verticalLine"></div>
-      <ion-label class="labelName" style="padding-right: 20px;" *ngIf="personalList">
-        Administrator
-      </ion-label>
+      <div style="padding-right: 20px;float: right;" *ngIf="personalList">
+        <mat-chip>
+          <p
+            style="white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
+            Human Resource</p>
+        </mat-chip>
+      </div>
       <!-- <div style="width:15px; float: right; height: 20px"></div>
       <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
       <div style="width: 12px; float:right; height: 20px"></div>

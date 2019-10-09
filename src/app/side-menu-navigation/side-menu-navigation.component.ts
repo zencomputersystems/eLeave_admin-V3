@@ -101,6 +101,16 @@ export class SideMenuNavigationComponent implements OnInit {
       url: '/main/general-leave-policy',
       icon: 'policy.svg'
     },
+    {
+      title: 'Apply On Behalf',
+      url: '/main/apply-on-behalf',
+      icon: 'policy.svg'
+    },
+    {
+      title: 'Approval Override',
+      url: '/main/approval-override',
+      icon: 'policy.svg'
+    }
   ];
 
   /** 

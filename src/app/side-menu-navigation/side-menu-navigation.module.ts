@@ -17,6 +17,7 @@ import { LeaveSetupModule } from '../admin-setup/leave-setup/leave-setup.module'
 import { RoleManagementModule } from '../admin-setup/role-management/role-management.module';
 import { GeneralLeavePolicyModule } from '../admin-setup/general-leave-policy/general-leave-policy.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
     imports: [
@@ -33,6 +34,7 @@ import { DashboardModule } from '../dashboard/dashboard.module';
         RoleManagementModule,
         GeneralLeavePolicyModule,
         DashboardModule,
+        MatChipsModule,
         RouterModule.forChild(sideMenuNavigationRoutes)
     ],
     providers: [AuthGuard],
