@@ -16,6 +16,7 @@ import { GeneralLeavePolicyComponent } from '../admin-setup/general-leave-policy
 import { PolicyListComponent } from '../admin-setup/general-leave-policy/policy-list/policy-list.component';
 import { CreatePolicyComponent } from '../admin-setup/general-leave-policy/create-policy/create-policy.component';
 import { EmployeeProfileComponent } from '../admin-setup/employee-profile-hr/employee-profile.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -24,7 +25,7 @@ export const sideMenuNavigationRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-            { path: 'dashboard', component: PageNotFoundComponent },
+            { path: 'dashboard', component: DashboardComponent },
             { path: 'inbox', component: AddEmployeeComponent }, // AddEmployeeComponent //EmployeeProfileComponent
             {
                 path: 'leave-setup', component: LeaveSetupComponent,

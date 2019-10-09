@@ -16,6 +16,7 @@ import { AddEmployeeModule } from '../admin-setup/add-employee/add-employee.modu
 import { LeaveSetupModule } from '../admin-setup/leave-setup/leave-setup.module';
 import { RoleManagementModule } from '../admin-setup/role-management/role-management.module';
 import { GeneralLeavePolicyModule } from '../admin-setup/general-leave-policy/general-leave-policy.module';
+import { DashboardModule } from '../dashboard/dashboard.module';
 
 @NgModule({
     imports: [
@@ -31,6 +32,7 @@ import { GeneralLeavePolicyModule } from '../admin-setup/general-leave-policy/ge
         LeaveSetupModule,
         RoleManagementModule,
         GeneralLeavePolicyModule,
+        DashboardModule,
         RouterModule.forChild(sideMenuNavigationRoutes)
     ],
     providers: [AuthGuard],

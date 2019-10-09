@@ -1,0 +1,77 @@
+// @import "~quill/dist/quill.core.css";
+
+:host {
+  top: 48px;
+  background: #f0f0f7;
+  overflow: auto;
+  justify-content: flex-start !important;
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 10px;
+  }
+  .annoucement,
+  .holiday {
+    flex: 48%;
+    max-width: 48%;
+    background: #ffffff;
+    margin: 1%;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
+  }
+  .joiner,
+  .leaver,
+  .longleave {
+    flex: 31.333%;
+    max-width: 31.333%;
+    background: #ffffff;
+    margin: 1%;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
+  }
+  .tasks {
+    flex: 64.667%;
+    max-width: 64.667%;
+    background: #ffffff;
+    margin: 1%;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
+    margin-bottom: 30px;
+  }
+  .birthday {
+    flex: 31.333%;
+    max-width: 31.333%;
+    background: #ffffff;
+    margin: 1%;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
+    margin-bottom: 30px;
+  }
+  .divider {
+    --min-height: none;
+    padding-top: 2%;
+    padding-bottom: 1%;
+    width: 99%;
+    padding-left: 1%;
+    opacity: 0.5;
+  }
+  mat-chip {
+    max-width: 69px;
+    min-height: 20px;
+    min-width: 69px;
+  }
+  .mat-chip.mat-standard-chip {
+    background-color: #46cdcf;
+  }
+  ::ng-deep .item-inner {
+    border-color: rgb(0, 0, 0);
+  }
+  .labelText {
+    margin: 0;
+  }
+  .avatar {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

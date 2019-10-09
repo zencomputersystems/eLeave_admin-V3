@@ -19,28 +19,28 @@
 // @import '~@fullcalendar/timegrid/main.css';
 
 $mat-myapp-primary: (
-  50: #e1eff9,
-  100: #b4d8f0,
-  200: #82bee6,
-  300: #50a4dc,
-  400: #2b91d5,
-  500: #057dcd,
-  600: #0475c8,
-  700: #046ac1,
-  800: #0360ba,
-  900: #014dae,
-  A100: #d8e6ff,
-  A200: #a5c6ff,
-  A400: #72a6ff,
-  A700: #5896ff,
+  50: #eeedfa,
+  100: #d4d2f3,
+  200: #b8b4ec,
+  300: #9b96e4,
+  400: #8580de,
+  500: #7069d8,
+  600: #6861d4,
+  700: #5d56ce,
+  800: #534cc8,
+  900: #413bbf,
+  A100: #ffffff,
+  A200: #dad9ff,
+  A400: #aaa6ff,
+  A700: #918cff,
   contrast: (
     50: #000000,
     100: #000000,
     200: #000000,
     300: #000000,
     400: #000000,
-    500: #000000,
-    600: #000000,
+    500: #ffffff,
+    600: #ffffff,
     700: #ffffff,
     800: #ffffff,
     900: #ffffff,
@@ -52,35 +52,35 @@ $mat-myapp-primary: (
 );
 
 $mat-myapp-accent: (
-  50: #eff0f1,
-  100: #d7dadc,
-  200: #bdc2c4,
-  300: #a2aaac,
-  400: #8e979b,
-  500: #7a8589,
-  600: #727d81,
-  700: #677276,
-  800: #5d686c,
-  900: #4a5559,
-  A100: #bfecfc,
-  A200: #8eddfa,
-  A400: #56d2ff,
-  A700: #3ccbff,
+  50: #e8e8ec,
+  100: #c7c6ce,
+  200: #a1a1ae,
+  300: #7b7b8e,
+  400: #5f5e75,
+  500: #43425d,
+  600: #3d3c55,
+  700: #34334b,
+  800: #2c2b41,
+  900: #1e1d30,
+  A100: #7777ff,
+  A200: #4444ff,
+  A400: #1111ff,
+  A700: #0000f6,
   contrast: (
     50: #000000,
     100: #000000,
     200: #000000,
-    300: #000000,
-    400: #000000,
-    500: #000000,
-    600: #000000,
-    700: #000000,
-    800: #000000,
-    900: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
     A100: #000000,
-    A200: #000000,
-    A400: #000000,
-    A700: #000000
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff
   )
 );
 
@@ -149,9 +149,9 @@ app-employee-profile
   > .mat-tab-label {
   height: 35px;
 }
-app-assign-role > div.row > div.column1 > mat-card > .mat-card-header > div.mat-card-header-text{
+app-assign-role > div.row > div.column1 > mat-card > .mat-card-header > div.mat-card-header-text {
   overflow: hidden;
 }
-app-assign-role > div.row > div.column2 > mat-card > .mat-card-header > div.mat-card-header-text{
+app-assign-role > div.row > div.column2 > mat-card > .mat-card-header > div.mat-card-header-text {
   overflow: hidden;
 }
