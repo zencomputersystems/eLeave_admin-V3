@@ -33,6 +33,16 @@ export class DashboardApiService {
     }
 
     /**
+     * create announcement
+     * @param {*} data
+     * @returns
+     * @memberof DashboardApiService
+     */
+    post_announcement_list(data: any) {
+        return this.apiService.postApi(data, '/api/admin/announcement');
+    }
+
+    /**
      * get upcoming holidays from today date
      * @returns {Observable<any>}
      * @memberof DashboardApiService

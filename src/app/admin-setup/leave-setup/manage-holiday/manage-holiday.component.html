@@ -1,4 +1,121 @@
-<div *ngIf="!editCalendar && !addCalendar && !deleteCalendar"
+<ion-card>
+    <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
+        <div class="fullContainer">
+            <div class="left">
+                <img src="assets/icon/leave_setup/icon_calendar@3x.png" style="width:36px;height:36px">
+            </div>
+            <div class="right">
+                <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Calendar
+                    Profile Setup
+                </ion-card-subtitle>
+                <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                    Some good & sweet explanation here</ion-card-subtitle>
+            </div>
+        </div>
+    </ion-card-header>
+    <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <div *ngIf="content" style="background: #f0f0f7; height: 100%;position: absolute;width: 100%;">
+        <div class="cardContent">
+            <ion-card-content>
+                <div class="row">
+                    <div class="calendar">
+                        <div
+                            style="font-size: 13px;width:100%;background: #f5f6fa;padding-left: 5px;color: #a3a6b4;font-weight: bold;">
+                            <ion-row>
+                                <ion-col size="4.5" style="font-size: 12px;"> CALENDAR PROFILE</ion-col>
+                                <ion-col size="4.5" style="font-size: 12px;"> NO. ASSIGNED EMPLOYEE</ion-col>
+                                <ion-col></ion-col>
+                            </ion-row>
+                        </div>
+                        <ion-row *ngFor="let list of profileList; let i=index" style="padding-left: 5px;">
+                            <ion-col size="4.5" style="cursor: pointer;" (click)="clickedCalendar(list, i)">
+                                <p class="textHover" style="font-size: 11px;" [ngClass]="{
+                                    'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"> {{list.code}}
+                                </p>
+                            </ion-col>
+                            <ion-col size="4.5" style="text-align: center;color: #4d4f5c;font-size: 11px;">
+                                {{list.employee}}</ion-col>
+                            <ion-col>
+                                <img src="assets/icon/leave_setup/icon_edit@3x.png"
+                                    style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
+                                    (click)="selectProfile(list, i)">
+                                &nbsp;&nbsp;
+                                <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                                    style="width: 11px;height:11px;display: inline-block;cursor: pointer;">
+                            </ion-col>
+                            <ion-item class="divider" lines="full"></ion-item>
+                        </ion-row>
+                    </div>
+
+                    <div class="restday">
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                            REST DAY
+                        </div>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Select Rest Day</mat-label>
+                            <!-- formControlName="dayControl" -->
+                            <mat-select class="selectLeave" [(value)]="restDay" multiple>
+                                <mat-option *ngFor="let day of weekdays; let j=index" [value]="day"
+                                    (click)="restDaySelected(day)" [disabled]="!editCalendar">
+                                    {{day}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                            <ion-row>
+                                <ion-col size="4" style="font-size: 12px;"> DATE</ion-col>
+                                <ion-col size="5" style="font-size: 12px;"> HOLIDAY</ion-col>
+                            </ion-row>
+                        </div>
+                        <p *ngIf="!editCalendar"
+                            style="width: 90%;padding: 20px;opacity: 0.8;font-size: 12px;line-height: 1.25;text-align: left;color: #a3a6b4;">
+                            Nothing to view. Please select calendar profile first.</p>
+                        <ion-row *ngFor="let holiday of events" style="width: 100%;padding-top: 10px;">
+                            <ng-container *ngIf="editCalendar">
+                                <ion-col size="4">
+                                    <mat-chip-list>
+                                        <ion-label
+                                            style="position: absolute;margin-top: -20px;padding: 5px;padding-bottom: 0;color:#4d4f5c; font-size:11px;line-height:2.22">
+                                            {{holiday.str}}
+                                        </ion-label>
+                                        <mat-chip>
+                                            <p
+                                                style="white-space: nowrap;width: 100%;text-align: center;color: #f0f0f7;font-size: 10px;line-height: 2.22;">
+                                                {{holiday.day}}</p>
+                                        </mat-chip>
+                                    </mat-chip-list>
+                                </ion-col>
+                                <ion-col class="colOfLeave" style="color: #4d4f5c;font-size: 11px;" align-self-center>
+                                    {{holiday.title}}
+                                </ion-col>
+                                <ion-item class="divider" lines="full"></ion-item>
+                            </ng-container>
+                        </ion-row>
+                    </div>
+
+                    <div class="assigned">
+                        <div
+                            style="margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                            ASSIGNED EMPLOYEE
+                        </div>
+                        <p *ngIf="!editCalendar"
+                            style="width: 90%;padding: 20px;opacity: 0.8;font-size: 12px;line-height: 1.25;text-align: left;color: #a3a6b4;">
+                            Nothing to view. Please select calendar profile first.</p>
+                        <ion-row *ngFor="let item of assignedNames" style="width: 100%;padding-left: 10px;">
+                            <ion-col align-self-center style="color: #4d4f5c;font-size:11px">{{item.FULLNAME}}</ion-col>
+                            <ion-item class="divider" lines="full" style="padding-top: 2%;padding-bottom: 2%;"></ion-item>
+                        </ion-row>
+                    </div>
+                </div>
+
+            </ion-card-content>
+        </div>
+    </div>
+</ion-card>
+<!-- <div *ngIf="!editCalendar && !addCalendar && !deleteCalendar"
     style="color: #057dcd; text-align: right;padding-top: 15px;">
     <div (click)="deleteCalendar = true;showEditForm = false" style="display: inline-block; color: #f04141">
         <i class="far fa-calendar-times"></i>
@@ -57,7 +174,7 @@
             Save
         </ion-button>
     </div>
-    <!------------------------------------- POST Added calendar  ------------------------------------>
+    <!------------------------------------- POST Added calendar  ------------------------------------
     <div style="text-align: right;padding-top: 5px;padding-right: 10px;" *ngIf="addCalendar">
         <ion-button fill="clear" (click)="addCalendar = false; profileName.reset();getPublicHolidayList();"
             style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
@@ -89,7 +206,7 @@
     </div>
 
     <div class="holidayView" [style.max-height.px]="height">
-        <!------------------------------- Edit calendar ----------------------------------------->
+        <!------------------------------- Edit calendar -----------------------------------------
         <div style="display:block; white-space: nowrap;" *ngIf="!showEditForm">
             <mat-form-field appearance="outline" [style.width.%]="editCalendar ? '47': '94'"
                 *ngIf="editCalendar || deleteCalendar">
@@ -118,7 +235,7 @@
             </mat-form-field>
         </div>
 
-        <!------------------------------- add calendar ------------------------------------------>
+        <!------------------------------- add calendar ------------------------------------------
         <div style="display:block; white-space: nowrap;">
             <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
                 <mat-label>Calendar profile name</mat-label>
@@ -162,7 +279,7 @@
             <!-- <span *ngIf="addCalendar">&nbsp;&nbsp;</span>
             <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
                 <input matInput placeholder="Month(mm)" [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
-            </mat-form-field> -->
+            </mat-form-field> --
         </div>
 
         <ion-item class="divider" lines="full" *ngIf="editCalendar || addCalendar"></ion-item>
@@ -215,4 +332,4 @@
             </ion-row>
         </div>
     </div>
-</form>
+</form> -->

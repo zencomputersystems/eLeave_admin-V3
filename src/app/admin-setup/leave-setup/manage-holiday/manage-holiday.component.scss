@@ -1,4 +1,79 @@
 :host {
+  ///////////////////////////////// new scss /////////////////////////
+  ion-card {
+    height: 100%;
+    margin: 0;
+  }
+  .fullContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 17px;
+  }
+  .right {
+    padding-left: 20px;
+    padding-top: 4px;
+  }
+  .mainDivider {
+    --min-height: none;
+  }
+  .subtitle {
+    display: block;
+    // padding-left: 2px;
+    color: #43425d;
+    opacity: 0.8;
+    padding-top: 3px;
+  }
+  .cardContent {
+    line-height: 1.25;
+    background: white;
+    overflow: auto;
+    height: calc(100% - 154px);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    // padding: 0 10px;
+  }
+  .calendar,
+  .restday,
+  .assigned {
+    flex: 32.5%;
+    max-width: 32.5%;
+    // background: #ffffff;
+    // margin: 1%;
+    // border-radius: 2px;
+    // box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
+  }
+  .textColor {
+    color: #3b86ff;
+  }
+  .oriColor {
+    color: #4d4f5c;
+  }
+  .textHover:hover{
+    color: #3b86ff;
+  }
+  .restday {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  mat-chip {
+    max-width: 68px;
+    min-height: 20px;
+    min-width: 68px;
+  }
+  .mat-chip.mat-standard-chip {
+    background-color: #7069d8;
+  }
+  ::ng-deep .mat-chip-list-wrapper .mat-standard-chip {
+    margin-top: 5px;
+  }
+
+  //////////////////////////////// end //////////////////////////////
   .personal {
     color: #057dcd;
     padding-right: 10px;
@@ -48,14 +123,22 @@
   .divider {
     --min-height: none;
     padding-top: 1%;
-    padding-bottom: 2%;
+    padding-bottom: 1%;
     width: 100%;
   }
   ::ng-deep .mat-select-value-text {
-    color: #7a8589;
+    opacity: 0.8;
+    font-size: 12px;
+    color: #43425d;
   }
   ::ng-deep .mat-select-arrow {
-    color: #7a8589;
+    color: #43425d;
+    opacity: 0.8;
+  }
+  ::ng-deep .mat-option-text {
+    color: #43425d;
+    opacity: 0.8;
+    font-size: 12px;
   }
   .button-outline {
     --border-width: 1px;
@@ -73,7 +156,7 @@
   ::ng-deep .fc-button-group > .fc-button:not(:last-child) {
     text-transform: capitalize;
   }
-  ::ng-deep .fc-event-container{
+  ::ng-deep .fc-event-container {
     cursor: pointer;
   }
 }

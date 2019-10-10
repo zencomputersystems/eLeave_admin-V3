@@ -8,9 +8,54 @@
     height: 0px;
     background-image: none;
   }
+  .toolbar1 {
+    height: 48px;
+    padding-right: 20px;
+  }
   .toolbar2 {
     --min-height: 35px;
     border: 1px solid
       var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
+  }
+  .contentMenu {
+    width: 230px;
+    --background: #8b89b4;
+    // border-right: 1px solid
+    //   var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
+    // border-left: 1px solid
+    //   var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
+  }
+  .labels:hover {
+    color: var(--ion-color-primary-shade);
+  }
+  .items {
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 14px;
+    // --background: #8b89b4;
+  }
+  .my-icon {
+    // fill: #f9fafc;
+    width: 14px;
+    height: 14px;
+  }
+  .mainColor {
+    --background: rgba(0, 0, 0, 0.1);
+    border-left: 2px solid #a3a0fb;
+  }
+  .highlightColor {
+    --background: #8b89b4;
+  }
+  .item:hover {
+    --background: rgba(0, 0, 0, 0.1);
+    // border-left: 2px solid #a3a0fb;
+  }
+  .content2 {
+    position: absolute;
+    // top: 37px;
+    width: calc(100% - 230px);
+    right: 0;
+    // height: calc(100% - 38px);
+    left: 230px;
   }
 }

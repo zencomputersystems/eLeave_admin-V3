@@ -91,6 +91,11 @@ export class ManageHolidayApiService {
         return this.leaveApi.get_personal_holiday_calendar(ID);
     }
 
+    get_assigned_employee_list(calendarID: string) {
+        this.api.headerAuthorization();
+        return this.api.getApiWithId('/api/admin/holiday/calendar-profile/users/', calendarID);
+    }
+
     /**
      * get all employee onleave list
      * @returns {Observable<any>}

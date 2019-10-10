@@ -87,6 +87,8 @@ export class DashboardComponent implements OnInit {
    */
   public message: string;
 
+  public title: string = null;
+
   /**
    * checkbox is checked or vice versa
    * @type {boolean}
@@ -186,5 +188,23 @@ export class DashboardComponent implements OnInit {
       this.get_task_list();
     })
   }
+
+  onClickPublish() {
+    let isChecked: number;
+    if (this.checked === true) {
+      isChecked = 1;
+    } else {
+      isChecked = 0;
+    }
+    const data = { "title": this.title, "message": this.message, "status": isChecked };
+    this.dashboardAPI.post_announcement_list(data).subscribe(response => console.log(response));
+  }
+
+  // {
+  //   "title": "Notice of requirement to take annual leave for Hari Raya festival",
+  //   "message": "Dear all,\n\n  In accordance with Hari Raya celebration, we would like to request all staff to take 1 day annual leave due to a close down of operations on 7 June 2019. Kindly apply annual leave for the low productivity period and take this as an opportunity to have a substantial break for family. \n  \n  This is not applicable to Manage365 and backup of Resident Engineer.\n  ",
+  //   "fromDate": "2019-09-01",
+  //   "toDate": "2019-12-01"
+  // }
 
 }

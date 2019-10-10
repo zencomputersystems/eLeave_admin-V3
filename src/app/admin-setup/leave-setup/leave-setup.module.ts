@@ -37,6 +37,7 @@ import { WorkingHourComponent } from './working-hour/working-hour.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { WorkingHourListComponent } from './working-hour/working-hour-list/working-hour-list.component';
 import { AssignWorkingHourComponent } from './working-hour/assign-working-hour/assign-working-hour.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 const routes: Routes = [
@@ -72,6 +73,7 @@ const routes: Routes = [
         MatRadioModule,
         MatDialogModule,
         NgxMaterialTimepickerModule,
+        MatChipsModule,
         RouterModule.forChild(routes)
     ],
     providers: [AssignCalendarTreeviewService],

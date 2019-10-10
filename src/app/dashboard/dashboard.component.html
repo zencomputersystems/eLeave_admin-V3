@@ -63,7 +63,7 @@
   <ion-content>
     <mat-form-field appearance="outline"
       style="width: 94%;margin: 20px;margin-top: 30px;margin-bottom: 0;font-size: 13px;color:#43425d;opacity: 0.8;">
-      <input matInput placeholder=" Add Announcement's Title">
+      <input matInput placeholder=" Add Announcement's Title" [(ngModel)]=title>
     </mat-form-field>
     <div style="width: 94%;margin: 20px;">
       <p-editor placeholder="Write Something" [style]="{'height':'230px','border-radius': '4px',
@@ -91,7 +91,7 @@
         &nbsp; -->
         <ion-button
           style="display: inline-block;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-          color="primary">
+          color="primary" (click)="onClickPublish()">
           Publish
         </ion-button>
       </div>
