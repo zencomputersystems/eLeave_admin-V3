@@ -9,6 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 @Component({
     selector: 'delete-calendar-confirmation',
     templateUrl: 'delete-calendar-confirmation.component.html',
+    styleUrls: ['delete-calendar-confirmation.component.scss'],
 })
 export class DeleteCalendarConfirmationComponent {
 

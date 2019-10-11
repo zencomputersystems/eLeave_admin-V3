@@ -14,6 +14,7 @@ import { APP_DATE_FORMATS, AppDateAdapter } from '../date.adapter';
 import { MatDialog } from '@angular/material';
 import { ManageHolidayApiService } from './manage-holiday-api.service';
 import { DeleteCalendarConfirmationComponent } from '../delete-calendar-confirmation/delete-calendar-confirmation.component';
+import { trigger, transition, animate, style, state } from '@angular/animations'
 
 /**
  * Manage holiday and rest day for employee
@@ -27,7 +28,19 @@ import { DeleteCalendarConfirmationComponent } from '../delete-calendar-confirma
     styleUrls: ['./manage-holiday.component.scss'],
     providers: [TitleCasePipe,
         { provide: DateAdapter, useClass: AppDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
+        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }],
+    animations: [
+        trigger('slideInOut', [
+            transition(':enter', [
+                style({ transform: 'translateX(100%)', opacity: 0 }),
+                animate('300ms', style({ transform: 'translateX(0)', opacity: 1 }))
+            ]),
+            transition(':leave', [
+                style({ transform: 'translateX(0)', opacity: 1 }),
+                animate('300ms', style({ transform: 'translateX(100%)', opacity: 0 }))
+            ])
+        ])
+    ]
 })
 export class ManageHolidayComponent implements OnInit {
 
@@ -133,6 +146,8 @@ export class ManageHolidayComponent implements OnInit {
      */
     public profileName: any;
 
+    public dayControl: any;
+
     /**
      * Public holiday list from API
      * @memberof ManageHolidayComponent
@@ -221,6 +236,10 @@ export class ManageHolidayComponent implements OnInit {
 
     public content: boolean = false;
 
+    public slideInOut: boolean = false;
+
+    public showAddIcon: boolean = false;
+
     /**
      *Creates an instance of ManageHolidayComponent.
      * @param {LeaveAPIService} leaveAPI
@@ -238,8 +257,9 @@ export class ManageHolidayComponent implements OnInit {
         this.countryList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
         this.editCalendarForm = new FormGroup({
             calendarProfile: new FormControl('', Validators.required),
-            dayControl: new FormControl(['']),
+            dayControlGroup: new FormControl(['']),
         });
+        this.dayControl = new FormControl(['']);
         this.profileName = new FormControl('', Validators.required);
         this.getPublicHolidayList();
         this.getProfileList();
@@ -292,6 +312,14 @@ export class ManageHolidayComponent implements OnInit {
                 const list = employeeNum;
                 this.profileList[i]["employee"] = list.length;
             })
+        }
+    }
+
+    disabledButton() {
+        if (this.editCalendar && this.showAddIcon) {
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -395,7 +423,7 @@ export class ManageHolidayComponent implements OnInit {
     selectProfile(list, index) {
         // this.showSpinner = true;
         // this.content = false;
-        this.editCalendar=true;
+        this.slideInOut = false;
         this.selectedCalendarProfile = list;
         this.clickedIndex = index;
         this.restDay = [];
@@ -404,6 +432,8 @@ export class ManageHolidayComponent implements OnInit {
                 // this.showSpinner = false;
                 // this.content = true;
                 this.personalProfile = data;
+                this.editCalendar = true;
+                this.slideInOut = true;
                 this.events = [];
                 for (let i = 0; i < this.personalProfile.holiday.length; i++) {
                     this.createHolidayList(this.personalProfile.holiday[i].start, this.personalProfile.holiday[i].title);
@@ -416,7 +446,7 @@ export class ManageHolidayComponent implements OnInit {
                         this.restDay.push(this.titlecasePipe.transform(this.personalProfile.rest[i].fullname));
                     }
                 }
-                this.editCalendarForm.patchValue({ dayControl: this.restDay });
+                this.dayControl.setValue(this.restDay);
             })
         this.manageHolidayAPI.get_assigned_employee_list(this.profileList[index].calendar_guid).subscribe(namelist => {
             this.assignedNames = namelist;
@@ -571,33 +601,36 @@ export class ManageHolidayComponent implements OnInit {
      * Delete calendar profile from list
      * @memberof ManageHolidayComponent
      */
-    deleteData() {
-        this.showSpinner = true;
-        this.content = false;
-        this.deleteCalendar = false;
-        this.reformatHolidayObject(this.events);
-        this.deleteCalendarProfile();
+    deleteData(item) {
+        // this.showSpinner = true;
+        // this.content = false;
+        // this.deleteCalendar = false;
+        // this.reformatHolidayObject(this.events);
+        this.deleteCalendarProfile(item);
     }
 
     /**
      * Delete the calendar profile after confirm by admin
      * @memberof ManageHolidayComponent
      */
-    deleteCalendarProfile() {
+    deleteCalendarProfile(item) {
         const dialog = this.displayDialog.open(DeleteCalendarConfirmationComponent, {
-            data: { name: this.selectedCalendarProfile.code, value: this.selectedCalendarProfile.calendar_guid }
+            data: { name: item.code, value: item.calendar_guid },
+            height: "195px",
+            width: "249px"
         });
         dialog.afterClosed().subscribe(result => {
-            if (result === this.selectedCalendarProfile.calendar_guid) {
-                this.manageHolidayAPI.delete_calendar_profile(this.selectedCalendarProfile.calendar_guid).subscribe(response => {
-                    this.manageHolidayAPI.notification('deleted successfully ');
+            if (result === item.calendar_guid) {
+                this.manageHolidayAPI.delete_calendar_profile(item.calendar_guid).subscribe(response => {
+                    // this.manageHolidayAPI.notification('deleted successfully ');
+                    this.getProfileList();
                 })
             }
-            this.showSpinner = false;
-            this.content = true;
-            this.editCalendarForm.reset();
-            this.getProfileList();
-            setTimeout(() => { this.getPublicHolidayList(); }, 100);
+            // this.showSpinner = false;
+            // this.content = true;
+            // this.editCalendarForm.reset();
+
+            // setTimeout(() => { this.getPublicHolidayList(); }, 100);
         });
     }
 

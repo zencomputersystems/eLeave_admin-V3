@@ -26,7 +26,8 @@
   .cardContent {
     line-height: 1.25;
     background: white;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     height: calc(100% - 154px);
     margin-left: 20px;
     margin-right: 20px;
@@ -35,18 +36,26 @@
   }
   .row {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     // padding: 0 10px;
   }
   .calendar,
-  .restday,
+  .restday {
+    flex: 34%;
+    max-width: 34%;
+  }
   .assigned {
-    flex: 32.5%;
-    max-width: 32.5%;
-    // background: #ffffff;
-    // margin: 1%;
-    // border-radius: 2px;
-    // box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
+    flex: 30.5%;
+    max-width: 30.5%;
+  }
+  .column {
+    font-size: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    padding-bottom: 0;
+    margin-bottom: 5px;
   }
   .textColor {
     color: #3b86ff;
@@ -54,7 +63,7 @@
   .oriColor {
     color: #4d4f5c;
   }
-  .textHover:hover{
+  .textHover:hover {
     color: #3b86ff;
   }
   .restday {
@@ -71,6 +80,11 @@
   }
   ::ng-deep .mat-chip-list-wrapper .mat-standard-chip {
     margin-top: 5px;
+  }
+  .addIcon {
+    color: #7069d8;
+    font-size: 16px;
+    cursor: pointer;
   }
 
   //////////////////////////////// end //////////////////////////////

@@ -1,8 +1,12 @@
-<h1 mat-dialog-title style="text-align: center;color: #20291f;font-size: 14px;">Confirmation</h1>
-<div mat-dialog-content style="text-align: center;color:#7a8589;font-size: 13px;">
-    <p>Are you sure you want to delete <strong>{{data.name}}</strong>?</p>
+<div class="title">Confirmation</div>
+<div style="text-align: center;padding-left: 20px;padding-right: 20px;margin-bottom: 20px;">
+    <p style="color: #43425d;line-height: 1.25;font-size: 12px;">Are you sure you want to delete
+        <strong>{{data.name}}</strong> calendar profile?</p>
 </div>
 <div mat-dialog-actions style="display: block; text-align: center;color:#7a8589;font-size: 13px;">
-    <button mat-button (click)="cancel()">Cancel</button>
-    <button mat-button [mat-dialog-close]="data.value" cdkFocusInitial>Delete</button>
+    <button mat-stroked-button (click)="cancel()" color="primary" style="border-radius: 2px;
+    width: 88px;height: 30px;line-height: 30px;border-color: #7069d8;">Cancel</button>
+    &nbsp;&nbsp;
+    <button mat-flat-button [mat-dialog-close]="data.value" style="background: #ff6768;color:white;border-radius: 2px;
+        width: 88px;height: 30px;line-height: 30px;" cdkFocusInitial>Delete</button>
 </div>

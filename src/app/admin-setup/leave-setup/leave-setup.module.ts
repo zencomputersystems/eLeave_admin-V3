@@ -38,7 +38,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { WorkingHourListComponent } from './working-hour/working-hour-list/working-hour-list.component';
 import { AssignWorkingHourComponent } from './working-hour/assign-working-hour/assign-working-hour.component';
 import { MatChipsModule } from '@angular/material/chips';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
     {
@@ -52,6 +52,7 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         IonicModule,
+        BrowserAnimationsModule,
         MatPaginatorModule,
         MatInputModule,
         MatSelectModule,
