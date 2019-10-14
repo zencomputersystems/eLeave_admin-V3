@@ -48,8 +48,8 @@ export class AssignCalendarApiService {
      * @returns {Observable<any>}
      * @memberof AssignCalendarApiService
      */
-    get_personal_holiday_calendar(calendarId): Observable<any> {
-        return this.leaveAPI.get_personal_holiday_calendar(calendarId);
+    get_personal_holiday_calendar(calendarId:string, year:number): Observable<any> {
+        return this.leaveAPI.get_personal_holiday_calendar(calendarId, year);
     }
 
     /**

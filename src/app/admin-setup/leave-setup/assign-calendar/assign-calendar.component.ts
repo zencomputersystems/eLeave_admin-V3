@@ -144,7 +144,7 @@ export class AssignCalendarComponent implements OnInit {
         this.showSpinner = true;
         this.selectedCalendarId = calendarId;
         this.disabledButton();
-        this.assignCalendarAPI.get_personal_holiday_calendar(calendarId).subscribe(
+        this.assignCalendarAPI.get_personal_holiday_calendar(calendarId, (new Date()).getFullYear()).subscribe(
             (data: any) => {
                 this.events = data.holiday;
                 for (let i = 0; i < this.events.length; i++) {

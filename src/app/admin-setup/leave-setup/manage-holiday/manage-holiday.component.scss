@@ -71,9 +71,9 @@
     margin-left: 10px;
   }
   mat-chip {
-    max-width: 68px;
+    max-width: 74px;
     min-height: 20px;
-    min-width: 68px;
+    min-width: 74px;
   }
   .mat-chip.mat-standard-chip {
     background-color: #7069d8;
@@ -85,6 +85,49 @@
     color: #7069d8;
     font-size: 16px;
     cursor: pointer;
+  }
+  .imgFilter{
+    filter: opacity(0.3);
+    cursor: text;
+  }
+  .imgColor{
+    filter: none;
+    cursor: pointer;
+  }
+  .showCursor{
+    cursor: pointer;
+    filter: none;
+  }
+  .dropdownList {
+    position: absolute;
+    margin-top: -17px;
+    width: 100%;
+    z-index: 2;
+    height: 290px;
+    overflow: auto;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+      0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    background: white;
+  }
+  .showSelection {
+    width: 93%;
+    height: 390px;
+    overflow: auto;
+    margin-bottom: 20px;
+  }
+  ::ng-deep .mat-select-value-text {
+    // opacity: 0.8;
+    font-size: 12px;
+    color: #43425d;;
+  }
+  ::ng-deep .mat-select-arrow {
+    color: #43425d;;
+    // opacity: 0.8;
+  }
+  ::ng-deep .mat-option-text {
+    color: #43425d;;
+    opacity: 0.8;
+    font-size: 12px;
   }
 
   //////////////////////////////// end //////////////////////////////
@@ -139,20 +182,6 @@
     padding-top: 1%;
     padding-bottom: 1%;
     width: 100%;
-  }
-  ::ng-deep .mat-select-value-text {
-    opacity: 0.8;
-    font-size: 12px;
-    color: #43425d;
-  }
-  ::ng-deep .mat-select-arrow {
-    color: #43425d;
-    opacity: 0.8;
-  }
-  ::ng-deep .mat-option-text {
-    color: #43425d;
-    opacity: 0.8;
-    font-size: 12px;
   }
   .button-outline {
     --border-width: 1px;

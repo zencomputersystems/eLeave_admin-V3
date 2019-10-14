@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Observable } from 'rxjs';
 import { LeaveApiService } from '../leave-api.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { SnackbarNotificationComponent } from '../snackbar-notification/snackbar-notification.component';
 import { Response } from '@angular/http';
 import { map } from 'rxjs/operators';
@@ -24,7 +24,9 @@ export class ManageHolidayApiService {
      * @param {MatSnackBar} snackBar
      * @memberof ManageHolidayApiService
      */
-    constructor(private api: APIService, private leaveApi: LeaveApiService, private snackBar: MatSnackBar) { }
+    constructor(private api: APIService, private leaveApi: LeaveApiService, public displayDialog: MatDialog) {
+        // private snackBar: MatSnackBar
+    }
 
     /**
      * Delete calendar profile
@@ -87,8 +89,8 @@ export class ManageHolidayApiService {
      * @returns {Observable<any>}
      * @memberof ManageHolidayApiService
      */
-    get_personal_holiday_calendar(ID: string): Observable<any> {
-        return this.leaveApi.get_personal_holiday_calendar(ID);
+    get_personal_holiday_calendar(ID: string, year: number): Observable<any> {
+        return this.leaveApi.get_personal_holiday_calendar(ID, year);
     }
 
     get_assigned_employee_list(calendarID: string) {
@@ -107,15 +109,29 @@ export class ManageHolidayApiService {
     }
 
     /**
+     * update calendar profile
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof ManageHolidayApiService
+     */
+    patch_assign_calendar_profile(data): Observable<any> {
+        return this.leaveApi.patch_assign_calendar_profile(data);
+    }
+
+    get_user_list(): Observable<any> {
+        return this.api.get_user_profile_list();
+    }
+
+    /**
     * Show notification after submit
     * @param {string} text
     * @memberof ManageHolidayApiService
     */
-    notification(text: string) {
-        this.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 3000,
-            data: text
-        });
-    }
+    // notification(text: string) {
+    //     this.snackBar.openFromComponent(SnackbarNotificationComponent, {
+    //         duration: 3000,
+    //         data: text
+    //     });
+    // }
 
 }

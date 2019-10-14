@@ -5,16 +5,17 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import listYear from '@fullcalendar/list';
 import { EventInput } from '@fullcalendar/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
+import { Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
 const moment = _moment;
 import { getDataSet, reduce } from "iso3166-2-db";
 import { MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 import { APP_DATE_FORMATS, AppDateAdapter } from '../date.adapter';
-import { MatDialog } from '@angular/material';
 import { ManageHolidayApiService } from './manage-holiday-api.service';
 import { DeleteCalendarConfirmationComponent } from '../delete-calendar-confirmation/delete-calendar-confirmation.component';
-import { trigger, transition, animate, style, state } from '@angular/animations'
+import { trigger, transition, animate, style } from '@angular/animations'
+import { MenuController } from '@ionic/angular';
+import { EmployeeTreeviewService } from '../assign-calendar/employee-treeview.service';
 
 /**
  * Manage holiday and rest day for employee
@@ -240,6 +241,19 @@ export class ManageHolidayComponent implements OnInit {
 
     public showAddIcon: boolean = false;
 
+    public showSelectedTree: boolean = false;
+
+    public showTreeDropdown: boolean = false;
+
+    public assignCalendarForm: any;
+
+    public employeeList: any[] = [];
+
+    public userList: any;
+
+    public menuTitleName: string = "Public Holiday Name";
+
+    public dateMenu: any = new Date();
     /**
      *Creates an instance of ManageHolidayComponent.
      * @param {LeaveAPIService} leaveAPI
@@ -247,11 +261,14 @@ export class ManageHolidayComponent implements OnInit {
      * @param {TitleCasePipe} titlecasePipe
      * @memberof ManageHolidayComponent
      */
-    constructor(private manageHolidayAPI: ManageHolidayApiService, private titlecasePipe: TitleCasePipe, public displayDialog: MatDialog) {
+    constructor(private manageHolidayAPI: ManageHolidayApiService, private titlecasePipe: TitleCasePipe, private menu: MenuController, private treeview: EmployeeTreeviewService) {
     }
 
     ngOnInit() {
         // window.dispatchEvent(new Event('resize'));
+        this.assignCalendarForm = new FormGroup({
+            user: new FormArray([]),
+        })
         this.countryDB = reduce(getDataSet(), "en");
         this.countryList = Object.keys(this.countryDB).map(key => this.countryDB[key]);
         this.countryList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
@@ -313,6 +330,66 @@ export class ManageHolidayComponent implements OnInit {
                 this.profileList[i]["employee"] = list.length;
             })
         }
+        this.manageHolidayAPI.get_user_list().subscribe(
+            data => {
+                this.userList = data;
+            });
+    }
+
+    submitData() {
+        for (let i = 0; i < this.assignCalendarForm.controls.user.value.length; i++) {
+            if (this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]) != 0) {
+                const index: number = this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]);
+                this.employeeList.push(this.userList[index].userId);
+            }
+        }
+        this.manageHolidayAPI.patch_assign_calendar_profile({
+            "user_guid": this.employeeList,
+            "calendar_guid": this.selectedCalendarProfile.calendar_guid
+        }).subscribe(response => {
+            this.assignCalendarForm.reset();
+            this.events = [];
+            this.employeeList = [];
+            this.showSelectedTree = false;
+            this.showSpinner = false;
+            this.treeview.checklistSelection.clear();
+            // this.assignCalendarAPI.openSnackBar('submitted successfully');
+        });
+    }
+
+
+
+    /**
+     * Closed div after clicked outside of div
+     * Push all items to array if they have checked
+     * Clear array if no item checked
+     * @param {*} event
+     * @memberof AssignCalendarComponent
+     */
+    clickOutside(event) {
+        if (!event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix") && !event.target.className.includes("inputDropdown")) {
+            this.showTreeDropdown = false;
+            this.showSelectedTree = true;
+            this.disabledButton();
+        }
+        for (let i = 0; i < this.treeview.checklistSelection.selected.length; i++) {
+            if (this.treeview.checklistSelection.selected[i].level == 2 && this.assignCalendarForm.controls.user.value.indexOf(this.treeview.checklistSelection.selected[i].item) === -1) {
+                this.assignCalendarForm.controls.user.value.push(this.treeview.checklistSelection.selected[i].item);
+                this.disabledButton();
+            }
+        }
+        if (this.treeview.checklistSelection.selected.length === 0) {
+            this.assignCalendarForm.controls.user.value.length = 0;
+        }
+    }
+
+    checkIdExist(array: any, obj: any) {
+        for (let j = 0; j < array.length; j++) {
+            if (array[j].employeeName === obj) {
+                return j;
+            }
+        }
+        return 0;
     }
 
     disabledButton() {
@@ -393,15 +470,21 @@ export class ManageHolidayComponent implements OnInit {
             "calendar_guid": this.selectedCalendarProfile.calendar_guid,
             "data": {
                 "code": this.selectedCalendarProfile.code,
+                "year": (new Date()).getFullYear(),
                 "holiday": this.events,
                 "rest": this.selectedWeekday
+                // "holiday": this.events,
+                // "rest": this.selectedWeekday
             }
         }
+
+
+        console.log('saveData', body);
         this.manageHolidayAPI.patch_calendar_profile(body).subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
                 this.content = true;
-                this.manageHolidayAPI.notification('submitted successfully ');
+                // this.manageHolidayAPI.notification('submitted successfully ');
                 this.restDay = [];
                 this.selectedWeekday = [];
                 this.editCalendarForm.reset();
@@ -427,11 +510,12 @@ export class ManageHolidayComponent implements OnInit {
         this.selectedCalendarProfile = list;
         this.clickedIndex = index;
         this.restDay = [];
-        this.manageHolidayAPI.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid).subscribe(
+        this.manageHolidayAPI.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid, (new Date()).getFullYear()).subscribe(
             (data: any) => {
                 // this.showSpinner = false;
                 // this.content = true;
                 this.personalProfile = data;
+                console.log('data', this.personalProfile);
                 this.editCalendar = true;
                 this.slideInOut = true;
                 this.events = [];
@@ -467,8 +551,10 @@ export class ManageHolidayComponent implements OnInit {
      */
     dateChanged(value, index) {
         this.events[index].start = moment(value).format('YYYY-MM-DD');
-        this.events[index].str = moment(value).format('DD-MM-YYYY');
+        // this.events[index].str = moment(value).format('DD-MM-YYYY');
         this.events[index].end = moment(value).format('YYYY-MM-DD');
+        // this.events[index].title = moment(value).format('YYYY-MM-DD');
+        // this.events[index].holidayName = moment(value).format('YYYY-MM-DD');
         this.events[index].day = this.getWeekDay(new Date(value));
     }
 
@@ -537,13 +623,14 @@ export class ManageHolidayComponent implements OnInit {
     createHolidayList(dateIso: string, name: string) {
         this.events.push({
             "start": moment(dateIso).format('YYYY-MM-DD'),
-            "str": moment(dateIso).format('DD-MM-YYYY'),
+            // "str": moment(dateIso).format('DD-MM-YYYY'),
             "end": moment(dateIso).format('YYYY-MM-DD'),
             "title": name,
+            "holidayName": name,
             "day": this.getWeekDay(new Date(dateIso)),
-            "allDay": true,
-            "backgroundColor": "#c2185b",
-            "borderColor": "#c2185b"
+            // "allDay": true,
+            // "backgroundColor": "#c2185b",
+            // "borderColor": "#c2185b"
         });
     }
 
@@ -555,9 +642,9 @@ export class ManageHolidayComponent implements OnInit {
      */
     reformatHolidayObject(holiday) {
         for (let i = 0; i < this.events.length; i++) {
-            delete holiday[i].allDay;
-            delete holiday[i].backgroundColor;
-            delete holiday[i].borderColor;
+            // delete holiday[i].allDay;
+            // delete holiday[i].backgroundColor;
+            // delete holiday[i].borderColor;
             delete holiday[i].day;
         }
 
@@ -582,11 +669,12 @@ export class ManageHolidayComponent implements OnInit {
             "holiday": this.events,
             "rest": this.selectedWeekday
         }
+        console.log(newProfile);
         this.manageHolidayAPI.post_calendar_profile(newProfile).subscribe(
             response => {
                 this.showSpinner = false;
                 this.content = true;
-                this.manageHolidayAPI.notification('submitted successfully ');
+                // this.manageHolidayAPI.notification('submitted successfully ');
                 this.getProfileList();
             });
         this.restDay = [];
@@ -614,8 +702,8 @@ export class ManageHolidayComponent implements OnInit {
      * @memberof ManageHolidayComponent
      */
     deleteCalendarProfile(item) {
-        const dialog = this.displayDialog.open(DeleteCalendarConfirmationComponent, {
-            data: { name: item.code, value: item.calendar_guid },
+        const dialog = this.manageHolidayAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
+            data: { name: item.code, value: item.calendar_guid, desc: ' calendar profile' },
             height: "195px",
             width: "249px"
         });
@@ -642,13 +730,30 @@ export class ManageHolidayComponent implements OnInit {
      * @memberof ManageHolidayComponent
      */
     deletePH(index: number, event: any, title: string) {
-        const popup = this.displayDialog.open(DeleteCalendarConfirmationComponent, {
-            data: { name: title, value: index }
+        const popup = this.manageHolidayAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
+            data: { name: title, value: index, desc: ' from holiday list' },
+            height: "195px",
+            width: "249px"
         });
         popup.afterClosed().subscribe(result => {
-            if (result === index) {
+            if (result == index && result != undefined) {
                 setTimeout(() => {
                     event.splice(index, 1);
+                }, 1000);
+            }
+        });
+    }
+
+    deleteEmployee(index: number, list: any, name: string) {
+        const popup = this.manageHolidayAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
+            data: { name: name, value: index, desc: ' from assigned employee list' },
+            height: "195px",
+            width: "249px"
+        });
+        popup.afterClosed().subscribe(response => {
+            if (response == index && response != undefined) {
+                setTimeout(() => {
+                    list.splice(index, 1);
                 }, 1000);
             }
         });
