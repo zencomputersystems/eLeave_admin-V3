@@ -138,7 +138,7 @@ export class ManageHolidayComponent implements OnInit {
      * @type {FormGroup}
      * @memberof ManageHolidayComponent
      */
-    public editCalendarForm: FormGroup;
+    // public editCalendarForm: FormGroup;
 
     /**
      * Track calendar input of add calendar form
@@ -148,6 +148,8 @@ export class ManageHolidayComponent implements OnInit {
     public profileName: any;
 
     public dayControl: any;
+
+    public yearDefault: any;
 
     /**
      * Public holiday list from API
@@ -229,8 +231,6 @@ export class ManageHolidayComponent implements OnInit {
      */
     public height: number;
 
-    public employeeNumber: number[] = [];
-
     public assignedNames: any[] = [];
 
     public clickedIndex: number;
@@ -272,11 +272,8 @@ export class ManageHolidayComponent implements OnInit {
         this.countryDB = reduce(getDataSet(), "en");
         this.countryList = Object.keys(this.countryDB).map(key => this.countryDB[key]);
         this.countryList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-        this.editCalendarForm = new FormGroup({
-            calendarProfile: new FormControl('', Validators.required),
-            dayControlGroup: new FormControl(['']),
-        });
-        this.dayControl = new FormControl(['']);
+        this.dayControl = new FormControl('');
+        this.yearDefault = new FormControl(2019);
         this.profileName = new FormControl('', Validators.required);
         this.getPublicHolidayList();
         this.getProfileList();
@@ -514,7 +511,7 @@ export class ManageHolidayComponent implements OnInit {
                 // this.showSpinner = false;
                 // this.content = true;
                 this.personalProfile = data;
-                console.log('data', this.personalProfile);
+                // console.log('data', this.personalProfile);
                 this.viewDetails = true;
                 this.slideInOut = true;
                 this.events = [];
@@ -595,23 +592,23 @@ export class ManageHolidayComponent implements OnInit {
      * @param {*} month
      * @memberof ManageHolidayComponent
      */
-    // callParamAPI(year, month) {
-    //     this.showSpinner = true;
-    //     this.content = false;
-    //     this.editCalendar = true;
-    //     this.addCalendar = false;
-    //     const params = { 'country': this.countryIso, 'location': this.regionISO, 'year': year, 'month': month, };
-    //     this.manageHolidayAPI.get_public_holiday_list(params).subscribe(
-    //         (data: any[]) => {
-    //             this.showSpinner = false;
-    //             this.content = true;
-    //             this.items = data;
-    //             this.events = [];
-    //             for (let j = 0; j < this.items.response.holidays.length; j++) {
-    //                 this.createHolidayList(this.items.response.holidays[j].date.iso, this.items.response.holidays[j].name);
-    //             }
-    //         })
-    // }
+    callParamAPI(year) {
+        // this.showSpinner = true;
+        // this.content = false;
+        // this.editCalendar = true;
+        this.addCalendar = false;
+        const params = { 'country': this.countryIso, 'location': this.regionISO, 'year': year };
+        this.manageHolidayAPI.get_public_holiday_list(params).subscribe(
+            (data: any[]) => {
+                // this.showSpinner = false;
+                // this.content = true;
+                this.items = data;
+                this.events = [];
+                for (let j = 0; j < this.items.response.holidays.length; j++) {
+                    this.createHolidayList(this.items.response.holidays[j].date.iso, this.items.response.holidays[j].name);
+                }
+            })
+    }
 
     /**
      * Push objects to array of event holidays
@@ -622,14 +619,10 @@ export class ManageHolidayComponent implements OnInit {
     createHolidayList(dateIso: string, name: string) {
         this.events.push({
             "start": moment(dateIso).format('YYYY-MM-DD'),
-            // "str": moment(dateIso).format('DD-MM-YYYY'),
             "end": moment(dateIso).format('YYYY-MM-DD'),
             "title": name,
             "holidayName": name,
             "day": this.getWeekDay(new Date(dateIso)),
-            // "allDay": true,
-            // "backgroundColor": "#c2185b",
-            // "borderColor": "#c2185b"
         });
     }
 
@@ -685,8 +678,14 @@ export class ManageHolidayComponent implements OnInit {
         this.showSpinner = true;
         this.content = false;
         this.reformatHolidayObject(this.events);
+        this.callParamAPI(this.yearDefault.value);
         const newProfile = {
             "code": this.profileName.value,
+            "filter": {
+                "year": this.yearDefault.value,
+                "country": this.countryIso,
+                "region": this.regionISO
+            },
             "holiday": this.events,
             "rest": this.selectedWeekday
         }
@@ -695,15 +694,14 @@ export class ManageHolidayComponent implements OnInit {
             response => {
                 this.showSpinner = false;
                 this.content = true;
-                // this.manageHolidayAPI.notification('submitted successfully ');
                 this.getProfileList();
             });
+        this.menu.close('createCalendarDetails');
+        this.countryIso = '';
+        this.countryIso = '';
         this.restDay = [];
         this.selectedWeekday = [];
         this.profileName.reset();
-        setTimeout(() => {
-            this.getPublicHolidayList();
-        }, 100);
     }
 
     /**

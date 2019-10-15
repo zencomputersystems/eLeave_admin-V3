@@ -93,13 +93,13 @@
     <ion-content>
         <mat-form-field appearance="outline" style="width: 93%;font-size: 12px;opacity: 0.8;
         color: #43425d;margin-left: 10px;margin-right: 10px;margin-top: 15px;">
-            <mat-label>Calendar profile name</mat-label>
+            <mat-label>Calendar Profile Name</mat-label>
             <input matInput [formControl]="profileName" required>
             <mat-error>Please enter profile name</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" style="width: 93%;font-size: 12px;opacity: 0.8;
         color: #43425d;margin-left: 10px;margin-right: 10px;">
-            <mat-label>Rest day</mat-label>
+            <mat-label>Rest Day</mat-label>
             <mat-select multiple>
                 <mat-option *ngFor="let day of weekdays; let j=index" [value]="day" (click)="restDaySelected(day)">
                     {{day}}</mat-option>
@@ -108,7 +108,7 @@
 
         <mat-form-field appearance="outline" style="width: 93%;font-size: 12px;opacity: 0.8;
         color: #43425d;margin-left: 10px;margin-right: 10px;">
-            <mat-label>Country list</mat-label>
+            <mat-label>Country List</mat-label>
             <mat-select>
                 <mat-option selected>None</mat-option>
                 <mat-option *ngFor="let list of countryList; let i=index" [value]="list.iso"
@@ -129,7 +129,8 @@
 
         <mat-form-field appearance="outline" style="width: 93%;font-size: 12px;opacity: 0.8;
         color: #43425d;margin-left: 10px;margin-right: 10px;">
-            <input matInput placeholder="Year(yyyy)" [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
+            <mat-label>Year (yyyy)</mat-label>
+            <input matInput [formControl]="yearDefault">
         </mat-form-field>
         &nbsp;&nbsp;
         <p style="color: #808495;font-size: 12px;margin: 0px;margin-left:10px;display: block;">Select Employee (you can
@@ -199,7 +200,7 @@
 
         <div style="text-align: center;margin:30px">
             <ion-button style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                color="primary" (click)="postData()">
+                color="primary" (click)="postData()" [disabled]="!profileName.valid">
                 Create
             </ion-button>
         </div>
@@ -307,9 +308,9 @@
                                 <ion-col align-self-center size="4.5" class="column"> NO. ASSIGNED
                                     EMPLOYEE</ion-col>
                                 <ion-col align-self-center>
-                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="showAddIcon"></ion-icon>
+                                    <ion-icon class="addIcon" name="add-circle-outline"></ion-icon>
                                     <p style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
-            margin-top: -21px;margin-left: 20px;" *ngIf="showAddIcon"
+            margin-top: -21px;margin-left: 20px;"
                                         (click)="menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'assignEmployeeDetails');menu.open('createCalendarDetails');">
                                         ADD</p>
                                 </ion-col>
@@ -353,8 +354,7 @@
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label style="font-size:12px;color: #43425d;opacity:0.8">Select Rest Day
                             </mat-label>
-                            <mat-select style="font-size: 12px;" multiple [formControl]="dayControl"
-                                [disabled]="!showAddIcon">
+                            <mat-select style="font-size: 12px;" multiple [formControl]="dayControl">
                                 <mat-option style="font-size: 12px;" *ngFor="let day of weekdays; let j=index"
                                     (click)="restDaySelected(day)" [value]="day" [disabled]="disabledButton()">
                                     {{day}}</mat-option>
@@ -405,7 +405,8 @@
                                 </ion-col>
                                 <ion-col size="5" style="overflow: hidden;
                                 white-space: nowrap;text-overflow: ellipsis;" align-self-center>
-                                    <p style="color: #4d4f5c;font-size: 11px;" *ngIf="!showAddIcon">
+                                    <p style="color: #4d4f5c;font-size: 11px;overflow: hidden;
+                                    white-space: nowrap;text-overflow: ellipsis;" *ngIf="!showAddIcon">
                                         {{holiday.title}}
                                     </p>
                                     <mat-form-field *ngIf="showAddIcon"
