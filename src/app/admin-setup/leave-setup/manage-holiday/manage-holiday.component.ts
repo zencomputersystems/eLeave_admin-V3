@@ -84,7 +84,7 @@ export class ManageHolidayComponent implements OnInit {
      * @type {boolean}
      * @memberof ManageHolidayComponent
      */
-    public editCalendar: boolean = false;
+    public viewDetails: boolean = false;
 
     /**
      * show/hide delete calendar
@@ -251,9 +251,9 @@ export class ManageHolidayComponent implements OnInit {
 
     public userList: any;
 
-    public menuTitleName: string = "Public Holiday Name";
+    public menuNewHoliday: any = [];
 
-    public dateMenu: any = new Date();
+
     /**
      *Creates an instance of ManageHolidayComponent.
      * @param {LeaveAPIService} leaveAPI
@@ -393,7 +393,7 @@ export class ManageHolidayComponent implements OnInit {
     }
 
     disabledButton() {
-        if (this.editCalendar && this.showAddIcon) {
+        if (this.viewDetails && this.showAddIcon) {
             return false;
         } else {
             return true;
@@ -430,13 +430,13 @@ export class ManageHolidayComponent implements OnInit {
      * @param {number} index
      * @memberof ManageHolidayComponent
      */
-    checkAllDay(list: any, index: number) {
-        if (list[index].TIME_SLOT) {
-            this.leaveEvent[index].allDay = false;
-        } else {
-            this.leaveEvent[index].allDay = true;
-        }
-    }
+    // checkAllDay(list: any, index: number) {
+    //     if (list[index].TIME_SLOT) {
+    //         this.leaveEvent[index].allDay = false;
+    //     } else {
+    //         this.leaveEvent[index].allDay = true;
+    //     }
+    // }
 
     /**
      * Get calendar profile list from API
@@ -462,9 +462,12 @@ export class ManageHolidayComponent implements OnInit {
      * @memberof ManageHolidayComponent
      */
     saveData() {
-        this.showSpinner = true;
-        this.content = false;
-        this.editCalendar = false;
+        // this.showSpinner = true;
+        // this.content = false;
+        this.viewDetails = false;
+        this.showAddIcon = false;
+        this.slideInOut = false;
+        this.clickedIndex = null;
         this.reformatHolidayObject(this.events);
         const body = {
             "calendar_guid": this.selectedCalendarProfile.calendar_guid,
@@ -473,25 +476,21 @@ export class ManageHolidayComponent implements OnInit {
                 "year": (new Date()).getFullYear(),
                 "holiday": this.events,
                 "rest": this.selectedWeekday
-                // "holiday": this.events,
-                // "rest": this.selectedWeekday
             }
         }
-
-
         console.log('saveData', body);
         this.manageHolidayAPI.patch_calendar_profile(body).subscribe(
             (data: any[]) => {
-                this.showSpinner = false;
-                this.content = true;
+                // this.showSpinner = false;
+                // this.content = true;
                 // this.manageHolidayAPI.notification('submitted successfully ');
                 this.restDay = [];
                 this.selectedWeekday = [];
-                this.editCalendarForm.reset();
+                // this.editCalendarForm.reset();
                 this.getProfileList();
-                setTimeout(() => {
-                    this.getPublicHolidayList();
-                }, 100);
+                // setTimeout(() => {
+                //     this.getPublicHolidayList();
+                // }, 100);
             })
     }
 
@@ -516,7 +515,7 @@ export class ManageHolidayComponent implements OnInit {
                 // this.content = true;
                 this.personalProfile = data;
                 console.log('data', this.personalProfile);
-                this.editCalendar = true;
+                this.viewDetails = true;
                 this.slideInOut = true;
                 this.events = [];
                 for (let i = 0; i < this.personalProfile.holiday.length; i++) {
@@ -596,23 +595,23 @@ export class ManageHolidayComponent implements OnInit {
      * @param {*} month
      * @memberof ManageHolidayComponent
      */
-    callParamAPI(year, month) {
-        this.showSpinner = true;
-        this.content = false;
-        this.editCalendar = true;
-        this.addCalendar = false;
-        const params = { 'country': this.countryIso, 'location': this.regionISO, 'year': year, 'month': month, };
-        this.manageHolidayAPI.get_public_holiday_list(params).subscribe(
-            (data: any[]) => {
-                this.showSpinner = false;
-                this.content = true;
-                this.items = data;
-                this.events = [];
-                for (let j = 0; j < this.items.response.holidays.length; j++) {
-                    this.createHolidayList(this.items.response.holidays[j].date.iso, this.items.response.holidays[j].name);
-                }
-            })
-    }
+    // callParamAPI(year, month) {
+    //     this.showSpinner = true;
+    //     this.content = false;
+    //     this.editCalendar = true;
+    //     this.addCalendar = false;
+    //     const params = { 'country': this.countryIso, 'location': this.regionISO, 'year': year, 'month': month, };
+    //     this.manageHolidayAPI.get_public_holiday_list(params).subscribe(
+    //         (data: any[]) => {
+    //             this.showSpinner = false;
+    //             this.content = true;
+    //             this.items = data;
+    //             this.events = [];
+    //             for (let j = 0; j < this.items.response.holidays.length; j++) {
+    //                 this.createHolidayList(this.items.response.holidays[j].date.iso, this.items.response.holidays[j].name);
+    //             }
+    //         })
+    // }
 
     /**
      * Push objects to array of event holidays
@@ -632,6 +631,28 @@ export class ManageHolidayComponent implements OnInit {
             // "backgroundColor": "#c2185b",
             // "borderColor": "#c2185b"
         });
+    }
+
+    addNewPH(title, start) {
+        this.menuNewHoliday.push({
+            "start": moment(start).format('YYYY-MM-DD'),
+            "end": moment(start).format('YYYY-MM-DD'),
+            "title": title,
+            "holidayName": title,
+            "day": this.getWeekDay(new Date(start))
+        })
+    }
+
+    menuDateChanged(value, i) {
+        this.menuNewHoliday[i].start = moment(value).format('YYYY-MM-DD');
+        this.menuNewHoliday[i].end = moment(value).format('YYYY-MM-DD');
+        this.menuNewHoliday[i].day = this.getWeekDay(new Date(value));
+    }
+
+    combineEvent() {
+        Array.prototype.push.apply(this.events, this.menuNewHoliday);
+        this.menu.close('addHolidayDetails');
+        this.menuNewHoliday = [];
     }
 
     /**
@@ -686,18 +707,6 @@ export class ManageHolidayComponent implements OnInit {
     }
 
     /**
-     * Delete calendar profile from list
-     * @memberof ManageHolidayComponent
-     */
-    deleteData(item) {
-        // this.showSpinner = true;
-        // this.content = false;
-        // this.deleteCalendar = false;
-        // this.reformatHolidayObject(this.events);
-        this.deleteCalendarProfile(item);
-    }
-
-    /**
      * Delete the calendar profile after confirm by admin
      * @memberof ManageHolidayComponent
      */
@@ -717,7 +726,6 @@ export class ManageHolidayComponent implements OnInit {
             // this.showSpinner = false;
             // this.content = true;
             // this.editCalendarForm.reset();
-
             // setTimeout(() => { this.getPublicHolidayList(); }, 100);
         });
     }
@@ -757,24 +765,6 @@ export class ManageHolidayComponent implements OnInit {
                 }, 1000);
             }
         });
-    }
-
-    /**
-     * when event is clicked
-     * show 'All Day' || 'Half Day'
-     * @param {*} clicked
-     * @memberof CalendarViewPage
-     */
-    onEventClick(clicked: any) {
-        if (clicked.event.end) {
-            this.endDate = moment(clicked.event.end).subtract(1, "days").format("YYYY-MM-DD");
-        }
-        if (clicked.event._def.extendedProps.TIME_SLOT) {
-            this.timeslot = 'Half Day' + '(' + clicked.event._def.extendedProps.TIME_SLOT + ')';
-        }
-        if (clicked.event._def.extendedProps.TIME_SLOT == null) {
-            this.timeslot = 'All Day';
-        }
     }
 
 }
