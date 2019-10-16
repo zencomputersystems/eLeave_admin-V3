@@ -337,21 +337,12 @@ export class ManageHolidayComponent implements OnInit {
         for (let i = 0; i < this.assignCalendarForm.controls.user.value.length; i++) {
             if (this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]) != 0) {
                 const index: number = this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]);
-                this.employeeList.push(this.userList[index].userId);
+                if (!this.employeeList.includes(this.userList[index].userId)) {
+                    this.employeeList.push(this.userList[index].userId);
+                }
             }
         }
-        this.manageHolidayAPI.patch_assign_calendar_profile({
-            "user_guid": this.employeeList,
-            "calendar_guid": this.selectedCalendarProfile.calendar_guid
-        }).subscribe(response => {
-            this.assignCalendarForm.reset();
-            this.events = [];
-            this.employeeList = [];
-            this.showSelectedTree = false;
-            this.showSpinner = false;
-            this.treeview.checklistSelection.clear();
-            // this.assignCalendarAPI.openSnackBar('submitted successfully');
-        });
+        this.search();
     }
 
 
@@ -363,11 +354,20 @@ export class ManageHolidayComponent implements OnInit {
      * @param {*} event
      * @memberof AssignCalendarComponent
      */
-    clickOutside(event) {
-        if (!event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix") && !event.target.className.includes("inputDropdown")) {
+    clickOutside(event, control) {
+        if (!event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix") && !event.target.className.includes("inputDropdown") && !event.target.className.includes("mat-checkbox-inner-container")) {
             this.showTreeDropdown = false;
             this.showSelectedTree = true;
             this.disabledButton();
+            for (let i = 0; i < control.dataNodes.length; i++) {
+                let flatNode = control.dataNodes[i].item;
+                for (let j = 0; j < this.assignedNames.length; j++) {
+                    if (flatNode === this.assignedNames[j].FULLNAME) {
+                        this.treeview.todoLeafItemSelectionToggle(control.dataNodes[i]);
+                        this.treeview.checklistSelection.isSelected(control.dataNodes[i]);
+                    }
+                }
+            }
         }
         for (let i = 0; i < this.treeview.checklistSelection.selected.length; i++) {
             if (this.treeview.checklistSelection.selected[i].level == 2 && this.assignCalendarForm.controls.user.value.indexOf(this.treeview.checklistSelection.selected[i].item) === -1) {
@@ -378,6 +378,19 @@ export class ManageHolidayComponent implements OnInit {
         if (this.treeview.checklistSelection.selected.length === 0) {
             this.assignCalendarForm.controls.user.value.length = 0;
         }
+
+        if (control !== undefined) {
+            for (let i = 0; i < control.dataNodes.length; i++) {
+                let flatNode = control.dataNodes[i].item;
+                for (let j = 0; j < this.assignedNames.length; j++) {
+                    if (flatNode === this.assignedNames[j].FULLNAME) {
+                        this.treeview.todoLeafItemSelectionToggle(control.dataNodes[i]);
+                        this.treeview.checklistSelection.isSelected(control.dataNodes[i]);
+                    }
+                }
+            }
+        }
+
     }
 
     checkIdExist(array: any, obj: any) {
@@ -468,30 +481,45 @@ export class ManageHolidayComponent implements OnInit {
         this.reformatHolidayObject(this.events);
         const body = {
             "calendar_guid": this.selectedCalendarProfile.calendar_guid,
+            "year": (new Date()).getFullYear(),
             "data": {
                 "code": this.selectedCalendarProfile.code,
-                "year": (new Date()).getFullYear(),
                 "holiday": this.events,
                 "rest": this.selectedWeekday
             }
         }
-        console.log('saveData', body);
         this.manageHolidayAPI.patch_calendar_profile(body).subscribe(
             (data: any[]) => {
-                // this.showSpinner = false;
-                // this.content = true;
-                // this.manageHolidayAPI.notification('submitted successfully ');
                 this.restDay = [];
+                this.dayControl.reset();
                 this.selectedWeekday = [];
-                // this.editCalendarForm.reset();
                 this.getProfileList();
-                // setTimeout(() => {
-                //     this.getPublicHolidayList();
-                // }, 100);
             })
+        this.manageHolidayAPI.patch_assign_calendar_profile({
+            "user_guid": this.employeeList,
+            "calendar_guid": this.selectedCalendarProfile.calendar_guid
+        }).subscribe(response => {
+            this.assignCalendarForm.reset();
+            this.events = [];
+            this.employeeList = [];
+            this.showSelectedTree = false;
+            this.showSpinner = false;
+            this.treeview.checklistSelection.clear();
+            this.getAssignedList();
+        });
     }
 
-
+    search() {
+        const fullname = [];
+        for (let j = 0; j < this.assignedNames.length; j++) {
+            fullname.push(this.assignedNames[j].FULLNAME);
+        }
+        for (let i = 0; i < this.assignCalendarForm.controls.user.value.length; i++) {
+            if (!fullname.includes(this.assignCalendarForm.controls.user.value[i])) {
+                this.assignedNames.push({ FULLNAME: this.assignCalendarForm.controls.user.value[i] });
+            }
+        }
+    }
 
     /**
      * Select calendar profile to pass the calendar Id to API
@@ -656,9 +684,6 @@ export class ManageHolidayComponent implements OnInit {
      */
     reformatHolidayObject(holiday) {
         for (let i = 0; i < this.events.length; i++) {
-            // delete holiday[i].allDay;
-            // delete holiday[i].backgroundColor;
-            // delete holiday[i].borderColor;
             delete holiday[i].day;
         }
 
@@ -700,6 +725,7 @@ export class ManageHolidayComponent implements OnInit {
         this.countryIso = '';
         this.countryIso = '';
         this.restDay = [];
+        this.dayControl.reset();
         this.selectedWeekday = [];
         this.profileName.reset();
     }
@@ -750,7 +776,7 @@ export class ManageHolidayComponent implements OnInit {
         });
     }
 
-    deleteEmployee(index: number, list: any, name: string) {
+    deleteEmployee(index: number, name: string) {
         const popup = this.manageHolidayAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
             data: { name: name, value: index, desc: ' from assigned employee list' },
             height: "195px",
@@ -759,7 +785,7 @@ export class ManageHolidayComponent implements OnInit {
         popup.afterClosed().subscribe(response => {
             if (response == index && response != undefined) {
                 setTimeout(() => {
-                    list.splice(index, 1);
+                    this.assignedNames.splice(index, 1);
                 }, 1000);
             }
         });

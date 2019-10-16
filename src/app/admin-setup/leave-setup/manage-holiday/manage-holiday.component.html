@@ -14,7 +14,8 @@
             <input matInput class="inputDropdown" readonly required>
             <mat-icon matSuffix class="iconDropdown"><i class="material-icons">arrow_drop_down</i></mat-icon>
             <mat-error>Please select at least one option</mat-error>
-            <div class="dropdownList" *ngIf="showTreeDropdown" (clickOutside)="clickOutside($event)">
+            <div class="dropdownList" *ngIf="showTreeDropdown"
+                (clickOutside)="clickOutside($event, treeview.treeControl )">
                 <mat-tree style="z-index: 82;position: absolute;width: 100%;" [dataSource]="treeview.dataSource"
                     [treeControl]="treeview.treeControl">
                     <!-- inner checkbox -->
@@ -71,7 +72,7 @@
         </div>
         <div style="text-align: center;margin:30px">
             <ion-button style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                color="primary" (click)="submitData();">
+                color="primary" (click)="submitData();menu.close('assignEmployeeDetails');">
                 Assign
             </ion-button>
         </div>
@@ -308,8 +309,8 @@
                                 <ion-col align-self-center size="4.5" class="column"> NO. ASSIGNED
                                     EMPLOYEE</ion-col>
                                 <ion-col align-self-center>
-                                    <ion-icon class="addIcon" name="add-circle-outline"></ion-icon>
-                                    <p style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
+                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="!showAddIcon"></ion-icon>
+                                    <p *ngIf="!showAddIcon" style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
             margin-top: -21px;margin-left: 20px;"
                                         (click)="menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'assignEmployeeDetails');menu.open('createCalendarDetails');">
                                         ADD</p>
@@ -453,10 +454,10 @@
                                     style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px">
                                     {{item.FULLNAME}}
                                 </ion-col>
-                                <ion-col size="3" align-self-center style="text-align: center;"> <img
-                                        src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="showAddIcon"
-                                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
-                                        (click)="deleteEmployee(i, assignedNames, item.FULLNAME)">
+                                <ion-col size="3" align-self-center style="text-align: center;">
+                                    <!-- <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="showAddIcon"
+                                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;"> -->
+                                    <!-- (click)="deleteEmployee(i, item.FULLNAME)" -->
                                 </ion-col>
                                 <ion-item class="divider" lines="full" style="padding-top: 1%;">
                                 </ion-item>
