@@ -101,7 +101,7 @@
         <mat-form-field appearance="outline" style="width: 93%;font-size: 12px;opacity: 0.8;
         color: #43425d;margin-left: 10px;margin-right: 10px;">
             <mat-label>Rest Day</mat-label>
-            <mat-select multiple>
+            <mat-select [formControl]="dayControl" multiple>
                 <mat-option *ngFor="let day of weekdays; let j=index" [value]="day" (click)="restDaySelected(day)">
                     {{day}}</mat-option>
             </mat-select>
@@ -110,7 +110,7 @@
         <mat-form-field appearance="outline" style="width: 93%;font-size: 12px;opacity: 0.8;
         color: #43425d;margin-left: 10px;margin-right: 10px;">
             <mat-label>Country List</mat-label>
-            <mat-select>
+            <mat-select [formControl]="country">
                 <mat-option selected>None</mat-option>
                 <mat-option *ngFor="let list of countryList; let i=index" [value]="list.iso"
                     (click)="countryRegion = countryDB[list.iso].regions; countryIso = list.iso;">
@@ -120,7 +120,7 @@
         <mat-form-field appearance="outline" style="width: 93%;font-size: 12px;opacity: 0.8;
         color: #43425d;margin-left: 10px;margin-right: 10px;">
             <mat-label>Regions</mat-label>
-            <mat-select>
+            <mat-select [formControl]="region">
                 <mat-option selected>None</mat-option>
                 <mat-option *ngFor="let list of countryRegion; let i=index" [value]="list.iso"
                     (click)=" regionISO = list.iso">
@@ -201,7 +201,8 @@
 
         <div style="text-align: center;margin:30px">
             <ion-button style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                color="primary" (click)="postData()" [disabled]="!profileName.valid">
+                color="primary" (click)="postData();menu.close('createCalendarDetails');"
+                [disabled]="!profileName.valid">
                 Create
             </ion-button>
         </div>
@@ -312,36 +313,38 @@
                                     <ion-icon class="addIcon" name="add-circle-outline" *ngIf="!showAddIcon"></ion-icon>
                                     <p *ngIf="!showAddIcon" style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
             margin-top: -21px;margin-left: 20px;"
-                                        (click)="menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'assignEmployeeDetails');menu.open('createCalendarDetails');">
+                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null; viewDetails = false;menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'assignEmployeeDetails');menu.open('createCalendarDetails');">
                                         ADD</p>
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <ion-row *ngFor="let list of profileList; let i=index" style="padding-left: 5px;padding-top: 5px;
+                        <div style="height: 400px;overflow: auto;">
+                            <ion-row *ngFor="let list of profileList; let i=index" style="padding-left: 5px;padding-top: 5px;
                         padding-bottom: 5px;">
-                            <ion-col size="4.5"
-                                style="cursor: pointer;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"
-                                (click)="clickedCalendar(list, i)">
-                                <p class="textHover" style="font-size: 11px;" [ngClass]="{
+                                <ion-col size="4.5"
+                                    style="cursor: pointer;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"
+                                    (click)="clickedCalendar(list, i)">
+                                    <p class="textHover" style="font-size: 11px;" [ngClass]="{
                                     'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"> {{list.code}}
-                                </p>
-                            </ion-col>
-                            <ion-col size="4.5" style="text-align: center;color: #4d4f5c;font-size: 11px;">
-                                {{list.employee}}</ion-col>
-                            <ion-col>
-                                <img src="assets/icon/leave_setup/icon_edit@3x.png"
-                                    style="width: 11px;height:11px;display: inline-block;"
-                                    (click)="selectProfile(list, i);showAddIcon=true"
-                                    [ngClass]="{
+                                    </p>
+                                </ion-col>
+                                <ion-col size="4.5" style="text-align: center;color: #4d4f5c;font-size: 11px;">
+                                    {{list.employee}}</ion-col>
+                                <ion-col>
+                                    <img src="assets/icon/leave_setup/icon_edit@3x.png"
+                                        style="width: 11px;height:11px;display: inline-block;"
+                                        (click)="selectProfile(list, i);showAddIcon=true"
+                                        [ngClass]="{
                                         'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
-                                &nbsp;&nbsp;
-                                <img src="assets/icon/leave_setup/icon_trash@3x.png"
-                                    style="width: 11px;height:11px;display: inline-block;"
-                                    (click)="deleteCalendarProfile(profileList[i]);selectProfile(list, i)"
-                                    [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}">
-                            </ion-col>
-                            <ion-item class="divider" lines="full"></ion-item>
-                        </ion-row>
+                                    &nbsp;&nbsp;
+                                    <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                                        style="width: 11px;height:11px;display: inline-block;"
+                                        (click)="deleteCalendarProfile(profileList[i]);selectProfile(list, i)"
+                                        [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}">
+                                </ion-col>
+                                <ion-item class="divider" lines="full"></ion-item>
+                            </ion-row>
+                        </div>
                     </div>
 
                     <div class="restday">

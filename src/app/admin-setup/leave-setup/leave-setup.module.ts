@@ -17,7 +17,6 @@ import { ManageHolidayComponent } from './manage-holiday/manage-holiday.componen
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { AssignCalendarComponent } from './assign-calendar/assign-calendar.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-notification.component';
 import { MatTreeModule } from '@angular/material/tree';
@@ -79,7 +78,7 @@ const routes: Routes = [
     ],
     providers: [AssignCalendarTreeviewService],
     entryComponents: [SnackbarNotificationComponent, DeleteCalendarConfirmationComponent],
-    declarations: [ManageHolidayComponent, LeaveSetupComponent, AssignCalendarComponent, SnackbarNotificationComponent, DeleteCalendarConfirmationComponent,
+    declarations: [ManageHolidayComponent, LeaveSetupComponent, SnackbarNotificationComponent, DeleteCalendarConfirmationComponent,
         LeaveSetupTabComponent, ApplyOnBehalfComponent, ApprovalOverrideComponent, LeaveAdjustmentComponent, LeaveEntitlementByBatchComponent, WorkingHourComponent,
         WorkingHourListComponent, AssignWorkingHourComponent]
 })
