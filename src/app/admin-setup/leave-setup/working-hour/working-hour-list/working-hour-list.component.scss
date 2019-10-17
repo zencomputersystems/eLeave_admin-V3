@@ -1,7 +1,7 @@
 :host {
   margin: auto;
   width: 100%;
-  height: calc(100% - 58px);
+  // height: calc(100% - 58px);
 
   .divider {
     --min-height: none;
@@ -9,11 +9,11 @@
     padding-bottom: 1%;
     width: 100%;
   }
-  ion-col {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+  // ion-col {
+  //   overflow: hidden;
+  //   white-space: nowrap;
+  //   text-overflow: ellipsis;
+  // }
   .container {
     background: white;
     min-height: 100%;
@@ -106,5 +106,89 @@
     cursor: pointer;
     position: absolute;
     margin-left: 30px;
+  }
+  // new style
+  ion-card {
+    height: 100%;
+    margin: 0;
+  }
+  .fullContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 17px;
+  }
+  .right {
+    padding-left: 20px;
+    padding-top: 4px;
+  }
+  .cardContent {
+    line-height: 1.25;
+    background: white;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 154px);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .row {
+    display: flex;
+    flex-wrap: nowrap;
+    // padding: 0 10px;
+  }
+  .working {
+    flex: 55%;
+    max-width: 55%;
+  }
+  .assigned {
+    flex: 45%;
+    max-width: 45%;
+    margin-left: 10px;
+  }
+  .mainDivider {
+    --min-height: none;
+  }
+  .subtitle {
+    display: block;
+    // padding-left: 2px;
+    color: #43425d;
+    opacity: 0.8;
+    padding-top: 3px;
+  }
+  .column {
+    font-size: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    padding-bottom: 0;
+    margin-bottom: 5px;
+  }
+  .textColor {
+    color: #3b86ff;
+  }
+  .oriColor {
+    color: #4d4f5c;
+  }
+  .textHover:hover {
+    color: #3b86ff;
+  }
+  .addIcon {
+    color: #7069d8;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .imgFilter {
+    filter: opacity(0.3);
+    cursor: text;
+  }
+  .imgColor {
+    filter: none;
+    cursor: pointer;
+  }
+  .showCursor {
+    cursor: pointer;
+    filter: none;
   }
 }

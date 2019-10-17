@@ -85,6 +85,17 @@ export class WorkingHourApiService {
     }
 
     /**
+     * get assigned employee list by given working hour GUID
+     * @param {string} id
+     * @returns {Observable<any>}
+     * @memberof WorkingHourApiService
+     */
+    get_assigned_working_profile_user(id: string)
+        : Observable<any> {
+        return this.apiService.getApiWithId('/api/admin/working-hours/working-hours-profile/users/', id);
+    }
+
+    /**
      * show pop up snackbar
      * @param {string} txt
      * @memberof WorkingHourApiService

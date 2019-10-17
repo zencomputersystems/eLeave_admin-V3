@@ -1,74 +1,202 @@
 <!-- <div style="width: 100%; height:100%; text-align: center;" *ngIf="showSpinner">
     <app-spinner></app-spinner>
 </div> -->
-<div style="text-align: center" *ngIf="showSpinner">
-    <ion-spinner name="lines" color="primary"></ion-spinner>
-</div>
-<div class="container" *ngIf="!showSpinner">
-    <div class="cardContent">
-        <ion-card-content *ngIf="showListPage">
-            <div style="color: #057dcd;text-align: right;padding-top: 15px;">
-                <div style="display: inline-block;cursor: pointer;">
-                    <div class="user-icon" [inlineSVG]="'assets/icon/option/user.svg'"
-                        (click)="showAssignPage=true;showDetailPage=false;showListPage=false">
-                    </div>
-                    <ion-label class=" label" style="font-size: 14px; color: #057dcd;
-                    margin-top: 2px;cursor: pointer;padding-left: 10px;padding-right: 10px;"
-                        (click)="showAssignPage=true;showDetailPage=false;showListPage=false">
-                        Assign</ion-label>
-                </div>
-                &nbsp;&nbsp;
-                <div class="textAssign" style="display: inline-block;">
-                    <div class="user-icon" [inlineSVG]="'assets/icon/option/add.svg'"
-                        (click)="showDetailPage=true;id='';showAssignPage=false;showListPage=false"></div>
-                    <ion-label class="label" style="font-size: 14px; color: #057dcd;
-            margin-top: 2px;cursor: pointer;padding-left: 10px;"
-                        (click)="showDetailPage=true;id='';showAssignPage=false;showListPage=false">
-                        Create</ion-label>
-                </div>
+<ion-card>
+    <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
+        <div class="fullContainer">
+            <div class="left">
+                <img src="assets/icon/leave_setup/icon_calendar@3x.png" style="width:36px;height:36px">
             </div>
-            <div style="margin-top: 2%">
-                <ion-row class="titleRow">
-                    <ion-col size="3">
-                        <ion-label class="titleLabel">PROFILE NAME</ion-label>
-                    </ion-col>
-                    <ion-col size="4">
-                        <ion-label class="titleLabel">DESCRIPTION</ion-label>
-                    </ion-col>
-                    <ion-col size="3">
-                        <ion-label class="titleLabel">WORKING HOUR</ion-label>
-                    </ion-col>
-                    <ion-col>
-                    </ion-col>
-                </ion-row>
-                <ion-row class="detailsRow" *ngFor="let item of list">
-                    <ion-col size="3">
-                        <ion-label class="colOfLeave">{{item.code}}</ion-label>
-                    </ion-col>
-                    <ion-col size="4" class="colOfLeave">{{item.description}}
-                    </ion-col>
-                    <ion-col size="3" class="colOfLeave" *ngIf="list">{{item.strtime}} - {{item.endtime}}
-                    </ion-col>
-                    <ion-col>
-                        <div class="edit-pencil-icon" [inlineSVG]="'assets/icon/option/pencil.svg'"
-                            (click)="showDetailPage = true;id=item.working_hours_guid">
-                        </div>
-                        <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'"
-                            (click)="deleteWorkingHrProfile(item.working_hours_guid, item.code)"></div>
-                    </ion-col>
-                    <ion-item class="divider" lines="full"></ion-item>
-                </ion-row>
+            <div class="right">
+                <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Working Hour
+                    Setup
+                </ion-card-subtitle>
+                <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                    Some good & sweet explanation here</ion-card-subtitle>
             </div>
-        </ion-card-content>
-
-        <ion-card-content *ngIf="showDetailPage">
-            <app-working-hour [showDetailPage]="showDetailPage" [id]="id" (valueChange)="valueChanged($event, 'edit')">
-            </app-working-hour>
-        </ion-card-content>
-
-        <ion-card-content *ngIf="showAssignPage">
-            <app-assign-working-hour [showAssignPage]="showAssignPage" (backToList)="valueChanged($event, 'assign')">
-            </app-assign-working-hour>
-        </ion-card-content>
+            <div style="right: 25px;top: 25px;position: absolute;" *>
+                <ion-button fill="outline"
+                    style="background: #f0f0f7;font-size: 12px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                    color="primary">
+                    Cancel
+                </ion-button>
+                <div style="display: inline-block"></div>
+                <ion-button style="font-size: 12px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                    color="primary">
+                    Save
+                </ion-button>
+            </div>
+        </div>
+    </ion-card-header>
+    <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
+        <app-spinner></app-spinner>
     </div>
-</div>
+    <!-- class="container" -->
+    <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;" *ngIf="!showSpinner">
+        <div class="cardContent">
+            <ion-card-content>
+                <div class="row">
+                    <div class="working">
+                        <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
+                                    padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                            <ion-row>
+                                <ion-col size="5" align-self-center>PROFILE NAME
+                                </ion-col>
+                                <ion-col size="2.5" align-self-center class="column"> WORKING HOUR</ion-col>
+                                <ion-col size="3" align-self-center class="column"> NO. OF ASSIGNED EMPLOYEE</ion-col>
+                                <ion-col align-self-center>
+                                    <ion-icon class="addIcon" name="add-circle-outline"></ion-icon>
+                                    <p style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
+                    margin-top: -21px;margin-left: 20px;"
+                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null; viewDetails = false;menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'assignEmployeeDetails');menu.open('createCalendarDetails');">
+                                        ADD</p>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <div style="height: 400px;overflow: auto;">
+                            <ion-row *ngFor="let item of list; let i=index" style="padding-left: 5px;padding-top: 5px;
+                                padding-bottom: 5px;">
+                                <ion-col size="5" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                    <p class="textHover"
+                                        style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
+                                        [ngClass]="{
+                                            'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
+                                        (click)="clickedCalendar(item, i)">
+                                        {{item.code}}
+                                    </p>
+                                    <p
+                                        style="font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                        {{item.description}}
+                                    </p>
+                                </ion-col>
+                                <ion-col align-self-center size="2.5" style="color: #4d4f5c;font-size: 11px;">
+                                    {{item.strtime}} - {{item.endtime}}</ion-col>
+                                <ion-col align-self-center size="3s"
+                                    style="text-align: center;color: #4d4f5c;font-size: 11px;">
+                                    {{item.employee}}</ion-col>
+                                <ion-col align-self-center>
+                                    <img src="assets/icon/leave_setup/icon_edit@3x.png"
+                                        style="width: 11px;height:11px;display: inline-block;"
+                                        (click)="clickedId=item.working_hours_guid"
+                                        [ngClass]="{
+                                                'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
+                                    &nbsp;&nbsp;
+                                    <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                                        style="width: 11px;height:11px;display: inline-block;"
+                                        (click)="deleteWorkingHrProfile(item.working_hours_guid, item.code)"
+                                        [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}">
+                                </ion-col>
+                                <ion-item class="divider" lines="full"></ion-item>
+                            </ion-row>
+                        </div>
+                    </div>
+                    <div class="assigned">
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                            <ion-row>
+                                <ion-col size="6"
+                                    style="font-size: 12px;display: -webkit-box;
+                                    -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    ASSIGNED EMPLOYEE</ion-col>
+                                <ion-col size="4"
+                                    style="font-size: 12px;display: -webkit-box;
+                                    -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    ID NO</ion-col>
+                                <ion-col align-self-center>
+                                    <ion-icon class="addIcon" name="add-circle-outline"></ion-icon>
+                                    <p style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
+                        margin-top: -21px;margin-left: 20px;">
+                                        ADD</p>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <p *ngIf="!viewDetails"
+                            style="width: 90%;padding: 20px;opacity: 0.8;font-size: 12px;line-height: 1.25;text-align: left;color: #a3a6b4;">
+                            Nothing to view. Please select profile name first.</p>
+                        <div style="height: 396px;overflow: auto;">
+                            <ion-row *ngFor="let item of assignedNames; let i =index" style="width: 100%;padding-left: 10px;padding-top: 5px;
+                                padding-bottom: 5px;">
+                                <ion-col size="6" align-self-center
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px">
+                                    {{item.FULLNAME}}
+                                </ion-col>
+                                <ion-col size="4">ID</ion-col>
+                                <ion-col align-self-center style="text-align: center;">
+                                    <!-- <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="showAddIcon"
+                                            style="width: 11px;height:11px;display: inline-block;cursor: pointer;"> -->
+                                    <!-- (click)="deleteEmployee(i, item.FULLNAME)" -->
+                                </ion-col>
+                                <ion-item class="divider" lines="full" style="padding-top: 1%;">
+                                </ion-item>
+                            </ion-row>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div style="color: #057dcd;text-align: right;padding-top: 15px;">
+                    <div style="display: inline-block;cursor: pointer;">
+                        <div class="user-icon" [inlineSVG]="'assets/icon/option/user.svg'"
+                            (click)="showAssignPage=true;showDetailPage=false;showListPage=false">
+                        </div>
+                        <ion-label class=" label" style="font-size: 14px; color: #057dcd;
+                    margin-top: 2px;cursor: pointer;padding-left: 10px;padding-right: 10px;"
+                            (click)="showAssignPage=true;showDetailPage=false;showListPage=false">
+                            Assign</ion-label>
+                    </div>
+                    &nbsp;&nbsp;
+                    <div class="textAssign" style="display: inline-block;">
+                        <div class="user-icon" [inlineSVG]="'assets/icon/option/add.svg'"
+                            (click)="showDetailPage=true;id='';showAssignPage=false;showListPage=false"></div>
+                        <ion-label class="label" style="font-size: 14px; color: #057dcd;
+            margin-top: 2px;cursor: pointer;padding-left: 10px;"
+                            (click)="showDetailPage=true;id='';showAssignPage=false;showListPage=false">
+                            Create</ion-label>
+                    </div>
+                </div>
+                <div style="margin-top: 2%">
+                    <ion-row class="titleRow">
+                        <ion-col size="3">
+                            <ion-label class="titleLabel">PROFILE NAME</ion-label>
+                        </ion-col>
+                        <ion-col size="4">
+                            <ion-label class="titleLabel">DESCRIPTION</ion-label>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-label class="titleLabel">WORKING HOUR</ion-label>
+                        </ion-col>
+                        <ion-col>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="detailsRow" *ngFor="let item of list">
+                        <ion-col size="3">
+                            <ion-label class="colOfLeave">{{item.code}}</ion-label>
+                        </ion-col>
+                        <ion-col size="4" class="colOfLeave">{{item.description}}
+                        </ion-col>
+                        <ion-col size="3" class="colOfLeave" *ngIf="list">{{item.strtime}} - {{item.endtime}}
+                        </ion-col>
+                        <ion-col>
+                            <div class="edit-pencil-icon" [inlineSVG]="'assets/icon/option/pencil.svg'"
+                                (click)="showDetailPage = true;id=item.working_hours_guid">
+                            </div>
+                            <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'"
+                                (click)="deleteWorkingHrProfile(item.working_hours_guid, item.code)"></div>
+                        </ion-col>
+                        <ion-item class="divider" lines="full"></ion-item>
+                    </ion-row>
+                </div> -->
+            </ion-card-content>
+
+            <!-- <ion-card-content *ngIf="showDetailPage">
+                <app-working-hour [showDetailPage]="showDetailPage" [id]="id"
+                    (valueChange)="valueChanged($event, 'edit')">
+                </app-working-hour>
+            </ion-card-content>
+
+            <ion-card-content *ngIf="showAssignPage">
+                <app-assign-working-hour [showAssignPage]="showAssignPage"
+                    (backToList)="valueChanged($event, 'assign')">
+                </app-assign-working-hour>
+            </ion-card-content> -->
+        </div>
+    </div>
+</ion-card>

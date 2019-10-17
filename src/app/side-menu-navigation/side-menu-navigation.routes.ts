@@ -21,6 +21,7 @@ import { ManageHolidayComponent } from '../admin-setup/leave-setup/manage-holida
 import { WorkingHourComponent } from '../admin-setup/leave-setup/working-hour/working-hour.component';
 import { LeaveAdjustmentComponent } from '../admin-setup/leave-setup/leave-adjustment/leave-adjustment.component';
 import { LeaveEntitlementByBatchComponent } from '../admin-setup/leave-setup/leave-entitlement-by-batch/leave-entitlement-by-batch.component';
+import { WorkingHourListComponent } from '../admin-setup/leave-setup/working-hour/working-hour-list/working-hour-list.component';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -38,7 +39,7 @@ export const sideMenuNavigationRoutes: Routes = [
                     // { path: 'tab', component: LeaveSetupTabComponent }
                     { path: '', redirectTo: 'calendar-profile-setup', pathMatch: 'full' },
                     { path: 'calendar-profile-setup', component: ManageHolidayComponent },
-                    { path: 'working-hour-setup', component: WorkingHourComponent },
+                    { path: 'working-hour-setup', component: WorkingHourListComponent },
                     { path: 'leave-adjustment', component: LeaveAdjustmentComponent },
                     { path: 'leave-entitlement-by-batch', component: LeaveEntitlementByBatchComponent }
                 ]

@@ -1,7 +1,7 @@
 import { OnInit, Component } from "@angular/core";
 import { WorkingHourApiService } from "../working-hour-api.service";
 import { MatDialog } from "@angular/material";
-import { DialogDeleteConfirmationComponent } from "src/app/admin-setup/role-management/dialog-delete-confirmation/dialog-delete-confirmation.component";
+import { DeleteCalendarConfirmationComponent } from "../../delete-calendar-confirmation/delete-calendar-confirmation.component";
 
 /**
  * working hour profile list page
@@ -51,6 +51,10 @@ export class WorkingHourListComponent implements OnInit {
      */
     public showSpinner: boolean = false;
 
+    public clickedId: string;
+
+    public clickedIndex: number;
+
     /**
      *Creates an instance of WorkingHourListComponent.
      * @param {WorkingHourApiService} workingHrAPI
@@ -64,9 +68,11 @@ export class WorkingHourListComponent implements OnInit {
         this.showSpinner = true;
         this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
         for (let i = 0; i < this.list.length; i++) {
+            let number = await this.workingHrAPI.get_assigned_working_profile_user(this.list[i].working_hours_guid).toPromise();
             let details = await this.workingHrAPI.get_working_hours_details(this.list[i].working_hours_guid).toPromise();
             this.list[i].strtime = details.property.fullday.start_time;
             this.list[i].endtime = details.property.fullday.end_time;
+            this.list[i]["employee"] = number.length;
         }
         this.showSpinner = false;
     }
@@ -86,6 +92,12 @@ export class WorkingHourListComponent implements OnInit {
         this.ngOnInit();
     }
 
+    clickedCalendar(list, index) {
+        this.clickedIndex = index;
+        console.log(list);
+        // this.selectProfile(list, index);
+    }
+
     /**
      * delete working hour profile
      * @param {string} working_hour_guid
@@ -93,8 +105,10 @@ export class WorkingHourListComponent implements OnInit {
      * @memberof WorkingHourListComponent
      */
     deleteWorkingHrProfile(working_hour_guid: string, name: string) {
-        const dialogRef = this.dialog.open(DialogDeleteConfirmationComponent, {
-            data: { value: working_hour_guid, name: name }
+        const dialogRef = this.dialog.open(DeleteCalendarConfirmationComponent, {
+            data: { name: name, value: working_hour_guid, desc: ' profile name' },
+            height: "195px",
+            width: "249px"
         });
         dialogRef.afterClosed().subscribe(val => {
             if (val === working_hour_guid) {
