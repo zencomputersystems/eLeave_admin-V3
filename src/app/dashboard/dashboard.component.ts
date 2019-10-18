@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { DashboardApiService } from './dashboard-api.service';
 import * as _moment from 'moment';
+import { MatDialog } from '@angular/material';
+import { DeleteCalendarConfirmationComponent } from '../admin-setup/leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
 const moment = _moment;
 
 /**
@@ -87,6 +89,11 @@ export class DashboardComponent implements OnInit {
    */
   public message: string;
 
+  /**
+   * title of the announcement
+   * @type {string}
+   * @memberof DashboardComponent
+   */
   public title: string = null;
 
   /**
@@ -102,7 +109,7 @@ export class DashboardComponent implements OnInit {
    * @param {DashboardApiService} dashboardAPI
    * @memberof DashboardComponent
    */
-  constructor(private menu: MenuController, private dashboardAPI: DashboardApiService) {
+  constructor(private menu: MenuController, private dashboardAPI: DashboardApiService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -189,6 +196,11 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+
+  /**
+   * create new announcement
+   * @memberof DashboardComponent
+   */
   onClickPublish() {
     let isChecked: number;
     if (this.checked === true) {
@@ -196,15 +208,26 @@ export class DashboardComponent implements OnInit {
     } else {
       isChecked = 0;
     }
-    const data = { "title": this.title, "message": this.message, "status": isChecked };
-    this.dashboardAPI.post_announcement_list(data).subscribe(response => console.log(response));
+    const data = { "title": this.title, "message": this.message, "isPinned": isChecked };
+    this.dashboardAPI.post_announcement_list(data).subscribe(response => {
+      this.getAnnouncementList();
+      this.menu.close('createAnnouncementDetails');
+    });
   }
 
-  // {
-  //   "title": "Notice of requirement to take annual leave for Hari Raya festival",
-  //   "message": "Dear all,\n\n  In accordance with Hari Raya celebration, we would like to request all staff to take 1 day annual leave due to a close down of operations on 7 June 2019. Kindly apply annual leave for the low productivity period and take this as an opportunity to have a substantial break for family. \n  \n  This is not applicable to Manage365 and backup of Resident Engineer.\n  ",
-  //   "fromDate": "2019-09-01",
-  //   "toDate": "2019-12-01"
-  // }
-
+  deleteAnnouncement(item) {
+    const dialog = this.dialog.open(DeleteCalendarConfirmationComponent, {
+      data: { name: 'this', value: item.ANNOUNCEMENT_GUID, desc: ' announcement' },
+      height: "195px",
+      width: "249px"
+    });
+    dialog.afterClosed().subscribe(result => {
+      if (result === item.ANNOUNCEMENT_GUID) {
+        this.dashboardAPI.delete_announcement_list(item.ANNOUNCEMENT_GUID).subscribe(response => {
+          console.log(response);
+          this.getAnnouncementList();
+        })
+      }
+    });
+  }
 }

@@ -38,6 +38,8 @@ import { WorkingHourListComponent } from './working-hour/working-hour-list/worki
 import { AssignWorkingHourComponent } from './working-hour/assign-working-hour/assign-working-hour.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import 'hammerjs';
 
 const routes: Routes = [
     {
@@ -48,6 +50,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
+        NgbModule,
         CommonModule,
         FormsModule,
         IonicModule,
@@ -74,6 +77,7 @@ const routes: Routes = [
         MatDialogModule,
         NgxMaterialTimepickerModule,
         MatChipsModule,
+        NgbTimepickerModule,
         RouterModule.forChild(routes)
     ],
     providers: [AssignCalendarTreeviewService],

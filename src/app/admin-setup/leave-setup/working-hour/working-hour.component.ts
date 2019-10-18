@@ -2,6 +2,7 @@ import { OnInit, Component, Input, OnChanges, SimpleChanges, Output, EventEmitte
 import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { WorkingHourApiService } from "./working-hour-api.service";
 import * as _moment from 'moment';
+import { MenuController } from "@ionic/angular";
 const moment = _moment;
 
 /**
@@ -40,13 +41,6 @@ export class WorkingHourComponent implements OnInit, OnChanges {
      */
     private _data: any;
 
-    /**
-     * show/hide this page
-     * @type {boolean}
-     * @memberof WorkingHourComponent
-     */
-    @Input() showDetailPage: boolean = true;
-
     /** 
      * get value of clicked working_hour_guid from parent page
      * @type {string}
@@ -60,12 +54,15 @@ export class WorkingHourComponent implements OnInit, OnChanges {
      */
     @Output() valueChange = new EventEmitter();
 
+
+    // time = { hour: 13, minute: 30 };
+    // meridian = true;
     /**
      *Creates an instance of WorkingHourComponent.
      * @param {WorkingHourApiService} workingHourAPI
      * @memberof WorkingHourComponent
      */
-    constructor(private workingHourAPI: WorkingHourApiService) {
+    constructor(private workingHourAPI: WorkingHourApiService, private menu: MenuController) {
         this.workingHourForm = new FormGroup({
             profileName: new FormControl('', Validators.required),
             description: new FormControl('', Validators.required),
@@ -92,7 +89,7 @@ export class WorkingHourComponent implements OnInit, OnChanges {
     }
 
     async ngOnChanges(changes: SimpleChanges) {
-        if (changes.id) {
+        if (changes.id.currentValue !== "" && changes.id.currentValue !== undefined) {
             let detail = await this.workingHourAPI.get_working_hours_details(this.id).toPromise();
             this.workingHourForm.patchValue({
                 profileName: detail.code,
@@ -112,7 +109,7 @@ export class WorkingHourComponent implements OnInit, OnChanges {
                 startQ4picker: detail.property.quarterday.Q4.start_time,
                 endQ4picker: detail.property.quarterday.Q4.end_time
             });
-        }
+        } else { this.workingHourForm.reset() }
     }
 
     /**
@@ -169,24 +166,24 @@ export class WorkingHourComponent implements OnInit, OnChanges {
                 "working_hours_guid": this.id,
                 "data": body
             }).subscribe(res => {
-                this.workingHourAPI.showPopUp('submitted successfully ');
+                // this.workingHourAPI.showPopUp('submitted successfully ');
                 this.showSmallSpinner = false;
             })
         } else {
             this.workingHourAPI.post_working_hours(body).subscribe(response => {
-                this.workingHourAPI.showPopUp('submitted successfully ');
+                // this.workingHourAPI.showPopUp('submitted successfully ');
                 this.showSmallSpinner = false;
             })
         }
     }
 
     /**
-     * click back to hide the details page
-     * @param {boolean} value
+     * refresh saved data by sending back the editted working hour id
+     * @param {string} id
      * @memberof WorkingHourComponent
      */
-    hideDetailPage(value: boolean) {
-        this.valueChange.emit(value);
+    refreshProfile(id: string) {
+        this.valueChange.emit(id);
     }
 
 

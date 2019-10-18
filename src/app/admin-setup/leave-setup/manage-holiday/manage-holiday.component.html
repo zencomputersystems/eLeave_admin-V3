@@ -278,7 +278,7 @@
                     Some good & sweet explanation here</ion-card-subtitle>
             </div>
             <div style="right: 25px;top: 25px;position: absolute;" *ngIf="showAddIcon">
-                <ion-button fill="outline" (click)="showAddIcon = false;clickedIndex=null;viewDetails = false;
+                <ion-button fill="outline" (click)="showAddIcon = false;clickedIndex=null;
                 slideInOut = false;dayControl.reset()"
                     style="background: #f0f0f7;font-size: 12px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
                     color="primary">
@@ -313,7 +313,7 @@
                                     <ion-icon class="addIcon" name="add-circle-outline" *ngIf="!showAddIcon"></ion-icon>
                                     <p *ngIf="!showAddIcon" style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
             margin-top: -21px;margin-left: 20px;"
-                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null; viewDetails = false;menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'assignEmployeeDetails');menu.open('createCalendarDetails');">
+                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'assignEmployeeDetails');menu.open('createCalendarDetails');">
                                         ADD</p>
                                 </ion-col>
                             </ion-row>
@@ -380,9 +380,9 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <p *ngIf="!viewDetails"
+                        <!-- <p *ngIf="!viewDetails"
                             style="width: 90%;padding: 20px;opacity: 0.8;font-size: 12px;line-height: 1.25;text-align: left;color: #a3a6b4;">
-                            Nothing to view. Please select calendar profile first.</p>
+                            Nothing to view. Please select calendar profile first.</p> -->
                         <div style="height: 265px;overflow: auto;" *ngIf="slideInOut"
                             [@slideInOut]="slideInOut ? 'open': 'close'">
                             <ion-row *ngFor="let holiday of events; let i=index" style="width: 100%;">
@@ -446,9 +446,9 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <p *ngIf="!viewDetails"
+                        <!-- <p *ngIf="!viewDetails"
                             style="width: 90%;padding: 20px;opacity: 0.8;font-size: 12px;line-height: 1.25;text-align: left;color: #a3a6b4;">
-                            Nothing to view. Please select calendar profile first.</p>
+                            Nothing to view. Please select calendar profile first.</p> -->
                         <div style="height: 396px;overflow: auto;" *ngIf="slideInOut "
                             [@slideInOut]="slideInOut ? 'open': 'close'">
                             <ion-row *ngFor="let item of assignedNames; let i =index" style="width: 100%;padding-left: 10px;padding-top: 5px;

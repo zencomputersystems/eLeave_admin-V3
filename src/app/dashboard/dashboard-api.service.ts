@@ -43,6 +43,17 @@ export class DashboardApiService {
     }
 
     /**
+     * delete announcement
+     * @param {*} id
+     * @returns
+     * @memberof DashboardApiService
+     */
+    delete_announcement_list(id: any) {
+        return this.apiService.deleteApi(id, '/api​/admin​/announcement​/');
+    }
+
+
+    /**
      * get upcoming holidays from today date
      * @returns {Observable<any>}
      * @memberof DashboardApiService

@@ -34,11 +34,11 @@ import { EmployeeTreeviewService } from '../assign-calendar/employee-treeview.se
         trigger('slideInOut', [
             transition(':enter', [
                 style({ transform: 'translateX(100%)', opacity: 0 }),
-                animate('300ms', style({ transform: 'translateX(0)', opacity: 1 }))
+                animate('200ms', style({ transform: 'translateX(0)', opacity: 1 }))
             ]),
             transition(':leave', [
                 style({ transform: 'translateX(0)', opacity: 1 }),
-                animate('300ms', style({ transform: 'translateX(100%)', opacity: 0 }))
+                animate('200ms', style({ transform: 'translateX(100%)', opacity: 0 }))
             ])
         ])
     ]
@@ -233,7 +233,7 @@ export class ManageHolidayComponent implements OnInit {
 
     public assignedNames: any[] = [];
 
-    public clickedIndex: number;
+    public clickedIndex: number = 0;
 
     public content: boolean = false;
 
@@ -418,6 +418,7 @@ export class ManageHolidayComponent implements OnInit {
         this.manageHolidayAPI.get_calendar_profile_list().subscribe(
             (data: any[]) => {
                 this.profileList = data;
+                this.clickedCalendar(this.profileList[0], this.clickedIndex);
                 this.getAssignedList();
                 this.showSpinner = false;
                 this.content = true;

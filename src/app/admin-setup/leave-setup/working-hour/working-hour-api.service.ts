@@ -90,8 +90,7 @@ export class WorkingHourApiService {
      * @returns {Observable<any>}
      * @memberof WorkingHourApiService
      */
-    get_assigned_working_profile_user(id: string)
-        : Observable<any> {
+    get_assigned_working_profile_user(id: string): Observable<any> {
         return this.apiService.getApiWithId('/api/admin/working-hours/working-hours-profile/users/', id);
     }
 

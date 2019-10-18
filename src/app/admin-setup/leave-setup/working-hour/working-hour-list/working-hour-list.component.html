@@ -1,6 +1,40 @@
-<!-- <div style="width: 100%; height:100%; text-align: center;" *ngIf="showSpinner">
-    <app-spinner></app-spinner>
-</div> -->
+<!------------------------------------------ edit working hour menu --------------------->
+<ion-menu style="--width: 700px;" contentId="editWorkingHourContent" side="end" type="overlay"
+    menuId="editWorkingHourDetails">
+    <ion-header style="background-color:#43425d; color: #fcfcfc;">
+        <img style="margin: 17px;width: 22px;height: 17px;float:left"
+            src="assets/icon/dashboard/icon All Holidays@3x.png">
+        <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">EDIT PROFILE
+        </p>
+    </ion-header>
+
+    <ion-content>
+        <app-working-hour [id]="id" (valueChange)="refreshProfileDetails($event)">
+        </app-working-hour>
+    </ion-content>
+</ion-menu>
+<ion-router-outlet id="editWorkingHourContent">
+</ion-router-outlet>
+
+<!------------------------------------------ create new working hour menu --------------------->
+<ion-menu style="--width: 700px;" contentId="createWorkingHourContent" side="end" type="overlay"
+    menuId="createWorkingHourDetails">
+    <ion-header style="background-color:#43425d; color: #fcfcfc;">
+        <img style="margin: 17px;width: 22px;height: 17px;float:left"
+            src="assets/icon/dashboard/icon All Holidays@3x.png">
+        <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">EDIT PROFILE
+        </p>
+    </ion-header>
+
+    <ion-content>
+        <app-working-hour [id]="id" (valueChange)="refreshProfileDetails($event)">
+        </app-working-hour>
+    </ion-content>
+</ion-menu>
+<ion-router-outlet id="createWorkingHourContent">
+</ion-router-outlet>
+
+<!------------------------------  content of working hour page ------------------------------------->
 <ion-card>
     <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
         <div class="fullContainer">
@@ -31,6 +65,8 @@
     <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
         <app-spinner></app-spinner>
     </div>
+    <!-- <ngb-timepicker [(ngModel)]="time" [meridian]="meridian"></ngb-timepicker> -->
+
     <!-- class="container" -->
     <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;" *ngIf="!showSpinner">
         <div class="cardContent">
@@ -48,7 +84,7 @@
                                     <ion-icon class="addIcon" name="add-circle-outline"></ion-icon>
                                     <p style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
                     margin-top: -21px;margin-left: 20px;"
-                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null; viewDetails = false;menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'assignEmployeeDetails');menu.open('createCalendarDetails');">
+                                        (click)="clickedIndex=null;id='';menu.enable(true, 'createWorkingHourDetails');menu.enable(false, 'editWorkingHourDetails');menu.open('createWorkingHourDetails');">
                                         ADD</p>
                                 </ion-col>
                             </ion-row>
@@ -71,13 +107,13 @@
                                 </ion-col>
                                 <ion-col align-self-center size="2.5" style="color: #4d4f5c;font-size: 11px;">
                                     {{item.strtime}} - {{item.endtime}}</ion-col>
-                                <ion-col align-self-center size="3s"
+                                <ion-col align-self-center size="3"
                                     style="text-align: center;color: #4d4f5c;font-size: 11px;">
                                     {{item.employee}}</ion-col>
                                 <ion-col align-self-center>
                                     <img src="assets/icon/leave_setup/icon_edit@3x.png"
                                         style="width: 11px;height:11px;display: inline-block;"
-                                        (click)="clickedId=item.working_hours_guid"
+                                        (click)="id=item.working_hours_guid;menu.enable(true, 'editWorkingHourDetails');menu.enable(false, 'createWorkingHourDetails');menu.open('editWorkingHourDetails'); "
                                         [ngClass]="{
                                                 'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
                                     &nbsp;&nbsp;
@@ -94,7 +130,7 @@
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
-                                <ion-col size="6"
+                                <ion-col size="8"
                                     style="font-size: 12px;display: -webkit-box;
                                     -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                                     ASSIGNED EMPLOYEE</ion-col>
@@ -102,30 +138,19 @@
                                     style="font-size: 12px;display: -webkit-box;
                                     -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                                     ID NO</ion-col>
-                                <ion-col align-self-center>
-                                    <ion-icon class="addIcon" name="add-circle-outline"></ion-icon>
-                                    <p style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
-                        margin-top: -21px;margin-left: 20px;">
-                                        ADD</p>
-                                </ion-col>
                             </ion-row>
                         </div>
-                        <p *ngIf="!viewDetails"
+                        <!-- <p
                             style="width: 90%;padding: 20px;opacity: 0.8;font-size: 12px;line-height: 1.25;text-align: left;color: #a3a6b4;">
-                            Nothing to view. Please select profile name first.</p>
+                            Nothing to view. Please select profile name first.</p> -->
                         <div style="height: 396px;overflow: auto;">
-                            <ion-row *ngFor="let item of assignedNames; let i =index" style="width: 100%;padding-left: 10px;padding-top: 5px;
+                            <ion-row *ngFor="let item of employeeList; let i =index" style="width: 100%;padding-left: 10px;padding-top: 5px;
                                 padding-bottom: 5px;">
-                                <ion-col size="6" align-self-center
+                                <ion-col size="8" align-self-center
                                     style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px">
                                     {{item.FULLNAME}}
                                 </ion-col>
-                                <ion-col size="4">ID</ion-col>
-                                <ion-col align-self-center style="text-align: center;">
-                                    <!-- <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="showAddIcon"
-                                            style="width: 11px;height:11px;display: inline-block;cursor: pointer;"> -->
-                                    <!-- (click)="deleteEmployee(i, item.FULLNAME)" -->
-                                </ion-col>
+                                <ion-col size="4" align-self-center>{{item.PERSONAL_ID_TYPE}}</ion-col>
                                 <ion-item class="divider" lines="full" style="padding-top: 1%;">
                                 </ion-item>
                             </ion-row>

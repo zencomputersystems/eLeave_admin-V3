@@ -2,6 +2,7 @@ import { OnInit, Component } from "@angular/core";
 import { WorkingHourApiService } from "../working-hour-api.service";
 import { MatDialog } from "@angular/material";
 import { DeleteCalendarConfirmationComponent } from "../../delete-calendar-confirmation/delete-calendar-confirmation.component";
+import { MenuController } from "@ionic/angular";
 
 /**
  * working hour profile list page
@@ -28,7 +29,7 @@ export class WorkingHourListComponent implements OnInit {
      * @type {boolean}
      * @memberof WorkingHourListComponent
      */
-    public showDetailPage: boolean = false;
+    // public showDetailPage: boolean = false;
 
     /**
      * show/hide assign page
@@ -51,9 +52,12 @@ export class WorkingHourListComponent implements OnInit {
      */
     public showSpinner: boolean = false;
 
-    public clickedId: string;
+    public clickedIndex: number = 0;
 
-    public clickedIndex: number;
+    public employeeList: any;
+
+    // time = { hour: 13, minute: 30 };
+    // meridian = true;
 
     /**
      *Creates an instance of WorkingHourListComponent.
@@ -61,7 +65,7 @@ export class WorkingHourListComponent implements OnInit {
      * @param {MatDialog} dialog
      * @memberof WorkingHourListComponent
      */
-    constructor(private workingHrAPI: WorkingHourApiService, public dialog: MatDialog) {
+    constructor(private workingHrAPI: WorkingHourApiService, public dialog: MatDialog, private menu: MenuController) {
     }
 
     async ngOnInit() {
@@ -82,20 +86,18 @@ export class WorkingHourListComponent implements OnInit {
      * @param {*} value
      * @memberof WorkingHourListComponent
      */
-    valueChanged(value, action: string) {
-        if (action == 'edit') {
-            this.showDetailPage = value;
-        } else {
-            this.showAssignPage = value;
-        }
-        this.showListPage = true;
+    refreshProfileDetails(id: string) {
+        // this.showDetailPage = false;
+        // this.showListPage = true;
         this.ngOnInit();
     }
 
     clickedCalendar(list, index) {
         this.clickedIndex = index;
         console.log(list);
-        // this.selectProfile(list, index);
+        this.workingHrAPI.get_assigned_working_profile_user(list.working_hours_guid).subscribe(response => {
+            this.employeeList = response;
+        })
     }
 
     /**
