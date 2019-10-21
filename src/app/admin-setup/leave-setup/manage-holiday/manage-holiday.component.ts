@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as _moment from 'moment';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -259,6 +259,8 @@ export class ManageHolidayComponent implements OnInit {
 
     public region: any;
 
+    public modeValue: string = 'OFF';
+
 
     /**
      *Creates an instance of ManageHolidayComponent.
@@ -390,7 +392,6 @@ export class ManageHolidayComponent implements OnInit {
                 }
             }
         }
-
     }
 
     checkIdExist(array: any, obj: any) {
@@ -438,7 +439,7 @@ export class ManageHolidayComponent implements OnInit {
         this.viewDetails = false;
         this.showAddIcon = false;
         this.slideInOut = false;
-        this.clickedIndex = null;
+        this.clickedIndex = 0;
         this.reformatHolidayObject(this.events);
         const body = {
             "calendar_guid": this.selectedCalendarProfile.calendar_guid,
@@ -449,6 +450,7 @@ export class ManageHolidayComponent implements OnInit {
                 "rest": this.selectedWeekday
             }
         }
+        console.log(body);
         this.manageHolidayAPI.patch_calendar_profile(body).subscribe(
             (data: any[]) => {
                 this.restDay = [];
@@ -456,6 +458,7 @@ export class ManageHolidayComponent implements OnInit {
                 this.selectedWeekday = [];
                 this.getProfileList();
             })
+        console.log(this.employeeList);
         this.manageHolidayAPI.patch_assign_calendar_profile({
             "user_guid": this.employeeList,
             "calendar_guid": this.selectedCalendarProfile.calendar_guid
@@ -633,10 +636,24 @@ export class ManageHolidayComponent implements OnInit {
         }
 
         for (let j = 0; j < this.restDay.length; j++) {
+            // if (this.checkObjectExist(this.restDay[j], this.restDay) === true) {
+            //     console.log(this.restDay);
+                // console.log(this.selectedWeekday[j].fullname.charAt(0).toUpperCase());
+            // }
             let obj = {};
             obj["fullname"] = (this.restDay[j]).toUpperCase();
             obj["name"] = obj["fullname"].substring(0, 3);
             this.selectedWeekday.push(obj);
+        }
+    }
+
+    toggleEvent(event) {
+        if (event.detail.checked === true) {
+            this.modeValue = 'ON';
+            this.showAddIcon = true;
+        } else {
+            this.modeValue = 'OFF'
+            this.showAddIcon = false;
         }
     }
 
@@ -702,7 +719,7 @@ export class ManageHolidayComponent implements OnInit {
                 this.manageHolidayAPI.delete_calendar_profile(item.calendar_guid).subscribe(response => {
                     this.getProfileList();
                     this.slideInOut = false;
-                    this.clickedIndex = null;
+                    this.clickedIndex = 0;
                     this.viewDetails = false;
                     this.dayControl.reset();
                     this.restDay = [];
