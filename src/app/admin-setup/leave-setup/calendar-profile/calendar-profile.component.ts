@@ -80,13 +80,6 @@ export class CalendarProfileComponent implements OnInit {
     public events: EventInput[];
 
     /**
-     * Show or hide edit profile
-     * @type {boolean}
-     * @memberof CalendarProfileComponent
-     */
-    public viewDetails: boolean = false;
-
-    /**
      * show/hide delete calendar
      * @type {boolean}
      * @memberof CalendarProfileComponent
@@ -269,22 +262,6 @@ export class CalendarProfileComponent implements OnInit {
     constructor(private manageHolidayAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, private menu: MenuController) {
     }
 
-    onDrop(event, list) {
-        for (let i = 0; i < this.assignedNames.length; i++) {
-            if (event.data === this.assignedNames[i].FULLNAME) {
-                this.getDragUserId(i);
-                this.manageHolidayAPI.patch_assign_calendar_profile({
-                    "user_guid": this.employeeList,
-                    "calendar_guid": list.calendar_guid
-                }).subscribe(response => {
-                    this.assignedNames.splice(i, 1);
-                    this.employeeList = [];
-                    this.getAssignedList();
-                });
-            }
-        }
-    }
-
     ngOnInit() {
         this.assignCalendarForm = new FormGroup({
             user: new FormArray([]),
@@ -358,15 +335,22 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     async getDragUserId(i: number) {
-        if (this.checkIdExist(this.userList, this.assignedNames[i].FULLNAME) != 0) {
-            const index: number = this.checkIdExist(this.userList, this.assignedNames[i].FULLNAME);
+        if (this.checkNameExist(this.userList, this.assignedNames[i].FULLNAME) != 0) {
+            const index: number = this.checkNameExist(this.userList, this.assignedNames[i].FULLNAME);
             if (!this.employeeList.includes(this.userList[index].userId)) {
                 await this.employeeList.push(this.userList[index].userId);
             }
         }
     }
 
-    checkIdExist(array: any, obj: any) {
+    /**
+     * check either the user name is exist or vice versa
+     * @param {*} array
+     * @param {*} obj
+     * @returns
+     * @memberof CalendarProfileComponent
+     */
+    checkNameExist(array: any, obj: any) {
         for (let j = 0; j < array.length; j++) {
             if (array[j].employeeName === obj) {
                 return j;
@@ -375,8 +359,35 @@ export class CalendarProfileComponent implements OnInit {
         return 0;
     }
 
+    /**
+     * patch employee after drag n drop to calendar profile
+     * @param {*} event
+     * @param {*} list
+     * @memberof CalendarProfileComponent
+     */
+    onDrop(event, list) {
+        for (let i = 0; i < this.assignedNames.length; i++) {
+            if (event.data === this.assignedNames[i].FULLNAME) {
+                this.getDragUserId(i);
+                this.manageHolidayAPI.patch_assign_calendar_profile({
+                    "user_guid": this.employeeList,
+                    "calendar_guid": list.calendar_guid
+                }).subscribe(response => {
+                    this.assignedNames.splice(i, 1);
+                    this.employeeList = [];
+                    this.getAssignedList();
+                });
+            }
+        }
+    }
+
+    /**
+     * disabled/enable checkbox of rest day
+     * @returns
+     * @memberof CalendarProfileComponent
+     */
     disabledButton() {
-        if (this.viewDetails && this.showAddIcon) {
+        if (this.showAddIcon) {
             return false;
         } else {
             return true;
@@ -408,7 +419,6 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     saveData() {
-        this.viewDetails = false;
         this.showAddIcon = false;
         this.slideInOut = false;
         this.clickedIndex = 0;
@@ -447,7 +457,6 @@ export class CalendarProfileComponent implements OnInit {
         this.manageHolidayAPI.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid, (new Date()).getFullYear()).subscribe(
             (data: any) => {
                 this.personalProfile = data;
-                this.viewDetails = true;
                 this.slideInOut = true;
                 this.events = [];
                 for (let i = 0; i < this.personalProfile.holiday.length; i++) {
@@ -474,11 +483,16 @@ export class CalendarProfileComponent implements OnInit {
         })
     }
 
+    /**
+     * click calendar to view details
+     * @param {*} list
+     * @param {*} index
+     * @memberof CalendarProfileComponent
+     */
     clickedCalendar(list, index) {
         this.clickedIndex = index;
         this.selectProfile(list, index);
     }
-
 
     /**
      * Edit public holiday date & show day name according changed date
@@ -633,7 +647,7 @@ export class CalendarProfileComponent implements OnInit {
 
         } else {
             this.modeValue = 'OFF'
-            this.showAddIcon = false;
+            this.saveData();
         }
     }
 
@@ -678,7 +692,6 @@ export class CalendarProfileComponent implements OnInit {
                     this.getProfileList();
                     this.slideInOut = false;
                     this.clickedIndex = 0;
-                    this.viewDetails = false;
                     this.dayControl.reset();
                     this.restDay = [];
                 })

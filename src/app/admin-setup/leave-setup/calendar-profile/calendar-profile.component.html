@@ -398,9 +398,6 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <!-- <p *ngIf="!viewDetails"
-                            style="width: 90%;padding: 20px;opacity: 0.8;font-size: 12px;line-height: 1.25;text-align: left;color: #a3a6b4;">
-                            Nothing to view. Please select calendar profile first.</p> -->
                         <div style="height: 265px;overflow: auto;" *ngIf="slideInOut"
                             [@slideInOut]="slideInOut ? 'open': 'close'">
                             <ion-row *ngFor="let holiday of events; let i=index" style="width: 100%;">
