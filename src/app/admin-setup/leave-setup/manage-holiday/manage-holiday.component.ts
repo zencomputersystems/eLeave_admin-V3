@@ -16,6 +16,7 @@ import { DeleteCalendarConfirmationComponent } from '../delete-calendar-confirma
 import { trigger, transition, animate, style } from '@angular/animations'
 import { MenuController } from '@ionic/angular';
 import { EmployeeTreeviewService } from '../assign-calendar/employee-treeview.service';
+import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.component';
 
 /**
  * Manage holiday and rest day for employee
@@ -638,7 +639,7 @@ export class ManageHolidayComponent implements OnInit {
         for (let j = 0; j < this.restDay.length; j++) {
             // if (this.checkObjectExist(this.restDay[j], this.restDay) === true) {
             //     console.log(this.restDay);
-                // console.log(this.selectedWeekday[j].fullname.charAt(0).toUpperCase());
+            // console.log(this.selectedWeekday[j].fullname.charAt(0).toUpperCase());
             // }
             let obj = {};
             obj["fullname"] = (this.restDay[j]).toUpperCase();
@@ -651,6 +652,11 @@ export class ManageHolidayComponent implements OnInit {
         if (event.detail.checked === true) {
             this.modeValue = 'ON';
             this.showAddIcon = true;
+            this.manageHolidayAPI.displayDialog.open(EditModeDialogComponent, {
+                height: "372.3px",
+                width: "452px"
+            });
+
         } else {
             this.modeValue = 'OFF'
             this.showAddIcon = false;

@@ -40,6 +40,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import 'hammerjs';
+import { EditModeDialogComponent } from './edit-mode-dialog/edit-mode-dialog.component';
 
 const routes: Routes = [
     {
@@ -81,9 +82,9 @@ const routes: Routes = [
         RouterModule.forChild(routes)
     ],
     providers: [AssignCalendarTreeviewService],
-    entryComponents: [SnackbarNotificationComponent, DeleteCalendarConfirmationComponent],
+    entryComponents: [SnackbarNotificationComponent, DeleteCalendarConfirmationComponent, EditModeDialogComponent],
     declarations: [ManageHolidayComponent, LeaveSetupComponent, SnackbarNotificationComponent, DeleteCalendarConfirmationComponent,
         LeaveSetupTabComponent, ApplyOnBehalfComponent, ApprovalOverrideComponent, LeaveAdjustmentComponent, LeaveEntitlementByBatchComponent, WorkingHourComponent,
-        WorkingHourListComponent, AssignWorkingHourComponent]
+        WorkingHourListComponent, AssignWorkingHourComponent, EditModeDialogComponent]
 })
 export class LeaveSetupModule { }
