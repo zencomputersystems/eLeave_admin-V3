@@ -11,7 +11,7 @@ const moment = _moment;
 import { getDataSet, reduce } from "iso3166-2-db";
 import { MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 import { APP_DATE_FORMATS, AppDateAdapter } from '../date.adapter';
-import { ManageHolidayApiService } from './manage-holiday-api.service';
+import { CalendarProfileApiService } from './calendar-profile-api.service';
 import { DeleteCalendarConfirmationComponent } from '../delete-calendar-confirmation/delete-calendar-confirmation.component';
 import { trigger, transition, animate, style } from '@angular/animations'
 import { MenuController } from '@ionic/angular';
@@ -21,13 +21,13 @@ import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.co
 /**
  * Manage holiday and rest day for employee
  * @export
- * @class ManageHolidayComponent
+ * @class CalendarProfileComponent
  * @implements {OnInit}
  */
 @Component({
-    selector: 'app-manage-holiday',
-    templateUrl: './manage-holiday.component.html',
-    styleUrls: ['./manage-holiday.component.scss'],
+    selector: 'app-calendar-profile',
+    templateUrl: './calendar-profile.component.html',
+    styleUrls: ['./calendar-profile.component.scss'],
     providers: [TitleCasePipe,
         { provide: DateAdapter, useClass: AppDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }],
@@ -44,107 +44,107 @@ import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.co
         ])
     ]
 })
-export class ManageHolidayComponent implements OnInit {
+export class CalendarProfileComponent implements OnInit {
 
     /**
       * This is local property for Full Calendar Component
       * @type {FullCalendarComponent}
-      * @memberof ManageHolidayComponent
+      * @memberof CalendarProfileComponent
       */
     @ViewChild('calendar') calendar: FullCalendarComponent;
 
     /**
      * This is input property for plugins of Full Calendar Component
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public calendarPlugins = [dayGridPlugin, timeGrigPlugin, listYear];
 
     /**
      * Get data from user profile API
      * @type {*}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public list: any;
 
     /**
      * Get data from user profile API (with parameters)
      * @type {*}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public items: any;
 
     /** 
      * Property for alias Event Input of Full Calendar Component
      * @type {EventInput[]}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public events: EventInput[];
 
     /**
      * Show or hide edit profile
      * @type {boolean}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public viewDetails: boolean = false;
 
     /**
      * show/hide delete calendar
      * @type {boolean}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public deleteCalendar: boolean = false;
 
     /**
      * Calendar profile list from API
      * eg: { "calendar_guid": "string", "code": "string" }
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public profileList;
 
     /**
      * Selected Calendar profile from list
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public selectedCalendarProfile;
 
     /**
      * Requested personal profile from API 
      * Get API with calendar Id
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public personalProfile;
 
     /**
      * Selected day name array list
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public restDay = [];
 
     /**
      * Array list of Sunday - Saturday to show on select input
      * @type {string[]}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public weekdays: string[];
 
     /**
      * Array list for rest to patch to API
      * eg: { "fullname": "SATURDAY", "name": "SAT" }
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public selectedWeekday = [];
 
     /**
      * Track calendar input of edit calendar form
      * @type {FormGroup}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     // public editCalendarForm: FormGroup;
 
     /**
      * Track calendar input of add calendar form
      * @type {*}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public profileName: any;
 
@@ -154,81 +154,81 @@ export class ManageHolidayComponent implements OnInit {
 
     /**
      * Public holiday list from API
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public countryList;
 
     /**
      * Region list of selected country
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public countryRegion;
 
     /**
      * Show/hide input form of add new calendar profile
      * @type {boolean}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public addCalendar: boolean = false;
 
     /**
      * Show/hide of save button and calendar profile select input
      * @type {boolean}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public showEditForm: boolean = false;
 
     /**
      * Show/hide loading spinner
      * @type {boolean}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public showSpinner: boolean = true;
 
     /**
      * Value of Region ISO from selected region/states
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public regionISO;
 
     /**
      * Value of selected Country ISO
      * @type {string}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public countryIso: string;
 
     /**
         * World public holiday from database npm i
-        * @memberof ManageHolidayComponent
+        * @memberof CalendarProfileComponent
         */
     public countryDB;
 
     /**
      * end date
      * @type {*}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public endDate: any;
 
     /**
      * get AM/PM slot
      * @type {*}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public timeslot: any;
 
     /**
      * event show in calendar
      * @type {*}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public leaveEvent: any;
 
     /** 
      * Get Height of calendar when window resize to set in holiday view
      * @type {number}
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     public height: number;
 
@@ -264,13 +264,13 @@ export class ManageHolidayComponent implements OnInit {
 
 
     /**
-     *Creates an instance of ManageHolidayComponent.
+     *Creates an instance of CalendarProfileComponent.
      * @param {LeaveAPIService} leaveAPI
      * @param {FormBuilder} fb
      * @param {TitleCasePipe} titlecasePipe
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
-    constructor(private manageHolidayAPI: ManageHolidayApiService, private titlecasePipe: TitleCasePipe, private menu: MenuController, private treeview: EmployeeTreeviewService) {
+    constructor(private manageHolidayAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, private menu: MenuController, private treeview: EmployeeTreeviewService) {
     }
 
     ngOnInit() {
@@ -305,7 +305,7 @@ export class ManageHolidayComponent implements OnInit {
 
     /**
      * Get public holiday list from calendarific
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     getPublicHolidayList() {
         this.showSpinner = true;
@@ -414,7 +414,7 @@ export class ManageHolidayComponent implements OnInit {
 
     /**
      * Get calendar profile list from API
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     getProfileList() {
         this.manageHolidayAPI.get_calendar_profile_list().subscribe(
@@ -434,7 +434,7 @@ export class ManageHolidayComponent implements OnInit {
 
     /**
      * click save button to patch the calendar to selected calendar profile
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     saveData() {
         this.viewDetails = false;
@@ -490,7 +490,7 @@ export class ManageHolidayComponent implements OnInit {
      * Select calendar profile to pass the calendar Id to API
      * Pass rest day value (eg: sat) to the select input to show initial value
      * @param {*} list
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     selectProfile(list, index) {
         this.slideInOut = false;
@@ -531,7 +531,7 @@ export class ManageHolidayComponent implements OnInit {
      * Edit public holiday date & show day name according changed date
      * @param {*} value
      * @param {*} index
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     dateChanged(value, index) {
         this.events[index].start = moment(value).format('YYYY-MM-DD');
@@ -543,7 +543,7 @@ export class ManageHolidayComponent implements OnInit {
      * Create a rest day array list
      * Check or uncheck weekday make changes in rest day array list
      * @param {string} day
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     restDaySelected(day: string) {
         if (this.checkObjectExist(day, this.restDay) === false) {
@@ -559,7 +559,7 @@ export class ManageHolidayComponent implements OnInit {
      * @param {*} obj
      * @param {*} array
      * @returns
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     checkObjectExist(obj: any, array: any) {
         for (let j = 0; j < array.length; j++) {
@@ -575,7 +575,7 @@ export class ManageHolidayComponent implements OnInit {
      * country, location, year and month (optional)
      * @param {*} year
      * @param {*} month
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     async callParamAPI(year) {
         this.addCalendar = false;
@@ -591,7 +591,7 @@ export class ManageHolidayComponent implements OnInit {
      * Push objects to array of event holidays
      * @param {string} dateIso
      * @param {string} name
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     createHolidayList(dateIso: string, name: string) {
         this.events.push({
@@ -629,7 +629,7 @@ export class ManageHolidayComponent implements OnInit {
      * Arrange object according body required of API 
      * POST / PATCH calendar profile
      * @param {*} holiday
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     reformatHolidayObject(holiday) {
         for (let i = 0; i < this.events.length; i++) {
@@ -665,7 +665,7 @@ export class ManageHolidayComponent implements OnInit {
 
     /**
      * POST/create new calendar to endpoint API
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     async postData() {
         this.showSpinner = true;
@@ -712,7 +712,7 @@ export class ManageHolidayComponent implements OnInit {
 
     /**
      * Delete the calendar profile after confirm by admin
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     deleteCalendarProfile(item) {
         const dialog = this.manageHolidayAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
@@ -739,7 +739,7 @@ export class ManageHolidayComponent implements OnInit {
      * @param {number} index
      * @param {*} event
      * @param {string} title
-     * @memberof ManageHolidayComponent
+     * @memberof CalendarProfileComponent
      */
     deletePH(index: number, event: any, title: string) {
         const popup = this.manageHolidayAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {

@@ -13,7 +13,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar
-import { ManageHolidayComponent } from './manage-holiday/manage-holiday.component';
+import { CalendarProfileComponent } from './calendar-profile/calendar-profile.component';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -83,7 +83,7 @@ const routes: Routes = [
     ],
     providers: [AssignCalendarTreeviewService],
     entryComponents: [SnackbarNotificationComponent, DeleteCalendarConfirmationComponent, EditModeDialogComponent],
-    declarations: [ManageHolidayComponent, LeaveSetupComponent, SnackbarNotificationComponent, DeleteCalendarConfirmationComponent,
+    declarations: [CalendarProfileComponent, LeaveSetupComponent, SnackbarNotificationComponent, DeleteCalendarConfirmationComponent,
         LeaveSetupTabComponent, ApplyOnBehalfComponent, ApprovalOverrideComponent, LeaveAdjustmentComponent, LeaveEntitlementByBatchComponent, WorkingHourComponent,
         WorkingHourListComponent, AssignWorkingHourComponent, EditModeDialogComponent]
 })
