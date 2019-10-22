@@ -41,6 +41,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import 'hammerjs';
 import { EditModeDialogComponent } from './edit-mode-dialog/edit-mode-dialog.component';
+import { DragDropEmployeeComponent } from './calendar-profile/drag-drop-employee/drag-drop-employee.component';
+import { DndModule } from 'ngx-drag-drop';
 
 const routes: Routes = [
     {
@@ -79,12 +81,13 @@ const routes: Routes = [
         NgxMaterialTimepickerModule,
         MatChipsModule,
         NgbTimepickerModule,
+        DndModule,
         RouterModule.forChild(routes)
     ],
     providers: [AssignCalendarTreeviewService],
     entryComponents: [SnackbarNotificationComponent, DeleteCalendarConfirmationComponent, EditModeDialogComponent],
     declarations: [CalendarProfileComponent, LeaveSetupComponent, SnackbarNotificationComponent, DeleteCalendarConfirmationComponent,
         LeaveSetupTabComponent, ApplyOnBehalfComponent, ApprovalOverrideComponent, LeaveAdjustmentComponent, LeaveEntitlementByBatchComponent, WorkingHourComponent,
-        WorkingHourListComponent, AssignWorkingHourComponent, EditModeDialogComponent]
+        WorkingHourListComponent, AssignWorkingHourComponent, EditModeDialogComponent, DragDropEmployeeComponent]
 })
 export class LeaveSetupModule { }

@@ -1,86 +1,3 @@
-<!------------------------------------------ assign employee menu --------------------------->
-<ion-menu contentId="assignEmployeeContent" side="end" type="overlay" menuId="assignEmployeeDetails">
-    <ion-header style="background-color:#43425d; color: #fcfcfc;">
-        <img style="margin: 17px;width: 22px;height: 17px;float:left"
-            src="assets/icon/dashboard/icon All Holidays@3x.png">
-        <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">ASSIGN NEW EMPLOYEE
-        </p>
-    </ion-header>
-
-    <ion-content>
-        <mat-form-field appearance="outline" style="z-index: 1;width: 93%;cursor: pointer;font-size: 12px;
-        opacity: 0.8;color: #43425d;margin: 10px;" (click)="showTreeDropdown = true;">
-            <mat-label>Please select employee</mat-label>
-            <input matInput class="inputDropdown" readonly required>
-            <mat-icon matSuffix class="iconDropdown"><i class="material-icons">arrow_drop_down</i></mat-icon>
-            <mat-error>Please select at least one option</mat-error>
-            <div class="dropdownList" *ngIf="showTreeDropdown"
-                (clickOutside)="clickOutside($event, treeview.treeControl )">
-                <mat-tree style="z-index: 82;position: absolute;width: 100%;" [dataSource]="treeview.dataSource"
-                    [treeControl]="treeview.treeControl">
-                    <!-- inner checkbox -->
-                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-                        <button mat-icon-button disabled></button>
-                        <mat-checkbox class="checklist-leaf-node"
-                            [checked]="treeview.checklistSelection.isSelected(node)"
-                            (change)="treeview.todoLeafItemSelectionToggle(node)" color="primary">{{node.item}}
-                        </mat-checkbox>
-                    </mat-tree-node>
-
-                    <!-- main checkbox -->
-                    <mat-tree-node *matTreeNodeDef="let node; when: treeview.hasChild" matTreeNodePadding>
-                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
-                            <mat-icon class="mat-icon-rtl-mirror">
-                                {{treeview.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                            </mat-icon>
-                        </button>
-                        <mat-checkbox [checked]="treeview.descendantsAllSelected(node)"
-                            [indeterminate]="treeview.descendantsPartiallySelected(node)"
-                            (change)="treeview.todoItemSelectionToggle(node)" color="primary">{{node.item}}
-                        </mat-checkbox>
-                    </mat-tree-node>
-                </mat-tree>
-            </div>
-        </mat-form-field>
-        <div class="showSelection" *ngIf="showSelectedTree">
-            <mat-tree [dataSource]="treeview.dataSource" [treeControl]="treeview.treeControl">
-                <!-- inner checkbox -->
-                <mat-tree-node style="font-size: 12px;color: #43425d;opacity: 0.8;"
-                    [style.display]="treeview.checklistSelection.isSelected(node) ? 'inline-flex' : 'none'"
-                    *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-                    <button mat-icon-button disabled></button>
-                    <mat-checkbox class="checklist-leaf-node" [checked]="treeview.checklistSelection.isSelected(node)"
-                        (change)="treeview.todoLeafItemSelectionToggle(node)" color="primary" disabled>{{node.item}}
-                    </mat-checkbox>
-                </mat-tree-node>
-
-                <!-- main checkbox -->
-                <mat-tree-node style="font-size: 12px;color: #43425d;opacity: 0.8;"
-                    [style.display]="(treeview.descendantsAllSelected(node) || treeview.descendantsPartiallySelected(node)) ? 'block' : 'none'"
-                    *matTreeNodeDef="let node; when: treeview.hasChild" matTreeNodePadding>
-                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
-                        <mat-icon class="mat-icon-rtl-mirror">
-                            {{treeview.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                        </mat-icon>
-                    </button>
-                    <mat-checkbox [checked]="treeview.descendantsAllSelected(node)"
-                        [indeterminate]="treeview.descendantsPartiallySelected(node)"
-                        (change)="treeview.todoItemSelectionToggle(node)" color="primary" disabled>{{node.item}}
-                    </mat-checkbox>
-                </mat-tree-node>
-            </mat-tree>
-        </div>
-        <div style="text-align: center;margin:30px">
-            <ion-button style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                color="primary" (click)="submitData();menu.close('assignEmployeeDetails');">
-                Assign
-            </ion-button>
-        </div>
-    </ion-content>
-</ion-menu>
-<ion-router-outlet id="assignEmployeeContent">
-</ion-router-outlet>
-
 <!------------------------------------------ create new calendar profile menu --------------------->
 <ion-menu contentId="createCalendarContent" side="end" type="overlay" menuId="createCalendarDetails">
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
@@ -134,7 +51,7 @@
             <input matInput [formControl]="yearDefault">
         </mat-form-field>
         &nbsp;&nbsp;
-        <p style="color: #808495;font-size: 12px;margin: 0px;margin-left:10px;display: block;">Select Employee (you can
+        <!-- <p style="color: #808495;font-size: 12px;margin: 0px;margin-left:10px;display: block;">Select Employee (you can
             add later)
         </p>
         <mat-form-field appearance="outline" style="width: 93%;cursor: pointer;font-size: 12px;
@@ -146,7 +63,7 @@
             <div class="dropdownList" *ngIf="showTreeDropdown" (clickOutside)="clickOutside($event)">
                 <mat-tree style="z-index: 82;position: absolute;width: 100%;" [dataSource]="treeview.dataSource"
                     [treeControl]="treeview.treeControl">
-                    <!-- inner checkbox -->
+                    <!-- inner checkbox --
                     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
                         <button mat-icon-button disabled></button>
                         <mat-checkbox class="checklist-leaf-node"
@@ -155,7 +72,7 @@
                         </mat-checkbox>
                     </mat-tree-node>
 
-                    <!-- main checkbox -->
+                    <!-- main checkbox --
                     <mat-tree-node *matTreeNodeDef="let node; when: treeview.hasChild" matTreeNodePadding>
                         <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
                             <mat-icon class="mat-icon-rtl-mirror">
@@ -172,7 +89,7 @@
         </mat-form-field>
         <div class="showSelection" *ngIf="showSelectedTree">
             <mat-tree [dataSource]="treeview.dataSource" [treeControl]="treeview.treeControl">
-                <!-- inner checkbox -->
+                <!-- inner checkbox --
                 <mat-tree-node style="font-size: 12px;color: #43425d;opacity: 0.8;"
                     [style.display]="treeview.checklistSelection.isSelected(node) ? 'inline-flex' : 'none'"
                     *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
@@ -182,7 +99,7 @@
                     </mat-checkbox>
                 </mat-tree-node>
 
-                <!-- main checkbox -->
+                <!-- main checkbox --
                 <mat-tree-node style="font-size: 12px;color: #43425d;opacity: 0.8;"
                     [style.display]="(treeview.descendantsAllSelected(node) || treeview.descendantsPartiallySelected(node)) ? 'block' : 'none'"
                     *matTreeNodeDef="let node; when: treeview.hasChild" matTreeNodePadding>
@@ -197,7 +114,7 @@
                     </mat-checkbox>
                 </mat-tree-node>
             </mat-tree>
-        </div>
+        </div> -->
 
         <div style="text-align: center;margin:30px">
             <ion-button style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
@@ -314,11 +231,9 @@
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
-                                <ion-col size="10"
-                                    style="font-size: 12px;display: -webkit-box;
-                                -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                                    CALENDAR
-                                    PROFILE</ion-col>
+                                <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                                    text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    CALENDAR PROFILE</ion-col>
                                 <!-- <ion-col align-self-center size="9" class="column"> CALENDAR
                                     PROFILE
                                 </ion-col> -->
@@ -326,55 +241,81 @@
                                     EMPLOYEE</ion-col> -->
                                 <ion-col align-self-center>
                                     <ion-icon class="addIcon" name="add-circle-outline" *ngIf="showAddIcon"
-                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'assignEmployeeDetails');menu.open('createCalendarDetails');">
+                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.open('createCalendarDetails');">
                                     </ion-icon>
                                     <!-- <p *ngIf="!showAddIcon" style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
             margin-top: -21px;margin-left: 20px;"
-                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'assignEmployeeDetails');menu.open('createCalendarDetails');">
+                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.open('createCalendarDetails');">
                                         ADD</p> -->
                                 </ion-col>
                             </ion-row>
                         </div>
                         <div style="height: 400px;overflow: auto;">
-                            <ion-row *ngFor="let list of profileList; let i=index" style="padding-left: 5px;padding-top: 5px;
-                        padding-bottom: 5px;">
-                                <ion-col size="10"
-                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                    <p *ngIf="!showAddIcon" class="textHover"
-                                        style="font-size: 12px;font-weight: bold;;cursor: pointer;" [ngClass]="{
+                            <ng-container *ngIf="!showAddIcon">
+                                <ion-row *ngFor="let list of profileList; let i=index" style="padding-left: 5px;">
+                                    <ion-col size="10"
+                                        style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                        <p class="textHover" style="font-size: 12px;font-weight: bold;;cursor: pointer;"
+                                            [ngClass]="{
                                     'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
-                                        (click)="clickedCalendar(list, i)"> {{list.code}}
-                                    </p>
-                                    <mat-form-field *ngIf="showAddIcon" style="font-size: 11px;width: 50%;" [ngClass]="{
-                                        'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}">
-                                        <input matInput [(ngModel)]="list.code" [ngModelOptions]="{standalone: true}" (click)="clickedCalendar(list, i)">
-                                    </mat-form-field>
-                                    <!-- (input)="resize(i)" id="{{ i }}" -->
-                                    <!-- <span *ngIf="showAddIcon" #hiddenText
+                                            (click)="clickedCalendar(list, i)"> {{list.code}}
+                                        </p>
+
+                                        <!-- (input)="resize(i)" id="{{ i }}" -->
+                                        <!-- <span *ngIf="showAddIcon" #hiddenText
                                         style="visibility: hidden; white-space: pre;">{{i.value}}</span> -->
-                                    <div
-                                        style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                        Assigned Employee No.: <p
-                                            style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
-                                            {{list.employee}}</p>
-                                    </div>
-                                </ion-col>
-                                <!-- <ion-col size="4.5" style="text-align: center;color: #4d4f5c;font-size: 11px;">
+                                        <div
+                                            style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                            Assigned Employee No.: <p
+                                                style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
+                                                {{list.employee}}</p>
+                                        </div>
+                                    </ion-col>
+                                    <!-- <ion-col size="4.5" style="text-align: center;color: #4d4f5c;font-size: 11px;">
                                     {{list.employee}}</ion-col> -->
-                                <ion-col align-self-center>
-                                    <!-- <img src="assets/icon/leave_setup/icon_edit@3x.png"
+                                    <ion-col align-self-center>
+                                        <!-- <img src="assets/icon/leave_setup/icon_edit@3x.png"
                                         style="width: 11px;height:11px;display: inline-block;"
                                         (click)="selectProfile(list, i);showAddIcon=true"
                                         [ngClass]="{
                                         'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
                                     &nbsp;&nbsp; -->
-                                    <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="showAddIcon"
-                                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
-                                        (click)="deleteCalendarProfile(profileList[i]);selectProfile(list, i)">
-                                    <!-- [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}" -->
-                                </ion-col>
-                                <ion-item class="divider" lines="full"></ion-item>
-                            </ion-row>
+                                        <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="showAddIcon"
+                                            style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
+                                            (click)="deleteCalendarProfile(profileList[i]);selectProfile(list, i)">
+                                        <!-- [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}" -->
+                                    </ion-col>
+                                    <ion-item class="divider" lines="full"></ion-item>
+                                </ion-row>
+                            </ng-container>
+
+                            <ng-container *ngIf="showAddIcon">
+                                <section class="my-dropzone scrollable" dndDropzone dndDragoverClass="custom-drag-over"
+                                    (dndDrop)="onDrop($event, list)" *ngFor="let list of profileList; let i=index">
+                                    <ion-row class="sectionRow">
+                                        <ion-col size="10"
+                                            style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;padding-top: 0;">
+                                            <mat-form-field style="font-size: 11px;width: 50%;height: 35px;" [ngClass]="{
+                                            'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}">
+                                                <input matInput [(ngModel)]="list.code"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    (click)="clickedCalendar(list, i)">
+                                            </mat-form-field>
+                                            <div
+                                                style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                Assigned Employee No.: <p
+                                                    style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
+                                                    {{list.employee}}</p>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col align-self-center>
+                                            <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                                                style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
+                                                (click)="deleteCalendarProfile(profileList[i]);selectProfile(list, i)">
+                                        </ion-col>
+                                    </ion-row>
+                                </section>
+                            </ng-container>
                         </div>
                     </div>
 
@@ -382,40 +323,43 @@
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
-                                <ion-col size="9"
-                                    style="font-size: 12px;display: -webkit-box;
-                                -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                <ion-col style="font-size: 12px;white-space: nowrap;
+                                    text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                                     ASSIGNED EMPLOYEE</ion-col>
-                                <!-- <ion-col size="3" align-self-center>
-                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="showAddIcon"></ion-icon>
-                                    <p style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
-                    margin-top: -21px;margin-left: 20px;" *ngIf="showAddIcon"
-                                        (click)="menu.enable(true, 'assignEmployeeDetails');menu.enable(false, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.open('assignEmployeeDetails');">
-                                        ADD</p>
-                                </ion-col> -->
                             </ion-row>
                         </div>
-                        <!-- <p *ngIf="!viewDetails"
-                            style="width: 90%;padding: 20px;opacity: 0.8;font-size: 12px;line-height: 1.25;text-align: left;color: #a3a6b4;">
-                            Nothing to view. Please select calendar profile first.</p> -->
-                        <div style="height: 396px;overflow: auto;" *ngIf="slideInOut "
+
+                        <div style="height: 396px;overflow: auto;" *ngIf="slideInOut && !showAddIcon"
                             [@slideInOut]="slideInOut ? 'open': 'close'">
-                            <ion-row *ngFor="let item of assignedNames; let i =index" style="width: 100%;padding-left: 10px;padding-top: 5px;
-                            padding-bottom: 5px;">
-                                <ion-col align-self-center size="9">
-                                    <!-- {{item.FULLNAME}} -->
-                                    <p
-                                        style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px">
+                            <ion-row *ngFor="let item of assignedNames; let i =index"
+                                style="width: 100%;padding-left: 10px;">
+                                <ion-col align-self-center size="9" style="padding-top: 0;padding-bottom: 0;">
+                                    <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
+                                        padding-bottom: 13px;">
                                         {{item.FULLNAME}}</p>
                                 </ion-col>
                                 <!-- <ion-col size="3" align-self-center style="text-align: center;">
                                     <!-- <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="showAddIcon"
                                         style="width: 11px;height:11px;display: inline-block;cursor: pointer;"> -->
-                                <!-- (click)="deleteEmployee(i, item.FULLNAME)" --
+                                <!-- (click)="deleteEmployee(i, item.FULLNAME)" -- --
                                 </ion-col> -->
-                                <ion-item class="divider" lines="full" style="padding-top: 2%;">
+                                <ion-item class="divider" lines="full">
                                 </ion-item>
                             </ion-row>
+                        </div>
+
+                        <div style="height: 396px;overflow: auto;" *ngIf="slideInOut && showAddIcon"
+                            [@slideInOut]="slideInOut ? 'open': 'close'">
+                            <mat-card *ngFor="let draggable of assignedNames" [dndDraggable]="draggable.content"
+                                [dndEffectAllowed]="draggable.effectAllowed" [dndDisableIf]="draggable.disable"
+                                style="margin: 5px;border-radius: 3px;box-shadow: 0 3px 6px 0 rgba(77, 77, 77, 0.16);">
+
+                                <div style="float: left;padding-right: 15px;cursor: move;">
+                                    <img src="assets/icon/leave_setup/icon_reorder@3x.png"
+                                        style="width: 16px;height: 16px;" *ngIf="draggable.handle" dndHandle></div>
+                                <p [hidden]="!draggable.handle" style="color: #4d4f5c;font-size:11px;display: flex;">
+                                    {{draggable.content}}</p>
+                            </mat-card>
                         </div>
                     </div>
 
@@ -441,14 +385,14 @@
                             <ion-row>
                                 <ion-col size="4" class="column">
                                     DATE</ion-col>
-                                <ion-col size="3" *ngIf="!showAddIcon">DAY</ion-col>
+                                <ion-col size="3" class="column" *ngIf="!showAddIcon">DAY</ion-col>
                                 <ion-col size="5" class="column">
                                     HOLIDAY</ion-col>
                                 <ion-col size="3" align-self-center style="text-align: right;">
-                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="showAddIcon" (click)="menu.enable(true, 'addHolidayDetails');menu.enable(false, 'createCalendarDetails');menu.enable(false, 'assignEmployeeDetails');
+                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="showAddIcon" (click)="menu.enable(true, 'addHolidayDetails');menu.enable(false, 'createCalendarDetails');
                                     menu.open('addHolidayDetails');addNewPH(undefined, undefined)"></ion-icon>
                                     <!-- <p style="color: #7069d8;; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
-                    margin-top: -21px;margin-left: 20px;" *ngIf="showAddIcon" (click)="menu.enable(true, 'addHolidayDetails');menu.enable(false, 'createCalendarDetails');menu.enable(false, 'assignEmployeeDetails');
+                    margin-top: -21px;margin-left: 20px;" *ngIf="showAddIcon" (click)="menu.enable(true, 'addHolidayDetails');menu.enable(false, 'createCalendarDetails');
                                         menu.open('addHolidayDetails');addNewPH(undefined, undefined)">
                                         ADD</p> -->
                                 </ion-col>

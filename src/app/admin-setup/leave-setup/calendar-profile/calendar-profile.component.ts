@@ -15,7 +15,6 @@ import { CalendarProfileApiService } from './calendar-profile-api.service';
 import { DeleteCalendarConfirmationComponent } from '../delete-calendar-confirmation/delete-calendar-confirmation.component';
 import { trigger, transition, animate, style } from '@angular/animations'
 import { MenuController } from '@ionic/angular';
-import { EmployeeTreeviewService } from '../assign-calendar/employee-treeview.service';
 import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.component';
 
 /**
@@ -254,14 +253,11 @@ export class CalendarProfileComponent implements OnInit {
 
     public menuNewHoliday: any = [];
 
-    private _newCalendarGUID: string;
-
     public country: any;
 
     public region: any;
 
     public modeValue: string = 'OFF';
-
 
     /**
      *Creates an instance of CalendarProfileComponent.
@@ -270,7 +266,23 @@ export class CalendarProfileComponent implements OnInit {
      * @param {TitleCasePipe} titlecasePipe
      * @memberof CalendarProfileComponent
      */
-    constructor(private manageHolidayAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, private menu: MenuController, private treeview: EmployeeTreeviewService) {
+    constructor(private manageHolidayAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, private menu: MenuController) {
+    }
+
+    onDrop(event, list) {
+        for (let i = 0; i < this.assignedNames.length; i++) {
+            if (event.data === this.assignedNames[i].FULLNAME) {
+                this.getDragUserId(i);
+                this.manageHolidayAPI.patch_assign_calendar_profile({
+                    "user_guid": this.employeeList,
+                    "calendar_guid": list.calendar_guid
+                }).subscribe(response => {
+                    this.assignedNames.splice(i, 1);
+                    this.employeeList = [];
+                    this.getAssignedList();
+                });
+            }
+        }
     }
 
     ngOnInit() {
@@ -323,6 +335,10 @@ export class CalendarProfileComponent implements OnInit {
             });
     }
 
+    /**
+     * get assigned user list from requested calendar ID 
+     * @memberof CalendarProfileComponent
+     */
     getAssignedList() {
         for (let i = 0; i < this.profileList.length; i++) {
             this.manageHolidayAPI.get_assigned_employee_list(this.profileList[i].calendar_guid).subscribe(employeeNum => {
@@ -336,61 +352,16 @@ export class CalendarProfileComponent implements OnInit {
             });
     }
 
-    async submitData() {
-        for (let i = 0; i < this.assignCalendarForm.controls.user.value.length; i++) {
-            if (this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]) != 0) {
-                const index: number = this.checkIdExist(this.userList, this.assignCalendarForm.controls.user.value[i]);
-                if (!this.employeeList.includes(this.userList[index].userId)) {
-                    await this.employeeList.push(this.userList[index].userId);
-                }
-            }
-        }
-        await this.search();
-    }
-
-
-
     /**
-     * Closed div after clicked outside of div
-     * Push all items to array if they have checked
-     * Clear array if no item checked
-     * @param {*} event
-     * @memberof AssignCalendarComponent
+     * get dragged user id 
+     * @param {number} i
+     * @memberof CalendarProfileComponent
      */
-    clickOutside(event, control) {
-        if (!event.target.className.includes("material-icons") && !event.target.className.includes("mat-form-field-infix") && !event.target.className.includes("inputDropdown") && !event.target.className.includes("mat-checkbox-inner-container")) {
-            this.showTreeDropdown = false;
-            this.showSelectedTree = true;
-            this.disabledButton();
-            for (let i = 0; i < control.dataNodes.length; i++) {
-                let flatNode = control.dataNodes[i].item;
-                for (let j = 0; j < this.assignedNames.length; j++) {
-                    if (flatNode === this.assignedNames[j].FULLNAME) {
-                        this.treeview.todoLeafItemSelectionToggle(control.dataNodes[i]);
-                        this.treeview.checklistSelection.isSelected(control.dataNodes[i]);
-                    }
-                }
-            }
-        }
-        for (let i = 0; i < this.treeview.checklistSelection.selected.length; i++) {
-            if (this.treeview.checklistSelection.selected[i].level == 2 && this.assignCalendarForm.controls.user.value.indexOf(this.treeview.checklistSelection.selected[i].item) === -1) {
-                this.assignCalendarForm.controls.user.value.push(this.treeview.checklistSelection.selected[i].item);
-                this.disabledButton();
-            }
-        }
-        if (this.treeview.checklistSelection.selected.length === 0) {
-            this.assignCalendarForm.controls.user.value.length = 0;
-        }
-
-        if (control !== undefined) {
-            for (let i = 0; i < control.dataNodes.length; i++) {
-                let flatNode = control.dataNodes[i].item;
-                for (let j = 0; j < this.assignedNames.length; j++) {
-                    if (flatNode === this.assignedNames[j].FULLNAME) {
-                        this.treeview.todoLeafItemSelectionToggle(control.dataNodes[i]);
-                        this.treeview.checklistSelection.isSelected(control.dataNodes[i]);
-                    }
-                }
+    async getDragUserId(i: number) {
+        if (this.checkIdExist(this.userList, this.assignedNames[i].FULLNAME) != 0) {
+            const index: number = this.checkIdExist(this.userList, this.assignedNames[i].FULLNAME);
+            if (!this.employeeList.includes(this.userList[index].userId)) {
+                await this.employeeList.push(this.userList[index].userId);
             }
         }
     }
@@ -459,32 +430,8 @@ export class CalendarProfileComponent implements OnInit {
                 this.selectedWeekday = [];
                 this.getProfileList();
             })
-        console.log(this.employeeList);
-        this.manageHolidayAPI.patch_assign_calendar_profile({
-            "user_guid": this.employeeList,
-            "calendar_guid": this.selectedCalendarProfile.calendar_guid
-        }).subscribe(response => {
-            this.assignCalendarForm.reset();
-            this.events = [];
-            this.employeeList = [];
-            this.showSelectedTree = false;
-            this.showSpinner = false;
-            this.treeview.checklistSelection.clear();
-            this.getAssignedList();
-        });
     }
 
-    async search() {
-        const fullname = [];
-        for (let j = 0; j < this.assignedNames.length; j++) {
-            fullname.push(this.assignedNames[j].FULLNAME);
-        }
-        for (let i = 0; i < this.assignCalendarForm.controls.user.value.length; i++) {
-            if (!fullname.includes(this.assignCalendarForm.controls.user.value[i])) {
-                await this.assignedNames.push({ FULLNAME: this.assignCalendarForm.controls.user.value[i] });
-            }
-        }
-    }
 
     /**
      * Select calendar profile to pass the calendar Id to API
@@ -518,6 +465,12 @@ export class CalendarProfileComponent implements OnInit {
             })
         this.manageHolidayAPI.get_assigned_employee_list(this.profileList[index].calendar_guid).subscribe(namelist => {
             this.assignedNames = namelist;
+            for (let i = 0; i < this.assignedNames.length; i++) {
+                this.assignedNames[i]["content"] = this.assignedNames[i].FULLNAME;
+                this.assignedNames[i]["effectAllowed"] = "copyMove";
+                this.assignedNames[i]["disable"] = false;
+                this.assignedNames[i]["handle"] = true;
+            }
         })
     }
 
@@ -603,6 +556,12 @@ export class CalendarProfileComponent implements OnInit {
         });
     }
 
+    /**
+     * add new PH from menu
+     * @param {*} title
+     * @param {*} start
+     * @memberof CalendarProfileComponent
+     */
     addNewPH(title, start) {
         this.menuNewHoliday.push({
             "start": moment(start).format('YYYY-MM-DD'),
@@ -613,12 +572,22 @@ export class CalendarProfileComponent implements OnInit {
         })
     }
 
+    /**
+     * date in menu changed
+     * @param {*} value
+     * @param {*} i
+     * @memberof CalendarProfileComponent
+     */
     menuDateChanged(value, i) {
         this.menuNewHoliday[i].start = moment(value).format('YYYY-MM-DD');
         this.menuNewHoliday[i].end = moment(value).format('YYYY-MM-DD');
         this.menuNewHoliday[i].day = this.getWeekDay(new Date(value));
     }
 
+    /**
+     * add new PH to the original event list
+     * @memberof CalendarProfileComponent
+     */
     combineEvent() {
         Array.prototype.push.apply(this.events, this.menuNewHoliday);
         this.menu.close('addHolidayDetails');
@@ -648,6 +617,11 @@ export class CalendarProfileComponent implements OnInit {
         }
     }
 
+    /**
+     * toggle on/off of edit mode
+     * @param {*} event
+     * @memberof CalendarProfileComponent
+     */
     toggleEvent(event) {
         if (event.detail.checked === true) {
             this.modeValue = 'ON';
@@ -686,28 +660,6 @@ export class CalendarProfileComponent implements OnInit {
         this.showSpinner = false;
         this.content = true;
         this.getProfileList();
-
-        // assign calendar to employee
-        await this.submitData();
-        this._newCalendarGUID = response[0].CALENDAR_GUID;
-        this.manageHolidayAPI.patch_assign_calendar_profile({
-            "user_guid": this.employeeList,
-            "calendar_guid": this._newCalendarGUID
-        }).subscribe(response => {
-            this.assignCalendarForm.reset();
-            this.employeeList = [];
-            this.treeview.checklistSelection.clear();
-            this.getAssignedList();
-            this.countryIso = '';
-            this.regionISO = '';
-            this.restDay = [];
-            this.selectedWeekday = [];
-            this.profileName.reset();
-            this.dayControl.reset();
-            this.country.reset();
-            this.region.reset();
-            this.treeview.checklistSelection.clear();
-        });
     }
 
     /**
