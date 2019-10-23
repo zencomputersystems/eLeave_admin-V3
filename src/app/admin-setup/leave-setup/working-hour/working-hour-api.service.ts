@@ -81,7 +81,7 @@ export class WorkingHourApiService {
      * @memberof WorkingHourApiService
      */
     patch_user_working_hours(data: any): Observable<any> {
-        return this.apiService.deleteApi(data, '/api/admin/working-hours/user-working-hours');
+        return this.apiService.patchApi(data, '/api/admin/working-hours/user-working-hours');
     }
 
     /**
@@ -95,14 +95,25 @@ export class WorkingHourApiService {
     }
 
     /**
-     * show pop up snackbar
-     * @param {string} txt
+     * get user list
+     * @returns {Observable<any>}
      * @memberof WorkingHourApiService
      */
-    showPopUp(txt: string) {
+    get_all_users_list(): Observable<any> {
+        return this.apiService.get_user_profile_list();
+    }
+
+    /**
+     * show pop up snackbar
+     * @param {string} txt
+     * @param {boolean} value
+     * @memberof WorkingHourApiService
+     */
+    showPopUp(txt: string, value: boolean) {
         this.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 5000,
-            data: txt
+            duration: 2000,
+            verticalPosition: "top",
+            data: { message: txt, response: value }
         });
     }
 

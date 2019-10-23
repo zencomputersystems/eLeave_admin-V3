@@ -138,12 +138,12 @@
     // padding: 0 10px;
   }
   .working {
-    flex: 55%;
-    max-width: 55%;
+    flex: 60%;
+    max-width: 60%;
   }
   .assigned {
-    flex: 45%;
-    max-width: 45%;
+    flex: 40%;
+    max-width: 40%;
     margin-left: 10px;
   }
   .mainDivider {
@@ -155,15 +155,6 @@
     color: #43425d;
     opacity: 0.8;
     padding-top: 3px;
-  }
-  .column {
-    font-size: 12px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    padding-bottom: 0;
-    margin-bottom: 5px;
   }
   .textColor {
     color: #3b86ff;
@@ -190,5 +181,25 @@
   .showCursor {
     cursor: pointer;
     filter: none;
+  }
+  // drag & drap
+  .sectionRow {
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    box-shadow: rgba(77, 77, 77, 0.16) 0px 3px 6px 0px;
+    border-radius: 3px;
+    margin: 5px;
+  }
+  .dndDragging {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+      0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+  .custom-drag-over {
+    background-color: #fafafa;
+    // border-color: limegreen;
+    // transform: scale(1.05);
   }
 }

@@ -48,8 +48,8 @@
                 <ion-card-subtitle class="subtitle" style="font-size: 12px;">
                     Some good & sweet explanation here</ion-card-subtitle>
             </div>
-            <div style="right: 25px;top: 25px;position: absolute;" *>
-                <ion-button fill="outline"
+            <div style="right: 75px;top: 25px;position: absolute;">
+                <!-- <ion-button fill="outline"
                     style="background: #f0f0f7;font-size: 12px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
                     color="primary">
                     Cancel
@@ -58,7 +58,16 @@
                 <ion-button style="font-size: 12px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
                     color="primary">
                     Save
-                </ion-button>
+                </ion-button> -->
+                <p
+                    style="opacity: 0.8;font-size: 12px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
+                    Edit
+                    Mode: {{mode}}</p>
+                <div style="display: inline-block;margin-top: 8px;
+                position: absolute;">
+                    <ion-toggle style="zoom:0.70" mode="ios" color="secondary" (ionChange)="toggleMode($event)">
+                    </ion-toggle>
+                </div>
             </div>
         </div>
     </ion-card-header>
@@ -76,54 +85,97 @@
                         <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
                                     padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
-                                <ion-col size="5" align-self-center>PROFILE NAME
+                                <ion-col size="5" align-self-center
+                                    style="display: -webkit-box;
+                                -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+                                    PROFILE NAME
                                 </ion-col>
-                                <ion-col size="2.5" align-self-center class="column"> WORKING HOUR</ion-col>
-                                <ion-col size="3" align-self-center class="column"> NO. OF ASSIGNED EMPLOYEE</ion-col>
-                                <ion-col align-self-center>
-                                    <ion-icon class="addIcon" name="add-circle-outline"></ion-icon>
-                                    <p style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
-                    margin-top: -21px;margin-left: 20px;"
+                                <ion-col size="3" align-self-center
+                                    style="display: -webkit-box;
+                                -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+                                    WORKING HOUR</ion-col>
+                                <ion-col size="2.5" align-self-center
+                                    style="display: -webkit-box;
+                                -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+                                    ASSIGNED EMPLOYEE NO.</ion-col>
+                                <ion-col size="1.5" align-self-center style="text-align: right;padding-right: 10px;">
+                                    <ion-icon *ngIf="mode==='ON'" class="addIcon" name="add-circle-outline"
                                         (click)="clickedIndex=null;id='';menu.enable(true, 'createWorkingHourDetails');menu.enable(false, 'editWorkingHourDetails');menu.open('createWorkingHourDetails');">
-                                        ADD</p>
+                                    </ion-icon>
                                 </ion-col>
                             </ion-row>
                         </div>
                         <div style="height: 400px;overflow: auto;">
-                            <ion-row *ngFor="let item of list; let i=index" style="padding-left: 5px;padding-top: 5px;
-                                padding-bottom: 5px;">
-                                <ion-col size="5" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                    <p class="textHover"
-                                        style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
-                                        [ngClass]="{
+                            <ng-container *ngIf="mode==='OFF'">
+                                <ion-row *ngFor="let item of list; let i=index" style="padding-left: 5px;">
+                                    <ion-col size="5"
+                                        style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                        <p class="textHover"
+                                            style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
+                                            [ngClass]="{
                                             'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
-                                        (click)="clickedCalendar(item, i)">
-                                        {{item.code}}
-                                    </p>
-                                    <p
-                                        style="font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                        {{item.description}}
-                                    </p>
-                                </ion-col>
-                                <ion-col align-self-center size="2.5" style="color: #4d4f5c;font-size: 11px;">
-                                    {{item.strtime}} - {{item.endtime}}</ion-col>
-                                <ion-col align-self-center size="3"
-                                    style="text-align: center;color: #4d4f5c;font-size: 11px;">
-                                    {{item.employee}}</ion-col>
-                                <ion-col align-self-center>
-                                    <img src="assets/icon/leave_setup/icon_edit@3x.png"
-                                        style="width: 11px;height:11px;display: inline-block;"
-                                        (click)="id=item.working_hours_guid;menu.enable(true, 'editWorkingHourDetails');menu.enable(false, 'createWorkingHourDetails');menu.open('editWorkingHourDetails'); "
-                                        [ngClass]="{
-                                                'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
-                                    &nbsp;&nbsp;
-                                    <img src="assets/icon/leave_setup/icon_trash@3x.png"
-                                        style="width: 11px;height:11px;display: inline-block;"
-                                        (click)="deleteWorkingHrProfile(item.working_hours_guid, item.code)"
-                                        [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}">
-                                </ion-col>
-                                <ion-item class="divider" lines="full"></ion-item>
-                            </ion-row>
+                                            (click)="clickedCalendar(item, i)">
+                                            {{item.code}}
+                                        </p>
+                                        <p
+                                            style="font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                            {{item.description}}
+                                        </p>
+                                    </ion-col>
+                                    <ion-col align-self-center size="3" style="color: #4d4f5c;font-size: 11px;">
+                                        {{item.strtime}} - {{item.endtime}}</ion-col>
+                                    <ion-col align-self-center size="2.5"
+                                        style="text-align: center;color: #4d4f5c;font-size: 11px;">
+                                        {{item.employee}}</ion-col>
+                                    <ion-col size="1.5" align-self-center
+                                        style="text-align: right;padding-right: 10px;">
+                                    </ion-col>
+                                    <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 0;">
+                                    </ion-item>
+                                </ion-row>
+                            </ng-container>
+
+                            <ng-container *ngIf="mode==='ON'">
+                                <section class="my-dropzone scrollable" dndDropzone dndDragoverClass="custom-drag-over"
+                                    (dndDrop)="dropEvent($event, item)" [dndDisableIf]="i==clickedIndex"
+                                    *ngFor="let item of list; let i=index">
+                                    <ion-row class="sectionRow">
+                                        <ion-col size="5"
+                                            style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                            <p class="textHover"
+                                                style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
+                                                [ngClass]="{
+                                                    'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
+                                                (click)="clickedCalendar(item, i)">
+                                                {{item.code}}
+                                            </p>
+                                            <p
+                                                style="font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                {{item.description}}
+                                            </p>
+                                        </ion-col>
+                                        <ion-col align-self-center size="3" style="color: #4d4f5c;font-size: 11px;">
+                                            {{item.strtime}} - {{item.endtime}}</ion-col>
+                                        <ion-col align-self-center size="2.5"
+                                            style="text-align: center;color: #4d4f5c;font-size: 11px;">
+                                            {{item.employee}}</ion-col>
+                                        <ion-col size="1.5" align-self-center
+                                            style="text-align: right;padding-right: 10px;">
+                                            <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mode==='ON'"
+                                                style="width: 11px;height:11px;display: inline-block;"
+                                                [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
+                                                (click)="id=item.working_hours_guid;menu.enable(true, 'editWorkingHourDetails');menu.enable(false, 'createWorkingHourDetails');menu.open('editWorkingHourDetails'); ">
+                                            &nbsp;&nbsp;
+                                            <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mode==='ON'"
+                                                style="width: 11px;height:11px;display: inline-block;"
+                                                [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
+                                                (click)="deleteWorkingHrProfile(item.working_hours_guid, item.code)">
+                                        </ion-col>
+                                    </ion-row>
+                                </section>
+                            </ng-container>
+
+
                         </div>
                     </div>
                     <div class="assigned">
@@ -137,23 +189,48 @@
                                 <ion-col size="4"
                                     style="font-size: 12px;display: -webkit-box;
                                     -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                                    ID NO</ion-col>
+                                    ID NO.</ion-col>
                             </ion-row>
                         </div>
                         <!-- <p
                             style="width: 90%;padding: 20px;opacity: 0.8;font-size: 12px;line-height: 1.25;text-align: left;color: #a3a6b4;">
                             Nothing to view. Please select profile name first.</p> -->
-                        <div style="height: 396px;overflow: auto;">
-                            <ion-row *ngFor="let item of employeeList; let i =index" style="width: 100%;padding-left: 10px;padding-top: 5px;
-                                padding-bottom: 5px;">
-                                <ion-col size="8" align-self-center
-                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px">
+                        <div style="height: 396px;overflow: auto;" *ngIf="mode==='OFF'">
+                            <ion-row *ngFor="let item of employeeList; let i =index"
+                                style="width: 100%;padding-left: 10px;">
+                                <ion-col size="8" align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
+                                    padding-bottom: 13px;">
                                     {{item.FULLNAME}}
                                 </ion-col>
-                                <ion-col size="4" align-self-center>{{item.PERSONAL_ID_TYPE}}</ion-col>
-                                <ion-item class="divider" lines="full" style="padding-top: 1%;">
+                                <ion-col size="4" align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
+                                    padding-bottom: 13px;">
+                                    {{item.PERSONAL_ID_TYPE}}</ion-col>
+                                <ion-item class="divider" lines="full">
                                 </ion-item>
                             </ion-row>
+                        </div>
+
+                        <div style="height: 396px;overflow: auto;" *ngIf="mode==='ON'">
+                            <mat-card *ngFor="let draggable of employeeList" [dndDraggable]="draggable.content"
+                                [dndEffectAllowed]="draggable.effectAllowed" [dndDisableIf]="draggable.disable"
+                                style="margin: 5px;border-radius: 3px;box-shadow: 0 3px 6px 0 rgba(77, 77, 77, 0.16);">
+                                <ion-row>
+                                    <ion-col size="8" align-self-center style="padding:0;">
+                                        <div style="float: left;padding-right: 15px;cursor: move;">
+                                            <img src="assets/icon/leave_setup/icon_reorder@3x.png"
+                                                style="width: 16px;height: 16px;" *ngIf="draggable.handle" dndHandle>
+                                        </div>
+                                        <p [hidden]="!draggable.handle"
+                                            style="color: #4d4f5c;font-size:11px;display: flex;">
+                                            {{draggable.content}}</p>
+                                    </ion-col>
+                                    <ion-col size="4" align-self-center style="padding:0;">
+                                        <p [hidden]="!draggable.handle"
+                                            style="color: #4d4f5c;font-size:11px;display: inline-block;">
+                                            {{draggable.PERSONAL_ID_TYPE}}</p>
+                                    </ion-col>
+                                </ion-row>
+                            </mat-card>
                         </div>
                     </div>
                 </div>
