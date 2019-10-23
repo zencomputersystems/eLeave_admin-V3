@@ -507,10 +507,10 @@ export class ApplyOnBehalfComponent implements OnInit {
                 this.clearArrayList();
                 this.showSelectedTree = false;
                 this._employeeId = [];
-                this.leaveAPI.openSnackBar('submitted successfully ');
+                this.leaveAPI.openSnackBar('Leave application was submitted successfully', true);
                 if (response.status === 401) {
                     window.location.href = '/login';
-                    this.leaveAPI.openSnackBar('submitted unsuccessfully ' + response.message);
+                    this.leaveAPI.openSnackBar(response.message, false);
                 }
             });
     }

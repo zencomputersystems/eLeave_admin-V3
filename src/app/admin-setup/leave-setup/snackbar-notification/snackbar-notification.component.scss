@@ -1,0 +1,26 @@
+::ng-deep .mat-snack-bar-container {
+  padding: 0 !important;
+  background: transparent;
+}
+:host {
+  .alertSuccess {
+    background: #7069d8;
+    border-radius: 2px;
+    box-shadow: 8px 8px 12px 0 rgba(0, 0, 0, 0.15);
+    text-align: center;
+    min-height: 52.3px;
+    line-height: 50px;
+    min-width: 383px;
+    opacity: 0.9;
+  }
+  .alertFail {
+    background: #808495;
+    border-radius: 2px;
+    box-shadow: 8px 8px 12px 0 rgba(0, 0, 0, 0.15);
+    text-align: center;
+    min-height: 52.3px;
+    line-height: 50px;
+    min-width: 383px;
+    opacity: 0.9;
+  }
+}

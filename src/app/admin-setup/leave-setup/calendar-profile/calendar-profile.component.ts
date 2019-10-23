@@ -259,7 +259,7 @@ export class CalendarProfileComponent implements OnInit {
      * @param {TitleCasePipe} titlecasePipe
      * @memberof CalendarProfileComponent
      */
-    constructor(private manageHolidayAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, private menu: MenuController) {
+    constructor(private calendarProfileAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, private menu: MenuController) {
     }
 
     ngOnInit() {
@@ -299,7 +299,7 @@ export class CalendarProfileComponent implements OnInit {
     getPublicHolidayList() {
         this.showSpinner = true;
         this.content = false;
-        this.manageHolidayAPI.get_public_holiday_list().subscribe(
+        this.calendarProfileAPI.get_public_holiday_list().subscribe(
             (data: any) => {
                 this.showSpinner = false;
                 this.content = true;
@@ -318,12 +318,12 @@ export class CalendarProfileComponent implements OnInit {
      */
     getAssignedList() {
         for (let i = 0; i < this.profileList.length; i++) {
-            this.manageHolidayAPI.get_assigned_employee_list(this.profileList[i].calendar_guid).subscribe(employeeNum => {
+            this.calendarProfileAPI.get_assigned_employee_list(this.profileList[i].calendar_guid).subscribe(employeeNum => {
                 const list = employeeNum;
                 this.profileList[i]["employee"] = list.length;
             })
         }
-        this.manageHolidayAPI.get_user_list().subscribe(
+        this.calendarProfileAPI.get_user_list().subscribe(
             data => {
                 this.userList = data;
             });
@@ -369,7 +369,7 @@ export class CalendarProfileComponent implements OnInit {
         for (let i = 0; i < this.assignedNames.length; i++) {
             if (event.data === this.assignedNames[i].FULLNAME) {
                 this.getDragUserId(i);
-                this.manageHolidayAPI.patch_assign_calendar_profile({
+                this.calendarProfileAPI.patch_assign_calendar_profile({
                     "user_guid": this.employeeList,
                     "calendar_guid": list.calendar_guid
                 }).subscribe(response => {
@@ -399,7 +399,7 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     getProfileList() {
-        this.manageHolidayAPI.get_calendar_profile_list().subscribe(
+        this.calendarProfileAPI.get_calendar_profile_list().subscribe(
             (data: any[]) => {
                 this.profileList = data;
                 this.clickedCalendar(this.profileList[0], this.clickedIndex);
@@ -433,12 +433,15 @@ export class CalendarProfileComponent implements OnInit {
             }
         }
         console.log(body);
-        this.manageHolidayAPI.patch_calendar_profile(body).subscribe(
+        this.calendarProfileAPI.patch_calendar_profile(body).subscribe(
             (data: any[]) => {
                 this.restDay = [];
                 this.dayControl.reset();
                 this.selectedWeekday = [];
                 this.getProfileList();
+                this.calendarProfileAPI.notification('Edit mode disabled. Good job!', true);
+            }, error => {
+                this.calendarProfileAPI.notification('Sorry. Error occurred.', false);
             })
     }
 
@@ -454,7 +457,7 @@ export class CalendarProfileComponent implements OnInit {
         this.selectedCalendarProfile = list;
         this.clickedIndex = index;
         this.restDay = [];
-        this.manageHolidayAPI.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid, (new Date()).getFullYear()).subscribe(
+        this.calendarProfileAPI.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid, (new Date()).getFullYear()).subscribe(
             (data: any) => {
                 this.personalProfile = data;
                 this.slideInOut = true;
@@ -472,7 +475,7 @@ export class CalendarProfileComponent implements OnInit {
                 }
                 this.dayControl.setValue(this.restDay);
             })
-        this.manageHolidayAPI.get_assigned_employee_list(this.profileList[index].calendar_guid).subscribe(namelist => {
+        this.calendarProfileAPI.get_assigned_employee_list(this.profileList[index].calendar_guid).subscribe(namelist => {
             this.assignedNames = namelist;
             for (let i = 0; i < this.assignedNames.length; i++) {
                 this.assignedNames[i]["content"] = this.assignedNames[i].FULLNAME;
@@ -547,7 +550,7 @@ export class CalendarProfileComponent implements OnInit {
     async callParamAPI(year) {
         this.addCalendar = false;
         const params = { 'country': this.countryIso, 'location': this.regionISO, 'year': year };
-        this.items = await this.manageHolidayAPI.get_public_holiday_list(params).toPromise();
+        this.items = await this.calendarProfileAPI.get_public_holiday_list(params).toPromise();
         this.events = [];
         for (let j = 0; j < this.items.response.holidays.length; j++) {
             this.createHolidayList(this.items.response.holidays[j].date.iso, this.items.response.holidays[j].name);
@@ -604,6 +607,7 @@ export class CalendarProfileComponent implements OnInit {
      */
     combineEvent() {
         Array.prototype.push.apply(this.events, this.menuNewHoliday);
+        this.calendarProfileAPI.notification('New public holiday(s) was added successfully.', true);
         this.menu.close('addHolidayDetails');
         this.menuNewHoliday = [];
     }
@@ -640,9 +644,9 @@ export class CalendarProfileComponent implements OnInit {
         if (event.detail.checked === true) {
             this.modeValue = 'ON';
             this.showAddIcon = true;
-            this.manageHolidayAPI.displayDialog.open(EditModeDialogComponent, {
-                height: "372.3px",
-                width: "452px"
+            this.calendarProfileAPI.displayDialog.open(EditModeDialogComponent, {
+                height: "359.3px",
+                width: "383px"
             });
 
         } else {
@@ -670,9 +674,15 @@ export class CalendarProfileComponent implements OnInit {
             "holiday": this.events,
             "rest": this.selectedWeekday
         }
-        let response = await this.manageHolidayAPI.post_calendar_profile(newProfile).toPromise();
-        this.showSpinner = false;
-        this.content = true;
+        this.calendarProfileAPI.post_calendar_profile(newProfile).subscribe(response => {
+            this.calendarProfileAPI.notification('New calendar profile was created successfully.', true);
+            this.showSpinner = false;
+            this.content = true;
+        }, error => {
+            this.calendarProfileAPI.notification(error.status + ' ' + error.statusText + '.', false);
+            this.showSpinner = false;
+            this.content = true;
+        });
         this.getProfileList();
     }
 
@@ -681,19 +691,20 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     deleteCalendarProfile(item) {
-        const dialog = this.manageHolidayAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
+        const dialog = this.calendarProfileAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
             data: { name: item.code, value: item.calendar_guid, desc: ' calendar profile' },
             height: "195px",
             width: "249px"
         });
         dialog.afterClosed().subscribe(result => {
             if (result === item.calendar_guid) {
-                this.manageHolidayAPI.delete_calendar_profile(item.calendar_guid).subscribe(response => {
+                this.calendarProfileAPI.delete_calendar_profile(item.calendar_guid).subscribe(response => {
                     this.getProfileList();
                     this.slideInOut = false;
                     this.clickedIndex = 0;
                     this.dayControl.reset();
                     this.restDay = [];
+                    this.calendarProfileAPI.notification('Calendar profile was deleted.', true);
                 })
             }
         });
@@ -707,7 +718,7 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     deletePH(index: number, event: any, title: string) {
-        const popup = this.manageHolidayAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
+        const popup = this.calendarProfileAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
             data: { name: title, value: index, desc: ' from holiday list' },
             height: "195px",
             width: "249px"
@@ -716,8 +727,11 @@ export class CalendarProfileComponent implements OnInit {
             if (result == index && result != undefined) {
                 setTimeout(() => {
                     event.splice(index, 1);
+                    this.calendarProfileAPI.notification('Public holiday was deleted.', true);
                 }, 1000);
             }
         });
     }
 }
+
+// TODO: prevent duplicate rest day added when saveData() 22/10/2019

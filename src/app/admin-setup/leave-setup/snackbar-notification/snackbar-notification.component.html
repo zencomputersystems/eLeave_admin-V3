@@ -1,10 +1,15 @@
-<span class="alertSuccess" *ngIf="data.includes('successfully')">
-    <ion-icon name="checkmark-circle-outline" style="width: 24px;
-        height: 24px;position: absolute;top: 11px;"></ion-icon>
-    <ion-label style="padding-left: 35px;">You have {{data}}!</ion-label>
-</span>
-<span class="alertFail" *ngIf="data.includes('unsuccessfully')">
-    <ion-icon name="information-circle-outline" style="width: 24px;
-        height: 24px;position: absolute;top: 11px;"></ion-icon>
-    <ion-label style="padding-left: 35px;">You have {{data}}!</ion-label>
-</span>
+<!------------------------------------ success --------------------------------------------->
+<div class="alertSuccess" *ngIf="data.response === true">
+    <img src="assets/icon/leave_setup/icon_tick@3x.png" style="width: 24px;height:24px;position: absolute;
+    top: 13px;">
+    <p style="padding-left: 40px;color:white;font-size: 14px;
+    display: inline-block;margin: 0;">{{data.message}}</p>
+</div>
+
+<!------------------------------------ fail --------------------------------------------->
+<div class="alertFail" *ngIf="data.response === false">
+    <img src="assets/icon/leave_setup/icon_untick@3x.png" style="width: 24px;height:24px;position: absolute;
+    top: 13px;">
+    <p style="padding-left: 40px;color:white;font-size: 14px;
+    display: inline-block;margin: 0;"> {{data.message}}</p>
+</div>

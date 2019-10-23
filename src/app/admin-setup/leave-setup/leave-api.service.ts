@@ -49,7 +49,7 @@ export class LeaveApiService {
      * @returns {Observable<any>}
      * @memberof LeaveApiService
      */
-    get_personal_holiday_calendar(id:string, year:number): Observable<any> {
+    get_personal_holiday_calendar(id: string, year: number): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.getApi('/api/admin/holiday/calendar-profile/days/' + id + '/' + year);
     }
@@ -138,10 +138,10 @@ export class LeaveApiService {
     * @param {string} message
     * @memberof LeaveApiService
     */
-    openSnackBar(message: string) {
+    openSnackBar(message: string, val: boolean) {
         this.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 3000,
-            data: message
+            data: { message: message, response: val }
         });
     }
 

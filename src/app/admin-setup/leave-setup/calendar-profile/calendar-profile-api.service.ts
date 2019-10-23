@@ -24,8 +24,7 @@ export class CalendarProfileApiService {
      * @param {MatSnackBar} snackBar
      * @memberof CalendarProfileApiService
      */
-    constructor(private api: APIService, private leaveApi: LeaveApiService, public displayDialog: MatDialog) {
-        // private snackBar: MatSnackBar
+    constructor(private api: APIService, private leaveApi: LeaveApiService, public displayDialog: MatDialog, private snackBar: MatSnackBar) {
     }
 
     /**
@@ -134,15 +133,17 @@ export class CalendarProfileApiService {
     }
 
     /**
-    * Show notification after submit
-    * @param {string} text
-    * @memberof CalendarProfileApiService
-    */
-    // notification(text: string) {
-    //     this.snackBar.openFromComponent(SnackbarNotificationComponent, {
-    //         duration: 3000,
-    //         data: text
-    //     });
-    // }
+     * Show notification after submit
+     * @param {string} text
+     * @param {boolean} val
+     * @memberof CalendarProfileApiService
+     */
+    notification(text: string, val: boolean) {
+        this.snackBar.openFromComponent(SnackbarNotificationComponent, {
+            duration: 2000,
+            verticalPosition: "top",
+            data: { message: text, response: val }
+        });
+    }
 
 }

@@ -8,15 +8,9 @@ import { MAT_SNACK_BAR_DATA } from "@angular/material/snack-bar";
 @Component({
   selector: 'app-snackbar-notification',
   templateUrl: './snackbar-notification.component.html',
-  styles: [`
-      .alertSuccess {
-        color: #48c353;
-      }
-      .alertFail{
-          color: #bdbdbd;
-      }
-    `],
+  styleUrls: ['./snackbar-notification.component.scss']
 })
+
 export class SnackbarNotificationComponent {
 
   /**
