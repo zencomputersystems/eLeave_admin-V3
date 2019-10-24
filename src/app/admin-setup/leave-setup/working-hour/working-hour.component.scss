@@ -71,4 +71,44 @@
       color: #057dcd !important;
     }
   }
+
+  // ngb-timepicker
+  .ngbTime {
+    font-size: 10px;
+  }
+  ::ng-deep {
+    .ngb-tp-input-container.ngb-tp-hour > .ngb-tp-input,
+    .ngb-tp-input-container.ngb-tp-minute > .ngb-tp-input,
+    .ngb-tp-meridian > button {
+      font-size: 12px;
+    }
+    .ngb-tp-input:focus {
+      box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;
+      border-color:#7069d8;
+    }
+    .ngb-tp-input:active {
+      box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;
+    }
+    .btn-outline-primary {
+      color: #7069d8;
+      border-color: #7069d8;
+    }
+    .btn-outline-primary:hover {
+      background-color: #7069d8;
+      border-color: #7069d8;
+      color: white;
+    }
+    .btn-outline-primary:focus {
+      box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;
+    }
+    .btn-outline-primary:active:focus {
+      background-color: #7069d8;
+      border-color: #7069d8;
+      color: white;
+      box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;
+    }
+    .ngb-tp-spacer {
+      width: 0.7em;
+    }
+  }
 }

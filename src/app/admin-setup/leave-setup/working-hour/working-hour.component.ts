@@ -34,6 +34,20 @@ export class WorkingHourComponent implements OnInit, OnChanges {
     public showSmallSpinner: boolean = false;
 
     /**
+     * show/hide toggle button in timepicker
+     * @type {boolean}
+     * @memberof WorkingHourComponent
+     */
+    public meridian: boolean = true;
+
+    /**
+     * show/hide arrow up & down in timepicker toggle button
+     * @type {boolean}
+     * @memberof WorkingHourComponent
+     */
+    public spinners: boolean = false;
+
+    /**
      * details from requested id
      * @private
      * @type {*}
@@ -54,14 +68,11 @@ export class WorkingHourComponent implements OnInit, OnChanges {
      */
     @Output() valueChange = new EventEmitter();
 
-    // time = { hour: 13, minute: 30 };
-    // time;
-    // meridian = true;
-    // spinners = false;
 
     /**
      *Creates an instance of WorkingHourComponent.
      * @param {WorkingHourApiService} workingHourAPI
+     * @param {MenuController} menu
      * @memberof WorkingHourComponent
      */
     constructor(private workingHourAPI: WorkingHourApiService, private menu: MenuController) {
@@ -96,20 +107,36 @@ export class WorkingHourComponent implements OnInit, OnChanges {
             this.workingHourForm.patchValue({
                 profileName: detail.code,
                 description: detail.description,
-                startpicker: detail.property.fullday.start_time,
-                endpicker: detail.property.fullday.end_time,
-                starthalfdayAMpicker: detail.property.halfday.AM.start_time,
-                endhalfdayAMpicker: detail.property.halfday.AM.end_time,
-                starthalfdayPMpicker: detail.property.halfday.PM.start_time,
-                endhalfdayPMpicker: detail.property.halfday.PM.end_time,
-                startQ1picker: detail.property.quarterday.Q1.start_time,
-                endQ1picker: detail.property.quarterday.Q1.end_time,
-                startQ2picker: detail.property.quarterday.Q2.start_time,
-                endQ2picker: detail.property.quarterday.Q2.end_time,
-                startQ3picker: detail.property.quarterday.Q3.start_time,
-                endQ3picker: detail.property.quarterday.Q3.end_time,
-                startQ4picker: detail.property.quarterday.Q4.start_time,
-                endQ4picker: detail.property.quarterday.Q4.end_time
+                startpicker: { "hour": Number((detail.property.fullday.start_time.split(':'))[0]), "minute": Number((detail.property.fullday.start_time.split(':'))[1]) },
+                endpicker: { "hour": Number((detail.property.fullday.end_time.split(':'))[0]), "minute": Number((detail.property.fullday.end_time.split(':'))[1]) },
+                starthalfdayAMpicker: { "hour": Number((detail.property.halfday.AM.start_time.split(':'))[0]), "minute": Number((detail.property.halfday.AM.start_time.split(':'))[1]) },
+                endhalfdayAMpicker: { "hour": Number((detail.property.halfday.AM.end_time.split(':'))[0]), "minute": Number((detail.property.halfday.AM.end_time.split(':'))[1]) },
+                starthalfdayPMpicker: { "hour": Number((detail.property.halfday.PM.start_time.split(':'))[0]), "minute": Number((detail.property.halfday.PM.start_time.split(':'))[1]) },
+                endhalfdayPMpicker: { "hour": Number((detail.property.halfday.PM.end_time.split(':'))[0]), "minute": Number((detail.property.halfday.PM.end_time.split(':'))[1]) },
+                startQ1picker: {
+                    "hour": Number((detail.property.quarterday.Q1.start_time.split(':'))[0]), "minute": Number((detail.property.quarterday.Q1.start_time.split(':'))[1])
+                },
+                endQ1picker: {
+                    "hour": Number((detail.property.quarterday.Q1.end_time.split(':'))[0]), "minute": Number((detail.property.quarterday.Q1.end_time.split(':'))[1])
+                },
+                startQ2picker: {
+                    "hour": Number((detail.property.quarterday.Q2.start_time.split(':'))[0]), "minute": Number((detail.property.quarterday.Q2.start_time.split(':'))[1])
+                },
+                endQ2picker: {
+                    "hour": Number((detail.property.quarterday.Q2.end_time.split(':'))[0]), "minute": Number((detail.property.quarterday.Q2.end_time.split(':'))[1])
+                },
+                startQ3picker: {
+                    "hour": Number((detail.property.quarterday.Q3.start_time.split(':'))[0]), "minute": Number((detail.property.quarterday.Q3.start_time.split(':'))[1])
+                },
+                endQ3picker: {
+                    "hour": Number((detail.property.quarterday.Q3.end_time.split(':'))[0]), "minute": Number((detail.property.quarterday.Q3.end_time.split(':'))[1])
+                },
+                startQ4picker: {
+                    "hour": Number((detail.property.quarterday.Q4.start_time.split(':'))[0]), "minute": Number((detail.property.quarterday.Q4.start_time.split(':'))[1])
+                },
+                endQ4picker: {
+                    "hour": Number((detail.property.quarterday.Q4.end_time.split(':'))[0]), "minute": Number((detail.property.quarterday.Q4.end_time.split(':'))[1])
+                }
             });
         } else { this.workingHourForm.reset() }
     }
@@ -122,15 +149,15 @@ export class WorkingHourComponent implements OnInit, OnChanges {
         this.showSmallSpinner = true;
         this._data.code = this.workingHourForm.controls.profileName.value;
         this._data.description = this.workingHourForm.controls.description.value;
-        this._data.property.fullday.start_time = moment(this.workingHourForm.controls.startpicker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.fullday.end_time = moment(this.workingHourForm.controls.endpicker.value, ["h:mm A"]).format("HH:mm");
-        this._data.property.halfday.AM.start_time = this.workingHourForm.controls.starthalfdayAMpicker.value;
-        this._data.property.halfday.AM.end_time = this.workingHourForm.controls.endhalfdayAMpicker.value;
-        this._data.property.halfday.PM.start_time = this.workingHourForm.controls.starthalfdayPMpicker.value;
-        this._data.property.halfday.PM.end_time = this.workingHourForm.controls.endhalfdayPMpicker.value;
+        this._data.property.fullday.start_time = this.workingHourForm.controls.startpicker.value.hour + ":" + (this.workingHourForm.controls.startpicker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.startpicker.value.minute;
+        this._data.property.fullday.end_time = this.workingHourForm.controls.endpicker.value.hour + ":" + (this.workingHourForm.controls.endpicker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.endpicker.value.minute;
+        this._data.property.halfday.AM.start_time = this.workingHourForm.controls.starthalfdayAMpicker.value.hour + ":" + (this.workingHourForm.controls.starthalfdayAMpicker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.starthalfdayAMpicker.value.minute;
+        this._data.property.halfday.AM.end_time = this.workingHourForm.controls.endhalfdayAMpicker.value.hour + ":" + (this.workingHourForm.controls.endhalfdayAMpicker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.endhalfdayAMpicker.value.minute;
+        this._data.property.halfday.PM.start_time = this.workingHourForm.controls.starthalfdayPMpicker.value.hour + ":" + (this.workingHourForm.controls.starthalfdayPMpicker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.starthalfdayPMpicker.value.minute;
+        this._data.property.halfday.PM.end_time = this.workingHourForm.controls.endhalfdayPMpicker.value.hour + ":" + (this.workingHourForm.controls.endhalfdayPMpicker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.endhalfdayPMpicker.value.minute;
         Object.keys(this._data.property.halfday).map(ampm => {
             Object.keys(this._data.property.halfday[ampm]).map(startend => {
-                this._data.property.halfday[ampm][startend] = moment(this._data.property.halfday[ampm][startend], ["h:mm A"]).format("HH:mm");
+                this._data.property.halfday[ampm][startend] = this._data.property.halfday[ampm][startend];
             })
         });
         this.postQuarterDay();
@@ -142,17 +169,17 @@ export class WorkingHourComponent implements OnInit, OnChanges {
      * @memberof WorkingHourComponent
      */
     postQuarterDay() {
-        this._data.property.quarterday.Q1.start_time = this.workingHourForm.controls.startQ1picker.value;
-        this._data.property.quarterday.Q1.end_time = this.workingHourForm.controls.endQ1picker.value;
-        this._data.property.quarterday.Q2.start_time = this.workingHourForm.controls.startQ2picker.value;
-        this._data.property.quarterday.Q2.end_time = this.workingHourForm.controls.endQ2picker.value;
-        this._data.property.quarterday.Q3.start_time = this.workingHourForm.controls.startQ3picker.value;
-        this._data.property.quarterday.Q3.end_time = this.workingHourForm.controls.endQ3picker.value;
-        this._data.property.quarterday.Q4.start_time = this.workingHourForm.controls.startQ4picker.value;
-        this._data.property.quarterday.Q4.end_time = this.workingHourForm.controls.endQ4picker.value;
+        this._data.property.quarterday.Q1.start_time = this.workingHourForm.controls.startQ1picker.value.hour + ":" + (this.workingHourForm.controls.startQ1picker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.startQ1picker.value.minute;
+        this._data.property.quarterday.Q1.end_time = this.workingHourForm.controls.endQ1picker.value.hour + ":" + (this.workingHourForm.controls.endQ1picker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.endQ1picker.value.minute;
+        this._data.property.quarterday.Q2.start_time = this.workingHourForm.controls.startQ2picker.value + ":" + (this.workingHourForm.controls.startQ2picker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.startQ2picker.value.minute;
+        this._data.property.quarterday.Q2.end_time = this.workingHourForm.controls.endQ2picker.value + ":" + (this.workingHourForm.controls.endQ2picker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.endQ2picker.value.minute;
+        this._data.property.quarterday.Q3.start_time = this.workingHourForm.controls.startQ3picker.value + ":" + (this.workingHourForm.controls.startQ3picker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.startQ3picker.value.minute;
+        this._data.property.quarterday.Q3.end_time = this.workingHourForm.controls.endQ3picker.value + ":" + (this.workingHourForm.controls.endQ3picker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.endQ3picker.value.minute;
+        this._data.property.quarterday.Q4.start_time = this.workingHourForm.controls.startQ4picker.value + ":" + (this.workingHourForm.controls.startQ4picker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.startQ4picker.value.minute;
+        this._data.property.quarterday.Q4.end_time = this.workingHourForm.controls.endQ4picker.value + ":" + (this.workingHourForm.controls.endQ4picker.value.minute < 10 ? '0' : '') + this.workingHourForm.controls.endQ4picker.value.minute;
         Object.keys(this._data.property.quarterday).map(objKey => {
             Object.keys(this._data.property.quarterday[objKey]).map(endstart => {
-                this._data.property.quarterday[objKey][endstart] = moment(this._data.property.quarterday[objKey][endstart], ["h:mm A"]).format("HH:mm");
+                this._data.property.quarterday[objKey][endstart] = this._data.property.quarterday[objKey][endstart];
             })
         });
     }
@@ -168,13 +195,18 @@ export class WorkingHourComponent implements OnInit, OnChanges {
                 "working_hours_guid": this.id,
                 "data": body
             }).subscribe(res => {
-                // this.workingHourAPI.showPopUp('submitted successfully ');
+                this.workingHourAPI.showPopUp('Working hour profile was updated successfully', true);
                 this.showSmallSpinner = false;
+            }, error => {
+                this.workingHourAPI.showPopUp('Sorry. Error occurred.', false);
             })
         } else {
             this.workingHourAPI.post_working_hours(body).subscribe(response => {
-                // this.workingHourAPI.showPopUp('submitted successfully ');
+                this.workingHourAPI.showPopUp('New working hour profile was created successfully', true);
                 this.showSmallSpinner = false;
+                this.refreshProfile(response[0].WORKING_HOURS_GUID);
+            }, error => {
+                this.workingHourAPI.showPopUp(error.status + ' ' + error.statusText + '.', false);
             })
         }
     }
