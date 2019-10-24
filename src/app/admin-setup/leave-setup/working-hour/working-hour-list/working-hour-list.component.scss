@@ -119,7 +119,7 @@
   }
   .right {
     padding-left: 20px;
-    padding-top: 4px;
+    // padding-top: 4px;
   }
   .cardContent {
     line-height: 1.25;
@@ -135,6 +135,7 @@
   .row {
     display: flex;
     flex-wrap: nowrap;
+    margin: 0;
     // padding: 0 10px;
   }
   .working {

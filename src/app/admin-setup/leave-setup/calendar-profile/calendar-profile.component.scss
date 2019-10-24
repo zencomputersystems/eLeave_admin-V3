@@ -11,7 +11,7 @@
   }
   .right {
     padding-left: 20px;
-    padding-top: 4px;
+    // padding-top: 4px;
   }
   .mainDivider {
     --min-height: none;
@@ -37,6 +37,7 @@
   .row {
     display: flex;
     flex-wrap: nowrap;
+    margin: 0;
     // padding: 0 10px;
   }
   .calendar,

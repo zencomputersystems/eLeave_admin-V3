@@ -54,9 +54,11 @@ export class WorkingHourComponent implements OnInit, OnChanges {
      */
     @Output() valueChange = new EventEmitter();
 
-
     // time = { hour: 13, minute: 30 };
+    // time;
     // meridian = true;
+    // spinners = false;
+
     /**
      *Creates an instance of WorkingHourComponent.
      * @param {WorkingHourApiService} workingHourAPI

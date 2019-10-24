@@ -1,4 +1,4 @@
-<p style="color: #43425d;line-height: 1.53;font-size:16px;padding-left: 20px;margin-bottom: 5px;">Overview</p>
+<p style="margin: 10px;color: #43425d;line-height: 1.53;font-size:16px;padding-left: 20px;margin-bottom: 5px;">Overview</p>
 
 
 <!-------------------------------- show announcement menu ---------------------------------->
@@ -119,7 +119,7 @@
                 </ion-label>
                 <mat-chip>
                   <p
-                    style="white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
+                    style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
                     {{item.day}}</p>
                 </mat-chip>
               </mat-chip-list>
@@ -138,7 +138,7 @@
                 </ion-label>
                 <mat-chip>
                   <p
-                    style="white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
+                    style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
                     {{item.day}}</p>
                 </mat-chip>
               </mat-chip-list>
@@ -201,7 +201,7 @@
               <ion-icon name="close" style="color: #ff6768;padding-top: 3px;padding-right: 5px;
                 font-size: 15px;cursor: pointer;">
               </ion-icon>
-              <p style="position: absolute;top: -5px;display: inline-block;color: #ff6768;cursor: pointer;font-size: 11px;line-height: 1.82;"
+              <p style="position: absolute;display: inline-block;color: #ff6768;cursor: pointer;font-size: 11px;line-height: 1.82;"
                 (click)="deleteAnnouncement(item)">
                 Delete</p>
             </div>
@@ -229,7 +229,7 @@
             <mat-chip-list>
               <mat-chip>
                 <p
-                  style="white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
+                  style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
                   {{item.day}}</p>
               </mat-chip>
             </mat-chip-list>
@@ -522,7 +522,7 @@
                             padding-left: 0.5%;font-size: 16px;cursor: pointer;">
                     </ion-icon>
                     <p
-                      style="position: absolute;top: -5px;font-weight: bold;display: inline-block;color: #3b86ff;cursor: pointer;font-size: 11px;line-height: 1.82;">
+                      style="position: absolute;font-weight: bold;display: inline-block;color: #3b86ff;cursor: pointer;font-size: 11px;line-height: 1.82;">
                       Action</p>
                   </div>
                 </ion-col>
@@ -532,7 +532,7 @@
                                 padding-left: 0.5%;font-size: 16px;cursor: pointer;"
                       (click)="approveLeave(item.leave_transaction_guid)">
                     </ion-icon>
-                    <p style="position: absolute;top: -5px;font-weight: bold;display: inline-block;color: #46cdcf;cursor: pointer;font-size: 11px;line-height: 1.82;"
+                    <p style="position: absolute;font-weight: bold;display: inline-block;color: #46cdcf;cursor: pointer;font-size: 11px;line-height: 1.82;"
                       (click)="approveLeave(item.leave_transaction_guid)">Accept</p>
                   </div>
                 </ion-col>
@@ -542,7 +542,7 @@
                                             padding-left: 0.5%;font-size: 16px;cursor: pointer;"
                       (click)="rejectLeave(item.leave_transaction_guid)">
                     </ion-icon>
-                    <p style="position: absolute;top: -5px;font-weight: bold;display: inline-block;color: #ff6768;cursor: pointer;font-size: 11px;line-height: 1.82;"
+                    <p style="position: absolute;font-weight: bold;display: inline-block;color: #ff6768;cursor: pointer;font-size: 11px;line-height: 1.82;"
                       (click)="rejectLeave(item.leave_transaction_guid)">Reject</p>
                   </div>
                 </ion-col>
