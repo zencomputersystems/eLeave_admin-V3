@@ -19,7 +19,7 @@ export class RoleManagementComponent implements OnInit {
      * @param {Router} router
      * @memberof RoleManagementComponent
      */
-    constructor(private router: Router) {
+    constructor(public router: Router) {
 
     }
 

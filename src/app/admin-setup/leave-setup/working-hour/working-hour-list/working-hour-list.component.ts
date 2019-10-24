@@ -46,6 +46,13 @@ export class WorkingHourListComponent implements OnInit {
      */
     public showSpinner: boolean = false;
 
+    /**
+     * set id as selected working hour guid
+     * @type {string}
+     * @memberof WorkingHourListComponent
+     */
+    public id: string;
+
     public clickedIndex: number = 0;
 
     public employeeList: any;
@@ -56,8 +63,9 @@ export class WorkingHourListComponent implements OnInit {
 
     private _droppedUser: any[] = [];
 
-    // time = { hour: 13, minute: 30 };
-    // meridian = true;
+    time = { hour: 13, minute: 30 };
+    spinners = false;
+    meridian = true;
 
     /**
      *Creates an instance of WorkingHourListComponent.

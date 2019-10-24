@@ -259,7 +259,7 @@ export class CalendarProfileComponent implements OnInit {
      * @param {TitleCasePipe} titlecasePipe
      * @memberof CalendarProfileComponent
      */
-    constructor(private calendarProfileAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, private menu: MenuController) {
+    constructor(private calendarProfileAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, public menu: MenuController) {
     }
 
     ngOnInit() {

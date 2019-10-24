@@ -369,7 +369,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {APIService} apiService
      * @memberof ApplyOnBehalfComponent
      */
-    constructor(private leaveAPI: LeaveApiService, private tree: EmployeeTreeviewService, private apiService: APIService) {
+    constructor(private leaveAPI: LeaveApiService, public tree: EmployeeTreeviewService, private apiService: APIService) {
         this.applyLeaveForm = this.formGroup();
     }
 
