@@ -5,27 +5,21 @@
   }
   .divider {
     --min-height: none;
-    padding-top: 1%;
-    padding-bottom: 1%;
+    // padding-top: 1%;
+    // padding-bottom: 1%;
     width: 100%;
   }
   .detailsRow {
     height: 55px;
   }
-  .content {
-    margin-top: 2%;
-    margin-bottom: 2%;
-  }
   .avatar {
     width: 30px;
     height: 30px;
+    margin: 0 auto;
     // margin-top: -7px;
   }
   .button-outline {
     --border-width: 1px;
-  }
-  ::ng-deep .mat-select-value-text {
-    color: #7a8589;
   }
   ion-col {
     overflow: hidden;
@@ -38,5 +32,57 @@
     height: 30px;
     fill: #bebebe;
     margin: 0 auto;
+  }
+
+  // new
+  ion-card {
+    height: 100%;
+    margin: 0;
+  }
+  .fullContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 17px;
+  }
+  .cardContent {
+    line-height: 1.25;
+    background: white;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 154px);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .right {
+    padding-left: 20px;
+    // padding-top: 4px;
+  }
+  .row {
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 0;
+    // padding: 0 10px;
+  }
+  .details {
+    flex: 30%;
+    max-width: 30%;
+  }
+  .assigned {
+    flex: 70%;
+    max-width: 70%;
+    margin-left: 10px;
+  }
+  .subtitle {
+    display: block;
+    // padding-left: 2px;
+    color: #43425d;
+    opacity: 0.8;
+    padding-top: 3px;
+  }
+  ::ng-deep .mat-select-value-text {
+    color: #43425d;
+    opacity: 0.8;
   }
 }

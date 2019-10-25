@@ -162,10 +162,10 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @memberof LeaveAdjustmentComponent
      */
     companySelected(guid) {
-        this.showSpinner = true;
+        // this.showSpinner = true;
         this._companyGUID = guid;
         this.leaveSetupAPI.get_company_details(guid).subscribe(list => {
-            this.showSpinner = false;
+            // this.showSpinner = false;
             this.department = list.departmentList;
         })
     }
@@ -177,10 +177,10 @@ export class LeaveAdjustmentComponent implements OnInit {
      */
     departmentSelected(name) {
         this.filteredUserItems = [];
-        this.showSpinner = true;
+        // this.showSpinner = true;
         this.apiService.get_user_profile_list().subscribe(list => {
             this._userItems = list;
-            this.showSpinner = false;
+            // this.showSpinner = false;
             this.filterUserList(this._userItems, name);
         })
     }
@@ -331,7 +331,7 @@ export class LeaveAdjustmentComponent implements OnInit {
             "reason": this.adjustmentForm.controls.reason.value
         };
         this.leaveSetupAPI.patch_leave_adjustment(data).subscribe(response => {
-            this.openNotification('submitted successfully ');
+            this.openNotification('You have submitted successfully', true);
             this.showSmallSpinner = false;
             this.filteredUserItems = [];
             this._selectedUser = [];
@@ -346,10 +346,11 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @param {string} statement
      * @memberof LeaveAdjustmentComponent
      */
-    openNotification(statement: string) {
+    openNotification(statement: string, val: boolean) {
         this.leaveSetupAPI.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 5000,
-            data: statement
+            duration: 2000,
+            verticalPosition: "top",
+            data: { message: statement, response: val }
         });
     }
 

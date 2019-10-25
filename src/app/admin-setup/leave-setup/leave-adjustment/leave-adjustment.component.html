@@ -1,4 +1,4 @@
-<div style="margin-top: 4%;">
+<!-- <div style="margin-top: 4%;">
     <form [formGroup]="adjustmentForm">
         <div style="display: inline-block;width: 31%;">
             <span style="padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
@@ -10,7 +10,7 @@
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let company of company" [value]=company.TENANT_COMPANY_GUID
                         (click)="companySelected(company.TENANT_COMPANY_GUID);enableDisableSubmitButton()">
-                        <!-- true -->
+                        <!-- true --
                         {{company.NAME}}
                     </mat-option>
                 </mat-select>
@@ -28,7 +28,7 @@
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let department of department" [value]=department.department
                         (click)="departmentSelected(department.department);enableDisableSubmitButton()">
-                        <!-- true -->
+                        <!-- true --
                         {{department.department}}
                     </mat-option>
                 </mat-select>
@@ -48,7 +48,7 @@
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let leavetype of leavetypeList" [value]=leavetype.LEAVE_TYPE_GUID
                         (click)="enableDisableSubmitButton(); getLeaveEntitlement(leavetype.LEAVE_TYPE_GUID)">
-                        <!-- true -->
+                        <!-- true --
                         {{leavetype.CODE}}
                     </mat-option>
                 </mat-select>
@@ -68,11 +68,11 @@
                                 <i class="material-icons">{{adjustmentForm.controls.symbol.value}}</i></mat-icon>
                         </mat-select-trigger>
                         <mat-option value="add" (click)="enableDisableSubmitButton()">
-                            <!-- true -->
+                            <!-- true --
                             <mat-icon><i class="material-icons" style="display: flex;">add</i></mat-icon>
                         </mat-option>
                         <mat-option value="remove" (click)="enableDisableSubmitButton()">
-                            <!-- true -->
+                            <!-- true --
                             <mat-icon><i class="material-icons" style="display: flex;">remove</i></mat-icon>
                         </mat-option>
                     </mat-select>
@@ -84,7 +84,7 @@
                     <mat-label>Please enter number of day</mat-label>
                     <input type="number" matInput formControlName="noOfDay" required
                         (input)="enableDisableSubmitButton()">
-                    <!-- true -->
+                    <!-- true --
                     <mat-error>No of day is <strong>required</strong></mat-error>
                 </mat-form-field>
             </div>
@@ -96,13 +96,12 @@
                     style="display: block;font-size: 13px;width: 100%;color:#7a8589;padding-left: 18px;">
                     <mat-label>Please enter reason</mat-label>
                     <input matInput formControlName="reason" required (input)="enableDisableSubmitButton()">
-                    <!-- true -->
+                    <!-- true --
                     <mat-error>Reason is <strong>required</strong></mat-error>
                 </mat-form-field>
             </div>
         </div>
     </form>
-
     <div class="content" *ngIf="filteredUserItems.length > 0">
         <ion-row class="titleRow" nowrap>
             <ion-col size="0.7" style="padding-left: 10px;padding-right: 30px;text-overflow: initial;">
@@ -169,4 +168,233 @@
             <ion-spinner name="lines-small" color="primary"></ion-spinner>
         </div>
     </div>
-</div>
+</div> -->
+
+<ion-card>
+    <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
+        <div class="fullContainer">
+            <div class="left">
+                <img src="assets/icon/leave_setup/icon_calendar@3x.png" style="width:36px;height:36px">
+            </div>
+            <div class="right">
+                <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Leave
+                    Adjustment
+                </ion-card-subtitle>
+                <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                    Some good & sweet explanation here</ion-card-subtitle>
+            </div>
+            <div style="right: 25px;top: 25px;position: absolute;">
+                <ion-button style="font-size: 11px;height: 30px;width:193px;cursor: pointer;text-transform: none;"
+                    color="primary">
+                    View Leave Adjustment History
+                </ion-button>
+            </div>
+        </div>
+    </ion-card-header>
+    <!-- <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div> -->
+
+    <!-- class="container" -->
+    <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;" *ngIf="!showSpinner">
+        <div class="cardContent">
+            <ion-card-content>
+                <div class="row">
+                    <div class="details">
+                        <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
+                                    padding-top: 1px;margin-bottom: 10px;color: #a3a6b4;font-weight: bold;">
+                            <ion-row>
+                                <ion-col align-self-center style="padding: 10px;">
+                                    DETAILS
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <div>
+                            <form [formGroup]="adjustmentForm">
+                                <div style="display: block;width: 100%;">
+                                    <span
+                                        style="padding-bottom: 5px;font-size: 12px;color:#808495;padding-left: 15px;display: block">
+                                        COMPANY LIST</span>
+                                    <mat-form-field appearance="outline"
+                                        style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
+                                        <mat-label>Please select company tenant</mat-label>
+                                        <mat-select formControlName="company" required>
+                                            <mat-option>None</mat-option>
+                                            <mat-option *ngFor="let company of company"
+                                                [value]=company.TENANT_COMPANY_GUID
+                                                (click)="companySelected(company.TENANT_COMPANY_GUID);enableDisableSubmitButton()">
+                                                {{company.NAME}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <!-- <mat-error>Company tenant is <strong>required</strong></mat-error> -->
+                                    </mat-form-field>
+                                </div>
+                                <div style="display: block;width: 100%;">
+                                    <span
+                                        style="padding-bottom: 5px;font-size: 12px;color:#808495;padding-left: 15px;display: block">
+                                        DEPARTMENT LIST</span>
+                                    <mat-form-field appearance="outline"
+                                        style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
+                                        <mat-label>Please select department</mat-label>
+                                        <mat-select formControlName="department" required>
+                                            <mat-option>None</mat-option>
+                                            <mat-option *ngFor="let department of department"
+                                                [value]=department.department
+                                                (click)="departmentSelected(department.department);enableDisableSubmitButton()">
+                                                {{department.department}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
+                                                margin-left: -50px;margin-top: -10px;"></ion-spinner>
+                                        <!-- <mat-error>Department is <strong>required</strong></mat-error> -->
+                                    </mat-form-field>
+                                </div>
+                                <div style="width: 100%;display: block;">
+                                    <span
+                                        style="padding-bottom: 5px;font-size: 12px;color:#808495;padding-left: 15px;display: block">
+                                        LEAVE TYPE</span>
+                                    <mat-form-field appearance="outline"
+                                        style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
+                                        <mat-label>Please select leave type</mat-label>
+                                        <mat-select formControlName="leavetype" required>
+                                            <mat-option>None</mat-option>
+                                            <mat-option *ngFor="let leavetype of leavetypeList"
+                                                [value]=leavetype.LEAVE_TYPE_GUID
+                                                (click)="enableDisableSubmitButton(); getLeaveEntitlement(leavetype.LEAVE_TYPE_GUID)">
+                                                {{leavetype.CODE}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <!-- <mat-error>Leave type is <strong>required</strong></mat-error> -->
+                                    </mat-form-field>
+                                </div>
+                                <div style="display: block;width: 100%;">
+                                    <div style="width: 40%;display: inline-block;">
+                                        <span
+                                            style="padding-bottom: 5px;font-size: 12px;color:#808495;padding-left: 15px;display: block">
+                                            NO OF DAY</span>
+                                        <mat-form-field appearance="outline"
+                                            style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;">
+                                            <mat-label>Symbol</mat-label>
+                                            <mat-select formControlName="symbol" required>
+                                                <mat-select-trigger>
+                                                    <mat-icon style="position: absolute;margin-top: -8px;">
+                                                        <i
+                                                            class="material-icons">{{adjustmentForm.controls.symbol.value}}</i>
+                                                    </mat-icon>
+                                                </mat-select-trigger>
+                                                <mat-option value="add" (click)="enableDisableSubmitButton()">
+                                                    <mat-icon><i class="material-icons" style="display: flex;">add</i>
+                                                    </mat-icon>
+                                                </mat-option>
+                                                <mat-option value="remove" (click)="enableDisableSubmitButton()">
+                                                    <mat-icon><i class="material-icons"
+                                                            style="display: flex;">remove</i></mat-icon>
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div style="width: 60%;display: inline-block;">
+                                        <mat-form-field appearance="outline"
+                                            style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
+                                            <mat-label>Please enter number of day</mat-label>
+                                            <input type="number" matInput formControlName="noOfDay" required
+                                                (input)="enableDisableSubmitButton()">
+                                            <!-- <mat-error>No of day is <strong>required</strong></mat-error> -->
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div style="display: block;width: 100%;">
+                                    <span
+                                        style="display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;">
+                                        REASON</span>
+                                    <mat-form-field appearance="outline"
+                                        style="height: 130px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
+                                        <mat-label>Please enter reason</mat-label>
+                                        <textarea matInput formControlName="reason" required
+                                            (input)="enableDisableSubmitButton()"
+                                            style="height: 100px;resize: none;"></textarea>
+                                        <!-- <mat-error>Reason is <strong>required</strong></mat-error> -->
+                                    </mat-form-field>
+                                </div>
+                            </form>
+                        </div>
+                        <div style="margin: 0 auto;padding: 15px;padding-top: 0;;text-align: center;">
+                            <ion-button
+                                style="font-size: 11px;height: 30px;width: 100%;background: white;text-transform: none;"
+                                color="primary"
+                                (click)="patchLeaveNumber();adjustmentForm.reset();showSmallSpinner = true;mainCheckBox=false;indeterminate=false;"
+                                [disabled]="disableSubmitButton">
+                                Submit
+                            </ion-button>
+                            <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
+                                *ngIf="showSmallSpinner">
+                                <ion-spinner name="lines-small" color="primary"></ion-spinner>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="assigned">
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;                            padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                            <ion-row nowrap>
+                                <ion-col size="1.5"
+                                    style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
+                                    <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
+                                        [(ngModel)]="mainCheckBox" [indeterminate]="indeterminate"
+                                        (click)="mainCheckboxEvent()">
+                                    </ion-checkbox>
+                                </ion-col>
+                                <ion-col size="2">
+                                    <ion-label style="font-size: 12px;">ID</ion-label>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
+                                </ion-col>
+                                <ion-col size="4" style="text-align: center;">
+                                    <ion-label style="font-size: 12px;">ENTITLEMENT</ion-label>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <div class="content" *ngIf="filteredUserItems.length > 0">
+                            <ion-row class="detailsRow" *ngFor="let item of filteredUserItems; let i=index">
+                                <ion-col size="1.5" style="text-align: center;padding-left: 10px;padding-right: 30px;">
+                                    <ion-avatar class="avatar" (mouseover)="hoverEvent(i, true, item.isChecked)"
+                                        (mouseout)="hoverEvent(i, false, item.isChecked)">
+                                        <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                                            [style.display]="showCheckbox[i] ? 'none' : 'block'">
+                                        <div class="checkboxOnAvatar"
+                                            [style.display]="showCheckbox[i] ? 'block' : 'none'">
+                                            <ion-checkbox mode="ios"
+                                                style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                                            </ion-checkbox>
+                                        </div>
+                                    </ion-avatar>
+                                </ion-col>
+                                <ion-col size="2" class="colOfLeave"
+                                    style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                    {{item.staffNumber}}
+                                </ion-col>
+                                <ion-col size="4" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                    <ion-label style="color:#43425d; font-weight: bold;;font-size: 12px;">
+                                        {{item.employeeName}}</ion-label>
+                                    <p
+                                        style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                        {{item.designation}}</p>
+                                </ion-col>
+                                <ion-col size="4" class="colOfLeave"
+                                    style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                    {{item.entitlement}}
+                                </ion-col>
+                                <ion-item class="divider" lines="full"></ion-item>
+                            </ion-row>
+                        </div>
+                        <div *ngIf="showNoResult" style="width: 100%; text-align:center;padding: 10px">
+                            <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
+                            <p style="font-size: 20px;color:#bebebe;padding-top:10px ">No Results Found</p>
+                        </div>
+                    </div>
+                </div>
+            </ion-card-content>
+        </div>
+    </div>
+</ion-card>
