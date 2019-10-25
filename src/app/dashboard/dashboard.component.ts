@@ -48,6 +48,20 @@ export class DashboardComponent implements OnInit {
   public announcements: any;
 
   /**
+   * get joiner list
+   * @type {*}
+   * @memberof DashboardComponent
+   */
+  public joiners: any;
+
+  /**
+   * get leaver list
+   * @type {*}
+   * @memberof DashboardComponent
+   */
+  public leaver: any;
+
+  /**
      * show all holiday 
      * @type {boolean}
      * @memberof DashboardComponent
@@ -116,6 +130,7 @@ export class DashboardComponent implements OnInit {
     this.getHolidayList();
     this.getAnnouncementList();
     this.get_task_list();
+    this.get_joiner_leaver_list();
   }
 
   /**
@@ -172,6 +187,25 @@ export class DashboardComponent implements OnInit {
     this.dashboardAPI.get_task_list().subscribe(data => {
       this.tasks = data;
     })
+  }
+
+  /**
+   * get joiner & leaver list
+   * @memberof DashboardComponent
+   */
+  get_joiner_leaver_list() {
+    this.dashboardAPI.upcoming_joiner().subscribe(nameList => {
+      this.joiners = nameList;
+      for (let i = 0; i < this.joiners.length; i++) {
+        this.joiners[i].JOIN_DATE = (moment(this.joiners[i].JOIN_DATE).format('DD MMM YYYY'))
+      }
+    });
+    this.dashboardAPI.upcoming_leaver().subscribe(leaver => {
+      this.leaver = leaver;
+      for (let i = 0; i < this.leaver.length; i++) {
+        this.leaver[i].RESIGNATION_DATE = (moment(this.leaver[i].RESIGNATION_DATE).format('DD MMM YYYY'))
+      }
+    });
   }
 
   /**

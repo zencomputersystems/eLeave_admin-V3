@@ -100,5 +100,23 @@ export class DashboardApiService {
             .pipe(map((value: Response) => value.text()))
     }
 
+    /**
+     * upcoming joiner list 
+     * @returns {Observable<any>}
+     * @memberof DashboardApiService
+     */
+    upcoming_joiner(): Observable<any> {
+        return this.apiService.getApi('/api/admin/dashboard/upcoming-joiner');
+    }
+
+    /**
+     * upcoming leaver list
+     * @returns {Observable<any>}
+     * @memberof DashboardApiService
+     */
+    upcoming_leaver(): Observable<any> {
+        return this.apiService.getApi('/api/admin/dashboard/upcoming-leaver');
+    }
+
 
 }
