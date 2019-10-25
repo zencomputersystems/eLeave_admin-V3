@@ -97,7 +97,7 @@ export class DashboardApiService {
      */
     post_reject_list(GUID): Observable<any> {
         return this.http.post(this.apiService.baseUrl + '/api/leave/rejected', GUID, { headers: this.apiService.headers })
-            .pipe(map((res: Response) => res.text()))
+            .pipe(map((value: Response) => value.text()))
     }
 
 
