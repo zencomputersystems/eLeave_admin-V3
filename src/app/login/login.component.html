@@ -1,42 +1,76 @@
-<div style="height: 100%;margin-top: 51px;">
-  <div class="avatar">
-    <ion-icon name="business" style="height: 70%; width: 70%"></ion-icon>
+<div class="row">
+  <div class="column1" style="display: inline-block">
+    <img style="width: 100%;height:100%;" src="assets/Group 244@3x.png">
   </div>
-  <div style="margin-top: -120px; padding-bottom: 10px">
-    <ion-card style="margin: 0 auto; margin-top: 80px;">
-      <div class="example-container">
-        <form [formGroup]="formGroupValidation">
-          <span>EMAIL ADDRESS</span><br>
-          <mat-form-field appearance="outline">
-            <input matInput #emailInput placeholder="Email address" formControlName="email" required>
-            <mat-error *ngIf="formGroupValidation.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
-          </mat-form-field>
-          <br>
-          <br>
-          <span>PASSWORD</span><br>
-          <mat-form-field appearance="outline">
-            <input matInput placeholder="Password" #passwordInput [type]="showPassword ? 'text' : 'password'"
-              formControlName="pass" required>
-            <mat-error *ngIf="formGroupValidation.controls['pass'].invalid">{{getPassErrorMessage()}}</mat-error>
-            <mat-icon class="showHidePassword" matSuffix>
-              <ion-icon name="eye-off" (click)="showPasswordKey()" *ngIf="!showPassword"></ion-icon>
-              <ion-icon name="eye" (click)="hidePasswordKey()" *ngIf="showPassword"></ion-icon>
-            </mat-icon>
-          </mat-form-field>
-          <br>
-          <br>
+  <div class="column2">
+
+    <div *ngIf="!forgotPass"
+      style="display: flex;align-items: center;justify-content: center;flex-direction: column;width: 100%;min-height: 80%;align-items: center;">
+      <img style="width: 110px;height: 39px;" src="assets/icon/ZEN_logo.png">
+      <br>
+      <p style="opacity: 0.5;font-size: 13px;line-height: 0.62;text-align: center;color: #4d4f5c;">Welcome back! Please
+        login to your account.</p>
+      <br>
+      <form [formGroup]="formGroupValidation" style="width: 300px;">
+        <mat-form-field>
+          <input matInput #emailInput placeholder="Username" formControlName="email" required>
+          <mat-error *ngIf="formGroupValidation.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <br> <br>
+        <mat-form-field>
+          <input matInput placeholder="Password" #passwordInput [type]="showPassword ? 'text' : 'password'"
+            formControlName="pass" required>
+          <mat-error *ngIf="formGroupValidation.controls['pass'].invalid">{{getPassErrorMessage()}}</mat-error>
+          <mat-icon class="showHidePassword" matSuffix>
+            <ion-icon name="eye-off" (click)="showPasswordKey()" *ngIf="!showPassword"></ion-icon>
+            <ion-icon name="eye" (click)="hidePasswordKey()" *ngIf="showPassword"></ion-icon>
+          </mat-icon>
+        </mat-form-field>
+        <br>
+        <br>
+        <div style="display: block;white-space:nowrap;margin-bottom: 30px;">
           <ion-checkbox (ionChange)="rememberMe($event, emailInput.value, passwordInput.value)" [checked]="valueOfCheck"
-            style="display: inline-flex;--size: 14px;z-index: 0;" [disabled]="!formGroupValidation.valid"></ion-checkbox>
-          <span style="padding-left: 10px; color:#7a8589">Remember me</span>
-          <ion-button shape="round" fill="solid" float-right style="margin-right: 7%; margin-top: -0.2%;font-size: 10px;
-      height: 27px;" (click)="signIn(emailInput.value, passwordInput.value)" [disabled]="!formGroupValidation.valid">
-            Sign In</ion-button>
-        </form>
-      </div>
-    </ion-card>
+            style="display: inline-flex;--size: 11px;z-index: 0;" [disabled]="!formGroupValidation.valid">
+          </ion-checkbox>
+          <p style="margin-top: -19px;padding-left: 20px; font-size: 11px;color:#43425d;margin-bottom: 0;">
+            Remember me</p>
+          <p style="font-size: 11px;color: #43425d;text-align: right;margin-top: -15px;cursor: pointer;"
+            (click)="forgotPass=true">Forgot Password
+          </p>
+        </div>
+        <ion-button fill="solid" style="margin: 0 auto;display: block;font-size: 12px;width: 124px;text-transform: capitalize;color: white;--background: #43425d;
+        height: 34px;" (click)="signIn(emailInput.value, passwordInput.value)" [disabled]="!formGroupValidation.valid">
+          Login</ion-button>
+      </form>
+    </div>
+
+    <!----------------------------------- Forgort Password -------------------------------->
+    <div *ngIf="forgotPass"
+      style="display: flex;align-items: center;justify-content: center;flex-direction: column;width: 100%;min-height: 80%;align-items: center;">
+      <img style="width: 110px;height: 39px;" src="assets/icon/ZEN_logo.png">
+      <br>
+      <p style="opacity: 0.5;font-size: 13px;line-height: 0.62;text-align: center;color: #4d4f5c;">Enter your email and
+        we send you a password reset link</p>
+      <br>
+      <form [formGroup]="resetPassword" style="width: 300px;">
+        <mat-form-field>
+          <input matInput #emailValue placeholder="Email" formControlName="emailAdd" required>
+          <mat-error *ngIf="resetPassword.controls['emailAdd'].invalid">{{getEmailError()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <br>
+
+        <ion-button fill="solid" style="margin: 0 auto;display: block;font-size: 12px;width: 124px;text-transform: capitalize;color: white;--background: #43425d;
+      height: 34px;" (click)="sendRequest(emailValue.value)" [disabled]="!resetPassword.valid">
+          Send Request</ion-button>
+        <div style="position: absolute;margin-top: -32px;margin-left: 222px;" *ngIf="showSmallSpinner">
+          <ion-spinner name="lines-small" color="primary"></ion-spinner>
+        </div>
+      </form>
+    </div>
+
   </div>
-  <!-- <div style="text-align: center;color: #057dcd; cursor: pointer;">Forgot my password</div> -->
 </div>
-<ngx-spinner bdColor="#a2a4ab" size="medium" color="#057dcd" type="square-jelly-box" [fullScreen]="true"
+<ngx-spinner bdColor="#a2a4ab" size="medium" color="#7069d8" type="ball-clip-rotate-pulse" [fullScreen]="true"
   style="opacity: 0.5">
 </ngx-spinner>

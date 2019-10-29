@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AuthService } from './auth.service';
+import { LocalStorageService } from 'angular-web-storage';
 
 /**
  * API used in this admin folder 
@@ -30,7 +32,7 @@ export class APIService {
      * @param {Http} http
      * @memberof APIService
      */
-    constructor(public http: Http) {
+    constructor(public http: Http, public local: LocalStorageService, private auth: AuthService) {
     }
 
     /**
@@ -38,8 +40,8 @@ export class APIService {
      * @memberof APIService
      */
     headerAuthorization() {
-        if (this.headers["_headers"].size != 1) {
-            this.headers.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
+        if (this.headers["_headers"].size != 1 && this.auth.isAuthenticated) {
+            this.headers.append('Authorization', 'JWT ' + JSON.parse(this.local.get('access_token')));
         }
     }
 

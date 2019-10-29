@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginComponent } from './login.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { AngularWebStorageModule } from 'angular-web-storage';
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
         ReactiveFormsModule,
         MatIconModule,
         NgxSpinnerModule,
+        AngularWebStorageModule,
         RouterModule.forChild(routes)
     ],
     declarations: [LoginComponent]

@@ -27,6 +27,10 @@ export class LeaveSetupComponent implements OnInit {
             url: ['/main/leave-setup/working-hour-setup'],
         },
         {
+            title: 'Leave Entitlement Setup',
+            url: ['/main/leave-setup/leave-entitlement-setup'],
+        },
+        {
             title: 'Leave Adjustment',
             url: ['/main/leave-setup/leave-adjustment'],
         },

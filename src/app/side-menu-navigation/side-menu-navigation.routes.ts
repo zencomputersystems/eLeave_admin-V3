@@ -40,6 +40,7 @@ export const sideMenuNavigationRoutes: Routes = [
                     { path: '', redirectTo: 'calendar-profile-setup', pathMatch: 'full' },
                     { path: 'calendar-profile-setup', component: CalendarProfileComponent },
                     { path: 'working-hour-setup', component: WorkingHourListComponent },
+                    { path: 'leave-entitlement-setup', component: PageNotFoundComponent},
                     { path: 'leave-adjustment', component: LeaveAdjustmentComponent },
                     { path: 'leave-entitlement-by-batch', component: LeaveEntitlementByBatchComponent }
                 ]

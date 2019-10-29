@@ -248,6 +248,7 @@ export class SideMenuNavigationComponent implements OnInit {
    */
   logout(event) {
     window.location.href = '/login';
+    localStorage.clear();
   }
 
 }
