@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { LeaveApiService } from "../leave-api.service";
 import { APIService } from "src/services/shared-service/api.service";
 import { SnackbarNotificationComponent } from "../snackbar-notification/snackbar-notification.component";
+import { MenuController } from "@ionic/angular";
 /**
  * leave adjusment page
  * @export
@@ -109,6 +110,13 @@ export class LeaveAdjustmentComponent implements OnInit {
     public showSelectToView: boolean = true;
 
     /**
+     * show employee list
+     * @type {boolean}
+     * @memberof LeaveAdjustmentComponent
+     */
+    public showList: boolean = false;
+
+    /**
      * selected company guid
      * @private
      * @type {string}
@@ -147,7 +155,7 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @param {MatSnackBar} snackBar
      * @memberof LeaveAdjustmentComponent
      */
-    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService) {
+    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService, public menu: MenuController) {
         this.adjustmentForm = new FormGroup({
             company: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),

@@ -170,6 +170,95 @@
     </div>
 </div> -->
 
+<ion-menu style="--width: 500px;" contentId="leaveAdjustContent" side="end" type="overlay" menuId="leaveAdjustDetails">
+    <ion-header style="background-color:#43425d; color: #fcfcfc;">
+        <img style="margin: 17px;width: 22px;height: 17px;float:left"
+            src="assets/icon/dashboard/icon All Holidays@3x.png">
+        <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">
+            LEAVE ADJUSTMENT HISTORY
+        </p>
+    </ion-header>
+
+    <ion-content>
+        <div style="display: block;width: 100%;">
+            <div
+                style="font-size: 11px;background: #f5f6fa;padding: 10px;padding-left: 15px;margin: 10px;color: #a3a6b4;font-weight: bold;">
+                <ion-row>
+                    <ion-col size="7">DATE: <p
+                            style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">20 SEPT 2019</p>
+                    </ion-col>
+                    <ion-col>DONE BY: <p style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">
+                            JESSIE</p>
+                    </ion-col>
+                </ion-row>
+            </div>
+            <div style="margin: 20px;">
+                <ion-row>
+                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
+                            Company</ion-label>
+                        <p
+                            style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                            Zen Computer Systems Sdn Bhd</p>
+                    </ion-col>
+                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
+                            Department</ion-label>
+                        <p
+                            style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                            Research & Development</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
+                            Leave Type</ion-label>
+                        <p
+                            style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                            ML-Medical Leave</p>
+                    </ion-col>
+                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
+                            No. of Days</ion-label>
+                        <p
+                            style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                            +2 days</p>
+                    </ion-col>
+                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
+                            Affected Employee</ion-label>
+                        <p
+                            style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                            8 persons</p>
+                    </ion-col>
+                </ion-row>
+                <div><img style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
+                        src="assets/icon/leave_setup/icon_request@3x.png" (click)="showList = !showList ">
+                    <p style="color: #43425d;opacity: 0.8;font-size: 11px;font-weight: bold;width: 23%;
+                    display: inline-block;"> List of Employees</p>
+                    <div style="border-top: 1px solid rgba(67, 66, 93, 0.2);display: inline-block;width: 72%;"></div>
+                </div>
+                <div *ngIf="showList" style="font-size: 11px;color: #808495;margin-left: 15px;">
+                    <ion-row>
+                        <ion-col style="padding-top: 0;">Zulkifli bin Arrifin</ion-col>
+                        <ion-col style="padding-top: 0;">Rajaputra Balasingh</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col style="padding-top: 0;">Clement Chee Siong Yee</ion-col>
+                        <ion-col style="padding-top: 0;">Mohd Akmar bin Ab.Karim</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col style="padding-top: 0;">Pratap K.Singh</ion-col>
+                        <ion-col style="padding-top: 0;">Asmidar binti Mohd Fauzi</ion-col>
+                    </ion-row>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-menu>
+<ion-router-outlet id="leaveAdjustContent">
+</ion-router-outlet>
+
 <ion-card>
     <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
         <div class="fullContainer">
@@ -185,7 +274,7 @@
             </div>
             <div style="right: 25px;top: 25px;position: absolute;">
                 <ion-button style="font-size: 11px;height: 30px;width:193px;cursor: pointer;text-transform: none;"
-                    color="primary">
+                    color="primary" (click)="menu.open('leaveAdjustDetails')">
                     View Leave Adjustment History
                 </ion-button>
             </div>
