@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Http } from "@angular/http";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
+import { map } from "rxjs/operators";
 
 /**
  * API for leave entitlement by batch
@@ -40,7 +41,9 @@ export class LeaveEntitlementByBatchApiService {
      */
     post_leave_entitlement(value): Observable<any> {
         this.apiService.headerAuthorization();
-        return this.apiService.postApi(value, '/api/leave-entitlement');
+        // return this.apiService.postApi(value, '/api/leave-entitlement');
+        return this.http.post(this.apiService.baseUrl + '/api/leave-entitlement', value, { headers: this.apiService.headers })
+            .pipe(map((response) => response.text()))
     }
 
     /**

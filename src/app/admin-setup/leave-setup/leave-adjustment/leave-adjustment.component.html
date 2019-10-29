@@ -306,7 +306,7 @@
                                         COMPANY LIST</span>
                                     <mat-form-field appearance="outline"
                                         style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
-                                        <mat-label>Please select company tenant</mat-label>
+                                        <mat-label>Please select company</mat-label>
                                         <mat-select formControlName="company" required>
                                             <mat-option>None</mat-option>
                                             <mat-option *ngFor="let company of company"
@@ -413,17 +413,14 @@
                                 color="primary"
                                 (click)="patchLeaveNumber();adjustmentForm.reset();showSmallSpinner = true;mainCheckBox=false;indeterminate=false;"
                                 [disabled]="disableSubmitButton">
-                                Submit
+                                Submit<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
+                                </ion-spinner>
                             </ion-button>
-                            <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
-                                *ngIf="showSmallSpinner">
-                                <ion-spinner name="lines-small" color="primary"></ion-spinner>
-                            </div>
                         </div>
                     </div>
                     <div class="assigned">
                         <div
-                            style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;                            padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row nowrap>
                                 <ion-col size="1.5"
                                     style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">

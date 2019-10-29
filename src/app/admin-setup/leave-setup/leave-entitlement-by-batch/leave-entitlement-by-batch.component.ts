@@ -109,6 +109,13 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
     public showNoResult: boolean = false;
 
     /**
+     * show select to view paragraph
+     * @type {boolean}
+     * @memberof LeaveEntitlementByBatchComponent
+     */
+    public showSelectToView: boolean = true;
+
+    /**
      * selected user from filtered user list
      * @private
      * @type {any[]}
@@ -159,11 +166,11 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
      * @memberof LeaveEntitlementByBatchComponent
      */
     companyClicked(company_guid: string) {
-        this.showSpinner = true;
+        // this.showSpinner = true;
         this._company_GUID = company_guid;
         this.leaveAPI.get_company_details(company_guid).subscribe(item => {
             this.departmentItems = item.departmentList;
-            this.showSpinner = false;
+            // this.showSpinner = false;
         })
     }
 
@@ -175,6 +182,7 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
     departmentClicked(name: string) {
         this.filteredUser = [];
         this.showSpinner = true;
+        this.showSelectToView = false;
         this.leaveEntitlementAPI.get_user_list().subscribe(list => {
             this._user_Items = list;
             this.showSpinner = false;
@@ -306,7 +314,7 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
             "leaveEntitlementId": this.entitlementBatch.controls.entitlement_code.value
         };
         this.leaveEntitlementAPI.post_leave_entitlement(body).subscribe(response => {
-            this.openMsg('submitted successfully ');
+            this.openMsg('You have submitted successfully', true);
             this.showSmallSpinner = false;
             this.filteredUser = [];
             this._selected_User = [];
@@ -321,10 +329,11 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
      * @param {string} popUpText
      * @memberof LeaveAdjustmentPage
      */
-    openMsg(popUpText: string) {
+    openMsg(popUpText: string, value: boolean) {
         this.leaveAPI.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 5000,
-            data: popUpText
+            duration: 2000,
+            verticalPosition: "top",
+            data: { message: popUpText, response: value }
         });
     }
 
