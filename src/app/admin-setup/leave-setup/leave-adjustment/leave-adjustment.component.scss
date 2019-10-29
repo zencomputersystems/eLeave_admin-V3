@@ -74,6 +74,10 @@
     max-width: 70%;
     margin-left: 10px;
   }
+  .content {
+    height: 512px;
+    overflow: auto;
+  }
   .subtitle {
     display: block;
     // padding-left: 2px;

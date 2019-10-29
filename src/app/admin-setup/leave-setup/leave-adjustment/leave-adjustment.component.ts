@@ -102,6 +102,13 @@ export class LeaveAdjustmentComponent implements OnInit {
     public showNoResult: boolean = false;
 
     /**
+     * show select to view paragraph
+     * @type {boolean}
+     * @memberof LeaveAdjustmentComponent
+     */
+    public showSelectToView: boolean = true;
+
+    /**
      * selected company guid
      * @private
      * @type {string}
@@ -177,11 +184,13 @@ export class LeaveAdjustmentComponent implements OnInit {
      */
     departmentSelected(name) {
         this.filteredUserItems = [];
-        // this.showSpinner = true;
+        this.showSelectToView = false;
+        this.showSpinner = true;
         this.apiService.get_user_profile_list().subscribe(list => {
             this._userItems = list;
-            // this.showSpinner = false;
+            this.showSpinner = false;
             this.filterUserList(this._userItems, name);
+            // TODO: show all short code of leave type entitled in this.filterUserList
         })
     }
 
@@ -192,10 +201,10 @@ export class LeaveAdjustmentComponent implements OnInit {
      */
     getLeaveEntitlement(leavetypeGUID) {
         for (let i = 0; i < this.filteredUserItems.length; i++) {
+            this.filteredUserItems[i].entitlement = '';
             this.leaveSetupAPI.get_entilement_details(this.filteredUserItems[i].userId).subscribe(data => {
                 for (let j = 0; j < data.length; j++) {
-                    if (data[j].LEAVE_TYPE_GUID === leavetypeGUID)
-                        this.filteredUserItems[i].entitlement = data[j].ENTITLED_DAYS;
+                    if (data[j].LEAVE_TYPE_GUID === leavetypeGUID) { this.filteredUserItems[i].entitlement = data[j].ENTITLED_DAYS; }
                 }
             })
         }
@@ -213,6 +222,7 @@ export class LeaveAdjustmentComponent implements OnInit {
                 this.filteredUserItems.push(userList[i]);
                 this.showCheckbox.push(false);
                 this.filteredUserItems[this.filteredUserItems.length - 1].isChecked = false;
+                this.filteredUserItems[this.filteredUserItems.length - 1]["entitlement"] = 'AL, EL, PL, RL';
             }
         }
         if (this.filteredUserItems.length > 0) {
