@@ -4,6 +4,8 @@ import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { MatSnackBar } from "@angular/material";
 import { SnackbarNotificationComponent } from "../leave-setup/snackbar-notification/snackbar-notification.component";
+import { LocalStorageService } from "angular-web-storage";
+import { AuthService } from "src/services/shared-service/auth.service";
 
 /**
  * Role API
@@ -33,7 +35,7 @@ export class RoleApiService {
      * @param {Http} http
      * @memberof RoleApiService
      */
-    constructor(public http: Http, private snackBar: MatSnackBar) {
+    constructor(public http: Http, private snackBar: MatSnackBar, public local: LocalStorageService, private auth: AuthService) {
     }
 
     /**
@@ -41,8 +43,8 @@ export class RoleApiService {
      * @memberof RoleApiService
      */
     authorization() {
-        if (this.headerApp["_headers"].size < 1) {
-            this.headerApp.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
+        if (this.headerApp["_headers"].size < 1 && this.auth.isAuthenticated) {
+            this.headerApp.append('Authorization', 'JWT ' + JSON.parse(this.local.get('access_token')));
         }
     }
 
