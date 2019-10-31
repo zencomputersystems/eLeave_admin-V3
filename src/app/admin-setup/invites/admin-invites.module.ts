@@ -19,6 +19,7 @@ import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { DeleteListConfirmationComponent } from './delete-list-confirmation/delete-list-confirmation.component';
 import { MatDialogModule, MatButtonModule, MatMenuModule, MatDatepickerModule } from '@angular/material';
 import { DateDialogComponent } from './date-dialog/date-dialog.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 const routes: Routes = [
@@ -46,6 +47,7 @@ const routes: Routes = [
         MatButtonModule,
         MatMenuModule,
         MatDatepickerModule,
+        NgxPaginationModule,
         RouterModule.forChild(routes)
     ],
     entryComponents: [DeleteListConfirmationComponent, DateDialogComponent],

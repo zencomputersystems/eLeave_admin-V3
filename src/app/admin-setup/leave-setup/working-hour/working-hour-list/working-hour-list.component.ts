@@ -149,7 +149,7 @@ export class WorkingHourListComponent implements OnInit {
         if (evt.detail.checked === true) {
             this.mode = 'ON';
             this.dialog.open(EditModeDialogComponent, {
-                data: true,
+                data: 'working',
                 height: "354.3px",
                 width: "383px"
             });

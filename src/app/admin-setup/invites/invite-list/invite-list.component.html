@@ -1,6 +1,474 @@
+<ion-card>
+    <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
+        <div class="fullContainer">
+            <div class="left" style="margin-top: 10px;">
+                <img src="assets/icon/add_employee/icon persons@3x.png" style="width:36px;height:23px">
+            </div>
+            <div class="right">
+                <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Employee Setup
+                </ion-card-subtitle>
+                <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                    Some good & sweet explanation here</ion-card-subtitle>
+            </div>
+            <div style="right: 75px;top: 25px;position: absolute;">
+                <p
+                    style="margin-top: 16px;opacity: 0.8;font-size: 12px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
+                    Edit
+                    Mode: {{mode}}</p>
+                <div style="display: inline-block;position: absolute;margin-top: 12px;">
+                    <ion-toggle class="toggleButton" mode="ios" color="secondary" (ionChange)="toggleMode($event)">
+                    </ion-toggle>
+                </div>
+            </div>
+        </div>
+    </ion-card-header>
+    <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;">
+        <div class="cardContent">
+            <ion-card-content>
+                <div class="row">
+                    <div class="table">
+                        <div class="connectionsContainer">
+                            <div class="topHeader">
+                                <ion-button class="people" *ngIf="list" color="primary" [style.pointerEvents]="'none'">
+                                    <p style="color: white;font-size: 11px;">{{list.length}} Peoples</p>
+                                </ion-button>
+                                <ion-searchbar mode="md" class="searchbar" placeholder="Filter by name"
+                                    (ionClear)="clearDetails()" (ionChange)="changeDetails($event)"></ion-searchbar>
+                            </div>
+                            <div style="width: 100%; height:100%; text-align: center;" *ngIf="showSpinner">
+                                <app-spinner></app-spinner>
+                            </div>
+                            <ion-content class="listContent" [style.display]="showSpinner ? 'none' : 'block'"
+                                *ngIf="list">
+                                <ion-row class="titleRow">
+                                    <ion-col size="2">
+                                        <ion-label style="font-size: 11px;color: #a5a4bf;font-weight: bold;">ID
+                                        </ion-label>
+                                    </ion-col>
+                                    <ion-col size="7">
+                                        <ion-label style="font-size: 11px;color: #a5a4bf;font-weight: bold;">EMPLOYEE
+                                            NAME</ion-label>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label style="font-size: 11px;color: #a5a4bf;font-weight: bold;">STATUS
+                                        </ion-label>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row class="detailsRow" *ngFor="let item of list | paginate: { itemsPerPage: 7, currentPage: p,
+                                    totalItems: list.length }; let i=index;">
+                                    <ion-col size="2">
+                                        <ion-label style="color:#808495; font-size: 12px;font-weight: normal">
+                                            {{item.staffNumber}}
+                                        </ion-label>
+                                    </ion-col>
+                                    <ion-col class="colOfLeave" size="7">
+                                        <p class="textHover" (click)="getUserId(item.userId, i, p)"
+                                            [ngClass]="{
+                                            'textColor': clickedIndex === ((p-1)*7)+i , 'oriColor': clickedIndex !== ((p-1)*7)+i}"
+                                            style="font-weight: bold; font-size: 12px;cursor: pointer;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                            {{item.employeeName}}</p>
+                                        <p
+                                            style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                            {{item.designation}}</p>
+                                    </ion-col>
+                                    <ion-col class="colOfLeave" style="color:#808495; font-size: 12px;">
+                                        {{item.status}}
+                                    </ion-col>
+                                    <ion-item class="divider" lines="full"></ion-item>
+                                </ion-row>
+                            </ion-content>
+                            <div [style.display]="showSpinner ? 'none' : 'block'">
+                                <pagination-template #p2="paginationApi" (pageChange)="p = $event">
+                                    <div class="custom-pagination" style="float: left;">
+                                        <div class="pagination-previous" style="display: inline-block">
+                                            <ion-button [disabled]="p2.isFirstPage()" fill="outline"
+                                                (click)="p2.previous()"
+                                                style="--border-radius: 2px;background: #f0f0f7;font-size: 11px;height: 30px;width: 80px;"
+                                                color="primary">Prev
+                                            </ion-button>
+                                        </div>
+                                        <div style="padding-left: 5px;display: inline-block;"></div>
+                                        <div class="pagination-next" style="display: inline-block">
+                                            <ion-button (click)="p2.next()" [disabled]="p2.isLastPage()"
+                                                style="--border-radius: 2px;font-size: 11px;height: 30px;width: 80px"
+                                                color="primary">Next
+                                            </ion-button>
+                                        </div>
+                                    </div>
+                                </pagination-template>
+
+                                <div style="font-size: 9px;padding-top: 4px;text-align: right;">
+                                    <pagination-controls (pageChange)="p = $event" maxSize="3" directionLinks="true"
+                                        previousLabel="" nextLabel="">
+                                    </pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details">
+                        <ion-card-header style="padding-right: 0;">
+                            <div style="right: 4px;top: 23px;position: absolute;">
+                                <p style="color: #43425d;opacity:0.8;font-size: 12px;font-weight: bold;">Employee Status
+                                </p>
+                                <div style="margin-top: 5px;margin-left: 10px;">
+                                    <ion-toggle class="toggleButton" mode="ios" color="secondary">
+                                        <!-- (ionChange)="toggleMode($event)" -->
+                                    </ion-toggle>
+                                    <p style="margin-top: 3px;
+                                    opacity: 0.8;font-size: 12px;color: #43425d;padding-left: 10px;
+                                    position: absolute;display: inline-block;">
+                                        Active</p>
+                                </div>
+
+                            </div>
+                            <div>
+                                <div class="left" style="display: inline-block;margin-top: 2px;">
+                                    <ion-avatar class="avatar">
+                                        <img src="assets/icon/chris.jpg">
+                                    </ion-avatar>
+                                </div>
+                                <div style="padding-left: 20px;display: inline-block;
+                                margin-top: 8px;position: absolute;">
+                                    <ion-card-subtitle
+                                        style="font-size: 12px;padding-bottom:3px;color: #43425d;opacity: 0.8;font-weight: bold;">
+                                        Masri bin Mahmud
+                                    </ion-card-subtitle>
+                                    <ion-card-subtitle class="subtitle">
+                                        System Engineer</ion-card-subtitle>
+                                    <ion-card-subtitle class="subtitle">Infrastructure Department
+                                    </ion-card-subtitle>
+                                    <!-- <ion-card-subtitle class="subtitle" *ngIf="employ">
+                                        {{employ.employmentDetail.workLocation}}
+                                    </ion-card-subtitle> -->
+                                </div>
+                            </div>
+                        </ion-card-header>
+                        <ion-card-content style="padding-right: 0;">
+                            <div
+                                style="margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                                PERSONAL DETAILS</div>
+                            <!-- <div>
+                                <ion-row class="detailsRow">
+                                    <ion-col>
+                                        <ion-label class="label">Full Name</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{personalDetails.fullname}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [(ngModel)]="personalDetails.fullname">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Display Name</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{personalDetails.nickname}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [(ngModel)]="personalDetails.nickname">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Personal Phone Number</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{personalDetails.phoneNumber}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [(ngModel)]="personalDetails.phoneNumber">
+                                        </mat-form-field>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row class="detailsRow">
+                                    <ion-col>
+                                        <ion-label class="label">Personal Email Address</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{personalDetails.emailAddress}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [(ngModel)]="personalDetails.emailAddress">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Work Phone Number</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{personalDetails.workPhoneNumber}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [(ngModel)]="personalDetails.workPhoneNumber">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Work Email Address</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{personalDetails.workEmailAddress}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [(ngModel)]="personalDetails.workEmailAddress">
+                                        </mat-form-field>
+
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row class="detailsRow">
+                                    <ion-col>
+                                        <ion-label class="label">Birthdate</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{personalDetails.dob}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" >
+                                            <input matInput [matDatepicker]="picker1" [formControl]="firstPicker"
+                                                required >
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">NRIC</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{personalDetails.nric}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [(ngModel)]="personalDetails.nric">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Gender</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{personalDetails.gender}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <mat-select [(value)]="personalDetails.gender">
+                                                <mat-option value="Female">Female</mat-option>
+                                                <mat-option value="Male">Male</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row class="detailsRow">
+                                    <ion-col>
+                                        <ion-label class="label">Religion</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{personalDetails.religion}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [(ngModel)]="personalDetails.religion">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Race</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{personalDetails.race}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [(ngModel)]="personalDetails.race">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Marital Status</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{personalDetails.maritalStatus}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <mat-select [(value)]="personalDetails.maritalStatus">
+                                                <mat-option value="Single">Single</mat-option>
+                                                <mat-option value="Married">Married</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </ion-col>
+
+                                </ion-row>
+                                <ion-row class="detailsRow">
+                                    <ion-col>
+                                        <ion-label class="label">Nationality</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{personalDetails.nationality}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [(ngModel)]="personalDetails.nationality">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col></ion-col>
+                                    <ion-col></ion-col>
+                                </ion-row>
+                            </div> -->
+                            <div
+                                style="margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                                EMPLOYEMENT DETAILS</div>
+                            <!-- <div>
+                                <ion-row class="detailsRow">
+                                    <ion-col>
+                                        <ion-label class="label">Employee ID No</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.employeeId}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [(ngModel)]="employmentDetails.employmentDetail.employeeId">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Designation</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.designation}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput
+                                                [(ngModel)]="employmentDetails.employmentDetail.designation">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Reporting To</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.reportingTo}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput
+                                                [(ngModel)]="employmentDetails.employmentDetail.reportingTo">
+                                        </mat-form-field>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row class="detailsRow">
+                                    <ion-col>
+                                        <ion-label class="label">Department</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.department}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [(ngModel)]="employmentDetails.employmentDetail.department">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Work Location</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.branch}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [(ngModel)]="employmentDetails.employmentDetail.branch">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-item class="divider" lines="full"></ion-item>
+                                <ion-row class="detailsRow">
+                                    <ion-col>
+                                        <ion-label class="label">Employment Type</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.employmentType}}
+                                        </p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput
+                                                [(ngModel)]="employmentDetails.employmentDetail.employmentType">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Employment Status</ion-label>
+                                        <p *ngIf="mode === 'OFF'">
+                                            {{employmentDetails.employmentDetail.employmentStatus}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput
+                                                [(ngModel)]="employmentDetails.employmentDetail.employmentStatus">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Date of Hired</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.dateOfJoin}}</p>
+                                         <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [matDatepicker]="dateOfJoin" [formControl]="dateOfJoin"
+                                                required>
+                                            <mat-datepicker-toggle matSuffix [for]="dateOfJoin"></mat-datepicker-toggle>
+                                            <mat-datepicker #dateOfJoin></mat-datepicker>
+                                        </mat-form-field> 
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row class="detailsRow">
+                                    <ion-col>
+                                        <ion-label class="label">Date of Confirmation</ion-label>
+                                        <p *ngIf="mode === 'OFF'">
+                                            {{employmentDetails.employmentDetail.dateOfConfirmation}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [matDatepicker]="dateConfirm"
+                                                [formControl]="dateConfirm" required>
+                                            <mat-datepicker-toggle matSuffix [for]="dateConfirm">
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #dateConfirm></mat-datepicker>
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Date of Resignation</ion-label>
+                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.dateOfResign}}
+                                        </p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput [matDatepicker]="dateResign" [formControl]="dateResign"
+                                                required>
+                                            <mat-datepicker-toggle matSuffix [for]="dateResign">
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #dateResign></mat-datepicker>
+                                        </mat-form-field> 
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Years of Service</ion-label>
+                                        <!-- <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.reportingTo}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'">
+                                            <input matInput
+                                                [(ngModel)]="employmentDetails.employmentDetail.reportingTo">
+                                        </mat-form-field> --
+                                    </ion-col>
+                                </ion-row>
+                            </div> -->
+                            <div
+                                style="margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                                CALENDAR, WORKING HOUR & LEAVE ENTITLEMENT</div>
+                            <div>
+                                <div style="display: inline-block;">
+                                    <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
+                                        Assign Calendar Profile</p>
+                                    <mat-form-field appearance="outline"
+                                        style="font-size: 12px;width: 100%;padding-left: 15px;">
+                                        <mat-label>Select calendar profile</mat-label>
+                                        <mat-select required>
+                                            <mat-option *ngFor="let item of calendarList; let j=index"
+                                                [value]="item.calendar_guid">
+                                                <!-- (click)="roleSelected(item.working_hours_guid)" -->
+                                                {{item.code}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                &nbsp;&nbsp;
+                                <div style="display: inline-block;">
+                                    <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
+                                        Assign Working Hour Profile</p>
+                                    <mat-form-field appearance="outline"
+                                        style="font-size: 12px;width: 100%;padding-left: 15px;">
+                                        <mat-label>Select working hour profile</mat-label>
+                                        <mat-select required>
+                                            <mat-option *ngFor="let item of workingList; let j=index"
+                                                [value]="item.working_hours_guid">
+                                                <!-- (click)="roleSelected(item.working_hours_guid)" -->
+                                                {{item.code}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div style="display: block;">
+                                    <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
+                                        Assign Leave Entitlement</p>
+                                    <p style="padding-left: 15px;font-size: 11px;color: #808495;margin-bottom: 10px;">
+                                        Select & add
+                                        respective leave entitlement for this employee here</p>
+                                    <mat-form-field appearance="outline"
+                                        style="width: 40%;padding-left: 15px;font-size: 12px;">
+                                        <mat-label>Select leave entitlement</mat-label>
+                                        <mat-select required>
+                                            <mat-option *ngFor="let item of entitlementList; let j=index"
+                                                [value]="item.leaveTypeId"
+                                                (click)="getLeaveTypeEntitlementId(item.leaveTypeId, item.leaveEntitlementId)">
+                                                {{item.leaveType}} - {{item.leaveEntitlementCode}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    &nbsp;&nbsp;
+                                    <mat-form-field appearance="outline"
+                                        style="width: 20%;font-size: 12px;font-weight: bold;">
+                                        <mat-label>Days Available</mat-label>
+                                        <input matInput [(ngModel)]="dayAvailable" disabled>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div
+                                style="margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                                EMPLOYEE ROLE</div>
+                            <div>
+                                <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">Assign
+                                    Role To This
+                                    Employee</p>
+                                <p style="padding-left: 15px;font-size: 11px;color: #808495;">Select role for this user.
+                                    Please note that
+                                    he/she will be able to make changes based
+                                    on role type assigned. </p>
+                                <mat-form-field appearance="outline"
+                                    style="width: 40%;padding-left: 15px;font-size: 12px;">
+                                    <mat-label>Types of role</mat-label>
+                                    <mat-select required>
+                                        <!-- formControlName="role" -->
+                                        <mat-option *ngFor="let item of roleList; let j=index" [value]="item.role_guid"
+                                            (click)="roleSelected(item.role_guid)">
+                                            {{item.code}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </ion-card-content>
+                    </div>
+                </div>
+            </ion-card-content>
+        </div>
+    </div>
+</ion-card>
+
 <!-------------------------------------------LIST VIEW------------------------------------------>
 
-<div class="connectionsContainer" *ngIf="listView">
+<!-- <div class="connectionsContainer" *ngIf="listView">
     <div class="topHeader">
         <span class="numOfPeople" *ngIf="list">{{list.length}} people</span>
         <ion-searchbar mode="ios" class="searchbar" placeholder="Search by name" (ionClear)="endPoint();
@@ -86,7 +554,7 @@
             </ion-col>
             <ion-col>
                 <!-- <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'" [matMenuTriggerFor]="menu">
-                </div> -->
+                </div> --
                 <ion-icon class="more" name="more" [matMenuTriggerFor]="menu"></ion-icon>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item style="color: #7a8589">Enable</button>
@@ -109,9 +577,10 @@
             </div><span style="padding-left: 5px; padding-right: 5px">Prev</span>
         </ion-button>
         <div style="padding-left: 10px"></div>
-        <ion-button [disabled]="disableNextButton" style="text-transform: capitalize;font-size: 12px;height: 30px;width: 90px;" color="primary"
+        <ion-button [disabled]="disableNextButton"
+            style="text-transform: capitalize;font-size: 12px;height: 30px;width: 90px;" color="primary"
             (click)="clickToNextPage(pageIndex+1)"><span style="padding-right: 10px;padding-left: 5px">Next</span>
-            <!-- <ion-icon name="arrow-forward"></ion-icon> -->
+            <!-- <ion-icon name="arrow-forward"></ion-icon> --
             <div style="width: 12px;height: 12px;fill: white;float: left;cursor: pointer;"
                 [inlineSVG]="'assets/icon/option/arrow-pointing-to-right.svg'">
             </div>
@@ -128,11 +597,11 @@
                 (click)="clickToNextPage(pageIndex+1)"></i>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-------------------------------------------GRID VIEW------------------------------------------>
 
-<div class="connectionsContainer" *ngIf="gridView">
+<!-- <div class="connectionsContainer" *ngIf="gridView">
     <div class="topHeader">
         <span class="numOfPeople" *ngIf="list">{{list.length}} people</span>
         <ion-searchbar mode="ios" class="searchbar" placeholder="Search by name" (ionClear)="endPoint();
@@ -170,7 +639,7 @@
                 <mat-card class="example-card" style="width: 90%;height: 90%;border-radius: 4px;
                     border: solid 0.5px #dfe3e6;">
                     <!-- <i class="fas fa-star" (click)="saveAsFavourite(i,item)"
-                        [style.color]="checkUserID(item.id) ? '#ffbb00' : '#dfe3e6'"></i> -->
+                        [style.color]="checkUserID(item.id) ? '#ffbb00' : '#dfe3e6'"></i> --
                     <ion-icon class="moreIcon" name="more" [matMenuTriggerFor]="menu"></ion-icon>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item style="color: #7a8589">Enable</button>
@@ -199,7 +668,7 @@
                         <button mat-button class="footerButton">
                             <i class="far fa-comment"></i>Send a message
                         </button>
-                    </mat-card-footer> -->
+                    </mat-card-footer> --
                 </mat-card>
             </mat-grid-tile>
         </mat-grid-list>
@@ -208,7 +677,7 @@
     <div style="padding-right: 20px;display: inline-flex;width: 97%;min-width: 330px;">
         <ion-button [disabled]="disablePrevButton" fill="outline" (click)="clickToPrevPage(pageIndex-1)"
             style="font-size: 12px;height: 30px;width: 90px;text-transform: capitalize;" color="primary">
-            <!-- <ion-icon name="arrow-back"></ion-icon> -->
+            <!-- <ion-icon name="arrow-back"></ion-icon> --
             <div style="width: 12px;height: 12px;fill: #057dcd;float: left;cursor: pointer;"
                 [inlineSVG]="'assets/icon/option/arrow-pointing-to-left.svg'">
             </div>
@@ -217,7 +686,7 @@
         <div style="padding-left: 10px"></div>
         <ion-button [disabled]="disableNextButton" style="text-transform: capitalize;font-size: 12px;height: 30px;width: 90px;" color="primary"
             (click)="clickToNextPage(pageIndex+1)"><span style="padding-right: 10px;padding-left: 5px">Next</span>
-            <!-- <ion-icon name="arrow-forward"> </ion-icon>-->
+            <!-- <ion-icon name="arrow-forward"> </ion-icon>--
             <div style="width: 12px;height: 12px;fill: white;float: left;cursor: pointer;"
                 [inlineSVG]="'assets/icon/option/arrow-pointing-to-right.svg'">
             </div>
@@ -234,4 +703,4 @@
                 (click)="clickToNextPage(pageIndex+1)"></i>
         </div>
     </div>
-</div>
+</div> -->

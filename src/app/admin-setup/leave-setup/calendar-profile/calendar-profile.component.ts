@@ -645,6 +645,7 @@ export class CalendarProfileComponent implements OnInit {
             this.modeValue = 'ON';
             this.showAddIcon = true;
             this.calendarProfileAPI.displayDialog.open(EditModeDialogComponent, {
+                data: 'calendar',
                 height: "359.3px",
                 width: "383px"
             });

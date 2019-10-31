@@ -14,4 +14,36 @@
     color: #20291f;
     font-weight: 500;
   }
+  // new
+  ion-card {
+    height: 100%;
+    margin: 0;
+  }
+  .fullContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 17px;
+  }
+  .right {
+    padding-left: 20px;
+    // padding-top: 4px;
+  }
+  .cardContent {
+    line-height: 1.25;
+    background: white;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 154px);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .subtitle {
+    display: block;
+    // padding-left: 2px;
+    color: #43425d;
+    opacity: 0.8;
+    padding-top: 3px;
+  }
 }
