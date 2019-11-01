@@ -134,6 +134,27 @@ export class LeaveApiService {
     }
 
     /**
+     * Get list of leave entitlement for this tenant
+     * @returns {Observable<any>}
+     * @memberof LeaveApiService
+     */
+    get_leavetype_entitlement(): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.getApi('/api/leavetype-entitlement');
+    }
+
+    /**
+     * assign leave entitlement to user
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof LeaveApiService
+     */
+    post_leave_entitlement(data): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.postApi(data, '/api/leave-entitlement');
+    }
+
+    /**
     * Show message of pass or fail after post data
     * @param {string} message
     * @memberof LeaveApiService

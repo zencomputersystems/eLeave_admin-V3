@@ -132,7 +132,7 @@ export class AdminInvitesApiService {
      */
     get_calendar_profile_list(): Observable<any> {
         this.apiService.headerAuthorization();
-        return this.apiService.getApi('/api/admin/holiday/calendar-profile'); // 12
+        return this.apiService.getApi('/api/admin/holiday/calendar-profile');
     }
 
     /**
@@ -142,40 +142,7 @@ export class AdminInvitesApiService {
      */
     get_working_hour_profile_list(): Observable<any> {
         this.apiService.headerAuthorization();
-        return this.apiService.getApi('/api/admin/working-hours/working-hours-profile'); // 13
-    }
-
-    /**
-     * Get list of leave entitlement for this tenant
-     * @returns {Observable<any>}
-     * @memberof AdminInvitesApiService
-     */
-    get_leavetype_entitlement(): Observable<any> {
-        this.apiService.headerAuthorization();
-        return this.apiService.getApi('/api/leavetype-entitlement'); // 14
-    }
-
-    /**
-     * assign leave entitlement to user
-     * @param {*} data
-     * @returns {Observable<any>}
-     * @memberof AdminInvitesApiService
-     */
-    post_leave_entitlement(data): Observable<any> {
-        this.apiService.headerAuthorization();
-        return this.apiService.postApi(data, '/api/leave-entitlement'); // 15
-    }
-
-    /**
-    * get requested user's entitlement details
-    * leave type, entitled day, balance, pending, taken
-    * @param {*} id
-    * @returns {Observable<any>}
-    * @memberof AdminInvitesApiService
-    */
-    get_entilement_details(id): Observable<any> {
-        this.apiService.headerAuthorization();
-        return this.apiService.getApiWithId('/api/leave-entitlement/', id);  // 16
+        return this.apiService.getApi('/api/admin/working-hours/working-hours-profile');
     }
 
     /**

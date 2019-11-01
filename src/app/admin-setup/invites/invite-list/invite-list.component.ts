@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { DeleteListConfirmationComponent } from '../delete-list-confirmation/delete-list-confirmation.component';
 import { MatDialog } from '@angular/material';
 import { AdminInvitesApiService } from '../admin-invites-api.service';
 import { DateDialogComponent } from '../date-dialog/date-dialog.component';
 import * as _moment from 'moment';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
-import { FormControl, Validators } from '@angular/forms';
+import { LeaveApiService } from '../../leave-setup/leave-api.service';
 const moment = _moment;
 
 /**
@@ -30,90 +29,6 @@ export class InviteListComponent implements OnInit {
      */
     public list: any;
 
-    /**
-     * To show arrow up or down icon for Name column
-     * @type {boolean}
-     * @memberof InviteListComponent
-     */
-    public arrowDownName: boolean = true;
-
-    /**
-     * To show arrow up or down icon for Id column
-     * @type {boolean}
-     * @memberof InviteListComponent
-     */
-    public arrowDownId: boolean = true;
-
-    /**
-     * Total number of users profile list
-     * @type {number}
-     * @memberof InviteListComponent
-     */
-    public totalItem: number;
-
-    /**
-     * Set the page items of each page
-     * @type {number}
-     * @memberof InviteListComponent
-     */
-    public itemsPerPage: number = 6;
-
-    /**
-     * Use for range calculation
-     * @type {number}
-     * @memberof InviteListComponent
-     */
-    public startEndNumber: number = 5;
-
-    /**
-     * Page number
-     * @type {number}
-     * @memberof InviteListComponent
-     */
-    public pageIndex: number;
-
-    /**
-     * Total page number 
-     * @type {number}
-     * @memberof InviteListComponent
-     */
-    public totalPageIndex: number;
-
-    /**
-     * Get current page items
-     * @type {*}
-     * @memberof InviteListComponent
-     */
-    public currentPageItems: any;
-
-    /**
-     * Enable or disable next button
-     * @type {boolean}
-     * @memberof InviteListComponent
-     */
-    public disableNextButton: boolean;
-
-    /**
-     * Enable or disable previous button
-     * @type {boolean}
-     * @memberof InviteListComponent
-     */
-    public disablePrevButton: boolean = true;
-
-    /**
-     * To show user profile list in list view
-     * @type {boolean}
-     * @memberof InviteListComponent
-     */
-    public listView: boolean = false;
-
-    /**
-     * To show user profile list in grid view
-     * @type {boolean}
-     * @memberof InviteListComponent
-     */
-    public gridView: boolean = false;
-
     // /**
     //  * Add as favourite list after clicked star icon
     //  * @memberof InviteListComponent
@@ -128,75 +43,113 @@ export class InviteListComponent implements OnInit {
     public showSpinner: boolean = true;
 
     /**
-     * hide content during loading
-     * @type {boolean}
+     * current page of paginator
+     * @type {number}
      * @memberof InviteListComponent
      */
-    public showContent: boolean = false;
+    public p: number;
 
     /**
-     * main checkbox value
-     * @type {boolean}
+     * mode on/off
+     * @type {string}
      * @memberof InviteListComponent
      */
-    public mainCheck: boolean = false;
-
-    /**
-     * main checkbox show indeterminate 
-     * @type {boolean}
-     * @memberof InviteListComponent
-     */
-    public indeterminateCheck: boolean = false;
-
-    /**
-     * hover to hide avatar
-     * @type {boolean}
-     * @memberof InviteListComponent
-     */
-    public hideAvatar: boolean[] = [];
-
-    p: number;
-
     public mode: string = 'OFF';
 
+    /**
+     * user info personal-details
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public personalDetails: any;
 
+    /**
+     * user info employment details
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public employmentDetails: any;
 
+    /**
+     * date of join form control
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public dateOfJoin: any;
 
+    /**
+     * date of confirm form control
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public dateConfirm: any;
 
+    /**
+     * date of resign form control
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public dateResign: any;
 
+    /**
+     * role profile list from API
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public roleList: any;
 
+    /**
+     * calendar profile list from API
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public calendarList: any;
 
+    /**
+     * working hour profile list from API
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public workingList: any;
 
+    /**
+     * leave entitlement list from API
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public entitlementList: any;
 
+    /**
+     * get selected user id
+     * @type {string}
+     * @memberof InviteListComponent
+     */
     public userId: string;
 
+    /**
+     * day available for selected employee & leave type & leave entitled
+     * @type {number}
+     * @memberof InviteListComponent
+     */
     public dayAvailable: number = 0;
 
+    /**
+     * clicked index 
+     * @type {number}
+     * @memberof InviteListComponent
+     */
     public clickedIndex: number = 0;
-
-    public thisPage: number = 0;
-
 
     /**
      *Creates an instance of InviteListComponent.
      * @param {AdminInvitesApiService} inviteAPI
-     * @param {Router} router
      * @param {MatDialog} popUp
      * @memberof InviteListComponent
      */
-    constructor(private inviteAPI: AdminInvitesApiService, public router: Router, public popUp: MatDialog) { }
+    constructor(private inviteAPI: AdminInvitesApiService, public popUp: MatDialog, private leaveApi: LeaveApiService) { }
 
     ngOnInit() {
-        this.listView = false;
+        // this.listView = false;
         this.endPoint();
         this.inviteAPI.get_role_profile_list().subscribe(list => {
             this.roleList = list;
@@ -207,7 +160,7 @@ export class InviteListComponent implements OnInit {
         this.inviteAPI.get_working_hour_profile_list().subscribe(list => {
             this.workingList = list;
         })
-        this.inviteAPI.get_leavetype_entitlement().subscribe(list => {
+        this.leaveApi.get_leavetype_entitlement().subscribe(list => {
             this.entitlementList = list;
         })
     }
@@ -220,7 +173,6 @@ export class InviteListComponent implements OnInit {
         this.inviteAPI.get_user_profile_list().subscribe(
             (data: any[]) => {
                 this.showSpinner = false;
-                this.showContent = true;
                 this.list = data;
                 // this.inviteAPI.get_admin_user_info('personal-details', this.list[0].userId).subscribe(data => {
                 //     console.log(data);
@@ -239,21 +191,35 @@ export class InviteListComponent implements OnInit {
             }
         );
     }
-    getUserId(userId, index, p) {
-        console.log(((p - 1) * 7) + index);
+
+    /**
+     * get clicked user id
+     * @param {string} userId
+     * @param {number} index
+     * @param {number} p
+     * @memberof InviteListComponent
+     */
+    getUserId(userId: string, index: number, p: number) {
         this.clickedIndex = ((p - 1) * 7) + index;
         this.userId = userId;
     }
 
+    /**
+     * assign employee to a selected leave entitlement
+     * get day balance value
+     * @param {*} leaveTypeId
+     * @param {*} leaveEntitlementId
+     * @memberof InviteListComponent
+     */
     getLeaveTypeEntitlementId(leaveTypeId, leaveEntitlementId) {
         // POST and create directly
         const data = {
             "userId": [this.userId], "leaveTypeId": leaveTypeId, "leaveEntitlementId": leaveEntitlementId
         }
-        this.inviteAPI.post_leave_entitlement(data).subscribe(res => {
+        this.leaveApi.post_leave_entitlement(data).subscribe(res => {
             console.log('res', res);
         })
-        this.inviteAPI.get_entilement_details(this.userId).subscribe(val => {
+        this.leaveApi.get_entilement_details(this.userId).subscribe(val => {
             console.log('entitledetails', val);
             for (let i = 0; i < val.length; i++) {
                 if (val[i].LEAVE_TYPE_GUID == leaveTypeId) {
@@ -264,6 +230,11 @@ export class InviteListComponent implements OnInit {
         console.log(leaveTypeId, leaveEntitlementId);
     }
 
+    /**
+     * toggle edit mode on/off
+     * @param {*} evt
+     * @memberof InviteListComponent
+     */
     toggleMode(evt) {
         if (evt.detail.checked === true) {
             this.mode = 'ON';
@@ -474,7 +445,6 @@ export class InviteListComponent implements OnInit {
         deleteDialog.afterClosed().subscribe(result => {
             if (result === id && name == 'delete') {
                 this.showSpinner = true;
-                this.showContent = false;
                 this.inviteAPI.delete_user(id).subscribe(response => {
                     this.endPoint();
                 })
@@ -498,7 +468,6 @@ export class InviteListComponent implements OnInit {
         disableDialog.afterClosed().subscribe(value => {
             if (value) {
                 this.showSpinner = true;
-                this.showContent = false;
                 this.inviteAPI.disable_user({
                     "user_guid": id,
                     "resign_date": moment(value).format('YYYY-MM-DD'),
