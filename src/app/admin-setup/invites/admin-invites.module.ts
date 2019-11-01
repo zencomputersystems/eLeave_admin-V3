@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
@@ -11,7 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
-import { AdminInvitesComponent } from './admin-invites.component';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { InviteMoreComponent } from './invite-more/invite-more.component';
 import { InviteListComponent } from './invite-list/invite-list.component';
@@ -25,7 +24,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 const routes: Routes = [
     {
         path: '',
-        component: AdminInvitesComponent
+        component: InviteListComponent
     }
 ];
 
@@ -34,6 +33,7 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         IonicModule,
+        ReactiveFormsModule,
         MatPaginatorModule,
         MatInputModule,
         MatSelectModule,
@@ -51,6 +51,6 @@ const routes: Routes = [
         RouterModule.forChild(routes)
     ],
     entryComponents: [DeleteListConfirmationComponent, DateDialogComponent],
-    declarations: [AdminInvitesComponent, InviteMoreComponent, InviteListComponent, DeleteListConfirmationComponent, DateDialogComponent]
+    declarations: [InviteMoreComponent, InviteListComponent, DeleteListConfirmationComponent, DateDialogComponent]
 })
 export class AdminInvitesModule { }

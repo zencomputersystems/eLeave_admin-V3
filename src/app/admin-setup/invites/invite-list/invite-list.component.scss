@@ -338,4 +338,17 @@
     opacity: 0.8;
     font-size: 12px;
   }
+  ::ng-deep .matFormField > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix {
+    border-top: 0;
+  }
+  .matFormField {
+    display: block;
+    width: 80%;
+    font-size: 11px;
+    color: #4d4f5c;
+  }
+  .pText {
+    color: #4d4f5c;
+    font-size: 11px;
+  }
 }

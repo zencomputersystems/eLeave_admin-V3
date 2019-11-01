@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DeleteListConfirmationComponent } from '../delete-list-confirmation/delete-list-confirmation.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AdminInvitesApiService } from '../admin-invites-api.service';
 import { DateDialogComponent } from '../date-dialog/date-dialog.component';
 import * as _moment from 'moment';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
 import { LeaveApiService } from '../../leave-setup/leave-api.service';
+import { FormControl, Validators } from '@angular/forms';
+import { APP_DATE_FORMATS, AppDateAdapter } from '../../leave-setup/date.adapter';
 const moment = _moment;
 
 /**
@@ -19,6 +21,9 @@ const moment = _moment;
     selector: 'app-invite-list',
     templateUrl: './invite-list.component.html',
     styleUrls: ['./invite-list.component.scss'],
+    providers: [
+        { provide: DateAdapter, useClass: AppDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
 })
 export class InviteListComponent implements OnInit {
 
@@ -64,6 +69,13 @@ export class InviteListComponent implements OnInit {
     public personalDetails: any;
 
     /**
+     * birthdate form control
+     * @type {*}
+     * @memberof InviteListComponent
+     */
+    public birthOfDate: any;
+
+    /**
      * user info employment details
      * @type {*}
      * @memberof InviteListComponent
@@ -82,14 +94,14 @@ export class InviteListComponent implements OnInit {
      * @type {*}
      * @memberof InviteListComponent
      */
-    public dateConfirm: any;
+    public dateOfConfirm: any;
 
     /**
      * date of resign form control
      * @type {*}
      * @memberof InviteListComponent
      */
-    public dateResign: any;
+    public dateOfResign: any;
 
     /**
      * role profile list from API
@@ -149,7 +161,6 @@ export class InviteListComponent implements OnInit {
     constructor(private inviteAPI: AdminInvitesApiService, public popUp: MatDialog, private leaveApi: LeaveApiService) { }
 
     ngOnInit() {
-        // this.listView = false;
         this.endPoint();
         this.inviteAPI.get_role_profile_list().subscribe(list => {
             this.roleList = list;
@@ -174,20 +185,7 @@ export class InviteListComponent implements OnInit {
             (data: any[]) => {
                 this.showSpinner = false;
                 this.list = data;
-                // this.inviteAPI.get_admin_user_info('personal-details', this.list[0].userId).subscribe(data => {
-                //     console.log(data);
-                //     this.personalDetails = data;
-                // })
-                // this.inviteAPI.get_admin_user_info('employment-detail', this.list[0].userId).subscribe(data => {
-                //     console.log('employ', data);
-                //     this.employmentDetails = data;
-                // this.dateOfJoin = new FormControl((this.employmentDetails.employmentDetail.dateOfJoin), Validators.required);
-                // this.employmentDetails.employmentDetail.dateOfJoin = moment(this.employmentDetails.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
-                // this.dateConfirm = new FormControl((this.employmentDetails.employmentDetail.dateOfConfirmation), Validators.required);
-                // this.employmentDetails.employmentDetail.dateOfConfirmation = moment(this.employmentDetails.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
-                // this.dateResign = new FormControl((this.employmentDetails.employmentDetail.dateOfResign), Validators.required);
-                // this.employmentDetails.employmentDetail.dateOfResign = moment(this.employmentDetails.employmentDetail.dateOfResign).format('DD-MM-YYYY');
-                // })
+                this.getUserId(this.list[0].userId, 0, 1);
             }
         );
     }
@@ -200,8 +198,29 @@ export class InviteListComponent implements OnInit {
      * @memberof InviteListComponent
      */
     getUserId(userId: string, index: number, p: number) {
+        if (p === undefined) {
+            this.p = 1;
+            p = 1;
+        }
         this.clickedIndex = ((p - 1) * 7) + index;
+        console.log(this.clickedIndex);
         this.userId = userId;
+        this.inviteAPI.get_admin_user_info('personal-details', userId).subscribe(data => {
+            console.log(data);
+            this.personalDetails = data;
+            this.birthOfDate = new FormControl((this.personalDetails.personalDetail.dob), Validators.required);
+            this.personalDetails.personalDetail.dob = moment(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
+        })
+        this.inviteAPI.get_admin_user_info('employment-detail', userId).subscribe(data => {
+            console.log('employ', data);
+            this.employmentDetails = data;
+            this.dateOfJoin = new FormControl((this.employmentDetails.employmentDetail.dateOfJoin), Validators.required);
+            this.employmentDetails.employmentDetail.dateOfJoin = moment(this.employmentDetails.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
+            this.dateOfConfirm = new FormControl((this.employmentDetails.employmentDetail.dateOfConfirmation), Validators.required);
+            this.employmentDetails.employmentDetail.dateOfConfirmation = moment(this.employmentDetails.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
+            this.dateOfResign = new FormControl((this.employmentDetails.employmentDetail.dateOfResign), Validators.required);
+            this.employmentDetails.employmentDetail.dateOfResign = moment(this.employmentDetails.employmentDetail.dateOfResign).format('DD-MM-YYYY');
+        })
     }
 
     /**
@@ -244,7 +263,9 @@ export class InviteListComponent implements OnInit {
                 width: "383px"
             });
         } else {
-            this.mode = 'OFF'
+            this.mode = 'OFF';
+            // this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.userId).subscribe(res => console.log(res));
+            // this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.userId).subscribe(resp => console.log(resp));
             this.inviteAPI.showSnackbar('Edit mode disabled. Good job!', true);
         }
     }

@@ -45,15 +45,15 @@
                                 *ngIf="list">
                                 <ion-row class="titleRow">
                                     <ion-col size="2">
-                                        <ion-label style="font-size: 11px;color: #a5a4bf;font-weight: bold;">ID
+                                        <ion-label style="font-size: 12px;color: #a5a4bf;font-weight: bold;">ID
                                         </ion-label>
                                     </ion-col>
                                     <ion-col size="7">
-                                        <ion-label style="font-size: 11px;color: #a5a4bf;font-weight: bold;">EMPLOYEE
+                                        <ion-label style="font-size: 12px;color: #a5a4bf;font-weight: bold;">EMPLOYEE
                                             NAME</ion-label>
                                     </ion-col>
                                     <ion-col>
-                                        <ion-label style="font-size: 11px;color: #a5a4bf;font-weight: bold;">STATUS
+                                        <ion-label style="font-size: 12px;color: #a5a4bf;font-weight: bold;">STATUS
                                         </ion-label>
                                     </ion-col>
                                 </ion-row>
@@ -122,7 +122,6 @@
                                     position: absolute;display: inline-block;">
                                         Active</p>
                                 </div>
-
                             </div>
                             <div>
                                 <div class="left" style="display: inline-block;margin-top: 2px;">
@@ -131,14 +130,14 @@
                                     </ion-avatar>
                                 </div>
                                 <div style="padding-left: 20px;display: inline-block;
-                                margin-top: 8px;position: absolute;">
+                                margin-top: 8px;position: absolute;" *ngIf="personalDetails">
                                     <ion-card-subtitle
                                         style="font-size: 12px;padding-bottom:3px;color: #43425d;opacity: 0.8;font-weight: bold;">
-                                        Masri bin Mahmud
+                                        {{personalDetails.employeeName}}
                                     </ion-card-subtitle>
                                     <ion-card-subtitle class="subtitle">
-                                        System Engineer</ion-card-subtitle>
-                                    <ion-card-subtitle class="subtitle">Infrastructure Department
+                                        {{personalDetails.employeeDesignation}}</ion-card-subtitle>
+                                    <ion-card-subtitle class="subtitle">{{personalDetails.employeeDepartment}}
                                     </ion-card-subtitle>
                                     <!-- <ion-card-subtitle class="subtitle" *ngIf="employ">
                                         {{employ.employmentDetail.workLocation}}
@@ -150,50 +149,59 @@
                             <div
                                 style="margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 PERSONAL DETAILS</div>
-                            <!-- <div>
+                            <div *ngIf="personalDetails">
                                 <ion-row class="detailsRow">
                                     <ion-col>
                                         <ion-label class="label">Full Name</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{personalDetails.fullname}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <input matInput [(ngModel)]="personalDetails.fullname">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{personalDetails.personalDetail.fullname}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput [(ngModel)]="personalDetails.personalDetail.fullname">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Display Name</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{personalDetails.nickname}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <input matInput [(ngModel)]="personalDetails.nickname">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{personalDetails.personalDetail.nickname}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput [(ngModel)]="personalDetails.personalDetail.nickname">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Personal Phone Number</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{personalDetails.phoneNumber}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <input matInput [(ngModel)]="personalDetails.phoneNumber">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{personalDetails.personalDetail.phoneNumber}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput [(ngModel)]="personalDetails.personalDetail.phoneNumber">
                                         </mat-form-field>
                                     </ion-col>
                                 </ion-row>
                                 <ion-row class="detailsRow">
                                     <ion-col>
                                         <ion-label class="label">Personal Email Address</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{personalDetails.emailAddress}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <input matInput [(ngModel)]="personalDetails.emailAddress">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{personalDetails.personalDetail.emailAddress}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput [(ngModel)]="personalDetails.personalDetail.emailAddress">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Work Phone Number</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{personalDetails.workPhoneNumber}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <input matInput [(ngModel)]="personalDetails.workPhoneNumber">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{personalDetails.personalDetail.workPhoneNumber}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput
+                                                [(ngModel)]="personalDetails.personalDetail.workPhoneNumber">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Work Email Address</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{personalDetails.workEmailAddress}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <input matInput [(ngModel)]="personalDetails.workEmailAddress">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{personalDetails.personalDetail.workEmailAddress}}
+                                        </p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput
+                                                [(ngModel)]="personalDetails.personalDetail.workEmailAddress">
                                         </mat-form-field>
 
                                     </ion-col>
@@ -201,26 +209,29 @@
                                 <ion-row class="detailsRow">
                                     <ion-col>
                                         <ion-label class="label">Birthdate</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{personalDetails.dob}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'" >
-                                            <input matInput [matDatepicker]="picker1" [formControl]="firstPicker"
-                                                required >
-                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker1></mat-datepicker>
+                                        <p class="pText" *ngIf="mode === 'OFF'">{{personalDetails.personalDetail.dob}}
+                                        </p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput [matDatepicker]="birthdate" [formControl]="birthOfDate"
+                                                required>
+                                            <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
+                                            <mat-datepicker #birthdate></mat-datepicker>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">NRIC</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{personalDetails.nric}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <input matInput [(ngModel)]="personalDetails.nric">
+                                        <p class="pText" *ngIf="mode === 'OFF'">{{personalDetails.personalDetail.nric}}
+                                        </p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput [(ngModel)]="personalDetails.personalDetail.nric">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Gender</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{personalDetails.gender}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <mat-select [(value)]="personalDetails.gender">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{personalDetails.personalDetail.gender}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <mat-select [(value)]="personalDetails.personalDetail.gender">
                                                 <mat-option value="Female">Female</mat-option>
                                                 <mat-option value="Male">Male</mat-option>
                                             </mat-select>
@@ -230,23 +241,26 @@
                                 <ion-row class="detailsRow">
                                     <ion-col>
                                         <ion-label class="label">Religion</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{personalDetails.religion}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <input matInput [(ngModel)]="personalDetails.religion">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{personalDetails.personalDetail.religion}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput [(ngModel)]="personalDetails.personalDetail.religion">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Race</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{personalDetails.race}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <input matInput [(ngModel)]="personalDetails.race">
+                                        <p class="pText" *ngIf="mode === 'OFF'">{{personalDetails.personalDetail.race}}
+                                        </p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput [(ngModel)]="personalDetails.personalDetail.race">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Marital Status</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{personalDetails.maritalStatus}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <mat-select [(value)]="personalDetails.maritalStatus">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{personalDetails.personalDetail.maritalStatus}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <mat-select [(value)]="personalDetails.personalDetail.maritalStatus">
                                                 <mat-option value="Single">Single</mat-option>
                                                 <mat-option value="Married">Married</mat-option>
                                             </mat-select>
@@ -257,39 +271,43 @@
                                 <ion-row class="detailsRow">
                                     <ion-col>
                                         <ion-label class="label">Nationality</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{personalDetails.nationality}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <input matInput [(ngModel)]="personalDetails.nationality">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{personalDetails.personalDetail.nationality}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput [(ngModel)]="personalDetails.personalDetail.nationality">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col></ion-col>
                                     <ion-col></ion-col>
                                 </ion-row>
-                            </div> -->
+                            </div>
                             <div
-                                style="margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                                style="margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 EMPLOYEMENT DETAILS</div>
-                            <!-- <div>
+                            <div *ngIf="employmentDetails">
                                 <ion-row class="detailsRow">
                                     <ion-col>
                                         <ion-label class="label">Employee ID No</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.employeeId}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{employmentDetails.employmentDetail.employeeId}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
                                             <input matInput [(ngModel)]="employmentDetails.employmentDetail.employeeId">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Designation</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.designation}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{employmentDetails.employmentDetail.designation}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
                                             <input matInput
                                                 [(ngModel)]="employmentDetails.employmentDetail.designation">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Reporting To</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.reportingTo}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{employmentDetails.employmentDetail.reportingTo}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
                                             <input matInput
                                                 [(ngModel)]="employmentDetails.employmentDetail.reportingTo">
                                         </mat-form-field>
@@ -298,60 +316,66 @@
                                 <ion-row class="detailsRow">
                                     <ion-col>
                                         <ion-label class="label">Department</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.department}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{employmentDetails.employmentDetail.department}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
                                             <input matInput [(ngModel)]="employmentDetails.employmentDetail.department">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Work Location</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.branch}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{employmentDetails.employmentDetail.branch}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
                                             <input matInput [(ngModel)]="employmentDetails.employmentDetail.branch">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                     </ion-col>
                                 </ion-row>
-                                <ion-item class="divider" lines="full"></ion-item>
+                                <ion-item class="divider" lines="full" style="padding-left: 15px;
+                                padding-right: 15px;padding-top: 2%;padding-bottom: 2%;">
+                                </ion-item>
                                 <ion-row class="detailsRow">
                                     <ion-col>
                                         <ion-label class="label">Employment Type</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.employmentType}}
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{employmentDetails.employmentDetail.employmentType}}
                                         </p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
                                             <input matInput
                                                 [(ngModel)]="employmentDetails.employmentDetail.employmentType">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Employment Status</ion-label>
-                                        <p *ngIf="mode === 'OFF'">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
                                             {{employmentDetails.employmentDetail.employmentStatus}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
                                             <input matInput
                                                 [(ngModel)]="employmentDetails.employmentDetail.employmentStatus">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Date of Hired</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.dateOfJoin}}</p>
-                                         <mat-form-field *ngIf="mode === 'ON'">
-                                            <input matInput [matDatepicker]="dateOfJoin" [formControl]="dateOfJoin"
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{employmentDetails.employmentDetail.dateOfJoin}}</p>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput [matDatepicker]="dateJoin" [formControl]="dateOfJoin"
                                                 required>
-                                            <mat-datepicker-toggle matSuffix [for]="dateOfJoin"></mat-datepicker-toggle>
-                                            <mat-datepicker #dateOfJoin></mat-datepicker>
-                                        </mat-form-field> 
+                                            <mat-datepicker-toggle matSuffix [for]="dateJoin"></mat-datepicker-toggle>
+                                            <mat-datepicker #dateJoin></mat-datepicker>
+                                        </mat-form-field>
                                     </ion-col>
                                 </ion-row>
                                 <ion-row class="detailsRow">
                                     <ion-col>
                                         <ion-label class="label">Date of Confirmation</ion-label>
-                                        <p *ngIf="mode === 'OFF'">
+                                        <p class="pText" *ngIf="mode === 'OFF'">
                                             {{employmentDetails.employmentDetail.dateOfConfirmation}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <input matInput [matDatepicker]="dateConfirm"
-                                                [formControl]="dateConfirm" required>
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput [matDatepicker]="dateConfirm" [formControl]="dateOfConfirm"
+                                                required>
                                             <mat-datepicker-toggle matSuffix [for]="dateConfirm">
                                             </mat-datepicker-toggle>
                                             <mat-datepicker #dateConfirm></mat-datepicker>
@@ -359,15 +383,16 @@
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Date of Resignation</ion-label>
-                                        <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.dateOfResign}}
+                                        <p class="pText" *ngIf="mode === 'OFF'">
+                                            {{employmentDetails.employmentDetail.dateOfResign}}
                                         </p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
-                                            <input matInput [matDatepicker]="dateResign" [formControl]="dateResign"
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <input matInput [matDatepicker]="dateResign" [formControl]="dateOfResign"
                                                 required>
                                             <mat-datepicker-toggle matSuffix [for]="dateResign">
                                             </mat-datepicker-toggle>
                                             <mat-datepicker #dateResign></mat-datepicker>
-                                        </mat-form-field> 
+                                        </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Years of Service</ion-label>
@@ -375,12 +400,15 @@
                                         <mat-form-field *ngIf="mode === 'ON'">
                                             <input matInput
                                                 [(ngModel)]="employmentDetails.employmentDetail.reportingTo">
-                                        </mat-form-field> --
+                                        </mat-form-field> -->
                                     </ion-col>
                                 </ion-row>
-                            </div> -->
+                                <ion-item class="divider" lines="full" style="padding-top: 2%;padding-bottom: 2%;padding-left: 15px;
+                                padding-right: 15px;">
+                                </ion-item>
+                            </div>
                             <div
-                                style="margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                                style="margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 CALENDAR, WORKING HOUR & LEAVE ENTITLEMENT</div>
                             <div>
                                 <div style="display: inline-block;">

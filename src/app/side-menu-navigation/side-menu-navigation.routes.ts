@@ -4,10 +4,7 @@ import { SideMenuNavigationComponent } from './side-menu-navigation.component';
 import { PageNotFoundComponent } from '../page-not-found.component';
 import { AddEmployeeComponent } from '../admin-setup/add-employee/add-employee.component';
 import { LeaveSetupComponent } from '../admin-setup/leave-setup/leave-setup.component';
-import { LeaveSetupTabComponent } from '../admin-setup/leave-setup/leave-setup-tab/leave-setup-tab.component';
-import { AdminInvitesComponent } from '../admin-setup/invites/admin-invites.component';
 import { InviteListComponent } from '../admin-setup/invites/invite-list/invite-list.component';
-import { InviteMoreComponent } from '../admin-setup/invites/invite-more/invite-more.component';
 import { RoleManagementComponent } from '../admin-setup/role-management/role-management.component';
 import { RoleListComponent } from '../admin-setup/role-management/role-list/role-list.component';
 import { RoleRightsComponent } from '../admin-setup/role-management/role-rights/role-rights.component';
@@ -18,7 +15,6 @@ import { CreatePolicyComponent } from '../admin-setup/general-leave-policy/creat
 import { EmployeeProfileComponent } from '../admin-setup/employee-profile-hr/employee-profile.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { CalendarProfileComponent } from '../admin-setup/leave-setup/calendar-profile/calendar-profile.component';
-import { WorkingHourComponent } from '../admin-setup/leave-setup/working-hour/working-hour.component';
 import { LeaveAdjustmentComponent } from '../admin-setup/leave-setup/leave-adjustment/leave-adjustment.component';
 import { LeaveEntitlementByBatchComponent } from '../admin-setup/leave-setup/leave-entitlement-by-batch/leave-entitlement-by-batch.component';
 import { WorkingHourListComponent } from '../admin-setup/leave-setup/working-hour/working-hour-list/working-hour-list.component';
