@@ -66,6 +66,16 @@ export class LeaveApiService {
     }
 
     /**
+     * assign working hour profile
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof LeaveApiService
+     */
+    patch_user_working_hours(data: any): Observable<any> {
+        return this.apiService.patchApi(data, '/api/admin/working-hours/user-working-hours');
+    }
+
+    /**
      * Apply leave for employee 
      * @param {*} id
      * @param {*} data

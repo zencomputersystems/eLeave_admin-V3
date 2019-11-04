@@ -8,6 +8,8 @@ import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit
 import { LeaveApiService } from '../../leave-setup/leave-api.service';
 import { FormControl, Validators } from '@angular/forms';
 import { APP_DATE_FORMATS, AppDateAdapter } from '../../leave-setup/date.adapter';
+import { genderStatus, maritalStatus } from '../../employee-profile-hr/employee-profile.service';
+import { RoleApiService } from '../../role-management/role-api.service';
 const moment = _moment;
 
 /**
@@ -152,13 +154,23 @@ export class InviteListComponent implements OnInit {
      */
     public clickedIndex: number = 0;
 
+    public calendarValue: any;
+
+    public workingValue: any;
+
+    public entitlementValue: any;
+
+    public roleValue: any;
+
+    public addEntitlement: any = [0];
+
     /**
      *Creates an instance of InviteListComponent.
      * @param {AdminInvitesApiService} inviteAPI
      * @param {MatDialog} popUp
      * @memberof InviteListComponent
      */
-    constructor(private inviteAPI: AdminInvitesApiService, public popUp: MatDialog, private leaveApi: LeaveApiService) { }
+    constructor(private inviteAPI: AdminInvitesApiService, public popUp: MatDialog, private leaveApi: LeaveApiService, public roleAPI: RoleApiService) { }
 
     ngOnInit() {
         this.endPoint();
@@ -186,8 +198,7 @@ export class InviteListComponent implements OnInit {
                 this.showSpinner = false;
                 this.list = data;
                 this.getUserId(this.list[0].userId, 0, 1);
-            }
-        );
+            });
     }
 
     /**
@@ -208,19 +219,34 @@ export class InviteListComponent implements OnInit {
         this.inviteAPI.get_admin_user_info('personal-details', userId).subscribe(data => {
             console.log(data);
             this.personalDetails = data;
-            this.birthOfDate = new FormControl((this.personalDetails.personalDetail.dob), Validators.required);
-            this.personalDetails.personalDetail.dob = moment(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
+            this.getPersonalDetails();
         })
         this.inviteAPI.get_admin_user_info('employment-detail', userId).subscribe(data => {
             console.log('employ', data);
             this.employmentDetails = data;
-            this.dateOfJoin = new FormControl((this.employmentDetails.employmentDetail.dateOfJoin), Validators.required);
-            this.employmentDetails.employmentDetail.dateOfJoin = moment(this.employmentDetails.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
-            this.dateOfConfirm = new FormControl((this.employmentDetails.employmentDetail.dateOfConfirmation), Validators.required);
-            this.employmentDetails.employmentDetail.dateOfConfirmation = moment(this.employmentDetails.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
-            this.dateOfResign = new FormControl((this.employmentDetails.employmentDetail.dateOfResign), Validators.required);
-            this.employmentDetails.employmentDetail.dateOfResign = moment(this.employmentDetails.employmentDetail.dateOfResign).format('DD-MM-YYYY');
+            this.getEmploymentDetails();
         })
+        this.inviteAPI.get_requested_user_profile(userId).subscribe(data => {
+            this.calendarValue = data.calendarId;
+            this.roleValue = data.roleId;
+            this.workingValue = data.workingHoursId;
+            this.entitlementValue = data.entitlementDetail[0].leaveTypeId;
+            this.dayAvailable = data.entitlementDetail[0].balanceDays;
+        })
+    }
+
+    getPersonalDetails() {
+        this.birthOfDate = new FormControl((this.personalDetails.personalDetail.dob), Validators.required);
+        this.personalDetails.personalDetail.dob = moment(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
+    }
+
+    getEmploymentDetails() {
+        this.dateOfJoin = new FormControl((this.employmentDetails.employmentDetail.dateOfJoin), Validators.required);
+        this.employmentDetails.employmentDetail.dateOfJoin = moment(this.employmentDetails.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
+        this.dateOfConfirm = new FormControl((this.employmentDetails.employmentDetail.dateOfConfirmation), Validators.required);
+        this.employmentDetails.employmentDetail.dateOfConfirmation = moment(this.employmentDetails.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
+        this.dateOfResign = new FormControl((this.employmentDetails.employmentDetail.dateOfResign), Validators.required);
+        this.employmentDetails.employmentDetail.dateOfResign = moment(this.employmentDetails.employmentDetail.dateOfResign).format('DD-MM-YYYY');
     }
 
     /**
@@ -249,6 +275,13 @@ export class InviteListComponent implements OnInit {
         console.log(leaveTypeId, leaveEntitlementId);
     }
 
+    addNewEntitlement() {
+        this.addEntitlement.push(0);
+    }
+    deleteEntitlement(index: number) {
+        this.addEntitlement.splice(index, 1);
+    }
+
     /**
      * toggle edit mode on/off
      * @param {*} evt
@@ -264,149 +297,52 @@ export class InviteListComponent implements OnInit {
             });
         } else {
             this.mode = 'OFF';
-            // this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.userId).subscribe(res => console.log(res));
-            // this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.userId).subscribe(resp => console.log(resp));
+            this.patchPersonalDetails();
+            this.patchEmploymentDetails();
+            this.assignProfile();
             this.inviteAPI.showSnackbar('Edit mode disabled. Good job!', true);
         }
     }
 
-    /**
-     * Show view list or grid list items
-     * @param {boolean} list
-     * @param {number} pageItems
-     * @param {number} range
-     * @memberof InviteListComponent
-     */
-    // viewType(list: boolean, pageItems: number, range: number) {
-    //     this.listView = list;
-    //     this.gridView = !list;
-    //     this.disableNextButton = false;
-    //     this.disablePrevButton = true;
-    //     this.itemsPerPage = pageItems;
-    //     this.startEndNumber = range;
-    //     this.loopItemsPerPage(1);
-    // }
+    patchPersonalDetails() {
+        this.personalDetails.personalDetail.nric = (this.personalDetails.personalDetail.nric).toString();
+        this.personalDetails.personalDetail.dob = moment(this.birthOfDate.value).format('YYYY-MM-DD');
+        this.personalDetails.personalDetail.gender = genderStatus[this.personalDetails.personalDetail.gender];
+        this.personalDetails.personalDetail.maritalStatus = maritalStatus[this.personalDetails.personalDetail.maritalStatus];
+        this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.userId).subscribe(res => {
+            this.personalDetails.personalDetail = res;
+            this.getPersonalDetails();
+            this.personalDetails.personalDetail.gender = genderStatus[this.personalDetails.personalDetail.gender];
+            this.personalDetails.personalDetail.maritalStatus = maritalStatus[this.personalDetails.personalDetail.maritalStatus];
+        });
+    }
 
-    /**
-     * Calculate number of item show in each page
-     * @param {number} index
-     * @param {*} data
-     * @param {number} itemEachPage
-     * @param {*} startEndNumber
-     * @memberof InviteListComponent
-     */
-    // loopItemsPerPage(index: number) {
-    //     this.pageIndex = index;
-    //     this.totalItem = this.list.length;
-    //     this.totalPageIndex = this.totalItem / this.itemsPerPage;
-    //     this.totalPageIndex = Math.ceil(this.totalPageIndex);
-    //     const startNum = (this.pageIndex * this.itemsPerPage) - this.startEndNumber;
-    //     const endNum = this.pageIndex * this.itemsPerPage;
-    //     const currentPageItems = [];
-    //     for (let j = startNum - 1; j < endNum; j++) {
-    //         const itemNum = this.list[j];
-    //         if (itemNum !== undefined) {
-    //             currentPageItems.push(itemNum);
-    //         }
-    //     }
-    //     this.currentPageItems = currentPageItems;
-    // }
+    patchEmploymentDetails() {
+        this.employmentDetails.employmentDetail.employeeId = (this.employmentDetails.employmentDetail.employeeId).toString();
+        this.employmentDetails.employmentDetail.incomeTaxNumber = (this.employmentDetails.employmentDetail.incomeTaxNumber).toString();
+        this.employmentDetails.employmentDetail.dateOfJoin = moment(this.dateOfJoin.value).format('YYYY-MM-DD');
+        this.employmentDetails.employmentDetail.dateOfResign = moment(this.dateOfResign.value).format('YYYY-MM-DD');
+        this.employmentDetails.employmentDetail.dateOfConfirmation = moment(this.dateOfConfirm.value).format('YYYY-MM-DD');
+        this.employmentDetails.employmentDetail.bankAccountNumber = (this.employmentDetails.employmentDetail.bankAccountNumber).toString();
+        this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.userId).subscribe(resp => {
+            this.employmentDetails.employmentDetail = resp;
+            this.getEmploymentDetails();
+        });
+    }
 
-    /**
-     * Enable or disable the next button
-     * @memberof InviteListComponent
-     */
-    // enableDisableNextButton() {
-    //     if (this.pageIndex === this.totalPageIndex) {
-    //         this.disableNextButton = true;
-    //     }
-    //     if (this.pageIndex > 0 && this.pageIndex < this.totalPageIndex) {
-    //         this.disableNextButton = false;
-    //     }
-    //     if (this.pageIndex > 1) {
-    //         this.disablePrevButton = false;
-    //     }
-    // }
+    assignProfile() {
+        this.leaveApi.patch_assign_calendar_profile({
+            "user_guid": [this.userId], "calendar_guid": this.calendarValue
+        }).subscribe(data => console.log(data));
 
-    /**
-     * Enable or disable the previous button
-     * @memberof InviteListComponent
-     */
-    // enableDisablePrevButton() {
-    //     if (this.pageIndex < 2) {
-    //         this.disablePrevButton = true;
-    //     }
-    //     if (this.pageIndex > 1 && this.pageIndex === this.totalPageIndex) {
-    //         this.disablePrevButton = false;
-    //     }
-    //     if (this.pageIndex < this.totalPageIndex) {
-    //         this.disableNextButton = false;
-    //     }
-    // }
+        this.leaveApi.patch_user_working_hours({
+            "user_guid": [this.userId], "working_hours_guid": this.workingValue
+        }).subscribe(data => console.log(data));
 
-    /**
-     * Show calculated content items after clicked next button
-     * @param {number} index
-     * @memberof InviteListComponent
-     */
-    // clickToNextPage(index: number) {
-    //     if (!(index > this.totalPageIndex)) {
-    //         this.loopItemsPerPage(index);
-    //     }
-    //     this.enableDisableNextButton();
-    // }
-
-    /**
-     * Show calculated content items after clicked previous button
-     * @param {number} index
-     * @memberof InviteListComponent
-     */
-    // clickToPrevPage(index: number) {
-    //     if (!(index < 1)) {
-    //         this.loopItemsPerPage(index);
-    //     }
-    //     this.enableDisablePrevButton();
-    // }
-
-    /**
-     * Sort Name column after clicked arrow up or down icon
-     * @param {boolean} booleanValue
-     * @param {number} ascValue
-     * @param {number} desValue
-     * @memberof InviteListComponent
-     */
-    // sortName(booleanValue: boolean, ascValue: number, desValue: number) {
-    //     this.arrowDownName = booleanValue;
-    //     this.list = this.list.slice(0);
-    //     this.list.sort(function (a, b) {
-    //         var x = a.employeeName.toLowerCase();
-    //         var y = b.employeeName.toLowerCase();
-    //         return x < y ? ascValue : x > y ? desValue : 0;
-    //     });
-    //     this.loopItemsPerPage(1);
-    //     this.disableNextButton = false;
-    //     this.disablePrevButton = true;
-    // }
-
-    /**
-     * Sort Id column after clicked arrow up or down icon
-     * @param {boolean} value
-     * @param {number} asc
-     * @param {number} des
-     * @memberof InviteListComponent
-     */
-    // sortId(value: boolean, asc: number, des: number) {
-    //     this.arrowDownId = value;
-    //     this.list = this.list.slice(0);
-    //     this.list.sort(function (a, b) {
-    //         var x = a.staffNumber;
-    //         var y = b.staffNumber;
-    //         return x < y ? asc : x > y ? des : 0;
-    //     });
-    //     this.loopItemsPerPage(1);
-    //     this.disableNextButton = false;
-    //     this.disablePrevButton = true;
-    // }
+        this.roleAPI.patch_user_profile({
+            "user_guid": [this.userId], "role_guid": this.roleValue
+        }).subscribe(data => console.log(data));
+    }
 
     /**
      * Filter text key in from searchbar 
@@ -418,10 +354,6 @@ export class InviteListComponent implements OnInit {
             this.list = this.list.filter((item: any) => {
                 return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
-            // this.pageIndex = 1;
-            // this.loopItemsPerPage(this.pageIndex);
-            // this.enableDisableNextButton();
-            // this.enableDisablePrevButton();
         }
     }
 
@@ -433,24 +365,10 @@ export class InviteListComponent implements OnInit {
     changeDetails(text: any) {
         if (text.srcElement.value === '') {
             this.endPoint();
-            // this.disableNextButton = false;
-            // this.disablePrevButton = true;
         } else {
             this.filter(text.srcElement.value);
         }
     }
-
-    // /**
-    //  * Check duplicate Id exist or not
-    //  * @param {string} ID
-    //  * @returns
-    //  * @memberof InviteListComponent
-    //  */
-    // checkUserID(ID: string) {
-    //     return this.favouriteList.some(function (el) {
-    //         return el.itemId === ID;
-    //     });
-    // }
 
     /**
      * manage employee status 
@@ -498,92 +416,5 @@ export class InviteListComponent implements OnInit {
             }
         })
     }
-
-    // /**
-    //  * Save highlighted star icon name card
-    //  * @param {number} index
-    //  * @param {*} item
-    //  * @memberof InviteListComponent
-    //  */
-    // saveAsFavourite(index: number, item: any) {
-    //     const create = { index: index, itemId: item.id };
-    //     const items = create;
-    //     if (this.favouriteList.length > 0 && this.checkUserID(item.id)) {
-    //         for (let i = 0; i < this.favouriteList.length; i++) {
-    //             if (this.favouriteList[i].index == index && this.favouriteList[i].itemId == item.id) {
-    //                 this.favouriteList.splice(i, 1);
-    //             }
-    //         }
-    //     } else if (this.favouriteList.length > 0 && !this.checkUserID(item.id)) {
-    //         this.favouriteList.push(items);
-    //     } else {
-    //         this.favouriteList.push(items);
-    //     }
-    // };
-
-    /**
-     * main checkbox value
-     * @memberof InviteListComponent
-     */
-    // checkboxEvent() {
-    //     this.hideAvatar = [];
-    //     setTimeout(() => {
-    //         this.list.forEach(value => {
-    //             value.isChecked = this.mainCheck;
-    //             if (value.isChecked) {
-    //                 this.hideAvatar.push(true);
-    //             } else {
-    //                 this.hideAvatar.push(false);
-    //             }
-    //         });
-    //     })
-    // }
-
-    /**
-     * item checkbox value
-     * @memberof InviteListComponent
-     */
-    // listEvent() {
-    //     const totalNumber = this.list.length;
-    //     let checkedLength = 0;
-    //     this.list.map(item => {
-    //         if (item.isChecked) {
-    //             checkedLength++;
-    //             this.hideAvatar.push(true);
-    //         }
-    //     });
-    //     if (checkedLength > 0 && checkedLength < totalNumber) {
-    //         this.indeterminateCheck = true;
-    //         this.mainCheck = false;
-    //     } else if (checkedLength == totalNumber) {
-    //         this.mainCheck = true;
-    //         this.indeterminateCheck = false;
-    //     } else {
-    //         this.indeterminateCheck = false;
-    //         this.mainCheck = false;
-    //     }
-    // }
-
-    /**
-     * mouse in/out event
-     * @param {number} idx
-     * @param {boolean} value
-     * @param {boolean} checkedValue
-     * @memberof InviteListComponent
-     */
-    // mouseHoverEvent(idx: number, value: boolean, checkedValue: boolean) {
-    //     if (checkedValue && (this.mainCheck || this.indeterminateCheck)) {
-    //         this.hideAvatar = [];
-    //         this.list.map(value => { this.hideAvatar.push(true); });
-    //     } else if (!checkedValue && (this.mainCheck || this.indeterminateCheck)) {
-    //         this.hideAvatar = [];
-    //         this.list.map(() => { this.hideAvatar.push(true); });
-    //     } else if (value && !checkedValue && !this.indeterminateCheck && !this.mainCheck) {
-    //         this.hideAvatar.splice(idx, 1, true);
-    //     } else {
-    //         this.hideAvatar = [];
-    //         this.list.map(value => { this.hideAvatar.push(false); });
-    //     }
-    // }
 
 }

@@ -342,18 +342,32 @@
                                         <p class="pText" *ngIf="mode === 'OFF'">
                                             {{employmentDetails.employmentDetail.employmentType}}
                                         </p>
-                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                        <!-- <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
                                             <input matInput
                                                 [(ngModel)]="employmentDetails.employmentDetail.employmentType">
+                                        </mat-form-field> -->
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <mat-select [(value)]="employmentDetails.employmentDetail.employmentType">
+                                                <mat-option value="Permanent">Permanent</mat-option>
+                                                <mat-option value="Contract">Contract</mat-option>
+                                                <mat-option value="Temporary">Temporary</mat-option>
+                                            </mat-select>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Employment Status</ion-label>
                                         <p class="pText" *ngIf="mode === 'OFF'">
                                             {{employmentDetails.employmentDetail.employmentStatus}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                        <!-- <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
                                             <input matInput
                                                 [(ngModel)]="employmentDetails.employmentDetail.employmentStatus">
+                                        </mat-form-field> -->
+                                        <mat-form-field *ngIf="mode === 'ON'" class="matFormField">
+                                            <mat-select [(value)]="employmentDetails.employmentDetail.employmentStatus">
+                                                <mat-option value="Probation">Probation</mat-option>
+                                                <mat-option value="Confirmed">Confirmed</mat-option>
+                                                <mat-option value="Terminated">Terminated</mat-option>
+                                            </mat-select>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
@@ -417,10 +431,9 @@
                                     <mat-form-field appearance="outline"
                                         style="font-size: 12px;width: 100%;padding-left: 15px;">
                                         <mat-label>Select calendar profile</mat-label>
-                                        <mat-select required>
+                                        <mat-select required [disabled]="mode === 'OFF'" [(value)]="calendarValue">
                                             <mat-option *ngFor="let item of calendarList; let j=index"
                                                 [value]="item.calendar_guid">
-                                                <!-- (click)="roleSelected(item.working_hours_guid)" -->
                                                 {{item.code}}</mat-option>
                                         </mat-select>
                                     </mat-form-field>
@@ -432,10 +445,9 @@
                                     <mat-form-field appearance="outline"
                                         style="font-size: 12px;width: 100%;padding-left: 15px;">
                                         <mat-label>Select working hour profile</mat-label>
-                                        <mat-select required>
+                                        <mat-select required [disabled]="mode === 'OFF'" [(value)]="workingValue">
                                             <mat-option *ngFor="let item of workingList; let j=index"
                                                 [value]="item.working_hours_guid">
-                                                <!-- (click)="roleSelected(item.working_hours_guid)" -->
                                                 {{item.code}}</mat-option>
                                         </mat-select>
                                     </mat-form-field>
@@ -446,22 +458,37 @@
                                     <p style="padding-left: 15px;font-size: 11px;color: #808495;margin-bottom: 10px;">
                                         Select & add
                                         respective leave entitlement for this employee here</p>
-                                    <mat-form-field appearance="outline"
-                                        style="width: 40%;padding-left: 15px;font-size: 12px;">
-                                        <mat-label>Select leave entitlement</mat-label>
-                                        <mat-select required>
-                                            <mat-option *ngFor="let item of entitlementList; let j=index"
-                                                [value]="item.leaveTypeId"
-                                                (click)="getLeaveTypeEntitlementId(item.leaveTypeId, item.leaveEntitlementId)">
-                                                {{item.leaveType}} - {{item.leaveEntitlementCode}}</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    &nbsp;&nbsp;
-                                    <mat-form-field appearance="outline"
-                                        style="width: 20%;font-size: 12px;font-weight: bold;">
-                                        <mat-label>Days Available</mat-label>
-                                        <input matInput [(ngModel)]="dayAvailable" disabled>
-                                    </mat-form-field>
+                                    <div *ngFor="let entitlement of addEntitlement; let i = index">
+                                        <mat-form-field appearance="outline"
+                                            style="width: 40%;padding-left: 15px;font-size: 12px;">
+                                            <mat-label>Select leave entitlement</mat-label>
+                                            <mat-select required [disabled]="mode === 'OFF'"
+                                                [(value)]="entitlementValue">
+                                                <mat-option *ngFor="let item of entitlementList; let j=index"
+                                                    [value]="item.leaveTypeId"
+                                                    (click)="getLeaveTypeEntitlementId(item.leaveTypeId, item.leaveEntitlementId)">
+                                                    {{item.leaveType}} - {{item.leaveEntitlementCode}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        &nbsp;&nbsp;
+                                        <mat-form-field appearance="outline"
+                                            style="width: 20%;font-size: 12px;font-weight: bold;">
+                                            <mat-label>Days Available</mat-label>
+                                            <input matInput [(ngModel)]="dayAvailable" disabled>
+                                        </mat-form-field>
+                                        &nbsp;&nbsp; &nbsp;&nbsp;
+                                        <img *ngIf="mode === 'ON' && i !== 0"
+                                            style="cursor: pointer;width: 11px;height: 11px;display: inline-block;"
+                                            src="assets/icon/leave_setup/icon_trash@3x.png"
+                                            (click)="deleteEntitlement(i)">
+                                    </div>
+                                </div>
+                                <div *ngIf="mode === 'ON'" style="padding-left: 15px;padding-bottom: 15px;
+                                margin-top: -15px;"><img
+                                        style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;display: inline-block;"
+                                        src="assets/icon/leave_setup/icon_request@3x.png" (click)="addNewEntitlement()">
+                                    <p style="color: #808495;font-size: 11px;font-weight: bold;display: inline-block;">
+                                        Add New Leave Entitlement</p>
                                 </div>
                             </div>
                             <div
@@ -478,8 +505,7 @@
                                 <mat-form-field appearance="outline"
                                     style="width: 40%;padding-left: 15px;font-size: 12px;">
                                     <mat-label>Types of role</mat-label>
-                                    <mat-select required>
-                                        <!-- formControlName="role" -->
+                                    <mat-select required [disabled]="mode === 'OFF'" [(value)]="roleValue">
                                         <mat-option *ngFor="let item of roleList; let j=index" [value]="item.role_guid"
                                             (click)="roleSelected(item.role_guid)">
                                             {{item.code}}</mat-option>

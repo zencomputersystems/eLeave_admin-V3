@@ -79,6 +79,16 @@ export class AdminInvitesApiService {
     }
 
     /**
+     * get requested user profile 
+     * @param {string} id
+     * @returns {Observable<any>}
+     * @memberof AdminInvitesApiService
+     */
+    get_requested_user_profile(id: string): Observable<any> {
+        return this.apiService.get_user_profile_details(id);
+    }
+
+    /**
      * get user info (personal-details, employment-detail, notification-rule)
      * @param {*} item
      * @param {*} id
