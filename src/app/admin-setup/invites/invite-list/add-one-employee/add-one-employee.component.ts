@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
 import { APIService } from 'src/services/shared-service/api.service';
-import { AdminInvitesApiService } from '../../invites/admin-invites-api.service';
+import { AdminInvitesApiService } from '../../admin-invites-api.service';
 import * as _moment from 'moment';
-import { AppDateAdapter, APP_DATE_FORMATS } from '../../leave-setup/date.adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/admin-setup/leave-setup/date.adapter';
 const moment = _moment;
 /**
  * Add One Employee Page
@@ -51,7 +50,7 @@ export class AddOneEmployeeComponent implements OnInit {
      * @param {AdminInvitesApiService} adminInvite
      * @memberof AddOneEmployeeComponent
      */
-    constructor(private apiService: APIService, public dialogAddOneEmployee: MatDialogRef<AddOneEmployeeComponent>, private adminInvite: AdminInvitesApiService) {
+    constructor(private apiService: APIService, private adminInvite: AdminInvitesApiService) {
         this.invitationForm = new FormGroup({
             name: new FormControl('', Validators.required),
             IC: new FormControl('', Validators.required),
@@ -82,7 +81,7 @@ export class AddOneEmployeeComponent implements OnInit {
         }]
         this.adminInvite.post_userimport(data).subscribe(data => {
             this.showSmallSpinner = false;
-            this.dialogAddOneEmployee.close();
+            // this.dialogAddOneEmployee.close();
         })
 
     }

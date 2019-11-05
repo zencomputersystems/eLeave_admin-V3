@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BulkImportComponent } from './bulk-import/bulk-import.component';
-import { AddOneEmployeeComponent } from './add-one-employee/add-one-employee.component';
+import { BulkImportComponent } from '../invites/invite-list/bulk-import/bulk-import.component';
+import { AddOneEmployeeComponent } from '../invites/invite-list/add-one-employee/add-one-employee.component';
 /**
  * Add Employee Page
  * @export

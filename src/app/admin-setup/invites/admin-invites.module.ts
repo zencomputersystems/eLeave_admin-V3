@@ -19,6 +19,9 @@ import { DeleteListConfirmationComponent } from './delete-list-confirmation/dele
 import { MatDialogModule, MatButtonModule, MatMenuModule, MatDatepickerModule } from '@angular/material';
 import { DateDialogComponent } from './date-dialog/date-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { BulkImportComponent } from './invite-list/bulk-import/bulk-import.component';
+import { FileDropModule } from 'ngx-file-drop';
+import { AddOneEmployeeComponent } from './invite-list/add-one-employee/add-one-employee.component';
 
 
 const routes: Routes = [
@@ -48,9 +51,10 @@ const routes: Routes = [
         MatMenuModule,
         MatDatepickerModule,
         NgxPaginationModule,
+        FileDropModule,
         RouterModule.forChild(routes)
     ],
     entryComponents: [DeleteListConfirmationComponent, DateDialogComponent],
-    declarations: [InviteMoreComponent, InviteListComponent, DeleteListConfirmationComponent, DateDialogComponent]
+    declarations: [InviteMoreComponent, InviteListComponent, DeleteListConfirmationComponent, DateDialogComponent, BulkImportComponent, AddOneEmployeeComponent]
 })
 export class AdminInvitesModule { }

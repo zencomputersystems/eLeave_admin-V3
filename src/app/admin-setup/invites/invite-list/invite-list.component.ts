@@ -10,6 +10,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { APP_DATE_FORMATS, AppDateAdapter } from '../../leave-setup/date.adapter';
 import { genderStatus, maritalStatus } from '../../employee-profile-hr/employee-profile.service';
 import { RoleApiService } from '../../role-management/role-api.service';
+import { MenuController } from '@ionic/angular';
 const moment = _moment;
 
 /**
@@ -164,13 +165,19 @@ export class InviteListComponent implements OnInit {
 
     public addEntitlement: any = [0];
 
+    public employeeStatus: string;
+
+    public individualButton: boolean = true;
+
+    public bulkButton: boolean = false;
+
     /**
      *Creates an instance of InviteListComponent.
      * @param {AdminInvitesApiService} inviteAPI
      * @param {MatDialog} popUp
      * @memberof InviteListComponent
      */
-    constructor(private inviteAPI: AdminInvitesApiService, public popUp: MatDialog, private leaveApi: LeaveApiService, public roleAPI: RoleApiService) { }
+    constructor(public menu: MenuController, private inviteAPI: AdminInvitesApiService, public popUp: MatDialog, private leaveApi: LeaveApiService, public roleAPI: RoleApiService) { }
 
     ngOnInit() {
         this.endPoint();
@@ -214,6 +221,7 @@ export class InviteListComponent implements OnInit {
             p = 1;
         }
         this.clickedIndex = ((p - 1) * 7) + index;
+        this.employeeStatus = this.list[this.clickedIndex].status;
         console.log(this.clickedIndex);
         this.userId = userId;
         this.inviteAPI.get_admin_user_info('personal-details', userId).subscribe(data => {
@@ -368,6 +376,16 @@ export class InviteListComponent implements OnInit {
         } else {
             this.filter(text.srcElement.value);
         }
+    }
+
+    /**
+     * close menu 
+     * @param {*} event
+     * @memberof InviteListComponent
+     */
+    eventOutput(event) {
+        this.menu.close('addNewEmployeeDetails');
+        this.inviteAPI.showSnackbar('New employee profiles was created successfully', true);
     }
 
     /**

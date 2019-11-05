@@ -8,13 +8,11 @@ import { MatCardModule } from '@angular/material/card';
 import { AddEmployeeComponent } from './add-employee.component';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
-import { BulkImportComponent } from './bulk-import/bulk-import.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BulkImportSuccessComponent } from './bulk-import-success/bulk-import-success.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FileDropModule } from 'ngx-file-drop';
-import { AddOneEmployeeComponent } from './add-one-employee/add-one-employee.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
@@ -47,7 +45,7 @@ const routes: Routes = [
         MatSelectModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [AddEmployeeComponent, BulkImportComponent, BulkImportSuccessComponent, AddOneEmployeeComponent],
-    entryComponents: [BulkImportComponent, BulkImportSuccessComponent, AddOneEmployeeComponent]
+    declarations: [AddEmployeeComponent, BulkImportSuccessComponent],
+    entryComponents: [BulkImportSuccessComponent]
 })
 export class AddEmployeeModule { }

@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { map } from 'rxjs/operators';
 import { RequestOptions, Http, Headers } from '@angular/http';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { BulkImportSuccessComponent } from '../bulk-import-success/bulk-import-success.component';
 import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import { BulkImportSuccessComponent } from 'src/app/admin-setup/add-employee/bulk-import-success/bulk-import-success.component';
+import { LocalStorageService } from 'angular-web-storage';
+
 /**
  * Bulk Import Page
  * @export
@@ -52,6 +54,9 @@ export class BulkImportComponent implements OnInit {
      */
     public formData: FormData = new FormData();
 
+    @Output() closeMenu = new EventEmitter();
+
+
     /**
      * Return value of filename from imported document
      * @readonly
@@ -64,30 +69,18 @@ export class BulkImportComponent implements OnInit {
 
     /**
      *Creates an instance of BulkImportComponent.
-     * @param {MatDialogRef<BulkImportComponent>} dialogBulkImport
-     * @param {MatDialogRef<BulkImportSuccessComponent>} dialogSuccess
-     * @param {MatDialog} dialog
      * @param {Http} http
      * @param {FormBuilder} fb
+     * @param {LocalStorageService} local
      * @memberof BulkImportComponent
      */
-    constructor(public dialogBulkImport: MatDialogRef<BulkImportComponent>,
-        public dialogSuccess: MatDialogRef<BulkImportSuccessComponent>,
-        public dialog: MatDialog, private http: Http, private fb: FormBuilder) {
+    constructor(private http: Http, private fb: FormBuilder, public local: LocalStorageService) {
     }
 
     ngOnInit() {
         this.fileform = this.fb.group({
             file: ''
         });
-    }
-
-    /**
-     * To close pop up page
-     * @memberof BulkImportComponent
-     */
-    onCloseClick(): void {
-        this.dialogBulkImport.close();
     }
 
     /**
@@ -140,7 +133,7 @@ export class BulkImportComponent implements OnInit {
     onSubmit() {
         this.formData.append('file', new Blob([(this.fileform.get('file').value)], { type: 'text/csv' }), this.fileName);
         const queryHeaders = new Headers();
-        queryHeaders.append('Authorization', 'JWT ' + JSON.parse(localStorage.getItem('access_token')));
+        queryHeaders.append('Authorization', 'JWT ' + JSON.parse(this.local.get('access_token')));
         const options = new RequestOptions({ headers: queryHeaders });
         return new Promise((resolve) => {
             this.http.post('http://zencore.zen.com.my:3000/api/userimport/csv', this.formData, options)
@@ -149,13 +142,14 @@ export class BulkImportComponent implements OnInit {
                 })).subscribe(
                     (response) => {
                         resolve(response.json());
-                        this.dialogBulkImport.close();
-                        this.dialog.open(BulkImportSuccessComponent);
+                        this.closeMenu.emit('true');
+                        // this.dialogBulkImport.close();
+                        // this.dialog.open(BulkImportSuccessComponent);
                     },
                     (err) => {
-                        if (err.status === 401) {
-                            window.location.href = '/login';
-                        }
+                        // if (err.status === 401) {
+                        //     window.location.href = '/login';
+                        // }
                     }
                 )
         })

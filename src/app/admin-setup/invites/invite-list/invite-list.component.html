@@ -1,3 +1,45 @@
+<ion-menu style="--width:455px" contentId="addNewEmployee" side="end" type="overlay" menuId="addNewEmployeeDetails">
+    <ion-header style="background-color:#43425d; color: #fcfcfc;">
+        <img style="margin: 17px;margin-top: 21px;width: 18.8px;height: 11.8px;float:left"
+            src="assets/icon/add_employee/icon_employee@3x.png">
+        <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">ADD NEW EMPLOYEE
+        </p>
+    </ion-header>
+
+    <ion-content>
+        <p style="font-size: 12px;color: #808495;margin: 17px;">You can add by individual or by bulk. All data will be
+            import to their respective sections details. Don’t
+            worry as you can always edit later</p>
+        <div style="margin-left:17px;margin-right:17px">
+            <ion-button
+                style="display:inline-block;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
+                [ngClass]="{
+                    'individualClicked': individualButton === true , 'individualUnclicked': individualButton === false}"
+                (click)="bulkButton = false; individualButton = true;">
+                Add Individual
+            </ion-button>
+            <ion-button [ngClass]="{ 'bulkClicked' : bulkButton === true , 'bulkUnclicked' : bulkButton === false}"
+                (click)="bulkButton = true; individualButton = false;"
+                style="display:inline-block;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;">
+                Add Bulk
+            </ion-button>
+            <div>
+                <!-- <app-add-one-employee *ngIf="individualButton === true"></app-add-one-employee> -->
+                <app-bulk-import *ngIf="bulkButton === true" (closeMenu)="eventOutput($event)"></app-bulk-import>
+            </div>
+        </div>
+        <div style="text-align: center;margin:30px" *ngIf="individualButton === true">
+            <ion-button style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                color="primary" (click)="combineEvent()">
+                Add
+            </ion-button>
+        </div>
+    </ion-content>
+</ion-menu>
+<ion-router-outlet id="addNewEmployee">
+</ion-router-outlet>
+
+<!---------------------------------------- employee setup page --------------------------------------->
 <ion-card>
     <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
         <div class="fullContainer">
@@ -52,9 +94,14 @@
                                         <ion-label style="font-size: 12px;color: #a5a4bf;font-weight: bold;">EMPLOYEE
                                             NAME</ion-label>
                                     </ion-col>
-                                    <ion-col>
+                                    <ion-col size="2">
                                         <ion-label style="font-size: 12px;color: #a5a4bf;font-weight: bold;">STATUS
                                         </ion-label>
+                                    </ion-col>
+                                    <ion-col align-self-center style="top: 3px;">
+                                        <ion-icon class="addIcon" name="add-circle-outline" *ngIf="mode === 'ON'"
+                                            (click)="menu.enable(true, 'addNewEmployeeDetails');menu.open('addNewEmployeeDetails')">
+                                        </ion-icon>
                                     </ion-col>
                                 </ion-row>
                                 <ion-row class="detailsRow" *ngFor="let item of list | paginate: { itemsPerPage: 7, currentPage: p,
@@ -74,8 +121,12 @@
                                             style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                                             {{item.designation}}</p>
                                     </ion-col>
-                                    <ion-col class="colOfLeave" style="color:#808495; font-size: 12px;">
+                                    <ion-col size="2" class="colOfLeave" style="color:#808495; font-size: 12px;">
                                         {{item.status}}
+                                    </ion-col>
+                                    <ion-col align-self-center>
+                                        <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mode === 'ON'"
+                                            style="width: 11px;height:11px;display: inline-block;cursor: pointer;">
                                     </ion-col>
                                     <ion-item class="divider" lines="full"></ion-item>
                                 </ion-row>
@@ -114,13 +165,17 @@
                                 <p style="color: #43425d;opacity:0.8;font-size: 12px;font-weight: bold;">Employee Status
                                 </p>
                                 <div style="margin-top: 5px;margin-left: 10px;">
-                                    <ion-toggle class="toggleButton" mode="ios" color="secondary">
-                                        <!-- (ionChange)="toggleMode($event)" -->
+                                    <ion-toggle class="toggleButton" mode="ios" color="secondary"
+                                        (ionChange)="toggleStatus($event)">
                                     </ion-toggle>
-                                    <p style="margin-top: 3px;
+                                    <p *ngIf="employeeStatus === 'Active'" style="margin-top: 3px;
                                     opacity: 0.8;font-size: 12px;color: #43425d;padding-left: 10px;
                                     position: absolute;display: inline-block;">
-                                        Active</p>
+                                        {{employeeStatus}}</p>
+                                    <p *ngIf="employeeStatus != 'Active'" style="margin-top: 3px;
+                                    opacity: 0.8;font-size: 12px;color: #43425d;padding-left: 10px;
+                                    position: absolute;display: inline-block;">
+                                        Inactive</p>
                                 </div>
                             </div>
                             <div>
@@ -459,7 +514,7 @@
                                         Select & add
                                         respective leave entitlement for this employee here</p>
                                     <div *ngFor="let entitlement of addEntitlement; let i = index">
-                                        <mat-form-field appearance="outline"
+                                        <mat-form-field appearance="outline" class="selectForm"
                                             style="width: 40%;padding-left: 15px;font-size: 12px;">
                                             <mat-label>Select leave entitlement</mat-label>
                                             <mat-select required [disabled]="mode === 'OFF'"
@@ -487,7 +542,8 @@
                                 margin-top: -15px;"><img
                                         style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;display: inline-block;"
                                         src="assets/icon/leave_setup/icon_request@3x.png" (click)="addNewEntitlement()">
-                                    <p style="color: #808495;font-size: 11px;font-weight: bold;display: inline-block;">
+                                    <p style="cursor: pointer;color: #808495;font-size: 11px;font-weight: bold;display: inline-block;"
+                                        (click)="addNewEntitlement()">
                                         Add New Leave Entitlement</p>
                                 </div>
                             </div>

@@ -313,6 +313,11 @@
     font-weight: bold;
     font-size: 12px;
   }
+  .addIcon {
+    color: #7069d8;
+    font-size: 16px;
+    cursor: pointer;
+  }
   .textHover:hover {
     color: #3b86ff;
   }
@@ -347,8 +352,24 @@
     font-size: 11px;
     color: #4d4f5c;
   }
+  ::ng-deep .selectForm > .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
   .pText {
     color: #4d4f5c;
     font-size: 11px;
+  }
+  // menu
+  .individualClicked {
+    --background: #7069d8;
+  }
+  .individualUnclicked {
+    --background: #43425d;
+  }
+  .bulkUnclicked {
+    --background: #43425d;
+  }
+  .bulkClicked {
+    --background: #7069d8;
   }
 }
