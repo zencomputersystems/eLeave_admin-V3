@@ -104,12 +104,7 @@ export class RoleListComponent implements OnInit {
             this.renderItemPerPage(1);
             this.disabledNextButton = false;
             this.disabledPrevButton = true;
-        },
-            error => {
-                if (error) {
-                    window.location.href = '/login';
-                }
-            });
+        });
     }
 
     /**

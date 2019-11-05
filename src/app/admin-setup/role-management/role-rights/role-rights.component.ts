@@ -161,8 +161,6 @@ export class RoleRightsComponent implements OnInit {
                 });
                 this.showSmallSpinner = false;
                 this.initCheckedValue();
-            }, error => {
-                window.location.href = '/login';
             });
         }
     }
@@ -249,7 +247,7 @@ export class RoleRightsComponent implements OnInit {
             this.roleAPi.snackbarMsg('saved successfully');
         }, error => {
             this.roleAPi.snackbarMsg('saved unsuccessfully');
-            window.location.href = '/login';
+            // window.location.href = '/login';
         });
     }
 
