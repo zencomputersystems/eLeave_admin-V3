@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as _moment from 'moment';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -254,9 +254,9 @@ export class CalendarProfileComponent implements OnInit {
 
     /**
      *Creates an instance of CalendarProfileComponent.
-     * @param {LeaveAPIService} leaveAPI
-     * @param {FormBuilder} fb
+     * @param {CalendarProfileApiService} calendarProfileAPI
      * @param {TitleCasePipe} titlecasePipe
+     * @param {MenuController} menu
      * @memberof CalendarProfileComponent
      */
     constructor(private calendarProfileAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, public menu: MenuController) {

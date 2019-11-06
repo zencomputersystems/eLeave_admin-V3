@@ -26,9 +26,9 @@
   .cardContent {
     line-height: 1.25;
     background: white;
-    overflow-y: auto;
-    overflow-x: hidden;
     height: calc(100% - 154px);
+    display: flex;
+    flex-direction: column;
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 30px;
@@ -38,16 +38,23 @@
     display: flex;
     flex-wrap: nowrap;
     margin: 0;
+    max-height: 100%;
     // padding: 0 10px;
   }
   .calendar,
   .assigned {
     flex: 30%;
     max-width: 30%;
+    max-height: 100%;
   }
   .assigned {
     margin-right: 10px;
     margin-left: 10px;
+  }
+  .restday {
+    flex: 38.5%;
+    max-width: 38.5%;
+    max-height: 100%;
   }
   .column {
     font-size: 12px;
@@ -69,10 +76,6 @@
   }
   .textHover:hover {
     color: #3b86ff;
-  }
-  .restday {
-    flex: 38.5%;
-    max-width: 38.5%;
   }
   mat-chip {
     max-width: 74px;

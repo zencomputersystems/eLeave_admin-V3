@@ -224,7 +224,7 @@
     </div>
     <div *ngIf="content" style="background: #f0f0f7; height: 100%;position: absolute;width: 100%;">
         <div class="cardContent">
-            <ion-card-content>
+            <ion-card-content style="max-height: 100%;">
                 <div class="row">
                     <div class="calendar">
                         <div
@@ -249,7 +249,7 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div style="height: 400px;overflow: auto;">
+                        <div style="overflow-y: auto;;height: calc(100% - 62px);">
                             <ng-container *ngIf="!showAddIcon">
                                 <ion-row *ngFor="let list of profileList; let i=index" style="padding-left: 5px;">
                                     <ion-col size="10"
@@ -328,8 +328,7 @@
                                     ASSIGNED EMPLOYEE</ion-col>
                             </ion-row>
                         </div>
-
-                        <div style="height: 396px;overflow: auto;" *ngIf="slideInOut && !showAddIcon"
+                        <div style="overflow-y: auto;height: calc(100% - 62px);" *ngIf="slideInOut && !showAddIcon"
                             [@slideInOut]="slideInOut ? 'open': 'close'">
                             <ion-row *ngFor="let item of assignedNames; let i =index"
                                 style="width: 100%;padding-left: 10px;">
@@ -347,8 +346,7 @@
                                 </ion-item>
                             </ion-row>
                         </div>
-
-                        <div style="height: 396px;overflow: auto;" *ngIf="slideInOut && showAddIcon"
+                        <div style="overflow-y: auto;height: calc(100% - 62px);" *ngIf="slideInOut && showAddIcon"
                             [@slideInOut]="slideInOut ? 'open': 'close'">
                             <mat-card *ngFor="let draggable of assignedNames" [dndDraggable]="draggable.content"
                                 [dndEffectAllowed]="draggable.effectAllowed" [dndDisableIf]="draggable.disable"
@@ -398,7 +396,7 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div style="height: 265px;overflow: auto;" *ngIf="slideInOut"
+                        <div style="overflow-y: auto;height: calc(100% - 190.5px);" *ngIf="slideInOut"
                             [@slideInOut]="slideInOut ? 'open': 'close'">
                             <ion-row *ngFor="let holiday of events; let i=index" style="width: 100%;">
                                 <ion-col size="4" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
