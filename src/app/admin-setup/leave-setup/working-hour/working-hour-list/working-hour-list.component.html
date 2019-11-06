@@ -77,7 +77,7 @@
     <!-- class="container" -->
     <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;" *ngIf="!showSpinner">
         <div class="cardContent">
-            <ion-card-content>
+            <ion-card-content style="max-height:100%;height: 100%;">
                 <div class="row">
                     <div class="working">
                         <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
@@ -103,7 +103,7 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div style="height: 400px;overflow: auto;">
+                        <div style="height: calc(100% - 62px);overflow-y: auto;">
                             <ng-container *ngIf="mode==='OFF'">
                                 <ion-row *ngFor="let item of list; let i=index" style="padding-left: 5px;">
                                     <ion-col size="5"
@@ -191,7 +191,7 @@
                         <!-- <p
                             style="width: 90%;padding: 20px;opacity: 0.8;font-size: 12px;line-height: 1.25;text-align: left;color: #a3a6b4;">
                             Nothing to view. Please select profile name first.</p> -->
-                        <div style="height: 396px;overflow: auto;" *ngIf="mode==='OFF'">
+                        <div style="height: calc(100% - 62px);overflow-y: auto;" *ngIf="mode==='OFF'">
                             <ion-row *ngFor="let item of employeeList; let i =index"
                                 style="width: 100%;padding-left: 10px;">
                                 <ion-col size="8" align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
@@ -206,7 +206,7 @@
                             </ion-row>
                         </div>
 
-                        <div style="height: 396px;overflow: auto;" *ngIf="mode==='ON'">
+                        <div style="height: calc(100% - 62px);overflow-y: auto;" *ngIf="mode==='ON'">
                             <mat-card *ngFor="let draggable of employeeList" [dndDraggable]="draggable.content"
                                 [dndEffectAllowed]="draggable.effectAllowed" [dndDisableIf]="draggable.disable"
                                 style="margin: 5px;border-radius: 3px;box-shadow: 0 3px 6px 0 rgba(77, 77, 77, 0.16);">

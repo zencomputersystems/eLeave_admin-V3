@@ -124,9 +124,9 @@
   .cardContent {
     line-height: 1.25;
     background: white;
-    overflow-y: auto;
-    overflow-x: hidden;
     height: calc(100% - 154px);
+    display: flex;
+    flex-direction: column;
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 30px;
@@ -136,16 +136,22 @@
     display: flex;
     flex-wrap: nowrap;
     margin: 0;
+    max-height: 100%;
+    height: 100%;
     // padding: 0 10px;
   }
   .working {
     flex: 60%;
     max-width: 60%;
+    max-height: 100%;
+    height: 100%;
   }
   .assigned {
     flex: 40%;
     max-width: 40%;
     margin-left: 10px;
+    max-height: 100%;
+    height: 100%;
   }
   .mainDivider {
     --min-height: none;
@@ -202,5 +208,10 @@
     background-color: #fafafa;
     // border-color: limegreen;
     // transform: scale(1.05);
+  }
+  ::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    display: none;
+    overflow: hidden;
   }
 }
