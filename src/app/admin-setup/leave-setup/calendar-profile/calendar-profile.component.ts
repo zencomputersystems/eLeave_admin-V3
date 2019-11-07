@@ -1,11 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as _moment from 'moment';
-import { FullCalendarComponent } from '@fullcalendar/angular';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGrigPlugin from '@fullcalendar/timegrid';
-import listYear from '@fullcalendar/list';
 import { EventInput } from '@fullcalendar/core';
-import { Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
+import { Validators, FormControl } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
 const moment = _moment;
 import { getDataSet, reduce } from "iso3166-2-db";
@@ -46,31 +42,11 @@ import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.co
 export class CalendarProfileComponent implements OnInit {
 
     /**
-      * This is local property for Full Calendar Component
-      * @type {FullCalendarComponent}
-      * @memberof CalendarProfileComponent
-      */
-    @ViewChild('calendar') calendar: FullCalendarComponent;
-
-    /**
-     * This is input property for plugins of Full Calendar Component
-     * @memberof CalendarProfileComponent
-     */
-    public calendarPlugins = [dayGridPlugin, timeGrigPlugin, listYear];
-
-    /**
      * Get data from user profile API
      * @type {*}
      * @memberof CalendarProfileComponent
      */
     public list: any;
-
-    /**
-     * Get data from user profile API (with parameters)
-     * @type {*}
-     * @memberof CalendarProfileComponent
-     */
-    public items: any;
 
     /** 
      * Property for alias Event Input of Full Calendar Component
@@ -80,31 +56,11 @@ export class CalendarProfileComponent implements OnInit {
     public events: EventInput[];
 
     /**
-     * show/hide delete calendar
-     * @type {boolean}
-     * @memberof CalendarProfileComponent
-     */
-    public deleteCalendar: boolean = false;
-
-    /**
      * Calendar profile list from API
      * eg: { "calendar_guid": "string", "code": "string" }
      * @memberof CalendarProfileComponent
      */
     public profileList;
-
-    /**
-     * Selected Calendar profile from list
-     * @memberof CalendarProfileComponent
-     */
-    public selectedCalendarProfile;
-
-    /**
-     * Requested personal profile from API 
-     * Get API with calendar Id
-     * @memberof CalendarProfileComponent
-     */
-    public personalProfile;
 
     /**
      * Selected day name array list
@@ -120,28 +76,24 @@ export class CalendarProfileComponent implements OnInit {
     public weekdays: string[];
 
     /**
-     * Array list for rest to patch to API
-     * eg: { "fullname": "SATURDAY", "name": "SAT" }
-     * @memberof CalendarProfileComponent
-     */
-    public selectedWeekday = [];
-
-    /**
-     * Track calendar input of edit calendar form
-     * @type {FormGroup}
-     * @memberof CalendarProfileComponent
-     */
-    // public editCalendarForm: FormGroup;
-
-    /**
      * Track calendar input of add calendar form
      * @type {*}
      * @memberof CalendarProfileComponent
      */
     public profileName: any;
 
+    /**
+     * Track day selection
+     * @type {*}
+     * @memberof CalendarProfileComponent
+     */
     public dayControl: any;
 
+    /**
+     * Track year input form control
+     * @type {*}
+     * @memberof CalendarProfileComponent
+     */
     public yearDefault: any;
 
     /**
@@ -155,20 +107,6 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     public countryRegion;
-
-    /**
-     * Show/hide input form of add new calendar profile
-     * @type {boolean}
-     * @memberof CalendarProfileComponent
-     */
-    public addCalendar: boolean = false;
-
-    /**
-     * Show/hide of save button and calendar profile select input
-     * @type {boolean}
-     * @memberof CalendarProfileComponent
-     */
-    public showEditForm: boolean = false;
 
     /**
      * Show/hide loading spinner
@@ -191,66 +129,120 @@ export class CalendarProfileComponent implements OnInit {
     public countryIso: string;
 
     /**
-        * World public holiday from database npm i
-        * @memberof CalendarProfileComponent
-        */
+     * World public holiday from database npm i
+     * @memberof CalendarProfileComponent
+     */
     public countryDB;
 
     /**
-     * end date
-     * @type {*}
+     * get the names assigned name list under the calendar
+     * @type {any[]}
      * @memberof CalendarProfileComponent
      */
-    public endDate: any;
+    public assignedNames: any[] = [];
 
     /**
-     * get AM/PM slot
-     * @type {*}
-     * @memberof CalendarProfileComponent
-     */
-    public timeslot: any;
-
-    /**
-     * event show in calendar
-     * @type {*}
-     * @memberof CalendarProfileComponent
-     */
-    public leaveEvent: any;
-
-    /** 
-     * Get Height of calendar when window resize to set in holiday view
+     * clicked calendar profile index
      * @type {number}
      * @memberof CalendarProfileComponent
      */
-    public height: number;
-
-    public assignedNames: any[] = [];
-
     public clickedIndex: number = 0;
 
+    /**
+     * show/hide content
+     * @type {boolean}
+     * @memberof CalendarProfileComponent
+     */
     public content: boolean = false;
 
+    /**
+     * animation slide in or out
+     * @type {boolean}
+     * @memberof CalendarProfileComponent
+     */
     public slideInOut: boolean = false;
 
+    /**
+     * show add icon when edit mode is toggle to 'ON'
+     * @type {boolean}
+     * @memberof CalendarProfileComponent
+     */
     public showAddIcon: boolean = false;
 
-    public showSelectedTree: boolean = false;
-
-    public showTreeDropdown: boolean = false;
-
-    public assignCalendarForm: any;
-
-    public employeeList: any[] = [];
-
-    public userList: any;
-
+    /**
+     * new holiday array list
+     * @type {*}
+     * @memberof CalendarProfileComponent
+     */
     public menuNewHoliday: any = [];
 
+    /**
+     * Track selected country in selection form field
+     * @type {*}
+     * @memberof CalendarProfileComponent
+     */
     public country: any;
 
+    /**
+     * track region selection in form field
+     * @type {*}
+     * @memberof CalendarProfileComponent
+     */
     public region: any;
 
+    /**
+     * toggle button value
+     * @type {string}
+     * @memberof CalendarProfileComponent
+     */
     public modeValue: string = 'OFF';
+
+    /**
+     * employee list of assigned employee
+     * @private
+     * @type {any[]}
+     * @memberof CalendarProfileComponent
+     */
+    private _employeeList: any[] = [];
+
+    /**
+     * user list from endpoint
+     * @private
+     * @type {*}
+     * @memberof CalendarProfileComponent
+     */
+    private _userList: any;
+
+    /**
+     * Array list for rest to patch to API
+     * eg: { "fullname": "SATURDAY", "name": "SAT" }
+     * @private
+     * @memberof CalendarProfileComponent
+     */
+    private _selectedWeekday = [];
+
+    /**
+     * Selected Calendar profile from list
+     * @private
+     * @memberof CalendarProfileComponent
+     */
+    private _selectedCalendarProfile;
+
+    /**
+     * Requested personal profile from API 
+     * Get API with calendar Id
+     * @private
+     * @memberof CalendarProfileComponent
+     */
+    private _personalProfile;
+
+    /**
+     * Get data from user profile API (with parameters)
+     * @private
+     * @type {*}
+     * @memberof CalendarProfileComponent
+     */
+    private _items: any;
 
     /**
      *Creates an instance of CalendarProfileComponent.
@@ -263,9 +255,6 @@ export class CalendarProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.assignCalendarForm = new FormGroup({
-            user: new FormArray([]),
-        })
         this.countryDB = reduce(getDataSet(), "en");
         this.countryList = Object.keys(this.countryDB).map(key => this.countryDB[key]);
         this.countryList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
@@ -305,7 +294,6 @@ export class CalendarProfileComponent implements OnInit {
                 this.content = true;
                 this.list = data;
                 this.events = [];
-                this.leaveEvent = [];
                 for (let i = 0; i < this.list.response.holidays.length; i++) {
                     this.createHolidayList(this.list.response.holidays[i].date.iso, this.list.response.holidays[i].name);
                 }
@@ -325,7 +313,7 @@ export class CalendarProfileComponent implements OnInit {
         }
         this.calendarProfileAPI.get_user_list().subscribe(
             data => {
-                this.userList = data;
+                this._userList = data;
             });
     }
 
@@ -335,10 +323,10 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     async getDragUserId(i: number) {
-        if (this.checkNameExist(this.userList, this.assignedNames[i].FULLNAME) != 0) {
-            const index: number = this.checkNameExist(this.userList, this.assignedNames[i].FULLNAME);
-            if (!this.employeeList.includes(this.userList[index].userId)) {
-                await this.employeeList.push(this.userList[index].userId);
+        if (this.checkNameExist(this._userList, this.assignedNames[i].FULLNAME) != 0) {
+            const index: number = this.checkNameExist(this._userList, this.assignedNames[i].FULLNAME);
+            if (!this._employeeList.includes(this._userList[index].userId)) {
+                await this._employeeList.push(this._userList[index].userId);
             }
         }
     }
@@ -370,11 +358,11 @@ export class CalendarProfileComponent implements OnInit {
             if (event.data === this.assignedNames[i].FULLNAME) {
                 this.getDragUserId(i);
                 this.calendarProfileAPI.patch_assign_calendar_profile({
-                    "user_guid": this.employeeList,
+                    "user_guid": this._employeeList,
                     "calendar_guid": list.calendar_guid
                 }).subscribe(response => {
                     this.assignedNames.splice(i, 1);
-                    this.employeeList = [];
+                    this._employeeList = [];
                     this.getAssignedList();
                 });
             }
@@ -424,20 +412,19 @@ export class CalendarProfileComponent implements OnInit {
         this.clickedIndex = 0;
         this.reformatHolidayObject(this.events);
         const body = {
-            "calendar_guid": this.selectedCalendarProfile.calendar_guid,
+            "calendar_guid": this._selectedCalendarProfile.calendar_guid,
             "year": (new Date()).getFullYear(),
             "data": {
-                "code": this.selectedCalendarProfile.code,
+                "code": this._selectedCalendarProfile.code,
                 "holiday": this.events,
-                "rest": this.selectedWeekday
+                "rest": this._selectedWeekday
             }
         }
-        console.log(body);
         this.calendarProfileAPI.patch_calendar_profile(body).subscribe(
             (data: any[]) => {
                 this.restDay = [];
                 this.dayControl.reset();
-                this.selectedWeekday = [];
+                this._selectedWeekday = [];
                 this.getProfileList();
                 this.calendarProfileAPI.notification('Edit mode disabled. Good job!', true);
             }, error => {
@@ -454,23 +441,23 @@ export class CalendarProfileComponent implements OnInit {
      */
     selectProfile(list, index) {
         this.slideInOut = false;
-        this.selectedCalendarProfile = list;
+        this._selectedCalendarProfile = list;
         this.clickedIndex = index;
         this.restDay = [];
-        this.calendarProfileAPI.get_personal_holiday_calendar(this.selectedCalendarProfile.calendar_guid, (new Date()).getFullYear()).subscribe(
+        this.calendarProfileAPI.get_personal_holiday_calendar(this._selectedCalendarProfile.calendar_guid, (new Date()).getFullYear()).subscribe(
             (data: any) => {
-                this.personalProfile = data;
+                this._personalProfile = data;
                 this.slideInOut = true;
                 this.events = [];
-                for (let i = 0; i < this.personalProfile.holiday.length; i++) {
-                    this.createHolidayList(this.personalProfile.holiday[i].start, this.personalProfile.holiday[i].title);
+                for (let i = 0; i < this._personalProfile.holiday.length; i++) {
+                    this.createHolidayList(this._personalProfile.holiday[i].start, this._personalProfile.holiday[i].title);
                 }
-                if (this.personalProfile["rest"] != undefined && Array.isArray(this.personalProfile.rest) == false) {
-                    this.restDay.push(this.titlecasePipe.transform(this.personalProfile.rest.fullname));
+                if (this._personalProfile["rest"] != undefined && Array.isArray(this._personalProfile.rest) == false) {
+                    this.restDay.push(this.titlecasePipe.transform(this._personalProfile.rest.fullname));
                 }
-                if (this.personalProfile["rest"] != undefined && Array.isArray(this.personalProfile.rest) == true) {
-                    for (let i = 0; i < this.personalProfile.rest.length; i++) {
-                        this.restDay.push(this.titlecasePipe.transform(this.personalProfile.rest[i].fullname));
+                if (this._personalProfile["rest"] != undefined && Array.isArray(this._personalProfile.rest) == true) {
+                    for (let i = 0; i < this._personalProfile.rest.length; i++) {
+                        this.restDay.push(this.titlecasePipe.transform(this._personalProfile.rest[i].fullname));
                     }
                 }
                 this.dayControl.setValue(this.restDay);
@@ -548,12 +535,11 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     async callParamAPI(year) {
-        this.addCalendar = false;
         const params = { 'country': this.countryIso, 'location': this.regionISO, 'year': year };
-        this.items = await this.calendarProfileAPI.get_public_holiday_list(params).toPromise();
+        this._items = await this.calendarProfileAPI.get_public_holiday_list(params).toPromise();
         this.events = [];
-        for (let j = 0; j < this.items.response.holidays.length; j++) {
-            this.createHolidayList(this.items.response.holidays[j].date.iso, this.items.response.holidays[j].name);
+        for (let j = 0; j < this._items.response.holidays.length; j++) {
+            this.createHolidayList(this._items.response.holidays[j].date.iso, this._items.response.holidays[j].name);
         }
     }
 
@@ -622,16 +608,11 @@ export class CalendarProfileComponent implements OnInit {
         for (let i = 0; i < this.events.length; i++) {
             delete holiday[i].day;
         }
-
         for (let j = 0; j < this.restDay.length; j++) {
-            // if (this.checkObjectExist(this.restDay[j], this.restDay) === true) {
-            //     console.log(this.restDay);
-            // console.log(this.selectedWeekday[j].fullname.charAt(0).toUpperCase());
-            // }
             let obj = {};
             obj["fullname"] = (this.restDay[j]).toUpperCase();
             obj["name"] = obj["fullname"].substring(0, 3);
-            this.selectedWeekday.push(obj);
+            this._selectedWeekday.push(obj);
         }
     }
 
@@ -663,6 +644,7 @@ export class CalendarProfileComponent implements OnInit {
     async postData() {
         this.showSpinner = true;
         this.content = false;
+        this.clickedIndex = 0;
         this.reformatHolidayObject(this.events);
         await this.callParamAPI(this.yearDefault.value);
         const newProfile = {
@@ -673,12 +655,17 @@ export class CalendarProfileComponent implements OnInit {
                 "region": this.regionISO
             },
             "holiday": this.events,
-            "rest": this.selectedWeekday
+            "rest": this._selectedWeekday
         }
         this.calendarProfileAPI.post_calendar_profile(newProfile).subscribe(response => {
             this.calendarProfileAPI.notification('New calendar profile was created successfully.', true);
             this.showSpinner = false;
             this.content = true;
+            this.profileName.reset();
+            this.country.reset();
+            this.region.reset();
+            this.countryIso = '';
+            this.regionISO = '';
         }, error => {
             this.calendarProfileAPI.notification(error.status + ' ' + error.statusText + '.', false);
             this.showSpinner = false;
@@ -734,5 +721,3 @@ export class CalendarProfileComponent implements OnInit {
         });
     }
 }
-
-// TODO: prevent duplicate rest day added when saveData() 22/10/2019

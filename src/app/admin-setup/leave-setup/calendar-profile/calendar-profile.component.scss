@@ -1,3 +1,8 @@
+::ng-deep .mat-pseudo-checkbox-checked {
+  &::after {
+    height: 5px !important;
+  }
+}
 :host {
   ///////////////////////////////// new scss /////////////////////////
   ion-card {

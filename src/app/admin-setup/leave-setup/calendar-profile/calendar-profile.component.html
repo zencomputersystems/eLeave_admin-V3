@@ -240,7 +240,7 @@
                                     EMPLOYEE</ion-col> -->
                                 <ion-col align-self-center>
                                     <ion-icon class="addIcon" name="add-circle-outline" *ngIf="showAddIcon"
-                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.open('createCalendarDetails');">
+                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null;restDay=[]; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.open('createCalendarDetails');">
                                     </ion-icon>
                                     <!-- <p *ngIf="!showAddIcon" style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
             margin-top: -21px;margin-left: 20px;"
