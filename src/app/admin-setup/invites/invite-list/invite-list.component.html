@@ -12,7 +12,7 @@
             worry as you can always edit later</p>
         <div style="margin-left:17px;margin-right:17px">
             <ion-button
-                style="display:inline-block;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
+                style="display:inline-block;font-size: 11px;height: 30px;width:195px;cursor: pointer;text-transform: none;"
                 [ngClass]="{
                     'individualClicked': individualButton === true , 'individualUnclicked': individualButton === false}"
                 (click)="bulkButton = false; individualButton = true;">
@@ -20,19 +20,23 @@
             </ion-button>
             <ion-button [ngClass]="{ 'bulkClicked' : bulkButton === true , 'bulkUnclicked' : bulkButton === false}"
                 (click)="bulkButton = true; individualButton = false;"
-                style="display:inline-block;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;">
+                style="display:inline-block;font-size: 11px;height: 30px;width:195px;cursor: pointer;text-transform: none;">
                 Add Bulk
             </ion-button>
             <div>
-                <!-- <app-add-one-employee *ngIf="individualButton === true"></app-add-one-employee> -->
+                <app-add-one-employee *ngIf="individualButton === true"></app-add-one-employee>
                 <app-bulk-import *ngIf="bulkButton === true" (closeMenu)="eventOutput($event)"></app-bulk-import>
             </div>
         </div>
-        <div style="text-align: center;margin:30px" *ngIf="individualButton === true">
-            <ion-button style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+        <div style="text-align: center;margin:20px" *ngIf="individualButton === true">
+            <ion-button
+                style="--border-radius:2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
                 color="primary" (click)="combineEvent()">
                 Add
             </ion-button>
+            <p style="color: #808495;font-size: 12px;padding-left: 70px;
+            padding-right: 70px;padding-top: 10px;">After click Add, it will go to edit mode and you can straightaway
+                complete the rest of the configuration there.</p>
         </div>
     </ion-content>
 </ion-menu>

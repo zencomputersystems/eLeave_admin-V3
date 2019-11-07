@@ -22,6 +22,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { BulkImportComponent } from './invite-list/bulk-import/bulk-import.component';
 import { FileDropModule } from 'ngx-file-drop';
 import { AddOneEmployeeComponent } from './invite-list/add-one-employee/add-one-employee.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 const routes: Routes = [
@@ -52,6 +53,7 @@ const routes: Routes = [
         MatDatepickerModule,
         NgxPaginationModule,
         FileDropModule,
+        MatAutocompleteModule,
         RouterModule.forChild(routes)
     ],
     entryComponents: [DeleteListConfirmationComponent, DateDialogComponent],
