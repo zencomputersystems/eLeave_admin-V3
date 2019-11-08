@@ -23,6 +23,7 @@ import { BulkImportComponent } from './invite-list/bulk-import/bulk-import.compo
 import { FileDropModule } from 'ngx-file-drop';
 import { AddOneEmployeeComponent } from './invite-list/add-one-employee/add-one-employee.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ChangeStatusConfimationComponent } from './invite-list/change-status-confimation/change-status-confimation.component';
 
 
 const routes: Routes = [
@@ -56,7 +57,9 @@ const routes: Routes = [
         MatAutocompleteModule,
         RouterModule.forChild(routes)
     ],
-    entryComponents: [DeleteListConfirmationComponent, DateDialogComponent],
-    declarations: [InviteMoreComponent, InviteListComponent, DeleteListConfirmationComponent, DateDialogComponent, BulkImportComponent, AddOneEmployeeComponent]
+    entryComponents: [DeleteListConfirmationComponent, DateDialogComponent,
+        ChangeStatusConfimationComponent],
+    declarations: [InviteMoreComponent, InviteListComponent, DeleteListConfirmationComponent,
+        DateDialogComponent, BulkImportComponent, AddOneEmployeeComponent, ChangeStatusConfimationComponent]
 })
 export class AdminInvitesModule { }

@@ -11,6 +11,7 @@ import { APP_DATE_FORMATS, AppDateAdapter } from '../../leave-setup/date.adapter
 import { genderStatus, maritalStatus } from '../../employee-profile-hr/employee-profile.service';
 import { RoleApiService } from '../../role-management/role-api.service';
 import { MenuController } from '@ionic/angular';
+import { ChangeStatusConfimationComponent } from './change-status-confimation/change-status-confimation.component';
 const moment = _moment;
 
 /**
@@ -206,6 +207,14 @@ export class InviteListComponent implements OnInit {
     public bulkButton: boolean = false;
 
     /**
+     * toggle status of employee
+     * active/inactive
+     * @type {boolean}
+     * @memberof InviteListComponent
+     */
+    public status: boolean;
+
+    /**
      *Creates an instance of InviteListComponent.
      * @param {MenuController} menu
      * @param {AdminInvitesApiService} inviteAPI
@@ -259,15 +268,17 @@ export class InviteListComponent implements OnInit {
         }
         this.clickedIndex = ((p - 1) * 7) + index;
         this.employeeStatus = this.list[this.clickedIndex].status;
-        console.log(this.clickedIndex);
+        if (this.employeeStatus == 'Active') {
+            this.status = true;
+        } else {
+            this.status = false;
+        }
         this.userId = userId;
         this.inviteAPI.get_admin_user_info('personal-details', userId).subscribe(data => {
-            console.log(data);
             this.personalDetails = data;
             this.getPersonalDetails();
         })
         this.inviteAPI.get_admin_user_info('employment-detail', userId).subscribe(data => {
-            console.log('employ', data);
             this.employmentDetails = data;
             this.getEmploymentDetails();
         })
@@ -285,8 +296,10 @@ export class InviteListComponent implements OnInit {
      * @memberof InviteListComponent
      */
     getPersonalDetails() {
-        this.birthOfDate = new FormControl((this.personalDetails.personalDetail.dob), Validators.required);
-        this.personalDetails.personalDetail.dob = moment(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
+        if (this.personalDetails.personalDetail != undefined) {
+            this.birthOfDate = new FormControl((this.personalDetails.personalDetail.dob), Validators.required);
+            this.personalDetails.personalDetail.dob = moment(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
+        }
     }
 
     /**
@@ -294,12 +307,15 @@ export class InviteListComponent implements OnInit {
      * @memberof InviteListComponent
      */
     getEmploymentDetails() {
-        this.dateOfJoin = new FormControl((this.employmentDetails.employmentDetail.dateOfJoin), Validators.required);
-        this.employmentDetails.employmentDetail.dateOfJoin = moment(this.employmentDetails.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
-        this.dateOfConfirm = new FormControl((this.employmentDetails.employmentDetail.dateOfConfirmation), Validators.required);
-        this.employmentDetails.employmentDetail.dateOfConfirmation = moment(this.employmentDetails.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
-        this.dateOfResign = new FormControl((this.employmentDetails.employmentDetail.dateOfResign), Validators.required);
-        this.employmentDetails.employmentDetail.dateOfResign = moment(this.employmentDetails.employmentDetail.dateOfResign).format('DD-MM-YYYY');
+        if (this.employmentDetails.employmentDetail != undefined) {
+            this.dateOfJoin = new FormControl((this.employmentDetails.employmentDetail.dateOfJoin), Validators.required);
+            this.employmentDetails.employmentDetail.dateOfJoin = moment(this.employmentDetails.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
+            this.dateOfConfirm = new FormControl((this.employmentDetails.employmentDetail.dateOfConfirmation), Validators.required);
+            this.employmentDetails.employmentDetail.dateOfConfirmation = moment(this.employmentDetails.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
+            this.dateOfResign = new FormControl((this.employmentDetails.employmentDetail.dateOfResign), Validators.required);
+            this.employmentDetails.employmentDetail.dateOfResign = moment(this.employmentDetails.employmentDetail.dateOfResign).format('DD-MM-YYYY');
+        }
+
     }
 
     /**
@@ -364,6 +380,42 @@ export class InviteListComponent implements OnInit {
             this.patchEmploymentDetails();
             this.assignProfile();
             this.inviteAPI.showSnackbar('Edit mode disabled. Good job!', true);
+        }
+    }
+
+    toggleStatus(event, name: string) {
+        if (event.currentTarget.checked == false) {
+            const dialog = this.popUp.open(ChangeStatusConfimationComponent, {
+                data: { name: name, status: 'Active' },
+                height: "195px",
+                width: "249px"
+            });
+            dialog.afterClosed().subscribe(result => {
+                if (result === 'Active') {
+                    this.employeeStatus = 'Active';
+                    this.status = true;
+                    this.inviteAPI.showSnackbar(name + ' become Active', true);
+                }
+            });
+        } else {
+            const dialog = this.popUp.open(ChangeStatusConfimationComponent, {
+                data: { name: name, status: 'Inactive' },
+                height: "195px",
+                width: "249px"
+            });
+            dialog.afterClosed().subscribe(result => {
+                if (result === 'Inactive') {
+                    this.employeeStatus = 'Inactive';
+                    this.status = false;
+                    this.inviteAPI.disable_user({
+                        "user_guid": this.userId,
+                        "resign_date": moment(new Date()).format('YYYY-MM-DD'),
+                    }).subscribe(response => {
+                        this.endPoint();
+                        this.inviteAPI.showSnackbar(name + ' become Inactive', true);
+                    })
+                }
+            });
         }
     }
 
