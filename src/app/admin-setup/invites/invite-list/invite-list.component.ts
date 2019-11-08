@@ -37,12 +37,6 @@ export class InviteListComponent implements OnInit {
      */
     public list: any;
 
-    // /**
-    //  * Add as favourite list after clicked star icon
-    //  * @memberof InviteListComponent
-    //  */
-    // public favouriteList = [];
-
     /**
      * Show spinner during loading
      * @type {boolean}
@@ -155,26 +149,69 @@ export class InviteListComponent implements OnInit {
      */
     public clickedIndex: number = 0;
 
+    /**
+     * calendar guid
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public calendarValue: any;
 
+    /**
+     * working hour guid
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public workingValue: any;
 
+    /**
+     * entitlement guid
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public entitlementValue: any;
 
+    /**
+     * role guid
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public roleValue: any;
 
+    /**
+     * entitlement id
+     * @type {*}
+     * @memberof InviteListComponent
+     */
     public addEntitlement: any = [0];
 
+    /** 
+     * active/inactive status from endpoint
+     * @type {string}
+     * @memberof InviteListComponent
+     */
     public employeeStatus: string;
 
+    /**
+     * individual button clicked or not
+     * @type {boolean}
+     * @memberof InviteListComponent
+     */
     public individualButton: boolean = true;
 
+    /**
+     * bulk import button clicked or not
+     * @type {boolean}
+     * @memberof InviteListComponent
+     */
     public bulkButton: boolean = false;
 
     /**
      *Creates an instance of InviteListComponent.
+     * @param {MenuController} menu
      * @param {AdminInvitesApiService} inviteAPI
      * @param {MatDialog} popUp
+     * @param {LeaveApiService} leaveApi
+     * @param {RoleApiService} roleAPI
      * @memberof InviteListComponent
      */
     constructor(public menu: MenuController, private inviteAPI: AdminInvitesApiService, public popUp: MatDialog, private leaveApi: LeaveApiService, public roleAPI: RoleApiService) { }
@@ -243,11 +280,19 @@ export class InviteListComponent implements OnInit {
         })
     }
 
+    /**
+     * get personal details of DOB
+     * @memberof InviteListComponent
+     */
     getPersonalDetails() {
         this.birthOfDate = new FormControl((this.personalDetails.personalDetail.dob), Validators.required);
         this.personalDetails.personalDetail.dob = moment(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
     }
 
+    /**
+     * get employment details of Dates
+     * @memberof InviteListComponent
+     */
     getEmploymentDetails() {
         this.dateOfJoin = new FormControl((this.employmentDetails.employmentDetail.dateOfJoin), Validators.required);
         this.employmentDetails.employmentDetail.dateOfJoin = moment(this.employmentDetails.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
@@ -283,9 +328,19 @@ export class InviteListComponent implements OnInit {
         console.log(leaveTypeId, leaveEntitlementId);
     }
 
+    /**
+     * add new form of entitlement
+     * @memberof InviteListComponent
+     */
     addNewEntitlement() {
         this.addEntitlement.push(0);
     }
+
+    /**
+     * delete form of entitlement
+     * @param {number} index
+     * @memberof InviteListComponent
+     */
     deleteEntitlement(index: number) {
         this.addEntitlement.splice(index, 1);
     }
@@ -312,6 +367,10 @@ export class InviteListComponent implements OnInit {
         }
     }
 
+    /**
+     * patch personal details
+     * @memberof InviteListComponent
+     */
     patchPersonalDetails() {
         this.personalDetails.personalDetail.nric = (this.personalDetails.personalDetail.nric).toString();
         this.personalDetails.personalDetail.dob = moment(this.birthOfDate.value).format('YYYY-MM-DD');
@@ -325,6 +384,10 @@ export class InviteListComponent implements OnInit {
         });
     }
 
+    /**
+     * patch employment details to endpoint
+     * @memberof InviteListComponent
+     */
     patchEmploymentDetails() {
         this.employmentDetails.employmentDetail.employeeId = (this.employmentDetails.employmentDetail.employeeId).toString();
         this.employmentDetails.employmentDetail.incomeTaxNumber = (this.employmentDetails.employmentDetail.incomeTaxNumber).toString();
@@ -338,6 +401,10 @@ export class InviteListComponent implements OnInit {
         });
     }
 
+    /**
+     * save assigned profile of calendar profile, working hour & user role
+     * @memberof InviteListComponent
+     */
     assignProfile() {
         this.leaveApi.patch_assign_calendar_profile({
             "user_guid": [this.userId], "calendar_guid": this.calendarValue

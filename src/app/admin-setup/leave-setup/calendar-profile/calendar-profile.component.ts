@@ -3,7 +3,6 @@ import * as _moment from 'moment';
 import { EventInput } from '@fullcalendar/core';
 import { Validators, FormControl } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
-const moment = _moment;
 import { getDataSet, reduce } from "iso3166-2-db";
 import { MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 import { APP_DATE_FORMATS, AppDateAdapter } from '../date.adapter';
@@ -12,6 +11,7 @@ import { DeleteCalendarConfirmationComponent } from '../delete-calendar-confirma
 import { trigger, transition, animate, style } from '@angular/animations'
 import { MenuController } from '@ionic/angular';
 import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.component';
+const moment = _moment;
 
 /**
  * Manage holiday and rest day for employee

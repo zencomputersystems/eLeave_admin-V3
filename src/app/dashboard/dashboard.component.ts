@@ -121,6 +121,7 @@ export class DashboardComponent implements OnInit {
    *Creates an instance of DashboardComponent.
    * @param {MenuController} menu
    * @param {DashboardApiService} dashboardAPI
+   * @param {MatDialog} dialog
    * @memberof DashboardComponent
    */
   constructor(private menu: MenuController, private dashboardAPI: DashboardApiService, public dialog: MatDialog) {
@@ -249,6 +250,11 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  /**
+   * delete annoucement dialog
+   * @param {*} item
+   * @memberof DashboardComponent
+   */
   deleteAnnouncement(item) {
     const dialog = this.dialog.open(DeleteCalendarConfirmationComponent, {
       data: { name: 'this', value: item.ANNOUNCEMENT_GUID, desc: ' announcement' },

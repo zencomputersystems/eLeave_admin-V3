@@ -52,6 +52,10 @@ export class BulkImportComponent implements OnInit {
      */
     public formData: FormData = new FormData();
 
+    /**
+     * emit output to close menu
+     * @memberof BulkImportComponent
+     */
     @Output() closeMenu = new EventEmitter();
 
 
@@ -81,10 +85,10 @@ export class BulkImportComponent implements OnInit {
         });
     }
 
-     /**
-     * To download CSV employee data Template 
-     * @memberof BulkImportComponent
-     */
+    /**
+    * To download CSV employee data Template 
+    * @memberof BulkImportComponent
+    */
     downloadFile() {
         const blob = new Blob([`STAFF_EMAIL,STAFF_ID,FULLNAME,NICKNAME,NRIC,DOB,GENDER,PHONE_NUMBER,COMPANY_NUMBER,MARITAL_STATUS,ADDRESS,POSTCODE,CITY,STATE,COUNTRY,DESIGNATION,DEPARTMENT,COST_CENTRE,BRANCH,DIVISION,COMPANY,JOIN_DATE,CONFIRMATION_DATE,RESIGNATION_DATE
         leavetest@zen.com.my,ZEN-00001,TEST 1 ZEN,TEST 1,12345676,9/7/2018,Male,654323456,13222222,SINGLE,This is address,44333,Shah Alam,Selangor,Malaysia,SOFTWARE ENGINEER,Tester,,CYBERJAYA,,Zen Company Sdn Bhd,9/7/2018,9/12/2018,

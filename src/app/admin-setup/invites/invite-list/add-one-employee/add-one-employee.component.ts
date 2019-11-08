@@ -218,6 +218,12 @@ export class AddOneEmployeeComponent implements OnInit {
         });
     }
 
+    /**
+     * filter branch from the list
+     * @param {string} name
+     * @returns
+     * @memberof AddOneEmployeeComponent
+     */
     filterBranch(name: string) {
         let results = this.branchList.filter(state =>
             state.BRANCH.toLowerCase().indexOf(name.toLowerCase()) === 0);
@@ -227,6 +233,12 @@ export class AddOneEmployeeComponent implements OnInit {
         return results;
     }
 
+    /**
+     * filter section from the list
+     * @param {string} name
+     * @returns
+     * @memberof AddOneEmployeeComponent
+     */
     filterSection(name: string) {
         let results = this.sectionList.filter(state =>
             state.SECTION.toLowerCase().indexOf(name.toLowerCase()) === 0);
@@ -236,6 +248,12 @@ export class AddOneEmployeeComponent implements OnInit {
         return results;
     }
 
+    /**
+     * filter department from the list
+     * @param {string} name
+     * @returns
+     * @memberof AddOneEmployeeComponent
+     */
     filterDepartment(name: string) {
         let results = this.departmentList.filter(state =>
             state.DEPARTMENT.toLowerCase().indexOf(name.toLowerCase()) === 0);
@@ -245,6 +263,12 @@ export class AddOneEmployeeComponent implements OnInit {
         return results;
     }
 
+    /**
+     * filter cost centre from the list
+     * @param {string} name
+     * @returns
+     * @memberof AddOneEmployeeComponent
+     */
     filterCC(name: string) {
         let results = this.costcentre.filter(state =>
             state.COSTCENTRE.toLowerCase().indexOf(name.toLowerCase()) === 0);
@@ -254,6 +278,10 @@ export class AddOneEmployeeComponent implements OnInit {
         return results;
     }
 
+    /** option selected from branch
+     * @param {*} option
+     * @memberof AddOneEmployeeComponent
+     */
     optionSelected(option) {
         console.log('optionSelected:', option.value);
         if (option.value.indexOf(this._question) === 0) {
@@ -263,6 +291,11 @@ export class AddOneEmployeeComponent implements OnInit {
         }
     }
 
+    /**
+     * option selected from section
+     * @param {*} option
+     * @memberof AddOneEmployeeComponent
+     */
     optionSectionSelected(option) {
         console.log('optionSelected:', option.value);
         if (option.value.indexOf(this._question) === 0) {
@@ -272,6 +305,11 @@ export class AddOneEmployeeComponent implements OnInit {
         }
     }
 
+    /**
+     * option selected from department
+     * @param {*} option
+     * @memberof AddOneEmployeeComponent
+     */
     optionDepartmentSelected(option) {
         console.log('optionSelected:', option.value);
         if (option.value.indexOf(this._question) === 0) {
@@ -281,6 +319,10 @@ export class AddOneEmployeeComponent implements OnInit {
         }
     }
 
+    /**
+     * click enter to save the new branch value to list
+     * @memberof AddOneEmployeeComponent
+     */
     enter() {
         const value = this.branchCtrl.value;
         if (!this.branchList.some(entry => entry === value)) {
@@ -289,6 +331,10 @@ export class AddOneEmployeeComponent implements OnInit {
         setTimeout(() => this.branchCtrl.setValue(value));
     }
 
+    /**
+     *  click enter to save the new section value to list
+     * @memberof AddOneEmployeeComponent
+     */
     enterSection() {
         const value = this.sectionCtrl.value;
         if (!this.sectionList.some(entry => entry === value)) {
@@ -297,6 +343,10 @@ export class AddOneEmployeeComponent implements OnInit {
         setTimeout(() => this.sectionCtrl.setValue(value));
     }
 
+    /**
+     *  click enter to save the new department value to list
+     * @memberof AddOneEmployeeComponent
+     */
     enterDepartment() {
         const value = this.sectionCtrl.value;
         if (!this.departmentList.some(entry => entry === value)) {
