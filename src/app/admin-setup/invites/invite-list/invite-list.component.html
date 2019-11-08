@@ -81,7 +81,7 @@
                                 <ion-button class="people" *ngIf="list" color="primary" [style.pointerEvents]="'none'">
                                     <p style="color: white;font-size: 11px;">{{list.length}} Peoples</p>
                                 </ion-button>
-                                <ion-searchbar mode="md" class="searchbar" placeholder="Filter by name"
+                                <ion-searchbar mode="md" class="searchbar" placeholder="Filter by Name"
                                     (ionClear)="clearDetails()" (ionChange)="changeDetails($event)"></ion-searchbar>
                             </div>
                             <div style="width: 100%; height:100%; text-align: center;" *ngIf="showSpinner">

@@ -424,16 +424,18 @@ export class InviteListComponent implements OnInit {
      * @memberof InviteListComponent
      */
     patchPersonalDetails() {
-        this.personalDetails.personalDetail.nric = (this.personalDetails.personalDetail.nric).toString();
-        this.personalDetails.personalDetail.dob = moment(this.birthOfDate.value).format('YYYY-MM-DD');
-        this.personalDetails.personalDetail.gender = genderStatus[this.personalDetails.personalDetail.gender];
-        this.personalDetails.personalDetail.maritalStatus = maritalStatus[this.personalDetails.personalDetail.maritalStatus];
-        this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.userId).subscribe(res => {
-            this.personalDetails.personalDetail = res;
-            this.getPersonalDetails();
+        if (this.personalDetails.personalDetail != undefined) {
+            this.personalDetails.personalDetail.nric = (this.personalDetails.personalDetail.nric).toString();
+            this.personalDetails.personalDetail.dob = moment(this.birthOfDate.value).format('YYYY-MM-DD');
             this.personalDetails.personalDetail.gender = genderStatus[this.personalDetails.personalDetail.gender];
             this.personalDetails.personalDetail.maritalStatus = maritalStatus[this.personalDetails.personalDetail.maritalStatus];
-        });
+            this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.userId).subscribe(res => {
+                this.personalDetails.personalDetail = res;
+                this.getPersonalDetails();
+                this.personalDetails.personalDetail.gender = genderStatus[this.personalDetails.personalDetail.gender];
+                this.personalDetails.personalDetail.maritalStatus = maritalStatus[this.personalDetails.personalDetail.maritalStatus];
+            });
+        }
     }
 
     /**
@@ -441,16 +443,18 @@ export class InviteListComponent implements OnInit {
      * @memberof InviteListComponent
      */
     patchEmploymentDetails() {
-        this.employmentDetails.employmentDetail.employeeId = (this.employmentDetails.employmentDetail.employeeId).toString();
-        this.employmentDetails.employmentDetail.incomeTaxNumber = (this.employmentDetails.employmentDetail.incomeTaxNumber).toString();
-        this.employmentDetails.employmentDetail.dateOfJoin = moment(this.dateOfJoin.value).format('YYYY-MM-DD');
-        this.employmentDetails.employmentDetail.dateOfResign = moment(this.dateOfResign.value).format('YYYY-MM-DD');
-        this.employmentDetails.employmentDetail.dateOfConfirmation = moment(this.dateOfConfirm.value).format('YYYY-MM-DD');
-        this.employmentDetails.employmentDetail.bankAccountNumber = (this.employmentDetails.employmentDetail.bankAccountNumber).toString();
-        this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.userId).subscribe(resp => {
-            this.employmentDetails.employmentDetail = resp;
-            this.getEmploymentDetails();
-        });
+        if (this.employmentDetails.employmentDetail != undefined) {
+            this.employmentDetails.employmentDetail.employeeId = (this.employmentDetails.employmentDetail.employeeId).toString();
+            this.employmentDetails.employmentDetail.incomeTaxNumber = (this.employmentDetails.employmentDetail.incomeTaxNumber).toString();
+            this.employmentDetails.employmentDetail.dateOfJoin = moment(this.dateOfJoin.value).format('YYYY-MM-DD');
+            this.employmentDetails.employmentDetail.dateOfResign = moment(this.dateOfResign.value).format('YYYY-MM-DD');
+            this.employmentDetails.employmentDetail.dateOfConfirmation = moment(this.dateOfConfirm.value).format('YYYY-MM-DD');
+            this.employmentDetails.employmentDetail.bankAccountNumber = (this.employmentDetails.employmentDetail.bankAccountNumber).toString();
+            this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.userId).subscribe(resp => {
+                this.employmentDetails.employmentDetail = resp;
+                this.getEmploymentDetails();
+            });
+        }
     }
 
     /**
