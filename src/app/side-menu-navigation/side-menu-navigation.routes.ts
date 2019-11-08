@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from 'src/services/shared-service/guards/auth-guard.service';
 import { SideMenuNavigationComponent } from './side-menu-navigation.component';
 import { PageNotFoundComponent } from '../page-not-found.component';
-import { AddEmployeeComponent } from '../admin-setup/add-employee/add-employee.component';
 import { LeaveSetupComponent } from '../admin-setup/leave-setup/leave-setup.component';
 import { InviteListComponent } from '../admin-setup/invites/invite-list/invite-list.component';
 import { RoleManagementComponent } from '../admin-setup/role-management/role-management.component';
@@ -27,7 +26,6 @@ export const sideMenuNavigationRoutes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashboardComponent },
-            { path: 'inbox', component: AddEmployeeComponent }, // AddEmployeeComponent //EmployeeProfileComponent
             {
                 path: 'leave-setup', component: LeaveSetupComponent,
                 children: [
