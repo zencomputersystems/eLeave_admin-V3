@@ -156,6 +156,16 @@ export class AdminInvitesApiService {
     }
 
     /**
+     * get department list
+     * @returns {Observable<any>}
+     * @memberof AdminInvitesApiService
+     */
+    get_departmet_list(): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.getApi('/api/admin/master/department');
+    }
+
+    /**
      * show pop up snackbar
      * @param {string} txt
      * @param {boolean} value

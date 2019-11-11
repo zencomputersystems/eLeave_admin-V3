@@ -43,6 +43,86 @@
 <ion-router-outlet id="addNewEmployee">
 </ion-router-outlet>
 
+<!---------------------------------------- employee filter ------------------------------------------->
+
+<ion-menu contentId="filterEmployee" side="end" type="overlay" menuId="filterEmployeeDetails">
+    <ion-header style="background-color:#43425d; color: #fcfcfc;">
+        <img style="margin: 17px;margin-top: 21px;width: 18.8px;height: 11.8px;float:left"
+            src="assets/icon/add_employee/icon_employee@3x.png">
+        <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">EMPLOYEE NAME
+            FILTERS
+        </p>
+    </ion-header>
+
+    <ion-content>
+        <p style="font-size: 12px;color: #808495;margin: 17px;">Please set your filter, it will make you smile while
+            searching your employee details.</p>
+        <div style="margin-left:17px;margin-right:17px">
+            <p style="opacity: 0.8;font-size: 14px;font-weight: bold;color: #43425d;margin-bottom: 8px;">Company</p>
+            <ion-item class="divider" lines="full"></ion-item>
+            <ion-item *ngFor="let item of companyList; let i=index" lines="none"
+                style="--min-height:36px;margin-left: -16px;">
+                <ion-checkbox mode="md"
+                    style="--background-checked: #a5a4bf;
+                    --border-color-checked: #a5a4bf;margin:0;--border-radius: 4px;--border-color: #a5a4bf;--background: #f0f0f7"
+                    [(ngModel)]="item.checked" (click)="clickedCompanyCheckbox(i)">
+                </ion-checkbox>
+                <ion-label
+                    style="margin:0;padding-left: 10px;display: inline-block;color: #43425d;opacity: 0.8;font-size: 11px;">
+                    {{item.NAME}}</ion-label>
+            </ion-item>
+        </div>
+        <div style="margin-left:17px;margin-right:17px;margin-top: 30px;">
+            <p style="opacity: 0.8;font-size: 14px;font-weight: bold;color: #43425d;margin-bottom: 8px;">Department</p>
+            <ion-item class="divider" lines="full"></ion-item>
+            <ion-item *ngFor="let item of departmentList;let i=index" lines="none"
+                style="--min-height:36px;margin-left: -16px;">
+                <ion-checkbox mode="md"
+                    style="--background-checked: #a5a4bf;
+                    --border-color-checked: #a5a4bf;margin:0;--border-radius: 4px;--border-color: #a5a4bf;--background: #f0f0f7"
+                    [(ngModel)]="item.checked" (click)="clickedDepartmentCheckbox(i)">
+                </ion-checkbox>
+                <ion-label
+                    style="margin:0;padding-left: 10px;display: inline-block;color: #43425d;opacity: 0.8;font-size: 11px;">
+                    {{item.DEPARTMENT}}</ion-label>
+            </ion-item>
+        </div>
+        <div style="margin-left:17px;margin-right:17px;margin-top: 30px;">
+            <p style="opacity: 0.8;font-size: 14px;font-weight: bold;color: #43425d;margin-bottom: 8px;">Status</p>
+            <ion-item class="divider" lines="full"></ion-item>
+            <ion-item lines="none" style="--min-height:36px;margin-left: -16px;">
+                <ion-checkbox mode="md"
+                    style="--background-checked: #a5a4bf;
+                    --border-color-checked: #a5a4bf;margin:0;--border-radius: 4px;--border-color: #a5a4bf;--background: #f0f0f7"
+                    [(ngModel)]="active">
+                </ion-checkbox>
+                <ion-label
+                    style="margin:0;padding-left: 10px;display: inline-block;color: #43425d;opacity: 0.8;font-size: 11px;">
+                    Active</ion-label>
+            </ion-item>
+            <ion-item lines="none" style="--min-height:36px;margin-left: -16px;">
+                <ion-checkbox mode="md"
+                    style="--background-checked: #a5a4bf;
+                    --border-color-checked: #a5a4bf;margin:0;--border-radius: 4px;--border-color: #a5a4bf;--background: #f0f0f7"
+                    [(ngModel)]="inactive">
+                </ion-checkbox>
+                <ion-label
+                    style="margin:0;padding-left: 10px;display: inline-block;color: #43425d;opacity: 0.8;font-size: 11px;">
+                    Inactive</ion-label>
+            </ion-item>
+        </div>
+        <div style="text-align: center;margin:20px">
+            <ion-button
+                style="--border-radius:2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                color="primary" (click)="menu.close('filterEmployeeDetails'); filterValue()">
+                Go
+            </ion-button>
+        </div>
+    </ion-content>
+</ion-menu>
+<ion-router-outlet id="filterEmployee">
+</ion-router-outlet>
+
 <!---------------------------------------- employee setup page --------------------------------------->
 <ion-card>
     <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
@@ -82,7 +162,15 @@
                                     <p style="color: white;font-size: 11px;">{{list.length}} Peoples</p>
                                 </ion-button>
                                 <ion-searchbar mode="md" class="searchbar" placeholder="Filter by Name"
-                                    (ionClear)="clearDetails()" (ionChange)="changeDetails($event)"></ion-searchbar>
+                                    (ionChange)="changeDetails($event)">
+                                </ion-searchbar>
+                                <ion-buttons end>
+                                    <div style="width: 17px;height: 17px;fill: #a5a4bf;opacity: 0.8;margin-top: 20px;cursor: pointer;position: absolute;
+                                    margin-left: -20px;"
+                                        [inlineSVG]="'assets/icon/option/filter.svg'"
+                                        (click)="menu.enable(true, 'filterEmployeeDetails');menu.enable(false, 'addNewEmployeeDetails');menu.open('filterEmployeeDetails')">
+                                    </div>
+                                </ion-buttons>
                             </div>
                             <div style="width: 100%; height:100%; text-align: center;" *ngIf="showSpinner">
                                 <app-spinner></app-spinner>
@@ -104,7 +192,7 @@
                                     </ion-col>
                                     <ion-col align-self-center style="top: 3px;">
                                         <ion-icon class="addIcon" name="add-circle-outline" *ngIf="mode === 'ON'"
-                                            (click)="menu.enable(true, 'addNewEmployeeDetails');menu.open('addNewEmployeeDetails')">
+                                            (click)="menu.enable(true, 'addNewEmployeeDetails');menu.enable(false, 'filterEmployeeDetails');menu.open('addNewEmployeeDetails')">
                                         </ion-icon>
                                     </ion-col>
                                 </ion-row>

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DeleteListConfirmationComponent } from '../delete-list-confirmation/delete-list-confirmation.component';
 import { MatDialog, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AdminInvitesApiService } from '../admin-invites-api.service';
-import { DateDialogComponent } from '../date-dialog/date-dialog.component';
 import * as _moment from 'moment';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
 import { LeaveApiService } from '../../leave-setup/leave-api.service';
@@ -214,6 +212,50 @@ export class InviteListComponent implements OnInit {
      */
     public status: boolean;
 
+    /** 
+     * company list get from endpoint
+     * @type {*}
+     * @memberof InviteListComponent
+     */
+    public companyList: any;
+
+    /**
+     * department list from master endpoint
+     * @type {*}
+     * @memberof InviteListComponent
+     */
+    public departmentList: any;
+
+    /**
+     * checkbox value of inactive filter
+     * @type {boolean}
+     * @memberof InviteListComponent
+     */
+    public inactive: boolean = false;
+
+    /**
+     * checkbox value of active filter
+     * @type {boolean}
+     * @memberof InviteListComponent
+     */
+    public active: boolean = false;
+
+    /**
+     * selected company guid
+     * @private
+     * @type {*}
+     * @memberof InviteListComponent
+     */
+    private _selectedCompany: any = [];
+
+    /**
+     * selected department name
+     * @private
+     * @type {*}
+     * @memberof InviteListComponent
+     */
+    private _selectedDepartment: any = [];
+
     /**
      *Creates an instance of InviteListComponent.
      * @param {MenuController} menu
@@ -238,6 +280,18 @@ export class InviteListComponent implements OnInit {
         })
         this.leaveApi.get_leavetype_entitlement().subscribe(list => {
             this.entitlementList = list;
+        })
+        this.leaveApi.get_company_list().subscribe(company => {
+            this.companyList = company;
+            for (let i = 0; i < this.companyList.length; i++) {
+                this.companyList[i]['checked'] = false;
+            }
+        });
+        this.inviteAPI.get_departmet_list().subscribe(list => {
+            this.departmentList = list;
+            for (let i = 0; i < this.departmentList.length; i++) {
+                this.departmentList[i]['checked'] = false;
+            }
         })
     }
 
@@ -383,6 +437,12 @@ export class InviteListComponent implements OnInit {
         }
     }
 
+    /**
+     * toggle to change employee status (active/inactive)
+     * @param {*} event
+     * @param {string} name
+     * @memberof InviteListComponent
+     */
     toggleStatus(event, name: string) {
         if (event.currentTarget.checked == false) {
             const dialog = this.popUp.open(ChangeStatusConfimationComponent, {
@@ -496,6 +556,8 @@ export class InviteListComponent implements OnInit {
     changeDetails(text: any) {
         if (text.srcElement.value === '') {
             this.endPoint();
+            this.active = false;
+            this.inactive = false;
         } else {
             this.filter(text.srcElement.value);
         }
@@ -512,28 +574,112 @@ export class InviteListComponent implements OnInit {
     }
 
     /**
+     * clicked on comapany checkbox
+     * @param {*} index
+     * @memberof InviteListComponent
+     */
+    clickedCompanyCheckbox(index) {
+        setTimeout(() => {
+            if (this.companyList[index].checked) {
+                this._selectedCompany.push(this.companyList[index].TENANT_COMPANY_GUID);
+            } else {
+                const i = this._selectedCompany.indexOf(this.companyList[index].TENANT_COMPANY_GUID);
+                this._selectedCompany.splice(i, 1);
+            }
+        }, 500);
+    }
+
+    /**
+     * clicked on department checkbox
+     * @param {number} index
+     * @memberof InviteListComponent
+     */
+    clickedDepartmentCheckbox(index: number) {
+        setTimeout(() => {
+            if (this.departmentList[index].checked) {
+                this._selectedDepartment.push(this.departmentList[index].DEPARTMENT);
+            } else {
+                const i = this._selectedDepartment.indexOf(this.departmentList[index].DEPARTMENT);
+                this._selectedDepartment.splice(i, 1);
+            }
+        }, 500);
+    }
+
+    /**
+     * click button to filter all selected company, department, active/inactive, etc
+     * @memberof InviteListComponent
+     */
+    async filterValue() {
+        let data = await this.inviteAPI.get_user_profile_list().toPromise();
+        this.list = data;
+
+        if (this.active == true) {
+            this.statusFiltered('Active', this.list);
+        }
+        if (this.inactive == true) {
+            this.statusFiltered('Inactive', this.list);
+        }
+        for (let i = 0; i < this._selectedCompany.length; i++) {
+            this.companyFiltered(this._selectedCompany[i], this.list);
+        }
+        for (let i = 0; i < this._selectedDepartment.length; i++) {
+            this.departmentFiltered(this._selectedDepartment[i], this.list);
+        }
+    }
+
+    /**
+     * filter selected status of employee (active/inactive)
+     * @param {string} text
+     * @param {*} list
+     * @memberof InviteListComponent
+     */
+    statusFiltered(text: string, list) {
+        this.list = list.filter((item: any) => {
+            return (item.status.indexOf(text) > -1);
+        })
+    }
+
+    /**
+     * filter selected company
+     * @param {string} companyId
+     * @param {*} list
+     * @memberof InviteListComponent
+     */
+    companyFiltered(companyId: string, list) {
+        this.list = list.filter((item: any) => {
+            return (item.companyId.toLowerCase().indexOf(companyId.toLowerCase()) > -1);
+        })
+    }
+
+    departmentFiltered(departmentName: string, list) {
+        this.list = list.filter((item: any) => {
+            return (item.department.toLowerCase().indexOf(departmentName.toLowerCase()) > -1);
+        })
+    }
+
+    /**
      * manage employee status 
      * @param {string} employeeName
      * @param {string} id
      * @param {string} name
      * @memberof InviteListComponent
      */
-    setUserStatus(employeeName: string, id: string, name: string) {
-        const deleteDialog = this.popUp.open(DeleteListConfirmationComponent, {
-            data: { name: employeeName, value: id, action: name }
-        });
-        deleteDialog.afterClosed().subscribe(result => {
-            if (result === id && name == 'delete') {
-                this.showSpinner = true;
-                this.inviteAPI.delete_user(id).subscribe(response => {
-                    this.endPoint();
-                })
-            }
-            if (result && name == 'disable') {
-                this.disableUser(employeeName, id);
-            }
-        });
-    }
+    // setUserStatus(employeeName: string, id: string, name: string) {
+    //     const deleteDialog = this.popUp.open(DeleteListConfirmationComponent, {
+    //         data: { name: employeeName, value: id, action: name }
+    //     });
+    //     deleteDialog.afterClosed().subscribe(result => {
+    //         if (result === id && name == 'delete') {
+    //             this.showSpinner = true;
+    //             this.inviteAPI.delete_user(id).subscribe(response => {
+    //                 this.endPoint();
+    //             })
+    //         }
+    //         if (result && name == 'disable') {
+    //             this.disableUser(employeeName, id);
+    //         }
+    //     });
+    // }
 
     /**
      * disable user and set expiration date 
@@ -541,21 +687,21 @@ export class InviteListComponent implements OnInit {
      * @param {string} id
      * @memberof InviteListComponent
      */
-    disableUser(employeeName: string, id: string) {
-        const disableDialog = this.popUp.open(DateDialogComponent, {
-            data: { name: employeeName, value: id, action: name }
-        });
-        disableDialog.afterClosed().subscribe(value => {
-            if (value) {
-                this.showSpinner = true;
-                this.inviteAPI.disable_user({
-                    "user_guid": id,
-                    "resign_date": moment(value).format('YYYY-MM-DD'),
-                }).subscribe(response => {
-                    this.endPoint();
-                })
-            }
-        })
-    }
+    // disableUser(employeeName: string, id: string) {
+    //     const disableDialog = this.popUp.open(DateDialogComponent, {
+    //         data: { name: employeeName, value: id, action: name }
+    //     });
+    //     disableDialog.afterClosed().subscribe(value => {
+    //         if (value) {
+    //             this.showSpinner = true;
+    //             this.inviteAPI.disable_user({
+    //                 "user_guid": id,
+    //                 "resign_date": moment(value).format('YYYY-MM-DD'),
+    //             }).subscribe(response => {
+    //                 this.endPoint();
+    //             })
+    //         }
+    //     })
+    // }
 
 }
