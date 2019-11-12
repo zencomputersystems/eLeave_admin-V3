@@ -218,7 +218,7 @@
                                     </ion-col>
                                     <ion-col align-self-center>
                                         <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mode === 'ON'"
-                                            style="width: 11px;height:11px;display: inline-block;cursor: pointer;">
+                                            style="width: 11px;height:11px;display: inline-block;cursor: pointer;" (click)="deleteEmployee(item.employeeName, item.userId)">
                                     </ion-col>
                                     <ion-item class="divider" lines="full"></ion-item>
                                 </ion-row>

@@ -10,6 +10,7 @@ import { genderStatus, maritalStatus } from '../../employee-profile-hr/employee-
 import { RoleApiService } from '../../role-management/role-api.service';
 import { MenuController } from '@ionic/angular';
 import { ChangeStatusConfimationComponent } from './change-status-confimation/change-status-confimation.component';
+import { DeleteCalendarConfirmationComponent } from '../../leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
 const moment = _moment;
 
 /**
@@ -658,50 +659,25 @@ export class InviteListComponent implements OnInit {
     }
 
     /**
-     * manage employee status 
-     * @param {string} employeeName
-     * @param {string} id
+     * delete employee
      * @param {string} name
+     * @param {string} userId
      * @memberof InviteListComponent
      */
-    // setUserStatus(employeeName: string, id: string, name: string) {
-    //     const deleteDialog = this.popUp.open(DeleteListConfirmationComponent, {
-    //         data: { name: employeeName, value: id, action: name }
-    //     });
-    //     deleteDialog.afterClosed().subscribe(result => {
-    //         if (result === id && name == 'delete') {
-    //             this.showSpinner = true;
-    //             this.inviteAPI.delete_user(id).subscribe(response => {
-    //                 this.endPoint();
-    //             })
-    //         }
-    //         if (result && name == 'disable') {
-    //             this.disableUser(employeeName, id);
-    //         }
-    //     });
-    // }
-
-    /**
-     * disable user and set expiration date 
-     * @param {string} employeeName
-     * @param {string} id
-     * @memberof InviteListComponent
-     */
-    // disableUser(employeeName: string, id: string) {
-    //     const disableDialog = this.popUp.open(DateDialogComponent, {
-    //         data: { name: employeeName, value: id, action: name }
-    //     });
-    //     disableDialog.afterClosed().subscribe(value => {
-    //         if (value) {
-    //             this.showSpinner = true;
-    //             this.inviteAPI.disable_user({
-    //                 "user_guid": id,
-    //                 "resign_date": moment(value).format('YYYY-MM-DD'),
-    //             }).subscribe(response => {
-    //                 this.endPoint();
-    //             })
-    //         }
-    //     })
-    // }
-
+    deleteEmployee(name: string, userId: string) {
+        const dialogRef = this.popUp.open(DeleteCalendarConfirmationComponent, {
+            data: { name: name, value: userId, desc: "'s employee profile" },
+            height: "195px",
+            width: "249px"
+        });
+        dialogRef.afterClosed().subscribe(val => {
+            if (val === userId) {
+                console.log(val);
+                this.inviteAPI.delete_user(userId).subscribe(response => {
+                    this.inviteAPI.showSnackbar('Selected employee profile was deleted', true);
+                    this.endPoint();
+                })
+            }
+        });
+    }
 }
