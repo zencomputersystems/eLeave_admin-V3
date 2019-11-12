@@ -195,17 +195,16 @@
                                         </ion-icon>
                                     </ion-col>
                                 </ion-row>
-                                <ion-row class="detailsRow" *ngFor="let item of list | paginate: { itemsPerPage: 7, currentPage: p,
-                                    totalItems: list.length }; let i=index;">
+                                <ion-row class="detailsRow" *ngFor="let item of list | paginate: config; let i=index;">
                                     <ion-col size="2">
                                         <ion-label style="color:#808495; font-size: 12px;font-weight: normal">
                                             {{item.staffNumber}}
                                         </ion-label>
                                     </ion-col>
                                     <ion-col class="colOfLeave" size="7">
-                                        <p class="textHover" (click)="getUserId(item.userId, i, p)"
+                                        <p class="textHover" (click)="getUserId(item.userId, i, config.currentPage)"
                                             [ngClass]="{
-                                            'textColor': clickedIndex === ((p-1)*7)+i , 'oriColor': clickedIndex !== ((p-1)*7)+i}"
+                                            'textColor': clickedIndex === ((config.currentPage-1)*7)+i , 'oriColor': clickedIndex !== ((config.currentPage-1)*7)+i}"
                                             style="font-weight: bold; font-size: 12px;cursor: pointer;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                                             {{item.employeeName}}</p>
                                         <p
@@ -224,7 +223,7 @@
                                 </ion-row>
                             </ion-content>
                             <div [style.display]="showSpinner ? 'none' : 'block'">
-                                <pagination-template #p2="paginationApi" (pageChange)="p = $event">
+                                <pagination-template #p2="paginationApi" (pageChange)="config.currentPage = $event">
                                     <div class="custom-pagination" style="float: left;">
                                         <div class="pagination-previous" style="display: inline-block">
                                             <ion-button [disabled]="p2.isFirstPage()" fill="outline"
@@ -244,8 +243,8 @@
                                 </pagination-template>
 
                                 <div style="font-size: 9px;padding-top: 4px;text-align: right;">
-                                    <pagination-controls (pageChange)="p = $event" maxSize="3" directionLinks="true"
-                                        previousLabel="" nextLabel="">
+                                    <pagination-controls (pageChange)="config.currentPage = $event" maxSize="3"
+                                        directionLinks="true" previousLabel="" nextLabel="">
                                     </pagination-controls>
                                 </div>
                             </div>

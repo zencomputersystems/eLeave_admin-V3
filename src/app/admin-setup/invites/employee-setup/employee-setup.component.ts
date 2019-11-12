@@ -45,13 +45,6 @@ export class EmployeeSetupComponent implements OnInit {
     public showSpinner: boolean = true;
 
     /**
-     * current page of paginator
-     * @type {number}
-     * @memberof EmployeeSetupComponent
-     */
-    public p: number;
-
-    /**
      * mode on/off
      * @type {string}
      * @memberof EmployeeSetupComponent
@@ -270,6 +263,13 @@ export class EmployeeSetupComponent implements OnInit {
     public showRole: boolean = false;
 
     /**
+     * get paginator config
+     * @type {*}
+     * @memberof EmployeeSetupComponent
+     */
+    public config: any;
+
+    /**
      * selected company guid
      * @private
      * @type {*}
@@ -294,7 +294,8 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {RoleApiService} roleAPI
      * @memberof EmployeeSetupComponent
      */
-    constructor(public menu: MenuController, private inviteAPI: AdminInvitesApiService, public popUp: MatDialog, private leaveApi: LeaveApiService, public roleAPI: RoleApiService) { }
+    constructor(public menu: MenuController, private inviteAPI: AdminInvitesApiService, public popUp: MatDialog, private leaveApi: LeaveApiService, public roleAPI: RoleApiService) {
+    }
 
     ngOnInit() {
         this.endPoint();
@@ -333,6 +334,11 @@ export class EmployeeSetupComponent implements OnInit {
             (data: any[]) => {
                 this.showSpinner = false;
                 this.list = data;
+                this.config = {
+                    itemsPerPage: 7,
+                    currentPage: 1,
+                    totalItems: this.list.length
+                }
                 this.getUserId(this.list[0].userId, 0, 1);
             });
     }
@@ -345,10 +351,6 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     getUserId(userId: string, index: number, p: number) {
-        if (p === undefined) {
-            this.p = 1;
-            p = 1;
-        }
         this.clickedIndex = ((p - 1) * 7) + index;
         this.employeeStatus = this.list[this.clickedIndex].status;
         if (this.employeeStatus == 'Active') {
