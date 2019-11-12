@@ -242,6 +242,34 @@ export class EmployeeSetupComponent implements OnInit {
     public active: boolean = false;
 
     /**
+     * show personal content after clicked expand
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public showPersonal: boolean = true;
+
+    /**
+     * show employment content after clicked expand
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public showEmploy: boolean = false;
+
+    /**
+     * show assign calendar,etc content after clicked expand
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public showCalendar: boolean = false;
+
+    /**
+     * show role content after clicked expand
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public showRole: boolean = false;
+
+    /**
      * selected company guid
      * @private
      * @type {*}

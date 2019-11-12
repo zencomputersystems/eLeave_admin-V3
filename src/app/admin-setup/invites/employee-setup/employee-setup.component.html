@@ -166,8 +166,7 @@
                                 </ion-searchbar>
                                 <ion-buttons end>
                                     <div style="width: 17px;height: 17px;fill: #a5a4bf;opacity: 0.8;margin-top: 20px;cursor: pointer;position: absolute;
-                                    margin-left: -20px;"
-                                        [inlineSVG]="'assets/icon/option/filter.svg'"
+                                    margin-left: -20px;" [inlineSVG]="'assets/icon/option/filter.svg'"
                                         (click)="menu.enable(true, 'filterEmployeeDetails');menu.enable(false, 'addNewEmployeeDetails');menu.open('filterEmployeeDetails')">
                                     </div>
                                 </ion-buttons>
@@ -218,7 +217,8 @@
                                     </ion-col>
                                     <ion-col align-self-center>
                                         <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mode === 'ON'"
-                                            style="width: 11px;height:11px;display: inline-block;cursor: pointer;" (click)="deleteEmployee(item.employeeName, item.userId)">
+                                            style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
+                                            (click)="deleteEmployee(item.employeeName, item.userId)">
                                     </ion-col>
                                     <ion-item class="divider" lines="full"></ion-item>
                                 </ion-row>
@@ -287,17 +287,14 @@
                                         {{personalDetails.employeeDesignation}}</ion-card-subtitle>
                                     <ion-card-subtitle class="subtitle">{{personalDetails.employeeDepartment}}
                                     </ion-card-subtitle>
-                                    <!-- <ion-card-subtitle class="subtitle" *ngIf="employ">
-                                        {{employ.employmentDetail.workLocation}}
-                                    </ion-card-subtitle> -->
                                 </div>
                             </div>
                         </ion-card-header>
                         <ion-card-content style="padding-right: 0;">
-                            <div
-                                style="margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                            <div (click)="showPersonal = true;showEmploy = false;showCalendar = false;showRole = false;"
+                                style="cursor: pointer;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 PERSONAL DETAILS</div>
-                            <div *ngIf="personalDetails">
+                            <div *ngIf="personalDetails && showPersonal">
                                 <ion-row class="detailsRow">
                                     <ion-col>
                                         <ion-label class="label">Full Name</ion-label>
@@ -471,10 +468,10 @@
                                     <ion-col></ion-col>
                                 </ion-row>
                             </div>
-                            <div
-                                style="margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                            <div (click)="showEmploy = true;showCalendar = false;showRole = false;showPersonal = false "
+                                style="cursor: pointer;margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 EMPLOYEMENT DETAILS</div>
-                            <div *ngIf="employmentDetails">
+                            <div *ngIf="employmentDetails && showEmploy">
                                 <ion-row class="detailsRow">
                                     <ion-col>
                                         <ion-label class="label">Employee ID No</ion-label>
@@ -641,10 +638,10 @@
                                 padding-right: 15px;">
                                 </ion-item>
                             </div>
-                            <div
-                                style="margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                            <div (click)="showCalendar = true;showRole = false; showEmploy = false;showPersonal = false"
+                                style="cursor: pointer;margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 CALENDAR, WORKING HOUR & LEAVE ENTITLEMENT</div>
-                            <div>
+                            <div *ngIf="showCalendar">
                                 <div style="display: inline-block;">
                                     <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
                                         Assign Calendar Profile</p>
@@ -712,10 +709,10 @@
                                         Add New Leave Entitlement</p>
                                 </div>
                             </div>
-                            <div
-                                style="margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                            <div (click)="showRole = true; showCalendar = false; showEmploy = false;showPersonal = false"
+                                style="cursor: pointer;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 EMPLOYEE ROLE</div>
-                            <div>
+                            <div *ngIf="showRole">
                                 <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">Assign
                                     Role To This
                                     Employee</p>
