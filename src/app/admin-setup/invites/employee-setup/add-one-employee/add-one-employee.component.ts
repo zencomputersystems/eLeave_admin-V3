@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { APIService } from 'src/services/shared-service/api.service';
 import { AdminInvitesApiService } from '../../admin-invites-api.service';
@@ -25,6 +25,33 @@ const moment = _moment;
         { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
 })
 export class AddOneEmployeeComponent implements OnInit {
+
+    /**
+     * disabled button
+     * @type {boolean}
+     * @memberof AddOneEmployeeComponent
+     */
+    @Input() disabledEditMode?: boolean;
+
+    /**
+     * get employment details
+     * @type {*}
+     * @memberof AddOneEmployeeComponent
+     */
+    @Input() getDetails?: any;
+
+    /**
+     * side menu add individual details
+     * @type {boolean}
+     * @memberof AddOneEmployeeComponent
+     */
+    @Input() individual?: boolean;
+
+    /**
+     * emit changed employment value
+     * @memberof AddOneEmployeeComponent
+     */
+    @Output() changedValue?= new EventEmitter();
 
     /**
      * form group for invitation
@@ -219,6 +246,20 @@ export class AddOneEmployeeComponent implements OnInit {
     }
 
     /**
+     * emit new value that changed
+     * @param {SimpleChanges} changes
+     * @memberof AddOneEmployeeComponent
+     */
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.disabledEditMode !== undefined) {
+            if (changes.disabledEditMode.currentValue == true) {
+                this.changedValue.emit(this.getDetails);
+            }
+        }
+    }
+
+
+    /**
      * filter branch from the list
      * @param {string} name
      * @returns
@@ -283,7 +324,6 @@ export class AddOneEmployeeComponent implements OnInit {
      * @memberof AddOneEmployeeComponent
      */
     optionSelected(option) {
-        console.log('optionSelected:', option.value);
         if (option.value.indexOf(this._question) === 0) {
             let newState = option.value.substring(this._question.length).split('"?')[0];
             this.branchList.push({ 'BRANCH': newState });
@@ -316,6 +356,20 @@ export class AddOneEmployeeComponent implements OnInit {
             let newState = option.value.substring(this._question.length).split('"?')[0];
             this.departmentList.push({ 'DEPARTMENT': newState });
             this.departmentCtrl.setValue(newState);
+        }
+    }
+
+    /**
+     * option of cost centre selected
+     * @param {*} option
+     * @memberof AddOneEmployeeComponent
+     */
+    optionCCSelected(option) {
+        console.log('optionSelected:', option.value);
+        if (option.value.indexOf(this._question) === 0) {
+            let newState = option.value.substring(this._question.length).split('"?')[0];
+            this.costcentre.push({ 'COSTCENTRE': newState });
+            this.costCentreCtrl.setValue(newState);
         }
     }
 
@@ -353,6 +407,18 @@ export class AddOneEmployeeComponent implements OnInit {
             this.departmentList.push({ 'DEPARTMENT': value });
         }
         setTimeout(() => this.departmentCtrl.setValue(value));
+    }
+
+    /**
+     * click enter to save the new cost centre value to list
+     * @memberof AddOneEmployeeComponent
+     */
+    enterCC() {
+        const value = this.costCentreCtrl.value;
+        if (!this.costcentre.some(entry => entry === value)) {
+            this.costcentre.push({ 'COSTCENTRE': value });
+        }
+        setTimeout(() => this.costCentreCtrl.setValue(value));
     }
 
     /**

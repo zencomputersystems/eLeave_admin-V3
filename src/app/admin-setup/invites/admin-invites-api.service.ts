@@ -21,7 +21,7 @@ export class AdminInvitesApiService {
      * @param {APIService} apiService
      * @memberof AdminInvitesApiService
      */
-    constructor(private apiService: APIService, public http: Http, public snackBar: MatSnackBar) { }
+    constructor(public apiService: APIService, public http: Http, public snackBar: MatSnackBar) { }
 
     /**
      * POST invited new user Id to endpoint

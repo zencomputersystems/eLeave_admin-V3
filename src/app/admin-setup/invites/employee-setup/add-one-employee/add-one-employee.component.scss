@@ -49,16 +49,20 @@
   ::ng-deep .mat-form-field-label-wrapper {
     font-size: 12px;
   }
-  // ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
-  //   padding: 0.4em 0px !important;
-  // }
-  // ::ng-deep .mat-form-field-label-wrapper {
-  //   top: -1.5em;
-  // }
-  // ::ng-deep
-  //   .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
-  //   .mat-form-field-label {
-  //   transform: translateY(-1.1em) scale(0.75);
-  //   width: 133.33333%;
-  // }
+
+  // employement-details
+  .detailsRow {
+    height: 55px;
+    padding-left: 10px;
+  }
+  .divider {
+    --min-height: none;
+    // padding-top: 1%;
+    // padding-bottom: 1%;
+    width: 100%;
+  }
+  ::ng-deep .mat-input-element:disabled {
+    color: #43425d;
+    // opacity: 0.8;
+  }
 }

@@ -24,7 +24,8 @@
                 Add Bulk
             </ion-button>
             <div>
-                <app-add-one-employee *ngIf="individualButton === true"></app-add-one-employee>
+                <app-add-one-employee *ngIf="individualButton === true" [individual]="individualButton === true">
+                </app-add-one-employee>
                 <app-bulk-import *ngIf="bulkButton === true" (closeMenu)="eventOutput($event)"></app-bulk-import>
             </div>
         </div>
@@ -471,6 +472,12 @@
                                 style="cursor: pointer;margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 EMPLOYEMENT DETAILS</div>
                             <div *ngIf="employmentDetails && showEmploy">
+                                <app-add-one-employee [disabledEditMode]="mode === 'OFF'"
+                                    [getDetails]="employmentDetails" (changedValue)="getChangedValue($event)">
+                                </app-add-one-employee>
+                                <ion-item class="divider" lines="full" style="padding-left: 15px;
+                                    padding-right: 15px;padding-top: 2%;padding-bottom: 2%;">
+                                </ion-item>
                                 <ion-row class="detailsRow">
                                     <ion-col>
                                         <ion-label class="label">Employee ID No</ion-label>

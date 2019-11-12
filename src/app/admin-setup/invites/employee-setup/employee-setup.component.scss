@@ -355,6 +355,10 @@
   ::ng-deep .selectForm > .mat-form-field-wrapper {
     padding-bottom: 0;
   }
+  ::ng-deep .mat-input-element:disabled{
+    color: #43425d;
+    // opacity: 0.8;
+  }
   .pText {
     color: #4d4f5c;
     font-size: 11px;

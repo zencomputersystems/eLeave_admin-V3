@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AdminInvitesApiService } from '../admin-invites-api.service';
 import * as _moment from 'moment';
@@ -546,6 +546,10 @@ export class EmployeeSetupComponent implements OnInit {
                 this.getEmploymentDetails();
             });
         }
+    }
+
+    getChangedValue(event) {
+        console.log('updated', event);
     }
 
     /**
