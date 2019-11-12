@@ -6,7 +6,7 @@ import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit
 import { LeaveApiService } from '../../leave-setup/leave-api.service';
 import { FormControl, Validators } from '@angular/forms';
 import { APP_DATE_FORMATS, AppDateAdapter } from '../../leave-setup/date.adapter';
-import { genderStatus, maritalStatus } from '../../employee-profile-hr/employee-profile.service';
+import { genderStatus, maritalStatus } from './employee-setup.service';
 import { RoleApiService } from '../../role-management/role-api.service';
 import { MenuController } from '@ionic/angular';
 import { ChangeStatusConfimationComponent } from './change-status-confimation/change-status-confimation.component';
@@ -15,193 +15,193 @@ const moment = _moment;
 
 /**
  *
- * Invite List Page
+ * Employee Setup Page
  * @export
- * @class InviteListComponent
+ * @class EmployeeSetupComponent
  * @implements {OnInit}
  */
 @Component({
-    selector: 'app-invite-list',
-    templateUrl: './invite-list.component.html',
-    styleUrls: ['./invite-list.component.scss'],
+    selector: 'app-employee-setup',
+    templateUrl: './employee-setup.component.html',
+    styleUrls: ['./employee-setup.component.scss'],
     providers: [
         { provide: DateAdapter, useClass: AppDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
 })
-export class InviteListComponent implements OnInit {
+export class EmployeeSetupComponent implements OnInit {
 
     /**
      * Get user profile list from API
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public list: any;
 
     /**
      * Show spinner during loading
      * @type {boolean}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public showSpinner: boolean = true;
 
     /**
      * current page of paginator
      * @type {number}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public p: number;
 
     /**
      * mode on/off
      * @type {string}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public mode: string = 'OFF';
 
     /**
      * user info personal-details
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public personalDetails: any;
 
     /**
      * birthdate form control
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public birthOfDate: any;
 
     /**
      * user info employment details
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public employmentDetails: any;
 
     /**
      * date of join form control
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public dateOfJoin: any;
 
     /**
      * date of confirm form control
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public dateOfConfirm: any;
 
     /**
      * date of resign form control
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public dateOfResign: any;
 
     /**
      * role profile list from API
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public roleList: any;
 
     /**
      * calendar profile list from API
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public calendarList: any;
 
     /**
      * working hour profile list from API
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public workingList: any;
 
     /**
      * leave entitlement list from API
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public entitlementList: any;
 
     /**
      * get selected user id
      * @type {string}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public userId: string;
 
     /**
      * day available for selected employee & leave type & leave entitled
      * @type {number}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public dayAvailable: number = 0;
 
     /**
      * clicked index 
      * @type {number}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public clickedIndex: number = 0;
 
     /**
      * calendar guid
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public calendarValue: any;
 
     /**
      * working hour guid
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public workingValue: any;
 
     /**
      * entitlement guid
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public entitlementValue: any;
 
     /**
      * role guid
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public roleValue: any;
 
     /**
      * entitlement id
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public addEntitlement: any = [0];
 
     /** 
      * active/inactive status from endpoint
      * @type {string}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public employeeStatus: string;
 
     /**
      * individual button clicked or not
      * @type {boolean}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public individualButton: boolean = true;
 
     /**
      * bulk import button clicked or not
      * @type {boolean}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public bulkButton: boolean = false;
 
@@ -209,35 +209,35 @@ export class InviteListComponent implements OnInit {
      * toggle status of employee
      * active/inactive
      * @type {boolean}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public status: boolean;
 
     /** 
      * company list get from endpoint
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public companyList: any;
 
     /**
      * department list from master endpoint
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public departmentList: any;
 
     /**
      * checkbox value of inactive filter
      * @type {boolean}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public inactive: boolean = false;
 
     /**
      * checkbox value of active filter
      * @type {boolean}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     public active: boolean = false;
 
@@ -245,7 +245,7 @@ export class InviteListComponent implements OnInit {
      * selected company guid
      * @private
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     private _selectedCompany: any = [];
 
@@ -253,18 +253,18 @@ export class InviteListComponent implements OnInit {
      * selected department name
      * @private
      * @type {*}
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     private _selectedDepartment: any = [];
 
     /**
-     *Creates an instance of InviteListComponent.
+     *Creates an instance of EmployeeSetupComponent.
      * @param {MenuController} menu
      * @param {AdminInvitesApiService} inviteAPI
      * @param {MatDialog} popUp
      * @param {LeaveApiService} leaveApi
      * @param {RoleApiService} roleAPI
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     constructor(public menu: MenuController, private inviteAPI: AdminInvitesApiService, public popUp: MatDialog, private leaveApi: LeaveApiService, public roleAPI: RoleApiService) { }
 
@@ -298,7 +298,7 @@ export class InviteListComponent implements OnInit {
 
     /**
      * Get user profile list from API
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     endPoint() {
         this.inviteAPI.get_user_profile_list().subscribe(
@@ -314,7 +314,7 @@ export class InviteListComponent implements OnInit {
      * @param {string} userId
      * @param {number} index
      * @param {number} p
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     getUserId(userId: string, index: number, p: number) {
         if (p === undefined) {
@@ -348,7 +348,7 @@ export class InviteListComponent implements OnInit {
 
     /**
      * get personal details of DOB
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     getPersonalDetails() {
         if (this.personalDetails.personalDetail != undefined) {
@@ -359,7 +359,7 @@ export class InviteListComponent implements OnInit {
 
     /**
      * get employment details of Dates
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     getEmploymentDetails() {
         if (this.employmentDetails.employmentDetail != undefined) {
@@ -378,7 +378,7 @@ export class InviteListComponent implements OnInit {
      * get day balance value
      * @param {*} leaveTypeId
      * @param {*} leaveEntitlementId
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     getLeaveTypeEntitlementId(leaveTypeId, leaveEntitlementId) {
         // POST and create directly
@@ -401,7 +401,7 @@ export class InviteListComponent implements OnInit {
 
     /**
      * add new form of entitlement
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     addNewEntitlement() {
         this.addEntitlement.push(0);
@@ -410,7 +410,7 @@ export class InviteListComponent implements OnInit {
     /**
      * delete form of entitlement
      * @param {number} index
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     deleteEntitlement(index: number) {
         this.addEntitlement.splice(index, 1);
@@ -419,7 +419,7 @@ export class InviteListComponent implements OnInit {
     /**
      * toggle edit mode on/off
      * @param {*} evt
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     toggleMode(evt) {
         if (evt.detail.checked === true) {
@@ -442,7 +442,7 @@ export class InviteListComponent implements OnInit {
      * toggle to change employee status (active/inactive)
      * @param {*} event
      * @param {string} name
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     toggleStatus(event, name: string) {
         if (event.currentTarget.checked == false) {
@@ -482,7 +482,7 @@ export class InviteListComponent implements OnInit {
 
     /**
      * patch personal details
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     patchPersonalDetails() {
         if (this.personalDetails.personalDetail != undefined) {
@@ -501,7 +501,7 @@ export class InviteListComponent implements OnInit {
 
     /**
      * patch employment details to endpoint
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     patchEmploymentDetails() {
         if (this.employmentDetails.employmentDetail != undefined) {
@@ -520,7 +520,7 @@ export class InviteListComponent implements OnInit {
 
     /**
      * save assigned profile of calendar profile, working hour & user role
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     assignProfile() {
         this.leaveApi.patch_assign_calendar_profile({
@@ -539,7 +539,7 @@ export class InviteListComponent implements OnInit {
     /**
      * Filter text key in from searchbar 
      * @param {*} text
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     filter(text: any) {
         if (text && text.trim() != '') {
@@ -552,7 +552,7 @@ export class InviteListComponent implements OnInit {
     /**
      * To filter entered text
      * @param {*} text
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     changeDetails(text: any) {
         if (text.srcElement.value === '') {
@@ -567,7 +567,7 @@ export class InviteListComponent implements OnInit {
     /**
      * close menu 
      * @param {*} event
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     eventOutput(event) {
         this.menu.close('addNewEmployeeDetails');
@@ -577,7 +577,7 @@ export class InviteListComponent implements OnInit {
     /**
      * clicked on comapany checkbox
      * @param {*} index
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     clickedCompanyCheckbox(index) {
         setTimeout(() => {
@@ -593,7 +593,7 @@ export class InviteListComponent implements OnInit {
     /**
      * clicked on department checkbox
      * @param {number} index
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     clickedDepartmentCheckbox(index: number) {
         setTimeout(() => {
@@ -608,7 +608,7 @@ export class InviteListComponent implements OnInit {
 
     /**
      * click button to filter all selected company, department, active/inactive, etc
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     async filterValue() {
         let data = await this.inviteAPI.get_user_profile_list().toPromise();
@@ -632,7 +632,7 @@ export class InviteListComponent implements OnInit {
      * filter selected status of employee (active/inactive)
      * @param {string} text
      * @param {*} list
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     statusFiltered(text: string, list) {
         this.list = list.filter((item: any) => {
@@ -643,15 +643,21 @@ export class InviteListComponent implements OnInit {
     /**
      * filter selected company
      * @param {string} companyId
-     * @param {*} list
-     * @memberof InviteListComponent
+     * @param {*} items
+     * @memberof EmployeeSetupComponent
      */
-    companyFiltered(companyId: string, list) {
-        this.list = list.filter((item: any) => {
-            return (item.companyId.toLowerCase().indexOf(companyId.toLowerCase()) > -1);
+    companyFiltered(companyId: string, items: any) {
+        this.list = items.filter((item: any) => {
+            return (item.companyId.toUpperCase().indexOf(companyId.toUpperCase()) > -1);
         })
     }
 
+    /**
+     * filter selected department
+     * @param {string} departmentName
+     * @param {*} list
+     * @memberof EmployeeSetupComponent
+     */
     departmentFiltered(departmentName: string, list) {
         this.list = list.filter((item: any) => {
             return (item.department.toLowerCase().indexOf(departmentName.toLowerCase()) > -1);
@@ -662,7 +668,7 @@ export class InviteListComponent implements OnInit {
      * delete employee
      * @param {string} name
      * @param {string} userId
-     * @memberof InviteListComponent
+     * @memberof EmployeeSetupComponent
      */
     deleteEmployee(name: string, userId: string) {
         const dialogRef = this.popUp.open(DeleteCalendarConfirmationComponent, {
@@ -672,7 +678,6 @@ export class InviteListComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(val => {
             if (val === userId) {
-                console.log(val);
                 this.inviteAPI.delete_user(userId).subscribe(response => {
                     this.inviteAPI.showSnackbar('Selected employee profile was deleted', true);
                     this.endPoint();

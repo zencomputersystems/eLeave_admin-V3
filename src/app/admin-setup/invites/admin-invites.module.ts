@@ -12,24 +12,24 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { InlineSVGModule } from 'ng-inline-svg';
-import { InviteMoreComponent } from './invite-more/invite-more.component';
-import { InviteListComponent } from './invite-list/invite-list.component';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { DeleteListConfirmationComponent } from './delete-list-confirmation/delete-list-confirmation.component';
 import { MatDialogModule, MatButtonModule, MatMenuModule, MatDatepickerModule } from '@angular/material';
 import { DateDialogComponent } from './date-dialog/date-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { BulkImportComponent } from './invite-list/bulk-import/bulk-import.component';
 import { FileDropModule } from 'ngx-file-drop';
-import { AddOneEmployeeComponent } from './invite-list/add-one-employee/add-one-employee.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { ChangeStatusConfimationComponent } from './invite-list/change-status-confimation/change-status-confimation.component';
+import { EmployeeSetupComponent } from './employee-setup/employee-setup.component';
+import { ChangeStatusConfimationComponent } from './employee-setup/change-status-confimation/change-status-confimation.component';
+import { BulkImportComponent } from './employee-setup/bulk-import/bulk-import.component';
+import { AddOneEmployeeComponent } from './employee-setup/add-one-employee/add-one-employee.component';
 
 
 const routes: Routes = [
     {
         path: '',
-        component: InviteListComponent
+        component: EmployeeSetupComponent
+
     }
 ];
 
@@ -59,7 +59,7 @@ const routes: Routes = [
     ],
     entryComponents: [DeleteListConfirmationComponent, DateDialogComponent,
         ChangeStatusConfimationComponent],
-    declarations: [InviteMoreComponent, InviteListComponent, DeleteListConfirmationComponent,
+    declarations: [EmployeeSetupComponent, DeleteListConfirmationComponent,
         DateDialogComponent, BulkImportComponent, AddOneEmployeeComponent, ChangeStatusConfimationComponent]
 })
 export class AdminInvitesModule { }

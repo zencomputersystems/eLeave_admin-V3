@@ -11,7 +11,6 @@ import { sideMenuNavigationRoutes } from './side-menu-navigation.routes';
 import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
 import { AdminInvitesModule } from '../admin-setup/invites/admin-invites.module';
-import { EmployeeProfileModule } from '../admin-setup/employee-profile-hr/employee-profile.module';
 import { LeaveSetupModule } from '../admin-setup/leave-setup/leave-setup.module';
 import { RoleManagementModule } from '../admin-setup/role-management/role-management.module';
 import { GeneralLeavePolicyModule } from '../admin-setup/general-leave-policy/general-leave-policy.module';
@@ -26,7 +25,6 @@ import { MatChipsModule } from '@angular/material/chips';
         InlineSVGModule.forRoot(),
         HttpClientModule,
         AdminInvitesModule,
-        EmployeeProfileModule,
         MatMenuModule,
         LeaveSetupModule,
         RoleManagementModule,
