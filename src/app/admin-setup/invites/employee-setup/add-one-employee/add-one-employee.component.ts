@@ -227,22 +227,7 @@ export class AddOneEmployeeComponent implements OnInit {
                     map(section => section ? this.filterSection(section) : this.sectionList.slice())
                 );
         });
-        this.apiService.get_master_list('department').subscribe(list => {
-            this.departmentList = list;
-            this.filteredDepartment = this.departmentCtrl.valueChanges
-                .pipe(
-                    startWith(''),
-                    map(department => department ? this.filterDepartment(department) : this.departmentList.slice())
-                );
-        });
-        this.apiService.get_master_list('costcentre').subscribe(list => {
-            this.costcentre = list;
-            this.filteredCostCentre = this.costCentreCtrl.valueChanges
-                .pipe(
-                    startWith(''),
-                    map(cc => cc ? this.filterCC(cc) : this.costcentre.slice())
-                );
-        });
+        this.getValue();
     }
 
     /**
@@ -269,6 +254,29 @@ export class AddOneEmployeeComponent implements OnInit {
             this.departmentCtrl.patchValue(this.getDetails.employmentDetail.department);
             this.costCentreCtrl.patchValue(this.getDetails.employmentDetail.costcentre);
         }
+    }
+
+    /**
+     * get list from master 'department' & 'costcentre'
+     * @memberof AddOneEmployeeComponent
+     */
+    getValue() {
+        this.apiService.get_master_list('department').subscribe(list => {
+            this.departmentList = list;
+            this.filteredDepartment = this.departmentCtrl.valueChanges
+                .pipe(
+                    startWith(''),
+                    map(department => department ? this.filterDepartment(department) : this.departmentList.slice())
+                );
+        });
+        this.apiService.get_master_list('costcentre').subscribe(list => {
+            this.costcentre = list;
+            this.filteredCostCentre = this.costCentreCtrl.valueChanges
+                .pipe(
+                    startWith(''),
+                    map(cc => cc ? this.filterCC(cc) : this.costcentre.slice())
+                );
+        });
     }
 
 
@@ -332,103 +340,30 @@ export class AddOneEmployeeComponent implements OnInit {
         return results;
     }
 
-    /** option selected from branch
+    /** option selected from autocomplete
      * @param {*} option
      * @memberof AddOneEmployeeComponent
      */
-    optionSelected(option) {
+    optionSelected(option, list, control) {
         if (option.value.indexOf(this._question) === 0) {
             let newState = option.value.substring(this._question.length).split('"?')[0];
-            this.branchList.push({ 'BRANCH': newState });
-            this.branchCtrl.setValue(newState);
+            const key = Object.keys(list[0])[0];
+            list.push({ [key]: newState });
+            control.setValue(newState);
         }
     }
 
     /**
-     * option selected from section
-     * @param {*} option
+     * click enter to save the new autocomplete value to list
      * @memberof AddOneEmployeeComponent
      */
-    optionSectionSelected(option) {
-        if (option.value.indexOf(this._question) === 0) {
-            let newState = option.value.substring(this._question.length).split('"?')[0];
-            this.sectionList.push({ 'SECTION': newState });
-            this.sectionCtrl.setValue(newState);
+    enter(control, list) {
+        const value = control.value;
+        if (!list.some(entry => entry === value)) {
+            const key = Object.keys(list[0])[0];
+            list.push({ [key]: value });
         }
-    }
-
-    /**
-     * option selected from department
-     * @param {*} option
-     * @memberof AddOneEmployeeComponent
-     */
-    optionDepartmentSelected(option) {
-        if (option.value.indexOf(this._question) === 0) {
-            let newState = option.value.substring(this._question.length).split('"?')[0];
-            this.departmentList.push({ 'DEPARTMENT': newState });
-            this.departmentCtrl.setValue(newState);
-        }
-    }
-
-    /**
-     * option of cost centre selected
-     * @param {*} option
-     * @memberof AddOneEmployeeComponent
-     */
-    optionCCSelected(option) {
-        if (option.value.indexOf(this._question) === 0) {
-            let newState = option.value.substring(this._question.length).split('"?')[0];
-            this.costcentre.push({ 'COSTCENTRE': newState });
-            this.costCentreCtrl.setValue(newState);
-        }
-    }
-
-    /**
-     * click enter to save the new branch value to list
-     * @memberof AddOneEmployeeComponent
-     */
-    enter() {
-        const value = this.branchCtrl.value;
-        if (!this.branchList.some(entry => entry === value)) {
-            this.branchList.push({ 'BRANCH': value });
-        }
-        setTimeout(() => this.branchCtrl.setValue(value));
-    }
-
-    /**
-     *  click enter to save the new section value to list
-     * @memberof AddOneEmployeeComponent
-     */
-    enterSection() {
-        const value = this.sectionCtrl.value;
-        if (!this.sectionList.some(entry => entry === value)) {
-            this.sectionList.push({ 'SECTION': value });
-        }
-        setTimeout(() => this.sectionCtrl.setValue(value));
-    }
-
-    /**
-     *  click enter to save the new department value to list
-     * @memberof AddOneEmployeeComponent
-     */
-    enterDepartment() {
-        const value = this.sectionCtrl.value;
-        if (!this.departmentList.some(entry => entry === value)) {
-            this.departmentList.push({ 'DEPARTMENT': value });
-        }
-        setTimeout(() => this.departmentCtrl.setValue(value));
-    }
-
-    /**
-     * click enter to save the new cost centre value to list
-     * @memberof AddOneEmployeeComponent
-     */
-    enterCC() {
-        const value = this.costCentreCtrl.value;
-        if (!this.costcentre.some(entry => entry === value)) {
-            this.costcentre.push({ 'COSTCENTRE': value });
-        }
-        setTimeout(() => this.costCentreCtrl.setValue(value));
+        setTimeout(() => control.setValue(value));
     }
 
     /**
