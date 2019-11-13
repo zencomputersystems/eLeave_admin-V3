@@ -3,132 +3,134 @@
         (click)="dialogAddOneEmployee.close()"></div> -->
     <!-- <p style="text-align: center;color: #7a8589;font-size: 16px;padding-bottom: 3%;margin-top: 0;">
         Please enter the employee details below</p> -->
-    <div style="display: block;width: 60%;">
-        <span style="padding-bottom: 5px;font-size: 12px;color:#808495;display: block">
-            SELECT COMPANY</span>
-        <mat-form-field appearance="outline"
-            style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;">
-            <mat-label>Please select company</mat-label>
-            <mat-select required>
-                <mat-option>None</mat-option>
-                <mat-option *ngFor="let company of companyList" [value]=company.TENANT_COMPANY_GUID
-                    (click)="companySelected(company.TENANT_COMPANY_GUID);">
-                    {{company.NAME}}
-                </mat-option>
-            </mat-select>
-            <!-- <mat-error>Company tenant is <strong>required</strong></mat-error> -->
-        </mat-form-field>
-    </div>
-
-    <div style="display: block;width: 100%;">
-        <div style="display: inline-block;width: 47%;">
+    <form [formGroup]="invitationForm">
+        <div style="display: block;width: 60%;">
             <span style="padding-bottom: 5px;font-size: 12px;color:#808495;display: block">
-                BRANCH</span>
+                SELECT COMPANY</span>
             <mat-form-field appearance="outline"
                 style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;">
-                <mat-label>Select/Create branch</mat-label>
-                <input matInput [matAutocomplete]="branch" [formControl]="branchCtrl"
-                    (keyup.enter)="enter(branchCtrl,branchList)">
-                <mat-autocomplete #branch="matAutocomplete"
-                    (optionSelected)="optionSelected($event.option,branchList, branchCtrl)">
-                    <mat-option style="font-size: 12px;color: #43425d;">None</mat-option>
-                    <mat-option *ngFor="let branch of filteredBranch | async" [value]="branch.BRANCH">
-                        <span style="font-size: 12px;color: #43425d;">{{branch.BRANCH}}</span>
+                <mat-label>Please select company</mat-label>
+                <mat-select formControlName="company" required>
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let company of companyList" [value]=company.TENANT_COMPANY_GUID>
+                        {{company.NAME}}
                     </mat-option>
-                </mat-autocomplete>
+                </mat-select>
+                <!-- <mat-error>Company tenant is <strong>required</strong></mat-error> -->
             </mat-form-field>
         </div>
-        &nbsp;&nbsp;
-        <div style="display: inline-block;width: 47%;">
-            <span style="padding-bottom: 5px;font-size: 12px;color:#808495;display: block">
-                DIVISION</span>
-            <mat-form-field appearance="outline"
-                style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;">
-                <mat-label>Select/Create division</mat-label>
-                <input matInput [formControl]="divisionCtrl">
-                <!-- [matAutocomplete]="auto" (keyup.enter)="enter()" -->
-                <!-- <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected($event.option)">
+
+        <div style="display: block;width: 100%;">
+            <div style="display: inline-block;width: 47%;">
+                <span style="padding-bottom: 5px;font-size: 12px;color:#808495;display: block">
+                    BRANCH</span>
+                <mat-form-field appearance="outline"
+                    style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;">
+                    <mat-label>Select/Create branch</mat-label>
+                    <input matInput [matAutocomplete]="branch" [formControl]="branchCtrl"
+                        (keyup.enter)="enter(branchCtrl,branchList)">
+                    <mat-autocomplete #branch="matAutocomplete"
+                        (optionSelected)="optionSelected($event.option,branchList, branchCtrl)">
+                        <mat-option style="font-size: 12px;color: #43425d;">None</mat-option>
+                        <mat-option *ngFor="let branch of filteredBranch | async" [value]="branch.BRANCH">
+                            <span style="font-size: 12px;color: #43425d;">{{branch.BRANCH}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            &nbsp;&nbsp;
+            <div style="display: inline-block;width: 47%;">
+                <span style="padding-bottom: 5px;font-size: 12px;color:#808495;display: block">
+                    DIVISION</span>
+                <mat-form-field appearance="outline"
+                    style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;">
+                    <mat-label>Select/Create division</mat-label>
+                    <input matInput [formControl]="divisionCtrl">
+                    <!-- [matAutocomplete]="auto" (keyup.enter)="enter()" -->
+                    <!-- <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected($event.option)">
                     <mat-option *ngFor="let state of filteredDivision | async" [value]="state">
                         <span style="font-size: 12px;color: #43425d;">{{ state }}</span>
                     </mat-option>
                 </mat-autocomplete> -->
-            </mat-form-field>
+                </mat-form-field>
+            </div>
         </div>
-    </div>
 
-    <div style="display: block;width: 100%;">
-        <div style="display: inline-block;width: 47%;">
-            <span style="padding-bottom: 5px;font-size: 12px;color:#808495;display: block">
-                SECTION</span>
-            <mat-form-field appearance="outline"
-                style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;">
-                <mat-label>Select/Create section</mat-label>
-                <input matInput [matAutocomplete]="section" [formControl]="sectionCtrl"
-                    (keyup.enter)="enter(sectionCtrl,sectionList)">
-                <mat-autocomplete #section="matAutocomplete"
-                    (optionSelected)="optionSelected($event.option,sectionList, sectionCtrl)">
-                    <mat-option style="font-size: 12px;color: #43425d;">None</mat-option>
-                    <mat-option *ngFor="let section of filteredSection | async" [value]="section.SECTION">
-                        <span style="font-size: 12px;color: #43425d;">{{section.SECTION}}</span>
-                    </mat-option>
-                </mat-autocomplete>
-                <!-- <mat-select>
+        <div style="display: block;width: 100%;">
+            <div style="display: inline-block;width: 47%;">
+                <span style="padding-bottom: 5px;font-size: 12px;color:#808495;display: block">
+                    SECTION</span>
+                <mat-form-field appearance="outline"
+                    style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;">
+                    <mat-label>Select/Create section</mat-label>
+                    <input matInput [matAutocomplete]="section" [formControl]="sectionCtrl"
+                        (keyup.enter)="enter(sectionCtrl,sectionList)">
+                    <mat-autocomplete #section="matAutocomplete"
+                        (optionSelected)="optionSelected($event.option,sectionList, sectionCtrl)">
+                        <mat-option style="font-size: 12px;color: #43425d;">None</mat-option>
+                        <mat-option *ngFor="let section of filteredSection | async" [value]="section.SECTION">
+                            <span style="font-size: 12px;color: #43425d;">{{section.SECTION}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                    <!-- <mat-select>
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let section of sectionList" [value]=section.SECTION>
                         {{section.SECTION}}
                     </mat-option>
                 </mat-select> -->
-            </mat-form-field>
-        </div>
-        &nbsp;&nbsp;
-        <div style="display: inline-block;width: 47%;">
-            <span style="padding-bottom: 5px;font-size: 12px;color:#808495;display: block">
-                DEPARTMENT</span>
-            <mat-form-field appearance="outline"
-                style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;">
-                <mat-label>Select/Create department</mat-label>
-                <input matInput [matAutocomplete]="department" [formControl]="departmentCtrl"
-                    (keyup.enter)="enter(departmentCtrl,departmentList)">
-                <mat-autocomplete #department="matAutocomplete"
-                    (optionSelected)="optionSelected($event.option,departmentList, departmentCtrl)">
-                    <mat-option style="font-size: 12px;color: #43425d;">None</mat-option>
-                    <mat-option *ngFor="let department of filteredDepartment | async" [value]="department.DEPARTMENT">
-                        <span style="font-size: 12px;color: #43425d;">{{department.DEPARTMENT}}</span>
-                    </mat-option>
-                </mat-autocomplete>
-                <!-- <mat-select>
+                </mat-form-field>
+            </div>
+            &nbsp;&nbsp;
+            <div style="display: inline-block;width: 47%;">
+                <span style="padding-bottom: 5px;font-size: 12px;color:#808495;display: block">
+                    DEPARTMENT</span>
+                <mat-form-field appearance="outline"
+                    style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;">
+                    <mat-label>Select/Create department</mat-label>
+                    <input matInput [matAutocomplete]="department" [formControl]="departmentCtrl"
+                        (keyup.enter)="enter(departmentCtrl,departmentList)">
+                    <mat-autocomplete #department="matAutocomplete"
+                        (optionSelected)="optionSelected($event.option,departmentList, departmentCtrl)">
+                        <mat-option style="font-size: 12px;color: #43425d;">None</mat-option>
+                        <mat-option *ngFor="let department of filteredDepartment | async"
+                            [value]="department.DEPARTMENT">
+                            <span style="font-size: 12px;color: #43425d;">{{department.DEPARTMENT}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                    <!-- <mat-select>
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let department of departmentList" [value]=department.DEPARTMENT>
                         {{department.DEPARTMENT}}
                     </mat-option>
                 </mat-select> -->
-            </mat-form-field>
+                </mat-form-field>
+            </div>
         </div>
-    </div>
 
-    <div style="display: block;width: 100%;">
-        <div style="display: inline-block;width: 47%;">
-            <span style="padding-bottom: 5px;font-size: 12px;color:#808495;display: block">
-                COST CENTRE</span>
-            <mat-form-field appearance="outline"
-                style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;">
-                <mat-label>Select/Create cost centre</mat-label>
-                <input matInput [matAutocomplete]="costcentre" [formControl]="costCentreCtrl"
-                    (keyup.enter)="enter(costCentreCtrl,costcentre)">
-                <mat-autocomplete #costcentre="matAutocomplete"
-                    (optionSelected)="optionSelected($event.option,costcentre, costCentreCtrl)">
-                    <mat-option style="font-size: 12px;color: #43425d;">None</mat-option>
-                    <mat-option *ngFor="let costcentre of filteredCostCentre | async" [value]="costcentre.COSTCENTRE">
-                        <span style="font-size: 12px;color: #43425d;">{{costcentre.COSTCENTRE}}</span>
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
+        <div style="display: block;width: 100%;">
+            <div style="display: inline-block;width: 47%;">
+                <span style="padding-bottom: 5px;font-size: 12px;color:#808495;display: block">
+                    COST CENTRE</span>
+                <mat-form-field appearance="outline"
+                    style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;">
+                    <mat-label>Select/Create cost centre</mat-label>
+                    <input matInput [matAutocomplete]="costcentre" [formControl]="costCentreCtrl"
+                        (keyup.enter)="enter(costCentreCtrl,costcentre)">
+                    <mat-autocomplete #costcentre="matAutocomplete"
+                        (optionSelected)="optionSelected($event.option,costcentre, costCentreCtrl)">
+                        <mat-option style="font-size: 12px;color: #43425d;">None</mat-option>
+                        <mat-option *ngFor="let costcentre of filteredCostCentre | async"
+                            [value]="costcentre.COSTCENTRE">
+                            <span style="font-size: 12px;color: #43425d;">{{costcentre.COSTCENTRE}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
         </div>
-    </div>
 
-    <ion-item class="divider" lines="full"></ion-item>
+        <ion-item class="divider" lines="full"></ion-item>
 
-    <form [formGroup]="invitationForm">
+
         <div style="display:block; white-space: nowrap;width: 100%;">
             <div style="width: 100%;display: inline-block;">
                 <span style="font-size: 12px;color: #808495;display: block">
@@ -239,6 +241,21 @@
             </div>
         </div> -->
     </form>
+</div>
+
+<div style="text-align: center;margin:20px" *ngIf="individual">
+    <ion-button
+        style="--border-radius:2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+        color="primary" (click)="sendInvitation()" [disabled]="!invitationForm.valid">
+        Add
+    </ion-button>
+    <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
+                *ngIf="showSmallSpinner">
+                <ion-spinner name="lines-small" color="primary"></ion-spinner>
+            </div>
+    <p style="color: #808495;font-size: 12px;padding-left: 70px;
+    padding-right: 70px;padding-top: 10px;">After click Add, it will go to edit mode and you can straightaway
+        complete the rest of the configuration there.</p>
 </div>
 
 <ng-container *ngIf="getDetails">

@@ -194,13 +194,14 @@ export class AddOneEmployeeComponent implements OnInit {
      */
     constructor(private apiService: APIService, private adminInvite: AdminInvitesApiService, private leaveSetupService: LeaveApiService) {
         this.invitationForm = new FormGroup({
+            company: new FormControl('', Validators.required),
             name: new FormControl('', Validators.required),
-            IC: new FormControl('', Validators.required),
+            // IC: new FormControl('', Validators.required),
             id: new FormControl('', Validators.required),
             joinDate: new FormControl('', Validators.required),
-            designation: new FormControl('', Validators.required),
-            email: new FormControl('', Validators.required),
-            phone: new FormControl('', Validators.required),
+            // designation: new FormControl('', Validators.required),
+            // email: new FormControl('', Validators.required),
+            // phone: new FormControl('', Validators.required),
         });
         this.branchCtrl = new FormControl({ value: '', disabled: true });
         this.divisionCtrl = new FormControl({ value: '', disabled: true });
@@ -373,10 +374,15 @@ export class AddOneEmployeeComponent implements OnInit {
     sendInvitation() {
         this.showSmallSpinner = true;
         const data = [{
-            "STAFF_EMAIL": this.invitationForm.controls.email.value,
+            // "STAFF_EMAIL": this.invitationForm.controls.email.value,
+            "COMPANY_NUMBER": this.invitationForm.controls.company.value,
             "STAFF_ID": this.invitationForm.controls.id.value,
             "FULLNAME": this.invitationForm.controls.name.value,
-            "DESIGNATION": this.invitationForm.controls.designation.value,
+            // "DESIGNATION": this.invitationForm.controls.designation.value,
+            "BRANCH": this.branchCtrl.value,
+            "DIVISION": this.divisionCtrl.value,
+            "DEPARTMENT": this.departmentCtrl.value,
+            "COST_CENTRE": this.costCentreCtrl.value,
             "JOIN_DATE": moment(this.invitationForm.controls.joinDate.value).format('YYYY-MM-DD')
         }]
         this.adminInvite.post_userimport(data).subscribe(data => {
