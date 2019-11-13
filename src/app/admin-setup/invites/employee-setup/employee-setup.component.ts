@@ -270,6 +270,34 @@ export class EmployeeSetupComponent implements OnInit {
     public config: any;
 
     /**
+     * show all company list
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public showall: boolean = false;
+
+    /**
+     * show less company list
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public showViewLessButton: boolean = false;
+
+    /**
+     * show all department list
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public showAllDepartment: boolean = false;
+
+    /**
+     * show less department
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public showLessDepartment: boolean = false;
+
+    /**
      * selected company guid
      * @private
      * @type {*}

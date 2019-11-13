@@ -24,7 +24,8 @@
                 Add Bulk
             </ion-button>
             <div>
-                <app-add-one-employee *ngIf="individualButton === true" [individual]="individualButton === true" [disabledEditMode]="false">
+                <app-add-one-employee *ngIf="individualButton === true" [individual]="individualButton === true"
+                    [disabledEditMode]="false">
                 </app-add-one-employee>
                 <app-bulk-import *ngIf="bulkButton === true" (closeMenu)="eventOutput($event)"></app-bulk-import>
             </div>
@@ -61,32 +62,80 @@
         <div style="margin-left:17px;margin-right:17px">
             <p style="opacity: 0.8;font-size: 14px;font-weight: bold;color: #43425d;margin-bottom: 8px;">Company</p>
             <ion-item class="divider" lines="full"></ion-item>
-            <ion-item *ngFor="let item of companyList; let i=index" lines="none"
-                style="--min-height:36px;margin-left: -16px;">
-                <ion-checkbox mode="md"
-                    style="--background-checked: #a5a4bf;
+            <ng-container *ngFor="let item of companyList; let i=index">
+                <ion-item *ngIf="i<3 && showall===false" lines="none" style="--min-height:36px;margin-left: -16px;">
+                    <ion-checkbox mode="md"
+                        style="--background-checked: #a5a4bf;
                     --border-color-checked: #a5a4bf;margin:0;--border-radius: 4px;--border-color: #a5a4bf;--background: #f0f0f7"
-                    [(ngModel)]="item.checked" (click)="clickedCompanyCheckbox(i)">
-                </ion-checkbox>
-                <ion-label
-                    style="margin:0;padding-left: 10px;display: inline-block;color: #43425d;opacity: 0.8;font-size: 11px;">
-                    {{item.NAME}}</ion-label>
-            </ion-item>
+                        [(ngModel)]="item.checked" (click)="clickedCompanyCheckbox(i)">
+                    </ion-checkbox>
+                    <ion-label
+                        style="margin:0;padding-left: 10px;display: inline-block;color: #43425d;opacity: 0.8;font-size: 11px;">
+                        {{item.NAME}}</ion-label>
+                </ion-item>
+                <ion-item *ngIf="showall" lines="none" style="--min-height:36px;margin-left: -16px;">
+                    <ion-checkbox mode="md"
+                        style="--background-checked: #a5a4bf;
+                    --border-color-checked: #a5a4bf;margin:0;--border-radius: 4px;--border-color: #a5a4bf;--background: #f0f0f7"
+                        [(ngModel)]="item.checked" (click)="clickedCompanyCheckbox(i)">
+                    </ion-checkbox>
+                    <ion-label
+                        style="margin:0;padding-left: 10px;display: inline-block;color: #43425d;opacity: 0.8;font-size: 11px;">
+                        {{item.NAME}}</ion-label>
+                </ion-item>
+            </ng-container>
+            <div style="text-align: center;margin:30px">
+                <ion-button *ngIf="!showViewLessButton" (click)="showall = true; showViewLessButton = true"
+                    style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                    color="primary">
+                    View More
+                </ion-button>
+                <ion-button *ngIf="showViewLessButton" (click)="showall = false; showViewLessButton = false"
+                    style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                    color="primary">
+                    View Less
+                </ion-button>
+            </div>
         </div>
         <div style="margin-left:17px;margin-right:17px;margin-top: 30px;">
             <p style="opacity: 0.8;font-size: 14px;font-weight: bold;color: #43425d;margin-bottom: 8px;">Department</p>
             <ion-item class="divider" lines="full"></ion-item>
-            <ion-item *ngFor="let item of departmentList;let i=index" lines="none"
-                style="--min-height:36px;margin-left: -16px;">
-                <ion-checkbox mode="md"
-                    style="--background-checked: #a5a4bf;
+            <ng-container *ngFor="let item of departmentList;let i=index">
+                <ion-item *ngIf="i<3 && showAllDepartment===false" lines="none"
+                    style="--min-height:36px;margin-left: -16px;">
+                    <ion-checkbox mode="md"
+                        style="--background-checked: #a5a4bf;
                     --border-color-checked: #a5a4bf;margin:0;--border-radius: 4px;--border-color: #a5a4bf;--background: #f0f0f7"
-                    [(ngModel)]="item.checked" (click)="clickedDepartmentCheckbox(i)">
-                </ion-checkbox>
-                <ion-label
-                    style="margin:0;padding-left: 10px;display: inline-block;color: #43425d;opacity: 0.8;font-size: 11px;">
-                    {{item.DEPARTMENT}}</ion-label>
-            </ion-item>
+                        [(ngModel)]="item.checked" (click)="clickedDepartmentCheckbox(i)">
+                    </ion-checkbox>
+                    <ion-label
+                        style="margin:0;padding-left: 10px;display: inline-block;color: #43425d;opacity: 0.8;font-size: 11px;">
+                        {{item.DEPARTMENT}}</ion-label>
+                </ion-item>
+                <ion-item *ngIf="showAllDepartment===true" lines="none" lines="none"
+                    style="--min-height:36px;margin-left: -16px;">
+                    <ion-checkbox mode="md"
+                        style="--background-checked: #a5a4bf;
+                --border-color-checked: #a5a4bf;margin:0;--border-radius: 4px;--border-color: #a5a4bf;--background: #f0f0f7"
+                        [(ngModel)]="item.checked" (click)="clickedDepartmentCheckbox(i)">
+                    </ion-checkbox>
+                    <ion-label
+                        style="margin:0;padding-left: 10px;display: inline-block;color: #43425d;opacity: 0.8;font-size: 11px;">
+                        {{item.DEPARTMENT}}</ion-label>
+                </ion-item>
+            </ng-container>
+            <div style="text-align: center;margin:30px">
+                <ion-button *ngIf="!showLessDepartment" (click)="showAllDepartment = true; showLessDepartment = true"
+                    style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                    color="primary">
+                    View More
+                </ion-button>
+                <ion-button *ngIf="showLessDepartment" (click)="showAllDepartment = false; showLessDepartment = false"
+                    style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                    color="primary">
+                    View Less
+                </ion-button>
+            </div>
         </div>
         <div style="margin-left:17px;margin-right:17px;margin-top: 30px;">
             <p style="opacity: 0.8;font-size: 14px;font-weight: bold;color: #43425d;margin-bottom: 8px;">Status</p>
