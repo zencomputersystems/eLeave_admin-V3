@@ -24,7 +24,7 @@
                 Add Bulk
             </ion-button>
             <div>
-                <app-add-one-employee *ngIf="individualButton === true" [individual]="individualButton === true">
+                <app-add-one-employee *ngIf="individualButton === true" [individual]="individualButton === true" [disabledEditMode]="false">
                 </app-add-one-employee>
                 <app-bulk-import *ngIf="bulkButton === true" (closeMenu)="eventOutput($event)"></app-bulk-import>
             </div>
@@ -528,7 +528,7 @@
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col>
-                                        <ion-label class="label">Work Location</ion-label>
+                                        <!-- <ion-label class="label">Work Location</ion-label>
                                         <p class="pText"
                                             *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined">
                                             {{employmentDetails.employmentDetail.branch}}</p>
@@ -536,7 +536,7 @@
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
                                             <input matInput [(ngModel)]="employmentDetails.employmentDetail.branch">
-                                        </mat-form-field>
+                                        </mat-form-field> -->
                                     </ion-col>
                                     <ion-col>
                                     </ion-col>
@@ -633,10 +633,11 @@
                                     </ion-col>
                                     <ion-col>
                                         <ion-label class="label">Years of Service</ion-label>
-                                        <!-- <p *ngIf="mode === 'OFF'">{{employmentDetails.employmentDetail.reportingTo}}</p>
-                                        <mat-form-field *ngIf="mode === 'ON'">
+                                        <p class="pText" *ngIf="employmentDetails.employmentDetail != undefined">
+                                            {{employmentDetails.employmentDetail.yearOfService}}</p>
+                                        <!-- <mat-form-field *ngIf="mode === 'ON'">
                                             <input matInput
-                                                [(ngModel)]="employmentDetails.employmentDetail.reportingTo">
+                                                [(ngModel)]="employmentDetails.employmentDetail.yearOfService">
                                         </mat-form-field> -->
                                     </ion-col>
                                 </ion-row>

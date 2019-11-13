@@ -202,11 +202,11 @@ export class AddOneEmployeeComponent implements OnInit {
             email: new FormControl('', Validators.required),
             phone: new FormControl('', Validators.required),
         });
-        this.branchCtrl = new FormControl();
-        this.divisionCtrl = new FormControl();
-        this.sectionCtrl = new FormControl();
-        this.departmentCtrl = new FormControl();
-        this.costCentreCtrl = new FormControl();
+        this.branchCtrl = new FormControl({ value: '', disabled: true });
+        this.divisionCtrl = new FormControl({ value: '', disabled: true });
+        this.sectionCtrl = new FormControl({ value: '', disabled: true });
+        this.departmentCtrl = new FormControl({ value: '', disabled: true });
+        this.costCentreCtrl = new FormControl({ value: '', disabled: true });
     }
 
     ngOnInit() {
@@ -255,6 +255,19 @@ export class AddOneEmployeeComponent implements OnInit {
             if (changes.disabledEditMode.currentValue == true) {
                 this.changedValue.emit(this.getDetails);
             }
+            if (changes.disabledEditMode.currentValue == false) {
+                this.branchCtrl.enable();
+                this.divisionCtrl.enable();
+                this.sectionCtrl.enable();
+                this.departmentCtrl.enable();
+                this.costCentreCtrl.enable();
+            }
+        }
+        if (changes.getDetails) {
+            this.branchCtrl.patchValue(this.getDetails.employmentDetail.branch);
+            this.sectionCtrl.patchValue(this.getDetails.employmentDetail.section);
+            this.departmentCtrl.patchValue(this.getDetails.employmentDetail.department);
+            this.costCentreCtrl.patchValue(this.getDetails.employmentDetail.costcentre);
         }
     }
 
@@ -337,7 +350,6 @@ export class AddOneEmployeeComponent implements OnInit {
      * @memberof AddOneEmployeeComponent
      */
     optionSectionSelected(option) {
-        console.log('optionSelected:', option.value);
         if (option.value.indexOf(this._question) === 0) {
             let newState = option.value.substring(this._question.length).split('"?')[0];
             this.sectionList.push({ 'SECTION': newState });
@@ -351,7 +363,6 @@ export class AddOneEmployeeComponent implements OnInit {
      * @memberof AddOneEmployeeComponent
      */
     optionDepartmentSelected(option) {
-        console.log('optionSelected:', option.value);
         if (option.value.indexOf(this._question) === 0) {
             let newState = option.value.substring(this._question.length).split('"?')[0];
             this.departmentList.push({ 'DEPARTMENT': newState });
@@ -365,7 +376,6 @@ export class AddOneEmployeeComponent implements OnInit {
      * @memberof AddOneEmployeeComponent
      */
     optionCCSelected(option) {
-        console.log('optionSelected:', option.value);
         if (option.value.indexOf(this._question) === 0) {
             let newState = option.value.substring(this._question.length).split('"?')[0];
             this.costcentre.push({ 'COSTCENTRE': newState });
