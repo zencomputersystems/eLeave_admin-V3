@@ -99,6 +99,11 @@ export class WorkingHourComponent implements OnInit, OnChanges {
         this._data = await this.workingHourAPI.get_working_hours_details(items[0].working_hours_guid).toPromise();
     }
 
+    /**
+     * get selected working hour details 
+     * @param {SimpleChanges} changes
+     * @memberof WorkingHourComponent
+     */
     async ngOnChanges(changes: SimpleChanges) {
         if (changes.id.currentValue !== "" && changes.id.currentValue !== undefined) {
             let detail = await this.workingHourAPI.get_working_hours_details(this.id).toPromise();

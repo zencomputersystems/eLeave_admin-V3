@@ -14,9 +14,24 @@ import { Router } from '@angular/router';
 })
 export class LeaveSetupComponent implements OnInit {
 
+    /**
+     * index of the link
+     * @type {number}
+     * @memberof LeaveSetupComponent
+     */
     public numOfArray: number;
+
+    /**
+     *  url route
+     * @type {string}
+     * @memberof LeaveSetupComponent
+     */
     public url: string;
-    public lastSegment: string;
+
+    /**
+     * link of the leave setup
+     * @memberof LeaveSetupComponent
+     */
     public leaveSetupPage = [
         {
             title: 'Calendar Profile Setup',
@@ -42,6 +57,7 @@ export class LeaveSetupComponent implements OnInit {
 
     /**
      *Creates an instance of LeaveSetupComponent.
+     * @param {Router} router
      * @memberof LeaveSetupComponent
      */
     constructor(private router: Router) {
@@ -51,6 +67,11 @@ export class LeaveSetupComponent implements OnInit {
         this.checkUrl(this.router.url);
     }
 
+    /**
+     * check url of clicked link
+     * @param {string} url
+     * @memberof LeaveSetupComponent
+     */
     checkUrl(url: string) {
         for (let i = 0; i < this.leaveSetupPage.length; i++) {
             if (this.leaveSetupPage[i].url.includes(url)) {
@@ -59,6 +80,11 @@ export class LeaveSetupComponent implements OnInit {
         }
     }
 
+    /**
+     * route to clicked link
+     * @param {number} index
+     * @memberof LeaveSetupComponent
+     */
     getIndexToShowArrow(index: number) {
         this.numOfArray = index;
         this.router.navigate(this.leaveSetupPage[index].url);
