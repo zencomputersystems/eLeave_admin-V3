@@ -1,4 +1,4 @@
-import { OnInit, Component } from "@angular/core";
+import { OnInit, Component, Input, SimpleChanges } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { PolicyApiService } from "../policy-api.service";
 import { ActivatedRoute } from "@angular/router";
@@ -15,6 +15,9 @@ import { ActivatedRoute } from "@angular/router";
     styleUrls: ['./create-policy.component.scss'],
 })
 export class CreatePolicyComponent implements OnInit {
+
+
+    @Input() companyId: any;
 
     /**
      * company list from API
@@ -35,14 +38,14 @@ export class CreatePolicyComponent implements OnInit {
      * @type {boolean}
      * @memberof CreatePolicyComponent
      */
-    public showSpinner: boolean = true;
+    // public showSpinner: boolean = true;
 
     /**
      * hide container during loading page
      * @type {boolean}
      * @memberof CreatePolicyComponent
      */
-    public showContainer: boolean = false;
+    // public showContainer: boolean = false;
 
     /**
      * mat radio button value 
@@ -109,12 +112,16 @@ export class CreatePolicyComponent implements OnInit {
      */
     public policyForm: any;
 
+    public emailValue: string;
+
+    public emailCheck: boolean;
+
     /**
      * show loading spinner when clicked on create policy to API
      * @type {boolean}
      * @memberof CreatePolicyComponent
      */
-    public showSmallSpinner: boolean = false;
+    // public showSmallSpinner: boolean = false;
 
     /**
      * to get index of selected month 
@@ -164,7 +171,7 @@ export class CreatePolicyComponent implements OnInit {
     constructor(private policyApi: PolicyApiService, private route: ActivatedRoute) {
         this.policyForm = new FormGroup(
             {
-                company: new FormControl(null, Validators.required),
+                // company: new FormControl(null, Validators.required),
                 anyoneLevel: new FormControl(null, Validators.required),
                 everyoneLevel: new FormControl(null, Validators.required),
                 escalateAfterDays: new FormControl(null, Validators.required),
@@ -177,18 +184,27 @@ export class CreatePolicyComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.params.subscribe(params => { this._companyGUID = params.id; });
-        this.policyApi.get_general_leave_policy_id(this._companyGUID).subscribe(list => {
-            this.policyList = list;
+        // this.route.params.subscribe(params => { this._companyGUID = params.id; });
+        // this.policyApi.get_general_leave_policy_id(this.companyId.TENANT_COMPANY_GUID).subscribe(list => {
+        //     this.policyList = list;
+        //     console.log(this.policyList);
+        // this.editPolicyDetails();
+        // })
+        // this.policyApi.get_company_list().subscribe(data => {
+        //     this.list = data;
+        //     // this.showContainer = true;
+        //     // this.showSpinner = false;
+        // }, error => {
+        //     window.location.href = '/login';
+        // })
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        console.log(changes);
+        if (changes.companyId.currentValue !== "" && changes.companyId.currentValue !== undefined) {
+            this.policyList = changes.companyId.currentValue;
             this.editPolicyDetails();
-        })
-        this.policyApi.get_company_list().subscribe(data => {
-            this.list = data;
-            this.showContainer = true;
-            this.showSpinner = false;
-        }, error => {
-            window.location.href = '/login';
-        })
+        }
     }
 
     /**
@@ -197,7 +213,7 @@ export class CreatePolicyComponent implements OnInit {
      */
     editPolicyDetails() {
         this._policyGUID = this.policyList.MAIN_GENERAL_POLICY_GUID;
-        this.policyForm.controls.company.value = this.policyList.PROPERTIES_XML.tenantCompanyId;
+        // this.policyForm.controls.company.value = this.policyList.PROPERTIES_XML.tenantCompanyId;
         this.radioValue = this.policyList.PROPERTIES_XML.approvalConfirmation.requirement;
         if (this.radioValue == 'Anyone') {
             this.policyForm.controls.anyoneLevel.value = this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel;
@@ -223,6 +239,13 @@ export class CreatePolicyComponent implements OnInit {
         this.policyForm.controls.YEChoice.value = this.policyList.PROPERTIES_XML.allowYearEndClosing.relativeYear;
         this.onBehalf = this.policyList.PROPERTIES_XML.applyOnBehalfConfirmation;
         this.email = this.policyList.PROPERTIES_XML.emailReminder;
+        if (this.email == true) {
+            this.emailValue = 'Yes';
+            this.emailCheck = true;
+        } else {
+            this.emailValue = 'No';
+            this.emailCheck = false;
+        }
         this.yearChanged(this.policyForm.controls.YEChoice.value);
         this.monthChanged('monthCF', 0);
         this.policyForm.controls.CFMonth.enable();
@@ -358,7 +381,7 @@ export class CreatePolicyComponent implements OnInit {
         this._data.allowYearEndClosing.relativeYear = this.policyForm.controls.YEChoice.value;
         this._data.applyOnBehalfConfirmation = this.onBehalf;
         this._data.emailReminder = this.email;
-        this._data.tenantCompanyId = this.policyForm.controls.company.value;
+        // this._data.tenantCompanyId = this.policyForm.controls.company.value;
     }
 
     /**
@@ -366,16 +389,25 @@ export class CreatePolicyComponent implements OnInit {
      * @memberof CreatePolicyComponent
      */
     savePolicy() {
-        this.showSmallSpinner = true;
+        // this.showSmallSpinner = true;
         this.getValue();
         const data = {
             'generalPolicyId': this._policyGUID,
             'data': this._data
         }
         this.policyApi.patch_general_leave_policy(data).subscribe(response => {
-            this.policyApi.message('saved successfully');
-            this.showSmallSpinner = false;
+            this.policyApi.message('Edit mode disabled. Good job!', true);
+            // this.policyApi.message('saved successfully');
+            // this.showSmallSpinner = false;
         })
+    }
+
+    toggleEmail(event) {
+        if (event.detail.checked === true) {
+            this.emailValue = 'Yes';
+        } else {
+            this.emailValue = 'No';
+        }
     }
 
 }

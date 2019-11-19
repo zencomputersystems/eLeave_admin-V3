@@ -79,12 +79,14 @@ export class PolicyApiService {
     /**
      * show notifation snackbar after clicked create policy
      * @param {string} message
+     * @param {boolean} value
      * @memberof PolicyApiService
      */
-    message(message: string) {
+    message(message: string, value: boolean) {
         this.snackbar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 2500,
-            data: message
+            duration: 2000,
+            verticalPosition: "top",
+            data: { message: message, response: value }
         });
     }
 

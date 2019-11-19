@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <div style="width: 100%; height:100%; text-align: center;" *ngIf="showSpinner">
         <app-spinner></app-spinner>
     </div>
@@ -58,4 +58,85 @@
                 (click)="nextPage(pageIndex+1)"></i>
         </div>
     </div>
-</div>
+</div> -->
+
+<ion-card>
+    <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
+        <div class="fullContainer">
+            <div class="left">
+                <img src="assets/icon/leave_setup/icon_calendar@3x.png" style="width:36px;height:36px">
+            </div>
+            <div class="right">
+                <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">General Leave
+                    Policy
+                </ion-card-subtitle>
+                <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                    Manage tenant leave policy to ensure general information is created in application
+                </ion-card-subtitle>
+            </div>
+            <div style="right: 75px;top: 25px;position: absolute;">
+                <p
+                    style="margin-top: 16px;opacity: 0.8;font-size: 12px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
+                    Edit
+                    Mode: {{modeValue}}</p>
+                <div style="display: inline-block;position: absolute;margin-top: 12px;">
+                    <ion-toggle style="zoom:0.70" mode="ios" color="secondary" (ionChange)="toggleEvent($event)">
+                    </ion-toggle>
+                </div>
+            </div>
+        </div>
+    </ion-card-header>
+
+    <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;">
+        <div class="cardContent">
+            <ion-card-content style="max-height:100%;height: 100%;">
+                <div class="row">
+                    <div class="list">
+                        <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
+                        padding-top: 1px;margin-bottom: 10px;color: #a3a6b4;font-weight: bold;">
+                            <ion-row>
+                                <ion-col align-self-center style="padding: 10px;">
+                                    COMPANY LIST
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <div style="height: calc(100% - 62px);overflow-y: auto;">
+                            <ion-row class="detailsRow" *ngFor="let item of companyName; let i=index"
+                                style="padding-left: 10px;">
+                                <ion-col style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                    <p class="textHover"
+                                        style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
+                                        [ngClass]="{
+                                            'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
+                                        (click)="clickedPolicy(item, i)">
+                                        {{item.NAME}}
+                                    </p>
+                                </ion-col>
+                                <ion-col size="1.5" align-self-center style="text-align: right;padding-right: 10px;">
+                                    <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="modeValue==='ON'"
+                                        style="width: 11px;height:11px;display: inline-block;"
+                                        [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}">
+                                </ion-col>
+                                <ion-item class="divider" lines="full">
+                                </ion-item>
+                            </ion-row>
+                        </div>
+                    </div>
+                    <div class="details">
+                        <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
+                        padding-top: 1px;margin-bottom: 10px;color: #a3a6b4;font-weight: bold;">
+                            <ion-row>
+                                <ion-col align-self-center style="padding: 10px;">
+                                    GENERAL LEAVE POLICY CONFIGURATION
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <div style="height: calc(100% - 62px);overflow-y: auto;">
+                            <app-create-policy [companyId]="policyDetails"></app-create-policy>
+                        </div>
+                    </div>
+                </div>
+            </ion-card-content>
+        </div>
+    </div>
+</ion-card>

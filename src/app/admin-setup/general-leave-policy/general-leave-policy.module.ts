@@ -16,7 +16,6 @@ import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { GeneralLeavePolicyComponent } from './general-leave-policy.component';
 import { CreatePolicyComponent } from './create-policy/create-policy.component';
 import { MatRadioModule } from '@angular/material';
 import { PolicyListComponent } from './policy-list/policy-list.component';
@@ -25,7 +24,7 @@ import { PolicyListComponent } from './policy-list/policy-list.component';
 const routes: Routes = [
     {
         path: '',
-        component: GeneralLeavePolicyComponent
+        component: PolicyListComponent
     }
 ];
 
@@ -51,6 +50,6 @@ const routes: Routes = [
         RouterModule.forChild(routes)
     ],
     entryComponents: [],
-    declarations: [GeneralLeavePolicyComponent, CreatePolicyComponent, PolicyListComponent]
+    declarations: [CreatePolicyComponent, PolicyListComponent]
 })
 export class GeneralLeavePolicyModule { }

@@ -52,6 +52,10 @@ export class LeaveSetupComponent implements OnInit {
         {
             title: 'Leave Entitlement by Batch',
             url: ['/main/leave-setup/leave-entitlement-by-batch'],
+        },
+        {
+            title: 'General Leave Policy',
+            url: ['/main/leave-setup/general-leave-policy'],
         }
     ];
 

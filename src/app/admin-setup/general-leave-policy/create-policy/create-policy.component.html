@@ -1,16 +1,16 @@
-<div style="width: 100%; height:100%; text-align: center;" *ngIf="showSpinner">
+<!-- <div style="width: 100%; height:100%; text-align: center;" *ngIf="showSpinner">
     <app-spinner></app-spinner>
 </div>
 <div class="advertiseTop" *ngIf="showContainer">
     <div class="objects-icon" [inlineSVG]="'assets/icon/user_profile/policy.svg'"></div>
     <p class="pText">Manage tenant leave policy to ensure general information as year end closing and forfeit leave date
         is created in application </p>
-</div>
-<div class="container" *ngIf="showContainer">
+</div> -->
+<div>
     <form [formGroup]="policyForm">
         <div class="content">
             <!-- company tenant list -->
-            <span style="padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
+            <!-- <span style="padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
                 COMPANY LIST</span>
             <mat-form-field appearance="outline"
                 style="display: block;font-size: 13px;width: 400px;color:#7a8589;padding-left: 18px;">
@@ -22,7 +22,7 @@
                 </mat-select>
                 <mat-error>Company tenant is <strong>required</strong></mat-error>
             </mat-form-field>
-            <ion-item class="divider" lines="full"></ion-item>
+            <ion-item class="divider" lines="full"></ion-item> -->
 
             <!-- Anyone, Everyone, Superior -->
             <span class="example-radio-group-label" style="padding-left: 20px;display: block;padding-top: 15px">
@@ -33,23 +33,31 @@
                     Anyone in hierarchy approves limit to
                 </mat-radio-button>
                 <mat-form-field appearance="outline"
-                    style="font-size: 13px;width: 80px;color:#7a8589;padding-left: 5px;">
-                    <input matInput formControlName="anyoneLevel" required><span matSuffix>level</span>
+                    style="font-size: 12px;width: 56px;color:#43425d;padding-left: 5px;">
+                    <input matInput formControlName="anyoneLevel" required>
+                    <!-- <span matSuffix>level</span> -->
                 </mat-form-field>
+                <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Level</p>
                 <div style="display: block"></div>
                 <mat-radio-button class="example-radio-button" value="Everyone"
                     (change)="showEscalateDay = true;radioValue = $event.value" style="display:inline-block">
                     Everyone in hierarchy approves limit to
                 </mat-radio-button>
                 <mat-form-field appearance="outline"
-                    style="font-size: 13px;width: 80px;color:#7a8589;padding-left: 5px;">
-                    <input matInput formControlName="everyoneLevel" required><span matSuffix>level</span>
+                    style="font-size: 12px;width: 56px;color:#43425d;padding-left: 5px;">
+                    <input matInput formControlName="everyoneLevel" required>
                 </mat-form-field>
-                <mat-form-field style="font-size: 13px;width: 175px;color:#7a8589;padding-left: 53px;display:block"
-                    *ngIf="showEscalateDay || radioValue === 'Everyone'">
-                    <mat-label>Escalate after</mat-label>
-                    <input matInput formControlName="escalateAfterDays" required><span matSuffix>days</span>
-                </mat-form-field>
+                <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Level</p>
+                <div style="display: block;" *ngIf="showEscalateDay || radioValue === 'Everyone'">
+                    <p style="padding-left: 53px;color: #4d4f5c;font-size:11px;display: inline-block;">Escalate
+                        after &nbsp;</p>
+                    <mat-form-field appearance="outline"
+                        style="width:56px;font-size: 12px;color:#43425d;display:inline-block">
+                        <!-- <mat-label>Escalate after</mat-label> -->
+                        <input matInput formControlName="escalateAfterDays" required>
+                    </mat-form-field>
+                    <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Days</p>
+                </div>
                 <mat-radio-button class="example-radio-button" value="Superior"
                     (change)="showEscalateDay = false;radioValue = $event.value">
                     Superior approves
@@ -62,11 +70,11 @@
                 <ion-item class="ionItem">
                     <ion-label>Forfeit carried forward leaves on:</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" (click)="CF = !CF" [(ngModel)]="CF"
-                        [checked]="CF" (ionChange)="checkEventCF($event)">
+                        [ngModelOptions]="{standalone: true}" [checked]="CF" (ionChange)="checkEventCF($event)">
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
-            <mat-form-field appearance="outline" style="font-size: 13px;width: 180px;color:#7a8589;padding-left: 50px;">
+            <mat-form-field appearance="outline" style="font-size: 13px;width: 192px;color:#7a8589;padding-left: 50px;">
                 <mat-label>Month</mat-label>
                 <mat-select formControlName="CFMonth" (selectionChange)="monthChanged('monthCF')">
                     <mat-option>None</mat-option>
@@ -84,26 +92,27 @@
                     <mat-option value="December">December</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 24px;">
+            <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 12px;">
                 <mat-label>Day</mat-label>
                 <mat-select formControlName="CFDay">
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let day of daysOfCF" [value]=day>{{day}}</mat-option>
                 </mat-select>
             </mat-form-field>
-            &nbsp;&nbsp;
-            <span style="font-size: 13px;color:#7a8589">next year</span>
+            &nbsp;
+            <span style="font-size: 11px;color: #43425d;opacity:0.8">Next year</span>
             <ion-item class="divider" lines="full"></ion-item>
             <!-- Year end closing -->
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Allow year end closing after:</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="yearEnd" [checked]="yearEnd"
-                        (click)="yearEnd = !yearEnd" (ionChange)="checkEventYr($event)">
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="yearEnd"
+                        [ngModelOptions]="{standalone: true}" [checked]="yearEnd" (click)="yearEnd = !yearEnd"
+                        (ionChange)="checkEventYr($event)">
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
-            <mat-form-field appearance="outline" style="font-size: 13px;width: 180px;color:#7a8589;padding-left: 50px;">
+            <mat-form-field appearance="outline" style="font-size: 13px;width: 192px;color:#7a8589;padding-left: 50px;">
                 <mat-label>Month</mat-label>
                 <mat-select formControlName="YEMonth" (selectionChange)="monthChanged('monthYE')">
                     <mat-option>None</mat-option>
@@ -121,14 +130,14 @@
                     <mat-option value="December">December</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 24px;">
+            <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 12px;">
                 <mat-label>Day</mat-label>
                 <mat-select formControlName="YEDay">
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let day of daysOfYE" [value]=day>{{day}}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 24px;">
+            <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 12px;">
                 <mat-label>Year</mat-label>
                 <mat-select formControlName="YEChoice" (selectionChange)="yearChanged($event.value)">
                     <mat-option>None</mat-option>
@@ -143,7 +152,7 @@
                 <ion-item class="ionItem">
                     <ion-label>Apply on behalf feature requires employee to confirm the application</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="onBehalf"
-                        [checked]="onBehalf" (click)="onBehalf = !onBehalf">
+                        [ngModelOptions]="{standalone: true}" [checked]="onBehalf" (click)="onBehalf = !onBehalf">
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -153,14 +162,23 @@
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Email reminder</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="email" [checked]="email"
-                        (click)="email = !email">
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="email"
+                        [ngModelOptions]="{standalone: true}" [checked]="email" (click)="email = !email">
                     </ion-checkbox>
                 </ion-item>
+                <div style="left: 178px;top: 21px;position: absolute;">
+                    <p
+                        style="opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
+                        {{emailValue}}</p>
+                    <div style="display: inline-block;position: absolute;">
+                        <ion-toggle [checked]="emailCheck" style="zoom:0.70" mode="ios" color="secondary" (ionChange)="toggleEmail($event)">
+                        </ion-toggle>
+                    </div>
+                </div>
             </ion-list>
             <ion-item class="divider" lines="full"></ion-item>
         </div>
-        <div style="text-align: center;padding: 20px;">
+        <!-- <div style="text-align: center;padding: 20px;">
             <ion-button fill="outline" style="font-size: 12px;height: 30px;width: 90px;background: white;"
                 color="primary"
                 (click)="policyForm.reset();CF = false;yearEnd = false;onBehalf = false;email = false;radioValue=null;">
@@ -174,6 +192,6 @@
             <div style="display: inline-block;margin-top: 8px;vertical-align: middle;" *ngIf="showSmallSpinner">
                 <ion-spinner name="lines-small" color="primary"></ion-spinner>
             </div>
-        </div>
+        </div> -->
     </form>
 </div>

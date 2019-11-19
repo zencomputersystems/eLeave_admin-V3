@@ -7,9 +7,7 @@ import { RoleManagementComponent } from '../admin-setup/role-management/role-man
 import { RoleListComponent } from '../admin-setup/role-management/role-list/role-list.component';
 import { RoleRightsComponent } from '../admin-setup/role-management/role-rights/role-rights.component';
 import { AssignRoleComponent } from '../admin-setup/role-management/assign-role/assign-role.component';
-import { GeneralLeavePolicyComponent } from '../admin-setup/general-leave-policy/general-leave-policy.component';
 import { PolicyListComponent } from '../admin-setup/general-leave-policy/policy-list/policy-list.component';
-import { CreatePolicyComponent } from '../admin-setup/general-leave-policy/create-policy/create-policy.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { CalendarProfileComponent } from '../admin-setup/leave-setup/calendar-profile/calendar-profile.component';
 import { LeaveAdjustmentComponent } from '../admin-setup/leave-setup/leave-adjustment/leave-adjustment.component';
@@ -33,7 +31,8 @@ export const sideMenuNavigationRoutes: Routes = [
                     { path: 'working-hour-setup', component: WorkingHourListComponent },
                     { path: 'leave-entitlement-setup', component: PageNotFoundComponent },
                     { path: 'leave-adjustment', component: LeaveAdjustmentComponent },
-                    { path: 'leave-entitlement-by-batch', component: LeaveEntitlementByBatchComponent }
+                    { path: 'leave-entitlement-by-batch', component: LeaveEntitlementByBatchComponent },
+                    { path: 'general-leave-policy', component: PolicyListComponent }
                 ]
             },
             {
@@ -49,14 +48,14 @@ export const sideMenuNavigationRoutes: Routes = [
                     { path: 'assign-role', component: AssignRoleComponent }
                 ]
             },
-            {
-                path: 'general-leave-policy', component: GeneralLeavePolicyComponent,
-                children: [
-                    { path: '', redirectTo: 'policy-list', pathMatch: 'full' },
-                    { path: 'policy-list', component: PolicyListComponent },
-                    { path: 'edit-policy/:id', component: CreatePolicyComponent }
-                ]
-            },
+            // {
+            //     path: 'general-leave-policy', component: PolicyListComponent,
+            //     children: [
+            //         { path: '', redirectTo: 'policy-list', pathMatch: 'full' },
+            //         { path: 'policy-list', component: PolicyListComponent },
+            //         { path: 'edit-policy/:id', component: CreatePolicyComponent }
+            //     ]
+            // },
             { path: 'apply-on-behalf', component: PageNotFoundComponent },
             { path: 'approval-override', component: PageNotFoundComponent },
         ]

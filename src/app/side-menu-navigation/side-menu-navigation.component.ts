@@ -97,11 +97,6 @@ export class SideMenuNavigationComponent implements OnInit {
       icon: 'page_admins.svg'
     },
     {
-      title: 'General Policy',
-      url: '/main/general-leave-policy',
-      icon: 'policy.svg'
-    },
-    {
       title: 'Apply On Behalf',
       url: '/main/apply-on-behalf',
       icon: 'policy.svg'
