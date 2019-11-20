@@ -82,18 +82,36 @@ export class PolicyListComponent implements OnInit {
      */
     public disablePrevButton: boolean;
 
+    /**
+     * edit mode value
+     * @type {string}
+     * @memberof PolicyListComponent
+     */
     public modeValue: string = 'OFF';
 
+    /**
+     * index of clicked company name 
+     * @type {number}
+     * @memberof PolicyListComponent
+     */
     public clickedIndex: number = 0;
 
+    /**
+     * selected leave policy details
+     * @type {*}
+     * @memberof PolicyListComponent
+     */
     public policyDetails: any;
 
     /**
      *Creates an instance of PolicyListComponent.
-     * @param {Router} router
+     * @param {LeaveApiService} leaveAPi
+     * @param {MatDialog} dialog
+     * @param {MenuController} menu
+     * @param {PolicyApiService} policyApi
      * @memberof PolicyListComponent
      */
-    constructor(private router: Router, private leaveAPi: LeaveApiService, public dialog: MatDialog, public menu: MenuController, private policyApi: PolicyApiService) { }
+    constructor(private leaveAPi: LeaveApiService, public dialog: MatDialog, public menu: MenuController, private policyApi: PolicyApiService) { }
 
 
     ngOnInit() {
@@ -117,9 +135,9 @@ export class PolicyListComponent implements OnInit {
      * @param {*} id
      * @memberof PolicyListComponent
      */
-    getCompanyId(id) {
-        this.router.navigate(['/main/general-leave-policy/edit-policy', id]);
-    }
+    // getCompanyId(id) {
+    //     this.router.navigate(['/main/general-leave-policy/edit-policy', id]);
+    // }
 
 
     /**

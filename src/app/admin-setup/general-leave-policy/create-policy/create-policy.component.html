@@ -29,8 +29,11 @@
                 Employee can go leave, if:</span>
             <mat-radio-group class="example-radio-group" [value]="radioValue">
                 <mat-radio-button class="example-radio-button" value="Anyone" style="display:inline-block"
-                    (change)="showEscalateDay = false;radioValue = $event.value">
-                    Anyone in hierarchy approves limit to
+                    (change)="showEscalateDay = false;radioValue = $event.value" [disabled]="modeInput === 'OFF'">
+                    <p style="font-size: 11px;color: #4d4f5c;"
+                        [style.color]="radioValue === 'Anyone' && modeInput === 'OFF'? '#4d4f5c':'rgba(0, 0, 0, 0.38)' ">
+                        Anyone in hierarchy
+                        approves limit to </p>
                 </mat-radio-button>
                 <mat-form-field appearance="outline"
                     style="font-size: 12px;width: 56px;color:#43425d;padding-left: 5px;">
@@ -39,9 +42,12 @@
                 </mat-form-field>
                 <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Level</p>
                 <div style="display: block"></div>
-                <mat-radio-button class="example-radio-button" value="Everyone"
+                <mat-radio-button class="example-radio-button" value="Everyone" [disabled]="modeInput === 'OFF'"
                     (change)="showEscalateDay = true;radioValue = $event.value" style="display:inline-block">
-                    Everyone in hierarchy approves limit to
+                    <p style="font-size: 11px;color: #4d4f5c;"
+                        [style.color]="radioValue === 'Anyone' && modeInput === 'OFF' ? '#4d4f5c':'rgba(0, 0, 0, 0.38)' ">
+                        Everyone in hierarchy approves limit to
+                    </p>
                 </mat-radio-button>
                 <mat-form-field appearance="outline"
                     style="font-size: 12px;width: 56px;color:#43425d;padding-left: 5px;">
@@ -59,8 +65,10 @@
                     <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Days</p>
                 </div>
                 <mat-radio-button class="example-radio-button" value="Superior"
-                    (change)="showEscalateDay = false;radioValue = $event.value">
-                    Superior approves
+                    (change)="showEscalateDay = false;radioValue = $event.value" [disabled]="modeInput === 'OFF'">
+                    <p style="font-size: 11px;color: #4d4f5c;"
+                        [style.color]="radioValue === 'Anyone' && modeInput === 'OFF'? '#4d4f5c':'rgba(0, 0, 0, 0.38)' ">
+                        Superior approves</p>
                 </mat-radio-button>
             </mat-radio-group>
             <ion-item class="divider" lines="full"></ion-item>
@@ -69,8 +77,9 @@
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Forfeit carried forward leaves on:</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" (click)="CF = !CF" [(ngModel)]="CF"
-                        [ngModelOptions]="{standalone: true}" [checked]="CF" (ionChange)="checkEventCF($event)">
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" (click)="CF = !CF" formControlName="CF"
+                        [checked]="CF.value">
+                        <!-- (ionChange)="checkEventCF($event)" -->
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -106,9 +115,10 @@
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Allow year end closing after:</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="yearEnd"
-                        [ngModelOptions]="{standalone: true}" [checked]="yearEnd" (click)="yearEnd = !yearEnd"
-                        (ionChange)="checkEventYr($event)">
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" formControlName="yearEnd"
+                        [checked]="yearEnd.value" (click)="yearEnd = !yearEnd">
+                        <!-- (ionChange)="checkEventYr($event)" [(ngModel)]="yearEnd"
+                        [ngModelOptions]="{standalone: true}" -->
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -151,8 +161,8 @@
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Apply on behalf feature requires employee to confirm the application</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="onBehalf"
-                        [ngModelOptions]="{standalone: true}" [checked]="onBehalf" (click)="onBehalf = !onBehalf">
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" formControlName="onBehalf"
+                        [checked]="onBehalf.value" (click)="onBehalf = !onBehalf">
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -162,16 +172,17 @@
             <ion-list lines="none">
                 <ion-item class="ionItem">
                     <ion-label>Email reminder</ion-label>
-                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="email"
-                        [ngModelOptions]="{standalone: true}" [checked]="email" (click)="email = !email">
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" formControlName="email" [checked]="email.value"
+                        (click)="email = !email">
                     </ion-checkbox>
                 </ion-item>
                 <div style="left: 178px;top: 21px;position: absolute;">
                     <p
                         style="opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
                         {{emailValue}}</p>
-                    <div style="display: inline-block;position: absolute;">
-                        <ion-toggle [checked]="emailCheck" style="zoom:0.70" mode="ios" color="secondary" (ionChange)="toggleEmail($event)">
+                    <div style="display: inline-block;position: absolute;" *ngIf="modeInput === 'ON'">
+                        <ion-toggle [checked]="emailCheck" style="zoom:0.70" mode="ios" color="secondary"
+                            (ionChange)="toggleEmail($event)">
                         </ion-toggle>
                     </div>
                 </div>

@@ -95,15 +95,21 @@
                         <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
                         padding-top: 1px;margin-bottom: 10px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
-                                <ion-col align-self-center style="padding: 10px;">
+                                <ion-col size="10" align-self-center style="padding: 10px;">
                                     COMPANY LIST
+                                </ion-col>
+                                <ion-col size="1.5" align-self-center style="text-align: right;padding-right: 10px;">
+                                    <ion-icon *ngIf="modeValue==='ON'" class="addIcon" name="add-circle-outline">
+                                        <!-- (click)="clickedIndex=null;id='';menu.enable(true, 'createWorkingHourDetails');menu.enable(false, 'editWorkingHourDetails');menu.open('createWorkingHourDetails');" -->
+                                    </ion-icon>
                                 </ion-col>
                             </ion-row>
                         </div>
                         <div style="height: calc(100% - 62px);overflow-y: auto;">
                             <ion-row class="detailsRow" *ngFor="let item of companyName; let i=index"
                                 style="padding-left: 10px;">
-                                <ion-col style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                <ion-col size="10"
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                     <p class="textHover"
                                         style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
                                         [ngClass]="{
@@ -114,7 +120,7 @@
                                 </ion-col>
                                 <ion-col size="1.5" align-self-center style="text-align: right;padding-right: 10px;">
                                     <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="modeValue==='ON'"
-                                        style="width: 11px;height:11px;display: inline-block;"
+                                        style="width: 11px;height:11px;display: inline-block;cursor:pointer"
                                         [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}">
                                 </ion-col>
                                 <ion-item class="divider" lines="full">
@@ -132,7 +138,7 @@
                             </ion-row>
                         </div>
                         <div style="height: calc(100% - 62px);overflow-y: auto;">
-                            <app-create-policy [companyId]="policyDetails"></app-create-policy>
+                            <app-create-policy [companyId]="policyDetails" [mode]="modeValue" ></app-create-policy>
                         </div>
                     </div>
                 </div>

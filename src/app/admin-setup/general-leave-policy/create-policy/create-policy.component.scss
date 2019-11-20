@@ -83,7 +83,7 @@
   }
   .example-radio-button {
     display: block;
-    color: #4d4f5c;
+    // color: #4d4f5c;
     font-size: 13px;
     padding-top: 10px;
     padding-left: 19px;
@@ -143,6 +143,10 @@
   }
   .ionItem {
     color: #4d4f5c;
+    opacity: 0.8;
     font-size: 11px;
+  }
+  .checkbox-disabled{
+    opacity: 1;
   }
 }
