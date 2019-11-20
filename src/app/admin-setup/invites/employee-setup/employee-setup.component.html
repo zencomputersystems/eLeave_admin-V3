@@ -242,7 +242,7 @@
                                         </ion-label>
                                     </ion-col>
                                     <ion-col class="colOfLeave" size="7">
-                                        <p class="textHover" (click)="getUserId(item.userId, i, config.currentPage)"
+                                        <p class="textHover" (click)="getUserId(item, i, config.currentPage)"
                                             [ngClass]="{
                                             'textColor': clickedIndex === ((config.currentPage-1)*7)+i , 'oriColor': clickedIndex !== ((config.currentPage-1)*7)+i}"
                                             style="font-weight: bold; font-size: 12px;cursor: pointer;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
@@ -770,8 +770,7 @@
                                     style="width: 40%;padding-left: 15px;font-size: 12px;">
                                     <mat-label>Types of role</mat-label>
                                     <mat-select required [disabled]="mode === 'OFF'" [(value)]="roleValue">
-                                        <mat-option *ngFor="let item of roleList; let j=index" [value]="item.role_guid"
-                                            (click)="roleSelected(item.role_guid)">
+                                        <mat-option *ngFor="let item of roleList; let j=index" [value]="item.role_guid">
                                             {{item.code}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>

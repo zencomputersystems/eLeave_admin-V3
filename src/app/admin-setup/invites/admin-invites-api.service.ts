@@ -104,13 +104,13 @@ export class AdminInvitesApiService {
     /**
      * patch personal user info details
      * @param {*} data
-     * @param {*} userId
+     * @param {*} id
      * @returns {Observable<any>}
      * @memberof AdminInvitesApiService
      */
-    patch_admin_personal_user_info(data, userId): Observable<any> {
+    patch_admin_personal_user_info(data, id: string): Observable<any> {
         this.apiService.headerAuthorization();
-        return this.apiService.patchApi(data, '/api/admin/user-info-details/personal/' + userId);
+        return this.apiService.patchApi(data, '/api/admin/user-info-details/personal/' + id);
     }
 
     /**

@@ -122,6 +122,13 @@ export class EmployeeSetupComponent implements OnInit {
     public entitlementList: any;
 
     /**
+     * get selected id
+     * @type {string}
+     * @memberof EmployeeSetupComponent
+     */
+    public id: string;
+
+    /**
      * get selected user id
      * @type {string}
      * @memberof EmployeeSetupComponent
@@ -367,18 +374,18 @@ export class EmployeeSetupComponent implements OnInit {
                     currentPage: 1,
                     totalItems: this.list.length
                 }
-                this.getUserId(this.list[0].userId, 0, 1);
+                this.getUserId(this.list[0], 0, 1);
             });
     }
 
     /**
      * get clicked user id
-     * @param {string} userId
+     * @param {*} item
      * @param {number} index
      * @param {number} p
      * @memberof EmployeeSetupComponent
      */
-    getUserId(userId: string, index: number, p: number) {
+    getUserId(item: any, index: number, p: number) {
         this.clickedIndex = ((p - 1) * 7) + index;
         this.employeeStatus = this.list[this.clickedIndex].status;
         if (this.employeeStatus == 'Active') {
@@ -386,16 +393,17 @@ export class EmployeeSetupComponent implements OnInit {
         } else {
             this.status = false;
         }
-        this.userId = userId;
-        this.inviteAPI.get_admin_user_info('personal-details', userId).subscribe(data => {
+        this.id = item.id;
+        this.userId = item.userId;
+        this.inviteAPI.get_admin_user_info('personal-details', this.id).subscribe(data => {
             this.personalDetails = data;
             this.getPersonalDetails();
         })
-        this.inviteAPI.get_admin_user_info('employment-detail', userId).subscribe(data => {
+        this.inviteAPI.get_admin_user_info('employment-detail', this.id).subscribe(data => {
             this.employmentDetails = data;
             this.getEmploymentDetails();
         })
-        this.inviteAPI.get_requested_user_profile(userId).subscribe(data => {
+        this.inviteAPI.get_requested_user_profile(this.userId).subscribe(data => {
             this.calendarValue = data.calendarId;
             this.roleValue = data.roleId;
             this.workingValue = data.workingHoursId;
@@ -548,7 +556,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.personalDetails.personalDetail.dob = moment(this.birthOfDate.value).format('YYYY-MM-DD');
             this.personalDetails.personalDetail.gender = genderStatus[this.personalDetails.personalDetail.gender];
             this.personalDetails.personalDetail.maritalStatus = maritalStatus[this.personalDetails.personalDetail.maritalStatus];
-            this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.userId).subscribe(res => {
+            this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.id).subscribe(res => {
                 this.personalDetails.personalDetail = res;
                 this.getPersonalDetails();
                 this.personalDetails.personalDetail.gender = genderStatus[this.personalDetails.personalDetail.gender];
@@ -569,7 +577,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails.employmentDetail.dateOfResign = moment(this.dateOfResign.value).format('YYYY-MM-DD');
             this.employmentDetails.employmentDetail.dateOfConfirmation = moment(this.dateOfConfirm.value).format('YYYY-MM-DD');
             this.employmentDetails.employmentDetail.bankAccountNumber = (this.employmentDetails.employmentDetail.bankAccountNumber).toString();
-            this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.userId).subscribe(resp => {
+            this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.id).subscribe(resp => {
                 this.employmentDetails.employmentDetail = resp;
                 this.getEmploymentDetails();
             });
