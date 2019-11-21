@@ -250,20 +250,20 @@
         Add
     </ion-button>
     <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
-                *ngIf="showSmallSpinner">
-                <ion-spinner name="lines-small" color="primary"></ion-spinner>
-            </div>
+        *ngIf="showSmallSpinner">
+        <ion-spinner name="lines-small" color="primary"></ion-spinner>
+    </div>
     <p style="color: #808495;font-size: 12px;padding-left: 70px;
     padding-right: 70px;padding-top: 10px;">After click Add, it will go to edit mode and you can straightaway
         complete the rest of the configuration there.</p>
 </div>
 
 <ng-container *ngIf="getDetails">
-    <ion-row class="detailsRow" style="height: 75px;">
+    <ion-row class="detailsRow">
         <ion-col>
             <p style="font-size: 12px;font-weight: bold;color: #808495;">
                 Select Company</p>
-            <mat-form-field appearance="outline" style="font-size: 12px;width: 43%;color:#43425d;">
+            <mat-form-field appearance="outline" style="height: 50px;font-size: 12px;width: 43%;color:#43425d;">
                 <mat-label>Please select company</mat-label>
                 <mat-select required [disabled]="disabledEditMode" [(ngModel)]="getDetails.employmentDetail.companyId">
                     <mat-option>None</mat-option>
@@ -275,11 +275,11 @@
             </mat-form-field>
         </ion-col>
     </ion-row>
-    <ion-row class="detailsRow" style="height: 75px;">
+    <ion-row class="detailsRow">
         <ion-col>
             <p style="font-size: 12px;font-weight: bold;color: #808495;">
                 Branch</p>
-            <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;">
+            <mat-form-field appearance="outline" style="height: 50px;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;">
                 <mat-label>Select/Create branch</mat-label>
                 <input matInput [matAutocomplete]="branch" [formControl]="branchCtrl"
                     (keyup.enter)="enter(branchCtrl,branchList)">
@@ -296,7 +296,7 @@
         <ion-col>
             <p style="font-size: 12px;font-weight: bold;color: #808495;">
                 Division</p>
-            <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;">
+            <mat-form-field appearance="outline" style="height: 50px;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;">
                 <mat-label>Select/Create division</mat-label>
                 <input matInput [disabled]="disabledEditMode">
                 <!-- [matAutocomplete]="auto" (keyup.enter)="enter()" -->
@@ -310,7 +310,7 @@
         <ion-col>
             <p style="font-size: 12px;font-weight: bold;color: #808495;">
                 Section</p>
-            <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;">
+            <mat-form-field appearance="outline" style="height: 50px;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;">
                 <mat-label>Select/Create section</mat-label>
                 <input matInput [matAutocomplete]="section" [formControl]="sectionCtrl"
                     (keyup.enter)="enter(sectionCtrl,sectionList)">
@@ -325,11 +325,11 @@
             </mat-form-field>
         </ion-col>
     </ion-row>
-    <ion-row class="detailsRow" style="height: 75px;">
+    <ion-row class="detailsRow">
         <ion-col>
             <p style="font-size: 12px;font-weight: bold;color: #808495;">
                 Department</p>
-            <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;">
+            <mat-form-field appearance="outline" style="height: 50px;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;">
                 <mat-label>Select/Create department</mat-label>
                 <input matInput [matAutocomplete]="department" [formControl]="departmentCtrl"
                     (keyup.enter)="enter(departmentCtrl,departmentList)">
@@ -346,7 +346,7 @@
         <ion-col>
             <p style="font-size: 12px;font-weight: bold;color: #808495;">
                 Cost Centre</p>
-            <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;">
+            <mat-form-field appearance="outline" style="height: 50px;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;">
                 <mat-label>Select/Create cost centre</mat-label>
                 <input matInput [matAutocomplete]="costcentre" [formControl]="costCentreCtrl"
                     (keyup.enter)="enter(costCentreCtrl,costcentre)">
