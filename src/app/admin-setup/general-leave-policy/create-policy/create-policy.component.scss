@@ -140,13 +140,21 @@
     width: 20px;
     height: 20px;
     margin-right: 14px;
+    --border-color: #7069d8;
   }
   .ionItem {
     color: #4d4f5c;
     opacity: 0.8;
     font-size: 11px;
   }
-  .checkbox-disabled{
+  .checkbox-disabled {
     opacity: 1;
+  }
+  ::ng-deep .mat-radio-button.mat-radio-disabled .mat-radio-outer-circle {
+    border-color: #7069d8;
+    opacity: 0.7;
+  }
+  .item-interactive-disabled .sc-ion-label-md-h {
+    opacity: 0.6;
   }
 }

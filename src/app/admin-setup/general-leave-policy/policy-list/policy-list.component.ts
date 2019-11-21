@@ -104,6 +104,13 @@ export class PolicyListComponent implements OnInit {
     public policyDetails: any;
 
     /**
+     * get clicked tenant company guid
+     * @type {string}
+     * @memberof PolicyListComponent
+     */
+    public tenantId: string;
+
+    /**
      *Creates an instance of PolicyListComponent.
      * @param {LeaveApiService} leaveAPi
      * @param {MatDialog} dialog
@@ -258,7 +265,14 @@ export class PolicyListComponent implements OnInit {
         }
     }
 
+    /**
+     * clicked policy name
+     * @param {*} item
+     * @param {number} index
+     * @memberof PolicyListComponent
+     */
     clickedPolicy(item: any, index: number) {
+        this.tenantId = item.TENANT_COMPANY_GUID;
         this.policyApi.get_general_leave_policy_id(item.TENANT_COMPANY_GUID).subscribe(list => {
             this.policyDetails = list;
         })

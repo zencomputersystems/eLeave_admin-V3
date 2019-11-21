@@ -30,6 +30,13 @@ export class CreatePolicyComponent implements OnInit {
     @Input() mode: string;
 
     /**
+     * tenant company guid
+     * @type {string}
+     * @memberof CreatePolicyComponent
+     */
+    @Input() tenantId: string;
+
+    /**
      * company list from API
      * @type {*}
      * @memberof CreatePolicyComponent
@@ -267,12 +274,11 @@ export class CreatePolicyComponent implements OnInit {
                     this.policyForm.controls.CFDay.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.day;
                     this.editDetails();
                 }
-
-            }
-            else {
-                this.policyForm.reset();
-                this.radioValue = null;
-                this.emailValue = 'No';
+                else {
+                    this.policyForm.reset();
+                    this.radioValue = null;
+                    this.emailValue = 'No';
+                }
             }
         }
     }
@@ -381,40 +387,6 @@ export class CreatePolicyComponent implements OnInit {
     }
 
     /**
-     * enable/disable mat form field of carry forward selection
-     * @param {*} val
-     * @memberof CreatePolicyComponent
-     */
-    // checkEventCF(val: any) {
-    //     if (val.detail.checked) {
-    //         this.policyForm.controls.CFMonth.enable();
-    //         this.policyForm.controls.CFDay.enable();
-    //     } else {
-    //         this.policyForm.controls.CFMonth.disable();
-    //         this.policyForm.controls.CFDay.disable();
-    //     }
-    // }
-
-
-    /**
-     * enable/disable mat form field of year end closing selection
-     * @param {*} event
-     * @memberof CreatePolicyComponent
-     */
-    // checkEventYr(event: any) {
-    //     if (event.detail.checked) {
-    //         this.policyForm.controls.YEMonth.enable();
-    //         this.policyForm.controls.YEDay.enable();
-    //         this.policyForm.controls.YEChoice.enable();
-    //     } else {
-    //         this.policyForm.controls.YEMonth.disable();
-    //         this.policyForm.controls.YEDay.disable();
-    //         this.policyForm.controls.YEChoice.disable();
-    //     }
-    // }
-
-
-    /**
      * data that created to POST to backend API
      * @memberof CreatePolicyComponent
      */
@@ -446,7 +418,6 @@ export class CreatePolicyComponent implements OnInit {
         this._data.allowYearEndClosing.relativeYear = this.policyForm.controls.YEChoice.value;
         this._data.applyOnBehalfConfirmation = this.policyForm.controls.onBehalf.value;
         this._data.emailReminder = this.policyForm.controls.email.value;
-        // this._data.tenantCompanyId = this.policyForm.controls.company.value;
     }
 
     /**
@@ -456,16 +427,25 @@ export class CreatePolicyComponent implements OnInit {
     savePolicy() {
         // this.showSmallSpinner = true;
         this.getValue();
-        const data = {
-            'generalPolicyId': this._policyGUID,
-            'data': this._data
+        if (this._policyGUID != undefined) {
+            const data = {
+                'generalPolicyId': this._policyGUID,
+                'data': this._data
+            }
+            this.policyApi.patch_general_leave_policy(data).subscribe(response => {
+                this.policyApi.message('Edit mode disabled. Good job!', true);
+                this._policyGUID = '';
+            })
+        } else {
+            this._data["tenantCompanyId"] = this.tenantId;
+            this.policyApi.post_general_leave_policy(this._data).subscribe(response => {
+                this.tenantId = '';
+                this.policyApi.message('Edit mode disabled. Good job!', true)
+            });
         }
-        this.policyApi.patch_general_leave_policy(data).subscribe(response => {
-            this.policyApi.message('Edit mode disabled. Good job!', true);
-            // this.policyApi.message('saved successfully');
-            // this.showSmallSpinner = false;
-        })
+
     }
+
 
     /**
      * toggle button value on email reminder

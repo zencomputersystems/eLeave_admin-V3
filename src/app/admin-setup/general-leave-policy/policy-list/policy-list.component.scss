@@ -167,4 +167,9 @@
     cursor: pointer;
     margin-top: 3px;
   }
+  ::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    display: none;
+    overflow: hidden;
+  }
 }
