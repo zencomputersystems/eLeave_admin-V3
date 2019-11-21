@@ -27,7 +27,7 @@ export class AuthService {
      * @param {HttpClient} httpClient
      * @memberof AuthService
      */
-    constructor(public session: SessionStorageService, public local: LocalStorageService, private httpClient: HttpClient) { }
+    constructor(public session: SessionStorageService, private local: LocalStorageService, private httpClient: HttpClient) { }
 
     /**
      * this is used to clear anything that needs to be removed

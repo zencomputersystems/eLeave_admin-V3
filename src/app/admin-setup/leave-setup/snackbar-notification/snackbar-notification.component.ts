@@ -21,6 +21,10 @@ export class SnackbarNotificationComponent {
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {
   }
 
+  /**
+   * initial method
+   * @memberof SnackbarNotificationComponent
+   */
   ngOnInit() {
 
   }

@@ -154,6 +154,10 @@ export class AssignWorkingHourComponent implements OnInit {
         })
     }
 
+    /**
+     * initial method to get list from endpoint
+     * @memberof AssignWorkingHourComponent
+     */
     ngOnInit() {
         this.leaveSetupAPI.get_company_list().subscribe(list => this.company = list);
         this.workingHrAPI.get_working_hours_profile_list().subscribe(data => this.workingHrProfileList = data);

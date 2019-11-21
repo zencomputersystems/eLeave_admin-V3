@@ -97,9 +97,13 @@ export class WorkingHourListComponent implements OnInit {
      * @param {MenuController} menu
      * @memberof WorkingHourListComponent
      */
-    constructor(private workingHrAPI: WorkingHourApiService, public dialog: MatDialog, public menu: MenuController) {
+    constructor(private workingHrAPI: WorkingHourApiService, public dialog: MatDialog, private menu: MenuController) {
     }
 
+    /**
+     * initial method to get working hour list
+     * @memberof WorkingHourListComponent
+     */
     async ngOnInit() {
         this.showSpinner = true;
         this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();

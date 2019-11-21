@@ -1,5 +1,9 @@
 import { browser, by, element } from 'protractor';
-
+/**
+ * app page
+ * @export
+ * @class AppPage
+ */
 export class AppPage {
 
   /**

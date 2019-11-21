@@ -30,9 +30,11 @@ export class APIService {
     /**
      *Creates an instance of APIService.
      * @param {Http} http
+     * @param {LocalStorageService} local
+     * @param {AuthService} auth
      * @memberof APIService
      */
-    constructor(public http: Http, public local: LocalStorageService, private auth: AuthService) {
+    constructor(public http: Http, private local: LocalStorageService, private auth: AuthService) {
     }
 
     /**

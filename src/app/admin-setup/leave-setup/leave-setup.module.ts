@@ -29,7 +29,6 @@ import { MatRadioModule, MatDialogModule } from '@angular/material';
 import { LeaveSetupComponent } from './leave-setup.component';
 import { ApprovalOverrideComponent } from './approval-override/approval-override.component';
 import { LeaveAdjustmentComponent } from './leave-adjustment/leave-adjustment.component';
-import { LeaveSetupTabComponent } from './leave-setup-tab/leave-setup-tab.component';
 import { LeaveEntitlementByBatchComponent } from './leave-entitlement-by-batch/leave-entitlement-by-batch.component';
 import { DeleteCalendarConfirmationComponent } from './delete-calendar-confirmation/delete-calendar-confirmation.component';
 import { WorkingHourComponent } from './working-hour/working-hour.component';
@@ -86,7 +85,7 @@ const routes: Routes = [
     providers: [AssignCalendarTreeviewService],
     entryComponents: [SnackbarNotificationComponent, DeleteCalendarConfirmationComponent, EditModeDialogComponent],
     declarations: [CalendarProfileComponent, LeaveSetupComponent, SnackbarNotificationComponent, DeleteCalendarConfirmationComponent,
-        LeaveSetupTabComponent, ApplyOnBehalfComponent, ApprovalOverrideComponent, LeaveAdjustmentComponent, LeaveEntitlementByBatchComponent, WorkingHourComponent,
+        ApplyOnBehalfComponent, ApprovalOverrideComponent, LeaveAdjustmentComponent, LeaveEntitlementByBatchComponent, WorkingHourComponent,
         WorkingHourListComponent, AssignWorkingHourComponent, EditModeDialogComponent]
 })
 export class LeaveSetupModule { }

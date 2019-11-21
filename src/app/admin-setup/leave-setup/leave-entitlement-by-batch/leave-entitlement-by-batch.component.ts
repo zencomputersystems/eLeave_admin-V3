@@ -154,6 +154,10 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
         })
     }
 
+    /**
+     * get initial method list from endpoint
+     * @memberof LeaveEntitlementByBatchComponent
+     */
     ngOnInit() {
         this.leaveAPI.get_company_list().subscribe(list => this.companyItems = list);
         this.leaveAPI.get_admin_leavetype().subscribe(list => this.leavetypeItems = list);

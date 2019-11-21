@@ -155,6 +155,10 @@ export class ApprovalOverrideComponent implements OnInit {
         })
     }
 
+    /**
+     * initial method to get list from endpoint
+     * @memberof ApprovalOverrideComponent
+     */
     ngOnInit() {
         this.approvalOverrideAPI.get_company_list().subscribe(list => this.companyList = list)
     }

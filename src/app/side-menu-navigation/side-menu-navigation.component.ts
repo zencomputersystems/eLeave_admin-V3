@@ -76,11 +76,6 @@ export class SideMenuNavigationComponent implements OnInit {
       url: '/main/dashboard',
       icon: 'dashboard.svg'
     },
-    // {
-    //   title: 'Inbox',
-    //   url: '/main/inbox',
-    //   icon: 'inbox.svg'
-    // },
     {
       title: 'Leave Setup',
       url: '/main/leave-setup',
@@ -147,8 +142,7 @@ export class SideMenuNavigationComponent implements OnInit {
    */
   constructor(private menu: MenuController, private router: Router,
     private apiService: APIService
-  ) {
-  }
+  ) { }
 
   /**
    * This method used to get initial value from personal details API json data
@@ -170,9 +164,6 @@ export class SideMenuNavigationComponent implements OnInit {
         this.activeRoute = this.appPages[i].url;
       }
     }
-
-
-
     this.openAtBeginning();
     this.apiService.get_personal_details().subscribe(data => {
       // this.userId = data.id;

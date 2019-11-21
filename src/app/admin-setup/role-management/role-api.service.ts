@@ -33,9 +33,12 @@ export class RoleApiService {
     /**
      *Creates an instance of RoleApiService.
      * @param {Http} http
+     * @param {MatSnackBar} snackBar
+     * @param {LocalStorageService} local
+     * @param {AuthService} auth
      * @memberof RoleApiService
      */
-    constructor(public http: Http, private snackBar: MatSnackBar, public local: LocalStorageService, private auth: AuthService) {
+    constructor(public http: Http, private snackBar: MatSnackBar, private local: LocalStorageService, private auth: AuthService) {
     }
 
     /**

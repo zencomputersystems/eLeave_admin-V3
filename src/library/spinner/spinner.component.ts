@@ -42,6 +42,10 @@ export class SpinnerComponent implements OnInit {
      */
     constructor() { }
 
+    /**
+     * initial method
+     * @memberof SpinnerComponent
+     */
     ngOnInit() {
 
     }

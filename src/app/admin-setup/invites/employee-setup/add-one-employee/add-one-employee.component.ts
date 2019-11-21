@@ -8,7 +8,6 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/admin-setup/leave-setu
 import { LeaveApiService } from 'src/app/admin-setup/leave-setup/leave-api.service';
 import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-const moment = _moment;
 
 /**
  * Add One Employee Page
@@ -210,6 +209,10 @@ export class AddOneEmployeeComponent implements OnInit {
         this.costCentreCtrl = new FormControl({ value: '', disabled: true });
     }
 
+    /**
+     * get list from endpoint and set form control
+     * @memberof AddOneEmployeeComponent
+     */
     ngOnInit() {
         this.leaveSetupService.get_company_list().subscribe(list => this.companyList = list);
         this.apiService.get_master_list('branch').subscribe(list => {
@@ -383,7 +386,7 @@ export class AddOneEmployeeComponent implements OnInit {
             "DIVISION": this.divisionCtrl.value,
             "DEPARTMENT": this.departmentCtrl.value,
             "COST_CENTRE": this.costCentreCtrl.value,
-            "JOIN_DATE": moment(this.invitationForm.controls.joinDate.value).format('YYYY-MM-DD')
+            "JOIN_DATE": _moment(this.invitationForm.controls.joinDate.value).format('YYYY-MM-DD')
         }]
         this.adminInvite.post_userimport(data).subscribe(data => {
             this.showSmallSpinner = false;

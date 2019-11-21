@@ -11,7 +11,6 @@ import { DeleteCalendarConfirmationComponent } from '../delete-calendar-confirma
 import { trigger, transition, animate, style } from '@angular/animations'
 import { MenuController } from '@ionic/angular';
 import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.component';
-const moment = _moment;
 
 /**
  * Manage holiday and rest day for employee
@@ -251,9 +250,13 @@ export class CalendarProfileComponent implements OnInit {
      * @param {MenuController} menu
      * @memberof CalendarProfileComponent
      */
-    constructor(private calendarProfileAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, public menu: MenuController) {
+    constructor(private calendarProfileAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, private menu: MenuController) {
     }
 
+    /**
+     * initial method to get list and set form control
+     * @memberof CalendarProfileComponent
+     */
     ngOnInit() {
         this.countryDB = reduce(getDataSet(), "en");
         this.countryList = Object.keys(this.countryDB).map(key => this.countryDB[key]);
@@ -491,8 +494,8 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     dateChanged(value, index) {
-        this.events[index].start = moment(value).format('YYYY-MM-DD');
-        this.events[index].end = moment(value).format('YYYY-MM-DD');
+        this.events[index].start = _moment(value).format('YYYY-MM-DD');
+        this.events[index].end = _moment(value).format('YYYY-MM-DD');
         this.events[index].day = this.getWeekDay(new Date(value));
     }
 
@@ -551,8 +554,8 @@ export class CalendarProfileComponent implements OnInit {
      */
     createHolidayList(dateIso: string, name: string) {
         this.events.push({
-            "start": moment(dateIso).format('YYYY-MM-DD'),
-            "end": moment(dateIso).format('YYYY-MM-DD'),
+            "start": _moment(dateIso).format('YYYY-MM-DD'),
+            "end": _moment(dateIso).format('YYYY-MM-DD'),
             "title": name,
             "holidayName": name,
             "day": this.getWeekDay(new Date(dateIso)),
@@ -567,8 +570,8 @@ export class CalendarProfileComponent implements OnInit {
      */
     addNewPH(title, start) {
         this.menuNewHoliday.push({
-            "start": moment(start).format('YYYY-MM-DD'),
-            "end": moment(start).format('YYYY-MM-DD'),
+            "start": _moment(start).format('YYYY-MM-DD'),
+            "end": _moment(start).format('YYYY-MM-DD'),
             "title": title,
             "holidayName": title,
             "day": this.getWeekDay(new Date(start))
@@ -582,8 +585,8 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     menuDateChanged(value, i) {
-        this.menuNewHoliday[i].start = moment(value).format('YYYY-MM-DD');
-        this.menuNewHoliday[i].end = moment(value).format('YYYY-MM-DD');
+        this.menuNewHoliday[i].start = _moment(value).format('YYYY-MM-DD');
+        this.menuNewHoliday[i].end = _moment(value).format('YYYY-MM-DD');
         this.menuNewHoliday[i].day = this.getWeekDay(new Date(value));
     }
 

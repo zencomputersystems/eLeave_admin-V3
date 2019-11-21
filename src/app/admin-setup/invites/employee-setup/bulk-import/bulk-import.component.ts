@@ -76,9 +76,13 @@ export class BulkImportComponent implements OnInit {
      * @param {LocalStorageService} local
      * @memberof BulkImportComponent
      */
-    constructor(private http: Http, private fb: FormBuilder, public local: LocalStorageService) {
+    constructor(private http: Http, private fb: FormBuilder, private local: LocalStorageService) {
     }
 
+    /**
+     * initial method
+     * @memberof BulkImportComponent
+     */
     ngOnInit() {
         this.fileform = this.fb.group({
             file: ''

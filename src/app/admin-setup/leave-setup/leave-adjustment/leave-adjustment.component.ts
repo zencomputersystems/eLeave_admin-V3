@@ -155,7 +155,7 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @param {MatSnackBar} snackBar
      * @memberof LeaveAdjustmentComponent
      */
-    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService, public menu: MenuController) {
+    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService, private menu: MenuController) {
         this.adjustmentForm = new FormGroup({
             company: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),
@@ -166,6 +166,10 @@ export class LeaveAdjustmentComponent implements OnInit {
         })
     }
 
+    /**
+     * get initial list from API
+     * @memberof LeaveAdjustmentComponent
+     */
     ngOnInit() {
         this.leaveSetupAPI.get_company_list().subscribe(list => this.company = list);
         this.leaveSetupAPI.get_admin_leavetype().subscribe(list => this.leavetypeList = list);

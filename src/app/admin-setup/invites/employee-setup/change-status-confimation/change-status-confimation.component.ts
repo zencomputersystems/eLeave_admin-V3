@@ -23,6 +23,10 @@ export class ChangeStatusConfimationComponent implements OnInit {
   constructor(public dialog: MatDialogRef<ChangeStatusConfimationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
+  /**
+   * initial method
+   * @memberof ChangeStatusConfimationComponent
+   */
   ngOnInit() {
   }
 

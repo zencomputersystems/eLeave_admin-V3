@@ -95,7 +95,10 @@ export class RoleListComponent implements OnInit {
      */
     constructor(private roleAPi: RoleApiService, private router: Router, public dialog: MatDialog) { }
 
-
+    /**
+     * initial method to get endpoint list
+     * @memberof RoleListComponent
+     */
     ngOnInit() {
         this.roleAPi.get_role_profile_list().subscribe(data => {
             this.roleList = data;

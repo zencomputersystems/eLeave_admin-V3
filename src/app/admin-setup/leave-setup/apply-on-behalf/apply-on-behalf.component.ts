@@ -13,7 +13,6 @@ import { AppDateAdapter, APP_DATE_FORMATS } from '../date.adapter';
 import { DayType } from './apply-on-behalf.service';
 import { LeaveApiService } from '../leave-api.service';
 import { EmployeeTreeviewService } from '../assign-calendar/employee-treeview.service';
-const moment = _moment;
 /**
  * Apply Leave Page
  * @export
@@ -459,8 +458,8 @@ export class ApplyOnBehalfComponent implements OnInit {
                 if (result[i] !== undefined) {
                     const minMax = this.getMinMaxDate(result[i]);
                     const remainingFullDay = {
-                        "startDate": moment(minMax[0]).format('YYYY-MM-DD HH:mm:ss'),
-                        "endDate": moment(minMax[1]).format('YYYY-MM-DD HH:mm:ss'),
+                        "startDate": _moment(minMax[0]).format('YYYY-MM-DD HH:mm:ss'),
+                        "endDate": _moment(minMax[1]).format('YYYY-MM-DD HH:mm:ss'),
                         "dayType": 0,
                         "slot": "",
                         "quarterDay": this.selectedQuarterHour
@@ -475,8 +474,8 @@ export class ApplyOnBehalfComponent implements OnInit {
                 if (result[i] !== undefined) {
                     const minMaxValue = this.getMinMaxDate(result[i]);
                     const remainingFullDay = {
-                        "startDate": moment(minMaxValue[0]).format('YYYY-MM-DD HH:mm:ss'),
-                        "endDate": moment(minMaxValue[1]).format('YYYY-MM-DD HH:mm:ss'),
+                        "startDate": _moment(minMaxValue[0]).format('YYYY-MM-DD HH:mm:ss'),
+                        "endDate": _moment(minMaxValue[1]).format('YYYY-MM-DD HH:mm:ss'),
                         "dayType": 2,
                         "slot": "",
                         "quarterDay": this.selectedQuarterHour
@@ -545,8 +544,8 @@ export class ApplyOnBehalfComponent implements OnInit {
     onDateChange(): void {
         if (!this.applyLeaveForm.value.firstPicker || !this.applyLeaveForm.value.secondPicker) {
         } else {
-            this._reformatDateFrom = moment(this.applyLeaveForm.value.firstPicker).format('YYYY-MM-DD HH:mm:ss');
-            this._reformatDateTo = moment(this.applyLeaveForm.value.secondPicker).format('YYYY-MM-DD HH:mm:ss');
+            this._reformatDateFrom = _moment(this.applyLeaveForm.value.firstPicker).format('YYYY-MM-DD HH:mm:ss');
+            this._reformatDateTo = _moment(this.applyLeaveForm.value.secondPicker).format('YYYY-MM-DD HH:mm:ss');
             this.getWeekDays(this.applyLeaveForm.value.firstPicker, this.applyLeaveForm.value.secondPicker, this._weekDayNumber);
             this.dayTypes.patchValue([{ selectArray: [this._dateArray] }]);
         }
@@ -606,7 +605,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyLeavePage
      */
     getValueFrom(event: MatDatepickerInputEvent<string>): string {
-        return this.minDate = moment(event.value).format('YYYY-MM-DD');
+        return this.minDate = _moment(event.value).format('YYYY-MM-DD');
     }
 
     /**
@@ -616,7 +615,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyLeavePage
      */
     getValueTo(event: MatDatepickerInputEvent<string>): string {
-        const toDate: string = moment(event.value).format('YYYY-MM-DD');
+        const toDate: string = _moment(event.value).format('YYYY-MM-DD');
         if (toDate < this.minDate) {
             return this.maxDate = this.minDate;
         } else {
@@ -723,8 +722,8 @@ export class ApplyOnBehalfComponent implements OnInit {
     postValueReformat(form: any, array: any, slot: string) {
         for (let j = 0; j < form.length; j++) {
             const obj = {
-                "startDate": moment(form[j]).format('YYYY-MM-DD HH:mm:ss'),
-                "endDate": moment(form[j]).format('YYYY-MM-DD HH:mm:ss'),
+                "startDate": _moment(form[j]).format('YYYY-MM-DD HH:mm:ss'),
+                "endDate": _moment(form[j]).format('YYYY-MM-DD HH:mm:ss'),
                 "dayType": Number(this.dayTypes.controls[this._index].value.name),
                 "slot": slot,
                 "quarterDay": this.selectedQuarterHour,

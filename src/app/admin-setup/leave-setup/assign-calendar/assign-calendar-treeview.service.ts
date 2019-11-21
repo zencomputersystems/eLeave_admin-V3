@@ -77,6 +77,11 @@ export class AssignCalendarTreeviewService {
      */
     public objectTree = {};
 
+    /**
+     * get company name
+     * @type {string}
+     * @memberof AssignCalendarTreeviewService
+     */
     public companyName: string;
 
     /** 
@@ -90,6 +95,7 @@ export class AssignCalendarTreeviewService {
     /**
      *Creates an instance of AssignCalendarTreeviewService.
      * @param {APIService} apiService
+     * @param {LeaveApiService} leaveAPI
      * @memberof AssignCalendarTreeviewService
      */
     constructor(private apiService: APIService, private leaveAPI: LeaveApiService) {
@@ -114,6 +120,11 @@ export class AssignCalendarTreeviewService {
             });
     }
 
+    /**
+     * get company details
+     * @param {*} companyId
+     * @memberof AssignCalendarTreeviewService
+     */
     getCompanyName(companyId) {
         for (let i = 0; i < companyId.length; i++) {
             this.leaveAPI.get_company_details(companyId[i]).subscribe(data => {

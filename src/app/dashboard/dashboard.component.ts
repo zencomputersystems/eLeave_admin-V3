@@ -4,7 +4,6 @@ import { DashboardApiService } from './dashboard-api.service';
 import * as _moment from 'moment';
 import { MatDialog } from '@angular/material';
 import { DeleteCalendarConfirmationComponent } from '../admin-setup/leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
-const moment = _moment;
 
 /**
  * Dashboard page
@@ -127,6 +126,10 @@ export class DashboardComponent implements OnInit {
   constructor(private menu: MenuController, private dashboardAPI: DashboardApiService, public dialog: MatDialog) {
   }
 
+  /**
+   * get all API list from endpoint
+   * @memberof DashboardComponent
+   */
   ngOnInit() {
     this.getHolidayList();
     this.getAnnouncementList();
@@ -159,7 +162,7 @@ export class DashboardComponent implements OnInit {
       this.showSpinner = false;
       for (let i = 0; i < this.holidays.length; i++) {
         this.holidays[i].day = this.getDayFromDate(new Date(this.holidays[i].start));
-        this.holidays[i].start = (moment(this.holidays[i].start).format('DD MMM YYYY'));
+        this.holidays[i].start = (_moment(this.holidays[i].start).format('DD MMM YYYY'));
       }
     })
   }
@@ -172,7 +175,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardAPI.get_announcement_list().subscribe(list => {
       this.announcements = list;
       for (let i = 0; i < this.announcements.length; i++) {
-        this.announcements[i].FROM_DATE = (moment(this.announcements[i].FROM_DATE).format('DD MMM YYYY'));
+        this.announcements[i].FROM_DATE = (_moment(this.announcements[i].FROM_DATE).format('DD MMM YYYY'));
       }
       const data = this.announcements;
       const is_pinned = 1;
@@ -198,13 +201,13 @@ export class DashboardComponent implements OnInit {
     this.dashboardAPI.upcoming_joiner().subscribe(nameList => {
       this.joiners = nameList;
       for (let i = 0; i < this.joiners.length; i++) {
-        this.joiners[i].JOIN_DATE = (moment(this.joiners[i].JOIN_DATE).format('DD MMM YYYY'))
+        this.joiners[i].JOIN_DATE = (_moment(this.joiners[i].JOIN_DATE).format('DD MMM YYYY'))
       }
     });
     this.dashboardAPI.upcoming_leaver().subscribe(leaver => {
       this.leaver = leaver;
       for (let i = 0; i < this.leaver.length; i++) {
-        this.leaver[i].RESIGNATION_DATE = (moment(this.leaver[i].RESIGNATION_DATE).format('DD MMM YYYY'))
+        this.leaver[i].RESIGNATION_DATE = (_moment(this.leaver[i].RESIGNATION_DATE).format('DD MMM YYYY'))
       }
     });
   }

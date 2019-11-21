@@ -1,4 +1,4 @@
-import { OnInit, Component, Input, SimpleChanges, Output, EventEmitter } from "@angular/core";
+import { Component, Input, SimpleChanges } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { PolicyApiService } from "../policy-api.service";
 
@@ -13,7 +13,7 @@ import { PolicyApiService } from "../policy-api.service";
     templateUrl: './create-policy.component.html',
     styleUrls: ['./create-policy.component.scss'],
 })
-export class CreatePolicyComponent implements OnInit {
+export class CreatePolicyComponent {
 
     /**
      * company id input
@@ -209,21 +209,6 @@ export class CreatePolicyComponent implements OnInit {
                 onBehalf: new FormControl({ value: null, disabled: true }, Validators.required),
                 email: new FormControl({ value: null, disabled: true }, Validators.required)
             });
-    }
-
-    ngOnInit() {
-        // this.policyApi.get_general_leave_policy_id(this.companyId.TENANT_COMPANY_GUID).subscribe(list => {
-        //     this.policyList = list;
-        //     console.log(this.policyList);
-        // this.editPolicyDetails();
-        // })
-        // this.policyApi.get_company_list().subscribe(data => {
-        //     this.list = data;
-        //     // this.showContainer = true;
-        //     // this.showSpinner = false;
-        // }, error => {
-        //     window.location.href = '/login';
-        // })
     }
 
     /**

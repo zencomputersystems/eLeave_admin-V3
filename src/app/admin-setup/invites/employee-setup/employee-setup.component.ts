@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AdminInvitesApiService } from '../admin-invites-api.service';
 import * as _moment from 'moment';
@@ -11,7 +11,6 @@ import { RoleApiService } from '../../role-management/role-api.service';
 import { MenuController } from '@ionic/angular';
 import { ChangeStatusConfimationComponent } from './change-status-confimation/change-status-confimation.component';
 import { DeleteCalendarConfirmationComponent } from '../../leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
-const moment = _moment;
 
 /**
  *
@@ -329,9 +328,13 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {RoleApiService} roleAPI
      * @memberof EmployeeSetupComponent
      */
-    constructor(public menu: MenuController, private inviteAPI: AdminInvitesApiService, public popUp: MatDialog, private leaveApi: LeaveApiService, public roleAPI: RoleApiService) {
+    constructor(private menu: MenuController, private inviteAPI: AdminInvitesApiService, public popUp: MatDialog, private leaveApi: LeaveApiService, public roleAPI: RoleApiService) {
     }
 
+    /**
+     * initial method to get endpoint list
+     * @memberof EmployeeSetupComponent
+     */
     ngOnInit() {
         this.endPoint();
         this.inviteAPI.get_role_profile_list().subscribe(list => {
@@ -419,7 +422,7 @@ export class EmployeeSetupComponent implements OnInit {
     getPersonalDetails() {
         if (this.personalDetails.personalDetail != undefined) {
             this.birthOfDate = new FormControl((this.personalDetails.personalDetail.dob), Validators.required);
-            this.personalDetails.personalDetail.dob = moment(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
+            this.personalDetails.personalDetail.dob = _moment(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
         }
     }
 
@@ -430,11 +433,11 @@ export class EmployeeSetupComponent implements OnInit {
     getEmploymentDetails() {
         if (this.employmentDetails.employmentDetail != undefined) {
             this.dateOfJoin = new FormControl((this.employmentDetails.employmentDetail.dateOfJoin), Validators.required);
-            this.employmentDetails.employmentDetail.dateOfJoin = moment(this.employmentDetails.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
+            this.employmentDetails.employmentDetail.dateOfJoin = _moment(this.employmentDetails.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
             this.dateOfConfirm = new FormControl((this.employmentDetails.employmentDetail.dateOfConfirmation), Validators.required);
-            this.employmentDetails.employmentDetail.dateOfConfirmation = moment(this.employmentDetails.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
+            this.employmentDetails.employmentDetail.dateOfConfirmation = _moment(this.employmentDetails.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
             this.dateOfResign = new FormControl((this.employmentDetails.employmentDetail.dateOfResign), Validators.required);
-            this.employmentDetails.employmentDetail.dateOfResign = moment(this.employmentDetails.employmentDetail.dateOfResign).format('DD-MM-YYYY');
+            this.employmentDetails.employmentDetail.dateOfResign = _moment(this.employmentDetails.employmentDetail.dateOfResign).format('DD-MM-YYYY');
         }
 
     }
@@ -536,7 +539,7 @@ export class EmployeeSetupComponent implements OnInit {
                     this.status = false;
                     this.inviteAPI.disable_user({
                         "user_guid": this.userId,
-                        "resign_date": moment(new Date()).format('YYYY-MM-DD'),
+                        "resign_date": _moment(new Date()).format('YYYY-MM-DD'),
                     }).subscribe(response => {
                         this.endPoint();
                         this.inviteAPI.showSnackbar(name + ' become Inactive', true);
@@ -553,7 +556,7 @@ export class EmployeeSetupComponent implements OnInit {
     patchPersonalDetails() {
         if (this.personalDetails.personalDetail != undefined) {
             this.personalDetails.personalDetail.nric = (this.personalDetails.personalDetail.nric).toString();
-            this.personalDetails.personalDetail.dob = moment(this.birthOfDate.value).format('YYYY-MM-DD');
+            this.personalDetails.personalDetail.dob = _moment(this.birthOfDate.value).format('YYYY-MM-DD');
             this.personalDetails.personalDetail.gender = genderStatus[this.personalDetails.personalDetail.gender];
             this.personalDetails.personalDetail.maritalStatus = maritalStatus[this.personalDetails.personalDetail.maritalStatus];
             this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.id).subscribe(res => {
@@ -573,9 +576,9 @@ export class EmployeeSetupComponent implements OnInit {
         if (this.employmentDetails.employmentDetail != undefined) {
             this.employmentDetails.employmentDetail.employeeId = (this.employmentDetails.employmentDetail.employeeId).toString();
             this.employmentDetails.employmentDetail.incomeTaxNumber = (this.employmentDetails.employmentDetail.incomeTaxNumber).toString();
-            this.employmentDetails.employmentDetail.dateOfJoin = moment(this.dateOfJoin.value).format('YYYY-MM-DD');
-            this.employmentDetails.employmentDetail.dateOfResign = moment(this.dateOfResign.value).format('YYYY-MM-DD');
-            this.employmentDetails.employmentDetail.dateOfConfirmation = moment(this.dateOfConfirm.value).format('YYYY-MM-DD');
+            this.employmentDetails.employmentDetail.dateOfJoin = _moment(this.dateOfJoin.value).format('YYYY-MM-DD');
+            this.employmentDetails.employmentDetail.dateOfResign = _moment(this.dateOfResign.value).format('YYYY-MM-DD');
+            this.employmentDetails.employmentDetail.dateOfConfirmation = _moment(this.dateOfConfirm.value).format('YYYY-MM-DD');
             this.employmentDetails.employmentDetail.bankAccountNumber = (this.employmentDetails.employmentDetail.bankAccountNumber).toString();
             this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.id).subscribe(resp => {
                 this.employmentDetails.employmentDetail = resp;
@@ -584,6 +587,11 @@ export class EmployeeSetupComponent implements OnInit {
         }
     }
 
+    /**
+     * get changed value output
+     * @param {*} event
+     * @memberof EmployeeSetupComponent
+     */
     getChangedValue(event) {
         console.log('updated', event);
     }

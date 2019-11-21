@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LeaveApiService } from '../../leave-setup/leave-api.service';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
-import { MatDialog } from '@angular/material';
 import { MenuController } from '@ionic/angular';
 import { PolicyApiService } from '../policy-api.service';
 import { Validators, FormControl } from '@angular/forms';
@@ -139,9 +138,12 @@ export class PolicyListComponent implements OnInit {
      * @param {PolicyApiService} policyApi
      * @memberof PolicyListComponent
      */
-    constructor(private leaveAPi: LeaveApiService, public menu: MenuController, private policyApi: PolicyApiService) { }
+    constructor(private leaveAPi: LeaveApiService, private menu: MenuController, private policyApi: PolicyApiService) { }
 
-
+    /**
+     * Set initial value to the properties & get endpoint value
+     * @memberof PolicyListComponent
+     */
     ngOnInit() {
         this.newName = new FormControl('', Validators.required);
         this.editName = new FormControl('', Validators.required);

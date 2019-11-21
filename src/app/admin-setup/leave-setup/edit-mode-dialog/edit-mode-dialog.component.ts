@@ -23,6 +23,10 @@ export class EditModeDialogComponent implements OnInit {
   constructor(public dialog: MatDialogRef<EditModeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
+  /**
+   * initial method
+   * @memberof EditModeDialogComponent
+   */
   ngOnInit() {
   }
 

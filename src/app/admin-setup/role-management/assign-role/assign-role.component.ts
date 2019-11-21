@@ -195,6 +195,10 @@ export class AssignRoleComponent implements OnInit {
             { role: new FormControl(null, Validators.required) });
     }
 
+    /**
+     * get list from initial method
+     * @memberof AssignRoleComponent
+     */
     ngOnInit() {
         this.viewReportList = options;
         this.data = roleDetails;

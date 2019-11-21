@@ -67,6 +67,10 @@ export class LeaveSetupComponent implements OnInit {
     constructor(private router: Router) {
     }
 
+    /**
+     * initial method to check url
+     * @memberof LeaveSetupComponent
+     */
     ngOnInit() {
         this.checkUrl(this.router.url);
     }

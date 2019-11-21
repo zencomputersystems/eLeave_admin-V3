@@ -146,7 +146,10 @@ export class RoleRightsComponent implements OnInit {
         this.viewReportList = options;
     }
 
-
+    /**
+     * initial method to get route
+     * @memberof RoleRightsComponent
+     */
     ngOnInit() {
         if (this.route.routeConfig.path.includes('create-new-role')) {
             this.showButtons = true;
