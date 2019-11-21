@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
 import { LeaveApiService } from "../leave-setup/leave-api.service";
-import { MatSnackBar } from "@angular/material";
+import { MatDialog } from "@angular/material";
 import { SnackbarNotificationComponent } from "../leave-setup/snackbar-notification/snackbar-notification.component";
 
 /**
@@ -18,9 +18,11 @@ export class PolicyApiService {
     /**
      *Creates an instance of PolicyApiService.
      * @param {APIService} apiService
+     * @param {LeaveApiService} leaveAPi
+     * @param {MatDialog} dialog
      * @memberof PolicyApiService
      */
-    constructor(private apiService: APIService, private leaveAPi: LeaveApiService, public snackbar: MatSnackBar) {
+    constructor(private apiService: APIService, private leaveAPi: LeaveApiService, public dialog: MatDialog) {
 
     }
 
@@ -77,13 +79,46 @@ export class PolicyApiService {
     }
 
     /**
+     * create new company 
+     * @param {string} name
+     * @returns {Observable<any>}
+     * @memberof PolicyApiService
+     */
+    post_company_name(name: string): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.postApi(name, '/api/company/' + name);
+    }
+
+    /**
+     * delete company from list
+     * @param {string} id
+     * @returns {Observable<any>}
+     * @memberof PolicyApiService
+     */
+    delete_company_name(id: string): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.deleteApi(id, '/api/company/' + id);
+    }
+
+    /**
+     * update company name
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof PolicyApiService
+     */
+    patch_company_name(data: any): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.patchApi(data, '/api/company');
+    }
+
+    /**
      * show notifation snackbar after clicked create policy
      * @param {string} message
      * @param {boolean} value
      * @memberof PolicyApiService
      */
     message(message: string, value: boolean) {
-        this.snackbar.openFromComponent(SnackbarNotificationComponent, {
+        this.leaveAPi.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 2000,
             verticalPosition: "top",
             data: { message: message, response: value }

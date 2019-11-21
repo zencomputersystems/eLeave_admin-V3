@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { LeaveApiService } from '../../leave-setup/leave-api.service';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
 import { MatDialog } from '@angular/material';
 import { MenuController } from '@ionic/angular';
 import { PolicyApiService } from '../policy-api.service';
+import { Validators, FormControl } from '@angular/forms';
 
 /**
  * List for all leave policy
@@ -38,49 +38,49 @@ export class PolicyListComponent implements OnInit {
      * @type {boolean}
      * @memberof PolicyListComponent
      */
-    public showPage: boolean = false;
+    // public showPage: boolean = false;
 
     /**
      * To show arrow up or down icon for Name column
      * @type {boolean}
      * @memberof PolicyListComponent
      */
-    public arrowDownName: boolean = true;
+    // public arrowDownName: boolean = true;
 
     /**
      * Page number on current page
      * @type {number}
      * @memberof PolicyListComponent
      */
-    public pageIndex: number;
+    // public pageIndex: number;
 
     /**
      * Total page number 
      * @type {number}
      * @memberof PolicyListComponent
      */
-    public totalPageNum: number;
+    // public totalPageNum: number;
 
     /**
      * Items of the current showing page
      * @type {*}
      * @memberof PolicyListComponent
      */
-    public currentItems: any;
+    // public currentItems: any;
 
     /**
      * Value of disable next button
      * @type {boolean}
      * @memberof PolicyListComponent
      */
-    public disableNextButton: boolean;
+    // public disableNextButton: boolean;
 
     /**
      * Value of disable previous button
      * @type {boolean}
      * @memberof PolicyListComponent
      */
-    public disablePrevButton: boolean;
+    // public disablePrevButton: boolean;
 
     /**
      * edit mode value
@@ -111,139 +111,45 @@ export class PolicyListComponent implements OnInit {
     public tenantId: string;
 
     /**
+     * validate on value create new company name
+     * @type {*}
+     * @memberof PolicyListComponent
+     */
+    public newName: any;
+
+    /**
+     * validate on value edit company name
+     * @type {*}
+     * @memberof PolicyListComponent
+     */
+    public editName: any;
+
+    /**
+     * get company id to patch company name
+     * @type {string}
+     * @memberof PolicyListComponent
+     */
+    public companyId: string;
+
+    /**
      *Creates an instance of PolicyListComponent.
      * @param {LeaveApiService} leaveAPi
-     * @param {MatDialog} dialog
      * @param {MenuController} menu
      * @param {PolicyApiService} policyApi
      * @memberof PolicyListComponent
      */
-    constructor(private leaveAPi: LeaveApiService, public dialog: MatDialog, public menu: MenuController, private policyApi: PolicyApiService) { }
+    constructor(private leaveAPi: LeaveApiService, public menu: MenuController, private policyApi: PolicyApiService) { }
 
 
     ngOnInit() {
+        this.newName = new FormControl('', Validators.required);
+        this.editName = new FormControl('', Validators.required);
         this.leaveAPi.get_company_list().subscribe(data => {
             this.companyName = data;
             this.clickedPolicy(this.companyName[0], 0);
-            // this.listOfPage(1);
             this.showSpinner = false;
-            this.showPage = true;
-            this.disableNextButton = false;
-            this.disablePrevButton = true;
-        }, error => {
-            if (error) {
-                window.location.href = '/login';
-            }
         })
     }
-
-    /**
-     * Pass tenant company guid to route to edit policy details page
-     * @param {*} id
-     * @memberof PolicyListComponent
-     */
-    // getCompanyId(id) {
-    //     this.router.navigate(['/main/general-leave-policy/edit-policy', id]);
-    // }
-
-
-    /**
-     * Sort ascending /descending order of company name column
-     * @param {number} val1
-     * @param {number} val2
-     * @memberof PolicyListComponent
-     */
-    // nameSorting(val1: number, val2: number) {
-    //     this.companyName.sort(function (a, b) {
-    //         const x = a.NAME.toLowerCase();
-    //         const y = b.NAME.toLowerCase();
-    //         return x < y ? val1 : x > y ? val2 : 0;
-    //     });
-    //     this.listOfPage(1);
-    //     this.disableNextButton = false;
-    //     this.disablePrevButton = true;
-    // }
-
-    /**
-     * Calculate number of item show in each page
-     * @param {number} i
-     * @memberof PolicyListComponent
-     */
-    // listOfPage(i: number) {
-    //     let totalNum;
-    //     const itemOfPage = 6;
-    //     const startEndVal = 5;
-    //     this.pageIndex = i;
-    //     totalNum = this.companyName.length;
-    //     this.totalPageNum = totalNum / itemOfPage;
-    //     this.totalPageNum = Math.ceil(this.totalPageNum);
-    //     const start = (this.pageIndex * itemOfPage) - startEndVal;
-    //     const end = this.pageIndex * itemOfPage;
-    //     const pageItems = [];
-    //     for (let j = start - 1; j < end; j++) {
-    //         const itemNum = this.companyName[j];
-    //         if (itemNum !== undefined) {
-    //             pageItems.push(itemNum);
-    //         }
-    //     }
-    //     this.currentItems = pageItems;
-    // }
-
-    /**
-     * Click to display next page of rendered items
-     * @param {number} i
-     * @memberof PolicyListComponent
-     */
-    // nextPage(i: number) {
-    //     if (!(i > this.totalPageNum)) {
-    //         this.listOfPage(i);
-    //     }
-    //     this.buttonNext();
-    // }
-
-    /**
-     * Click to display previous page of rendered items
-     * @param {number} i
-     * @memberof PolicyListComponent
-     */
-    // prevPage(i: number) {
-    //     if (!(i < 1)) {
-    //         this.listOfPage(i);
-    //     }
-    //     this.buttonPrev();
-    // }
-
-    /**
-     * Enable or disable next button
-     * @memberof PolicyListComponent
-     */
-    // buttonNext() {
-    //     if (this.pageIndex > 1) {
-    //         this.disablePrevButton = false;
-    //     }
-    //     if (this.pageIndex === this.totalPageNum) {
-    //         this.disableNextButton = true;
-    //     }
-    //     if (this.pageIndex > 0 && this.pageIndex < this.totalPageNum) {
-    //         this.disableNextButton = false;
-    //     }
-    // }
-
-    /**
-     * Enable or disable previous button
-     * @memberof PolicyListComponent
-     */
-    // buttonPrev() {
-    //     if (this.pageIndex < this.totalPageNum) {
-    //         this.disableNextButton = false;
-    //     }
-    //     if (this.pageIndex < 2) {
-    //         this.disablePrevButton = true;
-    //     }
-    //     if (this.pageIndex > 1 && this.pageIndex === this.totalPageNum) {
-    //         this.disablePrevButton = false;
-    //     }
-    // }
 
     /**
      * toggle edit mode
@@ -253,7 +159,7 @@ export class PolicyListComponent implements OnInit {
     toggleEvent(evt) {
         if (evt.detail.checked === true) {
             this.modeValue = 'ON';
-            this.dialog.open(EditModeDialogComponent, {
+            this.policyApi.dialog.open(EditModeDialogComponent, {
                 data: 'policy',
                 height: "354.3px",
                 width: "383px"
@@ -261,7 +167,6 @@ export class PolicyListComponent implements OnInit {
 
         } else {
             this.modeValue = 'OFF'
-            // this.workingHrAPI.showPopUp('Edit mode disabled. Good job!', true);
         }
     }
 
@@ -277,6 +182,44 @@ export class PolicyListComponent implements OnInit {
             this.policyDetails = list;
         })
         this.clickedIndex = index;
+    }
+
+    /**
+     * create new company name
+     * @memberof PolicyListComponent
+     */
+    createNewCompany() {
+        this.policyApi.post_company_name(this.newName.value).subscribe(response => {
+            this.policyApi.message('New company was created successfully', true);
+            this.menu.close('createCompanyDetails');
+            this.newName.reset();
+            this.ngOnInit();
+        });
+    }
+
+    /**
+     * delete company
+     * @param {*} id
+     * @memberof PolicyListComponent
+     */
+    deleteCompany(id) {
+        this.policyApi.delete_company_name(id).subscribe(response => {
+            this.ngOnInit();
+        })
+    }
+
+    /**
+     * update company name
+     * @param {*} items
+     * @memberof PolicyListComponent
+     */
+    updateCompanyName() {
+        this.policyApi.patch_company_name({ "id": this.companyId, "name": this.editName.value }).subscribe(res => {
+            this.policyApi.message('New company was updated successfully', true);
+            this.menu.close('editCompanyDetails');
+            this.editName.reset();
+            this.ngOnInit();
+        })
     }
 
 }

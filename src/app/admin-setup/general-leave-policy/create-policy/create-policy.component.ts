@@ -141,7 +141,7 @@ export class CreatePolicyComponent implements OnInit {
      * @type {boolean}
      * @memberof CreatePolicyComponent
      */
-    public emailCheck: boolean;
+    public emailCheck: boolean = false;
 
     /**
      * edit mode on/off
