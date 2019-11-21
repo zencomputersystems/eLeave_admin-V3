@@ -97,7 +97,7 @@ export class PolicyApiService {
      */
     delete_company_name(id: string): Observable<any> {
         this.apiService.headerAuthorization();
-        return this.apiService.deleteApi(id, '/api/company/' + id);
+        return this.apiService.deleteApi(id, '/api/company/');
     }
 
     /**

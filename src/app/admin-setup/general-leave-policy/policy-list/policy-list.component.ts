@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { MenuController } from '@ionic/angular';
 import { PolicyApiService } from '../policy-api.service';
 import { Validators, FormControl } from '@angular/forms';
+import { DeleteCalendarConfirmationComponent } from '../../leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
 
 /**
  * List for all leave policy
@@ -199,13 +200,22 @@ export class PolicyListComponent implements OnInit {
 
     /**
      * delete company
-     * @param {*} id
+     * @param {*} item
      * @memberof PolicyListComponent
      */
-    deleteCompany(id) {
-        this.policyApi.delete_company_name(id).subscribe(response => {
-            this.ngOnInit();
-        })
+    deleteCompany(item: any) {
+        const dialog = this.policyApi.dialog.open(DeleteCalendarConfirmationComponent, {
+            data: { name: item.NAME, value: item.TENANT_COMPANY_GUID, desc: ' company' },
+            height: "195px",
+            width: "249px"
+        });
+        dialog.afterClosed().subscribe(value => {
+            if (value === item.TENANT_COMPANY_GUID) {
+                this.policyApi.delete_company_name(item.TENANT_COMPANY_GUID).subscribe(response => {
+                    this.ngOnInit();
+                })
+            }
+        });
     }
 
     /**
