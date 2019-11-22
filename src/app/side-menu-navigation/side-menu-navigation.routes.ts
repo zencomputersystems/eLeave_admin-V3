@@ -39,14 +39,14 @@ export const sideMenuNavigationRoutes: Routes = [
                 path: 'employee-setup', component: EmployeeSetupComponent
             },
             {
-                path: 'role-management', component: RoleManagementComponent,
-                children: [
-                    { path: '', redirectTo: 'role-list', pathMatch: 'full' },
-                    { path: 'role-list', component: RoleListComponent },
-                    { path: 'role-rights/:id', component: RoleRightsComponent },
-                    { path: 'create-new-role', component: RoleRightsComponent },
-                    { path: 'assign-role', component: AssignRoleComponent }
-                ]
+                path: 'role-management', component: RoleListComponent
+                // children: [
+                //     { path: '', redirectTo: 'role-list', pathMatch: 'full' },
+                //     { path: 'role-list', component: RoleListComponent },
+                //     { path: 'role-rights/:id', component: RoleRightsComponent },
+                //     { path: 'create-new-role', component: RoleRightsComponent },
+                //     { path: 'assign-role', component: AssignRoleComponent }
+                // ]
             },
             // {
             //     path: 'general-leave-policy', component: PolicyListComponent,

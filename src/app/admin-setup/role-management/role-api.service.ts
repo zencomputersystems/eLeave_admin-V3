@@ -120,6 +120,19 @@ export class RoleApiService {
     }
 
     /**
+     * get assigned user from requested role profile id
+     * @param {string} roleId
+     * @returns {Observable<any>}
+     * @memberof RoleApiService
+     */
+    get_assigned_user_profile(roleId: string): Observable<any> {
+        this.authorization();
+        return this.http.get(this.baseUrl + ' /api/admin/role/role-profile/users/' + roleId, { headers: this.headerApp })
+            .pipe(map((res: Response) => res.json()));
+
+    }
+
+    /**
      * show delete confirmation after click Delete button
      * @param {string} text
      * @memberof RoleApiService
