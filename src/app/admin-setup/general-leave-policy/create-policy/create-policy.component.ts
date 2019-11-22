@@ -228,9 +228,7 @@ export class CreatePolicyComponent {
                 this.policyForm.controls.YEChoice.enable();
             } else {
                 this.policyForm.disable();
-                if (changes.mode.previousValue === 'ON' && changes.mode.currentValue === 'OFF') {
-                    this.savePolicy();
-                }
+                this.savePolicy(changes);
             }
         }
         this.detectChanges(changes);
@@ -244,14 +242,7 @@ export class CreatePolicyComponent {
     detectChanges(changes) {
         if (changes.companyId != undefined) {
             if (changes.companyId.currentValue != undefined) {
-                if (changes.companyId.currentValue.MAIN_GENERAL_POLICY_GUID != undefined) {
-                    this.companyDetailsChanges(changes);
-                }
-                else {
-                    this.policyForm.reset();
-                    this.radioValue = null;
-                    this.emailValue = 'No';
-                }
+                this.companyDetailsChanges(changes);
             }
         }
     }
@@ -262,19 +253,25 @@ export class CreatePolicyComponent {
      * @memberof CreatePolicyComponent
      */
     companyDetailsChanges(changes) {
-        this.policyList = changes.companyId.currentValue;
-        this._policyGUID = this.policyList.MAIN_GENERAL_POLICY_GUID;
-        this.radioValue = this.policyList.PROPERTIES_XML.approvalConfirmation.requirement;
-        if (this.radioValue == 'Anyone') {
-            this.policyForm.patchValue({ anyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
+        if (changes.companyId.currentValue.MAIN_GENERAL_POLICY_GUID != undefined) {
+            this.policyList = changes.companyId.currentValue;
+            this._policyGUID = this.policyList.MAIN_GENERAL_POLICY_GUID;
+            this.radioValue = this.policyList.PROPERTIES_XML.approvalConfirmation.requirement;
+            if (this.radioValue == 'Anyone') {
+                this.policyForm.patchValue({ anyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
+            } else {
+                this.policyForm.patchValue({ everyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
+            }
+            this.policyForm.controls.escalateAfterDays.value = this.policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays;
+            this.policyForm.patchValue({ CF: this.policyList.PROPERTIES_XML.forfeitCFLeave.value });
+            this.policyForm.patchValue({ CFMonth: this.policyList.PROPERTIES_XML.forfeitCFLeave.month });
+            this.policyForm.controls.CFDay.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.day;
+            this.editDetails();
         } else {
-            this.policyForm.patchValue({ everyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
+            this.policyForm.reset();
+            this.radioValue = null;
+            this.emailValue = 'No';
         }
-        this.policyForm.controls.escalateAfterDays.value = this.policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays;
-        this.policyForm.patchValue({ CF: this.policyList.PROPERTIES_XML.forfeitCFLeave.value });
-        this.policyForm.patchValue({ CFMonth: this.policyList.PROPERTIES_XML.forfeitCFLeave.month });
-        this.policyForm.controls.CFDay.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.day;
-        this.editDetails();
     }
 
     /**
@@ -397,26 +394,26 @@ export class CreatePolicyComponent {
      * Update the policy details and PATCH to endpoint
      * @memberof CreatePolicyComponent
      */
-    savePolicy() {
-        // this.showSmallSpinner = true;
-        this.getValue();
-        if (this._policyGUID != undefined) {
-            const data = {
-                'generalPolicyId': this._policyGUID,
-                'data': this._data
+    savePolicy(changes) {
+        if (changes.mode.previousValue === 'ON' && changes.mode.currentValue === 'OFF') {
+            this.getValue();
+            if (this._policyGUID != undefined) {
+                const data = {
+                    'generalPolicyId': this._policyGUID,
+                    'data': this._data
+                }
+                this.policyApi.patch_general_leave_policy(data).subscribe(response => {
+                    this.policyApi.message('Edit mode disabled. Good job!', true);
+                    this._policyGUID = '';
+                })
+            } else {
+                this._data["tenantCompanyId"] = this.tenantId;
+                this.policyApi.post_general_leave_policy(this._data).subscribe(response => {
+                    this.tenantId = '';
+                    this.policyApi.message('Edit mode disabled. Good job!', true)
+                });
             }
-            this.policyApi.patch_general_leave_policy(data).subscribe(response => {
-                this.policyApi.message('Edit mode disabled. Good job!', true);
-                this._policyGUID = '';
-            })
-        } else {
-            this._data["tenantCompanyId"] = this.tenantId;
-            this.policyApi.post_general_leave_policy(this._data).subscribe(response => {
-                this.tenantId = '';
-                this.policyApi.message('Edit mode disabled. Good job!', true)
-            });
         }
-
     }
 
 
