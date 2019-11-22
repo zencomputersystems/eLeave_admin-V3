@@ -74,7 +74,7 @@
   .iconSideMenuContent {
     transform: translateX(0) !important;
   }
-  ::ng-deep .split-pane-md.split-pane-visible>.split-pane-side{
+  ::ng-deep .split-pane-md.split-pane-visible > .split-pane-side {
     border-right: 0;
   }
   //------------------- header toolbar --------------------------//

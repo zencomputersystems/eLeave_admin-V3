@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="10.667" height="10.667" viewBox="0 0 10.667 10.667">
+    <defs>
+        <style>
+            .cls-1{fill:none}.cls-2{clip-path:url(#clip-path)}.cls-3{fill:#a5a4bf}
+        </style>
+        <clipPath id="clip-path">
+            <path d="M0 0h10.667v10.667H0z" class="cls-1"/>
+        </clipPath>
+    </defs>
+    <g id="icon_dashboard" class="cls-2">
+        <path id="Union_8" d="M8.667 10.667A.63.63 0 0 1 8 10V4a.63.63 0 0 1 .667-.667H10a.63.63 0 0 1 .667.667v6a.63.63 0 0 1-.667.667zm-4 0A.63.63 0 0 1 4 10V.667A.63.63 0 0 1 4.667 0H6a.63.63 0 0 1 .667.667V10a.63.63 0 0 1-.667.667zm-4 0A.63.63 0 0 1 0 10V7.334a.63.63 0 0 1 .667-.667H2a.63.63 0 0 1 .667.667V10a.63.63 0 0 1-.667.667z" class="cls-3" data-name="Union 8"/>
+    </g>
+</svg>
