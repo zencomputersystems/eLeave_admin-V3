@@ -245,19 +245,7 @@ export class CreatePolicyComponent {
         if (changes.companyId != undefined) {
             if (changes.companyId.currentValue != undefined) {
                 if (changes.companyId.currentValue.MAIN_GENERAL_POLICY_GUID != undefined) {
-                    this.policyList = changes.companyId.currentValue;
-                    this._policyGUID = this.policyList.MAIN_GENERAL_POLICY_GUID;
-                    this.radioValue = this.policyList.PROPERTIES_XML.approvalConfirmation.requirement;
-                    if (this.radioValue == 'Anyone') {
-                        this.policyForm.patchValue({ anyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
-                    } else {
-                        this.policyForm.patchValue({ everyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
-                    }
-                    this.policyForm.controls.escalateAfterDays.value = this.policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays;
-                    this.policyForm.patchValue({ CF: this.policyList.PROPERTIES_XML.forfeitCFLeave.value });
-                    this.policyForm.patchValue({ CFMonth: this.policyList.PROPERTIES_XML.forfeitCFLeave.month });
-                    this.policyForm.controls.CFDay.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.day;
-                    this.editDetails();
+                    this.companyDetailsChanges(changes);
                 }
                 else {
                     this.policyForm.reset();
@@ -269,25 +257,25 @@ export class CreatePolicyComponent {
     }
 
     /**
-     * get the details from Id of company GUID
+     * company details changes
+     * @param {*} changes
      * @memberof CreatePolicyComponent
      */
-    // editPolicyDetails() {
-    //     this._policyGUID = this.policyList.MAIN_GENERAL_POLICY_GUID;
-    //     // this.policyForm.controls.company.value = this.policyList.PROPERTIES_XML.tenantCompanyId;
-    //     this.radioValue = this.policyList.PROPERTIES_XML.approvalConfirmation.requirement;
-    //     if (this.radioValue == 'Anyone') {
-    //         this.policyForm.controls.anyoneLevel.value = this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel;
-    //     } else {
-    //         this.policyForm.controls.everyoneLevel.value = this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel;
-    //     }
-    //     this.policyForm.controls.escalateAfterDays.value = this.policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays;
-    //     this.CF = this.policyList.PROPERTIES_XML.forfeitCFLeave.value;
-    //     this.policyForm.controls.CFMonth.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.month;
-    //     this.policyForm.controls.CFDay.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.day;
-    //     this.editDetails();
-    // }
-
+    companyDetailsChanges(changes) {
+        this.policyList = changes.companyId.currentValue;
+        this._policyGUID = this.policyList.MAIN_GENERAL_POLICY_GUID;
+        this.radioValue = this.policyList.PROPERTIES_XML.approvalConfirmation.requirement;
+        if (this.radioValue == 'Anyone') {
+            this.policyForm.patchValue({ anyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
+        } else {
+            this.policyForm.patchValue({ everyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
+        }
+        this.policyForm.controls.escalateAfterDays.value = this.policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays;
+        this.policyForm.patchValue({ CF: this.policyList.PROPERTIES_XML.forfeitCFLeave.value });
+        this.policyForm.patchValue({ CFMonth: this.policyList.PROPERTIES_XML.forfeitCFLeave.month });
+        this.policyForm.controls.CFDay.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.day;
+        this.editDetails();
+    }
 
     /**
      * get the details from Id of company GUID
