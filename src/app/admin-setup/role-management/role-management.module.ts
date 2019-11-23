@@ -17,7 +17,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { RoleManagementComponent } from './role-management.component';
 import { RoleRightsComponent } from './role-rights/role-rights.component';
 import { RoleListComponent } from './role-list/role-list.component';
 import { LeaveSetupModule } from '../leave-setup/leave-setup.module';
@@ -32,7 +31,7 @@ import { DndModule } from 'ngx-drag-drop';
 const routes: Routes = [
     {
         path: '',
-        component: RoleManagementComponent
+        component: RoleListComponent
     }
 ];
 
@@ -63,6 +62,6 @@ const routes: Routes = [
     ],
     providers: [AssignCalendarTreeviewService],
     entryComponents: [DialogDeleteConfirmationComponent],
-    declarations: [RoleManagementComponent, RoleRightsComponent, RoleListComponent, AssignRoleComponent, DialogDeleteConfirmationComponent]
+    declarations: [RoleRightsComponent, RoleListComponent, AssignRoleComponent, DialogDeleteConfirmationComponent]
 })
 export class RoleManagementModule { }

@@ -247,9 +247,9 @@ export class RoleRightsComponent implements OnInit {
         };
         this.roleAPi.patch_role_profile(body).subscribe(response => {
             this.showSmallSpinner = false;
-            this.roleAPi.snackbarMsg('saved successfully');
+            // this.roleAPi.snackbarMsg('saved successfully');
         }, error => {
-            this.roleAPi.snackbarMsg('saved unsuccessfully');
+            // this.roleAPi.snackbarMsg('saved unsuccessfully');
             // window.location.href = '/login';
         });
     }
@@ -268,12 +268,12 @@ export class RoleRightsComponent implements OnInit {
                 this.showSmallSpinner = false;
                 this.defaultValue();
                 this.defaultProfileMngt();
-                this.roleAPi.snackbarMsg('saved successfully');
+                // this.roleAPi.snackbarMsg('saved successfully');
                 setTimeout(() => {
                     this.router.navigate(['/main/role-management']);
                 }, 2000);
             }, error => {
-                this.roleAPi.snackbarMsg('saved unsuccessfully');
+                // this.roleAPi.snackbarMsg('saved unsuccessfully');
             });
         } else {
             this.patchData();

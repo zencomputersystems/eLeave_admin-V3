@@ -127,7 +127,7 @@ export class RoleApiService {
      */
     get_assigned_user_profile(roleId: string): Observable<any> {
         this.authorization();
-        return this.http.get(this.baseUrl + ' /api/admin/role/role-profile/users/' + roleId, { headers: this.headerApp })
+        return this.http.get(this.baseUrl + '/api/admin/role/role-profile/users/' + roleId, { headers: this.headerApp })
             .pipe(map((res: Response) => res.json()));
 
     }
@@ -137,10 +137,11 @@ export class RoleApiService {
      * @param {string} text
      * @memberof RoleApiService
      */
-    snackbarMsg(text: string) {
+    snackbarMsg(text: string, val: boolean) {
         this.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 3000,
-            data: text
+            duration: 2000,
+            verticalPosition: "top",
+            data: { message: text, response: val }
         });
     }
 

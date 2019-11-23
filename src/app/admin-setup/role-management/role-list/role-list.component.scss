@@ -139,21 +139,6 @@
     max-height: 100%;
     height: 100%;
   }
-  // .calendar,
-  // .assigned {
-  //   flex: 30%;
-  //   max-width: 30%;
-  //   max-height: 100%;
-  // }
-  // .assigned {
-  //   margin-right: 10px;
-  //   margin-left: 10px;
-  // }
-  // .restday {
-  //   flex: 38.5%;
-  //   max-width: 38.5%;
-  //   max-height: 100%;
-  // }
   .role {
     flex: 28%;
     max-width: 28%;
@@ -176,5 +161,19 @@
     flex: 23.5%;
     max-width: 23.5%;
     max-height: 100%;
+  }
+  .textColor {
+    color: #3b86ff;
+  }
+  .oriColor {
+    color: #4d4f5c;
+  }
+  .textHover:hover {
+    color: #3b86ff;
+  }
+  .addIcon {
+    color: #7069d8;
+    font-size: 16px;
+    cursor: pointer;
   }
 }

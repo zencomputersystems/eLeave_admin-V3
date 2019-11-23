@@ -3,7 +3,6 @@ import { AuthGuard } from 'src/services/shared-service/guards/auth-guard.service
 import { SideMenuNavigationComponent } from './side-menu-navigation.component';
 import { PageNotFoundComponent } from '../page-not-found.component';
 import { LeaveSetupComponent } from '../admin-setup/leave-setup/leave-setup.component';
-import { RoleManagementComponent } from '../admin-setup/role-management/role-management.component';
 import { RoleListComponent } from '../admin-setup/role-management/role-list/role-list.component';
 import { RoleRightsComponent } from '../admin-setup/role-management/role-rights/role-rights.component';
 import { AssignRoleComponent } from '../admin-setup/role-management/assign-role/assign-role.component';

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RoleApiService } from '../role-api.service';
 import { MatDialog } from '@angular/material';
 import { DialogDeleteConfirmationComponent } from '../dialog-delete-confirmation/dialog-delete-confirmation.component';
+import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
 
 /**
  * Show list of role
@@ -87,6 +88,12 @@ export class RoleListComponent implements OnInit {
      */
     public disabledPrevButton: boolean;
 
+    public assignedNameList: any;
+
+    public clickedIndex: number = 0;
+
+    public mode: string = 'OFF';
+
     /**
      *Creates an instance of RoleListComponent.
      * @param {RoleApiService} roleAPi
@@ -103,11 +110,65 @@ export class RoleListComponent implements OnInit {
         this.roleAPi.get_role_profile_list().subscribe(data => {
             this.roleList = data;
             this.showSpinner = false;
-            this.showContent = true;
-            this.renderItemPerPage(1);
-            this.disabledNextButton = false;
-            this.disabledPrevButton = true;
+            // this.showContent = true;
+            // this.renderItemPerPage(1);
+            // this.disabledNextButton = false;
+            // this.disabledPrevButton = true;
+            this.clickedIndex = 0;
+            this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex)
+            for (let i = 0; i < this.roleList.length; i++) {
+                this.getAssignedEmployee(this.roleList[i].role_guid, i);
+            }
         });
+    }
+
+    /**
+     * get assigned employee from requested role iid
+     * @param {string} roleId
+     * @param {number} index
+     * @memberof RoleListComponent
+     */
+    async getAssignedEmployee(roleId: string, index: number) {
+        let a = await this.roleAPi.get_assigned_user_profile(roleId).toPromise();
+        this.roleList[index]["employee"] = a.length;
+    }
+
+    /**
+     * selected role profile
+     * @param {*} item
+     * @param {*} index
+     * @memberof RoleListComponent
+     */
+    async selectedProfile(item, index) {
+        this.clickedIndex = index;
+        let list = await this.roleAPi.get_assigned_user_profile(item.role_guid).toPromise();
+        this.assignedNameList = list;
+        for (let j = 0; j < this.assignedNameList.length; j++) {
+            this.assignedNameList[j]["content"] = this.assignedNameList[j].FULLNAME;
+            this.assignedNameList[j]["effectAllowed"] = "move";
+            this.assignedNameList[j]["handle"] = true;
+            this.assignedNameList[j]["disable"] = false;
+        }
+    }
+
+    /**
+     * toggle edit mode
+     * @param {*} event
+     * @memberof RoleListComponent
+     */
+    toggleMode(event) {
+        if (event.detail.checked === true) {
+            this.mode = 'ON';
+            this.dialog.open(EditModeDialogComponent, {
+                data: 'role',
+                height: "354.3px",
+                width: "383px"
+            });
+
+        } else {
+            this.mode = 'OFF'
+            this.roleAPi.snackbarMsg('Edit mode disabled. Good job!', true);
+        }
     }
 
     /**
@@ -115,9 +176,9 @@ export class RoleListComponent implements OnInit {
      * @param {*} roleId
      * @memberof RoleListComponent
      */
-    getRoleId(roleId) {
-        this.router.navigate(['/main/role-management/role-rights', roleId]);
-    }
+    // getRoleId(roleId) {
+    //     this.router.navigate(['/main/role-management/role-rights', roleId]);
+    // }
 
     /**
      * delete confirmation pop up dialog message
@@ -132,7 +193,7 @@ export class RoleListComponent implements OnInit {
             if (result === role_guid) {
                 this.roleAPi.delete_role_profile(role_guid).subscribe(response => {
                     this.ngOnInit();
-                    this.roleAPi.snackbarMsg('deleted successfully ');
+                    // this.roleAPi.snackbarMsg('deleted successfully ');
                 })
             }
         });
@@ -142,9 +203,9 @@ export class RoleListComponent implements OnInit {
      * Go to assign role page
      * @memberof RoleListComponent
      */
-    assignRole() {
-        this.router.navigate(['/main/role-management/assign-role']);
-    }
+    // assignRole() {
+    //     this.router.navigate(['/main/role-management/assign-role']);
+    // }
 
     /**
      * Sort ascending /descending order of rolename & description column
@@ -153,102 +214,102 @@ export class RoleListComponent implements OnInit {
      * @param {*} variable
      * @memberof RoleListComponent
      */
-    sortFunction(ascValue: number, desValue: number, variable: any) {
-        this.roleList.sort(function (a, b) {
-            if (variable == 'code') {
-                const x = a.code.toLowerCase();
-                const y = b.code.toLowerCase();
-                return x < y ? ascValue : x > y ? desValue : 0;
-            } else {
-                const x1 = a.description.toLowerCase();
-                const x2 = b.description.toLowerCase();
-                return x1 < x2 ? ascValue : x1 > x2 ? desValue : 0;
-            }
-        });
-        this.renderItemPerPage(1);
-        this.disabledNextButton = false;
-        this.disabledPrevButton = true;
-    }
+    // sortFunction(ascValue: number, desValue: number, variable: any) {
+    //     this.roleList.sort(function (a, b) {
+    //         if (variable == 'code') {
+    //             const x = a.code.toLowerCase();
+    //             const y = b.code.toLowerCase();
+    //             return x < y ? ascValue : x > y ? desValue : 0;
+    //         } else {
+    //             const x1 = a.description.toLowerCase();
+    //             const x2 = b.description.toLowerCase();
+    //             return x1 < x2 ? ascValue : x1 > x2 ? desValue : 0;
+    //         }
+    //     });
+    //     this.renderItemPerPage(1);
+    //     this.disabledNextButton = false;
+    //     this.disabledPrevButton = true;
+    // }
 
     /**
      * Calculate number of item show in each page
      * @param {number} i
      * @memberof RoleListComponent
      */
-    renderItemPerPage(i: number) {
-        let totalItem;
-        const pageItems = 7;
-        const startEndNumber = 6;
-        this.pageIndex = i;
-        totalItem = this.roleList.length;
-        this.sumPageIndex = totalItem / pageItems;
-        this.sumPageIndex = Math.ceil(this.sumPageIndex);
-        const startNum = (this.pageIndex * pageItems) - startEndNumber;
-        const endNum = this.pageIndex * pageItems;
-        const currentPageItems = [];
-        for (let j = startNum - 1; j < endNum; j++) {
-            const itemNum = this.roleList[j];
-            if (itemNum !== undefined) {
-                currentPageItems.push(itemNum);
-            }
-        }
-        this.currentItems = currentPageItems;
-    }
+    // renderItemPerPage(i: number) {
+    //     let totalItem;
+    //     const pageItems = 7;
+    //     const startEndNumber = 6;
+    //     this.pageIndex = i;
+    //     totalItem = this.roleList.length;
+    //     this.sumPageIndex = totalItem / pageItems;
+    //     this.sumPageIndex = Math.ceil(this.sumPageIndex);
+    //     const startNum = (this.pageIndex * pageItems) - startEndNumber;
+    //     const endNum = this.pageIndex * pageItems;
+    //     const currentPageItems = [];
+    //     for (let j = startNum - 1; j < endNum; j++) {
+    //         const itemNum = this.roleList[j];
+    //         if (itemNum !== undefined) {
+    //             currentPageItems.push(itemNum);
+    //         }
+    //     }
+    //     this.currentItems = currentPageItems;
+    // }
 
     /**
      * Click to display next page of rendered items
      * @param {number} i
      * @memberof RoleListComponent
      */
-    onClickNextPage(i: number) {
-        if (!(i > this.sumPageIndex)) {
-            this.renderItemPerPage(i);
-        }
-        this.nextButton();
-    }
+    // onClickNextPage(i: number) {
+    //     if (!(i > this.sumPageIndex)) {
+    //         this.renderItemPerPage(i);
+    //     }
+    //     this.nextButton();
+    // }
 
     /**
      * Click to display previous page of rendered items
      * @param {number} i
      * @memberof RoleListComponent
      */
-    onClickPrevPage(i: number) {
-        if (!(i < 1)) {
-            this.renderItemPerPage(i);
-        }
-        this.prevButton();
-    }
+    // onClickPrevPage(i: number) {
+    //     if (!(i < 1)) {
+    //         this.renderItemPerPage(i);
+    //     }
+    //     this.prevButton();
+    // }
 
     /**
      * Enable or disable next button
      * @memberof RoleListComponent
      */
-    nextButton() {
-        if (this.pageIndex === this.sumPageIndex) {
-            this.disabledNextButton = true;
-        }
-        if (this.pageIndex > 0 && this.pageIndex < this.sumPageIndex) {
-            this.disabledNextButton = false;
-        }
-        if (this.pageIndex > 1) {
-            this.disabledPrevButton = false;
-        }
-    }
+    // nextButton() {
+    //     if (this.pageIndex === this.sumPageIndex) {
+    //         this.disabledNextButton = true;
+    //     }
+    //     if (this.pageIndex > 0 && this.pageIndex < this.sumPageIndex) {
+    //         this.disabledNextButton = false;
+    //     }
+    //     if (this.pageIndex > 1) {
+    //         this.disabledPrevButton = false;
+    //     }
+    // }
 
     /**
      * Enable or disable previous button
      * @memberof RoleListComponent
      */
-    prevButton() {
-        if (this.pageIndex < 2) {
-            this.disabledPrevButton = true;
-        }
-        if (this.pageIndex > 1 && this.pageIndex === this.sumPageIndex) {
-            this.disabledPrevButton = false;
-        }
-        if (this.pageIndex < this.sumPageIndex) {
-            this.disabledNextButton = false;
-        }
-    }
+    // prevButton() {
+    //     if (this.pageIndex < 2) {
+    //         this.disabledPrevButton = true;
+    //     }
+    //     if (this.pageIndex > 1 && this.pageIndex === this.sumPageIndex) {
+    //         this.disabledPrevButton = false;
+    //     }
+    //     if (this.pageIndex < this.sumPageIndex) {
+    //         this.disabledNextButton = false;
+    //     }
+    // }
 
 }

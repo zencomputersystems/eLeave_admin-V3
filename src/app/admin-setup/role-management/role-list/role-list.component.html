@@ -34,27 +34,25 @@
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
-                                <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                                <ion-col size="9" style="font-size: 12px;white-space: nowrap;
                                     text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                                     ROLE DETAILS</ion-col>
-                                <ion-col align-self-center>
-                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="showAddIcon"
-                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null;restDay=[]; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.open('createCalendarDetails');">
+                                <ion-col align-self-center style="text-align: right;">
+                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="mode == 'ON'">
                                     </ion-icon>
                                 </ion-col>
                             </ion-row>
                         </div>
                         <div style="overflow-y: auto;height: calc(100% - 62px);">
-                            <ng-container>
-                                <!-- *ngIf="!showAddIcon" -->
-                                <ion-row *ngFor="let role of currentItems; let i=index" style="padding-left: 5px;">
-                                    <ion-col size="10"
+                            <ng-container *ngIf="mode == 'OFF'">
+                                <ion-row *ngFor="let role of roleList; let i=index" style="padding-left: 5px;">
+                                    <ion-col size="9"
                                         style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                         <p class="textHover"
                                             style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
                                             [ngClass]="{
                                             'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
-                                            (click)="clickedCalendar(item, i)">
+                                            (click)="selectedProfile(role, i)">
                                             {{role.code}}
                                         </p>
                                         <p
@@ -68,7 +66,8 @@
                                                 {{role.employee}}</p>
                                         </div>
                                     </ion-col>
-                                    <ion-col align-self-center>
+                                    <ion-col align-self-center *ngIf="mode == 'ON'"
+                                        style="text-align: right;padding-right: 15px;">
                                         <img src="assets/icon/leave_setup/icon_edit@3x.png"
                                             style="width: 11px;height:11px;display: inline-block;"
                                             (click)="selectProfile(list, i);showAddIcon=true"
@@ -83,34 +82,46 @@
                                 </ion-row>
                             </ng-container>
 
-                            <!-- <ng-container *ngIf="showAddIcon">
+                            <ng-container *ngIf="mode == 'ON'">
                                 <section class="my-dropzone scrollable" dndDropzone dndDragoverClass="custom-drag-over"
                                     (dndDrop)="onDrop($event, list)" [dndDisableIf]="i==clickedIndex"
-                                    *ngFor="let list of profileList; let i=index">
+                                    *ngFor="let role of roleList; let i=index">
                                     <ion-row class="sectionRow">
-                                        <ion-col size="10"
-                                            style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;padding-top: 0;">
-                                            <mat-form-field style="font-size: 11px;width: 50%;height: 35px;" [ngClass]="{
-                                                'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}">
-                                                <input matInput [(ngModel)]="list.code"
-                                                    [ngModelOptions]="{standalone: true}"
-                                                    (click)="clickedCalendar(list, i)">
-                                            </mat-form-field>
+                                        <ion-col size="9"
+                                            style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                            <p class="textHover"
+                                                style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
+                                                [ngClass]="{
+                                            'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
+                                                (click)="selectedProfile(role, i)">
+                                                {{role.code}}
+                                            </p>
+                                            <p
+                                                style="font-style: italic;font-weight: 600;padding-bottom: 5px;font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                {{role.description}}
+                                            </p>
                                             <div
                                                 style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                                 Assigned Employee No.: <p
                                                     style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
-                                                    {{list.employee}}</p>
+                                                    {{role.employee}}</p>
                                             </div>
                                         </ion-col>
-                                        <ion-col align-self-center>
+                                        <ion-col align-self-center *ngIf="mode == 'ON'"
+                                            style="text-align: right;padding-right: 15px;">
+                                            <img src="assets/icon/leave_setup/icon_edit@3x.png"
+                                                style="width: 11px;height:11px;display: inline-block;"
+                                                (click)="selectProfile(list, i);showAddIcon=true"
+                                                [ngClass]="{
+                                            'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
+                                            &nbsp;&nbsp;
                                             <img src="assets/icon/leave_setup/icon_trash@3x.png"
                                                 style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
                                                 (click)="deleteCalendarProfile(profileList[i]);selectProfile(list, i)">
                                         </ion-col>
                                     </ion-row>
                                 </section>
-                            </ng-container> -->
+                            </ng-container>
                         </div>
                     </div>
                     <div class="assigned">
@@ -120,12 +131,38 @@
                                 <ion-col size="10" style="font-size: 12px;white-space: nowrap;
                                     text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                                     ASSIGNED EMPLOYEE</ion-col>
-                                <ion-col align-self-center>
-                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="showAddIcon"
-                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null;restDay=[]; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.open('createCalendarDetails');">
-                                    </ion-icon>
-                                </ion-col>
                             </ion-row>
+                        </div>
+                        <!-- *ngIf="slideInOut && !showAddIcon"  [@slideInOut]="slideInOut ? 'open': 'close'"-->
+                        <div style="overflow-y: auto;height: calc(100% - 62px);" *ngIf="mode == 'OFF'">
+                            <ion-row *ngFor="let item of assignedNameList; let i =index"
+                                style="width: 100%;padding-left: 10px;">
+                                <ion-col align-self-center size="9" style="padding-top: 0;padding-bottom: 0;">
+                                    <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
+                                        padding-bottom: 13px;">
+                                        {{item.FULLNAME}}</p>
+                                </ion-col>
+                                <!-- <ion-col size="3" align-self-center style="text-align: center;">
+                                    <!-- <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="showAddIcon"
+                                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;"> -->
+                                <!-- (click)="deleteEmployee(i, item.FULLNAME)" -- --
+                                </ion-col> -->
+                                <ion-item class="divider" lines="full">
+                                </ion-item>
+                            </ion-row>
+                        </div>
+                        <div style="overflow-y: auto;height: calc(100% - 62px);" *ngIf="mode == 'ON'"
+                            [@slideInOut]="slideInOut ? 'open': 'close'">
+                            <mat-card *ngFor="let draggable of assignedNameList" [dndDraggable]="draggable.content"
+                                [dndEffectAllowed]="draggable.effectAllowed" [dndDisableIf]="draggable.disable"
+                                style="margin: 5px;border-radius: 3px;box-shadow: 0 3px 6px 0 rgba(77, 77, 77, 0.16);">
+
+                                <div style="float: left;padding-right: 15px;cursor: move;">
+                                    <img src="assets/icon/leave_setup/icon_reorder@3x.png"
+                                        style="width: 16px;height: 16px;" *ngIf="draggable.handle" dndHandle></div>
+                                <p [hidden]="!draggable.handle" style="color: #4d4f5c;font-size:11px;display: flex;">
+                                    {{draggable.content}}</p>
+                            </mat-card>
                         </div>
                     </div>
                     <div class="leave">
@@ -135,11 +172,14 @@
                                 <ion-col size="10" style="font-size: 12px;white-space: nowrap;
                                     text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                                     LEAVE SETUP</ion-col>
-                                <ion-col align-self-center>
-                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="showAddIcon"
-                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null;restDay=[]; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.open('createCalendarDetails');">
-                                    </ion-icon>
-                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                            <ion-row>
+                                <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                                    text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    LEAVE MANAGEMENT</ion-col>
                             </ion-row>
                         </div>
                     </div>
@@ -150,11 +190,22 @@
                                 <ion-col size="10" style="font-size: 12px;white-space: nowrap;
                                     text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                                     PROFILE MANAGEMENT</ion-col>
-                                <ion-col align-self-center>
-                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="showAddIcon"
-                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null;restDay=[]; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.open('createCalendarDetails');">
-                                    </ion-icon>
-                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                            <ion-row>
+                                <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                                    text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    CALENDAR</ion-col>
+                            </ion-row>
+                        </div>
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                            <ion-row>
+                                <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    REPORT</ion-col>
                             </ion-row>
                         </div>
                     </div>
