@@ -121,27 +121,27 @@ export class RoleApiService {
 
     /**
      * get assigned user from requested role profile id
-     * @param {string} roleId
+     * @param {string} role_id
      * @returns {Observable<any>}
      * @memberof RoleApiService
      */
-    get_assigned_user_profile(roleId: string): Observable<any> {
+    get_assigned_user_profile(role_id: string): Observable<any> {
         this.authorization();
-        return this.http.get(this.baseUrl + '/api/admin/role/role-profile/users/' + roleId, { headers: this.headerApp })
-            .pipe(map((res: Response) => res.json()));
+        return this.http.get(this.baseUrl + '/api/admin/role/role-profile/users/' + role_id, { headers: this.headerApp })
+            .pipe(map((response: Response) => response.json()));
 
     }
 
     /**
      * show delete confirmation after click Delete button
-     * @param {string} text
+     * @param {string} sentences
      * @memberof RoleApiService
      */
-    snackbarMsg(text: string, val: boolean) {
+    snackbarMsg(sentences: string, value: boolean) {
         this.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 2000,
             verticalPosition: "top",
-            data: { message: text, response: val }
+            data: { message: sentences, response: value }
         });
     }
 

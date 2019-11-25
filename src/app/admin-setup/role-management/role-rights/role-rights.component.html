@@ -68,56 +68,15 @@ margin: 0 auto;">
         </ion-item>
     </ion-list>
 </div>
-<div class="calendarView" *ngIf="calendar && profileDetails">
-    <!-- <mat-card-header>
-        <mat-card-subtitle>Calendar</mat-card-subtitle>
-    </mat-card-header> -->
-    <ion-list lines="none" class="ionItem" style="padding-left: 18px;padding-top: 18px">
-        <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="editMode == 'OFF'"
-            [(ngModel)]="profileDetails.property.allowViewCalendar.value" (ionChange)="checkEvent(calendarKey,null ,0)">
-        </ion-checkbox>
-        <mat-form-field appearance="outline" style="width: 76%">
-            <mat-label>View Calendar</mat-label>
-            <mat-select [(ngModel)]="profileDetails.property.allowViewCalendar.level" [disabled]="editMode == 'OFF'"
-                required>
-                <mat-option *ngFor="let item of viewReportList" [value]="item.value">
-                    {{item.name}}
-                </mat-option>
-            </mat-select>
-            <mat-error style="padding-top: 12px;" *ngIf="profileDetails.property.allowViewCalendar.value">
-                Option is <strong>required</strong>
-            </mat-error>
-            <mat-hint style="padding-top: 12px;color:#f44336"
-                *ngIf="profileDetails.property.allowViewCalendar.value && !profileDetails.property.allowViewCalendar.level">
-                Option is <strong>required</strong></mat-hint>
-        </mat-form-field>
-    </ion-list>
+<div *ngIf="leaveManagement && profileDetails"
+    style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+    <ion-row>
+        <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                                    text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            LEAVE MANAGEMENT</ion-col>
+    </ion-row>
 </div>
-<div class="reportView" *ngIf="report && profileDetails">
-    <!-- <mat-card-header>
-        <mat-card-subtitle>Report</mat-card-subtitle>
-    </mat-card-header> -->
-    <ion-list lines="none" class="ionItem" style="padding-left: 18px;padding-top: 18px">
-        <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="editMode == 'OFF'"
-            [(ngModel)]="profileDetails.property.allowViewReport.value" (ionChange)="checkEvent(reportKey, null,0)">
-        </ion-checkbox>
-        <mat-form-field appearance="outline" style="width: 76%">
-            <mat-label>View Report</mat-label>
-            <mat-select [(ngModel)]="profileDetails.property.allowViewReport.level" [disabled]="editMode == 'OFF'"
-                required>
-                <mat-option *ngFor="let item of viewReportList" [value]="item.value">
-                    {{item.name}}
-                </mat-option>
-            </mat-select>
-            <mat-error style="padding-top: 10px;" *ngIf="profileDetails.property.allowViewReport.value">
-                Option is <strong>required</strong>
-            </mat-error>
-            <mat-hint style="padding-top: 12px;color:#f44336"
-                *ngIf="profileDetails.property.allowViewReport.value && !profileDetails.property.allowViewReport.level">
-                Option is <strong>required</strong></mat-hint>
-        </mat-form-field>
-    </ion-list>
-</div>
+
 <!-- </div> -->
 
 <!-- <div class="column2"> -->
@@ -141,7 +100,8 @@ margin: 0 auto;">
             [class.my-class]="profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.value && !profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.level">
             <mat-label>Leave Adjustment</mat-label>
             <mat-select [(ngModel)]="profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.level"
-                [disabled]="editMode == 'OFF'" required>
+                [disabled]="editMode == 'OFF' || profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.value == false"
+                required>
                 <mat-option *ngFor="let item of viewReportList" [value]="item.value">
                     {{item.name}}
                 </mat-option>
@@ -164,7 +124,8 @@ margin: 0 auto;">
         <mat-form-field appearance="outline" style="width: 76%">
             <mat-label>Apply On Behalf</mat-label>
             <mat-select [(ngModel)]="profileDetails.property.allowLeaveManagement.allowApplyOnBehalf.level"
-                [disabled]="editMode == 'OFF'" required>
+                [disabled]="editMode == 'OFF' || profileDetails.property.allowLeaveManagement.allowApplyOnBehalf.value == false"
+                required>
                 <mat-option *ngFor="let item of viewReportList" [value]="item.value">
                     {{item.name}}
                 </mat-option>
@@ -187,7 +148,8 @@ margin: 0 auto;">
         <mat-form-field appearance="outline" style="width: 76%">
             <mat-label>Approval Override</mat-label>
             <mat-select [(ngModel)]="profileDetails.property.allowLeaveManagement.allowApprovalOverride.level"
-                [disabled]="editMode == 'OFF'" required>
+                [disabled]="editMode == 'OFF' || profileDetails.property.allowLeaveManagement.allowApprovalOverride.value ==false"
+                required>
                 <mat-option *ngFor="let item of viewReportList" [value]="item.value">
                     {{item.name}}
                 </mat-option>
@@ -225,7 +187,8 @@ margin: 0 auto;">
         <mat-form-field appearance="outline" style="width: 76%">
             <mat-label>View Profile</mat-label>
             <mat-select [(ngModel)]="profileDetails.property.allowProfileManagement.allowViewProfile.level"
-                [disabled]="editMode == 'OFF'" required>
+                [disabled]="editMode == 'OFF' || profileDetails.property.allowProfileManagement.allowViewProfile.value == false"
+                required>
                 <mat-option *ngFor="let item of viewReportList" [value]="item.value">
                     {{item.name}}
                 </mat-option>
@@ -248,7 +211,8 @@ margin: 0 auto;">
         <mat-form-field appearance="outline" style="width: 76%">
             <mat-label>Edit Profile</mat-label>
             <mat-select [(ngModel)]="profileDetails.property.allowProfileManagement.allowEditProfile.level"
-                [disabled]="editMode == 'OFF'" required>
+                [disabled]="editMode == 'OFF' || profileDetails.property.allowProfileManagement.allowEditProfile.value ==false"
+                required>
                 <mat-option *ngFor="let item of viewReportList" [value]="item.value">
                     {{item.name}}
                 </mat-option>
@@ -271,7 +235,8 @@ margin: 0 auto;">
         <mat-form-field appearance="outline" style="width: 76%">
             <mat-label>Change Password</mat-label>
             <mat-select [(ngModel)]="profileDetails.property.allowProfileManagement.allowChangePassword.level"
-                [disabled]="editMode == 'OFF'" required>
+                [disabled]="editMode == 'OFF' || profileDetails.property.allowProfileManagement.allowChangePassword.value == false"
+                required>
                 <mat-option *ngFor="let item of viewReportList" [value]="item.value">
                     {{item.name}}
                 </mat-option>
@@ -294,7 +259,8 @@ margin: 0 auto;">
         <mat-form-field appearance="outline" style="width: 76%">
             <mat-label>Profile Admin</mat-label>
             <mat-select [(ngModel)]="profileDetails.property.allowProfileManagement.allowProfileAdmin.level"
-                [disabled]="editMode == 'OFF'" required>
+                [disabled]="editMode == 'OFF' || profileDetails.property.allowProfileManagement.allowProfileAdmin.value == false"
+                required>
                 <mat-option *ngFor="let item of viewReportList" [value]="item.value">
                     {{item.name}}
                 </mat-option>
@@ -305,6 +271,73 @@ margin: 0 auto;">
             </mat-error>
             <mat-hint style="padding-top: 12px;color:#f44336"
                 *ngIf="profileDetails.property.allowProfileManagement.allowProfileAdmin.value && !profileDetails.property.allowProfileManagement.allowProfileAdmin.level">
+                Option is <strong>required</strong></mat-hint>
+        </mat-form-field>
+    </ion-list>
+</div>
+<div *ngIf="calendar && profileDetails"
+    style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+    <ion-row>
+        <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+    text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            CALENDAR</ion-col>
+    </ion-row>
+</div>
+
+<div class="calendarView" *ngIf="calendar && profileDetails">
+    <!-- <mat-card-header>
+            <mat-card-subtitle>Calendar</mat-card-subtitle>
+        </mat-card-header> -->
+    <ion-list lines="none" class="ionItem" style="padding-left: 18px;padding-top: 18px">
+        <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="editMode == 'OFF'"
+            [(ngModel)]="profileDetails.property.allowViewCalendar.value" (ionChange)="checkEvent(calendarKey,null ,0)">
+        </ion-checkbox>
+        <mat-form-field appearance="outline" style="width: 76%">
+            <mat-label>View Calendar</mat-label>
+            <mat-select [(ngModel)]="profileDetails.property.allowViewCalendar.level"
+                [disabled]="editMode == 'OFF' || profileDetails.property.allowViewCalendar.value == false" required>
+                <mat-option *ngFor="let item of viewReportList" [value]="item.value">
+                    {{item.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error style="padding-top: 12px;" *ngIf="profileDetails.property.allowViewCalendar.value">
+                Option is <strong>required</strong>
+            </mat-error>
+            <mat-hint style="padding-top: 12px;color:#f44336"
+                *ngIf="profileDetails.property.allowViewCalendar.value && !profileDetails.property.allowViewCalendar.level">
+                Option is <strong>required</strong></mat-hint>
+        </mat-form-field>
+    </ion-list>
+</div>
+<div *ngIf="report && profileDetails"
+    style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+    <ion-row>
+        <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            REPORT</ion-col>
+    </ion-row>
+</div>
+<div class="reportView" *ngIf="report && profileDetails">
+    <!-- <mat-card-header>
+            <mat-card-subtitle>Report</mat-card-subtitle>
+        </mat-card-header> -->
+    <ion-list lines="none" class="ionItem" style="padding-left: 18px;padding-top: 18px">
+        <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="editMode == 'OFF'"
+            [(ngModel)]="profileDetails.property.allowViewReport.value" (ionChange)="checkEvent(reportKey, null,0)">
+        </ion-checkbox>
+        <mat-form-field appearance="outline" style="width: 76%">
+            <mat-label>View Report</mat-label>
+            <mat-select [(ngModel)]="profileDetails.property.allowViewReport.level"
+                [disabled]="editMode == 'OFF' || profileDetails.property.allowViewReport.value == false" required>
+                <mat-option *ngFor="let item of viewReportList" [value]="item.value">
+                    {{item.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error style="padding-top: 10px;" *ngIf="profileDetails.property.allowViewReport.value">
+                Option is <strong>required</strong>
+            </mat-error>
+            <mat-hint style="padding-top: 12px;color:#f44336"
+                *ngIf="profileDetails.property.allowViewReport.value && !profileDetails.property.allowViewReport.level">
                 Option is <strong>required</strong></mat-hint>
         </mat-form-field>
     </ion-list>

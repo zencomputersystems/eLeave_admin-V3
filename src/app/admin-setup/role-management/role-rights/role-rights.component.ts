@@ -213,10 +213,19 @@ export class RoleRightsComponent implements OnInit {
     }
 
     async ngOnChanges(changes: SimpleChanges) {
-        if (changes.roleID.currentValue != undefined) {
-            let data = await this.roleAPi.get_role_details_profile(this.roleID).toPromise();
-            this.profileDetails = data;
-            this.initCheckedValue();
+        if (changes.roleID != undefined) {
+            if (changes.roleID.currentValue != undefined) {
+                let data = await this.roleAPi.get_role_details_profile(this.roleID).toPromise();
+                this.profileDetails = data;
+                this.initCheckedValue();
+            }
+        }
+        if (changes.editMode != undefined) {
+            if (changes.editMode.currentValue != undefined) {
+                if (changes.editMode.previousValue === 'ON' && changes.editMode.currentValue === 'OFF') {
+                    this.patchData();
+                }
+            }
         }
     }
 
@@ -293,16 +302,21 @@ export class RoleRightsComponent implements OnInit {
      * @memberof RoleRightsComponent
      */
     patchData() {
+        this.initCheckedValue();
+        this._body["code"] = this.profileDetails.code;
+        this._body["description"] = this.profileDetails.description;
+        this._body["property"] = this.profileDetails.property;
         const body = {
-            "role_guid": this._roleId,
+            "role_guid": this.roleID,
             "data": this._body
         };
+        console.log(body);
         this.roleAPi.patch_role_profile(body).subscribe(response => {
-            // this.showSmallSpinner = false;
             // this.roleAPi.snackbarMsg('saved successfully');
+            console.log(response);
+            this._body = {};
         }, error => {
             // this.roleAPi.snackbarMsg('saved unsuccessfully');
-            // window.location.href = '/login';
         });
     }
 
@@ -321,9 +335,9 @@ export class RoleRightsComponent implements OnInit {
                 this.defaultValue();
                 this.defaultProfileMngt();
                 // this.roleAPi.snackbarMsg('saved successfully');
-                setTimeout(() => {
-                    this.router.navigate(['/main/role-management']);
-                }, 2000);
+                // setTimeout(() => {
+                //     this.router.navigate(['/main/role-management']);
+                // }, 2000);
             }, error => {
                 // this.roleAPi.snackbarMsg('saved unsuccessfully');
             });
