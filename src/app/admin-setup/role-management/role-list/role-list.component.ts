@@ -94,6 +94,8 @@ export class RoleListComponent implements OnInit {
 
     public mode: string = 'OFF';
 
+    public roleIdOutput: string;
+
     /**
      *Creates an instance of RoleListComponent.
      * @param {RoleApiService} roleAPi
@@ -141,6 +143,7 @@ export class RoleListComponent implements OnInit {
      */
     async selectedProfile(item, index) {
         this.clickedIndex = index;
+        this.roleIdOutput = item.role_guid;
         let list = await this.roleAPi.get_assigned_user_profile(item.role_guid).toPromise();
         this.assignedNameList = list;
         for (let j = 0; j < this.assignedNameList.length; j++) {

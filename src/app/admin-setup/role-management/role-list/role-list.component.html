@@ -174,13 +174,21 @@
                                     LEAVE SETUP</ion-col>
                             </ion-row>
                         </div>
-                        <div
-                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
-                            <ion-row>
-                                <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                        <div style="overflow-y: auto;height: calc(100% - 62px);">
+                            <app-role-rights [leaveSetup]=true [leaveManagement]=false [profileManagement]=false
+                                [calendar]=false [report]=false [roleID]="roleIdOutput" [editMode]="mode">
+                            </app-role-rights>
+                            <div
+                                style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                                <ion-row>
+                                    <ion-col size="10" style="font-size: 12px;white-space: nowrap;
                                     text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                                    LEAVE MANAGEMENT</ion-col>
-                            </ion-row>
+                                        LEAVE MANAGEMENT</ion-col>
+                                </ion-row>
+                            </div>
+                            <app-role-rights [leaveManagement]=true [leaveSetup]=false [profileManagement]=false
+                                [calendar]=false [report]=false [roleID]="roleIdOutput" [editMode]="mode">
+                            </app-role-rights>
                         </div>
                     </div>
                     <div class="manage">
@@ -192,21 +200,32 @@
                                     PROFILE MANAGEMENT</ion-col>
                             </ion-row>
                         </div>
-                        <div
-                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
-                            <ion-row>
-                                <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                        <div style="overflow-y: auto;height: calc(100% - 62px);">
+                            <app-role-rights [profileManagement]=true [leaveManagement]=false [leaveSetup]=false
+                                [calendar]=false [report]=false [roleID]="roleIdOutput" [editMode]="mode">
+                            </app-role-rights>
+                            <div
+                                style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                                <ion-row>
+                                    <ion-col size="10" style="font-size: 12px;white-space: nowrap;
                                     text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                                    CALENDAR</ion-col>
-                            </ion-row>
-                        </div>
-                        <div
-                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
-                            <ion-row>
-                                <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                                        CALENDAR</ion-col>
+                                </ion-row>
+                            </div>
+                            <app-role-rights [calendar]=true [profileManagement]=false [leaveManagement]=false
+                                [leaveSetup]=false [report]=false [roleID]="roleIdOutput" [editMode]="mode">
+                            </app-role-rights>
+                            <div
+                                style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                                <ion-row>
+                                    <ion-col size="10" style="font-size: 12px;white-space: nowrap;
                                 text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                                    REPORT</ion-col>
-                            </ion-row>
+                                        REPORT</ion-col>
+                                </ion-row>
+                            </div>
+                            <app-role-rights [report]=true [calendar]=false [profileManagement]=false
+                                [leaveManagement]=false [leaveSetup]=false [roleID]="roleIdOutput" [editMode]="mode">
+                            </app-role-rights>
                         </div>
                     </div>
                 </div>
