@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { RoleApiService } from '../role-api.service';
 import { MatDialog } from '@angular/material';
 import { DialogDeleteConfirmationComponent } from '../dialog-delete-confirmation/dialog-delete-confirmation.component';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
+import { APIService } from 'src/services/shared-service/api.service';
 
 /**
  * Show list of role
@@ -88,21 +88,58 @@ export class RoleListComponent implements OnInit {
      */
     public disabledPrevButton: boolean;
 
+    /**
+     * get assigned employee name list 
+     * @type {*}
+     * @memberof RoleListComponent
+     */
     public assignedNameList: any;
 
+    /**
+     * selected index
+     * @type {number}
+     * @memberof RoleListComponent
+     */
     public clickedIndex: number = 0;
 
+    /**
+     * toggle button mode value
+     * @type {string}
+     * @memberof RoleListComponent
+     */
     public mode: string = 'OFF';
 
+    /** 
+     * role id value
+     * @type {string}
+     * @memberof RoleListComponent
+     */
     public roleIdOutput: string;
+
+    /**
+     * user list
+     * @private
+     * @type {*}
+     * @memberof RoleListComponent
+     */
+    private _userList: any;
+
+    /**
+     * filtered userId list of dragged user
+     * @private
+     * @type {*}
+     * @memberof RoleListComponent
+     */
+    private _filteredList: any = [];
 
     /**
      *Creates an instance of RoleListComponent.
      * @param {RoleApiService} roleAPi
-     * @param {Router} router
+     * @param {MatDialog} dialog
+     * @param {APIService} apiService
      * @memberof RoleListComponent
      */
-    constructor(private roleAPi: RoleApiService, private router: Router, public dialog: MatDialog) { }
+    constructor(private roleAPi: RoleApiService, public dialog: MatDialog, private apiService: APIService) { }
 
     /**
      * initial method to get endpoint list
@@ -112,16 +149,64 @@ export class RoleListComponent implements OnInit {
         this.roleAPi.get_role_profile_list().subscribe(data => {
             this.roleList = data;
             this.showSpinner = false;
-            // this.showContent = true;
-            // this.renderItemPerPage(1);
-            // this.disabledNextButton = false;
-            // this.disabledPrevButton = true;
             this.clickedIndex = 0;
             this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex)
-            for (let i = 0; i < this.roleList.length; i++) {
-                this.getAssignedEmployee(this.roleList[i].role_guid, i);
-            }
+            this.getAssignedEmployee();
+
         });
+        this.apiService.get_user_profile_list().subscribe(list => this._userList = list);
+    }
+
+    /**
+     * dropped user to patch to the assigned role profile
+     * @param {*} evt
+     * @param {*} roleItem
+     * @memberof RoleListComponent
+     */
+    onDropped(evt, roleItem) {
+        for (let i = 0; i < this.assignedNameList.length; i++) {
+            if (evt.data === this.assignedNameList[i].FULLNAME) {
+                this.draggedUserId(i);
+                this.roleAPi.patch_user_profile({
+                    "user_guid": this._filteredList,
+                    "role_guid": roleItem.role_guid
+                }).subscribe(response => {
+                    this.assignedNameList.splice(i, 1);
+                    this._filteredList = [];
+                    this.getAssignedEmployee();
+                });
+            }
+        }
+    }
+
+    /**
+     * get dragged item 
+     * @param {number} i
+     * @memberof RoleListComponent
+     */
+    async draggedUserId(i: number) {
+        if (this.checkDuplicateName(this._userList, this.assignedNameList[i].FULLNAME) != 0) {
+            const indexes: number = this.checkDuplicateName(this._userList, this.assignedNameList[i].FULLNAME);
+            if (!this._filteredList.includes(this._userList[indexes].userId)) {
+                await this._filteredList.push(this._userList[indexes].userId);
+            }
+        }
+    }
+
+    /**
+     * check duplicate employee name in the user list
+     * @param {*} list
+     * @param {*} obj
+     * @returns
+     * @memberof RoleListComponent
+     */
+    checkDuplicateName(list: any, obj: any) {
+        for (let j = 0; j < list.length; j++) {
+            if (list[j].employeeName === obj) {
+                return j;
+            }
+        }
+        return 0;
     }
 
     /**
@@ -130,9 +215,11 @@ export class RoleListComponent implements OnInit {
      * @param {number} index
      * @memberof RoleListComponent
      */
-    async getAssignedEmployee(roleId: string, index: number) {
-        let a = await this.roleAPi.get_assigned_user_profile(roleId).toPromise();
-        this.roleList[index]["employee"] = a.length;
+    async getAssignedEmployee() {
+        for (let i = 0; i < this.roleList.length; i++) {
+            let a = await this.roleAPi.get_assigned_user_profile(this.roleList[i].role_guid).toPromise();
+            this.roleList[i]["employee"] = a.length;
+        }
     }
 
     /**

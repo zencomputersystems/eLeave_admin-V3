@@ -84,7 +84,7 @@
 
                             <ng-container *ngIf="mode == 'ON'">
                                 <section class="my-dropzone scrollable" dndDropzone dndDragoverClass="custom-drag-over"
-                                    (dndDrop)="onDrop($event, list)" [dndDisableIf]="i==clickedIndex"
+                                    (dndDrop)="onDropped($event, role)" [dndDisableIf]="i==clickedIndex"
                                     *ngFor="let role of roleList; let i=index">
                                     <ion-row class="sectionRow">
                                         <ion-col size="9"
