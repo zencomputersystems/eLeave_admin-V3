@@ -301,10 +301,11 @@ export class RoleRightsComponent implements OnInit {
      * edit role details to send to API
      * @memberof RoleRightsComponent
      */
-    patchData() {
+    async patchData() {
         this.initCheckedValue();
-        this._body["code"] = this.profileDetails.code;
-        this._body["description"] = this.profileDetails.description;
+        let details = await this.roleAPi.get_role_details_profile(this.roleID).toPromise();
+        this._body["code"] = details.code;
+        this._body["description"] = details.description;
         this._body["property"] = this.profileDetails.property;
         const body = {
             "role_guid": this.roleID,
@@ -312,11 +313,7 @@ export class RoleRightsComponent implements OnInit {
         };
         console.log(body);
         this.roleAPi.patch_role_profile(body).subscribe(response => {
-            // this.roleAPi.snackbarMsg('saved successfully');
-            console.log(response);
             this._body = {};
-        }, error => {
-            // this.roleAPi.snackbarMsg('saved unsuccessfully');
         });
     }
 

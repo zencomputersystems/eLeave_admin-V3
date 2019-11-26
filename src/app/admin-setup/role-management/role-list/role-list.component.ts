@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material';
 import { DialogDeleteConfirmationComponent } from '../dialog-delete-confirmation/dialog-delete-confirmation.component';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
 import { APIService } from 'src/services/shared-service/api.service';
+import { MenuController } from '@ionic/angular';
+import { FormControl, Validators } from '@angular/forms';
 
 /**
  * Show list of role
@@ -117,6 +119,20 @@ export class RoleListComponent implements OnInit {
     public roleIdOutput: string;
 
     /**
+     * role name form control
+     * @type {*}
+     * @memberof RoleListComponent
+     */
+    public editRoleName: any;
+
+    /**
+     * role description form control
+     * @type {*}
+     * @memberof RoleListComponent
+     */
+    public editRoleDescription: any;
+
+    /**
      * user list
      * @private
      * @type {*}
@@ -133,24 +149,35 @@ export class RoleListComponent implements OnInit {
     private _filteredList: any = [];
 
     /**
+     * get property details from requested role id
+     * @private
+     * @type {*}
+     * @memberof RoleListComponent
+     */
+    private _property: any;
+
+    /**
      *Creates an instance of RoleListComponent.
      * @param {RoleApiService} roleAPi
      * @param {MatDialog} dialog
      * @param {APIService} apiService
+     * @param {MenuController} menu
      * @memberof RoleListComponent
      */
-    constructor(private roleAPi: RoleApiService, public dialog: MatDialog, private apiService: APIService) { }
+    constructor(private roleAPi: RoleApiService, public dialog: MatDialog, private apiService: APIService, private menu: MenuController) { }
 
     /**
      * initial method to get endpoint list
      * @memberof RoleListComponent
      */
     ngOnInit() {
+        this.editRoleName = new FormControl('', Validators.required);
+        this.editRoleDescription = new FormControl('', Validators.required);
         this.roleAPi.get_role_profile_list().subscribe(data => {
             this.roleList = data;
             this.showSpinner = false;
             this.clickedIndex = 0;
-            this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex)
+            this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);
             this.getAssignedEmployee();
 
         });
@@ -231,6 +258,8 @@ export class RoleListComponent implements OnInit {
     async selectedProfile(item, index) {
         this.clickedIndex = index;
         this.roleIdOutput = item.role_guid;
+        let data = await this.roleAPi.get_role_details_profile(item.role_guid).toPromise();
+        this._property = data.property;
         let list = await this.roleAPi.get_assigned_user_profile(item.role_guid).toPromise();
         this.assignedNameList = list;
         for (let j = 0; j < this.assignedNameList.length; j++) {
@@ -262,28 +291,42 @@ export class RoleListComponent implements OnInit {
     }
 
     /**
-     * Pass role id to route to edit role details page
-     * @param {*} roleId
+     * update role name & description 
      * @memberof RoleListComponent
      */
-    // getRoleId(roleId) {
-    //     this.router.navigate(['/main/role-management/role-rights', roleId]);
-    // }
+    updateRole() {
+        let data = {};
+        data["code"] = this.editRoleName.value;
+        data["description"] = this.editRoleDescription.value;
+        data["property"] = this._property;
+        const body = {
+            "role_guid": this.roleIdOutput,
+            "data": data
+        };
+        this.roleAPi.patch_role_profile(body).subscribe(response => {
+            this.ngOnInit();
+            this.menu.close('editRoleDetails');
+            this.roleAPi.snackbarMsg('Role profile was updated successfully', true);
+        })
+    }
 
     /**
      * delete confirmation pop up dialog message
-     * @param {*} role_guid
+     * @param {string} role_guid
+     * @param {string} role_name
      * @memberof RoleListComponent
      */
     delete(role_guid: string, role_name: string) {
         const dialogRef = this.dialog.open(DialogDeleteConfirmationComponent, {
-            data: { value: role_guid, name: role_name }
+            data: { value: role_guid, name: role_name },
+            height: "195px",
+            width: "249px"
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result === role_guid) {
                 this.roleAPi.delete_role_profile(role_guid).subscribe(response => {
                     this.ngOnInit();
-                    // this.roleAPi.snackbarMsg('deleted successfully ');
+                    this.roleAPi.snackbarMsg('Selected role profile was deleted', true);
                 })
             }
         });
