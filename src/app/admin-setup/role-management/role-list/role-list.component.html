@@ -21,7 +21,8 @@
             </mat-form-field>
         </div>
         <div style="margin: 20px;text-align: center;">
-            <ion-button style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+            <ion-button
+                style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
                 color="primary" (click)="updateRole()">
                 Update
             </ion-button>
@@ -29,6 +30,85 @@
     </ion-content>
 </ion-menu>
 <ion-router-outlet id="editRoleContent">
+</ion-router-outlet>
+
+<!------------------------------------------ create new role menu ------------------------------------>
+
+<ion-menu style="--width: 345px;" contentId="createNewRoleContent" side="end" type="overlay"
+    menuId="createNewRoleDetails">
+    <ion-header style="background-color:#43425d; color: #fcfcfc;">
+        <img style="margin: 15px;width: 22px;height: 22px;float:left" src="assets/icon/leave_setup/icon_roles@3x.png">
+        <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">CREATE NEW ROLES
+        </p>
+    </ion-header>
+
+    <ion-content>
+        <p style="font-size: 12px;color: #808495;margin: 17px;">You can create new or copy existing profile data. All
+            data will be import to their respective sections details EXCEPT Assigned Employee details.</p>
+        <div style="margin-left:17px;margin-right:17px">
+            <div style="display: block;white-space: nowrap;text-align: center;">
+                <ion-button
+                    style="--border-radius: 4px 0 0 4px;margin-right: 0;display:inline-block;font-size: 11px;height: 30px;width:150px;cursor: pointer;text-transform: none;"
+                    [ngClass]="{
+                    'newClicked': newButton === true , 'newUnclicked': newButton === false}"
+                    (click)="cloneButton = false; newButton = true;">
+                    Create New
+                </ion-button>
+                <ion-button
+                    [ngClass]="{ 'cloneClicked' : cloneButton === true , 'cloneUnclicked' : cloneButton === false}"
+                    (click)="cloneButton = true; newButton = false;"
+                    style="--border-radius: 0 4px 4px 0;margin-left: 0;display:inline-block;font-size: 11px;height: 30px;width:150px;cursor: pointer;text-transform: none;">
+                    Clone Existing Data
+                </ion-button>
+            </div>
+            <div *ngIf="newButton">
+                <p
+                    style="margin-bottom: 0;margin: 15px;margin-top: 20px;font-size: 12px; color: #808495;font-weight: bold;">
+                    ROLE NAME</p>
+                <div style="width: 100%;">
+                    <mat-form-field appearance="outline"
+                        style="margin: 15px;height: 45px;display: block;font-size: 12px;color:#43425d;margin-top: 0;">
+                        <mat-label>New role name here</mat-label>
+                        <input matInput [formControl]="newRoleName" required>
+                    </mat-form-field>
+                </div>
+                <div style="width: 100%;">
+                    <mat-form-field appearance="outline"
+                        style="margin: 15px;display: block;font-size: 12px;color:#43425d;">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput [formControl]="newRoleDescription" required
+                            style="height: 100px;resize: none;"></textarea>
+                    </mat-form-field>
+                </div>
+                <div style="margin: 20px;text-align: center;">
+                    <ion-button
+                        style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                        color="primary" (click)="createNew('new')"
+                        [disabled]="!newRoleName.valid || !newRoleDescription.valid">
+                        Create
+                    </ion-button>
+                </div>
+            </div>
+            <div *ngIf="cloneButton" style="margin: 15px;margin-top: 30px;">
+                <mat-radio-group [(ngModel)]="cloneRoleId">
+                    <mat-radio-button disableRipple="true" color="primary"
+                        style="margin-bottom: 3px;display: block;color: #4d4f5c;font-size: 12px;font-weight: 600;"
+                        *ngFor="let role of roleList" [value]="role.role_guid">
+                        {{role.code}}
+                    </mat-radio-button>
+                </mat-radio-group>
+                <div style="margin: 20px;text-align: center;">
+                    <ion-button
+                        style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                        color="primary" (click)="createNew('clone')" [disabled]="cloneRoleId == null">
+                        Create
+                    </ion-button>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-menu>
+<ion-router-outlet id="createNewRoleContent">
 </ion-router-outlet>
 
 <!------------------------------------------ role main page content -------------------------------->
@@ -72,7 +152,8 @@
                                     text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                                     ROLE DETAILS</ion-col>
                                 <ion-col align-self-center style="text-align: right;">
-                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="mode == 'ON'">
+                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="mode == 'ON'"
+                                        (click)="menu.open('createNewRoleDetails'); menu.enable(true, 'createNewRoleDetails'); menu.enable(false, 'editRoleDetails')">
                                     </ion-icon>
                                 </ion-col>
                             </ion-row>
@@ -104,7 +185,7 @@
                                         style="text-align: right;padding-right: 15px;">
                                         <img src="assets/icon/leave_setup/icon_edit@3x.png"
                                             style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
-                                            (click)="selectedProfile(role, i);editRoleName.patchValue(role.code);editRoleDescription.patchValue(role.description);menu.enable(true, 'editRoleDetails'); menu.open('editRoleDetails')"
+                                            (click)="selectedProfile(role, i);editRoleName.patchValue(role.code);editRoleDescription.patchValue(role.description);menu.enable(true, 'editRoleDetails'); menu.open('editRoleDetails'); menu.enable(false, 'createNewRoleDetails');"
                                             [ngClass]="{
                                             'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
                                         &nbsp;&nbsp;
@@ -145,7 +226,7 @@
                                             style="text-align: right;padding-right: 15px;">
                                             <img src="assets/icon/leave_setup/icon_edit@3x.png"
                                                 style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
-                                                (click)="selectedProfile(role, i);editRoleName.patchValue(role.code);editRoleDescription.patchValue(role.description);menu.enable(true, 'editRoleDetails'); menu.open('editRoleDetails')"
+                                                (click)="selectedProfile(role, i);editRoleName.patchValue(role.code);editRoleDescription.patchValue(role.description);menu.enable(true, 'editRoleDetails'); menu.open('editRoleDetails'); menu.enable(false, 'createNewRoleDetails');"
                                                 [ngClass]="{
                                             'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
                                             &nbsp;&nbsp;

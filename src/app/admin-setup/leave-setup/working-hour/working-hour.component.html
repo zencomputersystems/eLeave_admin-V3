@@ -220,13 +220,13 @@
             BACK
         </ion-button> -->
         <ion-button *ngIf="id==''"
-            style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary"
+            style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary"
             (click)="postWorkingHourSetup();workingHourForm.reset();menu.close('createWorkingHourDetails')"
             [disabled]="!workingHourForm.valid">
             Create
         </ion-button>
         <ion-button *ngIf="id != ''"
-            style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary"
+            style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary"
             (click)="postWorkingHourSetup();menu.close('editWorkingHourDetails'); refreshProfile(id)"
             [disabled]="!workingHourForm.valid">
             Update

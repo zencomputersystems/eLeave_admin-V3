@@ -26,6 +26,7 @@ import { ClickOutsideModule } from 'ng-click-outside';
 import { MatDialogModule } from '@angular/material';
 import { DialogDeleteConfirmationComponent } from './dialog-delete-confirmation/dialog-delete-confirmation.component';
 import { DndModule } from 'ngx-drag-drop';
+import { MatRadioModule } from '@angular/material/radio';
 
 
 const routes: Routes = [
@@ -58,6 +59,7 @@ const routes: Routes = [
         ClickOutsideModule,
         MatDialogModule,
         DndModule,
+        MatRadioModule,
         RouterModule.forChild(routes)
     ],
     providers: [AssignCalendarTreeviewService],

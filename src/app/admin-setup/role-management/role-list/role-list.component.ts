@@ -6,6 +6,7 @@ import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit
 import { APIService } from 'src/services/shared-service/api.service';
 import { MenuController } from '@ionic/angular';
 import { FormControl, Validators } from '@angular/forms';
+import { roleDetails } from '../role-details-data';
 
 /**
  * Show list of role
@@ -133,6 +134,41 @@ export class RoleListComponent implements OnInit {
     public editRoleDescription: any;
 
     /**
+     * new role profile name form control
+     * @type {*}
+     * @memberof RoleListComponent
+     */
+    public newRoleName: any;
+
+    /**
+     * new role profile description form control
+     * @type {*}
+     * @memberof RoleListComponent
+     */
+    public newRoleDescription: any;
+
+    /**
+     * selected new button or not
+     * @type {boolean}
+     * @memberof RoleListComponent
+     */
+    public newButton: boolean = true;
+
+    /**
+     * selected clone button or not
+     * @type {boolean}
+     * @memberof RoleListComponent
+     */
+    public cloneButton: boolean = false;
+
+    /**
+     * selected radio button (role profile id)
+     * @type {string}
+     * @memberof RoleListComponent
+     */
+    public cloneRoleId: string;
+
+    /**
      * user list
      * @private
      * @type {*}
@@ -164,7 +200,10 @@ export class RoleListComponent implements OnInit {
      * @param {MenuController} menu
      * @memberof RoleListComponent
      */
-    constructor(private roleAPi: RoleApiService, public dialog: MatDialog, private apiService: APIService, private menu: MenuController) { }
+    constructor(private roleAPi: RoleApiService, public dialog: MatDialog, private apiService: APIService, private menu: MenuController) {
+        this.newRoleName = new FormControl('', Validators.required);
+        this.newRoleDescription = new FormControl('', Validators.required);
+    }
 
     /**
      * initial method to get endpoint list
@@ -288,6 +327,29 @@ export class RoleListComponent implements OnInit {
             this.mode = 'OFF'
             this.roleAPi.snackbarMsg('Edit mode disabled. Good job!', true);
         }
+    }
+
+    /**
+     * create new/clone role profile
+     * @param {string} buttonName
+     * @memberof RoleListComponent
+     */
+    async createNew(buttonName: string) {
+        let details;
+        if (buttonName == 'new') {
+            details = roleDetails;
+            details.code = this.newRoleName.value;
+            details.description = this.newRoleDescription.value;
+        } else {
+            details = await this.roleAPi.get_role_details_profile(this.cloneRoleId).toPromise();
+        }
+        this.roleAPi.post_role_profile(details).subscribe(res => {
+            this.newRoleName.reset();
+            this.newRoleDescription.reset();
+            this.ngOnInit();
+            this.roleAPi.snackbarMsg('New role profile was created successfully', true);
+            this.menu.close('createNewRoleDetails');
+        })
     }
 
     /**

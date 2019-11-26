@@ -11,18 +11,20 @@
             import to their respective sections details. Don’t
             worry as you can always edit later</p>
         <div style="margin-left:17px;margin-right:17px">
-            <ion-button
-                style="display:inline-block;font-size: 11px;height: 30px;width:195px;cursor: pointer;text-transform: none;"
-                [ngClass]="{
+            <div style="display: block;white-space: nowrap;text-align: center;">
+                <ion-button
+                    style="--border-radius: 4px 0 0 4px;margin-right: 0;display:inline-block;font-size: 11px;height: 30px;width:195px;cursor: pointer;text-transform: none;"
+                    [ngClass]="{
                     'individualClicked': individualButton === true , 'individualUnclicked': individualButton === false}"
-                (click)="bulkButton = false; individualButton = true;">
-                Add Individual
-            </ion-button>
-            <ion-button [ngClass]="{ 'bulkClicked' : bulkButton === true , 'bulkUnclicked' : bulkButton === false}"
-                (click)="bulkButton = true; individualButton = false;"
-                style="display:inline-block;font-size: 11px;height: 30px;width:195px;cursor: pointer;text-transform: none;">
-                Add Bulk
-            </ion-button>
+                    (click)="bulkButton = false; individualButton = true;">
+                    Add Individual
+                </ion-button>
+                <ion-button [ngClass]="{ 'bulkClicked' : bulkButton === true , 'bulkUnclicked' : bulkButton === false}"
+                    (click)="bulkButton = true; individualButton = false;"
+                    style="--border-radius: 0 4px 4px 0;margin-left: 0;display:inline-block;font-size: 11px;height: 30px;width:195px;cursor: pointer;text-transform: none;">
+                    Add Bulk
+                </ion-button>
+            </div>
             <div>
                 <app-add-one-employee *ngIf="individualButton === true" [individual]="individualButton === true"
                     [disabledEditMode]="false">

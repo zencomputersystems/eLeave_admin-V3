@@ -273,7 +273,7 @@
                     Some good & sweet explanation here</ion-card-subtitle>
             </div>
             <div style="right: 25px;top: 25px;position: absolute;">
-                <ion-button style="font-size: 11px;height: 30px;width:193px;cursor: pointer;text-transform: none;"
+                <ion-button style="--border-radius: 2px;font-size: 11px;height: 30px;width:193px;cursor: pointer;text-transform: none;"
                     color="primary" (click)="menu.open('leaveAdjustDetails')">
                     View Leave Adjustment History
                 </ion-button>
@@ -409,7 +409,7 @@
                         </div>
                         <div style="margin: 0 auto;padding: 15px;padding-top: 0;;text-align: center;">
                             <ion-button
-                                style="font-size: 11px;height: 30px;width: 100%;background: white;text-transform: none;"
+                                style="--border-radius: 2px;font-size: 11px;height: 30px;width: 100%;background: white;text-transform: none;"
                                 color="primary"
                                 (click)="patchLeaveNumber();adjustmentForm.reset();showSmallSpinner = true;mainCheckBox=false;indeterminate=false;"
                                 [disabled]="disableSubmitButton">

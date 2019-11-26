@@ -191,6 +191,25 @@
   .custom-drag-over {
     background-color: #fafafa;
   }
+  // menu
+  .newClicked {
+    --background: #7069d8;
+  }
+  .newUnclicked {
+    --background: #43425d;
+  }
+  .cloneUnclicked {
+    --background: #43425d;
+  }
+  .cloneClicked {
+    --background: #7069d8;
+  }
+  ::ng-deep .mat-radio-outer-circle {
+    border-color: #7069d8;
+  }
+  ::ng-deep .mat-radio-label-content{
+    padding-left: 13px;
+  }
 
   // ::-webkit-scrollbar,
   // *::-webkit-scrollbar {
