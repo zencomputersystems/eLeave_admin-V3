@@ -41,7 +41,8 @@
   }
   .mainColor {
     --background: rgba(0, 0, 0, 0.1);
-    border-left: 2px solid #a3a0fb;
+    border-left: 4px solid #a3a0fb;
+    --padding-start: 12px;
   }
   .highlightColor {
     --background: #8b89b4;

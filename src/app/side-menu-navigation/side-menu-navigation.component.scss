@@ -22,7 +22,12 @@
   }
   .background-highlight {
     --background: rgba(0, 0, 0, 0.1);
-    border-left: 2px solid #a3a0fb;
+    border-left: 4px solid #a3a0fb;
+    --padding-start: 12px;
+  }
+  .background-highlight-icon {
+    --background: rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #a3a0fb;
   }
   ion-label {
     color: #ffffff;
@@ -34,13 +39,10 @@
   .text-color {
     color: #f9fafc;
   }
-  .my-icons {
-    fill: #f9fafc;
-  }
   .my-icon {
     fill: #a5a4bf;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    // height: 20px;
   }
   .my-icon-menu {
     fill: #abacaf;

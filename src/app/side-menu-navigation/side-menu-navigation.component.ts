@@ -74,32 +74,32 @@ export class SideMenuNavigationComponent implements OnInit {
     {
       title: 'Dashboard',
       url: '/main/dashboard',
-      icon: 'dashboard.svg'
+      icon: 'icon_dashboard.svg'
     },
     {
       title: 'Leave Setup',
       url: '/main/leave-setup',
-      icon: 'my_leave.svg'
+      icon: 'icon_calendar.svg'
     },
     {
       title: 'Employee Setup',
       url: '/main/employee-setup',
-      icon: 'employee.svg'
+      icon: 'icon_persons.svg'
     },
     {
       title: 'Role Management',
       url: '/main/role-management',
-      icon: 'page_admins.svg'
+      icon: 'icon_setting.svg'
     },
     {
-      title: 'Apply On Behalf',
+      title: 'Apply on Behalf',
       url: '/main/apply-on-behalf',
-      icon: 'policy.svg'
+      icon: 'icon_customers.svg'
     },
     {
       title: 'Approval Override',
       url: '/main/approval-override',
-      icon: 'policy.svg'
+      icon: 'icon_persons.svg'
     }
   ];
 

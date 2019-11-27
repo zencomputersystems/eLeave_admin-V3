@@ -80,7 +80,7 @@
       <ion-list>
         <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
           <ion-item no-padding lines="none" [routerLink]="[p.url]" style="display: block;--inner-padding-end: 0;"
-            [class.background-highlight]="activeRoute === appPages[i].url "
+            [class.background-highlight-icon]="activeRoute === appPages[i].url "
             [class.first-highlight]="router.url === this.appPages[i].url" (click)="activeRoute = appPages[i].url ">
             <div class="my-icon-menu" aria-label="My icon" style="align-items: center; width: 100%;"
               [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div>
