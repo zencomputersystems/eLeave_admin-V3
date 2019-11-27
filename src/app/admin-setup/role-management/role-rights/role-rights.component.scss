@@ -5,6 +5,9 @@
   // overflow: auto;
   height: 100%;
   max-height: 100%;
+  width: calc(50% - 30px);
+  display: flex;
+
   // header
   .objects-icon {
     float: left;
@@ -133,8 +136,11 @@
   .leave,
   .manage {
     flex: 49%;
-    max-width: 50%;
+    // max-width: 50%;
     max-height: 100%;
     overflow: auto;
   }
+  // .manage {
+  //   width: calc(26.5% - 30px);
+  // }
 }

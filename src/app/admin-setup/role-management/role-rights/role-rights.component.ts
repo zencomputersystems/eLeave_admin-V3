@@ -1,8 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { RoleApiService } from '../role-api.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { roleDetails, options } from '../role-details-data';
+import { options } from '../role-details-data';
 
 /**
  * Manage rights/permission for each role
@@ -25,34 +23,6 @@ export class RoleRightsComponent implements OnInit {
     @Input() leaveSetup: boolean = false;
 
     /**
-     * show leave management
-     * @type {boolean}
-     * @memberof RoleRightsComponent
-     */
-    @Input() leaveManagement: boolean = false;
-
-    /**
-     * show profile management
-     * @type {boolean}
-     * @memberof RoleRightsComponent
-     */
-    @Input() profileManagement: boolean = false;
-
-    /**
-     * show calendar details
-     * @type {boolean}
-     * @memberof RoleRightsComponent
-     */
-    @Input() calendar: boolean = false;
-
-    /**
-     * show report details
-     * @type {boolean}
-     * @memberof RoleRightsComponent
-     */
-    @Input() report: boolean = false;
-
-    /**
      * get role id of selected role profile
      * @type {string}
      * @memberof RoleRightsComponent
@@ -73,34 +43,6 @@ export class RoleRightsComponent implements OnInit {
      * @memberof RoleRightsComponent
      */
     public profileDetails: any;
-
-    /**
-     * SHow/hide Loading spinner 
-     * @type {boolean}
-     * @memberof RoleRightsComponent
-     */
-    // public showSpinner: boolean = true;
-
-    /**
-     * Show/hide small Spinner when await for requested list from API
-     * @type {boolean}
-     * @memberof RoleRightsComponent
-     */
-    // public showSmallSpinner: boolean = false;
-
-    /**
-     * Show clear & submit button in create-new-role path only
-     * @type {boolean}
-     * @memberof RoleRightsComponent
-     */
-    public showButtons: boolean = false;
-
-    /**
-     * Show content after the details loaded from API
-     * @type {boolean}
-     * @memberof RoleRightsComponent
-     */
-    // public showContent: boolean = false;
 
     /**
      * Value of checkbox (either indeterminate or vice versa)
@@ -157,22 +99,6 @@ export class RoleRightsComponent implements OnInit {
     public reportKey = [];
 
     /**
-     * form group of input rolename & description
-     * @type {*}
-     * @memberof RoleRightsComponent
-     */
-    // public inputFormControl: any;
-
-    /**
-     * roleId value get from url 
-     * used for request role profile details
-     * @private
-     * @type {string}
-     * @memberof RoleRightsComponent
-     */
-    private _roleId: string;
-
-    /**
      * code, description, property to send to API
      * @private
      * @type {*}
@@ -183,16 +109,9 @@ export class RoleRightsComponent implements OnInit {
     /**
      *Creates an instance of RoleRightsComponent.
      * @param {RoleApiService} roleAPi
-     * @param {ActivatedRoute} route
-     * @param {Router} router
      * @memberof RoleRightsComponent
      */
-    constructor(private roleAPi: RoleApiService, private route: ActivatedRoute, private router: Router) {
-        // route.params.subscribe(params => { this._roleId = params.id; });
-        // this.inputFormControl = new FormGroup({
-        //     rolename: new FormControl('', Validators.required),
-        //     description: new FormControl('', Validators.required),
-        // })
+    constructor(private roleAPi: RoleApiService) {
         this.viewReportList = options;
     }
 
@@ -201,17 +120,13 @@ export class RoleRightsComponent implements OnInit {
      * @memberof RoleRightsComponent
      */
     ngOnInit() {
-        // if (this.route.routeConfig.path.includes('create-new-role')) {
-        //     this.showButtons = true;
-        //     this.profileDetails = roleDetails;
-        //     this.initCheckedValue();
-        // } else {
-
-        // this._roleId
-
-        // }
     }
 
+    /**
+     * get changes on id
+     * @param {SimpleChanges} changes
+     * @memberof RoleRightsComponent
+     */
     async ngOnChanges(changes: SimpleChanges) {
         if (changes.roleID != undefined) {
             if (changes.roleID.currentValue != undefined) {
@@ -220,6 +135,15 @@ export class RoleRightsComponent implements OnInit {
                 this.initCheckedValue();
             }
         }
+        this.changesOnMode(changes);
+    }
+
+    /**
+     * get changes on mode
+     * @param {SimpleChanges} changes
+     * @memberof RoleRightsComponent
+     */
+    changesOnMode(changes: SimpleChanges) {
         if (changes.editMode != undefined) {
             if (changes.editMode.currentValue != undefined) {
                 if (changes.editMode.previousValue === 'ON' && changes.editMode.currentValue === 'OFF') {
@@ -234,8 +158,6 @@ export class RoleRightsComponent implements OnInit {
      * @memberof RoleRightsComponent
      */
     initCheckedValue() {
-        // this.showSpinner = false;
-        // this.showContent = true;
         this.leaveSetupKey = Object.keys(this.profileDetails.property.allowLeaveSetup).map(key => this.profileDetails.property.allowLeaveSetup[key]);
         this.leaveMngtKey = Object.keys(this.profileDetails.property.allowLeaveManagement).map(value => this.profileDetails.property.allowLeaveManagement[value]);
         this.profileMngtKey = Object.keys(this.profileDetails.property.allowProfileManagement).map(value => this.profileDetails.property.allowProfileManagement[value]);
@@ -311,36 +233,9 @@ export class RoleRightsComponent implements OnInit {
             "role_guid": this.roleID,
             "data": this._body
         };
-        console.log(body);
         this.roleAPi.patch_role_profile(body).subscribe(response => {
             this._body = {};
         });
-    }
-
-    /**
-     * Submit/save value to send to API
-     * POST/PATCH
-     * @memberof RoleRightsComponent
-     */
-    save() {
-        // this._body["code"] = this.inputFormControl.value.rolename;
-        // this._body["description"] = this.inputFormControl.value.description;
-        this._body["property"] = this.profileDetails.property;
-        if (this.showButtons === true) {
-            this.roleAPi.post_role_profile(this._body).subscribe(response => {
-                // this.showSmallSpinner = false;
-                this.defaultValue();
-                this.defaultProfileMngt();
-                // this.roleAPi.snackbarMsg('saved successfully');
-                // setTimeout(() => {
-                //     this.router.navigate(['/main/role-management']);
-                // }, 2000);
-            }, error => {
-                // this.roleAPi.snackbarMsg('saved unsuccessfully');
-            });
-        } else {
-            this.patchData();
-        }
     }
 
     /**

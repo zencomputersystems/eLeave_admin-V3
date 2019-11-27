@@ -36,62 +36,6 @@ export class RoleListComponent implements OnInit {
     public showSpinner: boolean = true;
 
     /**
-     * Content in page is hide during loading
-     * @type {boolean}
-     * @memberof RoleListComponent
-     */
-    public showContent: boolean = false;
-
-    /**
-     * To show arrow up or down icon for Rolename column
-     * @type {boolean}
-     * @memberof InviteListPage
-     */
-    public arrowDownName: boolean = true;
-
-    /**
-     * To show arrow up or down icon for Description column
-     * @type {boolean}
-     * @memberof RoleListComponent
-     */
-    public arrowDownDes: boolean = true;
-
-    /**
-     * Page number on current page
-     * @type {number}
-     * @memberof RoleListComponent
-     */
-    public pageIndex: number;
-
-    /**
-     * Total page number 
-     * @type {number}
-     * @memberof RoleListComponent
-     */
-    public sumPageIndex: number;
-
-    /**
-     * Items of the current showing page
-     * @type {*}
-     * @memberof RoleListComponent
-     */
-    public currentItems: any;
-
-    /**
-     * Value of disable next button
-     * @type {boolean}
-     * @memberof RoleListComponent
-     */
-    public disabledNextButton: boolean;
-
-    /**
-     * Value of disable previous button
-     * @type {boolean}
-     * @memberof RoleListComponent
-     */
-    public disabledPrevButton: boolean;
-
-    /**
      * get assigned employee name list 
      * @type {*}
      * @memberof RoleListComponent
@@ -196,11 +140,10 @@ export class RoleListComponent implements OnInit {
      *Creates an instance of RoleListComponent.
      * @param {RoleApiService} roleAPi
      * @param {MatDialog} dialog
-     * @param {APIService} apiService
      * @param {MenuController} menu
      * @memberof RoleListComponent
      */
-    constructor(private roleAPi: RoleApiService, public dialog: MatDialog, private apiService: APIService, private menu: MenuController) {
+    constructor(private roleAPi: RoleApiService, public dialog: MatDialog, private menu: MenuController) {
         this.newRoleName = new FormControl('', Validators.required);
         this.newRoleDescription = new FormControl('', Validators.required);
     }
@@ -220,7 +163,7 @@ export class RoleListComponent implements OnInit {
             this.getAssignedEmployee();
 
         });
-        this.apiService.get_user_profile_list().subscribe(list => this._userList = list);
+        this.roleAPi.get_user_list().subscribe(list => this._userList = list);
     }
 
     /**

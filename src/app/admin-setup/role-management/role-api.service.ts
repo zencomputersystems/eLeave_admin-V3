@@ -1,11 +1,9 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response } from "@angular/http";
-import { map } from "rxjs/operators";
+import { Http, Headers } from "@angular/http";
 import { Observable } from "rxjs";
 import { MatSnackBar } from "@angular/material";
 import { SnackbarNotificationComponent } from "../leave-setup/snackbar-notification/snackbar-notification.component";
-import { LocalStorageService } from "angular-web-storage";
-import { AuthService } from "src/services/shared-service/auth.service";
+import { APIService } from "src/services/shared-service/api.service";
 
 /**
  * Role API
@@ -32,23 +30,11 @@ export class RoleApiService {
 
     /**
      *Creates an instance of RoleApiService.
-     * @param {Http} http
      * @param {MatSnackBar} snackBar
-     * @param {LocalStorageService} local
-     * @param {AuthService} auth
+     * @param {APIService} apiService
      * @memberof RoleApiService
      */
-    constructor(public http: Http, private snackBar: MatSnackBar, private local: LocalStorageService, private auth: AuthService) {
-    }
-
-    /**
-     * Method used to append authorize token
-     * @memberof RoleApiService
-     */
-    authorization() {
-        if (this.headerApp["_headers"].size < 1 && this.auth.isAuthenticated) {
-            this.headerApp.append('Authorization', 'JWT ' + JSON.parse(this.local.get('access_token')));
-        }
+    constructor(private snackBar: MatSnackBar, private apiService: APIService) {
     }
 
     /**
@@ -57,9 +43,10 @@ export class RoleApiService {
      * @memberof RoleApiService
      */
     get_role_profile_list(): Observable<any> {
-        this.authorization();
-        return this.http.get(this.baseUrl + '/api/admin/role/role-profile', { headers: this.headerApp })
-            .pipe(map((res: Response) => res.json()))
+        this.apiService.headerAuthorization();
+        return this.apiService.getApi('/api/admin/role/role-profile');
+        // return this.http.get(this.baseUrl + '/api/admin/role/role-profile', { headers: this.headerApp })
+        //     .pipe(map((res: Response) => res.json()))
     }
 
     /**
@@ -69,9 +56,10 @@ export class RoleApiService {
      * @memberof RoleApiService
      */
     get_role_details_profile(id): Observable<any> {
-        this.authorization();
-        return this.http.get(this.baseUrl + '/api/admin/role/' + id, { headers: this.headerApp })
-            .pipe(map((res: Response) => res.json()));
+        this.apiService.headerAuthorization();
+        return this.apiService.getApiWithId('/api/admin/role/', id);
+        // return this.http.get(this.baseUrl + '/api/admin/role/' + id, { headers: this.headerApp })
+        //     .pipe(map((res: Response) => res.json()));
     }
 
     /**
@@ -81,8 +69,9 @@ export class RoleApiService {
      * @memberof RoleApiService
      */
     patch_role_profile(body): Observable<any> {
-        this.authorization();
-        return this.http.patch(this.baseUrl + '/api/admin/role/role-profile', body, { headers: this.headerApp })
+        this.apiService.headerAuthorization();
+        return this.apiService.patchApi(body, '/api/admin/role/role-profile');
+        // return this.http.patch(this.baseUrl + '/api/admin/role/role-profile', body, { headers: this.headerApp })
     }
 
     /**
@@ -92,8 +81,9 @@ export class RoleApiService {
      * @memberof RoleApiService
      */
     post_role_profile(data): Observable<any> {
-        this.authorization();
-        return this.http.post(this.baseUrl + '/api/admin/role/role-profile', data, { headers: this.headerApp })
+        this.apiService.headerAuthorization();
+        return this.apiService.postApi(data, '/api/admin/role/role-profile');
+        // return this.http.post(this.baseUrl + '/api/admin/role/role-profile', data, { headers: this.headerApp })
     }
 
     /**
@@ -103,9 +93,10 @@ export class RoleApiService {
      * @memberof RoleApiService
      */
     delete_role_profile(roleId): Observable<any> {
-        this.authorization();
-        return this.http.delete(this.baseUrl + '/api/admin/role/role-profile/' + roleId, { headers: this.headerApp })
-            .pipe(map((res: Response) => res.json()));
+        this.apiService.headerAuthorization();
+        return this.apiService.deleteApi(roleId, '/api/admin/role/role-profile/');
+        // return this.http.delete(this.baseUrl + '/api/admin/role/role-profile/' + roleId, { headers: this.headerApp })
+        //     .pipe(map((res: Response) => res.json()));
     }
 
     /**
@@ -115,8 +106,9 @@ export class RoleApiService {
      * @memberof RoleApiService
      */
     patch_user_profile(id): Observable<any> {
-        this.authorization();
-        return this.http.patch(this.baseUrl + '/api/admin/role/user-role', id, { headers: this.headerApp });
+        this.apiService.headerAuthorization();
+        return this.apiService.patchApi(id, '/api/admin/role/user-role');
+        // return this.http.patch(this.baseUrl + '/api/admin/role/user-role', id, { headers: this.headerApp });
     }
 
     /**
@@ -126,10 +118,20 @@ export class RoleApiService {
      * @memberof RoleApiService
      */
     get_assigned_user_profile(role_id: string): Observable<any> {
-        this.authorization();
-        return this.http.get(this.baseUrl + '/api/admin/role/role-profile/users/' + role_id, { headers: this.headerApp })
-            .pipe(map((response: Response) => response.json()));
+        this.apiService.headerAuthorization();
+        return this.apiService.getApiWithId('/api/admin/role/role-profile/users/', role_id);
+        // return this.http.get(this.baseUrl + '/api/admin/role/role-profile/users/' + role_id, { headers: this.headerApp })
+        //     .pipe(map((response: Response) => response.json()));
 
+    }
+
+    /**
+     * get all user list
+     * @returns {Observable<any>}
+     * @memberof RoleApiService
+     */
+    get_user_list(): Observable<any> {
+        return this.apiService.get_user_profile_list();
     }
 
     /**
