@@ -1,9 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { RequestOptions, Http, Headers } from '@angular/http';
+import { RequestOptions, Headers } from '@angular/http';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { LocalStorageService } from 'angular-web-storage';
+import { LeaveApiService } from 'src/app/admin-setup/leave-setup/leave-api.service';
 
 /**
  * Bulk Import Page
@@ -53,6 +54,13 @@ export class BulkImportComponent implements OnInit {
     public formData: FormData = new FormData();
 
     /**
+     * button show/hide
+     * @type {boolean}
+     * @memberof BulkImportComponent
+     */
+    public chooseFileButton: boolean = true;
+
+    /**
      * emit output to close menu
      * @memberof BulkImportComponent
      */
@@ -71,12 +79,12 @@ export class BulkImportComponent implements OnInit {
 
     /**
      *Creates an instance of BulkImportComponent.
-     * @param {Http} http
      * @param {FormBuilder} fb
      * @param {LocalStorageService} local
+     * @param {LeaveApiService} leaveApi
      * @memberof BulkImportComponent
      */
-    constructor(private http: Http, private fb: FormBuilder, private local: LocalStorageService) {
+    constructor(private fb: FormBuilder, private local: LocalStorageService, private leaveApi: LeaveApiService) {
     }
 
     /**
@@ -124,6 +132,8 @@ export class BulkImportComponent implements OnInit {
                 fileEntry.file((file: File) => {
                     this.filename = file.name;
                     this.fileform.get('file').setValue(file);
+                    this.chooseFileButton = false;
+                    this.showUploadButton = true;
                     this.onSubmit();
                 });
             } else {
@@ -142,13 +152,12 @@ export class BulkImportComponent implements OnInit {
      * @memberof BulkImportComponent
      */
     openFile(event, uploadedFileName) {
-        if (uploadedFileName) {
-            this.showUploadButton = true;
-        }
         if (event.target.files.length > 0) {
             const file = event.target.files[0];
             this.filename = file.name;
             this.fileform.get('file').setValue(file);
+            this.showUploadButton = true;
+            this.chooseFileButton = false;
         }
     }
 
@@ -163,20 +172,18 @@ export class BulkImportComponent implements OnInit {
         queryHeaders.append('Authorization', 'JWT ' + JSON.parse(this.local.get('access_token')));
         const options = new RequestOptions({ headers: queryHeaders });
         return new Promise((resolve) => {
-            this.http.post('http://zencore.zen.com.my:3000/api/userimport/csv', this.formData, options)
+            this.leaveApi.http.post('http://zencore.zen.com.my:3000/api/userimport/csv', this.formData, options)
                 .pipe(map((response) => {
                     return response;
                 })).subscribe(
                     (response) => {
                         resolve(response.json());
                         this.closeMenu.emit('true');
-                        // this.dialogBulkImport.close();
-                        // this.dialog.open(BulkImportSuccessComponent);
-                    },
-                    (err) => {
-                        // if (err.status === 401) {
-                        //     window.location.href = '/login';
-                        // }
+                        this.ngOnInit();
+                        this.formData = new FormData();
+                        this.filename = '';
+                        this.chooseFileButton = true;
+                        this.showUploadButton = false;
                     }
                 )
         })

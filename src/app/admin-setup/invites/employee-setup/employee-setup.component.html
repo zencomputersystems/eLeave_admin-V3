@@ -156,7 +156,7 @@
         <div style="text-align: center;margin:20px">
             <ion-button
                 style="--border-radius:2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                color="primary" (click)="menu.close('filterEmployeeDetails'); filterValue()">
+                color="primary" (click)="inviteAPI.menu.close('filterEmployeeDetails'); filterValue()">
                 Go
             </ion-button>
         </div>
@@ -209,7 +209,7 @@
                                 <ion-buttons end>
                                     <div style="width: 17px;height: 17px;fill: #a5a4bf;opacity: 0.8;margin-top: 20px;cursor: pointer;position: absolute;
                                     margin-left: -20px;" [inlineSVG]="'assets/icon/option/filter.svg'"
-                                        (click)="menu.enable(true, 'filterEmployeeDetails');menu.enable(false, 'addNewEmployeeDetails');menu.open('filterEmployeeDetails')">
+                                        (click)="inviteAPI.menu.enable(true, 'filterEmployeeDetails');inviteAPI.menu.enable(false, 'addNewEmployeeDetails');inviteAPI.menu.open('filterEmployeeDetails')">
                                     </div>
                                 </ion-buttons>
                             </div>
@@ -233,7 +233,7 @@
                                     </ion-col>
                                     <ion-col align-self-center style="top: 3px;">
                                         <ion-icon class="addIcon" name="add-circle-outline" *ngIf="mode === 'ON'"
-                                            (click)="menu.enable(true, 'addNewEmployeeDetails');menu.enable(false, 'filterEmployeeDetails');menu.open('addNewEmployeeDetails')">
+                                            (click)="inviteAPI.menu.enable(true, 'addNewEmployeeDetails');inviteAPI.menu.enable(false, 'filterEmployeeDetails');inviteAPI.menu.open('addNewEmployeeDetails')">
                                         </ion-icon>
                                     </ion-col>
                                 </ion-row>
@@ -514,7 +514,7 @@
                                 EMPLOYEMENT DETAILS</div>
                             <div *ngIf="employmentDetails && showEmploy">
                                 <app-add-one-employee [disabledEditMode]="mode === 'OFF'"
-                                    [getDetails]="employmentDetails" (changedValue)="getChangedValue($event)">
+                                    [getDetails]="employmentDetails">
                                 </app-add-one-employee>
                                 <ion-item class="divider" lines="full" style="padding-left: 15px;
                                     padding-right: 15px;padding-top: 2%;padding-bottom: 2%;">

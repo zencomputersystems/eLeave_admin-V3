@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AdminInvitesApiService } from '../admin-invites-api.service';
 import * as _moment from 'moment';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
@@ -8,7 +8,6 @@ import { FormControl, Validators } from '@angular/forms';
 import { APP_DATE_FORMATS, AppDateAdapter } from '../../leave-setup/date.adapter';
 import { genderStatus, maritalStatus } from './employee-setup.service';
 import { RoleApiService } from '../../role-management/role-api.service';
-import { MenuController } from '@ionic/angular';
 import { ChangeStatusConfimationComponent } from './change-status-confimation/change-status-confimation.component';
 import { DeleteCalendarConfirmationComponent } from '../../leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
 
@@ -321,64 +320,54 @@ export class EmployeeSetupComponent implements OnInit {
 
     /**
      *Creates an instance of EmployeeSetupComponent.
-     * @param {MenuController} menu
      * @param {AdminInvitesApiService} inviteAPI
-     * @param {MatDialog} popUp
      * @param {LeaveApiService} leaveApi
      * @param {RoleApiService} roleAPI
      * @memberof EmployeeSetupComponent
      */
-    constructor(private menu: MenuController, private inviteAPI: AdminInvitesApiService, public popUp: MatDialog, private leaveApi: LeaveApiService, public roleAPI: RoleApiService) {
+    constructor(private inviteAPI: AdminInvitesApiService, private leaveApi: LeaveApiService, public roleAPI: RoleApiService) {
     }
 
     /**
      * initial method to get endpoint list
      * @memberof EmployeeSetupComponent
      */
-    ngOnInit() {
+    async ngOnInit() {
         this.endPoint();
-        this.inviteAPI.get_role_profile_list().subscribe(list => {
-            this.roleList = list;
-        })
-        this.inviteAPI.get_calendar_profile_list().subscribe(list => {
-            this.calendarList = list;
-        })
-        this.inviteAPI.get_working_hour_profile_list().subscribe(list => {
-            this.workingList = list;
-        })
-        this.leaveApi.get_leavetype_entitlement().subscribe(list => {
-            this.entitlementList = list;
-        })
-        this.leaveApi.get_company_list().subscribe(company => {
-            this.companyList = company;
-            for (let i = 0; i < this.companyList.length; i++) {
-                this.companyList[i]['checked'] = false;
-            }
-        });
-        this.inviteAPI.get_departmet_list().subscribe(list => {
-            this.departmentList = list;
-            for (let i = 0; i < this.departmentList.length; i++) {
-                this.departmentList[i]['checked'] = false;
-            }
-        })
+        let roleData = await this.inviteAPI.get_role_profile_list().toPromise()
+        this.roleList = roleData;
+        let calendarData = await this.inviteAPI.get_calendar_profile_list().toPromise();
+        this.calendarList = calendarData;
+        let workingData = await this.inviteAPI.get_working_hour_profile_list().toPromise();
+        this.workingList = workingData;
+        let entitlement = await this.leaveApi.get_leavetype_entitlement().toPromise();
+        this.entitlementList = entitlement;
+        let company = await this.leaveApi.get_company_list().toPromise();
+        this.companyList = company;
+        for (let i = 0; i < this.companyList.length; i++) {
+            this.companyList[i]['checked'] = false;
+        }
+        let department = await this.inviteAPI.get_departmet_list().toPromise();
+        this.departmentList = department;
+        for (let i = 0; i < this.departmentList.length; i++) {
+            this.departmentList[i]['checked'] = false;
+        }
     }
 
     /**
      * Get user profile list from API
      * @memberof EmployeeSetupComponent
      */
-    endPoint() {
-        this.inviteAPI.get_user_profile_list().subscribe(
-            (data: any[]) => {
-                this.showSpinner = false;
-                this.list = data;
-                this.config = {
-                    itemsPerPage: 7,
-                    currentPage: 1,
-                    totalItems: this.list.length
-                }
-                this.getUserId(this.list[0], 0, 1);
-            });
+    async endPoint() {
+        let data = await this.inviteAPI.get_user_profile_list().toPromise();
+        this.showSpinner = false;
+        this.list = data;
+        this.config = {
+            itemsPerPage: 7,
+            currentPage: 1,
+            totalItems: this.list.length
+        }
+        this.getUserId(this.list[0], 0, 1);
     }
 
     /**
@@ -449,22 +438,19 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {*} leaveEntitlementId
      * @memberof EmployeeSetupComponent
      */
-    getLeaveTypeEntitlementId(leaveTypeId, leaveEntitlementId) {
+    async getLeaveTypeEntitlementId(leaveTypeId, leaveEntitlementId) {
         // POST and create directly
         const data = {
             "userId": [this.userId], "leaveTypeId": leaveTypeId, "leaveEntitlementId": leaveEntitlementId
         }
-        this.leaveApi.post_leave_entitlement(data).subscribe(res => {
-            console.log('res', res);
-        })
-        this.leaveApi.get_entilement_details(this.userId).subscribe(val => {
-            console.log('entitledetails', val);
-            for (let i = 0; i < val.length; i++) {
-                if (val[i].LEAVE_TYPE_GUID == leaveTypeId) {
-                    this.dayAvailable = val[i].BALANCE_DAYS;
-                }
+        let res = await this.leaveApi.post_leave_entitlement(data).toPromise();
+        console.log(res);
+        let val = await this.leaveApi.get_entilement_details(this.userId).toPromise();
+        for (let i = 0; i < val.length; i++) {
+            if (val[i].LEAVE_TYPE_GUID == leaveTypeId) {
+                this.dayAvailable = val[i].BALANCE_DAYS;
             }
-        })
+        }
         console.log(leaveTypeId, leaveEntitlementId);
     }
 
@@ -493,7 +479,7 @@ export class EmployeeSetupComponent implements OnInit {
     toggleMode(evt) {
         if (evt.detail.checked === true) {
             this.mode = 'ON';
-            this.popUp.open(EditModeDialogComponent, {
+            this.inviteAPI.popUp.open(EditModeDialogComponent, {
                 data: 'employee',
                 height: "354.3px",
                 width: "383px"
@@ -503,7 +489,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.patchPersonalDetails();
             this.patchEmploymentDetails();
             this.assignProfile();
-            this.inviteAPI.showSnackbar('Edit mode disabled. Good job!', true);
+            this.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
         }
     }
 
@@ -513,39 +499,36 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {string} name
      * @memberof EmployeeSetupComponent
      */
-    toggleStatus(event, name: string) {
+    async toggleStatus(event, name: string) {
         if (event.currentTarget.checked == false) {
-            const dialog = this.popUp.open(ChangeStatusConfimationComponent, {
-                data: { name: name, status: 'Active' },
+            const dialog = this.inviteAPI.popUp.open(ChangeStatusConfimationComponent, {
+                data: { name: name, status: 'Activate' },
                 height: "195px",
                 width: "249px"
             });
-            dialog.afterClosed().subscribe(result => {
-                if (result === 'Active') {
-                    this.employeeStatus = 'Active';
-                    this.status = true;
-                    this.inviteAPI.showSnackbar(name + ' become Active', true);
-                }
-            });
+            let result = await dialog.afterClosed().toPromise();
+            if (result === 'Activate') {
+                this.employeeStatus = 'Active';
+                this.status = true;
+                this.leaveApi.openSnackBar(name + ' become Active', true);
+            }
         } else {
-            const dialog = this.popUp.open(ChangeStatusConfimationComponent, {
-                data: { name: name, status: 'Inactive' },
+            const dialog = this.inviteAPI.popUp.open(ChangeStatusConfimationComponent, {
+                data: { name: name, status: 'Deactivate' },
                 height: "195px",
                 width: "249px"
             });
-            dialog.afterClosed().subscribe(result => {
-                if (result === 'Inactive') {
-                    this.employeeStatus = 'Inactive';
-                    this.status = false;
-                    this.inviteAPI.disable_user({
-                        "user_guid": this.userId,
-                        "resign_date": _moment(new Date()).format('YYYY-MM-DD'),
-                    }).subscribe(response => {
-                        this.endPoint();
-                        this.inviteAPI.showSnackbar(name + ' become Inactive', true);
-                    })
-                }
-            });
+            let result = await dialog.afterClosed().toPromise();
+            if (result === 'Deactivate') {
+                this.employeeStatus = 'Inactive';
+                this.status = false;
+                this.inviteAPI.disable_user({
+                    "user_guid": this.userId,
+                    "resign_date": _moment(new Date()).format('YYYY-MM-DD'),
+                }).toPromise();
+                this.endPoint();
+                this.leaveApi.openSnackBar(name + ' become Inactive', true);
+            }
         }
     }
 
@@ -553,18 +536,17 @@ export class EmployeeSetupComponent implements OnInit {
      * patch personal details
      * @memberof EmployeeSetupComponent
      */
-    patchPersonalDetails() {
+    async patchPersonalDetails() {
         if (this.personalDetails.personalDetail != undefined) {
             this.personalDetails.personalDetail.nric = (this.personalDetails.personalDetail.nric).toString();
             this.personalDetails.personalDetail.dob = _moment(this.birthOfDate.value).format('YYYY-MM-DD');
             this.personalDetails.personalDetail.gender = genderStatus[this.personalDetails.personalDetail.gender];
             this.personalDetails.personalDetail.maritalStatus = maritalStatus[this.personalDetails.personalDetail.maritalStatus];
-            this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.id).subscribe(res => {
-                this.personalDetails.personalDetail = res;
-                this.getPersonalDetails();
-                this.personalDetails.personalDetail.gender = genderStatus[this.personalDetails.personalDetail.gender];
-                this.personalDetails.personalDetail.maritalStatus = maritalStatus[this.personalDetails.personalDetail.maritalStatus];
-            });
+            let res = await this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.id).toPromise();
+            this.personalDetails.personalDetail = res;
+            this.getPersonalDetails();
+            this.personalDetails.personalDetail.gender = genderStatus[this.personalDetails.personalDetail.gender];
+            this.personalDetails.personalDetail.maritalStatus = maritalStatus[this.personalDetails.personalDetail.maritalStatus];
         }
     }
 
@@ -572,7 +554,7 @@ export class EmployeeSetupComponent implements OnInit {
      * patch employment details to endpoint
      * @memberof EmployeeSetupComponent
      */
-    patchEmploymentDetails() {
+    async patchEmploymentDetails() {
         if (this.employmentDetails.employmentDetail != undefined) {
             this.employmentDetails.employmentDetail.employeeId = (this.employmentDetails.employmentDetail.employeeId).toString();
             this.employmentDetails.employmentDetail.incomeTaxNumber = (this.employmentDetails.employmentDetail.incomeTaxNumber).toString();
@@ -580,38 +562,31 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails.employmentDetail.dateOfResign = _moment(this.dateOfResign.value).format('YYYY-MM-DD');
             this.employmentDetails.employmentDetail.dateOfConfirmation = _moment(this.dateOfConfirm.value).format('YYYY-MM-DD');
             this.employmentDetails.employmentDetail.bankAccountNumber = (this.employmentDetails.employmentDetail.bankAccountNumber).toString();
-            this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.id).subscribe(resp => {
-                this.employmentDetails.employmentDetail = resp;
-                this.getEmploymentDetails();
-            });
+            let resp = await this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.id).toPromise();
+            this.employmentDetails.employmentDetail = resp;
+            this.getEmploymentDetails();
         }
-    }
-
-    /**
-     * get changed value output
-     * @param {*} event
-     * @memberof EmployeeSetupComponent
-     */
-    getChangedValue(event) {
-        console.log('updated', event);
     }
 
     /**
      * save assigned profile of calendar profile, working hour & user role
      * @memberof EmployeeSetupComponent
      */
-    assignProfile() {
-        this.leaveApi.patch_assign_calendar_profile({
+    async assignProfile() {
+        let data = await this.leaveApi.patch_assign_calendar_profile({
             "user_guid": [this.userId], "calendar_guid": this.calendarValue
-        }).subscribe(data => console.log(data));
+        }).toPromise();
+        console.log(data);
 
-        this.leaveApi.patch_user_working_hours({
+        let workingData = await this.leaveApi.patch_user_working_hours({
             "user_guid": [this.userId], "working_hours_guid": this.workingValue
-        }).subscribe(data => console.log(data));
+        }).toPromise();
+        console.log(workingData);
 
-        this.roleAPI.patch_user_profile({
+        let roleData = await this.roleAPI.patch_user_profile({
             "user_guid": [this.userId], "role_guid": this.roleValue
-        }).subscribe(data => console.log(data));
+        }).toPromise();
+        console.log(roleData);
     }
 
     /**
@@ -648,8 +623,9 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     eventOutput(event) {
-        this.menu.close('addNewEmployeeDetails');
-        this.inviteAPI.showSnackbar('New employee profiles was created successfully', true);
+        this.inviteAPI.menu.close('addNewEmployeeDetails');
+        this.leaveApi.openSnackBar('New employee profiles was created successfully', true);
+        this.endPoint();
     }
 
     /**
@@ -748,19 +724,17 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {string} userId
      * @memberof EmployeeSetupComponent
      */
-    deleteEmployee(name: string, userId: string) {
-        const dialogRef = this.popUp.open(DeleteCalendarConfirmationComponent, {
+    async deleteEmployee(name: string, userId: string) {
+        const dialogRef = this.inviteAPI.popUp.open(DeleteCalendarConfirmationComponent, {
             data: { name: name, value: userId, desc: "'s employee profile" },
             height: "195px",
             width: "249px"
         });
-        dialogRef.afterClosed().subscribe(val => {
-            if (val === userId) {
-                this.inviteAPI.delete_user(userId).subscribe(response => {
-                    this.inviteAPI.showSnackbar('Selected employee profile was deleted', true);
-                    this.endPoint();
-                })
-            }
-        });
+        let val = await dialogRef.afterClosed().toPromise();
+        if (val === userId) {
+            this.inviteAPI.delete_user(userId).toPromise();
+            this.leaveApi.openSnackBar('Selected employee profile was deleted', true);
+            this.endPoint();
+        }
     }
 }

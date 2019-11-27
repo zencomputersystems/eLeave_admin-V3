@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Observable } from 'rxjs';
-import { Http, Response } from '@angular/http';
-import { map } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material';
-import { SnackbarNotificationComponent } from '../leave-setup/snackbar-notification/snackbar-notification.component';
+import { MenuController } from '@ionic/angular';
+import { MatDialog } from '@angular/material';
 
 /**
  * invite more API used
@@ -19,9 +17,10 @@ export class AdminInvitesApiService {
     /**
      *Creates an instance of AdminInvitesApiService.
      * @param {APIService} apiService
+     * @param {MatSnackBar} snackBar
      * @memberof AdminInvitesApiService
      */
-    constructor(public apiService: APIService, public http: Http, public snackBar: MatSnackBar) { }
+    constructor(public apiService: APIService, public popUp: MatDialog, public menu: MenuController) { }
 
     /**
      * POST invited new user Id to endpoint
@@ -54,8 +53,9 @@ export class AdminInvitesApiService {
      */
     delete_user(id: string): Observable<any> {
         this.apiService.headerAuthorization();
-        return this.http.delete(this.apiService.baseUrl + '/api/users/' + id, { headers: this.apiService.headers })
-            .pipe(map((res: Response) => res.json()));
+        return this.apiService.deleteApi(id, '/api/users/');
+        // return this.http.delete(this.apiService.baseUrl + '/api/users/' + id, { headers: this.apiService.headers })
+        //     .pipe(map((res: Response) => res.json()));
     }
 
     /**
@@ -164,19 +164,4 @@ export class AdminInvitesApiService {
         this.apiService.headerAuthorization();
         return this.apiService.getApi('/api/admin/master/department');
     }
-
-    /**
-     * show pop up snackbar
-     * @param {string} txt
-     * @param {boolean} value
-     * @memberof AdminInvitesApiService
-     */
-    showSnackbar(text: string, value: boolean) {
-        this.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 2000,
-            verticalPosition: "top",
-            data: { message: text, response: value }
-        });
-    }
-
 }

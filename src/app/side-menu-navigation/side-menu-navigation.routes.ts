@@ -5,7 +5,6 @@ import { PageNotFoundComponent } from '../page-not-found.component';
 import { LeaveSetupComponent } from '../admin-setup/leave-setup/leave-setup.component';
 import { RoleListComponent } from '../admin-setup/role-management/role-list/role-list.component';
 import { RoleRightsComponent } from '../admin-setup/role-management/role-rights/role-rights.component';
-import { AssignRoleComponent } from '../admin-setup/role-management/assign-role/assign-role.component';
 import { PolicyListComponent } from '../admin-setup/general-leave-policy/policy-list/policy-list.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { CalendarProfileComponent } from '../admin-setup/leave-setup/calendar-profile/calendar-profile.component';

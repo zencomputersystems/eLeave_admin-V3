@@ -171,7 +171,8 @@ export class LeaveApiService {
     */
     openSnackBar(message: string, val: boolean) {
         this.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 3000,
+            duration: 2000,
+            verticalPosition: "top",
             data: { message: message, response: val }
         });
     }

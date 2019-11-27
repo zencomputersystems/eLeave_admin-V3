@@ -20,7 +20,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { RoleRightsComponent } from './role-rights/role-rights.component';
 import { RoleListComponent } from './role-list/role-list.component';
 import { LeaveSetupModule } from '../leave-setup/leave-setup.module';
-import { AssignRoleComponent } from './assign-role/assign-role.component';
 import { AssignCalendarTreeviewService } from '../leave-setup/assign-calendar/assign-calendar-treeview.service';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { MatDialogModule } from '@angular/material';
@@ -64,6 +63,6 @@ const routes: Routes = [
     ],
     providers: [AssignCalendarTreeviewService],
     entryComponents: [DialogDeleteConfirmationComponent],
-    declarations: [RoleRightsComponent, RoleListComponent, AssignRoleComponent, DialogDeleteConfirmationComponent]
+    declarations: [RoleRightsComponent, RoleListComponent, DialogDeleteConfirmationComponent]
 })
 export class RoleManagementModule { }

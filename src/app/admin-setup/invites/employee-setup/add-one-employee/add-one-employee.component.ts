@@ -47,12 +47,6 @@ export class AddOneEmployeeComponent implements OnInit {
     @Input() individual?: boolean;
 
     /**
-     * emit changed employment value
-     * @memberof AddOneEmployeeComponent
-     */
-    @Output() changedValue?= new EventEmitter();
-
-    /**
      * form group for invitation
      * @type {FormGroup}
      * @memberof AddOneEmployeeComponent
@@ -242,7 +236,6 @@ export class AddOneEmployeeComponent implements OnInit {
     ngOnChanges(changes: SimpleChanges) {
         if (changes.disabledEditMode !== undefined) {
             if (changes.disabledEditMode.currentValue == true) {
-                this.changedValue.emit(this.getDetails);
             }
             if (changes.disabledEditMode.currentValue == false) {
                 this.branchCtrl.enable();

@@ -9,12 +9,12 @@
         <p style="margin:0; color:#4d4f5c;opacity: 0.5;text-align: center;font-size: 8px;">or</p>
         <div style="text-align: center;">
             <form [formGroup]="fileform">
-                <ion-button *ngIf="fileName === undefined"
+                <ion-button *ngIf="chooseFileButton"
                     style="font-size: 9px;height: 26px;width: 80px;text-transform: none;" color="primary"
-                    (click)="file.click()">
+                    (click)="file.click();">
                     Choose File
                 </ion-button>
-                <ion-button *ngIf="fileName !== undefined" (click)="onSubmit()"
+                <ion-button *ngIf="showUploadButton" (click)="onSubmit();"
                     style="font-size: 9px;height: 26px;width: 80px;text-transform: none;" color="primary">
                     Upload File
                 </ion-button>
@@ -28,7 +28,8 @@
 </div>
 <div>
     <div style="color:#808495; padding-top: 10px; display: inline-block; font-size: 12px; cursor: pointer;">
-        Download template (csv format) <p style="text-decoration: underline;display: inline-block;color:#7069d8" (click)="downloadFile()">here
+        Download template (csv format) <p style="text-decoration: underline;display: inline-block;color:#7069d8"
+            (click)="downloadFile()">here
         </p>
     </div>
 </div>

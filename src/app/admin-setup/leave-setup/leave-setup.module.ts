@@ -34,7 +34,6 @@ import { DeleteCalendarConfirmationComponent } from './delete-calendar-confirmat
 import { WorkingHourComponent } from './working-hour/working-hour.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { WorkingHourListComponent } from './working-hour/working-hour-list/working-hour-list.component';
-import { AssignWorkingHourComponent } from './working-hour/assign-working-hour/assign-working-hour.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
@@ -86,6 +85,6 @@ const routes: Routes = [
     entryComponents: [SnackbarNotificationComponent, DeleteCalendarConfirmationComponent, EditModeDialogComponent],
     declarations: [CalendarProfileComponent, LeaveSetupComponent, SnackbarNotificationComponent, DeleteCalendarConfirmationComponent,
         ApplyOnBehalfComponent, ApprovalOverrideComponent, LeaveAdjustmentComponent, LeaveEntitlementByBatchComponent, WorkingHourComponent,
-        WorkingHourListComponent, AssignWorkingHourComponent, EditModeDialogComponent]
+        WorkingHourListComponent, EditModeDialogComponent]
 })
 export class LeaveSetupModule { }
