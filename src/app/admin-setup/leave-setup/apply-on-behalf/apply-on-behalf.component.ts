@@ -47,7 +47,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {string}
      * @memberof ApplyLeavePage
      */
-    public daysAvailable: string = '';
+    public daysAvailable: number = 0;
 
     /**
      * Local property for leave day applied
@@ -383,10 +383,10 @@ export class ApplyOnBehalfComponent implements OnInit {
         this.apiService.get_user_profile_list().subscribe(list =>
             this._userList = list
         )
-        setTimeout(() => {
-            let calendarApi = this.calendarComponent.getApi();
-            calendarApi.render();
-        }, 100);
+        // setTimeout(() => {
+        //     let calendarApi = this.calendarComponent.getApi();
+        //     calendarApi.render();
+        // }, 100);
         this.leaveAPI.get_admin_leavetype().subscribe(leave =>
             this.leaveTypes = leave
         )
@@ -411,7 +411,7 @@ export class ApplyOnBehalfComponent implements OnInit {
                     status: new FormControl([false])
                 })
             ]),
-            leaveTypes: new FormControl({ value: '', disabled: true }, Validators.required),
+            leaveTypes: new FormControl({ value: '', disabled: false }, Validators.required),
             firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
             secondPicker: new FormControl({ value: '', disabled: true }, Validators.required),
             inputReason: new FormControl('', Validators.required),

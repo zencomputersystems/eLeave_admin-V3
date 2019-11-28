@@ -1,4 +1,7 @@
 :host {
+  margin: auto;
+  width: 100%;
+  top: 48px;
   /////////////////// calendar ////////////////////////
 
   .app-calendar {
@@ -11,12 +14,7 @@
   ::ng-deep.fc-content-skeleton {
     min-height: 20px;
   }
-  .selection {
-    padding-left: 3%;
-    margin-top: 4%;
-    float: right;
-    width: 45%;
-  }
+
   .calendar-icon {
     fill: #bebebe;
     cursor: pointer;
@@ -59,23 +57,39 @@
     position: relative;
   }
   ::ng-deep .mat-radio-container {
-    height: 16px;
-    width: 16px;
+    height: 20px;
+    width: 20px;
   }
+  // ::ng-deep .mat-radio-outer-circle {
+  //   border-width: 1px;
+  //   height: 16px;
+  //   width: 16px;
+  // }
+  // ::ng-deep .mat-radio-inner-circle {
+  //   height: 16px;
+  //   width: 16px;
+  // }
+  // ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  //   border-color: #057dcd;
+  // }
+  // ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  //   background-color: #057dcd;
+  // }
   ::ng-deep .mat-radio-outer-circle {
     border-width: 1px;
-    height: 16px;
-    width: 16px;
+    height: 20px;
+    width: 20px;
+    border-color: #7069d8;
   }
   ::ng-deep .mat-radio-inner-circle {
-    height: 16px;
-    width: 16px;
+    height: 20px;
+    width: 20px;
   }
   ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-    border-color: #057dcd;
+    border-color: #7069d8;
   }
   ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-    background-color: #057dcd;
+    background-color: #7069d8;
   }
   ::ng-deep .mat-radio-button.mat-radio-disabled .mat-radio-outer-circle {
     border-color: rgba(0, 0, 0, 0.2);
@@ -135,5 +149,57 @@
   }
   ::ng-deep .fc-button-group > .fc-button:not(:last-child) {
     text-transform: capitalize;
+  }
+
+  // new
+  ion-card {
+    height: 100%;
+    margin: 0;
+  }
+  .fullContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 17px;
+  }
+  .right {
+    padding-left: 20px;
+    // padding-top: 4px;
+  }
+  .cardContent {
+    line-height: 1.25;
+    background: white;
+    height: calc(100% - 154px);
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .row {
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 0;
+    max-height: 100%;
+    height: 100%;
+  }
+  .filter {
+    flex: 55%;
+    max-width: 55%;
+    max-height: 100%;
+  }
+  .selection {
+    flex: 45%;
+    max-width: 45%;
+    max-height: 100%;
+    margin-left: 10px;
+  }
+  .searchbar {
+    width: 70%;
+    height: 40px;
+    color: #43425d;
+    font-size: 12px;
+    float: left;
+    margin-top: 4px;
   }
 }

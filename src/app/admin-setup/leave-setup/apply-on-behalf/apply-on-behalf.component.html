@@ -1,242 +1,394 @@
-<div class='app-calendar'>
+<!-- <div class='app-calendar'>
     <full-calendar #calendar defaultView="dayGridMonth" selectable="true" [header]="{
                           left: 'prev,next today',
                           center: 'title',
                           right: 'dayGridMonth,timeGridWeek'
                         }" [plugins]="calendarPlugins" [events]="calendarEvents">
     </full-calendar>
-</div>
-<div class="selection">
-    <form #radioForm="ngForm" style="padding-bottom: 2%;">
-        <mat-radio-group aria-label="Select an option" [(ngModel)]="radioOption" name="radio" required>
-            <mat-radio-button value="1" [checked]="radioOption == '1'">Apply for one</mat-radio-button>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <mat-radio-button value="2">Apply for group</mat-radio-button>
-        </mat-radio-group>
-    </form>
-
-    <form [formGroup]="applyLeaveForm">
-        <div style="display:block; white-space: nowrap;">
-            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="radioOption == '1'">
-                <mat-label>Company list</mat-label>
-                <mat-select class="selectLeave" formControlName="company" required>
-                    <mat-option>-- None --</mat-option>
-                    <mat-option *ngFor="let list of companyList; let i=index" [value]="list.TENANT_COMPANY_GUID"
-                        (click)="selectedCompany(list.TENANT_COMPANY_GUID)">
-                        {{list.NAME}}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="!applyLeaveForm.company" style="padding: 5px;padding-left: 0;">
-                    Please select one company</mat-error>
-            </mat-form-field>
-            <span *ngIf="radioOption == '1'">&nbsp;&nbsp;</span>
-            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="radioOption == '1'">
-                <mat-label>Employee list</mat-label>
-                <mat-select formControlName="userControl" required>
-                    <mat-option>-- None --</mat-option>
-                    <mat-optgroup *ngFor="let department of departmentlist" [label]="department.item">
-                        <mat-option *ngFor=" let name of department.children" [value]="name.item"
-                            (click)="getSelectedEmployee(name.item)">
-                            {{name.item}}
-                        </mat-option>
-                    </mat-optgroup>
-                </mat-select>
-                <mat-error *ngIf="!applyLeaveForm.userControl" style="padding: 5px;padding-left: 0;">
-                    Please select one employee</mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline" style="width: 97%;cursor: pointer;" *ngIf="radioOption == '2'"
-                (click)="showTreeDropdown = true;applyLeaveForm.controls.leaveTypes.enable();">
-                <mat-label>Employee list</mat-label>
-                <input matInput class="dropdownDiv" readonly required>
-                <mat-icon matSuffix class="iconDropdown"><i class="material-icons">arrow_drop_down</i></mat-icon>
-                <mat-error>Please select at least one option</mat-error>
-                <div class="dropdownList" *ngIf="showTreeDropdown" (clickOutside)="clickOutside($event)">
-                    <mat-tree style="z-index: 2;position: absolute;width: 100%;" [dataSource]="tree.dataSource"
-                        [treeControl]="tree.treeControl">
-                        <!-- inner checkbox -->
-                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-                            <button mat-icon-button disabled></button>
-                            <mat-checkbox class="checklist-leaf-node"
-                                [checked]="tree.checklistSelection.isSelected(node)"
-                                (change)="tree.todoLeafItemSelectionToggle(node)" color="primary">{{node.item}}
-                            </mat-checkbox>
-                        </mat-tree-node>
-
-                        <!-- main checkbox -->
-                        <mat-tree-node *matTreeNodeDef="let node; when: tree.hasChild" matTreeNodePadding>
-                            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
-                                <mat-icon class="mat-icon-rtl-mirror">
-                                    {{tree.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                                </mat-icon>
-                            </button>
-                            <mat-checkbox [checked]="tree.descendantsAllSelected(node)"
-                                [indeterminate]="tree.descendantsPartiallySelected(node)"
-                                (change)="tree.todoItemSelectionToggle(node)" color="primary">
-                                {{node.item}}
-                            </mat-checkbox>
-                        </mat-tree-node>
-                    </mat-tree>
-                </div>
-            </mat-form-field>
-            <div class="showSelection" *ngIf="showSelectedTree && radioOption == '2'">
-                <mat-tree [dataSource]="tree.dataSource" [treeControl]="tree.treeControl">
-                    <!-- inner checkbox -->
-                    <mat-tree-node [style.display]="tree.checklistSelection.isSelected(node) ? 'block' : 'none'"
-                        *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-                        <button mat-icon-button disabled></button>
-                        <mat-checkbox class="checklist-leaf-node" [checked]="tree.checklistSelection.isSelected(node)"
-                            (change)="tree.todoLeafItemSelectionToggle(node)" color="primary" disabled>{{node.item}}
-                        </mat-checkbox>
-                    </mat-tree-node>
-
-                    <!-- main checkbox -->
-                    <mat-tree-node
-                        [style.display]="(tree.descendantsAllSelected(node) || tree.descendantsPartiallySelected(node)) ? 'block' : 'none'"
-                        *matTreeNodeDef="let node; when: tree.hasChild" matTreeNodePadding>
-                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
-                            <mat-icon class="mat-icon-rtl-mirror">
-                                {{tree.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                            </mat-icon>
-                        </button>
-                        <mat-checkbox [checked]="tree.descendantsAllSelected(node)"
-                            [indeterminate]="tree.descendantsPartiallySelected(node)"
-                            (change)="tree.todoItemSelectionToggle(node)" color="primary" disabled>{{node.item}}
-                        </mat-checkbox>
-                    </mat-tree-node>
-                </mat-tree>
+</div> -->
+<ion-card>
+    <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
+        <div class="fullContainer">
+            <div class="left">
+                <img src="assets/icon/leave_setup/icon_role@3x.png" style="width:28px;height:33px">
+            </div>
+            <div class="right">
+                <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Apply on
+                    Behalf
+                </ion-card-subtitle>
+                <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                    Some good & sweet explanation here</ion-card-subtitle>
             </div>
         </div>
-        <div style="display:block; white-space: nowrap;">
-            <mat-form-field appearance="outline" style="width:70%" *ngIf="radioOption == '1'">
-                <mat-label>Leave types</mat-label>
-                <mat-select class="selectLeave" name="leave" formControlName="leaveTypes" required>
-                    <mat-option *ngFor="let leave of entitlement; let i=index" [value]="leave.leaveTypeName"
-                        (click)="daysAvailable = leave.balanceDays;leaveTypeId = leave.leaveTypeId; applyLeaveForm.controls.firstPicker.enable();applyLeaveForm.controls.secondPicker.enable();">
-                        {{leave.leaveTypeName}}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="!applyLeaveForm.leaveTypes" style="padding: 5px;padding-left: 0;">
-                    Please select one leave type</mat-error>
-                <ion-spinner name="lines-small" *ngIf="showSpinner && radioOption == '1'" color="primary" style="position: absolute;
+    </ion-card-header>
+    <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;">
+        <div class="cardContent">
+            <ion-card-content style="max-height: 100%;height: 100%;">
+                <div class="row">
+                    <div class="filter">
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 15px;color: #a5a4bf;">
+                            <ion-row>
+                                <ion-col style="font-weight: bold;white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    EMPLOYEE LIST</ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col style="padding-top: 0;color: #808495;padding-bottom: 0;margin-bottom: 5px;">
+                                    You can
+                                    apply leave on behalf employee. Simply type their name or even by
+                                    department name to apply leave for them - as individual or whole department.
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-searchbar mode="md" class="searchbar"
+                                    placeholder="Search by Name/Department or Company"
+                                    (ionChange)="changeDetails($event)">
+                                </ion-searchbar>
+                            </ion-row>
+                        </div>
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 4px;margin-bottom: 5px;color: #a5a4bf;font-weight: bold;">
+                            <ion-row nowrap>
+                                <ion-col size="1.5"
+                                    style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
+                                    <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
+                                        [(ngModel)]="mainCheckBox" [indeterminate]="indeterminate"
+                                        (click)="mainCheckboxEvent()">
+                                    </ion-checkbox>
+                                </ion-col>
+                                <ion-col size="1" align-self-center style="white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;">
+                                    ID
+                                </ion-col>
+                                <ion-col size="4" align-self-center style="white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;">
+                                    EMPLOYEE NAME
+                                </ion-col>
+                                <ion-col size="2" align-self-center style="white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;">
+                                    ENTITLEMENT
+                                </ion-col>
+                                <ion-col size="2" align-self-center style="text-align: center;white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;">
+                                    BALANCE
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <div style="width: 100%; height:100%; text-align: center; margin-top: -30px"
+                            *ngIf="showSpinner">
+                            <app-spinner></app-spinner>
+                        </div>
+                        <p style="color: #a3a6b4;opacity:0.8;font-size: 12px;width: 30%;
+                        margin: 0 auto;padding-top: 30px;">
+                            Nothing to view. Please search & select employee or department first. </p>
+                    </div>
+                    <div class="selection">
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a5a4bf;">
+                            <ion-row>
+                                <ion-col style="font-weight: bold;white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    LEAVE TYPES & DURATION</ion-col>
+                            </ion-row>
+                        </div>
+                        <!-- <form #radioForm="ngForm" style="padding-bottom: 2%;">
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="radioOption" name="radio"
+                                required>
+                                <mat-radio-button value="1" [checked]="radioOption == '1'">Apply for one
+                                </mat-radio-button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <mat-radio-button value="2">Apply for group</mat-radio-button>
+                            </mat-radio-group>
+                        </form> -->
+
+                        <form [formGroup]="applyLeaveForm" style="height: calc( 100% - 62px);
+                        overflow: auto;padding-left: 15px;">
+                            <!-- <div style="display:block; white-space: nowrap;">
+                                <mat-form-field appearance="outline" style="width: 47%;" *ngIf="radioOption == '1'">
+                                    <mat-label>Company list</mat-label>
+                                    <mat-select class="selectLeave" formControlName="company" required>
+                                        <mat-option>-- None --</mat-option>
+                                        <mat-option *ngFor="let list of companyList; let i=index"
+                                            [value]="list.TENANT_COMPANY_GUID"
+                                            (click)="selectedCompany(list.TENANT_COMPANY_GUID)">
+                                            {{list.NAME}}</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="!applyLeaveForm.company" style="padding: 5px;padding-left: 0;">
+                                        Please select one company</mat-error>
+                                </mat-form-field>
+                                <span *ngIf="radioOption == '1'">&nbsp;&nbsp;</span>
+                                <mat-form-field appearance="outline" style="width: 47%;" *ngIf="radioOption == '1'">
+                                    <mat-label>Employee list</mat-label>
+                                    <mat-select formControlName="userControl" required>
+                                        <mat-option>-- None --</mat-option>
+                                        <mat-optgroup *ngFor="let department of departmentlist"
+                                            [label]="department.item">
+                                            <mat-option *ngFor=" let name of department.children" [value]="name.item"
+                                                (click)="getSelectedEmployee(name.item)">
+                                                {{name.item}}
+                                            </mat-option>
+                                        </mat-optgroup>
+                                    </mat-select>
+                                    <mat-error *ngIf="!applyLeaveForm.userControl"
+                                        style="padding: 5px;padding-left: 0;">
+                                        Please select one employee</mat-error>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" style="width: 97%;cursor: pointer;"
+                                    *ngIf="radioOption == '2'"
+                                    (click)="showTreeDropdown = true;applyLeaveForm.controls.leaveTypes.enable();">
+                                    <mat-label>Employee list</mat-label>
+                                    <input matInput class="dropdownDiv" readonly required>
+                                    <mat-icon matSuffix class="iconDropdown"><i
+                                            class="material-icons">arrow_drop_down</i>
+                                    </mat-icon>
+                                    <mat-error>Please select at least one option</mat-error>
+                                    <div class="dropdownList" *ngIf="showTreeDropdown"
+                                        (clickOutside)="clickOutside($event)">
+                                        <mat-tree style="z-index: 2;position: absolute;width: 100%;"
+                                            [dataSource]="tree.dataSource" [treeControl]="tree.treeControl">
+                                            <!-- inner checkbox --
+                                            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle
+                                                matTreeNodePadding>
+                                                <button mat-icon-button disabled></button>
+                                                <mat-checkbox class="checklist-leaf-node"
+                                                    [checked]="tree.checklistSelection.isSelected(node)"
+                                                    (change)="tree.todoLeafItemSelectionToggle(node)" color="primary">
+                                                    {{node.item}}
+                                                </mat-checkbox>
+                                            </mat-tree-node>
+
+                                            <!-- main checkbox --
+                                            <mat-tree-node *matTreeNodeDef="let node; when: tree.hasChild"
+                                                matTreeNodePadding>
+                                                <button mat-icon-button matTreeNodeToggle
+                                                    [attr.aria-label]="'toggle ' + node.filename">
+                                                    <mat-icon class="mat-icon-rtl-mirror">
+                                                        {{tree.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                    </mat-icon>
+                                                </button>
+                                                <mat-checkbox [checked]="tree.descendantsAllSelected(node)"
+                                                    [indeterminate]="tree.descendantsPartiallySelected(node)"
+                                                    (change)="tree.todoItemSelectionToggle(node)" color="primary">
+                                                    {{node.item}}
+                                                </mat-checkbox>
+                                            </mat-tree-node>
+                                        </mat-tree>
+                                    </div>
+                                </mat-form-field>
+                                <div class="showSelection" *ngIf="showSelectedTree && radioOption == '2'">
+                                    <mat-tree [dataSource]="tree.dataSource" [treeControl]="tree.treeControl">
+                                        <!-- inner checkbox --
+                                        <mat-tree-node
+                                            [style.display]="tree.checklistSelection.isSelected(node) ? 'block' : 'none'"
+                                            *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                                            <button mat-icon-button disabled></button>
+                                            <mat-checkbox class="checklist-leaf-node"
+                                                [checked]="tree.checklistSelection.isSelected(node)"
+                                                (change)="tree.todoLeafItemSelectionToggle(node)" color="primary"
+                                                disabled>
+                                                {{node.item}}
+                                            </mat-checkbox>
+                                        </mat-tree-node>
+
+                                        <!-- main checkbox --
+                                        <mat-tree-node
+                                            [style.display]="(tree.descendantsAllSelected(node) || tree.descendantsPartiallySelected(node)) ? 'block' : 'none'"
+                                            *matTreeNodeDef="let node; when: tree.hasChild" matTreeNodePadding>
+                                            <button mat-icon-button matTreeNodeToggle
+                                                [attr.aria-label]="'toggle ' + node.filename">
+                                                <mat-icon class="mat-icon-rtl-mirror">
+                                                    {{tree.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                </mat-icon>
+                                            </button>
+                                            <mat-checkbox [checked]="tree.descendantsAllSelected(node)"
+                                                [indeterminate]="tree.descendantsPartiallySelected(node)"
+                                                (change)="tree.todoItemSelectionToggle(node)" color="primary" disabled>
+                                                {{node.item}}
+                                            </mat-checkbox>
+                                        </mat-tree-node>
+                                    </mat-tree>
+                                </div>
+                            </div> -->
+                            <div style="display:block; white-space: nowrap;width: 90%;overflow: hidden;">
+                                <mat-form-field appearance="outline" style="width:73%">
+                                    <mat-label>Leave types</mat-label>
+                                    <mat-select class="selectLeave" name="leave" formControlName="leaveTypes" required>
+                                        <mat-option *ngFor="let leave of entitlement; let i=index"
+                                            [value]="leave.leaveTypeName"
+                                            (click)="daysAvailable = leave.balanceDays;leaveTypeId = leave.leaveTypeId; applyLeaveForm.controls.firstPicker.enable();applyLeaveForm.controls.secondPicker.enable();">
+                                            {{leave.leaveTypeName}}</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="!applyLeaveForm.leaveTypes" style="padding: 5px;padding-left: 0;">
+                                        Please select one leave type</mat-error>
+                                    <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
                 margin-left: -50px;margin-top: -10px;"></ion-spinner>
-            </mat-form-field>
-            <mat-form-field appearance="outline" *ngIf="radioOption == '2'" style="width:97%">
-                <mat-label>Leave types</mat-label>
-                <mat-select class="selectLeave" *ngIf="radioOption == '2'" name="leave" formControlName="leaveTypes"
-                    required>
-                    <mat-option *ngFor="let leave of leaveTypes; let i=index" [value]="leave.CODE"
-                        (click)="leaveTypeId = leave.LEAVE_TYPE_GUID;applyLeaveForm.controls.firstPicker.enable();applyLeaveForm.controls.secondPicker.enable();">
-                        {{leave.CODE}}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="!applyLeaveForm.leaveTypes" style="padding: 5px;padding-left: 0;">
-                    Please select one leave type</mat-error>
-            </mat-form-field>
-            &nbsp;&nbsp;
-            <mat-form-field style="width: 24%" appearance="outline" *ngIf="radioOption === '1'">
-                <mat-label>Days available</mat-label>
-                <input matInput [(value)]="daysAvailable" disabled>
-            </mat-form-field>
-        </div>
-        <div style="display:block; white-space: nowrap;">
-            <mat-form-field class="date" appearance="outline">
-                <mat-label>Start date</mat-label>
-                <input class="dateInput" matInput [matDatepicker]="picker1" formControlName="firstPicker" required
-                    (dateInput)="getValueFrom($event)" [max]="maxDate" (dateChange)="onDateChange()">
-                <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'" (click)="picker1.open()">
-                </div>
-                <mat-datepicker #picker1></mat-datepicker>
-                <mat-error *ngIf="!applyLeaveForm.firstPicker" style="padding: 5px;padding-left: 0;">
-                    Invalid start date</mat-error>
-            </mat-form-field>
-            &nbsp;&nbsp;
-            <mat-form-field class="date" appearance="outline">
-                <mat-label>End date</mat-label>
-                <input class="dateInput" matInput [matDatepicker]="picker2" formControlName="secondPicker" required
-                    (dateInput)="getValueTo($event)" [min]="minDate" (dateChange)="onDateChange()">
-                <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'" (click)="picker2.open()">
-                </div>
-                <mat-datepicker #picker2></mat-datepicker>
-                <mat-error *ngIf="!applyLeaveForm.secondPicker" style="padding: 5px;padding-left: 0;">
-                    Invalid end date</mat-error>
-            </mat-form-field>
-            &nbsp;&nbsp;
-            <mat-form-field style="width: 20%" appearance="outline">
-                <mat-label>No of days</mat-label>
-                <input matInput [(value)]="daysCount" disabled>
-            </mat-form-field>
-        </div>
+                                </mat-form-field>
+                                &nbsp;&nbsp;
+                                <div style="display: inline-block;">
+                                    <mat-label style="color: #808495;font-size: 12px;">Days available</mat-label>
+                                    <p *ngIf="daysAvailable != undefined"
+                                        style="color: #43425d;font-size: 13px;font-weight: bold;opacity: 0.8;margin-top: 12px">
+                                        {{daysAvailable}}</p>
+                                    <p *ngIf="daysAvailable == undefined"
+                                        style="color: #43425d;font-size: 13px;font-weight: bold;opacity: 0.8;margin-top: 12px">
+                                        0</p>
+                                </div>
+                                <!-- <mat-form-field style="width: 24%" appearance="outline" *ngIf="radioOption === '1'">
+                                    <mat-label>Days available</mat-label>
+                                    <input matInput [(value)]="daysAvailable" disabled>
+                                </mat-form-field> -->
+                            </div>
+                            <div style="display:block; white-space: nowrap;width: 90%;overflow: hidden;">
+                                <mat-form-field class="date" appearance="outline">
+                                    <mat-label>Start date</mat-label>
+                                    <input class="dateInput" matInput [matDatepicker]="picker1"
+                                        formControlName="firstPicker" required (dateInput)="getValueFrom($event)"
+                                        [max]="maxDate" (dateChange)="onDateChange()">
+                                    <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'"
+                                        (click)="picker1.open()">
+                                    </div>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                    <mat-error *ngIf="!applyLeaveForm.firstPicker"
+                                        style="padding: 5px;padding-left: 0;">
+                                        Invalid start date</mat-error>
+                                </mat-form-field>
+                                <div style="display: inline-block;width:3%"></div>
+                                <mat-form-field class="date" appearance="outline">
+                                    <mat-label>End date</mat-label>
+                                    <input class="dateInput" matInput [matDatepicker]="picker2"
+                                        formControlName="secondPicker" required (dateInput)="getValueTo($event)"
+                                        [min]="minDate" (dateChange)="onDateChange()">
+                                    <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'"
+                                        (click)="picker2.open()">
+                                    </div>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                    <mat-error *ngIf="!applyLeaveForm.secondPicker"
+                                        style="padding: 5px;padding-left: 0;">
+                                        Invalid end date</mat-error>
+                                </mat-form-field>
+                                &nbsp;&nbsp;
+                                <div style="display: inline-block">
+                                    <mat-label style="color: #808495;font-size: 12px;">No. of days</mat-label>
+                                    <p
+                                        style="color: #43425d;font-size: 13px;font-weight: bold;opacity: 0.8;margin-top: 12px">
+                                        {{daysCount}}</p>
+                                </div>
+                                <!-- <mat-form-field style="width: 20%" appearance="outline">
+                                    <mat-label>No of days</mat-label>
+                                    <input matInput [(value)]="daysCount" disabled>
+                                </mat-form-field> -->
+                            </div>
 
-        <ion-item class="divider" lines="full"></ion-item>
-        <div style="display: block; white-space: nowrap;" formArrayName="dayTypes">
-            <div style="display: block; white-space: nowrap;" *ngFor="let dayType of dayTypes.controls; let i=index"
-                [formGroupName]="i">
-                <mat-form-field appearance="outline" style="width: 30%;">
-                    <mat-label>Day types</mat-label>
-                    <mat-select class="selectLeave" formControlName="name"
-                        (selectionChange)="dayTypesChanged($event, i)">
-                        <mat-option value=0> Full Day</mat-option>
-                        <mat-option value=1> Half Day</mat-option>
-                        <mat-option value=2 *ngIf="daysCount === 1"> Quarter Day</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                &nbsp;&nbsp;
-                <mat-form-field appearance="outline" style="width: 32%;" *ngIf="dayTypes.value[i].name == 1 ">
-                    <mat-label>Half day dates </mat-label>
-                    <mat-select class="selectLeave" (selectionChange)="halfDaySelectionChanged($event.value,i)"
-                        (openedChange)="open(i)" multiple>
-                        <mat-option *ngFor="let selectArray of dayTypes.controls[i].value.selectArray[0]; let j=index"
-                            [value]="selectArray" [disabled]="dayTypes.controls[i].value.status[0][j]"
-                            (click)="valueSelected(i, j)">
-                            {{selectArray | date:'M/d/y'}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <span *ngIf="dayTypes.value[i].name !== 2 ">&nbsp;&nbsp;</span>
-                <mat-radio-group class="example-radio-group" (change)="timeSlotChanged($event,i)" style="width: 24%"
-                    *ngIf="dayTypes.value[i].name == 1 " [value]="dayTypes.controls[i].value.selectArray[1]">
-                    <mat-radio-button value="AM">AM
-                    </mat-radio-button>
-                    <mat-radio-button style="padding-left: 10px;" value="PM">PM
-                    </mat-radio-button>
-                </mat-radio-group>
-                <mat-form-field appearance="outline" style="width: 32%;" *ngIf="dayTypes.value[i].name == 2 ">
-                    <mat-label>Quarter hours</mat-label>
-                    <mat-select [(value)]="selectedQuarterHour">
-                        <mat-option value="Q1">Q1 Hours</mat-option>
-                        <mat-option value="Q2">Q2 Hours</mat-option>
-                        <mat-option value="Q3">Q3 Hours</mat-option>
-                        <mat-option value="Q4">Q4 Hours</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="addIcon" [inlineSVG]="'assets/icon/option/add.svg'" *ngIf="showAddIcon"
-                (click)="addFormField()"></div>
-            <mat-hint style="font-size: 75%;display: block;padding: 5px;padding-top: 2px;">
-                Please ignore day types selection if not considered other options (half/quarter)
-            </mat-hint>
-        </div>
-        <ion-item class="divider" lines="full"></ion-item>
-        <mat-form-field appearance="outline">
-            <mat-label>Reason</mat-label>
-            <input matInput formControlName="inputReason" required>
-            <mat-error *ngIf="!applyLeaveForm.inputReason" style="padding: 5px;padding-left: 0;"> Please
-                enter reason</mat-error>
-        </mat-form-field>
+                            <div style="display: block; white-space: nowrap;width: 90%;overflow: hidden;">
+                                <mat-radio-group>
+                                    <mat-radio-button value=0 color="primary" style="padding-right: 15px;">Full Day
+                                    </mat-radio-button>
+                                    <mat-radio-button value=1 color="primary" style="padding-right: 15px;">Half Day
+                                    </mat-radio-button>
+                                    <mat-radio-button value=2 color="primary" style="padding-right: 15px;">Quarter Day
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                                <mat-form-field style="width: 35%" appearance="outline">
+                                    <mat-label>Date Selection</mat-label>
+                                    <input matInput [(value)]="daysAvailable" disabled>
+                                </mat-form-field>
+                            </div>
+                            <!-- <ion-item class="divider" lines="full"></ion-item>
+                            <div style="display: block; white-space: nowrap;" formArrayName="dayTypes">
+                                <div style="display: block; white-space: nowrap;"
+                                    *ngFor="let dayType of dayTypes.controls; let i=index" [formGroupName]="i">
+                                    <mat-form-field appearance="outline" style="width: 30%;">
+                                        <mat-label>Day types</mat-label>
+                                        <mat-select class="selectLeave" formControlName="name"
+                                            (selectionChange)="dayTypesChanged($event, i)">
+                                            <mat-option value=0> Full Day</mat-option>
+                                            <mat-option value=1> Half Day</mat-option>
+                                            <mat-option value=2 *ngIf="daysCount === 1"> Quarter Day</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    &nbsp;&nbsp;
+                                    <mat-form-field appearance="outline" style="width: 32%;"
+                                        *ngIf="dayTypes.value[i].name == 1 ">
+                                        <mat-label>Half day dates </mat-label>
+                                        <mat-select class="selectLeave"
+                                            (selectionChange)="halfDaySelectionChanged($event.value,i)"
+                                            (openedChange)="open(i)" multiple>
+                                            <mat-option
+                                                *ngFor="let selectArray of dayTypes.controls[i].value.selectArray[0]; let j=index"
+                                                [value]="selectArray"
+                                                [disabled]="dayTypes.controls[i].value.status[0][j]"
+                                                (click)="valueSelected(i, j)">
+                                                {{selectArray | date:'M/d/y'}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <span *ngIf="dayTypes.value[i].name !== 2 ">&nbsp;&nbsp;</span>
+                                    <mat-radio-group class="example-radio-group" (change)="timeSlotChanged($event,i)"
+                                        style="width: 24%" *ngIf="dayTypes.value[i].name == 1 "
+                                        [value]="dayTypes.controls[i].value.selectArray[1]">
+                                        <mat-radio-button value="AM">AM
+                                        </mat-radio-button>
+                                        <mat-radio-button style="padding-left: 10px;" value="PM">PM
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                    <mat-form-field appearance="outline" style="width: 32%;"
+                                        *ngIf="dayTypes.value[i].name == 2 ">
+                                        <mat-label>Quarter hours</mat-label>
+                                        <mat-select [(value)]="selectedQuarterHour">
+                                            <mat-option value="Q1">Q1 Hours</mat-option>
+                                            <mat-option value="Q2">Q2 Hours</mat-option>
+                                            <mat-option value="Q3">Q3 Hours</mat-option>
+                                            <mat-option value="Q4">Q4 Hours</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="addIcon" [inlineSVG]="'assets/icon/option/add.svg'" *ngIf="showAddIcon"
+                                    (click)="addFormField()"></div>
+                                <mat-hint style="font-size: 75%;display: block;padding: 5px;padding-top: 2px;">
+                                    Please ignore day types selection if not considered other options (half/quarter)
+                                </mat-hint>
+                            </div> -->
+                            <ion-button fill="outline"
+                                style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 40%;font-size: 12px;text-transform: none">
+                                Upload Attachment
+                            </ion-button>
+                            <p style="color: #808495;font-size:11px;">File Allowed: .jpg, .png, .pdf only (max size 1MB)
+                            </p>
+                            <ion-item class="divider" lines="full" style="width:90%;"></ion-item>
+                            <mat-form-field appearance="outline" style="width: 90%;">
+                                <mat-label>Reason</mat-label>
+                                <textarea matInput formControlName="inputReason" required
+                                    style="height: 100px;resize: none;"></textarea>
+                                <mat-error *ngIf="!applyLeaveForm.inputReason" style="padding: 5px;padding-left: 0;">
+                                    Please enter reason</mat-error>
+                            </mat-form-field>
 
-        <div style="text-align: center;">
-            <ion-button shape="round" fill="outline"
-                (click)="applyLeaveForm.reset(); daysAvailable='';daysCount=0;minDate='';maxDate='';clearArrayList();tree.checklistSelection.clear()"
-                style="height: 27px; font-size: 12px;text-transform: none">Clear
-            </ion-button>
-            <ion-button *ngIf="radioOption == '1'" shape="round"
-                style="height: 27px;font-size: 12px;width: 115px;text-transform: none"
-                [disabled]="!applyLeaveForm.valid"
-                (click)="postData(); applyLeaveForm.reset();daysAvailable='';daysCount=0;minDate='';maxDate='';">
-                Apply for {{daysCount}} days
-            </ion-button>
-            <ion-button *ngIf="radioOption == '2'" shape="round"
-                style="height: 27px;font-size: 12px;width: 115px;text-transform: none"
-                [disabled]="applyLeaveForm.controls.inputReason.invalid"
-                (click)="postData(); applyLeaveForm.reset();daysCount=0;minDate='';maxDate='';tree.checklistSelection.clear();">
-                Apply for {{daysCount}} days
-            </ion-button>
+                            <div style="text-align: center;width: 90%;">
+                                <ion-button fill="outline"
+                                    (click)="applyLeaveForm.reset(); daysAvailable='';daysCount=0;minDate='';maxDate='';clearArrayList();tree.checklistSelection.clear()"
+                                    style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 40%;font-size: 12px;text-transform: none">
+                                    Clear
+                                </ion-button>
+                                <ion-button
+                                    style="--border-radius: 2px;height: 30px; width: 57%;font-size: 12px;text-transform: none"
+                                    [disabled]="!applyLeaveForm.valid"
+                                    (click)="postData(); applyLeaveForm.reset();daysAvailable='';daysCount=0;minDate='';maxDate='';">
+                                    Submit
+                                </ion-button>
+                                <!-- <ion-button *ngIf="radioOption == '2'"
+                                    style="--border-radius: 2px;height: 30px;  width: 57%;font-size: 12px;text-transform: none"
+                                    [disabled]="applyLeaveForm.controls.inputReason.invalid"
+                                    (click)="postData(); applyLeaveForm.reset();daysCount=0;minDate='';maxDate='';tree.checklistSelection.clear();">
+                                    Submit
+                                </ion-button> -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </ion-card-content>
         </div>
-    </form>
-</div>
+    </div>
+</ion-card>

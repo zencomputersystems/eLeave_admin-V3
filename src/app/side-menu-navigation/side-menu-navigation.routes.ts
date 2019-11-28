@@ -12,6 +12,7 @@ import { LeaveAdjustmentComponent } from '../admin-setup/leave-setup/leave-adjus
 import { LeaveEntitlementByBatchComponent } from '../admin-setup/leave-setup/leave-entitlement-by-batch/leave-entitlement-by-batch.component';
 import { WorkingHourListComponent } from '../admin-setup/leave-setup/working-hour/working-hour-list/working-hour-list.component';
 import { EmployeeSetupComponent } from '../admin-setup/invites/employee-setup/employee-setup.component';
+import { ApplyOnBehalfComponent } from '../admin-setup/leave-setup/apply-on-behalf/apply-on-behalf.component';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -54,7 +55,7 @@ export const sideMenuNavigationRoutes: Routes = [
             //         { path: 'edit-policy/:id', component: CreatePolicyComponent }
             //     ]
             // },
-            { path: 'apply-on-behalf', component: PageNotFoundComponent },
+            { path: 'apply-on-behalf', component: ApplyOnBehalfComponent },
             { path: 'approval-override', component: PageNotFoundComponent },
         ]
     },
