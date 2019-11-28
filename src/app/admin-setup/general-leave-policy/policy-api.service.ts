@@ -112,6 +112,16 @@ export class PolicyApiService {
     }
 
     /**
+     * get all user list
+     * @returns {Observable<any>}
+     * @memberof PolicyApiService
+     */
+    get_user_list(): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.get_user_profile_list();
+    }
+
+    /**
      * show notifation snackbar after clicked create policy
      * @param {string} message
      * @param {boolean} value

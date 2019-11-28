@@ -152,6 +152,35 @@ export class PolicyListComponent implements OnInit {
             this.clickedPolicy(this.companyName[0], 0);
             this.showSpinner = false;
         })
+        this.getAssignedEmployee();
+    }
+
+    /**
+     * assigned employee under the company
+     * @memberof PolicyListComponent
+     */
+    async getAssignedEmployee() {
+        let list = await this.policyApi.get_user_list().toPromise();
+        for (let i = 0; i < this.companyName.length; i++) {
+            let users = new Array();
+            this.filterUser(list, users, i);
+        }
+    }
+
+    /**
+     * filtered user
+     * @param {*} list
+     * @param {*} users
+     * @param {number} i
+     * @memberof PolicyListComponent
+     */
+    filterUser(list, users, i: number) {
+        for (let j = 0; j < list.length; j++) {
+            if (this.companyName[i].TENANT_COMPANY_GUID == list[j].companyId) {
+                users.push(list[j].userId);
+            }
+            this.companyName[i]["employee"] = users.length;
+        }
     }
 
     /**

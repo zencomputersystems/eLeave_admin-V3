@@ -173,6 +173,12 @@
                                         (click)="clickedPolicy(item, i)">
                                         {{item.NAME}}
                                     </p>
+                                    <div
+                                        style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                        Assigned Employee No.: <p
+                                            style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
+                                            {{item.employee}}</p>
+                                    </div>
                                 </ion-col>
                                 <ion-col size="3" align-self-center style="text-align: right;padding-right: 10px;">
                                     <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="modeValue==='ON'"
