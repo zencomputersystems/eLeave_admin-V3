@@ -6,6 +6,11 @@
   overflow: auto;
   justify-content: flex-start !important;
 
+  ::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    display: none;
+    overflow: hidden;
+  }
   .row {
     display: flex;
     flex-wrap: wrap;

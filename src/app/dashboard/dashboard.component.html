@@ -105,7 +105,7 @@
   </ion-header>
 
   <ion-content>
-    <ion-list>
+    <ion-list *ngIf="(holidays | json) != '{}'">
       <ng-container *ngFor="let item of holidays; let i = index;">
         <ion-item *ngIf="i<6 && showall===false">
           <ion-row style="width: 100%;padding-bottom: 10px;">
@@ -168,32 +168,51 @@
 <div class="row" *ngIf="row" style="margin-top: 20px;">
   <div class="annoucement">
     <div style="background-color: #ffffff;padding: 10px;">
-      <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 15px;padding-top: 1px;
+      <!-- <div style="font-size: 12px;width:100%;background: #f5f6fa;padding:10px;padding-left: 15px;padding-top: 1px;
         padding-bottom: 1px;color: #a3a6b4;font-weight: bold;">
-        <p style="float: left;margin-top: 10px;">Latest Annoucement</p>
+        <p style="float: left;margin-top: 10px;">LATEST ANNOUNCEMENT</p>
         <ion-button
-          style="margin-left: 10px;font-size: 11px;height: 26px;width:92px;cursor: pointer;text-transform: none;font-weight: bold;"
+          style="--border-radius:2px;margin-left: 10px;font-size: 11px;height: 26px;width:92px;cursor: pointer;text-transform: none;font-weight: bold;"
           color="primary" (click)="menu.enable(true, 'createAnnouncementDetails');menu.enable(false, 'viewHolidayDetails');
           menu.enable(false, 'viewAnnouncementDetails');menu.open('createAnnouncementDetails');">
           Create New
         </ion-button>
         <p (click)="menu.enable(true, 'viewAnnouncementDetails');menu.enable(false, 'viewReplacementDetails');menu.enable(false, 'viewAnnualDetails');menu.enable(false, 'viewHolidayDetails');menu.open('viewAnnouncementDetails');"
           style="cursor: pointer;margin-top: 0px;float: right;margin-right: 15px;margin-top: 10px;color:#3b86ff;opacity: 0.8;line-height: 1.36;font-size: 11px;font-weight: bold;">
-          View Details</p>
+          VIEW DETAILS</p>
+      </div> -->
+
+      <div
+        style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+        <ion-row>
+          <ion-col align-self-center size="10" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+            LATEST ANNOUNCEMENT
+            <ion-button
+              style="position: absolute;margin-top: -4px;--border-radius:2px;margin-left: 10px;font-size: 11px;height: 26px;width:92px;cursor: pointer;text-transform: none;font-weight: bold;"
+              color="primary" (click)="menu.enable(true, 'createAnnouncementDetails');menu.enable(false, 'viewHolidayDetails');
+            menu.enable(false, 'viewAnnouncementDetails');menu.open('createAnnouncementDetails');">
+              Create New
+            </ion-button>
+          </ion-col>
+          <ion-col align-self-center size="2"
+            style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;opacity: 0.8;"
+            (click)="menu.enable(true, 'viewAnnouncementDetails');menu.enable(false, 'viewReplacementDetails');menu.enable(false, 'viewAnnualDetails');menu.enable(false, 'viewHolidayDetails');menu.open('viewAnnouncementDetails');">
+            VIEW DETAILS</ion-col>
+        </ion-row>
       </div>
       <ion-row style="width: 100%;" *ngFor="let item of announcements; let i = index;">
         <ng-container style="padding-top: 2%;" *ngIf="i<3">
           <ion-col align-self-center size="3"
-            style="padding-left: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
+            style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;padding: 0;padding-left: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
             {{item.FROM_DATE}}
           </ion-col>
-          <ion-col style="color:#4d4f5c;font-size:11px;line-height: 1.82;overflow: hidden;
+          <ion-col size="7" style="padding: 0;color:#4d4f5c;font-size:11px;line-height: 1.82;overflow: hidden;
                   white-space: nowrap;text-overflow: ellipsis;">
             <span *ngIf="item.IS_PINNED === 1" style="font-weight: bold;color:#43425d;font-size:11px">
               {{item.TITLE}} <br></span>
             <span>{{item.MESSAGE}}</span>
           </ion-col>
-          <ion-col align-self-center>
+          <ion-col size="2" align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
             <div style="margin-right: 42px;text-align: right;">
               <ion-icon name="close" style="color: #ff6768;padding-top: 3px;padding-right: 5px;
                 font-size: 15px;cursor: pointer;">
@@ -210,32 +229,52 @@
   </div>
   <div class="holiday">
     <div style="background-color: #ffffff;padding: 10px;">
-      <div
+      <!-- <div
         style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
-        Upcoming Holidays <p
+        UPCOMING HOLIDAYS
+        <p *ngIf="(holidays | json) != '{}'"
           (click)="menu.enable(true, 'viewHolidayDetails');menu.enable(false, 'createAnnouncementDetails');;menu.enable(false, 'viewAnnouncementDetails');menu.open('viewHolidayDetails');"
           style="cursor: pointer;margin-top: 0px;float: right;margin-right: 5px;color:#3b86ff;opacity: 0.8;line-height: 1.36;font-size: 11px;font-weight: bold;">
-          View Details</p>
+          VIEW DETAILS</p>
+      </div> -->
+      <div
+        style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+        <ion-row>
+          <ion-col align-self-center size="10" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+            UPCOMING HOLIDAYS</ion-col>
+          <ion-col align-self-center size="2"
+            style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;opacity: 0.8;font-weight: bold;"
+            (click)="menu.enable(true, 'viewHolidayDetails');menu.enable(false, 'createAnnouncementDetails');;menu.enable(false, 'viewAnnouncementDetails');menu.open('viewHolidayDetails');">
+            VIEW DETAILS</ion-col>
+        </ion-row>
       </div>
-      <ion-row style="width: 100%;" *ngFor="let item of holidays; let i = index;">
-        <ng-container style="padding-top: 2%;" *ngIf="i<3">
-          <ion-col size="3" style="padding-left: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
-            <ion-label>{{item.start}}</ion-label>
-          </ion-col>
-          <ion-col size="3">
-            <mat-chip-list>
-              <mat-chip>
-                <p
-                  style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
-                  {{item.day}}</p>
-              </mat-chip>
-            </mat-chip-list>
-          </ion-col>
-          <ion-col style="color:#4d4f5c;font-size:11px;line-height: 1.82;">{{item.title}}
-          </ion-col>
-          <ion-item *ngIf="i<2" class="divider" lines="full"></ion-item>
-        </ng-container>
-      </ion-row>
+      <ng-container *ngIf="(holidays | json) != '{}'">
+        <ion-row style="width: 100%;" *ngFor="let item of holidays; let i = index;">
+          <ng-container style="padding-top: 2%;" *ngIf="i<3">
+            <ion-col size="3"
+              style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;padding-left: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
+              <ion-label>{{item.start}}</ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <mat-chip-list>
+                <mat-chip>
+                  <p
+                    style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
+                    {{item.day}}</p>
+                </mat-chip>
+              </mat-chip-list>
+            </ion-col>
+            <ion-col
+              style="color:#4d4f5c;font-size:11px;line-height: 1.82;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+              {{item.title}}
+            </ion-col>
+            <ion-item *ngIf="i<2" class="divider" lines="full"></ion-item>
+          </ng-container>
+        </ion-row>
+      </ng-container>
+      <p *ngIf="(holidays | json) == '{}'"
+        style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
+        No upcoming holiday</p>
     </div>
   </div>
 </div>
@@ -245,32 +284,41 @@
     <div style="background-color: #ffffff;padding: 10px;">
       <div
         style="font-size: 12px;width:100%;background: #7069d8;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
-        Upcoming New Joiner <p
-          style="cursor: pointer;margin-top: 0px;float: right;margin-right: 5px;color: #ffffff;line-height: 1.31;font-size: 12px;font-weight: bold;">
-          Date of Join</p>
-      </div>
-      <ion-list class="list" style="width: 100%;" *ngFor="let item of joiners">
         <ion-row>
-          <ion-col style="padding: 0;" size="9">
-            <ion-item lines="none">
-              <ion-avatar slot="start" class="avatar">
-                <img src="assets/icon/picture.png">
-              </ion-avatar>
-              <ion-label text-wrap class="labelText">
-                <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">{{item.FULLNAME}}
-                </p>
-                <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
-                  {{item.DESIGNATION}}
-                </p>
-              </ion-label>
-            </ion-item>
+          <ion-col align-self-center size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+            Upcoming New Joiner</ion-col>
+          <ion-col align-self-center size="3"
+            style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;">Date of Join
           </ion-col>
-          <ion-col align-self-center
-            style="text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">
-            {{item.JOIN_DATE}}</ion-col>
-          <ion-item class="divider" lines="full"></ion-item>
         </ion-row>
-      </ion-list>
+      </div>
+      <div *ngIf="joiners && joiners.length > 0" style="max-height: 192px;overflow: auto;width: 100%;">
+        <ion-list style="width: 100%;" *ngFor="let item of joiners">
+          <ion-row>
+            <ion-col size="8" style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+              <ion-item lines="none">
+                <ion-avatar slot="start" class="avatar">
+                  <img src="assets/icon/picture.png">
+                </ion-avatar>
+                <ion-label text-wrap class="labelText">
+                  <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">{{item.FULLNAME}}
+                  </p>
+                  <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
+                    {{item.DESIGNATION}}
+                  </p>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col align-self-center size="3"
+              style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;font-size: 11px;color: #4d4f5c;">
+              {{item.JOIN_DATE}}</ion-col>
+            <ion-item class="divider" lines="full"></ion-item>
+          </ion-row>
+        </ion-list>
+      </div>
+      <p *ngIf="joiners && joiners.length == 0"
+        style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
+        No upcoming new joiner</p>
     </div>
   </div>
 
@@ -278,135 +326,95 @@
     <div style="background-color: #ffffff;padding: 10px;">
       <div
         style="font-size: 12px;width:100%;background: #43425d;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
-        Upcoming Leaver <p
-          style="cursor: pointer;margin-top: 0px;float: right;margin-right: 5px;color: #ffffff;line-height: 1.31;font-size: 12px;font-weight: bold;">
-          Last Day</p>
-      </div>
-      <ion-list class="list" style="width: 100%;" *ngFor="let item of leaver">
         <ion-row>
-          <ion-col style="padding: 0;">
-            <ion-item lines="none">
-              <ion-avatar slot="start" class="avatar">
-                <img src="assets/icon/picture.png">
-              </ion-avatar>
-              <ion-label text-wrap class="labelText">
-                <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">{{item.FULLNAME}}
-                </p>
-                <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
-                  {{item.DESIGNATION}}
-                </p>
-              </ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col align-self-center
-            style="text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">
-            {{item.RESIGNATION_DATE}}</ion-col>
-          <ion-item class="divider" lines="full"></ion-item>
+          <ion-col align-self-center size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+            Upcoming Leaver</ion-col>
+          <ion-col align-self-center size="3"
+            style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;">Last Day</ion-col>
         </ion-row>
-      </ion-list>
+      </div>
+      <div *ngIf="leaver && leaver.length > 0" style="max-height: 192px;overflow: auto;width: 100%;">
+        <ion-list class="list" style="width: 100%;">
+          <ion-row *ngFor="let item of leaver">
+            <ion-col size="8" style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+              <ion-item lines="none">
+                <ion-avatar slot="start" class="avatar">
+                  <img src="assets/icon/picture.png">
+                </ion-avatar>
+                <ion-label text-wrap class="labelText">
+                  <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">{{item.FULLNAME}}
+                  </p>
+                  <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
+                    {{item.DESIGNATION}}
+                  </p>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col align-self-center size="3"
+              style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;font-size: 11px;color: #4d4f5c;">
+              {{item.RESIGNATION_DATE}}</ion-col>
+            <ion-item class="divider" lines="full"></ion-item>
+          </ion-row>
+        </ion-list>
+      </div>
+      <p *ngIf="leaver && leaver.length == 0"
+        style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
+        No upcoming leaver</p>
     </div>
   </div>
 
   <div class="longleave">
     <div style="background-color: #ffffff;padding: 10px;">
-      <div
+      <!-- <div
         style="font-size: 12px;width:100%;background: #f8bb40;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
         Long Leave Reminder <p
           style="cursor: pointer;margin-top: 0px;float: right;margin-right: 5px;color: #ffffff;line-height: 1.31;font-size: 12px;font-weight: bold;">
           Start On</p>
+      </div> -->
+      <div
+        style="font-size: 12px;width:100%;background: #f8bb40;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
+        <ion-row>
+          <ion-col align-self-center size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">Long
+            Leave Reminder</ion-col>
+          <ion-col align-self-center size="3"
+            style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;">Start On</ion-col>
+        </ion-row>
       </div>
-      <ion-list class="list" style="width: 100%;">
-        <ion-row>
-          <ion-col style="padding: 0;">
-            <ion-item lines="none">
-              <ion-avatar slot="start" class="avatar">
-                <img src="assets/icon/picture.png">
-              </ion-avatar>
+      <div style="max-height: 192px;overflow: auto;width: 100%;" *ngIf="longLeave && longLeave.status == undefined">
+        <ion-list class="list" style="width: 100%;">
+          <ion-row *ngFor="let item of longLeave.downline">
+            <ion-col size="8" style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+              <ion-item lines="none">
+                <ion-avatar slot="start" class="avatar">
+                  <img src="assets/icon/picture.png">
+                </ion-avatar>
+                <ion-label text-wrap class="labelText">
+                  <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">{{item.fullname}}
+                  </p>
+                  <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
+                    {{item.designation}}
+                  </p>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col align-self-center size="3"
+              style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">
               <ion-label text-wrap class="labelText">
-                <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">Rizaidi Ahmand
+                <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">{{item.startDate}}
                 </p>
-                <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
-                  Software Developer
+                <p
+                  style="margin-bottom: 0;margin-right: 7px;color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap">
+                  Total: {{item.noOfDays}} Days
                 </p>
               </ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col align-self-center
-            style="text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">
-            <ion-label text-wrap class="labelText">
-              <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">30
-                Sept 2019
-              </p>
-              <p
-                style="margin-bottom: 0;margin-right: 7px;color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap">
-                Total: 6 Days
-              </p>
-            </ion-label>
-          </ion-col>
-          <ion-item class="divider" lines="full"></ion-item>
-        </ion-row>
-
-        <ion-row>
-          <ion-col style="padding: 0;">
-            <ion-item lines="none">
-              <ion-avatar slot="start" class="avatar">
-                <img src="assets/icon/picture.png">
-              </ion-avatar>
-              <ion-label text-wrap class="labelText">
-                <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">Rizaidi Ahmand
-                </p>
-                <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
-                  Software Developer
-                </p>
-              </ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col align-self-center
-            style="text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">
-            <ion-label text-wrap class="labelText">
-              <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">30
-                Sept 2019
-              </p>
-              <p
-                style="margin-bottom: 0;margin-right: 7px;color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap">
-                Total: 6 Days
-              </p>
-            </ion-label>
-          </ion-col>
-          <ion-item class="divider" lines="full"></ion-item>
-        </ion-row>
-
-        <ion-row>
-          <ion-col style="padding: 0;">
-            <ion-item lines="none">
-              <ion-avatar slot="start" class="avatar">
-                <img src="assets/icon/picture.png">
-              </ion-avatar>
-              <ion-label text-wrap class="labelText">
-                <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">Rizaidi Ahmand
-                </p>
-                <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
-                  Software Developer
-                </p>
-              </ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col align-self-center
-            style="text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">
-            <ion-label text-wrap class="labelText">
-              <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">30
-                Sept 2019
-              </p>
-              <p
-                style="margin-bottom: 0;margin-right: 7px;color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap">
-                Total: 6 Days
-              </p>
-            </ion-label>
-          </ion-col>
-          <ion-item class="divider" lines="full"></ion-item>
-        </ion-row>
-
-      </ion-list>
+            </ion-col>
+            <ion-item class="divider" lines="full"></ion-item>
+          </ion-row>
+        </ion-list>
+      </div>
+      <p *ngIf="longLeave && longLeave.status != undefined"
+        style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
+        No long leave reminder</p>
     </div>
   </div>
 </div>
@@ -414,134 +422,155 @@
 <div class="row" *ngIf="row">
   <div class="tasks">
     <div style="background-color: #ffffff;padding: 10px;">
+      <!-- <div
+        style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+        YOUR TASKS
+      </div> -->
       <div
         style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
-        Your Tasks
+        <ion-row>
+          <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">YOUR TASKS
+          </ion-col>
+        </ion-row>
       </div>
-      <ng-container *ngIf="tasks && tasks.status == undefined">
-        <ion-list>
-          <ion-item *ngFor="let item of tasks; let i = index;">
-            <ion-row style="width: 100%;">
-              <ng-container style="padding-top: 2%;">
-                <ion-col align-self-center size="6"
-                  style="padding-left: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
-                  {{item.message}}
-                </ion-col>
-                <ion-col align-self-center>
-                  <div style="display: inline;padding-right: 30px;">
-                    <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
+      <div style="max-height: 192px;overflow: auto;width: 100%;">
+        <ng-container *ngIf="tasks && tasks.status == undefined">
+          <ion-list>
+            <ion-item *ngFor="let item of tasks; let i = index;">
+              <ion-row style="width: 100%;">
+                <ng-container style="padding-top: 2%;">
+                  <ion-col align-self-center size="6"
+                    style="padding-left: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
+                    {{item.message}}
+                  </ion-col>
+                  <ion-col align-self-center>
+                    <div style="display: inline;padding-right: 30px;">
+                      <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
                             padding-left: 0.5%;font-size: 16px;cursor: pointer;">
-                    </ion-icon>
-                    <p
-                      style="position: absolute;font-weight: bold;display: inline-block;color: #3b86ff;cursor: pointer;font-size: 11px;line-height: 1.82;">
-                      Action</p>
-                  </div>
-                </ion-col>
-                <ion-col align-self-center>
-                  <div style="display: inline;padding-right: 30px;">
-                    <ion-icon name="checkmark" style="color: #46cdcf;padding-top: 2px;padding-right: 10px;
+                      </ion-icon>
+                      <p
+                        style="position: absolute;font-weight: bold;display: inline-block;color: #3b86ff;cursor: pointer;font-size: 11px;line-height: 1.82;">
+                        Action</p>
+                    </div>
+                  </ion-col>
+                  <ion-col align-self-center>
+                    <div style="display: inline;padding-right: 30px;">
+                      <ion-icon name="checkmark" style="color: #46cdcf;padding-top: 2px;padding-right: 10px;
                                 padding-left: 0.5%;font-size: 16px;cursor: pointer;"
-                      (click)="approveLeave(item.leave_transaction_guid)">
-                    </ion-icon>
-                    <p style="position: absolute;font-weight: bold;display: inline-block;color: #46cdcf;cursor: pointer;font-size: 11px;line-height: 1.82;"
-                      (click)="approveLeave(item.leave_transaction_guid)">Accept</p>
-                  </div>
-                </ion-col>
-                <ion-col align-self-center>
-                  <div style="display: inline;padding-right: 30px;">
-                    <ion-icon name="close" style="color: #ff6768;padding-top: 2px;padding-right: 10px;
+                        (click)="approveLeave(item.leave_transaction_guid)">
+                      </ion-icon>
+                      <p style="position: absolute;font-weight: bold;display: inline-block;color: #46cdcf;cursor: pointer;font-size: 11px;line-height: 1.82;"
+                        (click)="approveLeave(item.leave_transaction_guid)">Accept</p>
+                    </div>
+                  </ion-col>
+                  <ion-col align-self-center>
+                    <div style="display: inline;padding-right: 30px;">
+                      <ion-icon name="close" style="color: #ff6768;padding-top: 2px;padding-right: 10px;
                                             padding-left: 0.5%;font-size: 16px;cursor: pointer;"
-                      (click)="rejectLeave(item.leave_transaction_guid)">
-                    </ion-icon>
-                    <p style="position: absolute;font-weight: bold;display: inline-block;color: #ff6768;cursor: pointer;font-size: 11px;line-height: 1.82;"
-                      (click)="rejectLeave(item.leave_transaction_guid)">Reject</p>
-                  </div>
-                </ion-col>
-                <!-- <ion-item *ngIf="i<notification.length-1" class="divider" lines="full"></ion-item> -->
-              </ng-container>
-            </ion-row>
-          </ion-item>
-        </ion-list>
-      </ng-container>
-      <ng-container *ngIf="tasks && tasks.status != undefined">
-        <p style="padding-left: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
-          No task assigned to you</p>
-      </ng-container>
+                        (click)="rejectLeave(item.leave_transaction_guid)">
+                      </ion-icon>
+                      <p style="position: absolute;font-weight: bold;display: inline-block;color: #ff6768;cursor: pointer;font-size: 11px;line-height: 1.82;"
+                        (click)="rejectLeave(item.leave_transaction_guid)">Reject</p>
+                    </div>
+                  </ion-col>
+                  <!-- <ion-item *ngIf="i<notification.length-1" class="divider" lines="full"></ion-item> -->
+                </ng-container>
+              </ion-row>
+            </ion-item>
+          </ion-list>
+        </ng-container>
+        <ng-container *ngIf="tasks && tasks.status != undefined">
+          <p style="padding-left: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
+            No task assigned to you</p>
+        </ng-container>
+      </div>
     </div>
   </div>
   <div class="birthday">
     <div style="background-color: #ffffff;padding: 10px;">
-      <div
+      <!-- <div
         style="font-size: 12px;width:100%;background: #46cdcf;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
         Upcoming Birthday <p
           style="cursor: pointer;margin-top: 0px;float: right;margin-right: 5px;color: #ffffff;line-height: 1.31;font-size: 12px;font-weight: bold;">
           Date of Birth</p>
+      </div> -->
+      <div
+        style="font-size: 12px;width:100%;background: #46cdcf;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
+        <ion-row>
+          <ion-col align-self-center size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+            Upcoming Birthday</ion-col>
+          <ion-col align-self-center size="3"
+            style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;">Date of Birth
+          </ion-col>
+        </ion-row>
       </div>
-      <ion-list class="list" style="width: 100%;">
-        <ion-row>
-          <ion-col style="padding: 0;">
-            <ion-item lines="none">
-              <ion-avatar slot="start" class="avatar">
-                <img src="assets/icon/picture.png">
-              </ion-avatar>
-              <ion-label text-wrap class="labelText">
-                <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">Rizaidi Ahmand
-                </p>
-                <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
-                  Software Developer
-                </p>
-              </ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col align-self-center
-            style="text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">20
-            Sept 2019</ion-col>
-          <ion-item class="divider" lines="full"></ion-item>
-        </ion-row>
+      <div style="max-height: 192px;overflow: auto;width: 100%;">
+        <ion-list class="list" style="width: 100%;">
+          <ion-row>
+            <ion-col size="8" style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+              <ion-item lines="none">
+                <ion-avatar slot="start" class="avatar">
+                  <img src="assets/icon/picture.png">
+                </ion-avatar>
+                <ion-label text-wrap class="labelText">
+                  <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">Rizaidi Ahmand
+                  </p>
+                  <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
+                    Software Developer
+                  </p>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col align-self-center size="3"
+              style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">
+              20
+              Sep 2019</ion-col>
+            <ion-item class="divider" lines="full"></ion-item>
+          </ion-row>
 
-        <ion-row>
-          <ion-col style="padding: 0;">
-            <ion-item lines="none">
-              <ion-avatar slot="start" class="avatar">
-                <img src="assets/icon/picture.png">
-              </ion-avatar>
-              <ion-label text-wrap class="labelText">
-                <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">Rizaidi Ahmand
-                </p>
-                <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
-                  Software Developer
-                </p>
-              </ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col align-self-center
-            style="text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">20
-            Sept 2019</ion-col>
-          <ion-item class="divider" lines="full"></ion-item>
-        </ion-row>
+          <ion-row>
+            <ion-col size="8" style="padding: 0;">
+              <ion-item lines="none">
+                <ion-avatar slot="start" class="avatar">
+                  <img src="assets/icon/picture.png">
+                </ion-avatar>
+                <ion-label text-wrap class="labelText">
+                  <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">Rizaidi Ahmand
+                  </p>
+                  <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
+                    Software Developer
+                  </p>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="3" align-self-center
+              style="text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">20
+              Sep 2019</ion-col>
+            <ion-item class="divider" lines="full"></ion-item>
+          </ion-row>
 
-        <ion-row>
-          <ion-col style="padding: 0;">
-            <ion-item lines="none">
-              <ion-avatar slot="start" class="avatar">
-                <img src="assets/icon/picture.png">
-              </ion-avatar>
-              <ion-label text-wrap class="labelText">
-                <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">Rizaidi Ahmand
-                </p>
-                <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
-                  Software Developer
-                </p>
-              </ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col align-self-center
-            style="text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">20
-            Sept 2019</ion-col>
-          <ion-item class="divider" lines="full"></ion-item>
-        </ion-row>
-
-      </ion-list>
+          <ion-row>
+            <ion-col size="8" style="padding: 0;">
+              <ion-item lines="none">
+                <ion-avatar slot="start" class="avatar">
+                  <img src="assets/icon/picture.png">
+                </ion-avatar>
+                <ion-label text-wrap class="labelText">
+                  <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">Rizaidi Ahmand
+                  </p>
+                  <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
+                    Software Developer
+                  </p>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="3" align-self-center
+              style="text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">20
+              Sep 2019</ion-col>
+            <ion-item class="divider" lines="full"></ion-item>
+          </ion-row>
+        </ion-list>
+      </div>
     </div>
   </div>
 </div>

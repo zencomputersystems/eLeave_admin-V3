@@ -67,8 +67,8 @@ export class DashboardApiService {
      * @returns {Observable<any>}
      * @memberof DashboardApiService
      */
-    get_long_leave_reminder(): Observable<any> {
-        return this.apiService.getApi('/api/employee/long-leave');
+    get_long_leave_reminder(role: string): Observable<any> {
+        return this.apiService.getApiWithId('/api/employee/long-leave/', role);
     }
 
     /**
@@ -116,6 +116,15 @@ export class DashboardApiService {
      */
     upcoming_leaver(): Observable<any> {
         return this.apiService.getApi('/api/admin/dashboard/upcoming-leaver');
+    }
+
+    /**
+     * get user profile details
+     * @returns {Observable<any>}
+     * @memberof DashboardApiService
+     */
+    user_profile_details(): Observable<any> {
+        return this.apiService.getApi('/api/userprofile');
     }
 
 

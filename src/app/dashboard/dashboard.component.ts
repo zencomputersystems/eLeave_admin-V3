@@ -117,6 +117,13 @@ export class DashboardComponent implements OnInit {
   public checked: boolean = false;
 
   /**
+   * long leave reminder list
+   * @type {*}
+   * @memberof DashboardComponent
+   */
+  public longLeave: any;
+
+  /**
    *Creates an instance of DashboardComponent.
    * @param {MenuController} menu
    * @param {DashboardApiService} dashboardAPI
@@ -130,11 +137,13 @@ export class DashboardComponent implements OnInit {
    * get all API list from endpoint
    * @memberof DashboardComponent
    */
-  ngOnInit() {
+  async ngOnInit() {
     this.getHolidayList();
     this.getAnnouncementList();
     this.get_task_list();
     this.get_joiner_leaver_list();
+    let details = await this.dashboardAPI.user_profile_details().toPromise();
+    this.dashboardAPI.get_long_leave_reminder(details.employmentDetail.userRole).subscribe(res => this.longLeave = res);
   }
 
   /**
@@ -155,16 +164,17 @@ export class DashboardComponent implements OnInit {
      * get holiday list from endpoint
      * @memberof DashboardComponent
      */
-  getHolidayList() {
-    this.dashboardAPI.get_upcoming_holidays().subscribe(details => {
-      this.holidays = details;
-      this.row = true;
-      this.showSpinner = false;
+  async getHolidayList() {
+    let details = await this.dashboardAPI.get_upcoming_holidays().toPromise();
+    this.holidays = details;
+    this.row = true;
+    this.showSpinner = false;
+    if (this.holidays.length != undefined) {
       for (let i = 0; i < this.holidays.length; i++) {
         this.holidays[i].day = this.getDayFromDate(new Date(this.holidays[i].start));
         this.holidays[i].start = (_moment(this.holidays[i].start).format('DD MMM YYYY'));
       }
-    })
+    }
   }
 
   /**
@@ -197,19 +207,18 @@ export class DashboardComponent implements OnInit {
    * get joiner & leaver list
    * @memberof DashboardComponent
    */
-  get_joiner_leaver_list() {
-    this.dashboardAPI.upcoming_joiner().subscribe(nameList => {
-      this.joiners = nameList;
-      for (let i = 0; i < this.joiners.length; i++) {
-        this.joiners[i].JOIN_DATE = (_moment(this.joiners[i].JOIN_DATE).format('DD MMM YYYY'))
-      }
-    });
-    this.dashboardAPI.upcoming_leaver().subscribe(leaver => {
-      this.leaver = leaver;
-      for (let i = 0; i < this.leaver.length; i++) {
-        this.leaver[i].RESIGNATION_DATE = (_moment(this.leaver[i].RESIGNATION_DATE).format('DD MMM YYYY'))
-      }
-    });
+  async get_joiner_leaver_list() {
+    let nameList = await this.dashboardAPI.upcoming_joiner().toPromise();
+    this.joiners = nameList;
+    for (let i = 0; i < this.joiners.length; i++) {
+      this.joiners[i].JOIN_DATE = (_moment(this.joiners[i].JOIN_DATE).format('DD MMM YYYY'))
+    }
+
+    let leaver = await this.dashboardAPI.upcoming_leaver().toPromise();
+    this.leaver = leaver;
+    for (let i = 0; i < this.leaver.length; i++) {
+      this.leaver[i].RESIGNATION_DATE = (_moment(this.leaver[i].RESIGNATION_DATE).format('DD MMM YYYY'))
+    }
   }
 
   /**
