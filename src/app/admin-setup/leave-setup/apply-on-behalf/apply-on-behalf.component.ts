@@ -15,7 +15,7 @@ import { LeaveApiService } from '../leave-api.service';
 /**
  * Apply Leave Page
  * @export
- * @class ApplyLeavePage
+ * @class ApplyOnBehalfComponent
  * @implements {OnInit}
  */
 @Component({
@@ -30,83 +30,83 @@ export class ApplyOnBehalfComponent implements OnInit {
     /**
      * Local property for leave entitlement details
      * @type {*}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     public entitlement: any;
 
     /**
      * Get calendar id from user profile API & request data from calendar API
      * @type {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     public calendarId: string;
 
     /**
      * Local property for leave day available
      * @type {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     public daysAvailable: number = 0;
 
     /**
      * Local property for leave day applied
      * @type {number}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     public daysCount: number = 0;
 
     /**
      * Local property for show or hide Add icon
      * @type {boolean}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     public showAddIcon: boolean = true;
 
     /**
      * This is input property for plugins of Full Calendar Component
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     public calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
 
     /**
      * Property for alias Event Input of Full Calendar Component
      * @type {EventInput[]}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     public calendarEvents: EventInput[];
 
     /**
      * Local property for min. date range
      * @type {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     public minDate: string;
 
     /**
      * Local property for max. date range
      * @type {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     public maxDate: string;
 
     /**
      * Local property for leave form group
      * @type {FormGroup}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     public applyLeaveForm: any;
 
     /**
      * Local property for selected quarter hour value
      * @type {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     public selectedQuarterHour: string = '';
 
     /**
      * Local property for leave type ID
      * @type {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     public leaveTypeId: string;
 
@@ -161,6 +161,24 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     public showSpinner: boolean = false;
 
+    public filteredUser: any;
+
+    public headCheckbox: boolean;
+
+    /**
+     * value of indeterminate in main checkbox
+     * @type {boolean}
+     * @memberof ApplyOnBehalfComponent
+     */
+    public indeterminateVal: boolean;
+
+    /**
+     * hover value of show/hide checkbox
+     * @type {boolean}
+     * @memberof ApplyOnBehalfComponent
+     */
+    public showCheckBox: boolean[] = [];
+
     /**
      * company Id get from selected company list
      * @private
@@ -197,7 +215,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * Local private property for value get from API
      * @private
      * @type {*}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _userList: any;
 
@@ -206,14 +224,14 @@ export class ApplyOnBehalfComponent implements OnInit {
      * eg: sunday-saturday is 0-6
      * @private
      * @type {number}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _weekDayNumber: number[] = [];
     /**
      * Local private property for selected date array list
      * @private
      * @type {*}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _dateArray: any;
 
@@ -221,7 +239,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * Local private property for start date
      * @private
      * @type {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _reformatDateFrom: string;
 
@@ -229,7 +247,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * Local private property for end date
      * @private
      * @type {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _reformatDateTo: string;
 
@@ -237,56 +255,56 @@ export class ApplyOnBehalfComponent implements OnInit {
      * Default index number for first day types selection
      * @private
      * @type {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _index: string = '0';
 
     /**
      * Date selected for 1st day types selection 
      * @private
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _firstForm = [];
 
     /**
      * Date selected for 2nd day types selection 
      * @private
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _secondForm = [];
 
     /**
      * Date selected for 3rd day types selection 
      * @private
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _thirdForm = [];
 
     /**
      * Index number of selected date from selection list (_dateArray) for 1st day types selection
      * @private
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _firstFormIndex = [];
 
     /**
      * Index number of selected date from selection list (_dateArray) for 2nd day types selection
      * @private
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _secondFormIndex = [];
 
     /**
      * Index number of selected date from selection list (_dateArray) for 3rd day types selection
      * @private
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _thirdFormIndex = [];
 
     /**
      * Disable date option list (true/false)
      * @private
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _arrayList = [];
 
@@ -294,7 +312,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * AM/PM for 1st day types selection
      * @private
      * @type {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _slot1: string;
 
@@ -302,7 +320,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * AM/PM for 2nd day types selection
      * @private
      * @type {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _slot2: string;
 
@@ -310,7 +328,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * AM/PM for 3rd day types selection
      * @private
      * @type {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _slot3: string;
 
@@ -318,35 +336,35 @@ export class ApplyOnBehalfComponent implements OnInit {
      * {startDate: "YYYY-MM-DD 00:00:00", endDate: "YYYY-MM-DD 00:00:00", dayType: number, slot: string, quarterDay: string}
      * Object for 1st day types selection
      * @private
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _objSlot1 = [];
 
     /**
      * Object for 2nd day types selection
      * @private
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _objSlot2 = [];
 
     /**
      * Object for 3rd day types selection
      * @private
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _objSlot3 = [];
 
     /**
      * Data collected from (_objSlot1, _objSlot2, _objSlot3) POST to apply leave API
      * @private
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     private _arrayDateSlot = [];
 
     /**
      * This is local property for Full Calendar Component
      * @type {FullCalendarComponent}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
@@ -374,7 +392,7 @@ export class ApplyOnBehalfComponent implements OnInit {
     /**
      * Initial method
      * Get user profile list from API
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     ngOnInit() {
         this.leaveAPI.get_company_list().subscribe(
@@ -382,10 +400,6 @@ export class ApplyOnBehalfComponent implements OnInit {
         this.apiService.get_user_profile_list().subscribe(list =>
             this._userList = list
         )
-        // setTimeout(() => {
-        //     let calendarApi = this.calendarComponent.getApi();
-        //     calendarApi.render();
-        // }, 100);
         this.leaveAPI.get_admin_leavetype().subscribe(leave =>
             this.leaveTypes = leave
         )
@@ -394,7 +408,7 @@ export class ApplyOnBehalfComponent implements OnInit {
     /**
      * This method is used to form group for validation
      * @returns
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     formGroup() {
         return new FormGroup({
@@ -417,12 +431,147 @@ export class ApplyOnBehalfComponent implements OnInit {
         });
     }
 
+    /**
+     * Filter text key in from searchbar 
+     * @param {*} text
+     * @memberof ApplyOnBehalfComponent
+     */
+    async filter(text: any) {
+        if (text && text.trim() != '') {
+            let name = this._userList.filter((item: any) => {
+                return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
+            })
+            let department = this._userList.filter((item: any) => {
+                return (item.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
+            })
+            this.filteredUser = require('lodash').uniqBy(name.concat(department), 'id');
+            this.addShortCode();
+        }
+    }
+
+    /**
+     * push short code of leave type
+     * @memberof ApplyOnBehalfComponent
+     */
+    async addShortCode() {
+        for (let i = 0; i < this.filteredUser.length; i++) {
+            let details = await this.leaveAPI.get_entilement_details(this.filteredUser[i].userId).toPromise();
+            // TODO 29/11/2019: need to change LEAVE_CODE to short code when available
+            let array = new Array();
+            for (let j = 0; j < details.length; j++) {
+                array.push(details[j].LEAVE_CODE);
+            }
+            if (array.length != 0) {
+                this.filteredUser[i]["shortCode"] = array.join();
+            }
+        }
+    }
+
+    /**
+     * To filter entered text
+     * @param {*} text
+     * @memberof ApplyOnBehalfComponent
+     */
+    changeDetails(text: any) {
+        if (text.srcElement.value === '') {
+            this.ngOnInit();
+            this.filteredUser = [];
+        } else {
+            this.filter(text.srcElement.value);
+        }
+    }
+
+    /**
+     * mouse hover to show/hide checkbox
+     * @param {number} i
+     * @param {boolean} mouseIn
+     * @param {boolean} isChecked
+     * @memberof ApplyOnBehalfComponent
+     */
+    hoverInOut(i: number, mouseIn: boolean, isChecked: boolean) {
+        if (isChecked && (this.headCheckbox || this.indeterminateVal)) {
+            this.showCheckBox = [];
+            this.filteredUser.map(value => { this.showCheckBox.push(true); });
+        } else if (!isChecked && (this.headCheckbox || this.indeterminateVal)) {
+            this.showCheckBox.splice(0, this.showCheckBox.length);
+            this.filteredUser.map(item => { this.showCheckBox.push(true); });
+        } else if (mouseIn && !isChecked && !this.indeterminateVal && !this.headCheckbox) {
+            this.showCheckBox.splice(i, 1, true);
+        } else {
+            this.showCheckBox.splice(0, this.showCheckBox.length);
+            this.filteredUser.map(item => { this.showCheckBox.push(false); });
+        }
+    }
+
+    /**
+     * check main checkbox to check all sub checkbox
+     * @memberof ApplyOnBehalfComponent
+     */
+    headerCheckbox() {
+        this.showCheckBox.splice(0, this.showCheckBox.length);
+        setTimeout(() => {
+            this.filteredUser.forEach(item => {
+                item.isChecked = this.headCheckbox;
+                if (item.isChecked) {
+                    this.showCheckBox.push(true);
+                } else {
+                    this.showCheckBox.push(false);
+                }
+                // this.enableDisableSubmitButton();
+            });
+        })
+    }
+
+    /**
+     * check sub checkbox to make changing in main checkbox (interminate/mainCheckBox)
+     * @memberof ApplyOnBehalfComponent
+     */
+    contentCheckbox() {
+        const totalLength = this.filteredUser.length;
+        let checkedValue = 0;
+        this.filteredUser.map(item => {
+            if (item.isChecked) {
+                checkedValue++;
+                this.showCheckBox.push(true);
+                this.getSelectedEmployee(item.userId, checkedValue);
+            }
+        });
+        if (checkedValue > 0 && checkedValue < totalLength) {
+            this.indeterminateVal = true;
+            this.headCheckbox = false;
+        } else if (checkedValue == totalLength) {
+            this.headCheckbox = true;
+            this.indeterminateVal = false;
+        } else {
+            this.indeterminateVal = false;
+            this.headCheckbox = false;
+        }
+        // this.enableDisableSubmitButton();
+    }
+
+    async addEntitlementBal() {
+        for (let i = 0; i < this.filteredUser.length; i++) {
+            let details = await this.leaveAPI.get_entilement_details(this.filteredUser[i].userId).toPromise();
+            for (let j = 0; j < details.length; j++) {
+                if (this.leaveTypeId == details[j].LEAVE_TYPE_GUID) {
+                    this.filteredUser[i]["entitled"] = details[j].ENTITLED_DAYS;
+                    this.filteredUser[i]["balance"] = details[j].BALANCE_DAYS;
+                }
+                else {
+                    this.filteredUser[i]["entitled"] = '-';
+                    this.filteredUser[i]["balance"] = '-';
+                }
+            }
+        }
+        console.log(this.filteredUser);
+    }
+
 
     /**
      * This method is used to create consecutive date as an array list
      * @param {*} arrayValue
      * @returns
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     createConsecutiveDate(arrayValue) {
         let arr = arrayValue,
@@ -443,7 +592,7 @@ export class ApplyOnBehalfComponent implements OnInit {
 
     /**
      * This method is used to post data to apply leave API 
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     postData() {
         let newArray = [];
@@ -515,7 +664,7 @@ export class ApplyOnBehalfComponent implements OnInit {
 
     /**
      * This method is used to clear all form value
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     clearArrayList() {
         this.applyLeaveForm = this.formGroup();
@@ -538,7 +687,7 @@ export class ApplyOnBehalfComponent implements OnInit {
     /**
      * This method is used to patch value of selected start date & end date
      * Calculate weekdays
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     onDateChange(): void {
         if (!this.applyLeaveForm.value.firstPicker || !this.applyLeaveForm.value.secondPicker) {
@@ -555,7 +704,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {Date} first
      * @param {Date} last
      * @returns
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     getWeekDays(first: Date, last: Date, dayNumber: number[]) {
         if (first > last) return -1;
@@ -577,7 +726,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * This method is used to get min. and max. date of each date array
      * @param {*} all_dates
      * @returns
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     getMinMaxDate(all_dates) {
         let max_dt = all_dates[0],
@@ -601,7 +750,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * This method is used to set min. date of datepicker start date
      * @param {MatDatepickerInputEvent<string>} event
      * @returns {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     getValueFrom(event: MatDatepickerInputEvent<string>): string {
         return this.minDate = _moment(event.value).format('YYYY-MM-DD');
@@ -611,7 +760,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * This method is used to set max. date of datepicker end date
      * @param {MatDatepickerInputEvent<string>} event
      * @returns {string}
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     getValueTo(event: MatDatepickerInputEvent<string>): string {
         const toDate: string = _moment(event.value).format('YYYY-MM-DD');
@@ -626,7 +775,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * This method is used to detect selection change of day types
      * @param {*} event
      * @param {*} index
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     // dayTypesChanged(event: any, index: any) {
     //     this._index = index;
@@ -641,7 +790,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {number} i
      * @param {*} value
      * @param {boolean} disabled
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     // patchValueFunction(i: number, value: any, disabled: boolean) {
     //     for (let j = 0; j < value.length; j++) {
@@ -653,7 +802,7 @@ export class ApplyOnBehalfComponent implements OnInit {
     /**
      * This method is used to detect opened change of half day dates
      * @param {number} index
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     // open(index: number) {
     //     if (this._arrayList.length === 0) {
@@ -682,7 +831,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * This method is used to calculate days of leave apply
      * @param {*} date
      * @param {*} form
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     calculate(date: any, form: any) {
         let missing = null;
@@ -700,7 +849,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {*} obj
      * @param {*} list
      * @returns
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     containsObject(obj: any, list: any) {
         for (let i = 0; i < list.length; i++) {
@@ -716,7 +865,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {*} form
      * @param {*} array
      * @param {string} slot
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     postValueReformat(form: any, array: any, slot: string) {
         for (let j = 0; j < form.length; j++) {
@@ -740,7 +889,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * This method is used to calculate days when selected date options
      * @param {*} selectedDate
      * @param {number} index
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     // halfDaySelectionChanged(selectedDate: any, index: number) {
     //     if (index == 0) {
@@ -765,7 +914,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * This method is used to assign value of selected date option
      * @param {number} i
      * @param {number} indexj
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     // valueSelected(i: number, indexj: number) {
     //     if (i == 0) {
@@ -796,7 +945,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * This method is used to get time slot AM/PM when detect change
      * @param {*} event
      * @param {*} i
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     // timeSlotChanged(event: any, i: any) {
     //     this._index = i;
@@ -819,7 +968,7 @@ export class ApplyOnBehalfComponent implements OnInit {
 
     /**
      * This method is used for add new form group after clicked add button
-     * @memberof ApplyLeavePage
+     * @memberof ApplyOnBehalfComponent
      */
     // addFormField() {
     //     if (this.dayTypes.controls.length < Object.keys(DayType).length / 2) {
@@ -858,20 +1007,26 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {string} name
      * @memberof ApplyOnBehalfComponent
      */
-    // getSelectedEmployee(name: string) {
-    //     this.showSpinner = true;
-    //     for (let i = 0; i < this._userList.length; i++) {
-    //         if (this._userList[i].employeeName === name) {
-    //             this.guid = this._userList[i].userId;
-    //             this.apiService.get_user_profile_details(this.guid).subscribe(data => {
-    //                 this.entitlement = data;
-    //                 this.entitlement = data.entitlementDetail;
-    //                 this.showSpinner = false;
-    //                 this.applyLeaveForm.controls.leaveTypes.enable();
-    //             })
-    //         }
-    //     }
-    // }
+    getSelectedEmployee(userId: string, checkVal: number) {
+        // this.showSpinner = true;
+        // for (let i = 0; i < this._userList.length; i++) {
+        //     if (this._userList[i].employeeName === name) {
+        //         this.guid = this._userList[i].userId;
+        if (checkVal == 1) {
+            this.radioOption = '1';
+            this.apiService.get_user_profile_details(userId).subscribe(data => {
+                this.entitlement = data;
+                this.entitlement = data.entitlementDetail;
+                this.showSpinner = false;
+                this.applyLeaveForm.controls.leaveTypes.enable();
+            })
+        } else {
+            this.radioOption = '2';
+        }
+
+        //     }
+        // }
+    }
 
     /**
      * close treeview div & get the selected  value

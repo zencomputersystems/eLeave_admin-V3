@@ -202,4 +202,15 @@
     float: left;
     margin-top: 4px;
   }
+  .avatar {
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    // margin-top: -7px;
+  }
+  ::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    display: none;
+    overflow: hidden;
+  }
 }
