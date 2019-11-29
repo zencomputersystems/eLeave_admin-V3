@@ -60,6 +60,11 @@ export class AppDateAdapter extends NativeDateAdapter {
     }
 }
 
+/**
+ * display date format for angular datepicker
+ * @export
+ * @constant APP_DATE_FORMATS
+ */
 export const APP_DATE_FORMATS =
 {
     parse: {

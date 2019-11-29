@@ -20,6 +20,11 @@ export interface Selection {
     value?: string;
 }
 
+/**
+ * constant of option for selection
+ * @export
+ * @constant options
+ */
 export const options: Selection[] = [
     { name: '-- None --' },
     { name: 'All Level', value: 'All' },
@@ -30,6 +35,11 @@ export const options: Selection[] = [
     { name: 'Branch Department Level', value: 'Branch Department' }
 ]
 
+/**
+ * constant of role details
+ * @export
+ * @constant roleDetails
+ */
 export const roleDetails: any = {
     "code": "",
     "description": "",

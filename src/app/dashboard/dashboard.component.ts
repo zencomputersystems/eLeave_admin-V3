@@ -142,8 +142,7 @@ export class DashboardComponent implements OnInit {
     this.getAnnouncementList();
     this.get_task_list();
     this.get_joiner_leaver_list();
-    let details = await this.dashboardAPI.user_profile_details().toPromise();
-    this.dashboardAPI.get_long_leave_reminder(details.employmentDetail.userRole).subscribe(res => this.longLeave = res);
+    this.dashboardAPI.get_long_leave_reminder().subscribe(res => this.longLeave = res);
   }
 
   /**

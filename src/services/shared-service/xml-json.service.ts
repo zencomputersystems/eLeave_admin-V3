@@ -1,5 +1,15 @@
+/**
+ * constant for convert
+ * @export
+ * @constant convert
+ */
 const convert = require('xmljson');
 
+/**
+ * class ofr xml conversion
+ * @export
+ * @class XmlJson
+ */
 export class XmlJson {
 
     /**

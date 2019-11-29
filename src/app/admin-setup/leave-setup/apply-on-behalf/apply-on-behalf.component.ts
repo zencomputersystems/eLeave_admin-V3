@@ -12,7 +12,6 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../date.adapter';
 import { DayType } from './apply-on-behalf.service';
 import { LeaveApiService } from '../leave-api.service';
-import { EmployeeTreeviewService } from '../assign-calendar/employee-treeview.service';
 /**
  * Apply Leave Page
  * @export
@@ -368,7 +367,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {APIService} apiService
      * @memberof ApplyOnBehalfComponent
      */
-    constructor(private leaveAPI: LeaveApiService, public tree: EmployeeTreeviewService, private apiService: APIService) {
+    constructor(private leaveAPI: LeaveApiService, private apiService: APIService) {
         this.applyLeaveForm = this.formGroup();
     }
 
@@ -399,8 +398,8 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     formGroup() {
         return new FormGroup({
-            company: new FormControl('', Validators.required),
-            userControl: new FormControl({ value: '', disabled: true }, Validators.required),
+            // company: new FormControl('', Validators.required),
+            // userControl: new FormControl({ value: '', disabled: true }, Validators.required),
             dayTypes: new FormArray([
                 new FormGroup({
                     name: new FormControl(0),
@@ -629,13 +628,13 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {*} index
      * @memberof ApplyLeavePage
      */
-    dayTypesChanged(event: any, index: any) {
-        this._index = index;
-        this.showAddIcon = true;
-        if (event.value == '1') {
-            this.open(index);
-        }
-    }
+    // dayTypesChanged(event: any, index: any) {
+    //     this._index = index;
+    //     this.showAddIcon = true;
+    //     if (event.value == '1') {
+    //         this.open(index);
+    //     }
+    // }
 
     /**
      * This method is used to patch value to form control status
@@ -644,40 +643,40 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {boolean} disabled
      * @memberof ApplyLeavePage
      */
-    patchValueFunction(i: number, value: any, disabled: boolean) {
-        for (let j = 0; j < value.length; j++) {
-            const valueFirst = (this.dayTypes.controls[i].value.status[0]).splice(value[j], 1, disabled);
-            this.dayTypes.controls[0].patchValue([{ status: valueFirst }]);
-        }
-    }
+    // patchValueFunction(i: number, value: any, disabled: boolean) {
+    //     for (let j = 0; j < value.length; j++) {
+    //         const valueFirst = (this.dayTypes.controls[i].value.status[0]).splice(value[j], 1, disabled);
+    //         this.dayTypes.controls[0].patchValue([{ status: valueFirst }]);
+    //     }
+    // }
 
     /**
      * This method is used to detect opened change of half day dates
      * @param {number} index
      * @memberof ApplyLeavePage
      */
-    open(index: number) {
-        if (this._arrayList.length === 0) {
-            for (let j = 0; j < this.dayTypes.controls[index].value.selectArray[0].length; j++) {
-                this._arrayList.push(false);
-            }
-        }
-        const selected = (this.dayTypes.controls[index].value.status).splice(0, 1, this._arrayList);
-        this.dayTypes.controls[index].patchValue([{ status: selected }]);
-        if (index == 0) {
-            this.patchValueFunction(index, this._firstFormIndex, false);
-            this.patchValueFunction(index, this._secondFormIndex, true);
-            this.patchValueFunction(index, this._thirdFormIndex, true);
-        } if (index == 1) {
-            this.patchValueFunction(index, this._firstFormIndex, true);
-            this.patchValueFunction(index, this._secondFormIndex, false);
-            this.patchValueFunction(index, this._thirdFormIndex, true);
-        } if (index == 2) {
-            this.patchValueFunction(index, this._firstFormIndex, true);
-            this.patchValueFunction(index, this._secondFormIndex, true);
-            this.patchValueFunction(index, this._thirdFormIndex, false);
-        }
-    }
+    // open(index: number) {
+    //     if (this._arrayList.length === 0) {
+    //         for (let j = 0; j < this.dayTypes.controls[index].value.selectArray[0].length; j++) {
+    //             this._arrayList.push(false);
+    //         }
+    //     }
+    //     const selected = (this.dayTypes.controls[index].value.status).splice(0, 1, this._arrayList);
+    //     this.dayTypes.controls[index].patchValue([{ status: selected }]);
+    //     if (index == 0) {
+    //         this.patchValueFunction(index, this._firstFormIndex, false);
+    //         this.patchValueFunction(index, this._secondFormIndex, true);
+    //         this.patchValueFunction(index, this._thirdFormIndex, true);
+    //     } if (index == 1) {
+    //         this.patchValueFunction(index, this._firstFormIndex, true);
+    //         this.patchValueFunction(index, this._secondFormIndex, false);
+    //         this.patchValueFunction(index, this._thirdFormIndex, true);
+    //     } if (index == 2) {
+    //         this.patchValueFunction(index, this._firstFormIndex, true);
+    //         this.patchValueFunction(index, this._secondFormIndex, true);
+    //         this.patchValueFunction(index, this._thirdFormIndex, false);
+    //     }
+    // }
 
     /**
      * This method is used to calculate days of leave apply
@@ -743,24 +742,24 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {number} index
      * @memberof ApplyLeavePage
      */
-    halfDaySelectionChanged(selectedDate: any, index: number) {
-        if (index == 0) {
-            this.calculate(selectedDate, this._firstForm);
-            this._firstForm = selectedDate;
-            this.postValueReformat(this._firstForm, this._objSlot1, this._slot1);
-        }
-        if (index == 1) {
-            this.calculate(selectedDate, this._secondForm);
-            this._secondForm = selectedDate;
-            this.postValueReformat(this._secondForm, this._objSlot2, this._slot2);
-        }
-        if (index == 2) {
-            this.calculate(selectedDate, this._thirdForm);
-            this._thirdForm = selectedDate;
-            this.postValueReformat(this._thirdForm, this._objSlot3, this._slot3);
-        }
-        this._arrayDateSlot = this._objSlot1.concat(this._objSlot2).concat(this._objSlot3);
-    }
+    // halfDaySelectionChanged(selectedDate: any, index: number) {
+    //     if (index == 0) {
+    //         this.calculate(selectedDate, this._firstForm);
+    //         this._firstForm = selectedDate;
+    //         this.postValueReformat(this._firstForm, this._objSlot1, this._slot1);
+    //     }
+    //     if (index == 1) {
+    //         this.calculate(selectedDate, this._secondForm);
+    //         this._secondForm = selectedDate;
+    //         this.postValueReformat(this._secondForm, this._objSlot2, this._slot2);
+    //     }
+    //     if (index == 2) {
+    //         this.calculate(selectedDate, this._thirdForm);
+    //         this._thirdForm = selectedDate;
+    //         this.postValueReformat(this._thirdForm, this._objSlot3, this._slot3);
+    //     }
+    //     this._arrayDateSlot = this._objSlot1.concat(this._objSlot2).concat(this._objSlot3);
+    // }
 
     /**
      * This method is used to assign value of selected date option
@@ -768,30 +767,30 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {number} indexj
      * @memberof ApplyLeavePage
      */
-    valueSelected(i: number, indexj: number) {
-        if (i == 0) {
-            const index = this._firstFormIndex.findIndex(item => item === indexj);
-            if (index > -1) {
-                this._firstFormIndex.splice(index, 1);
-            } else {
-                this._firstFormIndex.push(indexj);
-            }
-        } if (i == 1) {
-            const index = this._secondFormIndex.findIndex(item => item === indexj);
-            if (index > -1) {
-                this._secondFormIndex.splice(index, 1);
-            } else {
-                this._secondFormIndex.push(indexj);
-            }
-        } if (i == 2) {
-            const index = this._thirdFormIndex.findIndex(item => item === indexj);
-            if (index > -1) {
-                this._thirdFormIndex.splice(index, 1);
-            } else {
-                this._thirdFormIndex.push(indexj);
-            }
-        }
-    }
+    // valueSelected(i: number, indexj: number) {
+    //     if (i == 0) {
+    //         const index = this._firstFormIndex.findIndex(item => item === indexj);
+    //         if (index > -1) {
+    //             this._firstFormIndex.splice(index, 1);
+    //         } else {
+    //             this._firstFormIndex.push(indexj);
+    //         }
+    //     } if (i == 1) {
+    //         const index = this._secondFormIndex.findIndex(item => item === indexj);
+    //         if (index > -1) {
+    //             this._secondFormIndex.splice(index, 1);
+    //         } else {
+    //             this._secondFormIndex.push(indexj);
+    //         }
+    //     } if (i == 2) {
+    //         const index = this._thirdFormIndex.findIndex(item => item === indexj);
+    //         if (index > -1) {
+    //             this._thirdFormIndex.splice(index, 1);
+    //         } else {
+    //             this._thirdFormIndex.push(indexj);
+    //         }
+    //     }
+    // }
 
     /**
      * This method is used to get time slot AM/PM when detect change
@@ -799,100 +798,100 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {*} i
      * @memberof ApplyLeavePage
      */
-    timeSlotChanged(event: any, i: any) {
-        this._index = i;
-        const selected = (this.dayTypes.controls[this._index].value.selectArray).splice(1, 1, event.value);
-        this.dayTypes.controls[i].patchValue([{ selectArray: selected }]);
-        if (i === 0) {
-            this._slot1 = event.value;
-            this.postValueReformat(this._firstForm, this._objSlot1, this._slot1);
-        }
-        if (i === 1) {
-            this._slot2 = event.value;
-            this.postValueReformat(this._secondForm, this._objSlot2, this._slot2);
-        }
-        if (i === 2) {
-            this._slot3 = event.value;
-            this.postValueReformat(this._thirdForm, this._objSlot3, this._slot3);
-        }
-        this._arrayDateSlot = this._objSlot1.concat(this._objSlot2).concat(this._objSlot3);
-    }
+    // timeSlotChanged(event: any, i: any) {
+    //     this._index = i;
+    //     const selected = (this.dayTypes.controls[this._index].value.selectArray).splice(1, 1, event.value);
+    //     this.dayTypes.controls[i].patchValue([{ selectArray: selected }]);
+    //     if (i === 0) {
+    //         this._slot1 = event.value;
+    //         this.postValueReformat(this._firstForm, this._objSlot1, this._slot1);
+    //     }
+    //     if (i === 1) {
+    //         this._slot2 = event.value;
+    //         this.postValueReformat(this._secondForm, this._objSlot2, this._slot2);
+    //     }
+    //     if (i === 2) {
+    //         this._slot3 = event.value;
+    //         this.postValueReformat(this._thirdForm, this._objSlot3, this._slot3);
+    //     }
+    //     this._arrayDateSlot = this._objSlot1.concat(this._objSlot2).concat(this._objSlot3);
+    // }
 
     /**
      * This method is used for add new form group after clicked add button
      * @memberof ApplyLeavePage
      */
-    addFormField() {
-        if (this.dayTypes.controls.length < Object.keys(DayType).length / 2) {
-            this.dayTypes.push(new FormGroup({
-                name: new FormControl(0),
-                selectArray: new FormArray([new FormControl(this._dateArray), new FormControl('')]),
-                status: new FormControl([false])
-            }));
-        } else {
-            this.showAddIcon = false;
-            alert("No other option");
-        }
-    }
+    // addFormField() {
+    //     if (this.dayTypes.controls.length < Object.keys(DayType).length / 2) {
+    //         this.dayTypes.push(new FormGroup({
+    //             name: new FormControl(0),
+    //             selectArray: new FormArray([new FormControl(this._dateArray), new FormControl('')]),
+    //             status: new FormControl([false])
+    //         }));
+    //     } else {
+    //         this.showAddIcon = false;
+    //         alert("No other option");
+    //     }
+    // }
 
     /**
      * pass selected companyId to get department list
      * @param {*} selectedCompanyId
      * @memberof ApplyOnBehalfComponent
      */
-    selectedCompany(selectedCompanyId) {
-        this.departmentlist = [];
-        this.leaveAPI.get_company_details(selectedCompanyId).subscribe(list => {
-            this.applyLeaveForm.controls.userControl.enable();
-            for (let i = 0; i < this.tree.dataSource.data.length; i++) {
-                if (list.companyName == this.tree.dataSource.data[i].item) {
-                    for (let j = 0; j < this.tree.dataSource.data[i].children.length; j++) {
-                        this.departmentlist.push(this.tree.dataSource.data[i].children[j]);
-                    }
-                }
-            }
-        })
-    }
+    // selectedCompany(selectedCompanyId) {
+    //     this.departmentlist = [];
+    //     this.leaveAPI.get_company_details(selectedCompanyId).subscribe(list => {
+    //         this.applyLeaveForm.controls.userControl.enable();
+    //         for (let i = 0; i < this.tree.dataSource.data.length; i++) {
+    //             if (list.companyName == this.tree.dataSource.data[i].item) {
+    //                 for (let j = 0; j < this.tree.dataSource.data[i].children.length; j++) {
+    //                     this.departmentlist.push(this.tree.dataSource.data[i].children[j]);
+    //                 }
+    //             }
+    //         }
+    //     })
+    // }
 
     /**
      * get selected employee's user profile details
      * @param {string} name
      * @memberof ApplyOnBehalfComponent
      */
-    getSelectedEmployee(name: string) {
-        this.showSpinner = true;
-        for (let i = 0; i < this._userList.length; i++) {
-            if (this._userList[i].employeeName === name) {
-                this.guid = this._userList[i].userId;
-                this.apiService.get_user_profile_details(this.guid).subscribe(data => {
-                    this.entitlement = data;
-                    this.entitlement = data.entitlementDetail;
-                    this.showSpinner = false;
-                    this.applyLeaveForm.controls.leaveTypes.enable();
-                })
-            }
-        }
-    }
+    // getSelectedEmployee(name: string) {
+    //     this.showSpinner = true;
+    //     for (let i = 0; i < this._userList.length; i++) {
+    //         if (this._userList[i].employeeName === name) {
+    //             this.guid = this._userList[i].userId;
+    //             this.apiService.get_user_profile_details(this.guid).subscribe(data => {
+    //                 this.entitlement = data;
+    //                 this.entitlement = data.entitlementDetail;
+    //                 this.showSpinner = false;
+    //                 this.applyLeaveForm.controls.leaveTypes.enable();
+    //             })
+    //         }
+    //     }
+    // }
 
     /**
      * close treeview div & get the selected  value
      * @param {*} evt
      * @memberof ApplyOnBehalfComponent
      */
-    clickOutside(evt) {
-        if (!evt.target.className.includes("material-icons") && !evt.target.className.includes("dropdownDiv") && !evt.target.className.includes("mat-form-field-infix")) {
-            this.showTreeDropdown = false;
-            this.showSelectedTree = true;
-        }
-        for (let i = 0; i < this.tree.checklistSelection.selected.length; i++) {
-            if (this.tree.checklistSelection.selected[i].level == 2 && this._employeeTree.indexOf(this.tree.checklistSelection.selected[i].item) < 0) {
-                this._employeeTree.push(this.tree.checklistSelection.selected[i].item);
-            }
-        }
-        if (this.tree.checklistSelection.selected.length === 0) {
-            this._employeeTree.length = 0;
-        }
-    }
+    // clickOutside(evt) {
+    //     if (!evt.target.className.includes("material-icons") && !evt.target.className.includes("dropdownDiv") && !evt.target.className.includes("mat-form-field-infix")) {
+    //         this.showTreeDropdown = false;
+    //         this.showSelectedTree = true;
+    //     }
+    //     for (let i = 0; i < this.tree.checklistSelection.selected.length; i++) {
+    //         if (this.tree.checklistSelection.selected[i].level == 2 && this._employeeTree.indexOf(this.tree.checklistSelection.selected[i].item) < 0) {
+    //             this._employeeTree.push(this.tree.checklistSelection.selected[i].item);
+    //         }
+    //     }
+    //     if (this.tree.checklistSelection.selected.length === 0) {
+    //         this._employeeTree.length = 0;
+    //     }
+    // }
 
     /**
      * filter employee name that exist in user list
