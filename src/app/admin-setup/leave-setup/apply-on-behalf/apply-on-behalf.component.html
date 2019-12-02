@@ -10,7 +10,7 @@
     <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
         <div class="fullContainer">
             <div class="left">
-                <img src="assets/icon/leave_setup/icon_role@3x.png" style="width:28px;height:33px">
+                <img src="assets/icon/leave_setup/icon_applyonbehalf@3x.png" style="width:30px;height:33px">
             </div>
             <div class="right">
                 <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Apply on
@@ -18,6 +18,13 @@
                 </ion-card-subtitle>
                 <ion-card-subtitle class="subtitle" style="font-size: 12px;">
                     Some good & sweet explanation here</ion-card-subtitle>
+            </div>
+            <div style="right: 25px;top: 25px;position: absolute;">
+                <ion-button
+                    style="--border-radius: 2px;font-size: 11px;height: 30px;width:193px;cursor: pointer;text-transform: none;"
+                    color="primary" (click)="menu.open('leaveAdjustDetails')">
+                    View Apply On Behalf History
+                </ion-button>
             </div>
         </div>
     </ion-card-header>
@@ -69,7 +76,8 @@
                                     EMPLOYEE NAME
                                 </ion-col>
                                 <ion-col size="2.3" align-self-center style="white-space: nowrap;
-                                text-overflow: ellipsis;overflow: hidden;">
+                                text-overflow: ellipsis;overflow: hidden;"
+                                    [style.text-align]="applyLeaveForm.controls.leaveTypes.valid? 'center':'left'">
                                     ENTITLEMENT
                                 </ion-col>
                                 <ion-col size="2.3" align-self-center style="text-align: center;white-space: nowrap;
@@ -117,11 +125,12 @@
                                     style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                     {{item.shortCode}}
                                 </ion-col>
-                                <ion-col size="2.3" class="colOfLeave" *ngIf="applyLeaveForm.controls.leaveTypes.valid"
+                                <ion-col size="2.3" align-self-center class="colOfLeave"
+                                    *ngIf="applyLeaveForm.controls.leaveTypes.valid"
                                     style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                     {{item.entitled}}
                                 </ion-col>
-                                <ion-col size="2.3" class="colOfLeave"
+                                <ion-col size="2.3" align-self-center class="colOfLeave"
                                     style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                     {{item.balance}}
                                 </ion-col>
@@ -341,20 +350,58 @@
                                 </mat-form-field> -->
                             </div>
 
-                            <div style="display: block; white-space: nowrap;width: 90%;overflow: hidden;">
-                                <mat-radio-group>
-                                    <mat-radio-button value=0 color="primary" style="padding-right: 15px;">Full Day
+                            <div style="display: block; white-space: nowrap;width: 90%;overflow: hidden;margin-top: 10px;"
+                                *ngFor="let date of dateSelection; let j = index">
+                                <!-- dayTypes.controls[i].value.selectArray[0] -->
+                                <mat-radio-group [value]="dayName[j]" (change)="dayNameChanged($event, j)">
+                                    <mat-radio-button value=0 color="primary" style="padding-right: 15px;"
+                                        [checked]=true>Full Day
                                     </mat-radio-button>
                                     <mat-radio-button value=1 color="primary" style="padding-right: 15px;">Half Day
                                     </mat-radio-button>
                                     <mat-radio-button value=2 color="primary" style="padding-right: 15px;">Quarter Day
                                     </mat-radio-button>
                                 </mat-radio-group>
-                                <mat-form-field style="width: 35%" appearance="outline">
+                                <mat-form-field style="width: 35%;height: 60px;" appearance="outline">
                                     <mat-label>Date Selection</mat-label>
-                                    <input matInput [(value)]="daysAvailable" disabled>
+                                    <input matInput [(value)]="date" disabled>
                                 </mat-form-field>
+                                <div *ngIf="dayName[j] == '1'">
+                                    <p style="font-size: 12px;color: #43425d;">Half Day selection</p>
+                                    <ion-button (click)="amButton = true;" [fill]="amButton ? 'solid':'outline'"
+                                        style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
+                                        AM
+                                    </ion-button>
+                                    <ion-button (click)="amButton = false;" [fill]="!amButton ? 'solid':'outline'"
+                                        style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
+                                        PM
+                                    </ion-button>
+                                </div>
+                                <div *ngIf="dayName[j] == '2'">
+                                    <p style="font-size: 12px;color: #43425d;">Select your time-off here</p>
+                                    <ion-button [fill]="Q1Button? 'solid':'outline'"
+                                        (click)="Q1Button=true;Q2Button=false;Q3Button=false;Q4Button=false"
+                                        style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
+                                        Q1
+                                    </ion-button>
+                                    <ion-button [fill]="Q2Button? 'solid':'outline'"
+                                        (click)="Q1Button=false;Q2Button=true;Q3Button=false;Q4Button=false"
+                                        style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
+                                        Q2
+                                    </ion-button>
+                                    <ion-button [fill]="Q3Button? 'solid':'outline'"
+                                        (click)="Q1Button=false;Q2Button=false;Q3Button=true;Q4Button=false"
+                                        style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
+                                        Q3
+                                    </ion-button>
+                                    <ion-button [fill]="Q4Button? 'solid':'outline'"
+                                        (click)="Q1Button=false;Q2Button=false;Q3Button=false;Q4Button=true"
+                                        style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
+                                        Q4
+                                    </ion-button>
+                                </div>
                             </div>
+
                             <!-- <ion-item class="divider" lines="full"></ion-item>
                             <div style="display: block; white-space: nowrap;" formArrayName="dayTypes">
                                 <div style="display: block; white-space: nowrap;"
@@ -409,14 +456,15 @@
                                     Please ignore day types selection if not considered other options (half/quarter)
                                 </mat-hint>
                             </div> -->
-                            <ion-button fill="outline"
+                            <ion-item class="divider" lines="full" style="width:90%;"></ion-item>
+                            <ion-button fill="outline" *ngIf="radioOption == '1'"
                                 style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 40%;font-size: 12px;text-transform: none">
                                 Upload Attachment
                             </ion-button>
-                            <p style="color: #808495;font-size:11px;">File Allowed: .jpg, .png, .pdf only (max size 1MB)
+                            <p *ngIf="radioOption == '1'" style="color: #808495;font-size:11px;">File Allowed: .jpg,
+                                .png, .pdf only (max size 1MB)
                             </p>
-                            <ion-item class="divider" lines="full" style="width:90%;"></ion-item>
-                            <mat-form-field appearance="outline" style="width: 90%;">
+                            <mat-form-field appearance="outline" style="width: 90%;margin-top: 20px;">
                                 <mat-label>Reason</mat-label>
                                 <textarea matInput formControlName="inputReason" required
                                     style="height: 100px;resize: none;"></textarea>

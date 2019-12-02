@@ -179,6 +179,20 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     public showCheckBox: boolean[] = [];
 
+    public dateSelection: any;
+
+    public amButton: boolean = true;
+
+    public Q1Button: boolean = true;
+
+    public Q2Button: boolean = false;
+
+    public Q3Button: boolean = false;
+
+    public Q4Button: boolean = false;
+
+    public dayName: number[] = [];
+
     /**
      * company Id get from selected company list
      * @private
@@ -186,15 +200,6 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     private _selectedCompanyId: string;
-
-
-    /**
-     * selected tree item
-     * @private
-     * @type {*}
-     * @memberof ApplyOnBehalfComponent
-     */
-    private _employeeTree: any = [];
 
     /**
      * user guid from selected employee (option == 1)
@@ -456,13 +461,16 @@ export class ApplyOnBehalfComponent implements OnInit {
     async addShortCode() {
         for (let i = 0; i < this.filteredUser.length; i++) {
             let details = await this.leaveAPI.get_entilement_details(this.filteredUser[i].userId).toPromise();
-            // TODO 29/11/2019: need to change LEAVE_CODE to short code when available
             let array = new Array();
             for (let j = 0; j < details.length; j++) {
-                array.push(details[j].LEAVE_CODE);
+                array.push(details[j].ABBR);
             }
             if (array.length != 0) {
                 this.filteredUser[i]["shortCode"] = array.join();
+                this.filteredUser[i]["balance"] = '-';
+            } else {
+                this.filteredUser[i]["shortCode"] = '-';
+                this.filteredUser[i]["balance"] = '-';
             }
         }
     }
@@ -563,7 +571,6 @@ export class ApplyOnBehalfComponent implements OnInit {
                 }
             }
         }
-        console.log(this.filteredUser);
     }
 
 
@@ -632,14 +639,20 @@ export class ApplyOnBehalfComponent implements OnInit {
                 }
             }
         }
-        if (this.radioOption == '2') {
-            for (let i = 0; i < this._employeeTree.length; i++) {
-                this.checkIdExist(this._userList, this._employeeTree[i]);
+        // if (this.radioOption == '2') {
+        //     for (let i = 0; i < this._employeeTree.length; i++) {
+        //         this.checkIdExist(this._userList, this._employeeTree[i]);
+        //     }
+        // }
+        // if (this.radioOption == '1') {
+        //     this._employeeId.push(this.guid);
+        // }
+        for (let i = 0; i < this.filteredUser.length; i++) {
+            if (this.filteredUser[i].isChecked) {
+                this._employeeId.push(this.filteredUser[i].userId);
             }
         }
-        if (this.radioOption == '1') {
-            this._employeeId.push(this.guid);
-        }
+
         const applyLeaveData = {
             "leaveTypeID": this.leaveTypeId,
             "reason": this.applyLeaveForm.value.inputReason,
@@ -681,7 +694,6 @@ export class ApplyOnBehalfComponent implements OnInit {
         this._arrayDateSlot = [];
         this.selectedQuarterHour = '';
         this.departmentlist = [];
-        this._employeeTree = [];
     }
 
     /**
@@ -696,7 +708,18 @@ export class ApplyOnBehalfComponent implements OnInit {
             this._reformatDateTo = _moment(this.applyLeaveForm.value.secondPicker).format('YYYY-MM-DD HH:mm:ss');
             this.getWeekDays(this.applyLeaveForm.value.firstPicker, this.applyLeaveForm.value.secondPicker, this._weekDayNumber);
             this.dayTypes.patchValue([{ selectArray: [this._dateArray] }]);
+            this.dateSelection = this._dateArray;
+            for (let i = 0; i < this.dateSelection.length; i++) {
+                this.dateSelection[i] = _moment(this.dateSelection[i]).format('DD MMMM YYYY');
+                this.dayName.push(0);
+            }
+            console.log(this._dateArray, this.dateSelection, this.dayName);
         }
+    }
+
+    dayNameChanged(event, j) {
+        this.dayName.splice(j, 1, (event.value));
+        console.log(this.dayName);
     }
 
     /**
@@ -1054,12 +1077,12 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {*} obj
      * @memberof ApplyOnBehalfComponent
      */
-    checkIdExist(array: any, obj: any) {
-        for (let j = 0; j < array.length; j++) {
-            if (array[j].employeeName === obj) {
-                this._employeeId.push(this._userList[j].userId);
-            }
-        }
-    }
+    // checkIdExist(array: any, obj: any) {
+    //     for (let j = 0; j < array.length; j++) {
+    //         if (array[j].employeeName === obj) {
+    //             this._employeeId.push(this._userList[j].userId);
+    //         }
+    //     }
+    // }
 
 }

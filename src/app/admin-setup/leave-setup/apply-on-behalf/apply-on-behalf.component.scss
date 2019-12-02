@@ -99,7 +99,7 @@
   }
   .divider {
     --min-height: none;
-    padding-bottom: 5%;
+    padding-bottom: 3%;
     width: 100%;
   }
   ::ng-deep .mat-form-field > .mat-form-field-wrapper {
@@ -212,5 +212,9 @@
   *::-webkit-scrollbar {
     display: none;
     overflow: hidden;
+  }
+  .mat-input-element:disabled {
+    color: #43425d;
+    opacity: 0.8;
   }
 }
