@@ -1,17 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
-import { FullCalendarComponent } from '@fullcalendar/angular';
-import { EventInput } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGrigPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
-import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import * as _moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../date.adapter';
-import { DayType } from './apply-on-behalf.service';
 import { LeaveApiService } from '../leave-api.service';
+
+
 /**
  * Apply Leave Page
  * @export
@@ -39,7 +35,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {string}
      * @memberof ApplyOnBehalfComponent
      */
-    public calendarId: string;
+    // public calendarId: string;
 
     /**
      * Local property for leave day available
@@ -60,20 +56,20 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {boolean}
      * @memberof ApplyOnBehalfComponent
      */
-    public showAddIcon: boolean = true;
+    // public showAddIcon: boolean = true;
 
     /**
      * This is input property for plugins of Full Calendar Component
      * @memberof ApplyOnBehalfComponent
      */
-    public calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
+    // public calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
 
     /**
      * Property for alias Event Input of Full Calendar Component
      * @type {EventInput[]}
      * @memberof ApplyOnBehalfComponent
      */
-    public calendarEvents: EventInput[];
+    // public calendarEvents: EventInput[];
 
     /**
      * Local property for min. date range
@@ -97,13 +93,6 @@ export class ApplyOnBehalfComponent implements OnInit {
     public applyLeaveForm: any;
 
     /**
-     * Local property for selected quarter hour value
-     * @type {string}
-     * @memberof ApplyOnBehalfComponent
-     */
-    public selectedQuarterHour: string = '';
-
-    /**
      * Local property for leave type ID
      * @type {string}
      * @memberof ApplyOnBehalfComponent
@@ -111,34 +100,18 @@ export class ApplyOnBehalfComponent implements OnInit {
     public leaveTypeId: string;
 
     /**
-     * company list from API
-     *
-     * @type {*}
-     * @memberof ApplyOnBehalfComponent
-     */
-    public companyList: any;
-
-
-    /**
-     * department list get from selected company
-     * @type {*}
-     * @memberof ApplyOnBehalfComponent
-     */
-    public departmentlist: any = [];
-
-    /**
      * show/hide the tree view 
      * @type {boolean}
      * @memberof ApplyOnBehalfComponent
      */
-    public showTreeDropdown: boolean = false;
+    // public showTreeDropdown: boolean = false;
 
     /**
      * show selected tree value after clicked outside the div
      * @type {boolean}
      * @memberof ApplyOnBehalfComponent
      */
-    public showSelectedTree: boolean = false;
+    // public showSelectedTree: boolean = false;
 
     /**
      * radio button value
@@ -161,8 +134,18 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     public showSpinner: boolean = false;
 
+    /**
+     * filtered user from searchbar keyup
+     * @type {*}
+     * @memberof ApplyOnBehalfComponent
+     */
     public filteredUser: any;
 
+    /**
+     * header checkbox checked/unchecked
+     * @type {boolean}
+     * @memberof ApplyOnBehalfComponent
+     */
     public headCheckbox: boolean;
 
     /**
@@ -179,19 +162,41 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     public showCheckBox: boolean[] = [];
 
+    /**
+     * date range selected
+     * @type {*}
+     * @memberof ApplyOnBehalfComponent
+     */
     public dateSelection: any;
 
-    public amButton: boolean = true;
+    /**
+     * am/pm button value
+     * @type {boolean[]}
+     * @memberof ApplyOnBehalfComponent
+     */
+    public amButton: boolean[] = [];
 
-    public Q1Button: boolean = true;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ApplyOnBehalfComponent
+     */
+    public Q1Button: boolean[] = [];
 
-    public Q2Button: boolean = false;
+    public Q2Button: boolean[] = [];
 
-    public Q3Button: boolean = false;
+    public Q3Button: boolean[] = [];
 
-    public Q4Button: boolean = false;
+    public Q4Button: boolean[] = [];
 
-    public dayName: number[] = [];
+    public dayName: string[] = [];
+
+    private _slot: any = [];
+
+    public halfDayIndex: number[] = [];
+
+    public quarterDayIndex: number[] = [];
+
 
     /**
      * company Id get from selected company list
@@ -199,7 +204,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {string}
      * @memberof ApplyOnBehalfComponent
      */
-    private _selectedCompanyId: string;
+    // private _selectedCompanyId: string;
 
     /**
      * user guid from selected employee (option == 1)
@@ -207,7 +212,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {string}
      * @memberof ApplyOnBehalfComponent
      */
-    private guid: string;
+    // private guid: string;
     /**
      * selected user id
      * @private
@@ -239,6 +244,13 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     private _dateArray: any;
+
+    /**
+     * Local property for selected quarter hour value
+     * @type {string}
+     * @memberof ApplyOnBehalfComponent
+     */
+    private _selectedQuarterHour: string[] = [];
 
     /**
      * Local private property for start date
@@ -276,42 +288,42 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @private
      * @memberof ApplyOnBehalfComponent
      */
-    private _secondForm = [];
+    // private _secondForm = [];
 
     /**
      * Date selected for 3rd day types selection 
      * @private
      * @memberof ApplyOnBehalfComponent
      */
-    private _thirdForm = [];
+    // private _thirdForm = [];
 
     /**
      * Index number of selected date from selection list (_dateArray) for 1st day types selection
      * @private
      * @memberof ApplyOnBehalfComponent
      */
-    private _firstFormIndex = [];
+    // private _firstFormIndex = [];
 
     /**
      * Index number of selected date from selection list (_dateArray) for 2nd day types selection
      * @private
      * @memberof ApplyOnBehalfComponent
      */
-    private _secondFormIndex = [];
+    // private _secondFormIndex = [];
 
     /**
      * Index number of selected date from selection list (_dateArray) for 3rd day types selection
      * @private
      * @memberof ApplyOnBehalfComponent
      */
-    private _thirdFormIndex = [];
+    // private _thirdFormIndex = [];
 
     /**
      * Disable date option list (true/false)
      * @private
      * @memberof ApplyOnBehalfComponent
      */
-    private _arrayList = [];
+    // private _arrayList = [];
 
     /**
      * AM/PM for 1st day types selection
@@ -319,7 +331,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {string}
      * @memberof ApplyOnBehalfComponent
      */
-    private _slot1: string;
+    // private _slot1: string;
 
     /**
      * AM/PM for 2nd day types selection
@@ -327,7 +339,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {string}
      * @memberof ApplyOnBehalfComponent
      */
-    private _slot2: string;
+    // private _slot2: string;
 
     /**
      * AM/PM for 3rd day types selection
@@ -335,7 +347,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {string}
      * @memberof ApplyOnBehalfComponent
      */
-    private _slot3: string;
+    // private _slot3: string;
 
     /**
      * {startDate: "YYYY-MM-DD 00:00:00", endDate: "YYYY-MM-DD 00:00:00", dayType: number, slot: string, quarterDay: string}
@@ -343,21 +355,21 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @private
      * @memberof ApplyOnBehalfComponent
      */
-    private _objSlot1 = [];
+    // private _objSlot1 = [];
 
     /**
      * Object for 2nd day types selection
      * @private
      * @memberof ApplyOnBehalfComponent
      */
-    private _objSlot2 = [];
+    // private _objSlot2 = [];
 
     /**
      * Object for 3rd day types selection
      * @private
      * @memberof ApplyOnBehalfComponent
      */
-    private _objSlot3 = [];
+    // private _objSlot3 = [];
 
     /**
      * Data collected from (_objSlot1, _objSlot2, _objSlot3) POST to apply leave API
@@ -371,7 +383,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {FullCalendarComponent}
      * @memberof ApplyOnBehalfComponent
      */
-    @ViewChild('calendar') calendarComponent: FullCalendarComponent;
+    // @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
     /**
      * get day types of form array
@@ -379,19 +391,23 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {FormArray}
      * @memberof ApplyOnBehalfComponent
      */
-    get dayTypes(): FormArray {
-        return this.applyLeaveForm.get('dayTypes') as FormArray;
-    }
+    // get dayTypes(): FormArray {
+    //     return this.applyLeaveForm.get('dayTypes') as FormArray;
+    // }
 
     /**
      *Creates an instance of ApplyOnBehalfComponent.
      * @param {LeaveApiService} leaveAPI
-     * @param {EmployeeTreeviewService} tree
      * @param {APIService} apiService
      * @memberof ApplyOnBehalfComponent
      */
     constructor(private leaveAPI: LeaveApiService, private apiService: APIService) {
-        this.applyLeaveForm = this.formGroup();
+        this.applyLeaveForm = new FormGroup({
+            leaveTypes: new FormControl({ value: '', disabled: false }, Validators.required),
+            firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
+            secondPicker: new FormControl({ value: '', disabled: true }, Validators.required),
+            inputReason: new FormControl('', Validators.required),
+        });
     }
 
     /**
@@ -400,8 +416,8 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     ngOnInit() {
-        this.leaveAPI.get_company_list().subscribe(
-            list => this.companyList = list);
+        // this.leaveAPI.get_company_list().subscribe(
+        //     list => this.companyList = list);
         this.apiService.get_user_profile_list().subscribe(list =>
             this._userList = list
         )
@@ -415,26 +431,26 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @returns
      * @memberof ApplyOnBehalfComponent
      */
-    formGroup() {
-        return new FormGroup({
-            // company: new FormControl('', Validators.required),
-            // userControl: new FormControl({ value: '', disabled: true }, Validators.required),
-            dayTypes: new FormArray([
-                new FormGroup({
-                    name: new FormControl(0),
-                    selectArray: new FormArray([
-                        new FormControl(['0']),
-                        new FormControl(''),
-                    ]),
-                    status: new FormControl([false])
-                })
-            ]),
-            leaveTypes: new FormControl({ value: '', disabled: false }, Validators.required),
-            firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
-            secondPicker: new FormControl({ value: '', disabled: true }, Validators.required),
-            inputReason: new FormControl('', Validators.required),
-        });
-    }
+    // formGroup() {
+    //     return new FormGroup({
+    //         // company: new FormControl('', Validators.required),
+    //         // userControl: new FormControl({ value: '', disabled: true }, Validators.required),
+    //         // dayTypes: new FormArray([
+    //         //     new FormGroup({
+    //         //         name: new FormControl(0),
+    //         //         selectArray: new FormArray([
+    //         //             new FormControl(['0']),
+    //         //             new FormControl(''),
+    //         //         ]),
+    //         //         status: new FormControl([false])
+    //         //     })
+    //         // ]),
+    //         leaveTypes: new FormControl({ value: '', disabled: false }, Validators.required),
+    //         firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
+    //         secondPicker: new FormControl({ value: '', disabled: true }, Validators.required),
+    //         inputReason: new FormControl('', Validators.required),
+    //     });
+    // }
 
     /**
      * Filter text key in from searchbar 
@@ -446,8 +462,8 @@ export class ApplyOnBehalfComponent implements OnInit {
             let name = this._userList.filter((item: any) => {
                 return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
-            let department = this._userList.filter((item: any) => {
-                return (item.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
+            let department = this._userList.filter((valur: any) => {
+                return (valur.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
             this.filteredUser = require('lodash').uniqBy(name.concat(department), 'id');
             this.addShortCode();
@@ -481,11 +497,11 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     changeDetails(text: any) {
-        if (text.srcElement.value === '') {
+        if (text === '') {
             this.ngOnInit();
             this.filteredUser = [];
         } else {
-            this.filter(text.srcElement.value);
+            this.filter(text);
         }
     }
 
@@ -557,6 +573,10 @@ export class ApplyOnBehalfComponent implements OnInit {
         // this.enableDisableSubmitButton();
     }
 
+    /**
+     * add balance of selected leave type
+     * @memberof ApplyOnBehalfComponent
+     */
     async addEntitlementBal() {
         for (let i = 0; i < this.filteredUser.length; i++) {
             let details = await this.leaveAPI.get_entilement_details(this.filteredUser[i].userId).toPromise();
@@ -605,48 +625,46 @@ export class ApplyOnBehalfComponent implements OnInit {
         let newArray = [];
         newArray = this._dateArray;
         newArray = newArray.filter(val => !this._firstForm.includes(val));
-        newArray = newArray.filter(val => !this._secondForm.includes(val));
-        newArray = newArray.filter(val => !this._thirdForm.includes(val));
-        if (this.dayTypes.value[0].name !== 2) {
-            let result = this.createConsecutiveDate(newArray);
-            for (let i = 0; i < result.length; i++) {
-                if (result[i] !== undefined) {
-                    const minMax = this.getMinMaxDate(result[i]);
-                    const remainingFullDay = {
-                        "startDate": _moment(minMax[0]).format('YYYY-MM-DD HH:mm:ss'),
-                        "endDate": _moment(minMax[1]).format('YYYY-MM-DD HH:mm:ss'),
-                        "dayType": 0,
-                        "slot": "",
-                        "quarterDay": this.selectedQuarterHour
-                    }
-                    this._arrayDateSlot.push(remainingFullDay);
+        let result = this.createConsecutiveDate(newArray);
+        for (let j = 0; j < result.length; j++) {
+            if (result[j] !== undefined) {
+                const minMax = this.getMinMaxDate(result[j]);
+                const remainingFullDay = {
+                    "startDate": _moment(minMax[0]).format('YYYY-MM-DD HH:mm:ss'),
+                    "endDate": _moment(minMax[1]).format('YYYY-MM-DD HH:mm:ss'),
+                    "dayType": 0,
+                    "slot": "",
+                    "quarterDay": ""
                 }
+                this._arrayDateSlot.push(remainingFullDay);
             }
         }
-        if (this.dayTypes.value[0].name == 2) {
-            let result = this.createConsecutiveDate(newArray);
-            for (let i = 0; i < result.length; i++) {
-                if (result[i] !== undefined) {
-                    const minMaxValue = this.getMinMaxDate(result[i]);
-                    const remainingFullDay = {
-                        "startDate": _moment(minMaxValue[0]).format('YYYY-MM-DD HH:mm:ss'),
-                        "endDate": _moment(minMaxValue[1]).format('YYYY-MM-DD HH:mm:ss'),
-                        "dayType": 2,
-                        "slot": "",
-                        "quarterDay": this.selectedQuarterHour
-                    }
-                    this._arrayDateSlot.push(remainingFullDay);
-                }
+
+        this.dayName.forEach((dayVal, index) => dayVal === '1' ? this.halfDayIndex.push(index) : null);
+
+        for (let i = 0; i < this.halfDayIndex.length; i++) {
+            const remainingFullDay = {
+                "startDate": _moment(this._dateArray[this.halfDayIndex[i]]).format('YYYY-MM-DD HH:mm:ss'),
+                "endDate": _moment(this._dateArray[this.halfDayIndex[i]]).format('YYYY-MM-DD HH:mm:ss'),
+                "dayType": 1,
+                "slot": this._slot[this.halfDayIndex[i]],
+                "quarterDay": ""
             }
+            this._arrayDateSlot.push(remainingFullDay);
         }
-        // if (this.radioOption == '2') {
-        //     for (let i = 0; i < this._employeeTree.length; i++) {
-        //         this.checkIdExist(this._userList, this._employeeTree[i]);
-        //     }
-        // }
-        // if (this.radioOption == '1') {
-        //     this._employeeId.push(this.guid);
-        // }
+
+        this.dayName.forEach((value, index) => value === '2' ? this.quarterDayIndex.push(index) : null);
+        for (let i = 0; i < this.quarterDayIndex.length; i++) {
+            const remainingFullDay = {
+                "startDate": _moment(this._dateArray[this.quarterDayIndex[i]]).format('YYYY-MM-DD HH:mm:ss'),
+                "endDate": _moment(this._dateArray[this.quarterDayIndex[i]]).format('YYYY-MM-DD HH:mm:ss'),
+                "dayType": 2,
+                "slot": "",
+                "quarterDay": this._selectedQuarterHour[this.quarterDayIndex[i]]
+            }
+            this._arrayDateSlot.push(remainingFullDay);
+        }
+        console.log(this._arrayDateSlot);
         for (let i = 0; i < this.filteredUser.length; i++) {
             if (this.filteredUser[i].isChecked) {
                 this._employeeId.push(this.filteredUser[i].userId);
@@ -665,11 +683,8 @@ export class ApplyOnBehalfComponent implements OnInit {
         this.leaveAPI.post_apply_leave_onBehalf(details).subscribe(
             response => {
                 this.clearArrayList();
-                this.showSelectedTree = false;
-                this._employeeId = [];
-                this.leaveAPI.openSnackBar('Leave application was submitted successfully', true);
+                this.leaveAPI.openSnackBar('You have submitted successfully', true);
                 if (response.status === 401) {
-                    window.location.href = '/login';
                     this.leaveAPI.openSnackBar(response.message, false);
                 }
             });
@@ -680,20 +695,21 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     clearArrayList() {
-        this.applyLeaveForm = this.formGroup();
-        this._arrayList = [];
+        this._dateArray = [];
         this._firstForm = [];
-        this._secondForm = [];
-        this._thirdForm = [];
-        this._firstFormIndex = [];
-        this._secondFormIndex = [];
-        this._thirdFormIndex = [];
-        this._objSlot1 = [];
-        this._objSlot2 = [];
-        this._objSlot3 = [];
         this._arrayDateSlot = [];
-        this.selectedQuarterHour = '';
-        this.departmentlist = [];
+        this._slot = [];
+        this._selectedQuarterHour = [];
+        this.dayName = [];
+        this._employeeId = [];
+        this.dateSelection = [];
+        this.showCheckBox = [];
+        this.headCheckbox = false;
+        this.indeterminateVal = false;
+        document.querySelector('ion-searchbar').getInputElement().then((searchInput) => {
+            searchInput.value = '';
+            this.changeDetails('');
+        });
     }
 
     /**
@@ -707,19 +723,55 @@ export class ApplyOnBehalfComponent implements OnInit {
             this._reformatDateFrom = _moment(this.applyLeaveForm.value.firstPicker).format('YYYY-MM-DD HH:mm:ss');
             this._reformatDateTo = _moment(this.applyLeaveForm.value.secondPicker).format('YYYY-MM-DD HH:mm:ss');
             this.getWeekDays(this.applyLeaveForm.value.firstPicker, this.applyLeaveForm.value.secondPicker, this._weekDayNumber);
-            this.dayTypes.patchValue([{ selectArray: [this._dateArray] }]);
             this.dateSelection = this._dateArray;
+            this.dayName = [];
+            this._slot = []; this._selectedQuarterHour = []; this._firstForm = [];
             for (let i = 0; i < this.dateSelection.length; i++) {
                 this.dateSelection[i] = _moment(this.dateSelection[i]).format('DD MMMM YYYY');
-                this.dayName.push(0);
+                this.dayName.push("0");
+                this.amButton.push(true);
+                this.Q1Button.push(true);
+                this.Q2Button.push(false);
+                this.Q3Button.push(false);
+                this.Q4Button.push(false);
             }
-            console.log(this._dateArray, this.dateSelection, this.dayName);
         }
     }
 
-    dayNameChanged(event, j) {
-        this.dayName.splice(j, 1, (event.value));
-        console.log(this.dayName);
+    /**
+     * changed day(full/half/quarter day) selection
+     * @param {*} event
+     * @param {number} j
+     * @memberof ApplyOnBehalfComponent
+     */
+    dayNameChanged(event: any, j: number) {
+        this.dayName.splice(j, 1, event.value);
+        if (event.value == '1') {
+            this._slot[j] = "AM";
+            if (this._firstForm.indexOf(this._dateArray[j]) < 0) {
+                this._firstForm.push(this._dateArray[j]);
+            }
+        }
+        if (event.value == '2') {
+            this._selectedQuarterHour[j] = "Q1";
+            if (this._firstForm.indexOf(this._dateArray[j]) < 0) {
+                this._firstForm.push(this._dateArray[j]);
+            }
+        }
+    }
+
+    /**
+     * get am/pm or quarter value(Q1 to Q4)
+     * @param {number} j
+     * @param {string} buttonVal
+     * @memberof ApplyOnBehalfComponent
+     */
+    getHalfQuarterValue(j: number, buttonVal: string) {
+        if (buttonVal == 'AM' || buttonVal == 'PM') {
+            this._slot[j] = buttonVal;
+        } else {
+            this._selectedQuarterHour[j] = buttonVal;
+        }
     }
 
     /**
@@ -874,14 +926,14 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @returns
      * @memberof ApplyOnBehalfComponent
      */
-    containsObject(obj: any, list: any) {
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].startDate === obj.startDate) {
-                return true;
-            }
-        }
-        return false;
-    }
+    // containsObject(obj: any, list: any) {
+    //     for (let i = 0; i < list.length; i++) {
+    //         if (list[i].startDate === obj.startDate) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
     /**
      * This method is used to format body to be send to POST API
@@ -890,23 +942,23 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {string} slot
      * @memberof ApplyOnBehalfComponent
      */
-    postValueReformat(form: any, array: any, slot: string) {
-        for (let j = 0; j < form.length; j++) {
-            const obj = {
-                "startDate": _moment(form[j]).format('YYYY-MM-DD HH:mm:ss'),
-                "endDate": _moment(form[j]).format('YYYY-MM-DD HH:mm:ss'),
-                "dayType": Number(this.dayTypes.controls[this._index].value.name),
-                "slot": slot,
-                "quarterDay": this.selectedQuarterHour,
-            }
-            if (this.containsObject(obj, array) === false) {
-                array.push(obj);
-            }
-            if (obj.slot !== array[j].slot) {
-                array.splice(j, 1, obj);
-            }
-        }
-    }
+    // postValueReformat(form: any, array: any, slot: string) {
+    //     for (let j = 0; j < form.length; j++) {
+    //         const obj = {
+    //             "startDate": _moment(form[j]).format('YYYY-MM-DD HH:mm:ss'),
+    //             "endDate": _moment(form[j]).format('YYYY-MM-DD HH:mm:ss'),
+    //             "dayType": Number(this.dayTypes.controls[this._index].value.name),
+    //             "slot": slot,
+    //             "quarterDay": this.selectedQuarterHour,
+    //         }
+    //         if (this.containsObject(obj, array) === false) {
+    //             array.push(obj);
+    //         }
+    //         if (obj.slot !== array[j].slot) {
+    //             array.splice(j, 1, obj);
+    //         }
+    //     }
+    // }
 
     /**
      * This method is used to calculate days when selected date options
@@ -1031,10 +1083,6 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     getSelectedEmployee(userId: string, checkVal: number) {
-        // this.showSpinner = true;
-        // for (let i = 0; i < this._userList.length; i++) {
-        //     if (this._userList[i].employeeName === name) {
-        //         this.guid = this._userList[i].userId;
         if (checkVal == 1) {
             this.radioOption = '1';
             this.apiService.get_user_profile_details(userId).subscribe(data => {
@@ -1046,9 +1094,6 @@ export class ApplyOnBehalfComponent implements OnInit {
         } else {
             this.radioOption = '2';
         }
-
-        //     }
-        // }
     }
 
     /**
