@@ -1,7 +1,7 @@
 :host {
   margin: auto;
   width: 100%;
-  top: 48px;
+  // top: 48px;
   /////////////////// calendar ////////////////////////
 
   .app-calendar {
@@ -153,8 +153,9 @@
 
   // new
   ion-card {
-    height: 100%;
+    height: calc(100% - 48px);
     margin: 0;
+    top: 48px;
   }
   .fullContainer {
     display: flex;

@@ -1,11 +1,100 @@
-<!-- <div class='app-calendar'>
-    <full-calendar #calendar defaultView="dayGridMonth" selectable="true" [header]="{
-                          left: 'prev,next today',
-                          center: 'title',
-                          right: 'dayGridMonth,timeGridWeek'
-                        }" [plugins]="calendarPlugins" [events]="calendarEvents">
-    </full-calendar>
-</div> -->
+<ion-menu style="--width: 500px;" contentId="applybehalfContent" side="end" type="overlay" menuId="applybehalfDetails">
+    <ion-header style="background-color:#43425d; color: #fcfcfc;">
+        <img style="margin: 17px;width: 22px;height: 17px;float:left"
+            src="assets/icon/dashboard/icon All Holidays@3x.png">
+        <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">
+            APPLY ON BEHALF HISTORY
+        </p>
+    </ion-header>
+
+    <ion-content>
+        <div style="display: block;width: 100%;">
+            <div
+                style="font-size: 11px;background: #f5f6fa;padding: 10px;padding-left: 15px;margin: 10px;color: #a3a6b4;font-weight: bold;">
+                <ion-row>
+                    <ion-col size="7">DATE APPLIED: <p
+                            style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">20 NOV 2019</p>
+                    </ion-col>
+                    <ion-col>DONE BY: <p style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">
+                            JESSIE</p>
+                    </ion-col>
+                </ion-row>
+            </div>
+            <div style="margin: 20px;margin-top:10px;margin-left: 25px;">
+                <ion-row>
+                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
+                            Leave Type</ion-label>
+                        <p
+                            style="color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;margin: 0">
+                            ML-Medical Leave</p>
+                    </ion-col>
+                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
+                            No. of Days</ion-label>
+                        <p
+                            style="margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                            2 days</p>
+                    </ion-col>
+                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
+                            No. of Employees</ion-label>
+                        <p
+                            style="margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                            8 persons</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
+                            Date: 01 Dec 2019</ion-label>
+                        <p
+                            style="margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                            Fullday</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
+                            Date: 02 Dec 2019</ion-label>
+                        <p
+                            style="margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                            Q3</p>
+                    </ion-col>
+                </ion-row>
+                <div style="margin-left: 5px;"><img style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
+                        src="assets/icon/leave_setup/icon_request@3x.png" (click)="showList = !showList ">
+                    <p style="color: #43425d;opacity: 0.8;font-size: 11px;font-weight: bold;width: 23%;
+                    display: inline-block;"> List of Employees</p>
+                    <div style="border-top: 1px solid rgba(67, 66, 93, 0.2);display: inline-block;width: 72%;"></div>
+                </div>
+                <div *ngIf="showList" style="font-size: 12px;color: #43425d;
+                opacity: 0.8;margin-left: 20px;">
+                    <ion-row>
+                        <ion-col style="padding-top: 0;">Zulkifli bin Arrifin</ion-col>
+                        <ion-col style="padding-top: 0;">Rajaputra Balasingh</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col style="padding-top: 0;">Clement Chee Siong Yee</ion-col>
+                        <ion-col style="padding-top: 0;">Mohd Akmar bin Ab.Karim</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col style="padding-top: 0;">Pratap K.Singh</ion-col>
+                        <ion-col style="padding-top: 0;">Asmidar binti Mohd Fauzi</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col style="padding-top: 0;">Shewon Lee Kim Choo</ion-col>
+                        <ion-col style="padding-top: 0;">Tammy Tee Yen Wei</ion-col>
+                    </ion-row>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-menu>
+<ion-router-outlet id="applybehalfContent">
+</ion-router-outlet>
+
+
 <ion-card>
     <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
         <div class="fullContainer">
@@ -22,7 +111,7 @@
             <div style="right: 25px;top: 25px;position: absolute;">
                 <ion-button
                     style="--border-radius: 2px;font-size: 11px;height: 30px;width:193px;cursor: pointer;text-transform: none;"
-                    color="primary" (click)="menu.open('leaveAdjustDetails')">
+                    color="primary" (click)="menu.open('applybehalfDetails')">
                     View Apply On Behalf History
                 </ion-button>
             </div>
@@ -93,7 +182,7 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div style="height: calc( 100% - 200px);overflow: auto;">
+                        <div *ngIf="filteredUser != undefined" style="height: calc( 100% - 200px);overflow: auto;">
                             <ion-row class="detailsRow" *ngFor="let item of filteredUser; let i=index">
                                 <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
                                     <ion-avatar class="avatar" (mouseover)="hoverInOut(i, true, item.isChecked)"
@@ -142,7 +231,7 @@
                             *ngIf="showSpinner">
                             <app-spinner></app-spinner>
                         </div>
-                        <p style="color: #a3a6b4;opacity:0.8;font-size: 12px;width: 30%;
+                        <p *ngIf="filteredUser == undefined" style="color: #a3a6b4;opacity:0.8;font-size: 12px;width: 30%;
                         margin: 0 auto;padding-top: 30px;">
                             Nothing to view. Please search & select employee or department first. </p>
                     </div>

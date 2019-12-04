@@ -6,6 +6,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../date.adapter';
 import { LeaveApiService } from '../leave-api.service';
+import { MenuController } from '@ionic/angular';
 
 
 /**
@@ -438,9 +439,10 @@ export class ApplyOnBehalfComponent implements OnInit {
      *Creates an instance of ApplyOnBehalfComponent.
      * @param {LeaveApiService} leaveAPI
      * @param {APIService} apiService
+     * @param {MenuController} menu
      * @memberof ApplyOnBehalfComponent
      */
-    constructor(private leaveAPI: LeaveApiService, private apiService: APIService) {
+    constructor(private leaveAPI: LeaveApiService, private apiService: APIService, private menu: MenuController) {
         this.applyLeaveForm = new FormGroup({
             leaveTypes: new FormControl({ value: '', disabled: false }, Validators.required),
             firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
