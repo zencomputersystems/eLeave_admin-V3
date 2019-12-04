@@ -177,24 +177,63 @@ export class ApplyOnBehalfComponent implements OnInit {
     public amButton: boolean[] = [];
 
     /**
-     * 
+     * Q1 button clicked or not
      * @type {boolean}
      * @memberof ApplyOnBehalfComponent
      */
     public Q1Button: boolean[] = [];
 
+    /**
+     * Q2 button clicked or not
+     * @type {boolean[]}
+     * @memberof ApplyOnBehalfComponent
+     */
     public Q2Button: boolean[] = [];
 
+    /**
+     * Q3 button clicked or not
+     * @type {boolean[]}
+     * @memberof ApplyOnBehalfComponent
+     */
     public Q3Button: boolean[] = [];
 
+    /**
+     * Q4 button clicked or not
+     * @type {boolean[]}
+     * @memberof ApplyOnBehalfComponent
+     */
     public Q4Button: boolean[] = [];
 
+    /**
+     * day name value of each set
+     * '0' = full day
+     * '1' = half day
+     * '2' = quarter day
+     * @type {string[]}
+     * @memberof ApplyOnBehalfComponent
+     */
     public dayName: string[] = [];
 
+    /**
+     * half day value (am/pm)
+     * @private
+     * @type {*}
+     * @memberof ApplyOnBehalfComponent
+     */
     private _slot: any = [];
 
+    /**
+     * index of half day in dayName array
+     * @type {number[]}
+     * @memberof ApplyOnBehalfComponent
+     */
     public halfDayIndex: number[] = [];
 
+    /**
+     * index of quarter day in dayName array
+     * @type {number[]}
+     * @memberof ApplyOnBehalfComponent
+     */
     public quarterDayIndex: number[] = [];
 
 
@@ -410,6 +449,7 @@ export class ApplyOnBehalfComponent implements OnInit {
         });
     }
 
+
     /**
      * Initial method
      * Get user profile list from API
@@ -481,12 +521,14 @@ export class ApplyOnBehalfComponent implements OnInit {
             for (let j = 0; j < details.length; j++) {
                 array.push(details[j].ABBR);
             }
-            if (array.length != 0) {
-                this.filteredUser[i]["shortCode"] = array.join();
-                this.filteredUser[i]["balance"] = '-';
-            } else {
-                this.filteredUser[i]["shortCode"] = '-';
-                this.filteredUser[i]["balance"] = '-';
+            if (this.filteredUser[i] != undefined) {
+                if (array.length != 0) {
+                    this.filteredUser[i]["shortCode"] = array.join();
+                    this.filteredUser[i]["balance"] = '-';
+                } else {
+                    this.filteredUser[i]["shortCode"] = '-';
+                    this.filteredUser[i]["balance"] = '-';
+                }
             }
         }
     }
@@ -580,14 +622,16 @@ export class ApplyOnBehalfComponent implements OnInit {
     async addEntitlementBal() {
         for (let i = 0; i < this.filteredUser.length; i++) {
             let details = await this.leaveAPI.get_entilement_details(this.filteredUser[i].userId).toPromise();
-            for (let j = 0; j < details.length; j++) {
-                if (this.leaveTypeId == details[j].LEAVE_TYPE_GUID) {
-                    this.filteredUser[i]["entitled"] = details[j].ENTITLED_DAYS;
-                    this.filteredUser[i]["balance"] = details[j].BALANCE_DAYS;
-                }
-                else {
-                    this.filteredUser[i]["entitled"] = '-';
-                    this.filteredUser[i]["balance"] = '-';
+            if (this.filteredUser[i] != undefined) {
+                for (let j = 0; j < details.length; j++) {
+                    if (this.leaveTypeId == details[j].LEAVE_TYPE_GUID) {
+                        this.filteredUser[i]["entitled"] = details[j].ENTITLED_DAYS;
+                        this.filteredUser[i]["balance"] = details[j].BALANCE_DAYS;
+                    }
+                    else {
+                        this.filteredUser[i]["entitled"] = '-';
+                        this.filteredUser[i]["balance"] = '-';
+                    }
                 }
             }
         }
@@ -601,7 +645,11 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     createConsecutiveDate(arrayValue) {
-        let arr = arrayValue,
+        let reformatDate = [];
+        for (let j = 0; j < arrayValue.length; j++) {
+            reformatDate.push(new Date(arrayValue[j]))
+        }
+        let arr = reformatDate,
             i = 0,
             result = arr.reduce(function (stack, b) {
                 var cur = stack[i],
@@ -639,38 +687,7 @@ export class ApplyOnBehalfComponent implements OnInit {
                 this._arrayDateSlot.push(remainingFullDay);
             }
         }
-
-        this.dayName.forEach((dayVal, index) => dayVal === '1' ? this.halfDayIndex.push(index) : null);
-
-        for (let i = 0; i < this.halfDayIndex.length; i++) {
-            const remainingFullDay = {
-                "startDate": _moment(this._dateArray[this.halfDayIndex[i]]).format('YYYY-MM-DD HH:mm:ss'),
-                "endDate": _moment(this._dateArray[this.halfDayIndex[i]]).format('YYYY-MM-DD HH:mm:ss'),
-                "dayType": 1,
-                "slot": this._slot[this.halfDayIndex[i]],
-                "quarterDay": ""
-            }
-            this._arrayDateSlot.push(remainingFullDay);
-        }
-
-        this.dayName.forEach((value, index) => value === '2' ? this.quarterDayIndex.push(index) : null);
-        for (let i = 0; i < this.quarterDayIndex.length; i++) {
-            const remainingFullDay = {
-                "startDate": _moment(this._dateArray[this.quarterDayIndex[i]]).format('YYYY-MM-DD HH:mm:ss'),
-                "endDate": _moment(this._dateArray[this.quarterDayIndex[i]]).format('YYYY-MM-DD HH:mm:ss'),
-                "dayType": 2,
-                "slot": "",
-                "quarterDay": this._selectedQuarterHour[this.quarterDayIndex[i]]
-            }
-            this._arrayDateSlot.push(remainingFullDay);
-        }
-        console.log(this._arrayDateSlot);
-        for (let i = 0; i < this.filteredUser.length; i++) {
-            if (this.filteredUser[i].isChecked) {
-                this._employeeId.push(this.filteredUser[i].userId);
-            }
-        }
-
+        this.postDataHalfQuarter();
         const applyLeaveData = {
             "leaveTypeID": this.leaveTypeId,
             "reason": this.applyLeaveForm.value.inputReason,
@@ -688,6 +705,45 @@ export class ApplyOnBehalfComponent implements OnInit {
                     this.leaveAPI.openSnackBar(response.message, false);
                 }
             });
+    }
+
+    /**
+     * create object for half day & quarter day format to POST
+     * @memberof ApplyOnBehalfComponent
+     */
+    postDataHalfQuarter() {
+        this.dayName.forEach((dayVal, index) => {
+            dayVal === '1' ? this.halfDayIndex.push(index) : null;
+            dayVal === '2' ? this.quarterDayIndex.push(index) : null;
+        });
+
+        for (let i = 0; i < this.halfDayIndex.length; i++) {
+            const remainingFullDay = {
+                "startDate": _moment(this._dateArray[this.halfDayIndex[i]]).format('YYYY-MM-DD HH:mm:ss'),
+                "endDate": _moment(this._dateArray[this.halfDayIndex[i]]).format('YYYY-MM-DD HH:mm:ss'),
+                "dayType": 1,
+                "slot": this._slot[this.halfDayIndex[i]],
+                "quarterDay": ""
+            }
+            this._arrayDateSlot.push(remainingFullDay);
+        }
+
+        for (let i = 0; i < this.quarterDayIndex.length; i++) {
+            const remainingFullDay = {
+                "startDate": _moment(this._dateArray[this.quarterDayIndex[i]]).format('YYYY-MM-DD HH:mm:ss'),
+                "endDate": _moment(this._dateArray[this.quarterDayIndex[i]]).format('YYYY-MM-DD HH:mm:ss'),
+                "dayType": 2,
+                "slot": "",
+                "quarterDay": this._selectedQuarterHour[this.quarterDayIndex[i]]
+            }
+            this._arrayDateSlot.push(remainingFullDay);
+        }
+        console.log(this._arrayDateSlot);
+        for (let i = 0; i < this.filteredUser.length; i++) {
+            if (this.filteredUser[i].isChecked) {
+                this._employeeId.push(this.filteredUser[i].userId);
+            }
+        }
     }
 
     /**
@@ -745,6 +801,24 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     dayNameChanged(event: any, j: number) {
+        if (this.dayName[j] == '1' && event.value == '0') {
+            this.daysCount += 0.5;
+        }
+        if (this.dayName[j] == '2' && event.value == '0') {
+            this.daysCount += 0.75;
+        }
+        if (this.dayName[j] == '2' && event.value == '1') {
+            this.daysCount += 0.25;
+        }
+        if (this.dayName[j] == '0' && event.value == '1') {
+            this.daysCount -= 0.50;
+        }
+        if (this.dayName[j] == '1' && event.value == '2') {
+            this.daysCount -= 0.25;
+        }
+        if (this.dayName[j] == '0' && event.value == '2') {
+            this.daysCount -= 0.75;
+        }
         this.dayName.splice(j, 1, event.value);
         if (event.value == '1') {
             this._slot[j] = "AM";
@@ -757,6 +831,10 @@ export class ApplyOnBehalfComponent implements OnInit {
             if (this._firstForm.indexOf(this._dateArray[j]) < 0) {
                 this._firstForm.push(this._dateArray[j]);
             }
+        }
+        if (event.value == '0') {
+            const index = this._firstForm.indexOf(this._dateArray[j]);
+            this._firstForm.splice(index, 1);
         }
     }
 
@@ -908,16 +986,16 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {*} form
      * @memberof ApplyOnBehalfComponent
      */
-    calculate(date: any, form: any) {
-        let missing = null;
-        for (let i = 0; i < form.length; i++) {
-            if (date.indexOf(form[i]) == -1) {
-                missing = form[i];
-                this.daysCount = this.daysCount + 0.5;
-            }
-        }
-        if (!missing) { this.daysCount = this.daysCount - 0.5; }
-    }
+    // calculate(date: any, form: any) {
+    //     let missing = null;
+    //     for (let i = 0; i < form.length; i++) {
+    //         if (date.indexOf(form[i]) == -1) {
+    //             missing = form[i];
+    //             this.daysCount = this.daysCount + 0.5;
+    //         }
+    //     }
+    //     if (!missing) { this.daysCount = this.daysCount - 0.5; }
+    // }
 
     /**
      * This method is used to check duplicate start date
@@ -1093,6 +1171,18 @@ export class ApplyOnBehalfComponent implements OnInit {
             })
         } else {
             this.radioOption = '2';
+        }
+    }
+
+    /**
+     * delete unselected user
+     * @memberof ApplyOnBehalfComponent
+     */
+    showCheckedUser() {
+        for (let i = this.filteredUser.length - 1; i >= 0; --i) {
+            if (this.filteredUser[i].isChecked == false || this.filteredUser[i].isChecked == undefined) {
+                this.filteredUser.splice(i, 1);
+            }
         }
     }
 
