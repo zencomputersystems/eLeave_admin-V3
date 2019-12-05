@@ -1,6 +1,7 @@
 :host {
   margin: auto;
   width: 100%;
+  z-index: 0 !important;
 
   ion-card {
     height: calc(100% - 48px);
