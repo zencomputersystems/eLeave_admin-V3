@@ -100,6 +100,11 @@ export class SideMenuNavigationComponent implements OnInit {
       title: 'Approval Override',
       url: '/main/approval-override',
       icon: 'icon_persons.svg'
+    },
+     {
+      title: 'Year End Closing',
+      url: '/main/year-end-closing',
+      icon: 'icon_calendar.svg'
     }
   ];
 

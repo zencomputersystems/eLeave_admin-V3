@@ -84,12 +84,14 @@ export class ApprovalOverrideApiService {
     /**
      * snackbar message after submit approval
      * @param {string} text
+     * @param {boolean} value
      * @memberof ApprovalOverrideApiService
      */
-    notification(text: string) {
+    notification(text: string, value: boolean) {
         this.snackbar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 5000,
-            data: text
+            duration: 2000,
+            verticalPosition: "top",
+            data: { message: text, response: value }
         });
     }
 

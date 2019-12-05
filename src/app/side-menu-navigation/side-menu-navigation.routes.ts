@@ -13,6 +13,7 @@ import { LeaveEntitlementByBatchComponent } from '../admin-setup/leave-setup/lea
 import { WorkingHourListComponent } from '../admin-setup/leave-setup/working-hour/working-hour-list/working-hour-list.component';
 import { EmployeeSetupComponent } from '../admin-setup/invites/employee-setup/employee-setup.component';
 import { ApplyOnBehalfComponent } from '../admin-setup/leave-setup/apply-on-behalf/apply-on-behalf.component';
+import { YearEndClosingComponent } from '../admin-setup/year-end-closing/year-end-closing.component';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -57,6 +58,7 @@ export const sideMenuNavigationRoutes: Routes = [
             // },
             { path: 'apply-on-behalf', component: ApplyOnBehalfComponent },
             { path: 'approval-override', component: PageNotFoundComponent },
+            { path: 'year-end-closing', component: YearEndClosingComponent },
         ]
     },
     { path: '**', component: PageNotFoundComponent },

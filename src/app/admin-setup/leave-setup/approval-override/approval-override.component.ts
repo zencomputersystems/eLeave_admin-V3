@@ -355,11 +355,11 @@ export class ApprovalOverrideComponent implements OnInit {
     submitData(body: any) {
         this.approvalOverrideAPI.patch_approval_override(body).subscribe(response => {
             if (this.approvalForm.controls.radio.value == 'APPROVED') {
-                this.approvalOverrideAPI.notification('approved successfully ');
+                this.approvalOverrideAPI.notification('approved successfully ', true);
             } else if (this.approvalForm.controls.radio.value == 'REJECTED') {
-                this.approvalOverrideAPI.notification('rejected successfully ');
+                this.approvalOverrideAPI.notification('rejected successfully ', true);
             } else {
-                this.approvalOverrideAPI.notification('cancelled successfully ');
+                this.approvalOverrideAPI.notification('cancelled successfully ', true);
             }
             this.showNoResult = false;
             this.showSmallSpinner = false;
