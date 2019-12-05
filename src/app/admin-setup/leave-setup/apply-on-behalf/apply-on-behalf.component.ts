@@ -1165,10 +1165,8 @@ export class ApplyOnBehalfComponent implements OnInit {
     getSelectedEmployee(userId: string, checkVal: number) {
         if (checkVal == 1) {
             this.radioOption = '1';
-            this.apiService.get_user_profile_details(userId).subscribe(data => {
+            this.leaveAPI.get_entilement_details(userId).subscribe(data => {
                 this.entitlement = data;
-                this.entitlement = data.entitlementDetail;
-                this.showSpinner = false;
                 this.applyLeaveForm.controls.leaveTypes.enable();
             })
         } else {

@@ -368,9 +368,9 @@
                                     <mat-select class="selectLeave" name="leave" *ngIf="radioOption == '1'"
                                         formControlName="leaveTypes" required>
                                         <mat-option *ngFor="let leave of entitlement; let i=index"
-                                            [value]="leave.leaveTypeName"
-                                            (click)="addEntitlementBal();daysAvailable = leave.balanceDays;leaveTypeId = leave.leaveTypeId; applyLeaveForm.controls.firstPicker.enable();applyLeaveForm.controls.secondPicker.enable();">
-                                            {{leave.leaveTypeName}}</mat-option>
+                                            [value]="leave.LEAVE_CODE"
+                                            (click)="addEntitlementBal();daysAvailable = leave.BALANCE_DAYS;leaveTypeId = leave.LEAVE_TYPE_GUID; applyLeaveForm.controls.firstPicker.enable();applyLeaveForm.controls.secondPicker.enable();">
+                                            {{leave.LEAVE_CODE}}</mat-option>
                                     </mat-select>
                                     <mat-select class="selectLeave" name="leave" *ngIf="radioOption == '2'"
                                         formControlName="leaveTypes" required>
@@ -380,8 +380,6 @@
                                     </mat-select>
                                     <mat-error *ngIf="!applyLeaveForm.leaveTypes" style="padding: 5px;padding-left: 0;">
                                         Please select one leave type</mat-error>
-                                    <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
-                margin-left: -50px;margin-top: -10px;"></ion-spinner>
                                 </mat-form-field>
                                 &nbsp;&nbsp;
                                 <div style="display: inline-block;" *ngIf="radioOption == '1'">

@@ -395,12 +395,14 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails = data;
             this.getEmploymentDetails();
         })
-        this.inviteAPI.get_requested_user_profile(this.userId).subscribe(data => {
+        this.leaveApi.get_entilement_details(this.userId).subscribe(data => {
+            this.entitlementValue = data[0].LEAVE_TYPE_GUID;
+            this.dayAvailable = data[0].BALANCE_DAYS;
+        })
+        this.inviteAPI.get_user_profile_details(this.userId).subscribe(data => {
             this.calendarValue = data.calendarId;
             this.roleValue = data.roleId;
             this.workingValue = data.workingHoursId;
-            this.entitlementValue = data.entitlementDetail[0].leaveTypeId;
-            this.dayAvailable = data.entitlementDetail[0].balanceDays;
         })
     }
 

@@ -140,18 +140,6 @@ export class APIService {
     }
 
     /**
-     * This method is used to get user profile information of requested GUID
-     * @param {*} guid
-     * @returns {Observable<any>}
-     * @memberof APIService
-     */
-    get_user_profile_details(guid): Observable<any> {
-        this.headerAuthorization();
-        return this.http.get(this.baseUrl + '/api/userprofile/' + guid, { headers: this.headers })
-            .pipe(map((res: Response) => res.json()));
-    }
-
-    /**
      * Get user profile list JSON data from endpoint
      * @returns {Observable<any>}
      * @memberof APIService
