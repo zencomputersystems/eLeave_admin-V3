@@ -1,4 +1,173 @@
-<div style="margin-top: 4%;">
+<ion-card>
+    <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
+        <div class="fullContainer">
+            <div class="left">
+                <img src="assets/icon/leave_setup/icon_override@3x.png" style="width:24px;height:32px">
+            </div>
+            <div class="right">
+                <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Approval
+                    Override
+                </ion-card-subtitle>
+                <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                    Override leave application status for employee</ion-card-subtitle>
+            </div>
+            <div style="right: 25px;top: 25px;position: absolute;">
+                <ion-button
+                    style="--border-radius: 2px;font-size: 11px;height: 30px;width:193px;cursor: pointer;text-transform: none;"
+                    color="primary" (click)="menu.open('applybehalfDetails'); menuOpen=true;">
+                    View Approval Override History
+                </ion-button>
+            </div>
+        </div>
+    </ion-card-header>
+    <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;">
+        <div class="cardContent">
+            <ion-card-content style="max-height: 100%;height: 100%;">
+                <div class="row">
+                    <div class="filter">
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 15px;color: #a5a4bf;">
+                            <ion-row>
+                                <ion-col style="font-weight: bold;white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    EMPLOYEE LIST</ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col style="padding-top: 0;color: #808495;padding-bottom: 0;margin-bottom: 5px;">
+                                    You can override leave status for employee. Simply type their name or even by
+                                    department name and change their leave application- as individual or whole
+                                    department.
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-searchbar mode="md" class="searchbar"
+                                    placeholder="Search by Name/Department or Company"
+                                    (ionChange)="changeDetails($event.srcElement.value)">
+                                </ion-searchbar>
+                            </ion-row>
+                        </div>
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 4px;margin-bottom: 5px;color: #a5a4bf;font-weight: bold;">
+                            <ion-row nowrap>
+                                <ion-col size="1.5"
+                                    style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
+                                    <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
+                                        [(ngModel)]="headCheckbox" [indeterminate]="indeterminateVal"
+                                        (click)="headerCheckbox()">
+                                    </ion-checkbox>
+                                </ion-col>
+                                <ion-col size="7" align-self-center style="white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;">
+                                    EMPLOYEE & LEAVE APPLICATION DETAILS
+                                </ion-col>
+                                <ion-col size="2.3" align-self-center style="text-align: center;white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;">
+                                    DAYS
+                                </ion-col>
+                                <ion-col align-self-center>
+                                    <ion-buttons end style="height: 26px;" (click)="showCheckedUser()">
+                                        <div style="width: 18px;height: 18px;fill: #a5a4bf;opacity: 0.8;cursor: pointer;"
+                                            [inlineSVG]="'assets/icon/add_employee/filters.svg'">
+                                        </div>
+                                    </ion-buttons>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <div *ngIf="filteredUser != undefined" style="height: calc( 100% - 200px);overflow: auto;">
+                            <ion-row class="detailsRow" *ngFor="let item of filteredUser; let i=index">
+                                <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
+                                    <ion-avatar class="avatar" (mouseover)="hoverInOut(i, true, item.isChecked)"
+                                        (mouseout)="hoverInOut(i, false, item.isChecked)">
+                                        <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                                            [style.display]="showCheckBox[i] ? 'none' : 'block'">
+                                        <div class="checkboxOnAvatar"
+                                            [style.display]="showCheckBox[i] ? 'block' : 'none'">
+                                            <ion-checkbox mode="ios"
+                                                style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                [(ngModel)]="item.isChecked" (ionChange)="contentCheckbox()">
+                                            </ion-checkbox>
+                                        </div>
+                                    </ion-avatar>
+                                </ion-col>
+                                <ion-col size="7" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                    <ion-label style="color:#43425d; font-weight: bold;;font-size: 12px;">
+                                        {{item.employeeName}}</ion-label>
+                                    <p
+                                        style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                        {{item.designation}}</p>
+                                </ion-col>
+                                <ion-col size="2.3" align-self-center class="colOfLeave"
+                                    *ngIf="approvalForm.controls.leaveTypes.valid"
+                                    style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                    {{item.entitled}}
+                                </ion-col>
+                                <ion-col></ion-col>
+                                <ion-item lines="full" style=" --min-height: none;width: 100%;"></ion-item>
+                            </ion-row>
+                        </div>
+                        <div style="width: 100%; height:100%; text-align: center; margin-top: -30px"
+                            *ngIf="showSpinner">
+                            <app-spinner></app-spinner>
+                        </div>
+                        <p *ngIf="filteredUser == undefined" style="color: #a3a6b4;opacity:0.8;font-size: 12px;width: 30%;
+                        margin: 0 auto;padding-top: 30px;">
+                            Nothing to view. Please search & select employee or department first. </p>
+                    </div>
+                    <div class="selection">
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a5a4bf;">
+                            <ion-row>
+                                <ion-col style="font-weight: bold;white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    ACTION REQUIRED</ion-col>
+                            </ion-row>
+                        </div>
+                        <form [formGroup]="approvalForm" style="height: calc( 100% - 62px);
+                        overflow: auto;padding-left: 15px;">
+                            <div style="margin-top: 30px; margin-bottom: 20px;">
+                                <mat-radio-group formControlName="radio" required
+                                    style="padding-left: 10px;white-space: nowrap;color: #7a8589;"
+                                    (change)="enableDisableButton()">
+                                    <mat-radio-button value="CANCELLED" style="padding-right: 15px;">Cancel
+                                    </mat-radio-button>
+                                    <mat-radio-button value="REJECTED" style="padding-right: 15px;">Reject
+                                    </mat-radio-button>
+                                    <mat-radio-button value="APPROVED" style="padding-right: 15px;">Approve
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <ion-item class="divider" lines="full"></ion-item>
+                            <mat-form-field appearance="outline" style="width: 99%;margin-top: 20px;">
+                                <mat-label>Reason</mat-label>
+                                <textarea matInput formControlName="remark" required
+                                    style="height: 100px;resize: none;"></textarea>
+                                <mat-error *ngIf="!approvalForm.remark" style="padding: 5px;padding-left: 0;">
+                                    Please enter reason</mat-error>
+                            </mat-form-field>
+                            <div style="text-align: center;width: 100%;">
+                                <ion-button fill="outline"
+                                    (click)="approvalForm.reset(); daysAvailable='';daysCount=0;minDate='';maxDate='';clearArrayList();"
+                                    style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 40%;font-size: 12px;text-transform: none">
+                                    Clear
+                                </ion-button>
+                                <ion-button
+                                    style="--border-radius: 2px;height: 30px; width: 57%;font-size: 12px;text-transform: none"
+                                    [disabled]="!approvalForm.valid"
+                                    (click)="postData(); approvalForm.reset();daysAvailable='';daysCount=0;minDate='';maxDate='';">
+                                    Submit
+                                </ion-button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </ion-card-content>
+        </div>
+    </div>
+</ion-card>
+<!-- <div style="margin-top: 4%;">
     <form [formGroup]="approvalForm">
         <div style="display: inline-block;width: 31%;">
             <span style="padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
@@ -74,7 +243,7 @@
                 <!-- <ion-icon class="arrow" name="arrow-dropdown" (click)="sortName(false, 1, -1)" *ngIf="arrowDownName">
                 </ion-icon>
                 <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownName" (click)="sortName(true, -1, 1)">
-                </ion-icon> -->
+                </ion-icon> --
             </ion-col>
             <ion-col size="1.7">
                 <ion-label style="font-size: 12px;">LEAVE TYPE</ion-label>
@@ -159,4 +328,4 @@
             <ion-spinner name="lines-small" color="primary"></ion-spinner>
         </div>
     </div>
-</div>
+</div> -->

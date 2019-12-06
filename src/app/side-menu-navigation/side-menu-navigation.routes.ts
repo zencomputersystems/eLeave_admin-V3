@@ -4,7 +4,6 @@ import { SideMenuNavigationComponent } from './side-menu-navigation.component';
 import { PageNotFoundComponent } from '../page-not-found.component';
 import { LeaveSetupComponent } from '../admin-setup/leave-setup/leave-setup.component';
 import { RoleListComponent } from '../admin-setup/role-management/role-list/role-list.component';
-import { RoleRightsComponent } from '../admin-setup/role-management/role-rights/role-rights.component';
 import { PolicyListComponent } from '../admin-setup/general-leave-policy/policy-list/policy-list.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { CalendarProfileComponent } from '../admin-setup/leave-setup/calendar-profile/calendar-profile.component';
@@ -14,6 +13,7 @@ import { WorkingHourListComponent } from '../admin-setup/leave-setup/working-hou
 import { EmployeeSetupComponent } from '../admin-setup/invites/employee-setup/employee-setup.component';
 import { ApplyOnBehalfComponent } from '../admin-setup/leave-setup/apply-on-behalf/apply-on-behalf.component';
 import { YearEndClosingComponent } from '../admin-setup/year-end-closing/year-end-closing.component';
+import { ApprovalOverrideComponent } from '../admin-setup/leave-setup/approval-override/approval-override.component';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -35,29 +35,10 @@ export const sideMenuNavigationRoutes: Routes = [
                     { path: 'general-leave-policy', component: PolicyListComponent }
                 ]
             },
-            {
-                path: 'employee-setup', component: EmployeeSetupComponent
-            },
-            {
-                path: 'role-management', component: RoleListComponent
-                // children: [
-                //     { path: '', redirectTo: 'role-list', pathMatch: 'full' },
-                //     { path: 'role-list', component: RoleListComponent },
-                //     { path: 'role-rights/:id', component: RoleRightsComponent },
-                //     { path: 'create-new-role', component: RoleRightsComponent },
-                //     { path: 'assign-role', component: AssignRoleComponent }
-                // ]
-            },
-            // {
-            //     path: 'general-leave-policy', component: PolicyListComponent,
-            //     children: [
-            //         { path: '', redirectTo: 'policy-list', pathMatch: 'full' },
-            //         { path: 'policy-list', component: PolicyListComponent },
-            //         { path: 'edit-policy/:id', component: CreatePolicyComponent }
-            //     ]
-            // },
+            { path: 'employee-setup', component: EmployeeSetupComponent },
+            { path: 'role-management', component: RoleListComponent },
             { path: 'apply-on-behalf', component: ApplyOnBehalfComponent },
-            { path: 'approval-override', component: PageNotFoundComponent },
+            { path: 'approval-override', component: ApprovalOverrideComponent },
             { path: 'year-end-closing', component: YearEndClosingComponent },
         ]
     },

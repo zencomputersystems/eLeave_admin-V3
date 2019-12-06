@@ -129,7 +129,6 @@ app-employee-setup
   > ion-searchbar.searchbar
   > div.searchbar-input-container
   > ion-icon.searchbar-search-icon.sc-ion-searchbar-md {
-  // height: 88%;
   color: #bcbccb;
   width: 16px;
   box-shadow: none;
@@ -147,8 +146,6 @@ app-employee-setup
   > div.searchbar-input-container
   > button
   > ion-icon.searchbar-clear-icon.sc-ion-searchbar-md {
-  // height: 80%;
-  // margin-top: -3px;
   color: #bcbccb;
   width: 16px;
   box-shadow: none;
@@ -224,7 +221,6 @@ app-apply-on-behalf
   > ion-searchbar.searchbar
   > div.searchbar-input-container
   > ion-icon.searchbar-search-icon.sc-ion-searchbar-md {
-  // height: 88%;
   color: #bcbccb;
   width: 16px;
   box-shadow: none;
@@ -242,8 +238,60 @@ app-apply-on-behalf
   > div.searchbar-input-container
   > button
   > ion-icon.searchbar-clear-icon.sc-ion-searchbar-md {
-  // height: 80%;
-  // margin-top: -3px;
+  color: #bcbccb;
+  width: 16px;
+  box-shadow: none;
+}
+app-approval-override
+  > ion-card
+  > div
+  > div.cardContent
+  > ion-card-content
+  > div.row
+  > div.filter
+  > div
+  > ion-row
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > input.searchbar-input {
+  background: white;
+  color: #43425d;
+  opacity: 0.8;
+  border: solid 1px #a5a4bf;
+  font-size: 12px;
+  box-shadow: none !important;
+  height: 40px;
+  padding-left: 40px;
+}
+app-approval-override
+  > ion-card
+  > div
+  > div.cardContent
+  > ion-card-content
+  > div.row
+  > div.filter
+  > div
+  > ion-row
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > ion-icon.searchbar-search-icon.sc-ion-searchbar-md {
+  color: #bcbccb;
+  width: 16px;
+  box-shadow: none;
+}
+app-approval-override
+  > ion-card
+  > div
+  > div.cardContent
+  > ion-card-content
+  > div.row
+  > div.filter
+  > div
+  > ion-row
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > button
+  > ion-icon.searchbar-clear-icon.sc-ion-searchbar-md {
   color: #bcbccb;
   width: 16px;
   box-shadow: none;
