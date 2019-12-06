@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { DashboardApiService } from './dashboard-api.service';
 import * as _moment from 'moment';
@@ -17,6 +17,13 @@ import { DeleteCalendarConfirmationComponent } from '../admin-setup/leave-setup/
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+
+  /**
+     * set menu is open or close by assign new class
+     * @type {boolean}
+     * @memberof DashboardComponent
+     */
+    @HostBinding('class.menuOverlay') menuOpen: boolean = false;
 
   /*
    * show/hide row content in dashboard

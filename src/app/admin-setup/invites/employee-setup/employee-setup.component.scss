@@ -1,3 +1,6 @@
+:host(.menuOverlay) {
+  z-index: 101 !important;
+}
 :host {
   margin: auto;
   width: 100%;
@@ -358,7 +361,7 @@
   ::ng-deep .selectForm > .mat-form-field-wrapper {
     padding-bottom: 0;
   }
-  ::ng-deep .mat-input-element:disabled{
+  ::ng-deep .mat-input-element:disabled {
     color: #43425d;
     // opacity: 0.8;
   }

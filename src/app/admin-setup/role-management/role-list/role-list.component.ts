@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { RoleApiService } from '../role-api.service';
 import { MatDialog } from '@angular/material';
 import { DialogDeleteConfirmationComponent } from '../dialog-delete-confirmation/dialog-delete-confirmation.component';
@@ -111,6 +111,14 @@ export class RoleListComponent implements OnInit {
      * @memberof RoleListComponent
      */
     public cloneRoleId: string;
+
+    /**
+     * set menu is open or close by assign new class
+     * @type {boolean}
+     * @memberof RoleListComponent
+     */
+    @HostBinding('class.menuOverlay') menuOpen: boolean = false;
+
 
     /**
      * user list

@@ -1,5 +1,7 @@
 // @import "~quill/dist/quill.core.css";
-
+:host(.menuOverlay) {
+  z-index: 101 !important;
+}
 :host {
   // top: 48px;
   // background: #f0f0f7;

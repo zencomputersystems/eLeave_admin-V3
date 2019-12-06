@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import * as _moment from 'moment';
@@ -24,6 +24,14 @@ import { MenuController } from '@ionic/angular';
         { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
 })
 export class ApplyOnBehalfComponent implements OnInit {
+
+    /**
+     * set menu is open or close by assign new class
+     * @type {boolean}
+     * @memberof ApplyOnBehalfComponent
+     */
+    @HostBinding('class.menuOverlay') menuOpen: boolean = false;
+
     /**
      * Local property for leave entitlement details
      * @type {*}

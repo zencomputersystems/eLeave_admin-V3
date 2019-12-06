@@ -1,6 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
+/**
+ * dialog confirmation page
+ * @export
+ * @class DialogSubmitConfirmationComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-dialog-submit-confirmation',
   templateUrl: './dialog-submit-confirmation.component.html',
@@ -8,9 +14,19 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 })
 export class DialogSubmitConfirmationComponent implements OnInit {
 
+  /**
+   *Creates an instance of DialogSubmitConfirmationComponent.
+   * @constant {MatDialogRef<DialogSubmitConfirmationComponent>} dialogRef
+   * @constant {*} data
+   * @memberof DialogSubmitConfirmationComponent
+   */
   constructor(public dialogRef: MatDialogRef<DialogSubmitConfirmationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
+  /**
+   * initial method
+   * @memberof DialogSubmitConfirmationComponent
+   */
   ngOnInit() {
   }
 
@@ -18,8 +34,8 @@ export class DialogSubmitConfirmationComponent implements OnInit {
      * click on cancel button to close pop up dialog
      * @memberof DialogSubmitConfirmationComponent
      */
-    onCancelClick(): void {
-      this.dialogRef.close();
+  onCancelClick(): void {
+    this.dialogRef.close();
   }
 
 }

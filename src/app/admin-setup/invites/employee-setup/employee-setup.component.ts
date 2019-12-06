@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AdminInvitesApiService } from '../admin-invites-api.service';
 import * as _moment from 'moment';
@@ -27,6 +27,13 @@ import { DeleteCalendarConfirmationComponent } from '../../leave-setup/delete-ca
         { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
 })
 export class EmployeeSetupComponent implements OnInit {
+
+    /**
+     * set menu is open or close by assign new class
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    @HostBinding('class.menuOverlay') menuOpen: boolean = false;
 
     /**
      * Get user profile list from API
