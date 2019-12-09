@@ -443,11 +443,11 @@
               <ion-item *ngFor="let item of tasks; let i = index;">
                 <ion-row style="width: 100%;">
                   <ng-container style="padding-top: 2%;">
-                    <ion-col align-self-center size="6"
+                    <ion-col align-self-center size="8"
                       style="padding-left: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
                       {{item.message}}
                     </ion-col>
-                    <ion-col align-self-center>
+                    <!-- <ion-col align-self-center>
                       <div style="display: inline;padding-right: 30px;">
                         <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
                             padding-left: 0.5%;font-size: 16px;cursor: pointer;">
@@ -456,8 +456,8 @@
                           style="position: absolute;font-weight: bold;display: inline-block;color: #3b86ff;cursor: pointer;font-size: 11px;line-height: 1.82;">
                           Action</p>
                       </div>
-                    </ion-col>
-                    <ion-col align-self-center>
+                    </ion-col> -->
+                    <ion-col size="2" align-self-center style="text-align: center;">
                       <div style="display: inline;padding-right: 30px;">
                         <ion-icon name="checkmark" style="color: #46cdcf;padding-top: 2px;padding-right: 10px;
                                 padding-left: 0.5%;font-size: 16px;cursor: pointer;"
@@ -467,7 +467,7 @@
                           (click)="approveLeave(item.leave_transaction_guid)">Accept</p>
                       </div>
                     </ion-col>
-                    <ion-col align-self-center>
+                    <ion-col size="2" align-self-center style="text-align: center;">
                       <div style="display: inline;padding-right: 30px;">
                         <ion-icon name="close" style="color: #ff6768;padding-top: 2px;padding-right: 10px;
                                             padding-left: 0.5%;font-size: 16px;cursor: pointer;"

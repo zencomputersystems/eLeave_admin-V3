@@ -55,15 +55,15 @@
                                 <ion-col size="1.5"
                                     style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
                                     <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
-                                        [(ngModel)]="headCheckbox" [indeterminate]="indeterminateVal"
-                                        (click)="headerCheckbox()">
+                                        [(ngModel)]="mainCheckbox" [indeterminate]="indeterminate"
+                                        (click)="mainEvent()">
                                     </ion-checkbox>
                                 </ion-col>
-                                <ion-col size="7" align-self-center style="white-space: nowrap;
+                                <ion-col size="8" align-self-center style="white-space: nowrap;
                                 text-overflow: ellipsis;overflow: hidden;">
                                     EMPLOYEE & LEAVE APPLICATION DETAILS
                                 </ion-col>
-                                <ion-col size="2.3" align-self-center style="text-align: center;white-space: nowrap;
+                                <ion-col size="1.5" align-self-center style="text-align: center;white-space: nowrap;
                                 text-overflow: ellipsis;overflow: hidden;">
                                     DAYS
                                 </ion-col>
@@ -76,43 +76,64 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div *ngIf="filteredUser != undefined" style="height: calc( 100% - 200px);overflow: auto;">
-                            <ion-row class="detailsRow" *ngFor="let item of filteredUser; let i=index">
+                        <div *ngIf="filteredPendingList.length > 0" style="height: calc( 100% - 200px);overflow: auto;">
+                            <ion-row class="detailsRow" *ngFor="let item of filteredPendingList; let i=index">
                                 <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
-                                    <ion-avatar class="avatar" (mouseover)="hoverInOut(i, true, item.isChecked)"
-                                        (mouseout)="hoverInOut(i, false, item.isChecked)">
+                                    <ion-avatar class="avatar" (mouseover)="mouseEvent(true, i, item.isChecked)"
+                                        (mouseout)="mouseEvent(false, i, item.isChecked)">
                                         <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
-                                            [style.display]="showCheckBox[i] ? 'none' : 'block'">
+                                            [style.display]="displayCheckbox[i] ? 'none' : 'block'">
                                         <div class="checkboxOnAvatar"
-                                            [style.display]="showCheckBox[i] ? 'block' : 'none'">
+                                            [style.display]="displayCheckbox[i] ? 'block' : 'none'">
                                             <ion-checkbox mode="ios"
                                                 style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
-                                                [(ngModel)]="item.isChecked" (ionChange)="contentCheckbox()">
+                                                [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
                                             </ion-checkbox>
                                         </div>
                                     </ion-avatar>
                                 </ion-col>
-                                <ion-col size="7" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                    <ion-label style="color:#43425d; font-weight: bold;;font-size: 12px;">
+                                <ion-col size="8" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                    <ion-label style="opacity: 0.8;color:#43425d; font-weight: bold;;font-size: 12px;">
                                         {{item.employeeName}}</ion-label>
-                                    <p
-                                        style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                                        {{item.designation}}</p>
+                                    <div style="display: block;padding-top: 5px;">
+                                        <div style="display: inline-block;padding-right: 20px;">
+                                            <p
+                                                style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                <span style="font-weight: bold;">ID:</span> {{item.staffNumber}}</p>
+                                            <p
+                                                style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                <span style="font-weight: bold;">Leave Type:</span> {{item.ABBR}}</p>
+                                        </div>
+                                        <div style="display: inline-block;padding-right: 20px;">
+                                            <p
+                                                style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                <span style="font-weight: bold;">Status:</span> {{item.STATUS}}</p>
+                                            <p
+                                                style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                <span style="font-weight: bold;">Date Applied:</span>
+                                                {{item.CREATION_TS | date: 'yyyy-MM-dd'}}
+                                            </p>
+                                        </div>
+                                        <div style="display: inline-block;">
+                                            <p
+                                                style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                <span style="font-weight: bold;">Start Date:</span> {{item.START_DATE}}
+                                            </p>
+                                            <p
+                                                style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                <span style="font-weight: bold;">End Date:</span> {{item.END_DATE}}</p>
+                                        </div>
+                                    </div>
                                 </ion-col>
-                                <ion-col size="2.3" align-self-center class="colOfLeave"
-                                    *ngIf="approvalForm.controls.leaveTypes.valid"
+                                <ion-col size="1.5" align-self-center class="colOfLeave"
                                     style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                    {{item.entitled}}
+                                    {{item.NO_OF_DAYS}}
                                 </ion-col>
                                 <ion-col></ion-col>
                                 <ion-item lines="full" style=" --min-height: none;width: 100%;"></ion-item>
                             </ion-row>
                         </div>
-                        <div style="width: 100%; height:100%; text-align: center; margin-top: -30px"
-                            *ngIf="showSpinner">
-                            <app-spinner></app-spinner>
-                        </div>
-                        <p *ngIf="filteredUser == undefined" style="color: #a3a6b4;opacity:0.8;font-size: 12px;width: 30%;
+                        <p *ngIf="filteredPendingList.length == 0 " style="color: #a3a6b4;opacity:0.8;font-size: 12px;width: 30%;
                         margin: 0 auto;padding-top: 30px;">
                             Nothing to view. Please search & select employee or department first. </p>
                     </div>
@@ -142,21 +163,21 @@
                             <ion-item class="divider" lines="full"></ion-item>
                             <mat-form-field appearance="outline" style="width: 99%;margin-top: 20px;">
                                 <mat-label>Reason</mat-label>
-                                <textarea matInput formControlName="remark" required
-                                    style="height: 100px;resize: none;"></textarea>
+                                <textarea matInput formControlName="remark" required style="height: 100px;resize: none;"
+                                    (input)="enableDisableButton()"></textarea>
                                 <mat-error *ngIf="!approvalForm.remark" style="padding: 5px;padding-left: 0;">
                                     Please enter reason</mat-error>
                             </mat-form-field>
                             <div style="text-align: center;width: 100%;">
                                 <ion-button fill="outline"
-                                    (click)="approvalForm.reset(); daysAvailable='';daysCount=0;minDate='';maxDate='';clearArrayList();"
+                                    (click)="approvalForm.reset();mainCheckbox=false;indeterminate=false; clearValue()"
                                     style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 40%;font-size: 12px;text-transform: none">
                                     Clear
                                 </ion-button>
                                 <ion-button
                                     style="--border-radius: 2px;height: 30px; width: 57%;font-size: 12px;text-transform: none"
-                                    [disabled]="!approvalForm.valid"
-                                    (click)="postData(); approvalForm.reset();daysAvailable='';daysCount=0;minDate='';maxDate='';">
+                                    (click)="patchStatus();mainCheckbox=false;indeterminate=false"
+                                    [disabled]="disableButton">
                                     Submit
                                 </ion-button>
                             </div>

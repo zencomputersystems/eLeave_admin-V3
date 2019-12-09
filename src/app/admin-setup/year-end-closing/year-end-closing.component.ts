@@ -46,6 +46,13 @@ export class YearEndClosingComponent implements OnInit {
   public selected: number;
 
   /**
+   * show loading spinner
+   * @type {boolean}
+   * @memberof YearEndClosingComponent
+   */
+  public showSpinner: boolean = true;
+
+  /**
    *Creates an instance of YearEndClosingComponent.
    * @param {Router} router
    * @param {MatDialog} dialog
@@ -60,6 +67,7 @@ export class YearEndClosingComponent implements OnInit {
    */
   async ngOnInit() {
     this.pendingList = await this.yearEndApi.get_approval_override_list().toPromise();
+    this.showSpinner = false;
     this.currentDate = this.currentDate.getFullYear();
     this.yearList.push(this.currentDate);
     this.yearList.push(this.currentDate - 1);

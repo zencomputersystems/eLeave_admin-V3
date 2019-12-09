@@ -141,7 +141,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {boolean}
      * @memberof ApplyOnBehalfComponent
      */
-    public showSpinner: boolean = false;
+    public showSpinner: boolean = true;
 
     /**
      * filtered user from searchbar keyup
@@ -466,11 +466,10 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     ngOnInit() {
-        // this.leaveAPI.get_company_list().subscribe(
-        //     list => this.companyList = list);
-        this.apiService.get_user_profile_list().subscribe(list =>
-            this._userList = list
-        )
+        this.apiService.get_user_profile_list().subscribe(list => {
+            this._userList = list;
+            this.showSpinner = false;
+        })
         this.leaveAPI.get_admin_leavetype().subscribe(leave =>
             this.leaveTypes = leave
         )
