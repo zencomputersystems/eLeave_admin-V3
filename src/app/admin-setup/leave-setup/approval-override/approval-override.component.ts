@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApprovalOverrideApiService } from './approval-override-api.service';
-import { LeaveApiService } from '../leave-api.service';
+import { MenuController } from '@ionic/angular';
 
 /**
  * override approval for pending leave applciation 
@@ -15,6 +15,13 @@ import { LeaveApiService } from '../leave-api.service';
     styleUrls: ['./approval-override.component.scss'],
 })
 export class ApprovalOverrideComponent implements OnInit {
+
+    /**
+     * set menu is open or close by assign new class
+     * @type {boolean}
+     * @memberof ApprovalOverrideComponent
+     */
+    @HostBinding('class.menuOverrideOverlay') menuOpen: boolean = false;
 
     /**
      * validation for form field
@@ -123,7 +130,7 @@ export class ApprovalOverrideComponent implements OnInit {
      * @param {ApprovalOverrideApiService} approvalOverrideAPI
      * @memberof ApprovalOverrideComponent
      */
-    constructor(private approvalOverrideAPI: ApprovalOverrideApiService) {
+    constructor(private approvalOverrideAPI: ApprovalOverrideApiService, private menu: MenuController) {
         this.approvalForm = new FormGroup({
             remark: new FormControl('', Validators.required),
             radio: new FormControl('', Validators.required)
@@ -163,13 +170,13 @@ export class ApprovalOverrideComponent implements OnInit {
      */
     async filter(text: any) {
         if (text && text.trim() != '') {
-            let name = this._userList.filter((item: any) => {
-                return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
+            let username = this._userList.filter((user: any) => {
+                return (user.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
-            let department = this._userList.filter((valur: any) => {
-                return (valur.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
+            let departmentName = this._userList.filter((department: any) => {
+                return (department.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
-            this._filteredUserList = require('lodash').uniqBy(name.concat(department), 'id');
+            this._filteredUserList = require('lodash').uniqBy(username.concat(departmentName), 'id');
             for (let j = 0; j < this._filteredUserList.length; j++) {
                 this.filterUserGUID(this._pendingList, this._filteredUserList[j].userId, j);
             }
@@ -263,15 +270,14 @@ export class ApprovalOverrideComponent implements OnInit {
      * @param {string} leaveTypeGuid
      * @memberof ApprovalOverrideComponent
      */
-    getLeaveType(index: number, leaveTypeGuid: string) {
-        this.approvalOverrideAPI.get_admin_leavetype().subscribe(type => {
-            this._leaveTypeList = type;
-            for (let i = 0; i < this._leaveTypeList.length; i++) {
-                if (leaveTypeGuid === this._leaveTypeList[i].LEAVE_TYPE_GUID && this.filteredPendingList[index] != undefined) {
-                    this.filteredPendingList[index]["ABBR"] = this._leaveTypeList[i].ABBR;
-                }
+    async getLeaveType(index: number, leaveTypeGuid: string) {
+        let type = await this.approvalOverrideAPI.get_admin_leavetype().toPromise();
+        this._leaveTypeList = type;
+        for (let i = 0; i < this._leaveTypeList.length; i++) {
+            if (leaveTypeGuid === this._leaveTypeList[i].LEAVE_TYPE_GUID && this.filteredPendingList[index] != undefined) {
+                this.filteredPendingList[index]["ABBR"] = this._leaveTypeList[i].ABBR;
             }
-        })
+        }
     }
 
     /**

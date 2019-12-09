@@ -1,7 +1,13 @@
+:host(.menuOverrideOverlay) {
+  z-index: 101 !important;
+}
 :host {
   margin: auto;
   width: 100%;
   z-index: 0 !important;
+  .pStyle {
+    margin-bottom: 10px;
+  }
   .titleRow {
     padding-bottom: 10px;
     color: #20291f;
