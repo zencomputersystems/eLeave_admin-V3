@@ -31,7 +31,7 @@ export class ApprovalOverrideComponent implements OnInit {
     public approvalForm: any;
 
     /**
-     * list of pending approval application, filtered from selected company & department
+     * list of pending approval application
      * @type {*}
      * @memberof ApprovalOverrideComponent
      */
@@ -80,7 +80,7 @@ export class ApprovalOverrideComponent implements OnInit {
     public showSmallSpinner: boolean = false;
 
     /**
-     * show spinner after click selection of company & department
+     * show spinner
      * @type {boolean}
      * @memberof ApprovalOverrideComponent
      */
@@ -126,6 +126,14 @@ export class ApprovalOverrideComponent implements OnInit {
     private _leaveTypeList: any;
 
     /**
+     * get company list by id 
+     * @private
+     * @type {*}
+     * @memberof ApprovalOverrideComponent
+     */
+    private _companyList: any;
+
+    /**
      *Creates an instance of ApprovalOverrideComponent.
      * @param {ApprovalOverrideApiService} approvalOverrideAPI
      * @memberof ApprovalOverrideComponent
@@ -141,12 +149,18 @@ export class ApprovalOverrideComponent implements OnInit {
      * initial method to get list from endpoint
      * @memberof ApprovalOverrideComponent
      */
-    ngOnInit() {
-        this.approvalOverrideAPI.get_user_profile_list().subscribe(list => {
-            this._userList = list;
-            this.showSpinner = false;
-        })
-        this.approvalOverrideAPI.get_approval_override_list().subscribe(list => this._pendingList = list)
+    async ngOnInit() {
+        let list = await this.approvalOverrideAPI.get_user_profile_list().toPromise();
+        this._userList = list;
+        this.showSpinner = false;
+        this.approvalOverrideAPI.get_approval_override_list().subscribe(list => this._pendingList = list);
+        for (let i = 0; i < this._userList.length; i++) {
+            if (this._userList[i].companyId != null) {
+                let company = await this.approvalOverrideAPI.get_company_detail(this._userList[i].companyId).toPromise();
+                this._companyList = company;
+                this._userList[i]["companyName"] = this._companyList.companyName;
+            }
+        }
     }
 
     /**
@@ -160,6 +174,9 @@ export class ApprovalOverrideComponent implements OnInit {
             this.filteredPendingList = [];
         } else {
             this.filter(text);
+            if (this._filteredUserList.length == 0) {
+                this.filteredPendingList = [];
+            }
         }
     }
 
@@ -176,7 +193,12 @@ export class ApprovalOverrideComponent implements OnInit {
             let departmentName = this._userList.filter((department: any) => {
                 return (department.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
-            this._filteredUserList = require('lodash').uniqBy(username.concat(departmentName), 'id');
+            let companyName = this._userList.filter((company: any) => {
+                if (company.companyName != undefined) {
+                    return (company.companyName.toLowerCase().indexOf(text.toLowerCase()) > -1)
+                }
+            })
+            this._filteredUserList = require('lodash').uniqBy(username.concat(departmentName).concat(companyName), 'id');
             for (let j = 0; j < this._filteredUserList.length; j++) {
                 this.filterUserGUID(this._pendingList, this._filteredUserList[j].userId, j);
             }
@@ -387,10 +409,6 @@ export class ApprovalOverrideComponent implements OnInit {
     clearValue() {
         this.approvalForm.get('radio').reset();
         this.approvalForm.get('remark').reset();
-        document.querySelector('ion-searchbar').getInputElement().then((searchInput) => {
-            searchInput.value = '';
-            this.changeDetails('');
-        });
         this.mainEvent();
         this.filteredPendingList = [];
         this.leaveTransactionGUID = [];
@@ -408,6 +426,10 @@ export class ApprovalOverrideComponent implements OnInit {
             this.approvalOverrideAPI.notification('You have submitted successfully ', true);
             this.showSmallSpinner = false;
             this.clearValue();
+            document.querySelector('ion-searchbar').getInputElement().then((searchInput) => {
+                searchInput.value = '';
+                this.changeDetails('');
+            });
             // for (let i = 0; i < this.filteredPendingList.length; i++) {
             //     this.deleteSubmittedItem(i);
             // }

@@ -427,6 +427,14 @@ export class ApplyOnBehalfComponent implements OnInit {
     private _arrayDateSlot = [];
 
     /**
+     * details list from companyId
+     * @private
+     * @type {*}
+     * @memberof ApplyOnBehalfComponent
+     */
+    private _company: any;
+
+    /**
      * This is local property for Full Calendar Component
      * @type {FullCalendarComponent}
      * @memberof ApplyOnBehalfComponent
@@ -455,7 +463,7 @@ export class ApplyOnBehalfComponent implements OnInit {
             leaveTypes: new FormControl({ value: '', disabled: false }, Validators.required),
             firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
             secondPicker: new FormControl({ value: '', disabled: true }, Validators.required),
-            inputReason: new FormControl('', Validators.required),
+            inputReason: new FormControl('', Validators.required)
         });
     }
 
@@ -465,14 +473,18 @@ export class ApplyOnBehalfComponent implements OnInit {
      * Get user profile list from API
      * @memberof ApplyOnBehalfComponent
      */
-    ngOnInit() {
-        this.apiService.get_user_profile_list().subscribe(list => {
-            this._userList = list;
-            this.showSpinner = false;
-        })
-        this.leaveAPI.get_admin_leavetype().subscribe(leave =>
-            this.leaveTypes = leave
-        )
+    async ngOnInit() {
+        let list = await this.apiService.get_user_profile_list().toPromise();
+        this._userList = list;
+        this.showSpinner = false;
+        this.leaveAPI.get_admin_leavetype().subscribe(leave => this.leaveTypes = leave)
+        for (let i = 0; i < this._userList.length; i++) {
+            if (this._userList[i].companyId != null) {
+                let list = await this.leaveAPI.get_company_details(this._userList[i].companyId).toPromise();
+                this._company = list;
+                this._userList[i]["companyName"] = this._company.companyName;
+            }
+        }
     }
 
     /**
@@ -514,7 +526,12 @@ export class ApplyOnBehalfComponent implements OnInit {
             let department = this._userList.filter((valur: any) => {
                 return (valur.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
-            this.filteredUser = require('lodash').uniqBy(name.concat(department), 'id');
+            let company = this._userList.filter((company: any) => {
+                if (company.companyName != undefined) {
+                    return (company.companyName.toLowerCase().indexOf(text.toLowerCase()) > -1)
+                }
+            })
+            this.filteredUser = require('lodash').uniqBy(name.concat(department).concat(company), 'id');
             this.addShortCode();
         }
     }
