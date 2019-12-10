@@ -408,10 +408,9 @@ export class CreatePolicyComponent {
                 this._policyGUID = '';
             } else {
                 this._data["tenantCompanyId"] = this.tenantId;
-                this.policyApi.post_general_leave_policy(this._data).subscribe(response => {
-                    this.tenantId = '';
-                    this.policyApi.message('Edit mode disabled. Good job!', true)
-                });
+                await this.policyApi.post_general_leave_policy(this._data).toPromise();
+                this.tenantId = '';
+                this.policyApi.message('Edit mode disabled. Good job!', true);
             }
         }
     }

@@ -4,9 +4,9 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import * as _moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import { AppDateAdapter, APP_DATE_FORMATS } from '../date.adapter';
-import { LeaveApiService } from '../leave-api.service';
+import { AppDateAdapter, APP_DATE_FORMATS } from '../leave-setup/date.adapter';
 import { MenuController } from '@ionic/angular';
+import { LeaveApiService } from '../leave-setup/leave-api.service';
 
 
 /**

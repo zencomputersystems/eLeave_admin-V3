@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
 import { MatSnackBar } from "@angular/material";
-import { ApprovalOverrideApiService } from "../leave-setup/approval-override/approval-override-api.service";
+import { ApprovalOverrideApiService } from "../approval-override/approval-override-api.service";
 import { SnackbarNotificationComponent } from "../leave-setup/snackbar-notification/snackbar-notification.component";
 
 /**

@@ -24,10 +24,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { AssignCalendarTreeviewService } from './assign-calendar/assign-calendar-treeview.service';
-import { ApplyOnBehalfComponent } from './apply-on-behalf/apply-on-behalf.component';
+import { ApplyOnBehalfComponent } from '../apply-on-behalf/apply-on-behalf.component';
 import { MatRadioModule, MatDialogModule } from '@angular/material';
 import { LeaveSetupComponent } from './leave-setup.component';
-import { ApprovalOverrideComponent } from './approval-override/approval-override.component';
+import { ApprovalOverrideComponent } from '../approval-override/approval-override.component';
 import { LeaveAdjustmentComponent } from './leave-adjustment/leave-adjustment.component';
 import { LeaveEntitlementByBatchComponent } from './leave-entitlement-by-batch/leave-entitlement-by-batch.component';
 import { DeleteCalendarConfirmationComponent } from './delete-calendar-confirmation/delete-calendar-confirmation.component';
@@ -40,6 +40,7 @@ import { NgbModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import 'hammerjs';
 import { EditModeDialogComponent } from './edit-mode-dialog/edit-mode-dialog.component';
 import { DndModule } from 'ngx-drag-drop';
+import { LeaveEntitlementComponent } from './leave-entitlement/leave-entitlement.component';
 
 const routes: Routes = [
     {
@@ -85,6 +86,6 @@ const routes: Routes = [
     entryComponents: [SnackbarNotificationComponent, DeleteCalendarConfirmationComponent, EditModeDialogComponent],
     declarations: [CalendarProfileComponent, LeaveSetupComponent, SnackbarNotificationComponent, DeleteCalendarConfirmationComponent,
         ApplyOnBehalfComponent, ApprovalOverrideComponent, LeaveAdjustmentComponent, LeaveEntitlementByBatchComponent, WorkingHourComponent,
-        WorkingHourListComponent, EditModeDialogComponent]
+        WorkingHourListComponent, EditModeDialogComponent, LeaveEntitlementComponent]
 })
 export class LeaveSetupModule { }

@@ -11,9 +11,10 @@ import { LeaveAdjustmentComponent } from '../admin-setup/leave-setup/leave-adjus
 import { LeaveEntitlementByBatchComponent } from '../admin-setup/leave-setup/leave-entitlement-by-batch/leave-entitlement-by-batch.component';
 import { WorkingHourListComponent } from '../admin-setup/leave-setup/working-hour/working-hour-list/working-hour-list.component';
 import { EmployeeSetupComponent } from '../admin-setup/invites/employee-setup/employee-setup.component';
-import { ApplyOnBehalfComponent } from '../admin-setup/leave-setup/apply-on-behalf/apply-on-behalf.component';
+import { ApplyOnBehalfComponent } from '../admin-setup/apply-on-behalf/apply-on-behalf.component';
 import { YearEndClosingComponent } from '../admin-setup/year-end-closing/year-end-closing.component';
-import { ApprovalOverrideComponent } from '../admin-setup/leave-setup/approval-override/approval-override.component';
+import { ApprovalOverrideComponent } from '../admin-setup/approval-override/approval-override.component';
+import { LeaveEntitlementComponent } from '../admin-setup/leave-setup/leave-entitlement/leave-entitlement.component';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -29,7 +30,7 @@ export const sideMenuNavigationRoutes: Routes = [
                     { path: '', redirectTo: 'calendar-profile-setup', pathMatch: 'full' },
                     { path: 'calendar-profile-setup', component: CalendarProfileComponent },
                     { path: 'working-hour-setup', component: WorkingHourListComponent },
-                    { path: 'leave-entitlement-setup', component: PageNotFoundComponent },
+                    { path: 'leave-entitlement-setup', component: LeaveEntitlementComponent },
                     { path: 'leave-adjustment', component: LeaveAdjustmentComponent },
                     { path: 'leave-entitlement-by-batch', component: LeaveEntitlementByBatchComponent },
                     { path: 'general-leave-policy', component: PolicyListComponent }
