@@ -523,12 +523,12 @@ export class ApplyOnBehalfComponent implements OnInit {
             let name = this._userList.filter((item: any) => {
                 return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
-            let department = this._userList.filter((valur: any) => {
-                return (valur.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
+            let department = this._userList.filter((value: any) => {
+                return (value.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
-            let company = this._userList.filter((company: any) => {
-                if (company.companyName != undefined) {
-                    return (company.companyName.toLowerCase().indexOf(text.toLowerCase()) > -1)
+            let company = this._userList.filter((items: any) => {
+                if (items.companyName != undefined) {
+                    return (items.companyName.toLowerCase().indexOf(text.toLowerCase()) > -1)
                 }
             })
             this.filteredUser = require('lodash').uniqBy(name.concat(department).concat(company), 'id');
@@ -852,7 +852,7 @@ export class ApplyOnBehalfComponent implements OnInit {
                 this._firstForm.push(this._dateArray[j]);
             }
         }
-        if (event.value == '2') {
+        if (event.value === '2') {
             this._selectedQuarterHour[j] = "Q1";
             if (this._firstForm.indexOf(this._dateArray[j]) < 0) {
                 this._firstForm.push(this._dateArray[j]);

@@ -55,7 +55,7 @@ export class CreatePolicyComponent {
      * @type {boolean}
      * @memberof CreatePolicyComponent
      */
-    // public showSpinner: boolean = true;
+    public showSpinner: boolean = true;
 
     /**
      * hide container during loading page
@@ -243,6 +243,7 @@ export class CreatePolicyComponent {
         if (changes.companyId != undefined) {
             if (changes.companyId.currentValue != undefined) {
                 this.companyDetailsChanges(changes);
+                this.showSpinner = false;
             }
         }
     }
@@ -394,7 +395,7 @@ export class CreatePolicyComponent {
      * Update the policy details and PATCH to endpoint
      * @memberof CreatePolicyComponent
      */
-    savePolicy(changes) {
+    async savePolicy(changes) {
         if (changes.mode.previousValue === 'ON' && changes.mode.currentValue === 'OFF') {
             this.getValue();
             if (this._policyGUID != undefined) {
@@ -402,10 +403,9 @@ export class CreatePolicyComponent {
                     'generalPolicyId': this._policyGUID,
                     'data': this._data
                 }
-                this.policyApi.patch_general_leave_policy(data).subscribe(response => {
-                    this.policyApi.message('Edit mode disabled. Good job!', true);
-                    this._policyGUID = '';
-                })
+                await this.policyApi.patch_general_leave_policy(data).toPromise();
+                this.policyApi.message('Edit mode disabled. Good job!', true);
+                this._policyGUID = '';
             } else {
                 this._data["tenantCompanyId"] = this.tenantId;
                 this.policyApi.post_general_leave_policy(this._data).subscribe(response => {
