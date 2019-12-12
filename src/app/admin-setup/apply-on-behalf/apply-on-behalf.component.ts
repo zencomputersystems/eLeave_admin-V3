@@ -30,7 +30,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {boolean}
      * @memberof ApplyOnBehalfComponent
      */
-    @HostBinding('class.menuOverlay') menuOpen: boolean = false;
+    @HostBinding('class.menuOverlay') menuOpened: boolean;
 
     /**
      * Local property for leave entitlement details

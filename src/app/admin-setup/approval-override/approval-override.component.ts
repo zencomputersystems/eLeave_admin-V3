@@ -21,7 +21,7 @@ export class ApprovalOverrideComponent implements OnInit {
      * @type {boolean}
      * @memberof ApprovalOverrideComponent
      */
-    @HostBinding('class.menuOverrideOverlay') menuOpen: boolean = false;
+    @HostBinding('class.menuOverrideOverlay') menuOpen: boolean;
 
     /**
      * validation for form field

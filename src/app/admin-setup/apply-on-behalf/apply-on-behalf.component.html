@@ -1,5 +1,5 @@
 <ion-menu style="--width: 500px;" contentId="applybehalfContent" side="end" type="overlay" menuId="applybehalfDetails"
-    (ionDidClose)="menuOpen=false">
+    (ionDidClose)="menuOpened = false;">
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
         <img style="margin: 17px;width: 22px;height: 17px;float:left"
             src="assets/icon/dashboard/icon All Holidays@3x.png">
@@ -112,7 +112,8 @@
             <div style="right: 25px;top: 25px;position: absolute;">
                 <ion-button
                     style="--border-radius: 2px;font-size: 11px;height: 30px;width:193px;cursor: pointer;text-transform: none;"
-                    color="primary" (click)="menu.open('applybehalfDetails'); menuOpen=true;">
+                    color="primary"
+                    (click)="menu.open('applybehalfDetails');menu.enable(true, 'applybehalfDetails');menuOpened = true;">
                     View Apply On Behalf History
                 </ion-button>
             </div>
