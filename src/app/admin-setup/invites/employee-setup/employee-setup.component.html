@@ -186,7 +186,7 @@
                     Edit
                     Mode: {{mode}}</p>
                 <div style="display: inline-block;position: absolute;margin-top: 12px;">
-                    <ion-toggle class="toggleButton" mode="ios" color="secondary" (ionChange)="toggleMode($event)">
+                    <ion-toggle class="toggleButton" mode="ios" style="--background: #a5a4bf;" color="secondary" (ionChange)="toggleMode($event)">
                     </ion-toggle>
                 </div>
             </div>
@@ -300,7 +300,7 @@
                                 <p style="color: #43425d;opacity:0.8;font-size: 12px;font-weight: bold;">Employee Status
                                 </p>
                                 <div *ngIf="personalDetails" style="margin-top: 5px;margin-left: 10px;">
-                                    <ion-toggle class="toggleButton" mode="ios" color="secondary" [(ngModel)]="status"
+                                    <ion-toggle class="toggleButton" style="--background: #a5a4bf;" mode="ios" color="secondary" [(ngModel)]="status"
                                         [checked]="status"
                                         (click)="toggleStatus($event, personalDetails.employeeName); status = !status">
                                     </ion-toggle>

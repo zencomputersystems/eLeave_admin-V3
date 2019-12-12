@@ -4,23 +4,27 @@
     are several things
     you can do:</p>
   <div style="display: block;margin-left: 10px;">
-    <img src="assets/icon/leave_setup/icon_add@3x.png" style="height: 14px;width: 14px;">
+    <div style="float: left;padding-right: 10px;">
+      <img src="assets/icon/leave_setup/icon_add@3x.png" style="height: 14px;width: 14px;"></div>
     <p *ngIf="data === 'calendar'"
-      style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;padding-left: 10px;">
+      style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;">
       Add New Calendar Profile
       & Public Holiday</p>
     <p *ngIf="data === 'working'"
-      style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;padding-left: 10px;">
+      style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;">
       Add New Working Hour Profile</p>
     <p *ngIf="data === 'employee'"
-      style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;padding-left: 10px;">
+      style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;">
       Add new employee & leave entitlements</p>
     <p *ngIf="data === 'policy'"
-      style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;padding-left: 10px;">
+      style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;">
       Add New Company/Organization</p>
     <p *ngIf="data === 'role'"
-      style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;padding-left: 10px;">
+      style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;">
       Add New Roles</p>
+    <p *ngIf="data === 'entitlement'"
+      style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;">
+      Add New Leave Entitlement Code & Entitlement Level</p>
   </div>
   <div style="display: block;margin-left: 10px;">
     <div style="float: left;padding-right: 10px;" *ngIf="data === 'calendar' || data === 'working' || data === 'role'">
@@ -56,6 +60,9 @@
   </div>
   <p *ngIf="data === 'policy'" style="color: #43425d;line-height: 1.25;font-size: 12px; margin-top: 8px;">
     You're able to manage leave policy for each company here.</p>
+  <p *ngIf="data === 'entitlement'" style="color: #43425d;line-height: 1.25;font-size: 12px; margin-top: 8px;">
+    You're able to set all configurations for each leave entitlement code that you create such as, allowing apply leave
+    in advance etc.</p>
   <p style="color: #43425d;line-height: 1.25;font-size: 12px; margin-top: 16px;">
     After you're done, turn OFF Edit Mode, it
     shall save all of
