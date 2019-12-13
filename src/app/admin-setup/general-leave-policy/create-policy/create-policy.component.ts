@@ -258,11 +258,7 @@ export class CreatePolicyComponent {
             this.policyList = changes.companyId.currentValue;
             this._policyGUID = this.policyList.MAIN_GENERAL_POLICY_GUID;
             this.radioValue = this.policyList.PROPERTIES_XML.approvalConfirmation.requirement;
-            if (this.radioValue == 'Anyone') {
-                this.policyForm.patchValue({ anyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
-            } else {
-                this.policyForm.patchValue({ everyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
-            }
+            this.patchLevelValue();
             this.policyForm.controls.escalateAfterDays.value = this.policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays;
             this.policyForm.patchValue({ CF: this.policyList.PROPERTIES_XML.forfeitCFLeave.value });
             this.policyForm.patchValue({ CFMonth: this.policyList.PROPERTIES_XML.forfeitCFLeave.month });
@@ -272,6 +268,18 @@ export class CreatePolicyComponent {
             this.policyForm.reset();
             this.radioValue = null;
             this.emailValue = 'No';
+        }
+    }
+
+    /**
+     * patch value to form group
+     * @memberof CreatePolicyComponent
+     */
+    patchLevelValue() {
+        if (this.radioValue == 'Anyone') {
+            this.policyForm.patchValue({ anyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
+        } else {
+            this.policyForm.patchValue({ everyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
         }
     }
 
