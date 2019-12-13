@@ -3,7 +3,12 @@ import { LeaveApiService } from '../leave-api.service';
 import { LeaveEntitlementApiService } from './leave-entitlement-api.service';
 import { MatDialog } from '@angular/material';
 import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.component';
-
+/**
+ * Leave entitlement setup page
+ * @export
+ * @class LeaveEntitlementComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-leave-entitlement',
   templateUrl: './leave-entitlement.component.html',
@@ -11,42 +16,106 @@ import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.co
 })
 export class LeaveEntitlementComponent implements OnInit {
 
-  public listEntitlement: any;
-  public leavetypeID: string[];
+  /**
+   * leave types list
+   * @type {string[]}
+   * @memberof LeaveEntitlementComponent
+   */
   public leaveTypes: string[] = [];
+
+  /**
+   * leave entitlement details according leave type groupped
+   * @type {any[]}
+   * @memberof LeaveEntitlementComponent
+   */
   public leaveEntitlement: any[];
+
+  /**
+   * toggle button value
+   * @type {string}
+   * @memberof LeaveEntitlementComponent
+   */
   public mainToggle: string = 'OFF';
+
+  /**
+   * clicked index of entitlement profile
+   * @type {number}
+   * @memberof LeaveEntitlementComponent
+   */
   public clickedIndex: number;
+
+  /**
+   * clicked index of leave type header
+   * @type {number}
+   * @memberof LeaveEntitlementComponent
+   */
   public clickedHeaderIndex: number;
+
+  /**
+   * show/hidden of content leave entitlement
+   * @type {boolean[]}
+   * @memberof LeaveEntitlementComponent
+   */
   public leaveContent: boolean[] = [];
 
+  /**
+   *Creates an instance of LeaveEntitlementComponent.
+   * @param {LeaveEntitlementApiService} entitlementApi
+   * @param {LeaveApiService} leaveApi
+   * @param {MatDialog} dialog
+   * @memberof LeaveEntitlementComponent
+   */
   constructor(private entitlementApi: LeaveEntitlementApiService, private leaveApi: LeaveApiService, private dialog: MatDialog) { }
 
+  /**
+   * initial method to get value from API
+   * @memberof LeaveEntitlementComponent
+   */
   async ngOnInit() {
     this.leaveTypes = [];
     this.clickedIndex = 0;
     this.clickedHeaderIndex = 0;
     let data = await this.leaveApi.get_leavetype_entitlement().toPromise();
-    this.listEntitlement = data;
-    let grouppedId = require('lodash').groupBy(this.listEntitlement, 'leaveTypeId');
+    let grouppedId = require('lodash').groupBy(data, 'leaveTypeId');
     this.leaveEntitlement = Object.values(grouppedId);
+    this.getLeaveTypes(grouppedId);
+    this.leaveContent.splice(0, 1, true);
+    for (let i = 0; i < data.length; i++) {
+      this.getProfileDetails(data[i].leaveEntitlementId);
+    }
+  }
+
+  /**
+   * group leave types from leave entitlement list
+   * @param {*} grouppedId
+   * @memberof LeaveEntitlementComponent
+   */
+  async getLeaveTypes(grouppedId: any) {
     let ids = Object.keys(grouppedId);
     for (let i = 0; i < ids.length; i++) {
       this.leaveContent.push(false);
       let details = await this.entitlementApi.get_admin_leavetype_id(ids[i]).toPromise();
       this.leaveTypes.push(details.ABBR + ' - ' + details.CODE);
     }
-    this.leaveContent.splice(0, 1, true);
-    for (let i = 0; i < this.listEntitlement.length; i++) {
-      this.getProfileDetails(this.listEntitlement[i].leaveEntitlementId);
-    }
   }
 
+  /**
+   * get clicked entitlement profile details
+   * @param {string} entitledId
+   * @memberof LeaveEntitlementComponent
+   */
   async getProfileDetails(entitledId: string) {
     let details = await this.entitlementApi.get_leavetype_entitlement_id(entitledId).toPromise();
     console.log(details);
   }
 
+  /**
+   * pass clicked index to get profile details
+   * @param {*} item
+   * @param {number} i
+   * @param {number} j
+   * @memberof LeaveEntitlementComponent
+   */
   clickedEntitlement(item: any, i: number, j: number) {
     this.clickedIndex = i;
     this.clickedHeaderIndex = j;
@@ -54,15 +123,24 @@ export class LeaveEntitlementComponent implements OnInit {
     this.getProfileDetails(item.leaveEntitlementId);
   }
 
+  /**
+   * show content of entitlement from clicked header
+   * @param {number} index
+   * @memberof LeaveEntitlementComponent
+   */
   showClickedContent(index: number) {
     for (let i = 0; i < this.leaveContent.length; i++) {
       this.leaveContent.splice(i, 1, false);
     }
     this.leaveContent.splice(index, 1, true);
-    // this.leaveContent.splice();
   }
 
-  toggleMain(evt) {
+  /**
+   * toggle button edit mode value
+   * @param {*} evt
+   * @memberof LeaveEntitlementComponent
+   */
+  toggleMain(evt: any) {
     if (evt.detail.checked === true) {
       this.mainToggle = 'ON';
       this.dialog.open(EditModeDialogComponent, {

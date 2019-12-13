@@ -854,7 +854,7 @@ export class ApplyOnBehalfComponent implements OnInit {
         }
         if (event.value === '2') {
             this._selectedQuarterHour[j] = "Q1";
-            if (this._firstForm.indexOf(this._dateArray[j]) < 0) {
+            if (!(this._firstForm.includes(this._dateArray[j]))) {
                 this._firstForm.push(this._dateArray[j]);
             }
         }
