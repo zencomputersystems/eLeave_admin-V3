@@ -36,7 +36,15 @@
   ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
     background: white;
   }
-  .new {
+  ::ng-deep .mat-input-element:disabled {
+    color: #43425d;
+    opacity: 0.8;
+  }
+  ::ng-deep .mat-select-disabled .mat-select-value {
+    color: #43425d;
+    opacity: 0.8;
+  }
+  ::ng-deep .new {
     flex: 100%;
     max-width: 100%;
     max-height: 100%;

@@ -102,9 +102,9 @@
               </div>
             </ng-container>
           </div>
-          <div class="configuration">
-            <div
-              style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+          <div class="configuration" *ngIf="entitlementDetails">
+            <div (click)="showLeaveType =true"
+              style="cursor: pointer;font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
               <ion-row>
                 <ion-col
                   style="font-size: 12px;display: -webkit-box;
@@ -112,7 +112,9 @@
                   LEAVE TYPE CONFIGURATION</ion-col>
               </ion-row>
             </div>
-            <div style="height: calc(100% - 105px);overflow-y: auto;">
+            <div [style.display]="showLeaveType === true? 'block':'none'"
+              [style.height]="showLeaveType === true? 'calc(100% - 105px)':'0'"
+              [style.overflow]="showLeaveType === true? 'auto':''">
               <ion-row style="width: 100%;padding-left: 10px;">
                 <ion-col align-self-center class="text">
                   Allow applicant to Apply Leave in Advance
@@ -120,14 +122,17 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div>
-                    <div style="margin-top: -4px;float: right;">
+                    <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)">
+                        (ionChange)="toggleMode($event)" [checked]="entitlementDetails.PROPERTIES_XML.applyInAdvance">
                       </ion-toggle>
                     </div>
-                    <p
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.applyInAdvance === true"
                       style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
                       Allow</p>
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.applyInAdvance === false"
+                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      Not Allowed</p>
                   </div>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -140,14 +145,17 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div>
-                    <div style="margin-top: -4px;float: right;">
+                    <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)">
+                        (ionChange)="toggleMode($event)" [checked]="entitlementDetails.PROPERTIES_XML.applyNextYear">
                       </ion-toggle>
                     </div>
-                    <p
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.applyNextYear === true"
                       style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
                       Allow</p>
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.applyNextYear === false"
+                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      Not Allowed</p>
                   </div>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -160,14 +168,17 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div>
-                    <div style="margin-top: -4px;float: right;">
+                    <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)">
+                        (ionChange)="toggleMode($event)" [checked]="entitlementDetails.PROPERTIES_XML.claimEntitlement">
                       </ion-toggle>
                     </div>
-                    <p
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.claimEntitlement === true"
                       style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
-                      Allow</p>
+                      Yes</p>
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.claimEntitlement === false"
+                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      No</p>
                   </div>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -180,14 +191,18 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div>
-                    <div style="margin-top: -4px;float: right;">
+                    <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)">
+                        (ionChange)="toggleMode($event)"
+                        [checked]="entitlementDetails.PROPERTIES_XML.applyFractionUnit">
                       </ion-toggle>
                     </div>
-                    <p
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.applyFractionUnit === true"
                       style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
                       Allow</p>
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.applyFractionUnit === false"
+                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      Not Allowed</p>
                   </div>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -200,14 +215,18 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div>
-                    <div style="margin-top: -4px;float: right;">
+                    <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)">
+                        (ionChange)="toggleMode($event)"
+                        [checked]="entitlementDetails.PROPERTIES_XML.attachmentRequired">
                       </ion-toggle>
                     </div>
-                    <p
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.attachmentRequired === true"
                       style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
-                      Allow</p>
+                      Yes</p>
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.attachmentRequired === false"
+                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      No</p>
                   </div>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -219,12 +238,25 @@
                 </ion-col>
                 <ion-col align-self-center style="text-align: right;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
-                  <div style="display: inline-block;padding-right: 20px;">
-                    <mat-checkbox [disableRipple]=true>Holiday</mat-checkbox>
+                  <div style="display: inline-block;padding-right: 20px;" *ngIf="mainToggle === 'ON'">
+                    <mat-checkbox [disableRipple]=true
+                      [checked]="entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday">Holiday
+                    </mat-checkbox>
                   </div>
-                  <div style="display: inline-block;">
-                    <mat-checkbox [disableRipple]=true>Rest day</mat-checkbox>
+                  <div style="display: inline-block;" *ngIf="mainToggle === 'ON'">
+                    <mat-checkbox [disableRipple]=true
+                      [checked]="entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay">Rest day
+                    </mat-checkbox>
                   </div>
+                  <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === false"
+                    style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    Holiday</p>
+                  <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === false"
+                    style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    Rest Day</p>
+                  <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === true"
+                    style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    Holiday, Rest Day</p>
                 </ion-col>
                 <ion-item class="divider" lines="full">
                 </ion-item>
@@ -236,12 +268,19 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div style="float: right;">
-                    <!-- margin-right: 65px; -->
-                    <mat-form-field appearance="outline" style="height: 55px;
+                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                     font-size: 12px;width: 60px;color: #43425d;opacity: 0.8;">
-                      <input type="number" matInput>
+                      <input type="number" matInput
+                        [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.numberOfDays">
                     </mat-form-field>
-                    <p style="font-size: 11px;color: #43425d;padding-left: 10px;display: inline;">
+                    <p *ngIf="mainToggle === 'OFF'" style="font-weight: bold;
+                      opacity: 0.8;font-size: 11px;color: #43425d;padding-left: 10px;display: inline;">
+                      {{entitlementDetails.PROPERTIES_XML.applyBeforeProperties.numberOfDays}}</p>
+                    <p [style.padding-left.px]="mainToggle === 'OFF' ? '5':'10'"
+                      [style.padding-right.px]="mainToggle === 'OFF' ? '10':'0'"
+                      [style.font-weight]="mainToggle === 'OFF' ? 'bold':'normal'"
+                      [style.opacity]="mainToggle === 'OFF' ? '0.8':'1'"
+                      style="opacity: 0.8;font-size: 11px;color: #43425d;display: inline;">
                       Day</p>
                   </div>
                 </ion-col>
@@ -252,12 +291,25 @@
                 </ion-col>
                 <ion-col align-self-center style="text-align: right;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
-                  <div style="display: inline-block;padding-right: 20px;">
-                    <mat-checkbox [disableRipple]=true>Holiday</mat-checkbox>
+                  <div style="display: inline-block;padding-right: 20px;" *ngIf="mainToggle === 'ON'">
+                    <mat-checkbox [disableRipple]=true
+                      [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday">
+                      Holiday</mat-checkbox>
                   </div>
-                  <div style="display: inline-block;">
-                    <mat-checkbox [disableRipple]=true>Rest day</mat-checkbox>
+                  <div style="display: inline-block;" *ngIf="mainToggle === 'ON'">
+                    <mat-checkbox [disableRipple]=true
+                      [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay">
+                      Rest day</mat-checkbox>
                   </div>
+                  <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === false"
+                    style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    Holiday</p>
+                  <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === false"
+                    style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    Rest Day</p>
+                  <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === true"
+                    style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    Holiday, Rest Day</p>
                 </ion-col>
                 <ion-item class="divider" lines="full">
                 </ion-item>
@@ -269,18 +321,24 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div style="height: 30px;">
-                    <div style="margin-top: -4px;float: right;">
+                    <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)">
+                        (ionChange)="toggleMode($event)"
+                        [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck">
                       </ion-toggle>
                     </div>
-                    <p
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === true"
                       style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
                       Allow</p>
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === false"
+                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      Not Allowed</p>
                   </div>
                   <mat-form-field appearance="outline" style="height: 55px;
                   font-size: 12px;width: 60%;color: #43425d;float:right">
-                    <input matInput placeholder="Short Notice Application" disabled>
+                    <input matInput
+                      [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.textValue"
+                      disabled>
                   </mat-form-field>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -293,14 +351,18 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div>
-                    <div style="margin-top: -4px;float: right;">
+                    <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)">
+                        (ionChange)="toggleMode($event)"
+                        [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency">
                       </ion-toggle>
                     </div>
-                    <p
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency === true"
                       style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
-                      Allow</p>
+                      Yes</p>
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency === false"
+                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      No</p>
                   </div>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -313,12 +375,19 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div style="float: right;">
-                    <!-- margin-right: 65px; -->
-                    <mat-form-field appearance="outline" style="height: 55px;
+                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px; 
                                     font-size: 12px;width: 60px;color: #43425d;opacity: 0.8;">
-                      <input type="number" matInput>
+                      <input type="number" matInput
+                        [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.numberOfDays">
                     </mat-form-field>
-                    <p style="font-size: 11px;color: #43425d;padding-left: 10px;display: inline;">
+                    <p *ngIf="mainToggle === 'OFF'" style="font-size: 11px;color: #43425d;padding-left: 10px;display: inline;font-weight: bold;
+                      opacity: 0.8;">
+                      {{entitlementDetails.PROPERTIES_XML.applyWithinProperties.numberOfDays}}</p>
+                    <p [style.padding-left.px]="mainToggle === 'OFF' ? '5':'10'"
+                      [style.padding-right.px]="mainToggle === 'OFF' ? '10':'0'"
+                      [style.font-weight]="mainToggle === 'OFF' ? 'bold':'normal'"
+                      [style.opacity]="mainToggle === 'OFF' ? '0.8':'1'"
+                      style="opacity: 0.8;font-size: 11px;color: #43425d;display: inline;">
                       Day</p>
                   </div>
                 </ion-col>
@@ -329,12 +398,25 @@
                 </ion-col>
                 <ion-col align-self-center style="text-align: right;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
-                  <div style="display: inline-block;padding-right: 20px;">
-                    <mat-checkbox [disableRipple]=true>Holiday</mat-checkbox>
+                  <div style="display: inline-block;padding-right: 20px;" *ngIf="mainToggle === 'ON'">
+                    <mat-checkbox [disableRipple]=true
+                      [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday">
+                      Holiday</mat-checkbox>
                   </div>
-                  <div style="display: inline-block;">
-                    <mat-checkbox [disableRipple]=true>Rest day</mat-checkbox>
+                  <div style="display: inline-block;" *ngIf="mainToggle === 'ON'">
+                    <mat-checkbox [disableRipple]=true
+                      [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay">
+                      Rest day</mat-checkbox>
                   </div>
+                  <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === false"
+                    style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    Holiday</p>
+                  <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === false"
+                    style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    Rest Day</p>
+                  <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === true"
+                    style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    Holiday, Rest Day</p>
                 </ion-col>
                 <ion-item class="divider" lines="full">
                 </ion-item>
@@ -346,18 +428,24 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div style="height: 30px;">
-                    <div style="margin-top: -4px;float: right;">
+                    <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)">
+                        (ionChange)="toggleMode($event)"
+                        [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck">
                       </ion-toggle>
                     </div>
-                    <p
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === true"
                       style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
                       Allow</p>
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === false"
+                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      Not Allowed</p>
                   </div>
                   <mat-form-field appearance="outline" style="height: 55px;
                   font-size: 12px;width: 60%;color: #43425d;float:right">
-                    <input matInput placeholder="Back Dated Application" disabled>
+                    <input matInput
+                      [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.textValue"
+                      disabled>
                   </mat-form-field>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -370,25 +458,32 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div style="height: 30px;">
-                    <div style="margin-top: -4px;float: right;">
+                    <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)">
+                        (ionChange)="toggleMode($event)"
+                        [checked]="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck">
                       </ion-toggle>
                     </div>
-                    <p
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck === true"
                       style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
                       Allow</p>
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck === false"
+                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      Not Allowed</p>
                   </div>
                   <div style="text-align: right;">
-                    <p style="font-size: 11px;color: #43425d;padding-right: 10px;display: inline;">
+                    <p style="font-size: 11px;color: #43425d;opacity:0.8;padding-right: 10px;display: inline;">
                       Convert to :</p>
-                    <mat-form-field appearance="outline" style="height: 55px;
+                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                   font-size: 12px;width: 40%;color: #43425d;display: inline-block;">
-                      <mat-select>
+                      <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.textValue">
                         <mat-option>Nothing Selected</mat-option>
-                        <mat-option value="Unpaid Leave">Unpaid Leave</mat-option>
+                        <mat-option value="UNPAID LEAVE">Unpaid Leave</mat-option>
                       </mat-select>
                     </mat-form-field>
+                    <p *ngIf="mainToggle === 'OFF'"
+                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      {{entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.textValue}}</p>
                   </div>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -401,12 +496,18 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div style="float: right;">
-                    <!-- margin-right: 65px; -->
-                    <mat-form-field appearance="outline" style="height: 55px;
+                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                                     font-size: 12px;width: 60px;color: #43425d;opacity: 0.8;">
-                      <input type="number" matInput>
+                      <input type="number" matInput [(ngModel)]="entitlementDetails.PROPERTIES_XML.maxDayPerLeave">
                     </mat-form-field>
-                    <p style="font-size: 11px;color: #43425d;padding-left: 10px;display: inline;">
+                    <p *ngIf="mainToggle === 'OFF'" style="font-weight: bold;
+                      opacity: 0.8;font-size: 11px;color: #43425d;padding-left: 10px;display: inline;">
+                      {{entitlementDetails.PROPERTIES_XML.maxDayPerLeave}}</p>
+                    <p [style.padding-left.px]="mainToggle === 'OFF' ? '5':'10'"
+                      [style.padding-right.px]="mainToggle === 'OFF' ? '10':'0'"
+                      [style.font-weight]="mainToggle === 'OFF' ? 'bold':'normal'"
+                      [style.opacity]="mainToggle === 'OFF' ? '0.8':'1'"
+                      style="opacity: 0.8;font-size: 11px;color: #43425d;display: inline;">
                       Day (s)</p>
                   </div>
                 </ion-col>
@@ -415,18 +516,21 @@
               </ion-row>
               <ion-row style="width: 100%;padding-left: 10px;">
                 <ion-col align-self-center class="text">
-                  Allow to apply after
+                  Allow to apply leave after
                 </ion-col>
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
-                  <mat-form-field appearance="outline" style="height: 55px;
+                  <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                                   font-size: 12px;width: 60%;color: #43425d;float:right">
-                    <mat-select>
+                    <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.isAllowAfterJoinDate.textValue">
                       <mat-option>Nothing Selected</mat-option>
-                      <mat-option value="Confirmation">Confirmation</mat-option>
-                      <mat-option value="Probation">Probation</mat-option>
+                      <mat-option value="CONFIRMATION">Confirmation</mat-option>
+                      <mat-option value="PROBATION">Probation</mat-option>
                     </mat-select>
                   </mat-form-field>
+                  <p *ngIf="mainToggle === 'OFF'"
+                    style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    {{entitlementDetails.PROPERTIES_XML.isAllowAfterJoinDate.textValue}}</p>
                 </ion-col>
                 <ion-item class="divider" lines="full">
                 </ion-item>
@@ -438,18 +542,23 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div style="height: 30px;">
-                    <div style="margin-top: -4px;float: right;">
+                    <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)">
+                        (ionChange)="toggleMode($event)"
+                        [checked]="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck">
                       </ion-toggle>
                     </div>
-                    <p
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck === true"
                       style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
                       Allow</p>
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck === false"
+                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      Not Allowed</p>
                   </div>
                   <mat-form-field appearance="outline" style="height: 55px;
                   font-size: 12px;width: 60%;color: #43425d;float:right">
-                    <input matInput placeholder="" disabled>
+                    <input matInput
+                      [(ngModel)]="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.textValue" disabled>
                   </mat-form-field>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -462,18 +571,24 @@
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
                   <div style="height: 30px;">
-                    <div style="margin-top: -4px;float: right;">
+                    <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)">
+                        (ionChange)="toggleMode($event)"
+                        [checked]="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck">
                       </ion-toggle>
                     </div>
-                    <p
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck === true"
                       style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
                       Allow</p>
+                    <p *ngIf="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck === false"
+                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      Not Allowed</p>
                   </div>
                   <mat-form-field appearance="outline" style="height: 55px;
                   font-size: 12px;width: 60%;color: #43425d;float:right">
-                    <input matInput placeholder="" disabled>
+                    <input matInput
+                      [(ngModel)]="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.textValue"
+                      disabled>
                   </mat-form-field>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -485,9 +600,9 @@
                 </ion-col>
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
-                  <mat-form-field appearance="outline" style="height: 55px;
+                  <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                   font-size: 12px;width: 60%;color: #43425d;float:right">
-                    <mat-select>
+                    <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.leaveEntitlementType">
                       <mat-option>Nothing Selected</mat-option>
                       <mat-option value="Entitled in full">Entitled in full</mat-option>
                       <mat-option value="Prorated from date-of-join to current month">Prorated from date-of-join to
@@ -501,6 +616,9 @@
                       <mat-option value="Leave entitled after 12 months">Leave entitled after 12 months </mat-option>
                     </mat-select>
                   </mat-form-field>
+                  <p *ngIf="mainToggle === 'OFF'"
+                    style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    {{entitlementDetails.PROPERTIES_XML.leaveEntitlementType}}</p>
                 </ion-col>
                 <ion-item class="divider" lines="full">
                 </ion-item>
@@ -511,9 +629,9 @@
                 </ion-col>
                 <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                   padding-bottom: 13px;">
-                  <mat-form-field appearance="outline" style="height: 55px;
+                  <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                                   font-size: 12px;width: 60%;color: #43425d;float:right">
-                    <mat-select>
+                    <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.leaveEntitlementRounding">
                       <mat-option>Nothing Selected</mat-option>
                       <mat-option value="Round Down 1.00">Round Down 1.00</mat-option>
                       <mat-option value="Round Nearest 1.00 ">Round Nearest 1.00</mat-option>
@@ -523,19 +641,85 @@
                       <mat-option value="Round Up 0.5">Round Up 0.5</mat-option>
                     </mat-select>
                   </mat-form-field>
+                  <p *ngIf="mainToggle === 'OFF'"
+                    style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    {{entitlementDetails.PROPERTIES_XML.leaveEntitlementRounding}}</p>
                 </ion-col>
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
             </div>
-            <div
-              style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+            <div (click)="showLeaveType =false"
+              style="cursor: pointer;font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
               <ion-row>
                 <ion-col
                   style="font-size: 12px;display: -webkit-box;
                                 -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                   LEAVE ENTITLEMENT LEVEL</ion-col>
               </ion-row>
+            </div>
+            <div style="padding-top: 10px;" [style.display]="showLeaveType === false? 'block':'none'"
+              [style.height]="showLeaveType === false? 'calc(100% - 120px)':'0'"
+              [style.overflow]="showLeaveType === false? 'auto':''">
+              <ng-container *ngFor="let leave of entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement">
+                <div style="display: inline-block;width: 20%;">
+                  <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
+                    LEVEL</p>
+                  <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;padding-left: 15px;">
+                    <mat-select required [disabled]="mainToggle === 'OFF'" [(value)]="leave.id">
+                      <mat-option *ngFor="let item of level; let j=index" [value]="item">
+                        {{item}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                &nbsp;&nbsp;&nbsp;
+                <div style="display: inline-block;">
+                  <div style="display: inline-block;">
+                    <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
+                      SERVICE YEAR FROM</p>
+                    <mat-form-field appearance="outline" style="font-size: 12px;padding-left: 15px;">
+                      <input type="number" matInput [(ngModel)]="leave.serviceYearFrom"
+                        [disabled]="mainToggle === 'OFF'">
+                    </mat-form-field>
+                  </div>
+                  &nbsp;
+                  <div style="display: inline-block;">
+                    <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
+                      SERVICE YEAR TO</p>
+                    <mat-form-field appearance="outline" style="font-size: 12px;padding-left: 15px;">
+                      <input type="number" matInput [(ngModel)]="leave.serviceYearTo" [disabled]="mainToggle === 'OFF'">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div style="display: inline-block;width: 20%;"></div>
+                &nbsp;&nbsp;&nbsp;
+                <div style="display: inline-block;">
+                  <div style="display: inline-block;">
+                    <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
+                      ENTITLED DAY</p>
+                    <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;padding-left: 15px;">
+                      <input type="number" matInput [(ngModel)]="leave.entitledDays" [disabled]="mainToggle === 'OFF'">
+                    </mat-form-field>
+                  </div>
+                  &nbsp;&nbsp;
+                  <div style="display: inline-block;">
+                    <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
+                      BRING FORWARD</p>
+                    <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;padding-left: 15px;">
+                      <input type="number" matInput [(ngModel)]="leave.carryForward" [disabled]="mainToggle === 'OFF'">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <ion-item class="divider" lines="full" style="padding-bottom: 2%;">
+                </ion-item>
+              </ng-container>
+              <div *ngIf="mainToggle === 'ON'" style="padding-left: 15px;padding-bottom: 15px;"><img
+                  style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;display: inline-block;"
+                  src="assets/icon/leave_setup/icon_request@3x.png" (click)="addNewEntitlement()">
+                <p style="cursor: pointer;color: #808495;font-size: 11px;font-weight: bold;display: inline-block;"
+                  (click)="addNewEntitlement()">
+                  Add Leave Entitlement Level</p>
+              </div>
             </div>
           </div>
         </div>

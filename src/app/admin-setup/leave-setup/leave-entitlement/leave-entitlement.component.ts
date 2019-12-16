@@ -59,6 +59,27 @@ export class LeaveEntitlementComponent implements OnInit {
   public leaveContent: boolean[] = [];
 
   /**
+   * entitlement details of selected profile
+   * @type {*}
+   * @memberof LeaveEntitlementComponent
+   */
+  public entitlementDetails: any;
+
+  /**
+   * click to show content of configuration
+   * @type {boolean}
+   * @memberof LeaveEntitlementComponent
+   */
+  public showLeaveType: boolean = true;
+
+  /**
+   * level of entitlement
+   * @type {number[]}
+   * @memberof LeaveEntitlementComponent
+   */
+  public level: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  /**
    *Creates an instance of LeaveEntitlementComponent.
    * @param {LeaveEntitlementApiService} entitlementApi
    * @param {LeaveApiService} leaveApi
@@ -80,9 +101,7 @@ export class LeaveEntitlementComponent implements OnInit {
     this.leaveEntitlement = Object.values(grouppedId);
     this.getLeaveTypes(grouppedId);
     this.leaveContent.splice(0, 1, true);
-    for (let i = 0; i < data.length; i++) {
-      this.getProfileDetails(data[i].leaveEntitlementId);
-    }
+    this.getProfileDetails(data[0].leaveEntitlementId);
   }
 
   /**
@@ -105,8 +124,13 @@ export class LeaveEntitlementComponent implements OnInit {
    * @memberof LeaveEntitlementComponent
    */
   async getProfileDetails(entitledId: string) {
-    let details = await this.entitlementApi.get_leavetype_entitlement_id(entitledId).toPromise();
-    console.log(details);
+    this.entitlementDetails = await this.entitlementApi.get_leavetype_entitlement_id(entitledId).toPromise();
+    console.log(this.entitlementDetails);
+    if (this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.length == undefined) {
+      let a = [this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement];
+      this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement = a;
+      console.log(this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement);
+    }
   }
 
   /**
