@@ -105,6 +105,11 @@ export class SideMenuNavigationComponent implements OnInit {
       title: 'Year End Closing',
       url: '/main/year-end-closing',
       icon: 'icon_calendar@3x.png'
+    },
+    {
+      title: 'Report',
+      url: '/main/report',
+      icon: 'icon_calendar@3x.png'
     }
   ];
 

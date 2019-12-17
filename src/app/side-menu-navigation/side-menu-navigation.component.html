@@ -16,7 +16,7 @@
       <p style="display:flex; justify-content: center; color: #f9fafc;">ZEN Computer Systems</p>
       <ion-list>
         <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
-          <ion-item lines="none" [routerLink]="[p.url]" (click)="activeRoute = appPages[i].url"
+          <ion-item class="items" lines="none" [routerLink]="[p.url]" (click)="activeRoute = appPages[i].url"
             [class.background-highlight]="activeRoute === appPages[i].url">
             <!-- <div class="my-icon" aria-label="My icon" [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div> -->
             <img style="width: 18px;" src="assets/icon/sidebar_menus/{{p.icon}}">
@@ -24,6 +24,7 @@
               {{p.title}}
             </ion-label>
           </ion-item>
+          <ion-item lines="none" *ngIf="i == 3"></ion-item>
         </ion-menu-toggle>
       </ion-list>
     </ion-content>
@@ -80,13 +81,15 @@
       </ion-avatar>
       <ion-list>
         <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
-          <ion-item no-padding lines="none" [routerLink]="[p.url]" style="display: block;--inner-padding-end: 0;"
+          <ion-item class="items" no-padding lines="none" [routerLink]="[p.url]"
+            style="display: block;--inner-padding-end: 0;"
             [class.background-highlight-icon]="activeRoute === appPages[i].url "
             [class.first-highlight]="router.url === this.appPages[i].url" (click)="activeRoute = appPages[i].url ">
             <!-- <div class="my-icon-menu" aria-label="My icon" style="align-items: center; width: 100%;"
               [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div> -->
             <img style="margin: 0 auto; width: 20px;" src="assets/icon/sidebar_menus/{{p.icon}}">
           </ion-item>
+          <ion-item no-padding lines="none" *ngIf="i == 3"></ion-item>
         </ion-menu-toggle>
       </ion-list>
     </ion-content>

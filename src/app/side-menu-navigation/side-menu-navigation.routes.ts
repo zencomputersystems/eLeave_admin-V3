@@ -41,6 +41,7 @@ export const sideMenuNavigationRoutes: Routes = [
             { path: 'apply-on-behalf', component: ApplyOnBehalfComponent },
             { path: 'approval-override', component: ApprovalOverrideComponent },
             { path: 'year-end-closing', component: YearEndClosingComponent },
+            { path: 'report', component: PageNotFoundComponent },
         ]
     },
     { path: '**', component: PageNotFoundComponent },
