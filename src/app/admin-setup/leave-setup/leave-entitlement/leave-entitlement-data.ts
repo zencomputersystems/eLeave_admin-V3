@@ -5,11 +5,10 @@
  */
 export const entitlementData: any =
 {
-    "LEAVE_TYPE_CODE": "",
-    "ENTITLEMENT_GUID": "",
-    "LEAVE_ENTITLEMENT_CODE": "",
-    "DESCRIPTION": "",
-    "PROPERTIES_XML": {
+    "code": "",
+    "description": "",
+    "leavetype_id": "",
+    "property": {
         "applyInAdvance": false,
         "applyNextYear": false,
         "claimEntitlement": false,

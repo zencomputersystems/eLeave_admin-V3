@@ -267,8 +267,15 @@ export class LeaveEntitlementComponent implements OnInit {
       });
     } else {
       this.mainToggle = 'OFF'
-      this.entitlementApi.patch_leavetype_entitlement(this.entitlementDetails).subscribe(data => {
-        console.log(data);
+      // only save selected profile 
+      const data = {
+        "id": this.entitlementDetails.ENTITLEMENT_GUID,
+        "code": "Annual Leave",
+        "description": "Annual leave for junior executive",
+        "property": this.entitlementDetails.PROPERTIES_XML
+      };
+      this.entitlementApi.patch_leavetype_entitlement(data).subscribe(data => {
+        this.ngOnInit();
         this.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
       })
     }
@@ -300,13 +307,18 @@ export class LeaveEntitlementComponent implements OnInit {
     let data;
     if (buttonName == 'new') {
       data = entitlementData;
-      // data.leavetype_id = this.entitlementTypeNew;
-      data.LEAVE_ENTITLEMENT_CODE = this.newEntitlementName.value;
-      data.DESCRIPTION = this.newEntitlementDescription.value;
+      data.leavetype_id = this.entitlementTypeNew;
+      data.code = this.newEntitlementName.value;
+      data.description = this.newEntitlementDescription.value;
     } else {
-      data = await this.entitlementApi.get_leavetype_entitlement_id(this.cloneProfileId).toPromise();
+      let value = await this.entitlementApi.get_leavetype_entitlement_id(this.cloneProfileId).toPromise();
+      data = {
+        "code": value.LEAVE_ENTITLEMENT_CODE,
+        "description": value.DESCRIPTION,
+        "leavetype_id": this.entitlementTypeNew,
+        "property": value.PROPERTIES_XML
+      };
     }
-    console.log(data);
     this.entitlementApi.post_leavetype_entitlement(data).subscribe(res => {
       this.newEntitlementName.reset();
       this.newEntitlementDescription.reset();

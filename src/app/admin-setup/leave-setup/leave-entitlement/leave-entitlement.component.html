@@ -104,6 +104,24 @@
 </ion-router-outlet>
 
 
+<!------------------------------------------ create new leave type menu ------------------------------------>
+
+<ion-menu style="--width: 345px;" contentId="createNewTypeContent" side="end" type="overlay"
+  menuId="createNewTypeDetails">
+  <ion-header style="background-color:#43425d; color: #fcfcfc;">
+    <img style="margin: 15px;width: 22px;height: 22px;float:left" src="assets/icon/dashboard/icon All Holidays@3x.png">
+    <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">ADD NEW LEAVE
+      ENTITLEMENT PROFILE
+    </p>
+  </ion-header>
+
+  <ion-content>
+
+  </ion-content>
+</ion-menu>
+<ion-router-outlet id="createNewTypeContent">
+</ion-router-outlet>
+
 <!------------------------------------------ content ------------------------------------>
 <ion-card>
   <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
@@ -166,16 +184,21 @@
               <div (click)="showClickedContent(j)"
                 style="cursor: pointer;padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                 <ion-row>
-                  <ion-col align-self-center
+                  <ion-col size="9" align-self-center
                     style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
                     <img src="assets/icon/leave_setup/hamburger_menu@3x.png"
                       style="width:14px;height:12px;display: inline-block;margin-right: 10px;">
                     {{type.title}}
                   </ion-col>
+                  <ion-col align-self-center style="text-align: right;padding-right: 10px;">
+                    <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mainToggle === 'ON'"
+                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
+                      (click)="menu.open('createNewTypeDetails'); menu.enable(false, 'createNewEntitlementDetails');menu.enable(true,'createNewTypeDetails')">
+                  </ion-col>
                 </ion-row>
               </div>
               <div style="margin-bottom: 10px;" *ngIf="leaveContent[j] == true">
-                <ion-row *ngFor="let item of leaveEntitlement[j]; let i=index" style="padding-left: 5px;">
+                <ion-row *ngFor="let item of leaveEntitlement[j]; let i=index" style="padding-left: 10px;">
                   <ion-col size="9" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                     <p class="textHover"
                       style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
@@ -205,7 +228,7 @@
                 <div style="margin: 10px;" *ngIf="mainToggle === 'ON'"><img
                     style="display: inline-block;cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
                     src="assets/icon/leave_setup/icon_request@3x.png"
-                    (click)="entitlementTypeNew = type.leaveTypeId;menu.open('createNewEntitlementDetails'); menu.enable(true, 'createNewEntitlementDetails')">
+                    (click)="entitlementTypeNew = type.leaveTypeId;menu.open('createNewEntitlementDetails'); menu.enable(true, 'createNewEntitlementDetails');menu.enable(false,'createNewTypeDetails')">
                   <p style="color: #808495;font-size: 11px;font-weight: bold;
                 display: inline-block;"> Add New Leave Entitlement Profile</p>
                 </div>
@@ -225,7 +248,7 @@
             <div [style.display]="showLeaveType === true? 'block':'none'"
               [style.height]="showLeaveType === true? 'calc(100% - 105px)':'0'"
               [style.overflow]="showLeaveType === true? 'auto':''">
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Allow applicant to Apply Leave in Advance
                 </ion-col>
@@ -234,7 +257,8 @@
                   <div>
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        [checked]="entitlementDetails.PROPERTIES_XML.applyInAdvance">
+                        [checked]="entitlementDetails.PROPERTIES_XML.applyInAdvance"
+                        (ionChange)="$event.detail.checked === true? entitlementDetails.PROPERTIES_XML.applyInAdvance = true : entitlementDetails.PROPERTIES_XML.applyInAdvance = false">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.applyInAdvance === true"
@@ -248,7 +272,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Allow applicant to Apply Leave of the following year
                 </ion-col>
@@ -257,7 +281,8 @@
                   <div>
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        [checked]="entitlementDetails.PROPERTIES_XML.applyNextYear">
+                        [checked]="entitlementDetails.PROPERTIES_XML.applyNextYear"
+                        (ionChange)="$event.detail.checked === true? entitlementDetails.PROPERTIES_XML.applyNextYear=true: entitlementDetails.PROPERTIES_XML.applyNextYear=false">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.applyNextYear === true"
@@ -271,7 +296,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Allow applicant to claim entitlement (E.g: Work OT, claims AL, RL)
                 </ion-col>
@@ -280,7 +305,8 @@
                   <div>
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        [checked]="entitlementDetails.PROPERTIES_XML.claimEntitlement">
+                        [checked]="entitlementDetails.PROPERTIES_XML.claimEntitlement"
+                        (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.claimEntitlement=true:entitlementDetails.PROPERTIES_XML.claimEntitlement=false ">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.claimEntitlement === true"
@@ -294,7 +320,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Allow applicant to Apply Half Day (0.5) Leave
                 </ion-col>
@@ -303,7 +329,8 @@
                   <div>
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        [checked]="entitlementDetails.PROPERTIES_XML.applyFractionUnit">
+                        [checked]="entitlementDetails.PROPERTIES_XML.applyFractionUnit"
+                        (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyFractionUnit = true:entitlementDetails.PROPERTIES_XML.applyFractionUnit = false">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.applyFractionUnit === true"
@@ -317,7 +344,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Attach Certificate / Supporting Documents (E.g: Medical Certificate)
                 </ion-col>
@@ -326,7 +353,8 @@
                   <div>
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        [checked]="entitlementDetails.PROPERTIES_XML.attachmentRequired">
+                        [checked]="entitlementDetails.PROPERTIES_XML.attachmentRequired"
+                        (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.attachmentRequired = true: entitlementDetails.PROPERTIES_XML.attachmentRequired = false">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.attachmentRequired === true"
@@ -340,7 +368,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Exclude Day Type for Leave day(s) calculation
                 </ion-col>
@@ -369,7 +397,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Apply Before
                 </ion-col>
@@ -393,7 +421,7 @@
                   </div>
                 </ion-col>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Exclude Day Type
                 </ion-col>
@@ -422,7 +450,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Allow applicant to apply leave less than number of day(s) stated above
                 </ion-col>
@@ -431,7 +459,8 @@
                   <div style="height: 30px;">
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck">
+                        [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck"
+                        (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=true:entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=false">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === true"
@@ -451,7 +480,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Make short notice application as Emergency
                 </ion-col>
@@ -460,7 +489,8 @@
                   <div>
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency">
+                        [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency"
+                        (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency = true:entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency = false">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency === true"
@@ -474,7 +504,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Apply within
                 </ion-col>
@@ -498,7 +528,7 @@
                   </div>
                 </ion-col>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Exclude Day Type
                 </ion-col>
@@ -527,7 +557,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Allow applicant to submit backdated leave after number of day(s) stated above
                 </ion-col>
@@ -536,7 +566,8 @@
                   <div style="height: 30px;">
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck">
+                        [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck"
+                        (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = true: entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = false">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === true"
@@ -556,7 +587,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Allow applicant to apply more than Leave Balance
                 </ion-col>
@@ -565,7 +596,8 @@
                   <div style="height: 30px;">
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        [checked]="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck">
+                        [checked]="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck"
+                        (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck = true: entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck = false">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck === true"
@@ -593,7 +625,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Maximum day per leave application
                 </ion-col>
@@ -618,7 +650,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Allow to apply leave after
                 </ion-col>
@@ -639,7 +671,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Allow applicant to cancel leave after start/expired date
                 </ion-col>
@@ -648,7 +680,8 @@
                   <div style="height: 30px;">
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        [checked]="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck">
+                        [checked]="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck"
+                        (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck = true: entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck = false">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck === true"
@@ -668,7 +701,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Allow applicant to use previous year bring forward leave only
                 </ion-col>
@@ -677,7 +710,8 @@
                   <div style="height: 30px;">
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        [checked]="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck">
+                        [checked]="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck"
+                        (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck = true: entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck = false">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck === true"
@@ -697,7 +731,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Leave entitlement type
                 </ion-col>
@@ -726,7 +760,7 @@
                 <ion-item class="divider" lines="full">
                 </ion-item>
               </ion-row>
-              <ion-row style="width: 100%;padding-left: 10px;">
+              <ion-row class="rowDetails">
                 <ion-col align-self-center class="text">
                   Leave entitlement rounding
                 </ion-col>
