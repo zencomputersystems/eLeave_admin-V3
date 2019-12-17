@@ -490,7 +490,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.mode = 'ON';
             this.inviteAPI.popUp.open(EditModeDialogComponent, {
                 data: 'employee',
-                height: "354.3px",
+                height: "333.3px",
                 width: "383px"
             });
         } else {
@@ -513,7 +513,7 @@ export class EmployeeSetupComponent implements OnInit {
             const dialog = this.inviteAPI.popUp.open(ChangeStatusConfimationComponent, {
                 data: { name: name, status: 'Activate' },
                 height: "195px",
-                width: "249px"
+                width: "270px"
             });
             let result = await dialog.afterClosed().toPromise();
             if (result === 'Activate') {
@@ -525,7 +525,7 @@ export class EmployeeSetupComponent implements OnInit {
             const dialog = this.inviteAPI.popUp.open(ChangeStatusConfimationComponent, {
                 data: { name: name, status: 'Deactivate' },
                 height: "195px",
-                width: "249px"
+                width: "270px"
             });
             let result = await dialog.afterClosed().toPromise();
             if (result === 'Deactivate') {
@@ -737,7 +737,7 @@ export class EmployeeSetupComponent implements OnInit {
         const dialogRef = this.inviteAPI.popUp.open(DeleteCalendarConfirmationComponent, {
             data: { name: name, value: userId, desc: "'s employee profile" },
             height: "195px",
-            width: "249px"
+            width: "270px"
         });
         let val = await dialogRef.afterClosed().toPromise();
         if (val === userId) {

@@ -193,7 +193,7 @@ export class PolicyListComponent implements OnInit {
             this.modeValue = 'ON';
             this.policyApi.dialog.open(EditModeDialogComponent, {
                 data: 'policy',
-                height: "354.3px",
+                height: "316.3px",
                 width: "383px"
             });
 
@@ -238,7 +238,7 @@ export class PolicyListComponent implements OnInit {
         const dialog = this.policyApi.dialog.open(DeleteCalendarConfirmationComponent, {
             data: { name: item.NAME, value: item.TENANT_COMPANY_GUID, desc: ' company' },
             height: "195px",
-            width: "249px"
+            width: "270px"
         });
         dialog.afterClosed().subscribe(value => {
             if (value === item.TENANT_COMPANY_GUID) {

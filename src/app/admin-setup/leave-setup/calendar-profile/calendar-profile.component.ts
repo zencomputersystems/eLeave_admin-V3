@@ -630,7 +630,7 @@ export class CalendarProfileComponent implements OnInit {
             this.showAddIcon = true;
             this.calendarProfileAPI.displayDialog.open(EditModeDialogComponent, {
                 data: 'calendar',
-                height: "359.3px",
+                height: "343.3px",
                 width: "383px"
             });
 
@@ -685,7 +685,7 @@ export class CalendarProfileComponent implements OnInit {
         const dialog = this.calendarProfileAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
             data: { name: item.code, value: item.calendar_guid, desc: ' calendar profile' },
             height: "195px",
-            width: "249px"
+            width: "270px"
         });
         dialog.afterClosed().subscribe(result => {
             if (result === item.calendar_guid) {
@@ -712,7 +712,7 @@ export class CalendarProfileComponent implements OnInit {
         const popup = this.calendarProfileAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
             data: { name: title, value: index, desc: ' from holiday list' },
             height: "195px",
-            width: "249px"
+            width: "270px"
         });
         popup.afterClosed().subscribe(result => {
             if (result == index && result != undefined) {

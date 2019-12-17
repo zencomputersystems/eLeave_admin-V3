@@ -3,7 +3,6 @@ import { RoleApiService } from '../role-api.service';
 import { MatDialog } from '@angular/material';
 import { DialogDeleteConfirmationComponent } from '../dialog-delete-confirmation/dialog-delete-confirmation.component';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
-import { APIService } from 'src/services/shared-service/api.service';
 import { MenuController } from '@ionic/angular';
 import { FormControl, Validators } from '@angular/forms';
 import { roleDetails } from '../role-details-data';
@@ -270,7 +269,7 @@ export class RoleListComponent implements OnInit {
             this.mode = 'ON';
             this.dialog.open(EditModeDialogComponent, {
                 data: 'role',
-                height: "354.3px",
+                height: "360.3px",
                 width: "383px"
             });
 
@@ -333,7 +332,7 @@ export class RoleListComponent implements OnInit {
         const dialogRef = this.dialog.open(DialogDeleteConfirmationComponent, {
             data: { value: role_guid, name: role_name },
             height: "195px",
-            width: "249px"
+            width: "270px"
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result === role_guid) {

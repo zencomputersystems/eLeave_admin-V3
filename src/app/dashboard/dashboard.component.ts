@@ -277,7 +277,7 @@ export class DashboardComponent implements OnInit {
     const dialog = this.dialog.open(DeleteCalendarConfirmationComponent, {
       data: { name: 'this', value: item.ANNOUNCEMENT_GUID, desc: ' announcement' },
       height: "195px",
-      width: "249px"
+      width: "270px"
     });
     dialog.afterClosed().subscribe(result => {
       if (result === item.ANNOUNCEMENT_GUID) {

@@ -1,3 +1,110 @@
+<!------------------------------------------ create new leave entitlement menu ------------------------------------>
+
+<ion-menu style="--width: 345px;" contentId="createNewEntitlementContent" side="end" type="overlay"
+  menuId="createNewEntitlementDetails">
+  <ion-header style="background-color:#43425d; color: #fcfcfc;">
+    <img style="margin: 15px;width: 22px;height: 22px;float:left" src="assets/icon/dashboard/icon All Holidays@3x.png">
+    <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">ADD NEW LEAVE
+      ENTITLEMENT PROFILE
+    </p>
+  </ion-header>
+
+  <ion-content>
+    <p style="font-size: 12px;color: #808495;margin: 17px;">You can create new or copy existing profile data. All data
+      will be import to their respective sections details EXCEPT Assigned Employee details.</p>
+    <div style="margin-left:17px;margin-right:17px">
+      <div style="display: block;white-space: nowrap;text-align: center;">
+        <ion-button
+          style="--border-radius: 4px 0 0 4px;margin-right: 0;display:inline-block;font-size: 11px;height: 30px;width:150px;cursor: pointer;text-transform: none;"
+          [ngClass]="{
+                    'newClicked': newButton === true , 'newUnclicked': newButton === false}"
+          (click)="cloneButton = false; newButton = true;">
+          Create New
+        </ion-button>
+        <ion-button [ngClass]="{ 'cloneClicked' : cloneButton === true , 'cloneUnclicked' : cloneButton === false}"
+          (click)="cloneButton = true; newButton = false;"
+          style="--border-radius: 0 4px 4px 0;margin-left: 0;display:inline-block;font-size: 11px;height: 30px;width:150px;cursor: pointer;text-transform: none;">
+          Clone Existing Data
+        </ion-button>
+      </div>
+      <div *ngIf="newButton">
+        <p style="margin: 15px;margin-top: 20px;font-size: 12px; color: #808495;font-weight: bold;margin-bottom: 5px;">
+          LEAVE TYPE</p>
+        <div style="width: 100%;">
+          <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;padding-left: 15px;">
+            <mat-select required [(value)]="entitlementTypeNew">
+              <mat-option *ngFor="let item of leaveTypeList; let j=index" [value]="item.LEAVE_TYPE_GUID">
+                {{item.CODE}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <p style="margin: 15px;margin-top: 20px;font-size: 12px; color: #808495;font-weight: bold;margin-top: 0;
+        margin-bottom: 5px;">
+          LEAVE ENTITLEMENT PROFILE</p>
+        <div style="width: 100%;">
+          <mat-form-field appearance="outline"
+            style="margin: 15px;height: 45px;display: block;font-size: 12px;color:#43425d;margin-top: 0;">
+            <mat-label>Entitlement profile name</mat-label>
+            <input matInput [formControl]="newEntitlementName" required>
+          </mat-form-field>
+        </div>
+        <div style="width: 100%;">
+          <mat-form-field appearance="outline" style="margin: 15px;display: block;font-size: 12px;color:#43425d;">
+            <mat-label>Entitlement description</mat-label>
+            <textarea matInput [formControl]="newEntitlementDescription" required
+              style="height: 100px;resize: none;"></textarea>
+          </mat-form-field>
+        </div>
+        <div style="margin: 20px;text-align: center;">
+          <ion-button
+            style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+            color="primary" (click)="createProfile('new')"
+            [disabled]="!newEntitlementName.valid || !newEntitlementDescription.valid">
+            Add
+          </ion-button>
+        </div>
+      </div>
+      <div *ngIf="cloneButton" style="margin: 15px;">
+        <p style="margin-top: 20px;font-size: 12px; color: #808495;font-weight: bold;margin-bottom: 5px;">
+          LEAVE TYPE</p>
+        <div style="width: 100%;">
+          <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;">
+            <mat-select [(value)]="entitlementTypeNew" required>
+              <mat-option *ngFor="let item of leaveTypeList; let j=index" [value]="item.LEAVE_TYPE_GUID">
+                {{item.CODE}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <p style="margin: 15px;font-size: 12px;color: #808495;font-weight: bold;margin-top: 10px;
+        margin-left: 0;">
+          LEAVE ENTITLEMENT PROFILE</p>
+        <ng-container *ngFor="let type of leaveTypes; let j=index;">
+          <mat-radio-group [(ngModel)]="cloneProfileId">
+            <ng-container *ngFor="let item of leaveEntitlement[j]; let i=index">
+              <mat-radio-button disableRipple="true" color="primary" *ngIf="item.leaveTypeId == entitlementTypeNew"
+                style="margin-bottom: 3px;display: block;color: #4d4f5c;font-size: 12px;font-weight: 600;"
+                [value]="item.leaveEntitlementId">
+                {{item.leaveType}} - {{item.leaveEntitlementCode}}
+              </mat-radio-button>
+            </ng-container>
+          </mat-radio-group>
+        </ng-container>
+        <div style="margin: 20px;text-align: center;">
+          <ion-button
+            style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+            color="primary" (click)="createProfile('clone')" [disabled]="cloneProfileId == null">
+            Add
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-menu>
+<ion-router-outlet id="createNewEntitlementContent">
+</ion-router-outlet>
+
+
+<!------------------------------------------ content ------------------------------------>
 <ion-card>
   <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
     <div class="fullContainer">
@@ -31,28 +138,29 @@
   <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;" *ngIf="!showSpinner">
     <div class="cardContent">
       <ion-card-content style="max-height:100%;height: 100%;">
-        <div class="new" *ngIf="mainToggle === 'ON'">
+        <!-- <div class="new" *ngIf="mainToggle === 'ON'">
           <div
             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 10px;color: #a3a6b4;font-weight: bold;">
             <ion-row>
               <mat-form-field appearance="outline" style="height: 55px;
                   font-size: 12px;width: 28%;color: #43425d;">
-                <input matInput placeholder="Add new abbreviation here (eg.:AL,ML)">
+                <input matInput [formControl]="abbreviation" placeholder="Add new abbreviation here (eg.:AL,ML)">
               </mat-form-field>
               <div style="width: 1%;"></div>
               <mat-form-field appearance="outline" style="height: 55px;
             font-size: 12px;width: 40%;color: #43425d;">
-                <input matInput placeholder="Add new leave title here (eg.:Annual Leave,Medical Leave)">
+                <input matInput [formControl]="leaveTypeName"
+                  placeholder="Add new leave title here (eg.:Annual Leave,Medical Leave)">
               </mat-form-field>
               <div style="width: 1%;"></div>
               <ion-button style="--border-radius: 2px;text-transform: none;height: 39px; width: 29%;font-size: 11px;"
-                color="primary">
-                Create New Leave Entitlement
+                color="primary" (click)="newLeaveType()">
+                Create New Leave Type
               </ion-button>
             </ion-row>
           </div>
-        </div>
-        <div class="row" [style.max-height]="mainToggle === 'ON'? 'calc(100% - 85px)': '100%'">
+        </div> -->
+        <div class="row">
           <div class="entitlement">
             <ng-container *ngFor="let type of leaveTypes; let j=index;">
               <div (click)="showClickedContent(j)"
@@ -62,7 +170,7 @@
                     style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
                     <img src="assets/icon/leave_setup/hamburger_menu@3x.png"
                       style="width:14px;height:12px;display: inline-block;margin-right: 10px;">
-                    {{type}}
+                    {{type.title}}
                   </ion-col>
                 </ion-row>
               </div>
@@ -88,14 +196,16 @@
                   </ion-col>
                   <ion-col align-self-center style="text-align: right;padding-right: 20px;">
                     <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mainToggle === 'ON'"
-                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;">
+                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
+                      (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
                   </ion-col>
                   <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 0;">
                   </ion-item>
                 </ion-row>
                 <div style="margin: 10px;" *ngIf="mainToggle === 'ON'"><img
                     style="display: inline-block;cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
-                    src="assets/icon/leave_setup/icon_request@3x.png">
+                    src="assets/icon/leave_setup/icon_request@3x.png"
+                    (click)="entitlementTypeNew = type.leaveTypeId;menu.open('createNewEntitlementDetails'); menu.enable(true, 'createNewEntitlementDetails')">
                   <p style="color: #808495;font-size: 11px;font-weight: bold;
                 display: inline-block;"> Add New Leave Entitlement Profile</p>
                 </div>
@@ -124,7 +234,7 @@
                   <div>
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)" [checked]="entitlementDetails.PROPERTIES_XML.applyInAdvance">
+                        [checked]="entitlementDetails.PROPERTIES_XML.applyInAdvance">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.applyInAdvance === true"
@@ -147,7 +257,7 @@
                   <div>
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)" [checked]="entitlementDetails.PROPERTIES_XML.applyNextYear">
+                        [checked]="entitlementDetails.PROPERTIES_XML.applyNextYear">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.applyNextYear === true"
@@ -170,7 +280,7 @@
                   <div>
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)" [checked]="entitlementDetails.PROPERTIES_XML.claimEntitlement">
+                        [checked]="entitlementDetails.PROPERTIES_XML.claimEntitlement">
                       </ion-toggle>
                     </div>
                     <p *ngIf="entitlementDetails.PROPERTIES_XML.claimEntitlement === true"
@@ -193,7 +303,6 @@
                   <div>
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)"
                         [checked]="entitlementDetails.PROPERTIES_XML.applyFractionUnit">
                       </ion-toggle>
                     </div>
@@ -217,7 +326,6 @@
                   <div>
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)"
                         [checked]="entitlementDetails.PROPERTIES_XML.attachmentRequired">
                       </ion-toggle>
                     </div>
@@ -323,7 +431,6 @@
                   <div style="height: 30px;">
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)"
                         [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck">
                       </ion-toggle>
                     </div>
@@ -338,7 +445,7 @@
                   font-size: 12px;width: 60%;color: #43425d;float:right">
                     <input matInput
                       [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.textValue"
-                      disabled>
+                      [disabled]="mainToggle === 'OFF'">
                   </mat-form-field>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -353,7 +460,6 @@
                   <div>
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)"
                         [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency">
                       </ion-toggle>
                     </div>
@@ -430,7 +536,6 @@
                   <div style="height: 30px;">
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)"
                         [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck">
                       </ion-toggle>
                     </div>
@@ -445,7 +550,7 @@
                   font-size: 12px;width: 60%;color: #43425d;float:right">
                     <input matInput
                       [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.textValue"
-                      disabled>
+                      [disabled]="mainToggle === 'OFF'">
                   </mat-form-field>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -460,7 +565,6 @@
                   <div style="height: 30px;">
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)"
                         [checked]="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck">
                       </ion-toggle>
                     </div>
@@ -544,7 +648,6 @@
                   <div style="height: 30px;">
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)"
                         [checked]="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck">
                       </ion-toggle>
                     </div>
@@ -558,7 +661,8 @@
                   <mat-form-field appearance="outline" style="height: 55px;
                   font-size: 12px;width: 60%;color: #43425d;float:right">
                     <input matInput
-                      [(ngModel)]="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.textValue" disabled>
+                      [(ngModel)]="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.textValue"
+                      [disabled]="mainToggle === 'OFF'">
                   </mat-form-field>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -573,7 +677,6 @@
                   <div style="height: 30px;">
                     <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                       <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)"
                         [checked]="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck">
                       </ion-toggle>
                     </div>
@@ -588,7 +691,7 @@
                   font-size: 12px;width: 60%;color: #43425d;float:right">
                     <input matInput
                       [(ngModel)]="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.textValue"
-                      disabled>
+                      [disabled]="mainToggle === 'OFF'">
                   </mat-form-field>
                 </ion-col>
                 <ion-item class="divider" lines="full">
@@ -715,9 +818,8 @@
               </ng-container>
               <div *ngIf="mainToggle === 'ON'" style="padding-left: 15px;padding-bottom: 15px;"><img
                   style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;display: inline-block;"
-                  src="assets/icon/leave_setup/icon_request@3x.png" (click)="addNewEntitlement()">
-                <p style="cursor: pointer;color: #808495;font-size: 11px;font-weight: bold;display: inline-block;"
-                  (click)="addNewEntitlement()">
+                  src="assets/icon/leave_setup/icon_request@3x.png" (click)="addNewLevel()">
+                <p style="color: #808495;font-size: 11px;font-weight: bold;display: inline-block;">
                   Add Leave Entitlement Level</p>
               </div>
             </div>

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { APIService } from "src/services/shared-service/api.service";
-import { MatSnackBar } from "@angular/material";
+import { MatDialog } from "@angular/material";
 
 /**
  * Leave API endpoint
@@ -23,10 +23,10 @@ export class LeaveEntitlementApiService {
     /**
      *Creates an instance of LeaveEntitlementApiService.
      * @param {APIService} apiService
-     * @param {MatSnackBar} snackBar
+     * @param {MatDialog} dialog
      * @memberof LeaveEntitlementApiService
      */
-    constructor(private apiService: APIService, public snackBar: MatSnackBar) {
+    constructor(private apiService: APIService, public dialog: MatDialog) {
     }
 
     /**
@@ -50,6 +50,52 @@ export class LeaveEntitlementApiService {
         this.apiService.headerAuthorization();
         return this.apiService.getApiWithId('/api/leavetype-entitlement/', entitlementId);
     }
+
+    /**
+     * delete leave entitlement profile
+     * @param {string} id
+     * @returns {Observable<any>}
+     * @memberof LeaveEntitlementApiService
+     */
+    delete_leavetype_entitlement(id: string): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.deleteApi(id, '/api/leavetype-entitlement/');
+    }
+
+    /**
+     * create new leave entitlement profile
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof LeaveEntitlementApiService
+     */
+    post_leavetype_entitlement(data: any): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.postApi(data, '/api/leavetype-entitlement');
+    }
+
+    /**
+     * update leave entitlement details
+     * @param {*} details
+     * @returns {Observable<any>}
+     * @memberof LeaveEntitlementApiService
+     */
+    patch_leavetype_entitlement(details: any): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.patchApi(details, '/api/leavetype-entitlement');
+    }
+
+    /**
+     * create new leave type
+     * @param {*} content
+     * @returns {Observable<any>}
+     * @memberof LeaveEntitlementApiService
+     */
+    post_leavetype(content: any): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.postApi(content, '/api/admin/leavetype');
+    }
+
+
 
 
 

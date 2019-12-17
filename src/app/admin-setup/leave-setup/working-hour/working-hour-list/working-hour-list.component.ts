@@ -154,7 +154,7 @@ export class WorkingHourListComponent implements OnInit {
             this.mode = 'ON';
             this.dialog.open(EditModeDialogComponent, {
                 data: 'working',
-                height: "354.3px",
+                height: "360.3px",
                 width: "383px"
             });
 
@@ -240,7 +240,7 @@ export class WorkingHourListComponent implements OnInit {
         const dialogRef = this.dialog.open(DeleteCalendarConfirmationComponent, {
             data: { name: name, value: working_hour_guid, desc: ' profile name' },
             height: "195px",
-            width: "249px"
+            width: "270px"
         });
         dialogRef.afterClosed().subscribe(val => {
             if (val === working_hour_guid) {
