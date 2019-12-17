@@ -161,24 +161,31 @@ export class SideMenuNavigationComponent implements OnInit {
    * @memberof SideMenuNavigationComponent
    */
   ngOnInit() {
-    if (this.router.url.includes('?')) {
-      const url = this.router.url.split('?');
+    if (this.router.url.split("/").length == 4) {
+      const url = this.router.url.split('/');
       const lastSegment = url.pop();
-      if (url[0] === this.appPages[2].url) {
-        this.activeRoute = this.appPages[2].url;
-      }
+      this.activeUrl(url.join('/'));
+    } else {
+      this.activeUrl(this.router.url);
     }
 
+    this.openAtBeginning();
+    this.apiService.get_personal_details().subscribe(data => {
+      this.list = data;
+    });
+  }
+
+  /**
+   * show active route highlight in menu 
+   * @param {string} currentRoute
+   * @memberof SideMenuNavigationComponent
+   */
+  activeUrl(currentRoute: string) {
     for (let i = 0; i < this.appPages.length; i++) {
-      if (this.router.url === this.appPages[i].url) {
+      if (currentRoute === this.appPages[i].url) {
         this.activeRoute = this.appPages[i].url;
       }
     }
-    this.openAtBeginning();
-    this.apiService.get_personal_details().subscribe(data => {
-      // this.userId = data.id;
-      this.list = data;
-    });
   }
 
   /**

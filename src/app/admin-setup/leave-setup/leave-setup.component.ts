@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 /**
  * Leave header with router-outlet page 
@@ -65,6 +66,11 @@ export class LeaveSetupComponent implements OnInit {
      * @memberof LeaveSetupComponent
      */
     constructor(private router: Router) {
+        router.events
+            .pipe(filter(e => e instanceof NavigationEnd))
+            .subscribe((e: NavigationEnd) => {
+                this.checkUrl(e.urlAfterRedirects);
+            });
     }
 
     /**
@@ -83,7 +89,7 @@ export class LeaveSetupComponent implements OnInit {
     checkUrl(url: string) {
         for (let i = 0; i < this.leaveSetupPage.length; i++) {
             if (this.leaveSetupPage[i].url.includes(url)) {
-                this.getIndexToShowArrow(i);
+                this.showHighlightMenu(i);
             }
         }
     }
@@ -93,7 +99,7 @@ export class LeaveSetupComponent implements OnInit {
      * @param {number} index
      * @memberof LeaveSetupComponent
      */
-    getIndexToShowArrow(index: number) {
+    showHighlightMenu(index: number) {
         this.numOfArray = index;
         this.router.navigate(this.leaveSetupPage[index].url);
     }

@@ -5,7 +5,7 @@
             Leave Setup
         </ion-title>
         <ion-menu-toggle auto-hide="false" *ngFor="let p of leaveSetupPage; let i=index">
-            <ion-item class="items" lines="none" (click)="getIndexToShowArrow(i)" [ngClass]="{
+            <ion-item class="items" lines="none" (click)="showHighlightMenu(i)" [ngClass]="{
                     'mainColor': numOfArray === i,'highlightColor': numOfArray !== i}">
                 <ion-label>
                     {{p.title}}
