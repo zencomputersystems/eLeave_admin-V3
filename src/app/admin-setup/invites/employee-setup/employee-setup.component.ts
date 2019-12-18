@@ -10,6 +10,7 @@ import { genderStatus, maritalStatus } from './employee-setup.service';
 import { RoleApiService } from '../../role-management/role-api.service';
 import { ChangeStatusConfimationComponent } from './change-status-confimation/change-status-confimation.component';
 import { DeleteCalendarConfirmationComponent } from '../../leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
+import { personal, employment } from './employee-setup-data';
 
 /**
  *
@@ -378,6 +379,21 @@ export class EmployeeSetupComponent implements OnInit {
     }
 
     /**
+     * get emitted value to patch to user-info employement-details API
+     * @param {*} event
+     * @memberof EmployeeSetupComponent
+     */
+    receiveData(event) {
+        if (this.mode = 'OFF') {
+            this.employmentDetails.employmentDetail.branch = event[0];
+            this.employmentDetails.employmentDetail.section = event[2];
+            this.employmentDetails.employmentDetail.department = event[3];
+            this.employmentDetails.employmentDetail.costcentre = event[4];
+            this.patchEmploymentDetails();
+        }
+    }
+
+    /**
      * get clicked user id
      * @param {*} item
      * @param {number} index
@@ -403,8 +419,10 @@ export class EmployeeSetupComponent implements OnInit {
             this.getEmploymentDetails();
         })
         this.leaveApi.get_entilement_details(this.userId).subscribe(data => {
-            this.entitlementValue = data[0].LEAVE_TYPE_GUID;
-            this.dayAvailable = data[0].BALANCE_DAYS;
+            if (data.length > 0) {
+                this.entitlementValue = data[0].LEAVE_TYPE_GUID;
+                this.dayAvailable = data[0].BALANCE_DAYS;
+            }
         })
         this.inviteAPI.get_user_profile_details(this.userId).subscribe(data => {
             this.calendarValue = data.calendarId;
@@ -421,6 +439,8 @@ export class EmployeeSetupComponent implements OnInit {
         if (this.personalDetails.personalDetail != undefined) {
             this.birthOfDate = new FormControl((this.personalDetails.personalDetail.dob), Validators.required);
             this.personalDetails.personalDetail.dob = _moment(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
+        } else {
+            this.personalDetails.personalDetail = personal;
         }
     }
 
@@ -436,8 +456,9 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails.employmentDetail.dateOfConfirmation = _moment(this.employmentDetails.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
             this.dateOfResign = new FormControl((this.employmentDetails.employmentDetail.dateOfResign), Validators.required);
             this.employmentDetails.employmentDetail.dateOfResign = _moment(this.employmentDetails.employmentDetail.dateOfResign).format('DD-MM-YYYY');
+        } else {
+            this.employmentDetails.employmentDetail = employment;
         }
-
     }
 
     /**
@@ -496,7 +517,7 @@ export class EmployeeSetupComponent implements OnInit {
         } else {
             this.mode = 'OFF';
             this.patchPersonalDetails();
-            this.patchEmploymentDetails();
+            // this.patchEmploymentDetails();
             this.assignProfile();
             this.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
         }

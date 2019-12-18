@@ -516,7 +516,7 @@
                                 EMPLOYEMENT DETAILS</div>
                             <div *ngIf="employmentDetails && showEmploy">
                                 <app-add-one-employee [disabledEditMode]="mode === 'OFF'"
-                                    [getDetails]="employmentDetails">
+                                    [getDetails]="employmentDetails" (sendFormdata)="receiveData($event)">
                                 </app-add-one-employee>
                                 <ion-item class="divider" lines="full" style="padding-left: 15px;
                                     padding-right: 15px;padding-top: 2%;padding-bottom: 2%;">
@@ -558,7 +558,7 @@
                                         </mat-form-field>
                                     </ion-col>
                                 </ion-row>
-                                <ion-row class="detailsRow">
+                                <!-- <ion-row class="detailsRow">
                                     <ion-col>
                                         <ion-label class="label">Department</ion-label>
                                         <p class="pText"
@@ -579,11 +579,11 @@
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
                                             <input matInput [(ngModel)]="employmentDetails.employmentDetail.branch">
-                                        </mat-form-field> -->
+                                        </mat-form-field> --
                                     </ion-col>
                                     <ion-col>
                                     </ion-col>
-                                </ion-row>
+                                </ion-row> -->
                                 <ion-item class="divider" lines="full" style="padding-left: 15px;
                                 padding-right: 15px;padding-top: 2%;padding-bottom: 2%;">
                                 </ion-item>

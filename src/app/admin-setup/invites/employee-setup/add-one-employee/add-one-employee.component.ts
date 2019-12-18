@@ -40,6 +40,12 @@ export class AddOneEmployeeComponent implements OnInit {
     @Input() getDetails?: any;
 
     /**
+     * emit employement details
+     * @memberof AddOneEmployeeComponent
+     */
+    @Output() sendFormdata?= new EventEmitter();
+
+    /**
      * side menu add individual details
      * @type {boolean}
      * @memberof AddOneEmployeeComponent
@@ -235,8 +241,7 @@ export class AddOneEmployeeComponent implements OnInit {
      */
     ngOnChanges(changes: SimpleChanges) {
         if (changes.disabledEditMode !== undefined) {
-            if (changes.disabledEditMode.currentValue == true) {
-            }
+            this.toggleOnToOff(changes);
             if (changes.disabledEditMode.currentValue == false) {
                 this.branchCtrl.enable();
                 this.divisionCtrl.enable();
@@ -246,10 +251,31 @@ export class AddOneEmployeeComponent implements OnInit {
             }
         }
         if (changes.getDetails) {
-            this.branchCtrl.patchValue(this.getDetails.employmentDetail.branch);
-            this.sectionCtrl.patchValue(this.getDetails.employmentDetail.section);
-            this.departmentCtrl.patchValue(this.getDetails.employmentDetail.department);
-            this.costCentreCtrl.patchValue(this.getDetails.employmentDetail.costcentre);
+            if (this.getDetails.employmentDetail != undefined) {
+                this.branchCtrl.patchValue(this.getDetails.employmentDetail.branch);
+                this.sectionCtrl.patchValue(this.getDetails.employmentDetail.section);
+                this.departmentCtrl.patchValue(this.getDetails.employmentDetail.department);
+                this.costCentreCtrl.patchValue(this.getDetails.employmentDetail.costcentre);
+            }
+        }
+    }
+
+
+    /**
+     * getChangeFormValue
+     * Branch, division, section, department, costcentre
+     * @param {SimpleChanges} changes
+     * @memberof AddOneEmployeeComponent
+     */
+    toggleOnToOff(changes: SimpleChanges) {
+        if (changes.disabledEditMode.currentValue == true && changes.disabledEditMode.previousValue == false) {
+            const data = [];
+            data.push(this.branchCtrl.value);
+            data.push(this.divisionCtrl.value);
+            data.push(this.sectionCtrl.value);
+            data.push(this.departmentCtrl.value);
+            data.push(this.costCentreCtrl.value);
+            this.sendFormdata.emit(data);
         }
     }
 
