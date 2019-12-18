@@ -11,7 +11,9 @@
       <p style="opacity: 0.5;font-size: 13px;line-height: 0.62;text-align: center;color: #4d4f5c;">Welcome back! Please
         login to your account.</p>
       <br>
-      <form [formGroup]="formGroupValidation" style="width: 300px;">
+      <form [formGroup]="formGroupValidation" style="width: 300px;" autocomplete="off">
+        <input style="display:none" type="text" name="fakeusernameremembered" />
+        <input style="display:none" type="password" name="fakepasswordremembered" />
         <mat-form-field>
           <input matInput #emailInput placeholder="Username" formControlName="email" required>
           <mat-error *ngIf="formGroupValidation.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
@@ -19,7 +21,7 @@
         <br> <br>
         <mat-form-field>
           <input matInput placeholder="Password" #passwordInput [type]="showPassword ? 'text' : 'password'"
-            formControlName="pass" required>
+            formControlName="pass" autocomplete="new-password" required>
           <mat-error *ngIf="formGroupValidation.controls['pass'].invalid">{{getPassErrorMessage()}}</mat-error>
           <mat-icon class="showHidePassword" matSuffix>
             <ion-icon name="eye-off" (click)="showPasswordKey()" *ngIf="!showPassword"></ion-icon>
