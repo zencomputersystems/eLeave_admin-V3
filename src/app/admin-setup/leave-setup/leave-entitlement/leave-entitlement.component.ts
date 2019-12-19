@@ -102,21 +102,7 @@ export class LeaveEntitlementComponent implements OnInit {
    * @type {*}
    * @memberof LeaveEntitlementComponent
    */
-  public leaveTypeList: any;
-
-  /**
-   * entitlement name of add new profile
-   * @type {*}
-   * @memberof LeaveEntitlementComponent
-   */
-  public newEntitlementName: any;
-
-  /**
-   * entitlement description of add new profile
-   * @type {*}
-   * @memberof LeaveEntitlementComponent
-   */
-  public newEntitlementDescription: any;
+  // public leaveTypeList: any;
 
   /**
    * clone profile leave entitlement id
@@ -133,7 +119,7 @@ export class LeaveEntitlementComponent implements OnInit {
   public entitlementTypeNew: string;
 
   /**
-   * add new leave type name
+   * add new leave type name form control
    * @type {*}
    * @memberof LeaveEntitlementComponent
    */
@@ -141,10 +127,37 @@ export class LeaveEntitlementComponent implements OnInit {
 
   /**
    * add new abbreviation
-   * @type {FormControl}
+   * @type {*}
    * @memberof LeaveEntitlementComponent
    */
-  public abbreviation: FormControl;
+  public abbreviation: any;
+
+  /**
+   * abbreviation term of leave type
+   * @type {string}
+   * @memberof LeaveEntitlementComponent
+   */
+  public abbr: string;
+
+  /**
+   * name of leave type
+   * @type {string}
+   * @memberof LeaveEntitlementComponent
+   */
+  public name: string;
+
+  /**
+   * new leave type id 
+   * @type {string}
+   * @memberof LeaveEntitlementComponent
+   */
+  public newLeaveTypeId: string;
+
+  /**
+   * list of new entitlement profile
+   * @memberof LeaveEntitlementComponent
+   */
+  public newProfileList = [{ 'name': 'Default', 'description': 'Default Leave Entitlement' }];
 
   /**
    *Creates an instance of LeaveEntitlementComponent.
@@ -154,8 +167,6 @@ export class LeaveEntitlementComponent implements OnInit {
    * @memberof LeaveEntitlementComponent
    */
   constructor(private entitlementApi: LeaveEntitlementApiService, private leaveApi: LeaveApiService, private menu: MenuController) {
-    this.newEntitlementName = new FormControl('', Validators.required);
-    this.newEntitlementDescription = new FormControl('', Validators.required);
     this.abbreviation = new FormControl('', Validators.required);
     this.leaveTypeName = new FormControl('', Validators.required);
   }
@@ -175,7 +186,12 @@ export class LeaveEntitlementComponent implements OnInit {
     this.getLeaveTypes(grouppedId);
     this.leaveContent.splice(0, 1, true);
     this.getProfileDetails(data[0].leaveEntitlementId);
-    this.getLeaveTypeList();
+    // this.getLeaveTypeList();
+  }
+
+  addNewProfileItem() {
+    const obj = { 'name': '', 'description': '' }
+    this.newProfileList.push(obj);
   }
 
   /**
@@ -188,7 +204,8 @@ export class LeaveEntitlementComponent implements OnInit {
     for (let i = 0; i < ids.length; i++) {
       this.leaveContent.push(false);
       let details = await this.entitlementApi.get_admin_leavetype_id(ids[i]).toPromise();
-      this.leaveTypes.push({ "leaveTypeId": details.LEAVE_TYPE_GUID, "title": details.ABBR + ' - ' + details.CODE });
+      console.log(details);
+      this.leaveTypes.push({ "leaveTypeId": details.LEAVE_TYPE_GUID, "title": details.ABBR + ' - ' + details.CODE, "ABBR": details.ABBR, "name": details.CODE });
     }
   }
 
@@ -210,11 +227,11 @@ export class LeaveEntitlementComponent implements OnInit {
    * get leave types list
    * @memberof LeaveEntitlementComponent
    */
-  getLeaveTypeList() {
-    this.leaveApi.get_admin_leavetype().subscribe(data => {
-      this.leaveTypeList = data;
-    });
-  }
+  // getLeaveTypeList() {
+  //   this.leaveApi.get_admin_leavetype().subscribe(data => {
+  //     this.leaveTypeList = data;
+  //   });
+  // }
 
   addNewLevel() {
     const levelObj = {
@@ -252,6 +269,11 @@ export class LeaveEntitlementComponent implements OnInit {
     this.leaveContent.splice(index, 1, true);
   }
 
+  deleteProfile(index) {
+    this.newProfileList.splice(index, 1);
+    console.log(this.newProfileList);
+  }
+
   /**
    * toggle button edit mode value
    * @param {*} evt
@@ -262,7 +284,7 @@ export class LeaveEntitlementComponent implements OnInit {
       this.mainToggle = 'ON';
       this.entitlementApi.dialog.open(EditModeDialogComponent, {
         data: 'entitlement',
-        height: "363.3px",
+        height: "372.3px",
         width: "383px"
       });
     } else {
@@ -289,13 +311,12 @@ export class LeaveEntitlementComponent implements OnInit {
     const content = {
       "abbr": this.abbreviation.value,
       "code": this.leaveTypeName.value,
-      "description": ""
+      "description": this.leaveTypeName.value
     }
-    this.leaveTypes.push({ "leaveTypeId": "", "title": this.abbreviation.value + ' - ' + this.leaveTypeName.value });
-
-    // this.entitlementApi.post_leavetype(content).subscribe(res => {
-    //   console.log(res);
-    // })
+    this.entitlementApi.post_leavetype(content).subscribe(res => {
+      console.log(res.resource[0].LEAVE_TYPE_GUID);
+      this.newLeaveTypeId = res.resource[0].LEAVE_TYPE_GUID;
+    })
   }
 
   /**
@@ -306,10 +327,18 @@ export class LeaveEntitlementComponent implements OnInit {
   async createProfile(buttonName: string) {
     let data;
     if (buttonName == 'new') {
-      data = entitlementData;
-      data.leavetype_id = this.entitlementTypeNew;
-      data.code = this.newEntitlementName.value;
-      data.description = this.newEntitlementDescription.value;
+      for (let i = 0; i < this.newProfileList.length; i++) {
+        data = entitlementData;
+        data.leavetype_id = this.newLeaveTypeId;
+        data.code = this.newProfileList[i].name;
+        data.description = this.newProfileList[i].description;
+        await this.entitlementApi.post_leavetype_entitlement(data).toPromise();
+      }
+      this.ngOnInit();
+      this.newLeaveTypeId = '';
+      this.leaveApi.openSnackBar('New leave entitlement profile was added', true);
+      this.menu.close('createNewTypeDetails');
+      this.menu.close('editLeaveTypeDetails');
     } else {
       let value = await this.entitlementApi.get_leavetype_entitlement_id(this.cloneProfileId).toPromise();
       data = {
@@ -318,14 +347,14 @@ export class LeaveEntitlementComponent implements OnInit {
         "leavetype_id": this.entitlementTypeNew,
         "property": value.PROPERTIES_XML
       };
+      this.entitlementApi.post_leavetype_entitlement(data).subscribe(res => {
+        this.ngOnInit();
+        this.newLeaveTypeId = '';
+        this.leaveApi.openSnackBar('New leave entitlement profile was added', true);
+        this.menu.close('createNewTypeDetails');
+        this.menu.close('editLeaveTypeDetails');
+      })
     }
-    this.entitlementApi.post_leavetype_entitlement(data).subscribe(res => {
-      this.newEntitlementName.reset();
-      this.newEntitlementDescription.reset();
-      this.ngOnInit();
-      this.leaveApi.openSnackBar('New leave entitlement profile was added', true);
-      this.menu.close('createNewEntitlementDetails');
-    })
   }
 
   /**
@@ -337,7 +366,7 @@ export class LeaveEntitlementComponent implements OnInit {
    */
   deleteLeaveEntitlement(leaveEntitlementId: string, leavetype: string, code: string) {
     const dialogRef = this.entitlementApi.dialog.open(DeleteCalendarConfirmationComponent, {
-      data: { name: leavetype + ' - ' + code, value: leaveEntitlementId, desc: ' leave entitlement profile' },
+      data: { name: leavetype + ' - ' + code, value: leaveEntitlementId, desc: ' entitlement profile' },
       height: "195px",
       width: "270px"
     });

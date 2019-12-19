@@ -23,8 +23,8 @@
       style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;">
       Add New Roles</p>
     <p *ngIf="data === 'entitlement'"
-      style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;">
-      Add New Leave Entitlement Code & Entitlement Level</p>
+      style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;">
+      Add New Leave Type & Leave Entitlement</p>
   </div>
   <div style="display: block;margin-left: 10px;">
     <div style="float: left;padding-right: 10px;" *ngIf="data === 'calendar' || data === 'working' || data === 'role'">
@@ -44,8 +44,8 @@
     <p *ngIf="data === 'employee'" style="margin-bottom: 0px;color: #43425d;line-height: 2.25;font-size: 12px;">
       Change date in calendar</p>
   </div>
-  <div style="display: block;margin-left: 10px;" *ngIf="data === 'working' || data === 'role'">
-    <img src="assets/icon/leave_setup/icon_edit@3x.png" style="height: 10.3px;width: 10.9px;">
+  <div style="display: block;margin-left: 10px;" *ngIf="data === 'working' || data === 'role' || data === 'entitlement'">
+    <img src="assets/icon/leave_setup/icon_edit@3x.png" style="height: 12px;width: 12px;">
     <p
       style="margin-bottom: 5px;margin: 0;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;padding-left: 10px;">
       Edit
