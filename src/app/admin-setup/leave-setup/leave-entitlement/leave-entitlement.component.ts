@@ -232,19 +232,6 @@ export class LeaveEntitlementComponent implements OnInit {
   }
 
   /**
-   * pass clicked index to get profile details
-   * @param {*} item
-   * @param {number} i
-   * @param {number} j
-   * @memberof LeaveEntitlementComponent
-   */
-  clickedEntitlement(item: any, i: number, j: number) {
-    this.clickedIndex = i;
-    this.clickedHeaderIndex = j;
-    this.getProfileDetails(item.leaveEntitlementId);
-  }
-
-  /**
    * show content of entitlement from clicked header
    * @param {number} index
    * @memberof LeaveEntitlementComponent
@@ -335,6 +322,13 @@ export class LeaveEntitlementComponent implements OnInit {
       await this.entitlementApi.post_leavetype_entitlement(value).toPromise();
     }
     this.newEditProfileList = [];
+    const data = {
+      "abbr": this.abbr,
+      "code": this.name,
+      "description": this.name,
+      "id": this.entitlementTypeNew
+    }
+    await this.entitlementApi.patch_leavetype(data).toPromise();
   }
 
   /**
@@ -428,28 +422,26 @@ export class LeaveEntitlementComponent implements OnInit {
     this.newProfileList = [{ 'name': 'Default', 'description': 'Default Leave Entitlement' }];
     this.leaveApi.openSnackBar('New leave entitlement profile was added', true);
     this.menu.close('createNewTypeDetails');
-    this.menu.close('editLeaveTypeDetails');
   }
 
   /**
    * delete leave type 
    * @memberof LeaveEntitlementComponent
    */
-  deleteLeaveType(abbr: string, name: string) {
+  async deleteLeaveType(abbr: string, name: string) {
     const dialogRef = this.entitlementApi.dialog.open(DeleteCalendarConfirmationComponent, {
       data: { name: abbr + ' - ' + name, value: this.entitlementTypeNew, desc: ' leave type' },
       height: "230px",
       width: "270px"
     });
-    dialogRef.afterClosed().subscribe(val => {
-      if (val === this.entitlementTypeNew) {
-        this.entitlementApi.delete_leavetype(this.entitlementTypeNew).subscribe(res => {
-          this.menu.close('editLeaveTypeDetails');
-          this.ngOnInit();
-          this.leaveApi.openSnackBar('Leave type & attached profile was deleted', true);
-        })
-      }
-    });
+    let val = await dialogRef.afterClosed().toPromise();
+    if (val === this.entitlementTypeNew) {
+      this.entitlementApi.delete_leavetype(this.entitlementTypeNew).subscribe(res => {
+        this.menu.close('editLeaveTypeDetails');
+        this.ngOnInit();
+        this.leaveApi.openSnackBar('Leave type & attached profile was deleted', true);
+      })
+    }
   }
 
   /**
@@ -459,20 +451,19 @@ export class LeaveEntitlementComponent implements OnInit {
    * @param {string} code
    * @memberof LeaveEntitlementComponent
    */
-  deleteLeaveEntitlement(leaveEntitlementId: string, leavetype: string, code: string) {
+  async deleteLeaveEntitlement(leaveEntitlementId: string, leavetype: string, code: string) {
     const dialogRef = this.entitlementApi.dialog.open(DeleteCalendarConfirmationComponent, {
       data: { name: leavetype + ' - ' + code, value: leaveEntitlementId, desc: ' entitlement profile' },
       height: "195px",
       width: "270px"
     });
-    dialogRef.afterClosed().subscribe(val => {
-      if (val === leaveEntitlementId) {
-        this.entitlementApi.delete_leavetype_entitlement(leaveEntitlementId).subscribe(res => {
-          this.ngOnInit();
-          this.leaveApi.openSnackBar('Leave entitlement profile was deleted', true);
-        });
-      }
-    });
+    let val = await dialogRef.afterClosed().toPromise();
+    if (val === leaveEntitlementId) {
+      this.entitlementApi.delete_leavetype_entitlement(leaveEntitlementId).subscribe(res => {
+        this.ngOnInit();
+        this.leaveApi.openSnackBar('Leave entitlement profile was deleted', true);
+      });
+    }
   }
 
 }

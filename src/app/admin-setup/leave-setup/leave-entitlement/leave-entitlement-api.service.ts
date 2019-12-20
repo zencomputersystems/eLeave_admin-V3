@@ -106,6 +106,17 @@ export class LeaveEntitlementApiService {
         return this.apiService.deleteApi(id, '/api/admin/leavetype/');
     }
 
+    /**
+     * update data of leavetype (abbr, code, description)
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof LeaveEntitlementApiService
+     */
+    patch_leavetype(data): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.patchApi(data, '/api/admin/leavetype');
+    }
+
 
 
 
