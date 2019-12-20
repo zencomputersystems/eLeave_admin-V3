@@ -10,90 +10,94 @@
   </ion-header>
 
   <ion-content>
-    <p style="font-size: 12px;color: #808495;margin: 17px;">Create new leave type and leave entitlement here. After you
-      created new leave, simply hit ‘create’ and continue add new leave entitlement below.</p>
-    <div style="margin-left: 17px;margin-right: 17px;">
-      <div
-        style="cursor: pointer;padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 10px;margin-top: 15px;color: #a3a6b4;font-weight: bold;">
-        <ion-row>
-          <ion-col align-self-center
-            style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
-            LEAVE TYPE TITLE
-          </ion-col>
-        </ion-row>
-        <ion-row style="margin-top: 5px;">
-          <ion-col size="9.4" style="padding-right: 0;">
-            <div style="display: inline-block;width: 30%;">
-              <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
-                Abbreviation</p>
-              <mat-form-field appearance="outline" style="height: 55px;
+    <div style="height: calc(100% - 17px)">
+      <p style="font-size: 12px;color: #808495;margin: 17px;">Create new leave type and leave entitlement here. After
+        you
+        created new leave, simply hit ‘create’ and continue add new leave entitlement below.</p>
+      <div style="margin-left: 17px;margin-right: 17px;height: calc(100% - 70px);">
+        <div
+          style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 10px;margin-top: 15px;color: #a3a6b4;font-weight: bold;">
+          <ion-row>
+            <ion-col align-self-center
+              style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+              LEAVE TYPE TITLE
+            </ion-col>
+          </ion-row>
+          <ion-row style="margin-top: 5px;">
+            <ion-col size="9.4" style="padding-right: 0;">
+              <div style="display: inline-block;width: 30%;">
+                <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
+                  Abbreviation</p>
+                <mat-form-field appearance="outline" style="height: 55px;
             font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
-                <input matInput [formControl]="abbreviation" placeholder="E.g: AL, ML">
-              </mat-form-field>
-            </div>
-            <div style="width: 1%;display: inline-block;"></div>
-            <div style="display: inline-block;width: 69%;">
-              <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
-                Leave Type</p>
-              <mat-form-field appearance="outline" style="height: 55px;
+                  <input matInput [formControl]="abbreviation" placeholder="E.g: AL, ML">
+                </mat-form-field>
+              </div>
+              <div style="width: 1%;display: inline-block;"></div>
+              <div style="display: inline-block;width: 69%;">
+                <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
+                  Leave Type</p>
+                <mat-form-field appearance="outline" style="height: 55px;
       font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
-                <input matInput [formControl]="leaveTypeName" placeholder="E.g: Annual Leave">
-              </mat-form-field>
-            </div>
-          </ion-col>
-          <ion-col align-self-center style="padding-right: 0;text-align: right;;margin-top: 15px;">
-            <ion-button style="--border-radius: 2px;font-size: 11px;height: 40px;width:87px;text-transform: none;"
-              color="primary" (click)="newLeaveType()">
-              Create
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </div>
-      <div
-        style="cursor: pointer;padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 15px;color: #a3a6b4;font-weight: bold;">
-        <ion-row>
-          <ion-col align-self-center
-            style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
-            LEAVE ENTITLEMENT PROFILE
-          </ion-col>
-        </ion-row>
-      </div>
-      <div>
-        <ion-row *ngFor="let list of newProfileList; let i=index">
-          <ion-col size="10.5">
-            <div style="width: 40%;display: inline-block;">
-              <mat-form-field appearance="outline"
-                style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
-                <mat-label>Profile name</mat-label>
-                <input matInput [(ngModel)]="newProfileList[i].name" [disabled]="newLeaveTypeId == undefined" required>
-              </mat-form-field>
-            </div>
-            <div style="width: 1%;display: inline-block;"></div>
-            <div style="width: 58%;display: inline-block;">
-              <mat-form-field appearance="outline" style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
-                <mat-label>Entitlement description</mat-label>
-                <input matInput [(ngModel)]="newProfileList[i].description" [disabled]="newLeaveTypeId == undefined"
-                  required>
-              </mat-form-field>
-            </div>
-          </ion-col>
-          <ion-col align-self-center style="text-align: right;padding-right: 10px;">
-            <img src="assets/icon/leave_setup/icon_request@3x.png" *ngIf="newLeaveTypeId != undefined"
-              (click)="addNewProfileItem()"
-              style="width: 14px;height:14px;display: inline-block;cursor: pointer;margin-top: -15px;">
-            &nbsp;
-            <img src="assets/icon/leave_setup/icon_trash@3x.png" (click)="deleteProfile(i)"
-              *ngIf="newProfileList.length > 1 && newLeaveTypeId != undefined"
-              style="width: 12px;height:12px;display: inline-block;cursor: pointer;margin-top: -15px;">
-          </ion-col>
-        </ion-row>
-      </div>
-      <div style="text-align: center;bottom: 20px;right: 0;left: 0;position: absolute;">
-        <ion-button
-          style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
-          color="primary" (click)="createProfile('new')" [disabled]="newLeaveTypeId == undefined">
-          Add
-        </ion-button>
+                  <input matInput [formControl]="leaveTypeName" placeholder="E.g: Annual Leave">
+                </mat-form-field>
+              </div>
+            </ion-col>
+            <ion-col align-self-center style="padding-right: 0;text-align: right;;margin-top: 15px;">
+              <ion-button style="--border-radius: 2px;font-size: 11px;height: 40px;width:87px;text-transform: none;"
+                color="primary" (click)="newLeaveType()">
+                Create
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+        <div
+          style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 15px;color: #a3a6b4;font-weight: bold;">
+          <ion-row>
+            <ion-col align-self-center
+              style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+              LEAVE ENTITLEMENT PROFILE
+            </ion-col>
+          </ion-row>
+        </div>
+        <div style="height: calc(100% - 247px);overflow: auto;">
+          <ion-row *ngFor="let list of newProfileList; let i=index">
+            <ion-col size="10.5">
+              <div style="width: 40%;display: inline-block;">
+                <mat-form-field appearance="outline"
+                  style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
+                  <mat-label>Profile name</mat-label>
+                  <input matInput [(ngModel)]="newProfileList[i].name" [disabled]="newLeaveTypeId == undefined"
+                    required>
+                </mat-form-field>
+              </div>
+              <div style="width: 1%;display: inline-block;"></div>
+              <div style="width: 58%;display: inline-block;">
+                <mat-form-field appearance="outline" style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                  <mat-label>Entitlement description</mat-label>
+                  <input matInput [(ngModel)]="newProfileList[i].description" [disabled]="newLeaveTypeId == undefined"
+                    required>
+                </mat-form-field>
+              </div>
+            </ion-col>
+            <ion-col align-self-center style="text-align: right;padding-right: 10px;">
+              <img src="assets/icon/leave_setup/icon_request@3x.png" *ngIf="newLeaveTypeId != undefined"
+                (click)="addNewProfileItem('new')"
+                style="width: 14px;height:14px;display: inline-block;cursor: pointer;margin-top: -15px;">
+              &nbsp;
+              <img src="assets/icon/leave_setup/icon_trash@3x.png" (click)="deleteProfile('new',i)"
+                *ngIf="newProfileList.length > 1 && newLeaveTypeId != undefined"
+                style="width: 12px;height:12px;display: inline-block;cursor: pointer;margin-top: -15px;">
+            </ion-col>
+          </ion-row>
+        </div>
+        <div style="text-align: center;">
+          <ion-button
+            style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
+            color="primary" (click)="createProfile('new')" [disabled]="newLeaveTypeId == undefined">
+            Add
+          </ion-button>
+        </div>
       </div>
     </div>
   </ion-content>
@@ -114,131 +118,165 @@
   </ion-header>
 
   <ion-content>
-    <p style="font-size: 12px;color: #808495;margin: 17px;">You can create new or copy existing profile data. All data
-      will be import to their respective sections details EXCEPT Assigned Employee details.</p>
-    <div style="margin-left:17px;margin-right:17px">
-      <div style="display: block;white-space: nowrap;text-align: left;">
-        <ion-button
-          style="--border-radius: 4px 0 0 4px;margin-right: 0;display:inline-block;font-size: 11px;height: 30px;width:150px;cursor: pointer;text-transform: none;"
-          [ngClass]="{
+    <div style="height: calc(100% - 17px)">
+      <p style="font-size: 12px;color: #808495;margin: 17px;">You can create new or copy existing profile data. All data
+        will be import to their respective sections details EXCEPT Assigned Employee details.</p>
+      <div style="margin-left:17px;margin-right:17px;height: calc(100% - 73px);">
+        <div style="display: block;white-space: nowrap;text-align: left;">
+          <ion-button
+            style="--border-radius: 4px 0 0 4px;margin-right: 0;display:inline-block;font-size: 11px;height: 30px;width:150px;cursor: pointer;text-transform: none;"
+            [ngClass]="{
                     'newClicked': newButton === true , 'newUnclicked': newButton === false}"
-          (click)="cloneButton = false; newButton = true;">
-          Edit Data
-        </ion-button>
-        <ion-button [ngClass]="{ 'cloneClicked' : cloneButton === true , 'cloneUnclicked' : cloneButton === false}"
-          (click)="cloneButton = true; newButton = false;"
-          style="--border-radius: 0 4px 4px 0;margin-left: 0;display:inline-block;font-size: 11px;height: 30px;width:150px;cursor: pointer;text-transform: none;">
-          Clone Existing Data
-        </ion-button>
-      </div>
-      <div
-        style="cursor: pointer;padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 10px;margin-top: 15px;color: #a3a6b4;font-weight: bold;">
-        <ion-row>
-          <ion-col align-self-center
-            style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
-            LEAVE TYPE TITLE
-          </ion-col>
-        </ion-row>
-        <ion-row style="margin-top: 5px;">
-          <ion-col size="11" style="padding-right: 0;">
-            <div style="display: inline-block;width: 30%;">
-              <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
-                Abbreviation</p>
-              <mat-form-field appearance="outline" style="height: 55px;
+            (click)="cloneButton = false; newButton = true;">
+            Edit Data
+          </ion-button>
+          <ion-button [ngClass]="{ 'cloneClicked' : cloneButton === true , 'cloneUnclicked' : cloneButton === false}"
+            (click)="cloneButton = true; newButton = false;"
+            style="--border-radius: 0 4px 4px 0;margin-left: 0;display:inline-block;font-size: 11px;height: 30px;width:150px;cursor: pointer;text-transform: none;">
+            Clone Existing Data
+          </ion-button>
+        </div>
+        <div
+          style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 10px;margin-top: 15px;color: #a3a6b4;font-weight: bold;">
+          <ion-row>
+            <ion-col align-self-center
+              style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+              LEAVE TYPE TITLE
+            </ion-col>
+          </ion-row>
+          <ion-row style="margin-top: 5px;">
+            <ion-col size="11" style="padding-right: 0;">
+              <div style="display: inline-block;width: 30%;">
+                <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
+                  Abbreviation</p>
+                <mat-form-field appearance="outline" style="height: 55px;
               font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
-                <input matInput [(ngModel)]="abbr">
-              </mat-form-field>
-            </div>
-            <div style="width: 1%;display: inline-block;"></div>
-            <div style="display: inline-block;width: 69%;">
-              <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
-                Leave Type</p>
-              <mat-form-field appearance="outline" style="height: 55px;
+                  <input matInput [(ngModel)]="abbr">
+                </mat-form-field>
+              </div>
+              <div style="width: 1%;display: inline-block;"></div>
+              <div style="display: inline-block;width: 69%;">
+                <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
+                  Leave Type</p>
+                <mat-form-field appearance="outline" style="height: 55px;
         font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
-                <input matInput [(ngModel)]="name">
-              </mat-form-field>
-            </div>
-          </ion-col>
-          <ion-col align-self-center style="text-align: right;padding-right: 10px;margin-top: 15px;">
-            <img src="assets/icon/leave_setup/icon_trash@3x.png"
-              style="width: 11px;height:11px;display: inline-block;cursor: pointer;">
-          </ion-col>
-        </ion-row>
-      </div>
-      <div
-        style="cursor: pointer;padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 15px;color: #a3a6b4;font-weight: bold;">
-        <ion-row>
-          <ion-col align-self-center
-            style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
-            LEAVE ENTITLEMENT PROFILE
-          </ion-col>
-        </ion-row>
-      </div>
-      <div *ngIf="newButton" style="display: block;">
-        <ng-container *ngFor="let type of leaveTypes; let j=index;">
-          <ng-container *ngIf="leaveContent[j] == true">
-            <ion-row *ngFor="let item of leaveEntitlement[j]; let i=index">
-              <ion-col size="11">
-                <div style="width: 40%;display: inline-block;">
-                  <mat-form-field appearance="outline"
-                    style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
-                    <mat-label>Profile name</mat-label>
-                    <input matInput [(ngModel)]="item.leaveEntitlementCode" required>
-                  </mat-form-field>
-                </div>
-                <div style="width: 1%;display: inline-block;"></div>
-                <div style="width: 58%;display: inline-block;">
-                  <mat-form-field appearance="outline"
-                    style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
-                    <mat-label>Entitlement description</mat-label>
-                    <input matInput [(ngModel)]="item.leaveEntitlementDescription" required>
-                  </mat-form-field>
-                </div>
-              </ion-col>
-              <ion-col align-self-center style="text-align: right;padding-right: 20px;">
-                <img src="assets/icon/leave_setup/icon_trash@3x.png"
-                  style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;"
-                  (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
-              </ion-col>
-              <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;padding-left: 15px;
+                  <input matInput [(ngModel)]="name">
+                </mat-form-field>
+              </div>
+            </ion-col>
+            <ion-col align-self-center style="text-align: right;padding-right: 10px;margin-top: 15px;">
+              <img src="assets/icon/leave_setup/icon_trash@3x.png" (click)="deleteLeaveType(abbr, name)"
+                style="width: 11px;height:11px;display: inline-block;cursor: pointer;">
+            </ion-col>
+          </ion-row>
+        </div>
+        <div
+          style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 15px;color: #a3a6b4;font-weight: bold;">
+          <ion-row>
+            <ion-col align-self-center
+              style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+              LEAVE ENTITLEMENT PROFILE
+            </ion-col>
+          </ion-row>
+        </div>
+        <div *ngIf="newButton" style="display: block;height: calc(100% - 247px);">
+          <div style="height: calc(100% - 75px);overflow: auto;">
+            <ng-container *ngFor="let type of leaveTypes; let j=index;">
+              <ng-container *ngIf="leaveContent[j] == true">
+                <ion-row *ngFor="let item of leaveEntitlement[j]; let i=index">
+                  <ion-col size="11">
+                    <div style="width: 40%;display: inline-block;">
+                      <mat-form-field appearance="outline"
+                        style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
+                        <mat-label>Profile name</mat-label>
+                        <input matInput [(ngModel)]="item.leaveEntitlementCode" required>
+                      </mat-form-field>
+                    </div>
+                    <div style="width: 1%;display: inline-block;"></div>
+                    <div style="width: 58%;display: inline-block;">
+                      <mat-form-field appearance="outline"
+                        style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                        <mat-label>Entitlement description</mat-label>
+                        <input matInput [(ngModel)]="item.leaveEntitlementDescription" required>
+                      </mat-form-field>
+                    </div>
+                  </ion-col>
+                  <ion-col align-self-center style="text-align: right;padding-right: 20px;">
+                    <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;"
+                      (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
+                  </ion-col>
+                  <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;padding-left: 15px;
           padding-right: 43px;">
-              </ion-item>
-            </ion-row>
-          </ng-container>
-        </ng-container>
-        <div style="margin: 15px;margin-top: 0;"><img
-            style="display: inline-block;cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
-            src="assets/icon/leave_setup/icon_request@3x.png">
-          <p style="color: #808495;font-size: 11px;font-weight: bold;
-    display: inline-block;"> Add New Leave Entitlement Profile</p>
-        </div>
-        <div style="text-align: center;bottom: 20px;right: 0;left: 0;position: absolute;">
-          <ion-button
-            style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
-            color="primary">
-            Save
-          </ion-button>
-        </div>
-      </div>
-
-      <div *ngIf="cloneButton" style="margin: 15px;">
-        <ng-container *ngFor="let type of leaveTypes; let j=index;">
-          <mat-radio-group [(ngModel)]="cloneProfileId">
-            <ng-container *ngFor="let item of leaveEntitlement[j]; let i=index">
-              <mat-radio-button disableRipple="true" color="primary" *ngIf="item.leaveTypeId == entitlementTypeNew"
-                style="margin-bottom: 3px;display: block;color: #4d4f5c;font-size: 12px;font-weight: 600;"
-                [value]="item.leaveEntitlementId">
-                {{item.leaveType}} - {{item.leaveEntitlementCode}}
-              </mat-radio-button>
+                  </ion-item>
+                </ion-row>
+              </ng-container>
             </ng-container>
-          </mat-radio-group>
-        </ng-container>
-        <div style="text-align: center;bottom: 20px;right: 0;left: 0;position: absolute;">
-          <ion-button
-            style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
-            color="primary" (click)="createProfile('clone')" [disabled]="cloneProfileId == null">
-            Add
-          </ion-button>
+            <ng-container *ngIf="newEditProfileList.length > 0">
+              <ion-row *ngFor="let item of newEditProfileList; let i=index">
+                <ion-col size="11">
+                  <div style="width: 40%;display: inline-block;">
+                    <mat-form-field appearance="outline"
+                      style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
+                      <mat-label>Profile name</mat-label>
+                      <input matInput [(ngModel)]="newEditProfileList[i].name" required>
+                    </mat-form-field>
+                  </div>
+                  <div style="width: 1%;display: inline-block;"></div>
+                  <div style="width: 58%;display: inline-block;">
+                    <mat-form-field appearance="outline"
+                      style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                      <mat-label>Entitlement description</mat-label>
+                      <input matInput [(ngModel)]="newEditProfileList[i].description" required>
+                    </mat-form-field>
+                  </div>
+                </ion-col>
+                <ion-col align-self-center style="text-align: right;padding-right: 20px;">
+                  <img src="assets/icon/leave_setup/icon_trash@3x.png" (click)="deleteProfile('edit',i)"
+                    style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;">
+                </ion-col>
+                <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;padding-left: 15px;
+        padding-right: 43px;">
+                </ion-item>
+              </ion-row>
+            </ng-container>
+            <div style="margin: 15px;margin-top: 0;"><img (click)="addNewProfileItem('edit')"
+                style="display: inline-block;cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
+                src="assets/icon/leave_setup/icon_request@3x.png">
+              <p style="color: #808495;font-size: 11px;font-weight: bold;
+    display: inline-block;"> Add New Leave Entitlement Profile</p>
+            </div>
+          </div>
+          <div style="text-align: center;margin-top: 20px;">
+            <ion-button
+              style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
+              color="primary" (click)="saveCreateProfile()">
+              Save
+            </ion-button>
+          </div>
+        </div>
+
+        <div *ngIf="cloneButton" style="margin-left: 15px;height: calc(100% - 255px)">
+          <div style="height: calc(100% - 45px);overflow: auto;">
+            <ng-container *ngFor="let type of leaveTypes; let j=index;">
+              <mat-radio-group [(ngModel)]="cloneProfileId">
+                <ng-container *ngFor="let item of leaveEntitlement[j]; let i=index">
+                  <mat-radio-button disableRipple="true" color="primary" *ngIf="item.leaveTypeId == entitlementTypeNew"
+                    style="margin-bottom: 3px;display: block;color: #4d4f5c;font-size: 12px;font-weight: 600;"
+                    [value]="item.leaveEntitlementId">
+                    {{item.leaveType}} - {{item.leaveEntitlementCode}}
+                  </mat-radio-button>
+                </ng-container>
+              </mat-radio-group>
+            </ng-container>
+          </div>
+          <div style="text-align: center;">
+            <ion-button
+              style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
+              color="primary" (click)="createProfile('clone')" [disabled]="cloneProfileId == null">
+              Add
+            </ion-button>
+          </div>
         </div>
       </div>
     </div>
@@ -302,8 +340,6 @@
                 <ion-row>
                   <ion-col size="9" align-self-center
                     style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
-                    <!-- <img src="assets/icon/leave_setup/hamburger_menu@3x.png"
-                      style="width:14px;height:12px;display: inline-block;margin-right: 10px;"> -->
                     {{type.title}}
                   </ion-col>
                   <ion-col align-self-center style="text-align: right;padding-right: 10px;">
@@ -315,11 +351,11 @@
               </div>
               <div style="margin-bottom: 10px;" *ngIf="leaveContent[j] == true">
                 <ion-row *ngFor="let item of leaveEntitlement[j]; let i=index" style="padding-left: 10px;">
-                  <ion-col size="9" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                  <ion-col style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                     <p class="textHover"
                       style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
                       [ngClass]="{'textColor': clickedIndex === i && clickedHeaderIndex === j, 'oriColor': clickedIndex !== i || clickedHeaderIndex !== j}"
-                      (click)="clickedEntitlement(item, i, j)">
+                      (click)="clickedIndex = i;clickedHeaderIndex = j;getProfileDetails(item.leaveEntitlementId);">
                       {{item.leaveType}} - {{item.leaveEntitlementCode}}
                     </p>
                     <p
@@ -332,11 +368,6 @@
                         style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
                         {{item.totalEmployee}}</p>
                     </div>
-                  </ion-col>
-                  <ion-col align-self-center style="text-align: right;padding-right: 20px;">
-                    <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mainToggle === 'ON'"
-                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
-                      (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
                   </ion-col>
                   <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 0;">
                   </ion-item>

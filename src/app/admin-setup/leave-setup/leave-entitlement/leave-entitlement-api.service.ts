@@ -30,17 +30,6 @@ export class LeaveEntitlementApiService {
     }
 
     /**
-     *
-     * @param {string} id
-     * @returns {Observable<any>}
-     * @memberof LeaveEntitlementApiService
-     */
-    get_admin_leavetype_id(id: string): Observable<any> {
-        this.apiService.headerAuthorization();
-        return this.apiService.getApiWithId('/api/admin/leavetype/', id);
-    }
-
-    /**
      * get details of entitlement profile
      * @param {string} entitlementId
      * @returns {Observable<any>}
@@ -85,6 +74,17 @@ export class LeaveEntitlementApiService {
     }
 
     /**
+    * get leavetype filtered by id
+    * @param {string} id
+    * @returns {Observable<any>}
+    * @memberof LeaveEntitlementApiService
+    */
+    get_admin_leavetype_id(id: string): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.getApiWithId('/api/admin/leavetype/', id);
+    }
+
+    /**
      * create new leave type
      * @param {*} content
      * @returns {Observable<any>}
@@ -95,6 +95,16 @@ export class LeaveEntitlementApiService {
         return this.apiService.postApi(content, '/api/admin/leavetype');
     }
 
+    /**
+     * delete leave type
+     * @param {string} id
+     * @returns {Observable<any>}
+     * @memberof LeaveEntitlementApiService
+     */
+    delete_leavetype(id: string): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.deleteApi(id, '/api/admin/leavetype/');
+    }
 
 
 
