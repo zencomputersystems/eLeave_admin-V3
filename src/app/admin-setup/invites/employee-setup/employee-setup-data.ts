@@ -33,7 +33,7 @@ export const personal = {
 export const employment = {
     "employeeId": "",
     "companyId": "",
-    "workEmailAddress": "",
+    // "workEmailAddress": "",
     "department": "",
     "designation": "",
     "section": "",
@@ -42,7 +42,7 @@ export const employment = {
     "employmentStatus": "",
     "employmentType": "",
     "reportingTo": "",
-    "userRole": "",
+    // "userRole": "Employee",
     "dateOfJoin": "",
     "dateOfConfirmation": "",
     "dateOfResign": "",

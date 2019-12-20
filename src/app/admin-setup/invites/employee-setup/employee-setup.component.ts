@@ -517,7 +517,7 @@ export class EmployeeSetupComponent implements OnInit {
         } else {
             this.mode = 'OFF';
             this.patchPersonalDetails();
-            // this.patchEmploymentDetails();
+            this.patchEmploymentDetails();
             this.assignProfile();
             this.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
         }
@@ -592,6 +592,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails.employmentDetail.dateOfResign = _moment(this.dateOfResign.value).format('YYYY-MM-DD');
             this.employmentDetails.employmentDetail.dateOfConfirmation = _moment(this.dateOfConfirm.value).format('YYYY-MM-DD');
             this.employmentDetails.employmentDetail.bankAccountNumber = (this.employmentDetails.employmentDetail.bankAccountNumber).toString();
+            delete this.employmentDetails.employmentDetail["yearOfService"];
             let resp = await this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.id).toPromise();
             this.employmentDetails.employmentDetail = resp;
             this.getEmploymentDetails();
@@ -654,7 +655,7 @@ export class EmployeeSetupComponent implements OnInit {
      */
     eventOutput(event) {
         this.inviteAPI.menu.close('addNewEmployeeDetails');
-        this.leaveApi.openSnackBar('New employee profiles was created successfully', true);
+        this.leaveApi.openSnackBar('New employee profile was created successfully', true);
         this.endPoint();
     }
 

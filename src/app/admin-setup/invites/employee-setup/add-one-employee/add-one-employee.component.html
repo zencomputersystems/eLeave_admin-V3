@@ -12,7 +12,7 @@
                 <mat-label>Please select company</mat-label>
                 <mat-select formControlName="company" required>
                     <mat-option>None</mat-option>
-                    <mat-option *ngFor="let company of companyList" [value]=company.TENANT_COMPANY_GUID>
+                    <mat-option *ngFor="let company of companyList" [value]=company.NAME>
                         {{company.NAME}}
                     </mat-option>
                 </mat-select>
@@ -153,6 +153,16 @@
                         IC number is <strong>required</strong></mat-error>
                 </mat-form-field>
             </div> -->
+        </div>
+        <div style="width: 100%;display: inline-block;">
+            <span style="font-size: 12px;color: #808495;display: block">
+                EMAIL ADDRESS</span>
+            <mat-form-field appearance="outline" style="width: 100%;font-size: 12px;color: #43425d;opacity: 0.8;">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" required>
+                <mat-error *ngIf="!invitationForm.email">
+                    Email is <strong>required</strong></mat-error>
+            </mat-form-field>
         </div>
 
         <div style="display:block; white-space: nowrap;width: 100%;">

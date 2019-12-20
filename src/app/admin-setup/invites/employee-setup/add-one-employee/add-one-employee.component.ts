@@ -46,6 +46,13 @@ export class AddOneEmployeeComponent implements OnInit {
     @Output() sendFormdata?= new EventEmitter();
 
     /**
+     * close menu after add one user
+     * @memberof AddOneEmployeeComponent
+     */
+    @Output() closeMenu = new EventEmitter();
+
+
+    /**
      * side menu add individual details
      * @type {boolean}
      * @memberof AddOneEmployeeComponent
@@ -199,7 +206,7 @@ export class AddOneEmployeeComponent implements OnInit {
             id: new FormControl('', Validators.required),
             joinDate: new FormControl('', Validators.required),
             // designation: new FormControl('', Validators.required),
-            // email: new FormControl('', Validators.required),
+            email: new FormControl('', Validators.required),
             // phone: new FormControl('', Validators.required),
         });
         this.branchCtrl = new FormControl({ value: '', disabled: true });
@@ -396,11 +403,10 @@ export class AddOneEmployeeComponent implements OnInit {
     sendInvitation() {
         this.showSmallSpinner = true;
         const data = [{
-            // "STAFF_EMAIL": this.invitationForm.controls.email.value,
-            "COMPANY_NUMBER": this.invitationForm.controls.company.value,
+            "COMPANY": this.invitationForm.controls.company.value,
+            "STAFF_EMAIL": this.invitationForm.controls.email.value,
             "STAFF_ID": this.invitationForm.controls.id.value,
             "FULLNAME": this.invitationForm.controls.name.value,
-            // "DESIGNATION": this.invitationForm.controls.designation.value,
             "BRANCH": this.branchCtrl.value,
             "DIVISION": this.divisionCtrl.value,
             "DEPARTMENT": this.departmentCtrl.value,
@@ -409,6 +415,7 @@ export class AddOneEmployeeComponent implements OnInit {
         }]
         this.adminInvite.post_userimport(data).subscribe(data => {
             this.showSmallSpinner = false;
+            this.closeMenu.emit(true);
             // this.dialogAddOneEmployee.close();
         })
 
