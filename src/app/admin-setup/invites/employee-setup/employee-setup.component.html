@@ -303,7 +303,7 @@
                                 <div *ngIf="personalDetails" style="margin-top: 5px;margin-left: 10px;">
                                     <ion-toggle class="toggleButton" style="--background: #a5a4bf;" mode="ios"
                                         color="secondary" [(ngModel)]="status" [checked]="status"
-                                        (click)="toggleStatus($event, personalDetails.employeeName); status = !status">
+                                        (click)="toggleStatus($event, personalDetails.employeeName, personalDetails.userId); status = !status">
                                     </ion-toggle>
                                     <p *ngIf="employeeStatus === 'Active'" style="margin-top: 3px;
                                     opacity: 0.8;font-size: 12px;color: #43425d;padding-left: 10px;

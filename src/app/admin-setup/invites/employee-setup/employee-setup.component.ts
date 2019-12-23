@@ -529,12 +529,12 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {string} name
      * @memberof EmployeeSetupComponent
      */
-    async toggleStatus(event, name: string) {
+    async toggleStatus(event, name: string, userId: string) {
         if (event.currentTarget.checked == false) {
             const dialog = this.inviteAPI.popUp.open(ChangeStatusConfimationComponent, {
                 data: { name: name, status: 'Activate' },
-                height: "195px",
-                width: "270px"
+                height: "285px",
+                width: "360px"
             });
             let result = await dialog.afterClosed().toPromise();
             if (result === 'Activate') {
@@ -544,9 +544,9 @@ export class EmployeeSetupComponent implements OnInit {
             }
         } else {
             const dialog = this.inviteAPI.popUp.open(ChangeStatusConfimationComponent, {
-                data: { name: name, status: 'Deactivate' },
-                height: "195px",
-                width: "270px"
+                data: { name: name, status: 'Deactivate', userId: userId },
+                height: "395px",
+                width: "395px"
             });
             let result = await dialog.afterClosed().toPromise();
             if (result === 'Deactivate') {
