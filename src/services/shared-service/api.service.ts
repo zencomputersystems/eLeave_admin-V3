@@ -150,6 +150,17 @@ export class APIService {
     }
 
     /**
+     * get user profile list
+     * @param {string} userId
+     * @returns {Observable<any>}
+     * @memberof APIService
+     */
+    get_user_profile_details(userId: string): Observable<any> {
+        this.headerAuthorization();
+        return this.getApiWithId('/api/userprofile/', userId);
+    }
+
+    /**
      * This method is used to get any desired item
      * department, designation, section, branch, bank, costcentre, country
      * @param {*} item

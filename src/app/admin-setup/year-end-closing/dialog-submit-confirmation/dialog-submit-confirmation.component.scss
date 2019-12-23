@@ -2,6 +2,9 @@
   padding: 0 !important;
   border-radius: 2px;
 }
+button {
+  outline: none;
+}
 :host {
   .title {
     border-radius: 2px;

@@ -181,10 +181,8 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @memberof LeaveAdjustmentComponent
      */
     companySelected(guid) {
-        // this.showSpinner = true;
         this._companyGUID = guid;
         this.leaveSetupAPI.get_company_details(guid).subscribe(list => {
-            // this.showSpinner = false;
             this.department = list.departmentList;
         })
     }
@@ -202,7 +200,6 @@ export class LeaveAdjustmentComponent implements OnInit {
             this._userItems = list;
             this.showSpinner = false;
             this.filterUserList(this._userItems, name);
-            // TODO: show all short code of leave type entitled in this.filterUserList
         })
     }
 
@@ -228,19 +225,37 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @param {string} name
      * @memberof LeaveAdjustmentComponent
      */
-    filterUserList(userList: any, name: string) {
+    async filterUserList(userList: any, name: string) {
         for (let i = 0; i < userList.length; i++) {
-            if (userList[i].department === name && userList[i].companyId === this._companyGUID) {
-                this.filteredUserItems.push(userList[i]);
-                this.showCheckbox.push(false);
-                this.filteredUserItems[this.filteredUserItems.length - 1].isChecked = false;
-                this.filteredUserItems[this.filteredUserItems.length - 1]["entitlement"] = 'AL, EL, PL, RL';
-            }
+            this.filterByDepartment(userList, name, i);
         }
         if (this.filteredUserItems.length > 0) {
             this.showNoResult = false;
         } else {
             this.showNoResult = true;
+        }
+    }
+
+
+    /**
+     * filter employee by deparment
+     * @param {*} userList
+     * @param {string} name
+     * @param {number} i
+     * @memberof LeaveAdjustmentComponent
+     */
+    async filterByDepartment(userList: any, name: string, i: number) {
+        if (userList[i].department === name && userList[i].companyId === this._companyGUID) {
+            this.filteredUserItems.push(userList[i]);
+            this.showCheckbox.push(false);
+            this.filteredUserItems[this.filteredUserItems.length - 1].isChecked = false;
+            let list = await this.apiService.get_user_profile_details(userList[i].userId).toPromise();
+            let array = list.entitlementDetail;
+            let abbrList = [];
+            for (let i = 0; i < array.length; i++) {
+                abbrList.push(array[i].abbr);
+            }
+            this.filteredUserItems[this.filteredUserItems.length - 1]["entitlement"] = abbrList.join();
         }
     }
 

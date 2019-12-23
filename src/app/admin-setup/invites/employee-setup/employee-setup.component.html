@@ -171,8 +171,8 @@
 <ion-card>
     <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
         <div class="fullContainer">
-            <div class="left" style="margin-top: 10px;">
-                <img src="assets/icon/add_employee/icon persons@3x.png" style="width:36px;height:23px">
+            <div class="left">
+                <img src="assets/icon/leave_setup/icon_employee@3x.png" style="width:35px;height:30px">
             </div>
             <div class="right">
                 <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Employee Setup
@@ -335,7 +335,7 @@
                             </div>
                         </ion-card-header>
                         <ion-card-content style="padding-right: 0;">
-                            <div (click)="showPersonal = true;showEmploy = false;showCalendar = false;showRole = false;"
+                            <div (click)="showPersonal = true;showEmploy = false;showCalendar = false;showRole = false;showOthers=false"
                                 style="cursor: pointer;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 PERSONAL DETAILS</div>
                             <div *ngIf="personalDetails && showPersonal">
@@ -512,7 +512,7 @@
                                     <ion-col></ion-col>
                                 </ion-row>
                             </div>
-                            <div (click)="showEmploy = true;showCalendar = false;showRole = false;showPersonal = false "
+                            <div (click)="showEmploy = true;showCalendar = false;showRole = false;showPersonal = false;showOthers=false "
                                 style="cursor: pointer;margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 EMPLOYEMENT DETAILS</div>
                             <div *ngIf="employmentDetails && showEmploy">
@@ -689,7 +689,7 @@
                                 padding-right: 15px;">
                                 </ion-item>
                             </div>
-                            <div (click)="showCalendar = true;showRole = false; showEmploy = false;showPersonal = false"
+                            <div (click)="showCalendar = true;showRole = false; showEmploy = false;showPersonal = false; showOthers=false"
                                 style="cursor: pointer;margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 CALENDAR, WORKING HOUR & LEAVE ENTITLEMENT</div>
                             <div *ngIf="showCalendar">
@@ -760,7 +760,7 @@
                                         Add New Leave Entitlement</p>
                                 </div>
                             </div>
-                            <div (click)="showRole = true; showCalendar = false; showEmploy = false;showPersonal = false"
+                            <div (click)="showRole = true; showCalendar = false; showEmploy = false;showPersonal = false;showOthers= false"
                                 style="cursor: pointer;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 EMPLOYEE ROLE</div>
                             <div *ngIf="showRole">
@@ -780,6 +780,9 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
+                            <div (click)="showPersonal = false;showEmploy = false;showCalendar = false;showRole = false;showOthers=true"
+                                style="cursor: pointer;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                                OTHERS INFORMATION</div>
                         </ion-card-content>
                     </div>
                 </div>

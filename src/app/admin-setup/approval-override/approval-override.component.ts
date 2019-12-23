@@ -21,7 +21,7 @@ export class ApprovalOverrideComponent implements OnInit {
      * @type {boolean}
      * @memberof ApprovalOverrideComponent
      */
-    @HostBinding('class.menuOverrideOverlay') menuOpen: boolean;
+    @HostBinding('class.menuOverrideOverlay') overlay: boolean;
 
     /**
      * validation for form field
@@ -191,7 +191,9 @@ export class ApprovalOverrideComponent implements OnInit {
                 return (user.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
             let departmentName = this._userList.filter((department: any) => {
-                return (department.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
+                if (department.department != undefined) {
+                    return (department.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
+                }
             })
             let companyName = this._userList.filter((company: any) => {
                 if (company.companyName != undefined) {
@@ -226,16 +228,26 @@ export class ApprovalOverrideComponent implements OnInit {
     }
 
     /**
+     * open side menu to view history
+     * @memberof ApprovalOverrideComponent
+     */
+    openMenu() {
+        this.menu.open('approvalOverrideDetails');
+        this.menu.enable(true, 'approvalOverrideDetails');
+        this.overlay = true;
+    }
+
+    /**
      * delete unselected user
      * @memberof ApprovalOverrideComponent
      */
-    showCheckedUser() {
-        for (let j = this.filteredPendingList.length - 1; j >= 0; --j) {
-            if (this.filteredPendingList[j].isChecked == false || this.filteredPendingList[j].isChecked == undefined) {
-                this.filteredPendingList.splice(j, 1);
-            }
-        }
-    }
+    // showCheckedUser() {
+    //     for (let j = this.filteredPendingList.length - 1; j >= 0; --j) {
+    //         if (this.filteredPendingList[j].isChecked == false || this.filteredPendingList[j].isChecked == undefined) {
+    //             this.filteredPendingList.splice(j, 1);
+    //         }
+    //     }
+    // }
 
     /**
      * selected company id to get department list

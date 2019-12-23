@@ -41,6 +41,7 @@ import 'hammerjs';
 import { EditModeDialogComponent } from './edit-mode-dialog/edit-mode-dialog.component';
 import { DndModule } from 'ngx-drag-drop';
 import { LeaveEntitlementComponent } from './leave-entitlement/leave-entitlement.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 const routes: Routes = [
     {
@@ -80,6 +81,7 @@ const routes: Routes = [
         MatChipsModule,
         NgbTimepickerModule,
         DndModule,
+        MatMenuModule,
         RouterModule.forChild(routes)
     ],
     providers: [AssignCalendarTreeviewService],

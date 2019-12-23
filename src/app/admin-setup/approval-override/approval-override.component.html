@@ -1,5 +1,5 @@
 <ion-menu style="--width: 500px;" contentId="approvalOverrideContent" side="end" type="overlay"
-    menuId="approvalOverrideDetails" (ionDidClose)="menuOpen=false">
+    menuId="approvalOverrideDetails" (ionDidClose)="overlay=false">
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
         <img style="margin: 17px;width: 22px;height: 17px;float:left"
             src="assets/icon/dashboard/icon All Holidays@3x.png">
@@ -128,8 +128,7 @@
             <div style="right: 25px;top: 25px;position: absolute;">
                 <ion-button
                     style="--border-radius: 2px;font-size: 11px;height: 30px;width:193px;cursor: pointer;text-transform: none;"
-                    color="primary"
-                    (click)="menu.open('approvalOverrideDetails'); menu.enable(true, 'approvalOverrideDetails');menuOpen=true;">
+                    color="primary" (click)="openMenu()">
                     View Approval Override History
                 </ion-button>
             </div>
@@ -183,11 +182,16 @@
                                     DAYS
                                 </ion-col>
                                 <ion-col align-self-center>
-                                    <ion-buttons end style="height: 26px;" (click)="showCheckedUser()">
+                                    <ion-buttons end style="height: 26px;" [matMenuTriggerFor]="menu">
                                         <div style="width: 18px;height: 18px;fill: #a5a4bf;opacity: 0.8;cursor: pointer;"
                                             [inlineSVG]="'assets/icon/add_employee/filters.svg'">
                                         </div>
                                     </ion-buttons>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item>Approved</button>
+                                        <button mat-menu-item>Rejected</button>
+                                        <button mat-menu-item>Pending</button>
+                                    </mat-menu>
                                 </ion-col>
                             </ion-row>
                         </div>

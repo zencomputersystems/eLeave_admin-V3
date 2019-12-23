@@ -276,6 +276,13 @@ export class EmployeeSetupComponent implements OnInit {
     public showRole: boolean = false;
 
     /**
+     * show others information of contacts & family info & education
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public showOthers: boolean = false;
+
+    /**
      * get paginator config
      * @type {*}
      * @memberof EmployeeSetupComponent

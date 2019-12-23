@@ -524,7 +524,9 @@ export class ApplyOnBehalfComponent implements OnInit {
                 return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
             let department = this._userList.filter((value: any) => {
-                return (value.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
+                if (value.department != undefined) {
+                    return (value.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
+                }
             })
             let company = this._userList.filter((items: any) => {
                 if (items.companyName != undefined) {

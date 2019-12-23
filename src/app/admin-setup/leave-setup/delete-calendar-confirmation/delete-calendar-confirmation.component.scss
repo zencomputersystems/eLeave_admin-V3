@@ -1,6 +1,9 @@
 ::ng-deep .mat-dialog-container {
   padding: 0 !important;
 }
+button {
+  outline: none;
+}
 :host {
   .title {
     border-radius: 2px;
