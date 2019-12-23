@@ -308,12 +308,12 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     getAssignedList() {
-        for (let i = 0; i < this.profileList.length; i++) {
-            this.calendarProfileAPI.get_assigned_employee_list(this.profileList[i].calendar_guid).subscribe(employeeNum => {
-                const list = employeeNum;
-                this.profileList[i]["employee"] = list.length;
-            })
-        }
+        // for (let i = 0; i < this.profileList.length; i++) {
+        //     this.calendarProfileAPI.get_assigned_employee_list(this.profileList[i].calendar_guid).subscribe(employeeNum => {
+        //         const list = employeeNum;
+        //         this.profileList[i]["employee"] = list.length;
+        //     })
+        // }
         this.calendarProfileAPI.get_user_list().subscribe(
             data => {
                 this._userList = data;
@@ -397,11 +397,6 @@ export class CalendarProfileComponent implements OnInit {
                 this.getAssignedList();
                 this.showSpinner = false;
                 this.content = true;
-            },
-            error => {
-                if (error) {
-                    window.location.href = '/login';
-                }
             })
     }
 

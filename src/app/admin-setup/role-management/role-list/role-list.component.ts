@@ -167,7 +167,7 @@ export class RoleListComponent implements OnInit {
             this.showSpinner = false;
             this.clickedIndex = 0;
             this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);
-            this.getAssignedEmployee();
+            // this.getAssignedEmployee();
 
         });
         this.roleAPi.get_user_list().subscribe(list => this._userList = list);
@@ -189,7 +189,7 @@ export class RoleListComponent implements OnInit {
                 }).subscribe(response => {
                     this.assignedNameList.splice(i, 1);
                     this._filteredList = [];
-                    this.getAssignedEmployee();
+                    // this.getAssignedEmployee();
                 });
             }
         }
@@ -231,12 +231,12 @@ export class RoleListComponent implements OnInit {
      * @param {number} index
      * @memberof RoleListComponent
      */
-    async getAssignedEmployee() {
-        for (let i = 0; i < this.roleList.length; i++) {
-            let a = await this.roleAPi.get_assigned_user_profile(this.roleList[i].role_guid).toPromise();
-            this.roleList[i]["employee"] = a.length;
-        }
-    }
+    // async getAssignedEmployee() {
+    //     for (let i = 0; i < this.roleList.length; i++) {
+    //         let a = await this.roleAPi.get_assigned_user_profile(this.roleList[i].role_guid).toPromise();
+    //         this.roleList[i]["employee"] = a.length;
+    //     }
+    // }
 
     /**
      * selected role profile

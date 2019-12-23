@@ -196,7 +196,7 @@ export class WorkingHourListComponent implements OnInit {
             let details = await this.workingHrAPI.get_working_hours_details(this.list[i].working_hours_guid).toPromise();
             this.list[i].strtime = details.property.fullday.start_time;
             this.list[i].endtime = details.property.fullday.end_time;
-            this.list[i]["employee"] = number.length;
+            // this.list[i]["employee"] = number.length;
         }
     }
 
