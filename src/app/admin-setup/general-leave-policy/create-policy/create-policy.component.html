@@ -186,8 +186,9 @@
                         style="opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
                         {{emailValue}}</p>
                     <div style="display: inline-block;position: absolute;" *ngIf="modeInput === 'ON'">
-                        <ion-toggle [checked]="emailCheck" style="zoom:0.70;--background: #a5a4bf;" mode="ios" color="secondary"
-                            (ionChange)="toggleEmail($event)">
+                        <ion-toggle [checked]="emailCheck" style="zoom:0.70;--background: #a5a4bf;" mode="ios"
+                            color="secondary"
+                            (ionChange)="$event.detail.checked == true? emailValue = 'Yes': emailValue = 'No'">
                         </ion-toggle>
                     </div>
                 </div>

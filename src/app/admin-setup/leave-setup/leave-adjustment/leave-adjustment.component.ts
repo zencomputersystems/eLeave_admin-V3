@@ -208,14 +208,24 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @param {*} leavetypeGUID
      * @memberof LeaveAdjustmentComponent
      */
-    getLeaveEntitlement(leavetypeGUID) {
+    getLeaveEntitlement(leavetypeGUID: string) {
         for (let i = 0; i < this.filteredUserItems.length; i++) {
             this.filteredUserItems[i].entitlement = '';
-            this.leaveSetupAPI.get_entilement_details(this.filteredUserItems[i].userId).subscribe(data => {
-                for (let j = 0; j < data.length; j++) {
-                    if (data[j].LEAVE_TYPE_GUID === leavetypeGUID) { this.filteredUserItems[i].entitlement = data[j].ENTITLED_DAYS; }
-                }
-            })
+            this.getEntitlementDetails(leavetypeGUID, i)
+        }
+    }
+
+    /**
+     * get leave entitlement details
+     * @param {string} leavetypeGUID
+     * @memberof LeaveAdjustmentComponent
+     */
+    async getEntitlementDetails(leavetypeGUID: string, i: number) {
+        let data = await this.leaveSetupAPI.get_entilement_details(this.filteredUserItems[i].userId).toPromise();
+        for (let j = 0; j < data.length; j++) {
+            if (data[j].LEAVE_TYPE_GUID === leavetypeGUID) {
+                this.filteredUserItems[i].entitlement = data[j].ENTITLED_DAYS;
+            }
         }
     }
 
@@ -368,7 +378,7 @@ export class LeaveAdjustmentComponent implements OnInit {
             "reason": this.adjustmentForm.controls.reason.value
         };
         this.leaveSetupAPI.patch_leave_adjustment(data).subscribe(response => {
-            this.openNotification('You have submitted successfully', true);
+            this.leaveSetupAPI.openSnackBar('You have submitted successfully', true);
             this.showSmallSpinner = false;
             this.filteredUserItems = [];
             this._selectedUser = [];
@@ -377,20 +387,6 @@ export class LeaveAdjustmentComponent implements OnInit {
             });
         });
     }
-
-    /**
-     * show pop up snackbar
-     * @param {string} statement
-     * @memberof LeaveAdjustmentComponent
-     */
-    openNotification(statement: string, val: boolean) {
-        this.leaveSetupAPI.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 2000,
-            verticalPosition: "top",
-            data: { message: statement, response: val }
-        });
-    }
-
 
 
 }

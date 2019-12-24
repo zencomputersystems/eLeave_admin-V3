@@ -415,18 +415,4 @@ export class CreatePolicyComponent {
         }
     }
 
-
-    /**
-     * toggle button value on email reminder
-     * @param {*} event
-     * @memberof CreatePolicyComponent
-     */
-    toggleEmail(event) {
-        if (event.detail.checked === true) {
-            this.emailValue = 'Yes';
-        } else {
-            this.emailValue = 'No';
-        }
-    }
-
 }

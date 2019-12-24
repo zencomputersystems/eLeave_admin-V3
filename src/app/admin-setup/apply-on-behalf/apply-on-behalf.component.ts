@@ -550,13 +550,8 @@ export class ApplyOnBehalfComponent implements OnInit {
                 array.push(details[j].ABBR);
             }
             if (this.filteredUser[i] != undefined) {
-                if (array.length != 0) {
-                    this.filteredUser[i]["shortCode"] = array.join();
-                    this.filteredUser[i]["balance"] = '-';
-                } else {
-                    this.filteredUser[i]["shortCode"] = '-';
-                    this.filteredUser[i]["balance"] = '-';
-                }
+                this.filteredUser[i]["shortCode"] = array.join();
+                this.filteredUser[i]["balance"] = '-';
             }
         }
     }
@@ -652,14 +647,8 @@ export class ApplyOnBehalfComponent implements OnInit {
             let details = await this.leaveAPI.get_entilement_details(this.filteredUser[i].userId).toPromise();
             if (this.filteredUser[i] != undefined) {
                 for (let j = 0; j < details.length; j++) {
-                    if (this.leaveTypeId == details[j].LEAVE_TYPE_GUID) {
-                        this.filteredUser[i]["entitled"] = details[j].ENTITLED_DAYS;
-                        this.filteredUser[i]["balance"] = details[j].BALANCE_DAYS;
-                    }
-                    else {
-                        this.filteredUser[i]["entitled"] = '-';
-                        this.filteredUser[i]["balance"] = '-';
-                    }
+                    this.filteredUser[i]["entitled"] = details[j].ENTITLED_DAYS;
+                    this.filteredUser[i]["balance"] = details[j].BALANCE_DAYS;
                 }
             }
         }
