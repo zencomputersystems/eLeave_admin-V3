@@ -23,6 +23,7 @@ import { EmployeeSetupComponent } from './employee-setup/employee-setup.componen
 import { ChangeStatusConfimationComponent } from './employee-setup/change-status-confimation/change-status-confimation.component';
 import { BulkImportComponent } from './employee-setup/bulk-import/bulk-import.component';
 import { AddOneEmployeeComponent } from './employee-setup/add-one-employee/add-one-employee.component';
+import { OthesInformationTabComponent } from './employee-setup/othes-information-tab/othes-information-tab.component';
 
 
 const routes: Routes = [
@@ -60,6 +61,7 @@ const routes: Routes = [
     entryComponents: [DeleteListConfirmationComponent, DateDialogComponent,
         ChangeStatusConfimationComponent],
     declarations: [EmployeeSetupComponent, DeleteListConfirmationComponent,
-        DateDialogComponent, BulkImportComponent, AddOneEmployeeComponent, ChangeStatusConfimationComponent]
+        DateDialogComponent, BulkImportComponent, AddOneEmployeeComponent,
+        ChangeStatusConfimationComponent, OthesInformationTabComponent]
 })
 export class AdminInvitesModule { }

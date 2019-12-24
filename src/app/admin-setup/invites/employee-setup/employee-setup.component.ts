@@ -317,6 +317,8 @@ export class EmployeeSetupComponent implements OnInit {
      */
     public showLessDepartment: boolean = false;
 
+    public data: any;
+
     /**
      * selected company guid
      * @private
@@ -419,7 +421,9 @@ export class EmployeeSetupComponent implements OnInit {
         this.userId = item.userId;
         this.inviteAPI.get_admin_user_info('personal-details', this.id).subscribe(data => {
             this.personalDetails = data;
+            console.log(this.personalDetails);
             this.getPersonalDetails();
+
         })
         this.inviteAPI.get_admin_user_info('employment-detail', this.id).subscribe(data => {
             this.employmentDetails = data;
@@ -604,6 +608,10 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails.employmentDetail = resp;
             this.getEmploymentDetails();
         }
+    }
+
+    value(event){
+        console.log(event);
     }
 
     /**

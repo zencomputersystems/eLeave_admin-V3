@@ -172,6 +172,11 @@ export class APIService {
         return this.getApiWithId('/api/admin/master/', item);
     }
 
+    post_file(data): Observable<any> {
+        this.headerAuthorization();
+        return this.postApi(data, '/api/azure/upload');
+    }
+
 
 }
 

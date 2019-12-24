@@ -365,6 +365,36 @@
     color: #43425d;
     // opacity: 0.8;
   }
+  .labelTitle {
+    padding-bottom: 5px;
+    color: #43425d;
+    font-weight: bold;
+    opacity: 0.8;
+    font-size: 12px;
+    display: block;
+  }
+  .contentText {
+    display: inline;
+    font-size: 11px;
+    color: #4d4f5c;
+  }
+  .delete-icon {
+    width: 13px;
+    height: 13px;
+    fill: #dfe3e6;
+    cursor: pointer;
+    margin-left: 1%;
+    float: right;
+    margin-right: 8%;
+  }
+  .education-delete-icon {
+    width: 13px;
+    height: 13px;
+    fill: #dfe3e6;
+    cursor: pointer;
+    float: right;
+    margin-right: 28%;
+  }
   .pText {
     color: #4d4f5c;
     font-size: 11px;

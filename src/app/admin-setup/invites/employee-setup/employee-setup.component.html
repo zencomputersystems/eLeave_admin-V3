@@ -783,6 +783,10 @@
                             <div (click)="showPersonal = false;showEmploy = false;showCalendar = false;showRole = false;showOthers=true"
                                 style="cursor: pointer;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 OTHERS INFORMATION</div>
+                            <div *ngIf="showOthers">
+                                <app-othes-information-tab (personal)="value($event)" [details]="personalDetails" [mode]="mode">
+                                </app-othes-information-tab>
+                            </div>
                         </ion-card-content>
                     </div>
                 </div>
