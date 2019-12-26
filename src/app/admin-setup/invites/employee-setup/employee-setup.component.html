@@ -511,6 +511,71 @@
                                     <ion-col></ion-col>
                                     <ion-col></ion-col>
                                 </ion-row>
+                                <ion-row class="detailsRow"
+                                    *ngIf="mode === 'OFF' && personalDetails.personalDetail != undefined">
+                                    <ion-col>
+                                        <ion-label class="label" style="display: block;">Residential Address</ion-label>
+                                        <p style="display: inline" class="pText">
+                                            {{personalDetails.personalDetail.address1}},</p>
+                                        <p style="display: inline" class="pText">
+                                            {{personalDetails.personalDetail.address2}},</p>
+                                        <p style="display: inline" class="pText">
+                                            {{personalDetails.personalDetail.postcode}},
+                                        </p>
+                                        <p style="display: inline" class="pText">
+                                            {{personalDetails.personalDetail.city}},</p>
+                                        <p style="display: inline" class="pText">
+                                            {{personalDetails.personalDetail.state}},</p>
+                                        <p style="display: inline" class="pText">
+                                            {{personalDetails.personalDetail.country}}.</p>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row style="padding-left: 15px;">
+                                    <ion-label *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
+                                        class="label" style="display: block;">Residential Address</ion-label>
+                                </ion-row>
+                                <ion-row class="detailsRow"
+                                    *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined">
+                                    <ion-col style="overflow: initial;">
+                                        <mat-form-field class="matFormField">
+                                            <input matInput placeholder="Address line 1"
+                                                [(ngModel)]="personalDetails.personalDetail.address1">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col style="overflow: initial;">
+                                        <mat-form-field class="matFormField">
+                                            <input matInput placeholder="Address line 2"
+                                                [(ngModel)]="personalDetails.personalDetail.address2">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col style="overflow: initial;">
+                                        <mat-form-field class="matFormField">
+                                            <input matInput placeholder="Postcode"
+                                                [(ngModel)]="personalDetails.personalDetail.postcode">
+                                        </mat-form-field>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row class="detailsRow"
+                                    *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined">
+                                    <ion-col style="overflow: initial;">
+                                        <mat-form-field class="matFormField">
+                                            <input matInput placeholder="City"
+                                                [(ngModel)]="personalDetails.personalDetail.city">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col style="overflow: initial;">
+                                        <mat-form-field class="matFormField">
+                                            <input matInput placeholder="State"
+                                                [(ngModel)]="personalDetails.personalDetail.state">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col style="overflow: initial;">
+                                        <mat-form-field class="matFormField">
+                                            <input matInput placeholder="Country"
+                                                [(ngModel)]="personalDetails.personalDetail.country">
+                                        </mat-form-field>
+                                    </ion-col>
+                                </ion-row>
                             </div>
                             <div (click)="showEmploy = true;showCalendar = false;showRole = false;showPersonal = false;showOthers=false "
                                 style="cursor: pointer;margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">

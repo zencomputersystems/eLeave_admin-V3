@@ -22,7 +22,14 @@ export const personal = {
     "postcode": "",
     "city": "",
     "state": "",
-    "country": ""
+    "country": "",
+    "emergencyContact": [],
+    "education": [],
+    "certification": [],
+    "family": {
+        "spouse": [],
+        "child": []
+    }
 }
 
 /**

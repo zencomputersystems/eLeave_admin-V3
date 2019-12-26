@@ -582,6 +582,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.personalDetails.personalDetail.dob = _moment(this.birthOfDate.value).format('YYYY-MM-DD');
             this.personalDetails.personalDetail.gender = genderStatus[this.personalDetails.personalDetail.gender];
             this.personalDetails.personalDetail.maritalStatus = maritalStatus[this.personalDetails.personalDetail.maritalStatus];
+            this.personalDetails.personalDetail.postcode = Number(this.personalDetails.personalDetail.postcode);
             let res = await this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.id).toPromise();
             this.personalDetails.personalDetail = res;
             this.getPersonalDetails();

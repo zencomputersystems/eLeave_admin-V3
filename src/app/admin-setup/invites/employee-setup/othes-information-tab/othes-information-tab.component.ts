@@ -111,7 +111,7 @@ export class OthesInformationTabComponent implements OnInit {
    * @memberof OthesInformationTabComponent
    */
   ngOnInit() {
-    this.removeItems = []; this.spouseItems = []; this.childItems = []; this.eduList = [];
+    this.removeItems = []; this.spouseItems = []; this.childItems = []; this.eduList = []; this.awards = [];
     this.emergencyContact();
     this.familySpouse();
     this.familyChild();
@@ -135,8 +135,11 @@ export class OthesInformationTabComponent implements OnInit {
     if (changes.mode != undefined) {
       this.mode = changes.mode.currentValue;
       if (changes.mode.previousValue === 'ON' && changes.mode.currentValue === 'OFF') {
-        this.personal.emit([this.removeItems,this.spouseItems, this.childItems,this.eduList, this.awards]);
+        this.personal.emit([this.removeItems, this.spouseItems, this.childItems, this.eduList, this.awards]);
       }
+    }
+    if (changes.details != undefined) {
+      this.ngOnInit();
     }
   }
 
@@ -161,14 +164,17 @@ export class OthesInformationTabComponent implements OnInit {
    * @memberof OthesInformationTabComponent
    */
   familySpouse() {
-    if ((this.details.personalDetail.family.spouse instanceof Array) && this.details.personalDetail.family.spouse !== undefined) {
-      this.spouseItems = (this.details.personalDetail.family.spouse);
+    if (this.details.personalDetail.family != undefined) {
+      if ((this.details.personalDetail.family.spouse instanceof Array) && this.details.personalDetail.family.spouse !== undefined) {
+        this.spouseItems = (this.details.personalDetail.family.spouse);
+      }
+      else if (!(this.details.personalDetail.family.spouse instanceof Array) && this.details.personalDetail.family.spouse !== undefined) {
+        this.spouseItems.push(this.details.personalDetail.family.spouse);
+      } else {
+        this.spouseItems = this.details.personalDetail.family.spouse;
+      }
     }
-    else if (!(this.details.personalDetail.family.spouse instanceof Array) && this.details.personalDetail.family.spouse !== undefined) {
-      this.spouseItems.push(this.details.personalDetail.family.spouse);
-    } else {
-      this.spouseItems = this.details.personalDetail.family.spouse;
-    }
+
   }
 
   /**
@@ -176,13 +182,15 @@ export class OthesInformationTabComponent implements OnInit {
    * @memberof OthesInformationTabComponent
    */
   familyChild() {
-    if ((this.details.personalDetail.family.child instanceof Array) && this.details.personalDetail.family.child !== undefined) {
-      this.childItems = (this.details.personalDetail.family.child);
-    }
-    else if (!(this.details.personalDetail.family.child instanceof Array) && this.details.personalDetail.family.child !== undefined) {
-      this.childItems.push(this.details.personalDetail.family.child);
-    } else {
-      this.childItems = this.details.personalDetail.family.child;
+    if (this.details.personalDetail.family != undefined) {
+      if ((this.details.personalDetail.family.child instanceof Array) && this.details.personalDetail.family.child !== undefined) {
+        this.childItems = (this.details.personalDetail.family.child);
+      }
+      else if (!(this.details.personalDetail.family.child instanceof Array) && this.details.personalDetail.family.child !== undefined) {
+        this.childItems.push(this.details.personalDetail.family.child);
+      } else {
+        this.childItems = this.details.personalDetail.family.child;
+      }
     }
   }
 
@@ -191,15 +199,13 @@ export class OthesInformationTabComponent implements OnInit {
    * @memberof OthesInformationTabComponent
    */
   certification() {
-    const award = this.details.personalDetail.certification;
-    if (award != undefined) {
-      if (award instanceof Array) {
-        this.awards = award;
-      } else {
-        this.awards.push(award);
-      }
+    if ((this.details.personalDetail.certification instanceof Array) && this.details.personalDetail.certification !== undefined) {
+      this.awards = (this.details.personalDetail.certification);
+    }
+    else if (!(this.details.personalDetail.certification instanceof Array) && this.details.personalDetail.certification !== undefined) {
+      this.awards.push(this.details.personalDetail.certification);
     } else {
-      this.awards = [];
+      this.awards = this.details.personalDetail.certification;
     }
   }
 
