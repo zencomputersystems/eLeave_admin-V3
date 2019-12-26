@@ -5,37 +5,37 @@
     <ion-col>
       <ion-label *ngIf="index === 0" class="labelTitle">Contact Person
       </ion-label>
-      <p *ngIf="mode === 'OFF'" class="contentText">
+      <p *ngIf="mode === 'OFF' && details != undefined" class="contentText">
         {{item.contactName}}</p>
-      <mat-form-field *ngIf="mode === 'ON'">
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined">
         <input matInput placeholder="Contact Name" [(ngModel)]="removeItems[index].contactName">
       </mat-form-field>
     </ion-col>
     <ion-col>
       <ion-label *ngIf="index === 0" class="labelTitle">Relationship
       </ion-label>
-      <p *ngIf="mode === 'OFF'" class="contentText">
+      <p *ngIf="mode === 'OFF' && details != undefined" class="contentText">
         {{item.contactRelationship}}</p>
-      <mat-form-field *ngIf="mode === 'ON'">
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined">
         <input matInput placeholder="Contact Relationship" [(ngModel)]="removeItems[index].contactRelationship">
       </mat-form-field>
     </ion-col>
     <ion-col>
       <ion-label *ngIf="index === 0" class="labelTitle">Phone Number
       </ion-label>
-      <p *ngIf="mode === 'OFF'" class="contentText">
+      <p *ngIf="mode === 'OFF' && details != undefined" class="contentText">
         {{item.contactNumber}}</p>
-      <mat-form-field *ngIf="mode === 'ON'">
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined">
         <input matInput placeholder="Contact Number" [(ngModel)]="removeItems[index].contactNumber">
       </mat-form-field>
     </ion-col>
     <ion-col>
-      <div class="delete-icon" *ngIf="mode === 'ON'" [inlineSVG]="'assets/icon/option/trash.svg'"
+      <div class="delete-icon" *ngIf="mode === 'ON' && details != undefined" [inlineSVG]="'assets/icon/option/trash.svg'"
         (click)="removeItem(index, removeItems)">
       </div>
     </ion-col>
   </ion-row>
-  <ion-row class="detailsRow" *ngIf="mode === 'ON'">
+  <ion-row class="detailsRow" *ngIf="mode === 'ON' && details != undefined">
     <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
       padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(removeItems, contactObj)"></ion-icon>
     <span style="color:#3b86ff;">Add
@@ -49,28 +49,28 @@
     <ion-col>
       <ion-label class="labelTitle" *ngIf="index === 0">Spouse
       </ion-label>
-      <p *ngIf="mode === 'OFF'" class="contentText">
+      <p *ngIf="mode === 'OFF' && details != undefined" class="contentText">
         {{item.spouseName}}</p>
-      <mat-form-field *ngIf="mode === 'ON'">
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined">
         <input matInput placeholder="Spouse Name" [(ngModel)]="spouseItems[index].spouseName">
       </mat-form-field>
     </ion-col>
     <ion-col>
       <ion-label class="labelTitle" *ngIf="index === 0">NRIC</ion-label>
-      <p *ngIf="mode === 'OFF'" class="contentText">
+      <p *ngIf="mode === 'OFF' && details != undefined" class="contentText">
         {{item.spouseIdentificationNumber}}</p>
-      <mat-form-field *ngIf="mode === 'ON'">
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined">
         <input matInput placeholder="Identity card Number" [(ngModel)]="spouseItems[index].spouseIdentificationNumber">
       </mat-form-field>
     </ion-col>
     <ion-col></ion-col>
     <ion-col>
-      <div class="delete-icon" *ngIf="mode === 'ON'" [inlineSVG]="'assets/icon/option/trash.svg'"
+      <div class="delete-icon" *ngIf="mode === 'ON' && details != undefined" [inlineSVG]="'assets/icon/option/trash.svg'"
         (click)="removeItem(index, spouseItems)">
       </div>
     </ion-col>
   </ion-row>
-  <ion-row class="detailsRow" *ngIf="mode === 'ON'">
+  <ion-row class="detailsRow" *ngIf="mode === 'ON' && details != undefined">
     <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
 padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(spouseItems, spouseObj)"></ion-icon>
     <span style="color:#3b86ff;">Add
@@ -80,28 +80,28 @@ padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(spouseItem
     <ion-col>
       <ion-label class="labelTitle" *ngIf="index === 0">Child
       </ion-label>
-      <p *ngIf="mode === 'OFF'" class="contentText">
+      <p *ngIf="mode === 'OFF' && details != undefined" class="contentText">
         {{item.childName}}</p>
-      <mat-form-field *ngIf="mode === 'ON'">
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined">
         <input matInput placeholder="Child Name" [(ngModel)]="childItems[index].childName">
       </mat-form-field>
     </ion-col>
     <ion-col>
       <ion-label class="labelTitle" *ngIf="index === 0">NRIC</ion-label>
-      <p *ngIf="mode === 'OFF'" class="contentText">
+      <p *ngIf="mode === 'OFF' && details != undefined" class="contentText">
         {{item.childIdentificationNumber}}</p>
-      <mat-form-field *ngIf="mode === 'ON'">
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined">
         <input matInput placeholder="Identity card Number" [(ngModel)]="childItems[index].childIdentificationNumber">
       </mat-form-field>
     </ion-col>
     <ion-col></ion-col>
     <ion-col>
-      <div class="delete-icon" *ngIf="mode === 'ON'" [inlineSVG]="'assets/icon/option/trash.svg'"
+      <div class="delete-icon" *ngIf="mode === 'ON' && details != undefined" [inlineSVG]="'assets/icon/option/trash.svg'"
         (click)="removeItem(index, childItems)">
       </div>
     </ion-col>
   </ion-row>
-  <ion-row class="detailsRow" *ngIf="mode === 'ON'">
+  <ion-row class="detailsRow" *ngIf="mode === 'ON' && details != undefined">
     <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
   padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(childItems, childObj)"></ion-icon>
     <span style="color:#3b86ff">Add
@@ -128,40 +128,40 @@ padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(spouseItem
   </ion-row>
   <ion-row class="detailsRow" *ngFor="let item of eduList; let index = index">
     <ion-col size="2" class="colContent">
-      <p *ngIf="mode === 'OFF'" class="contentText">
+      <p *ngIf="mode === 'OFF' && details != undefined" class="contentText">
         {{item.qualificationLevel}}</p>
-      <mat-form-field *ngIf="mode === 'ON'" style="width: 100%;">
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined" style="width: 100%;">
         <input matInput placeholder="Education Level" [(ngModel)]="eduList[index].qualificationLevel">
       </mat-form-field>
     </ion-col>
     <ion-col size="3" class="colContent">
-      <p *ngIf="mode === 'OFF'" class="contentText">
+      <p *ngIf="mode === 'OFF' && details != undefined" class="contentText">
         {{item.major}}</p>
-      <mat-form-field *ngIf="mode === 'ON'" style="width: 100%;">
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined" style="width: 100%;">
         <input matInput placeholder="Major" [(ngModel)]="eduList[index].major">
       </mat-form-field>
     </ion-col>
     <ion-col size="3" class="colContent">
-      <p *ngIf="mode === 'OFF'" class="contentText">
+      <p *ngIf="mode === 'OFF' && details != undefined" class="contentText">
         {{item.university}}</p>
-      <mat-form-field *ngIf="mode === 'ON'" style="width: 100%;">
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined" style="width: 100%;">
         <input matInput placeholder="University" [(ngModel)]="eduList[index].university">
       </mat-form-field>
     </ion-col>
     <ion-col size="2" class="colContent">
-      <p *ngIf="mode === 'OFF'" class="contentText">
+      <p *ngIf="mode === 'OFF' && details != undefined" class="contentText">
         {{item.year}}</p>
-      <mat-form-field *ngIf="mode === 'ON'" style="width: 100%;">
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined" style="width: 100%;">
         <input matInput placeholder="Year" [(ngModel)]="eduList[index].year">
       </mat-form-field>
     </ion-col>
     <ion-col size="2" class="colContent">
-      <div class="education-delete-icon" *ngIf="mode === 'ON'" [inlineSVG]="'assets/icon/option/trash.svg'"
+      <div class="education-delete-icon" *ngIf="mode === 'ON' && details != undefined" [inlineSVG]="'assets/icon/option/trash.svg'"
         (click)="removeItem(index, eduList)">
       </div>
     </ion-col>
   </ion-row>
-  <ion-row class="detailsRow" *ngIf="mode === 'ON'">
+  <ion-row class="detailsRow" *ngIf="mode === 'ON' && details != undefined">
     <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
 padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(eduList, educationObj)"></ion-icon>
     <span style="color:#3b86ff;">
@@ -193,28 +193,28 @@ padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(eduList, e
   </ion-row>
   <ion-row class="detailsRow" *ngFor="let item of awards; let i = index">
     <ion-col size="4" class="colContent" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
-      <span *ngIf="mode === 'OFF'" class="contentText">{{item.certificationName}}</span>
-      <mat-form-field *ngIf="mode === 'ON'" style="width: 100%;">
+      <span *ngIf="mode === 'OFF' && details != undefined" class="contentText">{{item.certificationName}}</span>
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined" style="width: 100%;">
         <input matInput placeholder="Certification Name" [(ngModel)]="item.certificationName">
       </mat-form-field>
     </ion-col>
     <ion-col class="colContent" style="text-align: center;text-overflow: ellipsis;
   white-space: nowrap;overflow: hidden;">
-      <span *ngIf="mode === 'OFF'" class="contentText">{{item.certificationEnrollYear}}</span>
-      <mat-form-field *ngIf="mode === 'ON'" style="width: 100%;">
+      <span *ngIf="mode === 'OFF' && details != undefined" class="contentText">{{item.certificationEnrollYear}}</span>
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined" style="width: 100%;">
         <input matInput placeholder="Certification enroll year" [(ngModel)]="item.certificationEnrollYear">
       </mat-form-field>
     </ion-col>
     <ion-col class="colContent" style="text-align: center;text-overflow: ellipsis;
   white-space: nowrap;overflow: hidden;">
-      <span *ngIf="mode === 'OFF'" class="contentText">{{item.certificationGraduateYear}}</span>
-      <mat-form-field *ngIf="mode === 'ON'" style="width: 100%;">
+      <span *ngIf="mode === 'OFF' && details != undefined" class="contentText">{{item.certificationGraduateYear}}</span>
+      <mat-form-field *ngIf="mode === 'ON' && details != undefined" style="width: 100%;">
         <input matInput placeholder="Certification graduate year" [(ngModel)]="item.certificationGraduateYear">
       </mat-form-field>
     </ion-col>
     <ion-col class="colContent"
       style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;text-align: center;">
-      <ion-button *ngIf="mode === 'ON'" fill="outline" (click)="file.click();"
+      <ion-button *ngIf="mode === 'ON' && details != undefined" fill="outline" (click)="file.click();"
         style="margin: 0;background: #f0f0f7;font-size: 12px;height: 30px;width: 90px;display: inline-block; text-transform: capitalize"
         color="primary">Attachment
       </ion-button>
@@ -222,13 +222,13 @@ padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(eduList, e
         [href]="details.link+item.certificationAttachment" download>{{item.certificationAttachment}}</a>
     </ion-col>
     <ion-col size="0.5" class="colContent">
-      <div *ngIf="mode === 'ON'" class="education-delete-icon" style="margin-right: 60%;"
+      <div *ngIf="mode === 'ON' && details != undefined" class="education-delete-icon" style="margin-right: 60%;"
         [inlineSVG]="'assets/icon/option/trash.svg'" (click)="removeItem(i, awards)">
       </div>
     </ion-col>
     <input style="display:none" #file name="file" type="file" (change)="upload($event.target.files, i)">
   </ion-row>
-  <ion-row class="detailsRow" *ngIf="mode === 'ON'">
+  <ion-row class="detailsRow" *ngIf="mode === 'ON' && details != undefined">
     <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
 padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(awards, awardObj);"></ion-icon>
     <span style="color:#3b86ff;">

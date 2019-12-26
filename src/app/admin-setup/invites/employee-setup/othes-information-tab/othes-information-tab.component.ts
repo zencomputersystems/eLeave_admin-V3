@@ -135,7 +135,7 @@ export class OthesInformationTabComponent implements OnInit {
     if (changes.mode != undefined) {
       this.mode = changes.mode.currentValue;
       if (changes.mode.previousValue === 'ON' && changes.mode.currentValue === 'OFF') {
-        this.personal.emit(this.details);
+        this.personal.emit([this.removeItems,this.spouseItems, this.childItems,this.eduList, this.awards]);
       }
     }
   }

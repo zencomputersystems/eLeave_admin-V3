@@ -527,7 +527,7 @@ export class EmployeeSetupComponent implements OnInit {
         } else {
             this.mode = 'OFF';
             this.patchPersonalDetails();
-            this.patchEmploymentDetails();
+            // this.patchEmploymentDetails();
             this.assignProfile();
             this.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
         }
@@ -602,6 +602,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails.employmentDetail.dateOfResignation = _moment(this.dateOfResignation.value).format('YYYY-MM-DD');
             this.employmentDetails.employmentDetail.dateOfConfirmation = _moment(this.dateOfConfirm.value).format('YYYY-MM-DD');
             this.employmentDetails.employmentDetail.bankAccountNumber = (this.employmentDetails.employmentDetail.bankAccountNumber).toString();
+            this.employmentDetails.employmentDetail.epfNumber = (this.employmentDetails.employmentDetail.epfNumber).toString();
             delete this.employmentDetails.employmentDetail["yearOfService"];
             let resp = await this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.id).toPromise();
             this.employmentDetails.employmentDetail = resp;
@@ -609,8 +610,18 @@ export class EmployeeSetupComponent implements OnInit {
         }
     }
 
-    value(event){
-        console.log(event);
+    /**
+     * output from others-information 
+     * @param {*} event
+     * @memberof EmployeeSetupComponent
+     */
+    value(event) {
+        this.personalDetails.personalDetail.emergencyContact = event[0];
+        this.personalDetails.personalDetail.family.spouse = event[1];
+        this.personalDetails.personalDetail.family.child = event[2];
+        this.personalDetails.personalDetail.education = event[3];
+        this.personalDetails.personalDetail.certification = event[4];
+        this.patchPersonalDetails();
     }
 
     /**
@@ -621,17 +632,14 @@ export class EmployeeSetupComponent implements OnInit {
         let data = await this.leaveApi.patch_assign_calendar_profile({
             "user_guid": [this.userId], "calendar_guid": this.calendarValue
         }).toPromise();
-        console.log(data);
 
         let workingData = await this.leaveApi.patch_user_working_hours({
             "user_guid": [this.userId], "working_hours_guid": this.workingValue
         }).toPromise();
-        console.log(workingData);
 
         let roleData = await this.roleAPI.patch_user_profile({
             "user_guid": [this.userId], "role_guid": this.roleValue
         }).toPromise();
-        console.log(roleData);
     }
 
     /**
