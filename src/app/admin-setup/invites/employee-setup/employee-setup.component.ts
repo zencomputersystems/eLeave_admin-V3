@@ -97,7 +97,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @type {*}
      * @memberof EmployeeSetupComponent
      */
-    public dateOfResign: any;
+    public dateOfResignation: any;
 
     /**
      * role profile list from API
@@ -421,7 +421,6 @@ export class EmployeeSetupComponent implements OnInit {
         this.userId = item.userId;
         this.inviteAPI.get_admin_user_info('personal-details', this.id).subscribe(data => {
             this.personalDetails = data;
-            console.log(this.personalDetails);
             this.getPersonalDetails();
 
         })
@@ -465,8 +464,8 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails.employmentDetail.dateOfJoin = _moment(this.employmentDetails.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
             this.dateOfConfirm = new FormControl((this.employmentDetails.employmentDetail.dateOfConfirmation), Validators.required);
             this.employmentDetails.employmentDetail.dateOfConfirmation = _moment(this.employmentDetails.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
-            this.dateOfResign = new FormControl((this.employmentDetails.employmentDetail.dateOfResign), Validators.required);
-            this.employmentDetails.employmentDetail.dateOfResign = _moment(this.employmentDetails.employmentDetail.dateOfResign).format('DD-MM-YYYY');
+            this.dateOfResignation = new FormControl((this.employmentDetails.employmentDetail.dateOfResignation), Validators.required);
+            this.employmentDetails.employmentDetail.dateOfResignation = _moment(this.employmentDetails.employmentDetail.dateOfResignation).format('DD-MM-YYYY');
         } else {
             this.employmentDetails.employmentDetail = employment;
         }
@@ -600,7 +599,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails.employmentDetail.employeeId = (this.employmentDetails.employmentDetail.employeeId).toString();
             this.employmentDetails.employmentDetail.incomeTaxNumber = (this.employmentDetails.employmentDetail.incomeTaxNumber).toString();
             this.employmentDetails.employmentDetail.dateOfJoin = _moment(this.dateOfJoin.value).format('YYYY-MM-DD');
-            this.employmentDetails.employmentDetail.dateOfResign = _moment(this.dateOfResign.value).format('YYYY-MM-DD');
+            this.employmentDetails.employmentDetail.dateOfResignation = _moment(this.dateOfResignation.value).format('YYYY-MM-DD');
             this.employmentDetails.employmentDetail.dateOfConfirmation = _moment(this.dateOfConfirm.value).format('YYYY-MM-DD');
             this.employmentDetails.employmentDetail.bankAccountNumber = (this.employmentDetails.employmentDetail.bankAccountNumber).toString();
             delete this.employmentDetails.employmentDetail["yearOfService"];

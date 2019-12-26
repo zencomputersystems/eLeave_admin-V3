@@ -663,13 +663,13 @@
                                         <ion-label class="label">Date of Resignation</ion-label>
                                         <p class="pText"
                                             *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined">
-                                            {{employmentDetails.employmentDetail.dateOfResign}}
+                                            {{employmentDetails.employmentDetail.dateOfResignation}}
                                         </p>
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [matDatepicker]="dateResign" [formControl]="dateOfResign"
-                                                required>
+                                            <input matInput [matDatepicker]="dateResign"
+                                                [formControl]="dateOfResignation" required>
                                             <mat-datepicker-toggle matSuffix [for]="dateResign">
                                             </mat-datepicker-toggle>
                                             <mat-datepicker #dateResign></mat-datepicker>
@@ -679,10 +679,60 @@
                                         <ion-label class="label">Years of Service</ion-label>
                                         <p class="pText" *ngIf="employmentDetails.employmentDetail != undefined">
                                             {{employmentDetails.employmentDetail.yearOfService}}</p>
-                                        <!-- <mat-form-field *ngIf="mode === 'ON'">
+                                    </ion-col>
+                                </ion-row>
+                                <ion-item class="divider" lines="full" style="padding-top: 2%;padding-bottom: 2%;padding-left: 15px;
+                                padding-right: 15px;">
+                                </ion-item>
+                                <ion-row class="detailsRow">
+                                    <ion-col>
+                                        <ion-label class="label">Bank Account Name</ion-label>
+                                        <p class="pText"
+                                            *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined">
+                                            {{employmentDetails.employmentDetail.bankAccountName}}</p>
+                                        <mat-form-field
+                                            *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
+                                            class="matFormField">
                                             <input matInput
-                                                [(ngModel)]="employmentDetails.employmentDetail.yearOfService">
-                                        </mat-form-field> -->
+                                                [(ngModel)]="employmentDetails.employmentDetail.bankAccountName">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">Bank Account No</ion-label>
+                                        <p class="pText"
+                                            *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined">
+                                            {{employmentDetails.employmentDetail.bankAccountNumber}}</p>
+                                        <mat-form-field
+                                            *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
+                                            class="matFormField">
+                                            <input matInput
+                                                [(ngModel)]="employmentDetails.employmentDetail.bankAccountNumber">
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label class="label">EPF No</ion-label>
+                                        <p class="pText"
+                                            *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined">
+                                            {{employmentDetails.employmentDetail.epfNumber}}</p>
+                                        <mat-form-field
+                                            *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
+                                            class="matFormField">
+                                            <input matInput [(ngModel)]="employmentDetails.employmentDetail.epfNumber">
+                                        </mat-form-field>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row class="detailsRow">
+                                    <ion-col>
+                                        <ion-label class="label">Income Tax No</ion-label>
+                                        <p class="pText"
+                                            *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined">
+                                            {{employmentDetails.employmentDetail.incomeTaxNumber}}</p>
+                                        <mat-form-field
+                                            *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
+                                            class="matFormField">
+                                            <input matInput
+                                                [(ngModel)]="employmentDetails.employmentDetail.incomeTaxNumber">
+                                        </mat-form-field>
                                     </ion-col>
                                 </ion-row>
                                 <ion-item class="divider" lines="full" style="padding-top: 2%;padding-bottom: 2%;padding-left: 15px;
@@ -784,7 +834,8 @@
                                 style="cursor: pointer;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 OTHERS INFORMATION</div>
                             <div *ngIf="showOthers">
-                                <app-othes-information-tab (personal)="value($event)" [details]="personalDetails" [mode]="mode">
+                                <app-othes-information-tab (personal)="value($event)" [details]="personalDetails"
+                                    [mode]="mode">
                                 </app-othes-information-tab>
                             </div>
                         </ion-card-content>

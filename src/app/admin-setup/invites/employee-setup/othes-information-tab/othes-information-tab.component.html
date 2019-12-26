@@ -37,8 +37,8 @@
   </ion-row>
   <ion-row class="detailsRow" *ngIf="mode === 'ON'">
     <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
-      padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
-    <span style="color:#3b86ff; cursor: pointer;" (click)="addList(removeItems, contactObj)">Add
+      padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(removeItems, contactObj)"></ion-icon>
+    <span style="color:#3b86ff;">Add
       emergency contact</span>
   </ion-row>
 </div>
@@ -72,8 +72,8 @@
   </ion-row>
   <ion-row class="detailsRow" *ngIf="mode === 'ON'">
     <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
-padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
-    <span style="color:#3b86ff; cursor: pointer;" (click)="addList(spouseItems, spouseObj)">Add
+padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(spouseItems, spouseObj)"></ion-icon>
+    <span style="color:#3b86ff;">Add
       spouse</span>
   </ion-row>
   <ion-row class="detailsRow" *ngFor="let item of childItems; let index = index">
@@ -103,8 +103,8 @@ padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
   </ion-row>
   <ion-row class="detailsRow" *ngIf="mode === 'ON'">
     <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
-  padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
-    <span style="color:#3b86ff; cursor: pointer;" (click)="addList(childItems, childObj)">Add
+  padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(childItems, childObj)"></ion-icon>
+    <span style="color:#3b86ff">Add
       child</span>
   </ion-row>
 </div>
@@ -156,26 +156,15 @@ padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
       </mat-form-field>
     </ion-col>
     <ion-col size="2" class="colContent">
-      <!-- <ion-button *ngIf="mode === 'ON'" fill="outline" (click)="file.click();"
-        style="background: #f0f0f7;font-size: 12px;margin-top: 12px;height: 30px;width: 90px;display: inline-block; text-transform: capitalize"
-        color="primary">Attachment
-      </ion-button>
-      <ng-container *ngFor="let item of awards; let i = index">
-        <a *ngIf="mode === 'OFF'" class="contentText" [href]="details.link+item.certificationAttachment"
-          download>{{item.certificationAttachment}}</a>
-    
-      </ng-container> -->
       <div class="education-delete-icon" *ngIf="mode === 'ON'" [inlineSVG]="'assets/icon/option/trash.svg'"
         (click)="removeItem(index, eduList)">
       </div>
     </ion-col>
-    <input style="display:none" #file name="file" type="file"
-      (change)="preview(file.files, index); a($event.target.files)">
   </ion-row>
   <ion-row class="detailsRow" *ngIf="mode === 'ON'">
     <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
-padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
-    <span style="color:#3b86ff; cursor: pointer;" (click)="addList(eduList, educationObj)">
+padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(eduList, educationObj)"></ion-icon>
+    <span style="color:#3b86ff;">
       Add new</span>
   </ion-row>
 </div>
@@ -197,6 +186,9 @@ padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
     </ion-col>
     <ion-col style="text-overflow: ellipsis;
         white-space: nowrap;overflow: hidden;">
+    </ion-col>
+    <ion-col size="0.5" style="text-overflow: ellipsis;
+    white-space: nowrap;overflow: hidden;">
     </ion-col>
   </ion-row>
   <ion-row class="detailsRow" *ngFor="let item of awards; let i = index">
@@ -220,23 +212,26 @@ padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
         <input matInput placeholder="Certification graduate year" [(ngModel)]="item.certificationGraduateYear">
       </mat-form-field>
     </ion-col>
-    <ion-col class="colContent" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;text-align: center;">
+    <ion-col class="colContent"
+      style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;text-align: center;">
       <ion-button *ngIf="mode === 'ON'" fill="outline" (click)="file.click();"
-        style="background: #f0f0f7;font-size: 12px;margin-top: 12px;height: 30px;width: 90px;display: inline-block; text-transform: capitalize"
+        style="margin: 0;background: #f0f0f7;font-size: 12px;height: 30px;width: 90px;display: inline-block; text-transform: capitalize"
         color="primary">Attachment
       </ion-button>
-      <a *ngIf="mode === 'OFF'" class="contentText" [href]="details.link+item.certificationAttachment"
-        download>{{item.certificationAttachment}}</a>
-      <div *ngIf="mode === 'ON'" class="education-delete-icon" style="margin-right: 7%;"
-        [inlineSVG]="'assets/icon/option/trash.svg'" (click)="deleteItem(i, awards)">
+      <a class="contentText" style="display: block;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
+        [href]="details.link+item.certificationAttachment" download>{{item.certificationAttachment}}</a>
+    </ion-col>
+    <ion-col size="0.5" class="colContent">
+      <div *ngIf="mode === 'ON'" class="education-delete-icon" style="margin-right: 60%;"
+        [inlineSVG]="'assets/icon/option/trash.svg'" (click)="removeItem(i, awards)">
       </div>
     </ion-col>
-    <input style="display:none" #file name="file" type="file" (change)="preview(file.files, i)">
+    <input style="display:none" #file name="file" type="file" (change)="upload($event.target.files, i)">
   </ion-row>
   <ion-row class="detailsRow" *ngIf="mode === 'ON'">
     <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
-padding-left: 0.5%;font-size: 16px;cursor: pointer;"></ion-icon>
-    <span style="color:#3b86ff; cursor: pointer;" (click)="addInput(awards, awardObj);">
+padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="addList(awards, awardObj);"></ion-icon>
+    <span style="color:#3b86ff;">
       Add award or certification</span>
   </ion-row>
 </div>

@@ -45,7 +45,7 @@ export const employment = {
     // "userRole": "Employee",
     "dateOfJoin": "",
     "dateOfConfirmation": "",
-    "dateOfResign": "",
+    "dateOfResignation": "",
     "epfNumber": "",
     "incomeTaxNumber": "",
     "bankAccountName": "",
