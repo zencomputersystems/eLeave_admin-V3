@@ -23,7 +23,7 @@ export class LeaveEntitlementApiService {
     /**
      *Creates an instance of LeaveEntitlementApiService.
      * @param {APIService} apiService
-     * @param {MatDialog} dialog
+     * @param {MatDialog} dialog open material dialog
      * @memberof LeaveEntitlementApiService
      */
     constructor(private apiService: APIService, public dialog: MatDialog) {

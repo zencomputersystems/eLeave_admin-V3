@@ -19,7 +19,7 @@ export class PolicyApiService {
      *Creates an instance of PolicyApiService.
      * @param {APIService} apiService
      * @param {LeaveApiService} leaveAPi
-     * @param {MatDialog} dialog
+     * @param {MatDialog} dialog open material dialog
      * @memberof PolicyApiService
      */
     constructor(private apiService: APIService, private leaveAPi: LeaveApiService, public dialog: MatDialog) {

@@ -146,7 +146,7 @@ export class RoleListComponent implements OnInit {
     /**
      *Creates an instance of RoleListComponent.
      * @param {RoleApiService} roleAPi
-     * @param {MatDialog} dialog
+     * @param {MatDialog} dialog open material dialog
      * @param {MenuController} menu
      * @memberof RoleListComponent
      */

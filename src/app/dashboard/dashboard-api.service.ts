@@ -17,7 +17,7 @@ export class DashboardApiService {
     /**
      *Creates an instance of DashboardApiService.
      * @param {APIService} apiService
-     * @param {Http} http
+     * @param {Http} http perform http request
      * @memberof DashboardApiService
      */
     constructor(private apiService: APIService, public http: Http) {

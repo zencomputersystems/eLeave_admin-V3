@@ -16,8 +16,8 @@ export class DialogSubmitConfirmationComponent implements OnInit {
 
   /**
    *Creates an instance of DialogSubmitConfirmationComponent.
-   * @param {MatDialogRef<DialogSubmitConfirmationComponent>} dialogRef
-   * @param {*} data
+   * @param {MatDialogRef<DialogSubmitConfirmationComponent>} dialogRef reference to a dialog opened
+   * @param {*} data data get from inject component
    * @memberof DialogSubmitConfirmationComponent
    */
   constructor(public dialogRef: MatDialogRef<DialogSubmitConfirmationComponent>,

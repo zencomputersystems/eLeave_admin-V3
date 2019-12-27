@@ -52,8 +52,8 @@ export class ChangeStatusConfimationComponent implements OnInit {
 
   /**
    *Creates an instance of ChangeStatusConfimationComponent.
-   * @param {MatDialogRef<ChangeStatusConfimationComponent>} dialog
-   * @param {*} data
+   * @param {MatDialogRef<ChangeStatusConfimationComponent>} dialog reference to a dialog opened
+   * @param {*} data access data from inject component
    * @param {AdminInvitesApiService} API
    * @memberof ChangeStatusConfimationComponent
    */

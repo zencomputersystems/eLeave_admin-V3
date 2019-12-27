@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Observable } from 'rxjs';
 import { LeaveApiService } from '../leave-api.service';
-import { MatSnackBar, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { SnackbarNotificationComponent } from '../snackbar-notification/snackbar-notification.component';
 import { Response } from '@angular/http';
 import { map } from 'rxjs/operators';
@@ -21,10 +21,10 @@ export class CalendarProfileApiService {
      *Creates an instance of CalendarProfileApiService.
      * @param {APIService} api
      * @param {LeaveApiService} leaveApi
-     * @param {MatSnackBar} snackBar
+     * @param {MatDialog} displayDialog open material dialog
      * @memberof CalendarProfileApiService
      */
-    constructor(private api: APIService, private leaveApi: LeaveApiService, public displayDialog: MatDialog, private snackBar: MatSnackBar) {
+    constructor(private api: APIService, private leaveApi: LeaveApiService, public displayDialog: MatDialog) {
     }
 
     /**
@@ -139,7 +139,7 @@ export class CalendarProfileApiService {
      * @memberof CalendarProfileApiService
      */
     notification(text: string, val: boolean) {
-        this.snackBar.openFromComponent(SnackbarNotificationComponent, {
+        this.leaveApi.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 2000,
             verticalPosition: "top",
             data: { message: text, response: val }

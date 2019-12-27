@@ -15,8 +15,8 @@ export class DeleteCalendarConfirmationComponent {
 
     /**
      *Creates an instance of DeleteCalendarConfirmationComponent.
-     * @param {MatDialogRef<DeleteCalendarConfirmationComponent>} dialog
-     * @param {*} data
+     * @param {MatDialogRef<DeleteCalendarConfirmationComponent>} dialog reference to a dialog opened
+     * @param {*} data get data from inject component
      * @memberof DeleteCalendarConfirmationComponent
      */
     constructor(

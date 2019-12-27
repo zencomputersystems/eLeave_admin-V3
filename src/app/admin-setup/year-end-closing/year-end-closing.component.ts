@@ -55,7 +55,7 @@ export class YearEndClosingComponent implements OnInit {
   /**
    *Creates an instance of YearEndClosingComponent.
    * @param {Router} router
-   * @param {MatDialog} dialog
+   * @param {MatDialog} dialog to open material dialog
    * @param {YearEndClosingApiService} yearEndApi
    * @memberof YearEndClosingComponent
    */

@@ -23,8 +23,8 @@ export class DateDialogComponent {
 
     /**
      *Creates an instance of DateDialogComponent.
-     * @param {MatDialogRef<DateDialogComponent>} dialog
-     * @param {*} data
+     * @param {MatDialogRef<DateDialogComponent>} dialog reference to a dialog opened
+     * @param {*} data get from inject component
      * @memberof DateDialogComponent
      */
     constructor(

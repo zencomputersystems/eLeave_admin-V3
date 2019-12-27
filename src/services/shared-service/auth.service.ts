@@ -22,7 +22,7 @@ export class AuthService {
 
     /**
      *Creates an instance of AuthService.
-     * @param {SessionStorageService} session
+     * @param {SessionStorageService} session session storage
      * @param {LocalStorageService} local
      * @param {HttpClient} httpClient
      * @memberof AuthService

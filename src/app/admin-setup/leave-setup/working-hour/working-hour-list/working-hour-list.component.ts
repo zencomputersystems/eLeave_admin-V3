@@ -93,7 +93,7 @@ export class WorkingHourListComponent implements OnInit {
     /**
      *Creates an instance of WorkingHourListComponent.
      * @param {WorkingHourApiService} workingHrAPI
-     * @param {MatDialog} dialog
+     * @param {MatDialog} dialog open material dialog
      * @param {MenuController} menu
      * @memberof WorkingHourListComponent
      */

@@ -1,3 +1,8 @@
+/**
+ * side menu interface 
+ * @export
+ * @interface ISideMenu
+ */
 export interface ISideMenu {
   /**
    * This is local interface property as title of menu

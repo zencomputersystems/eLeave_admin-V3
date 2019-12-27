@@ -16,8 +16,8 @@ export class EditModeDialogComponent implements OnInit {
 
   /**
    *Creates an instance of EditModeDialogComponent.
-   * @param {MatDialogRef<EditModeDialogComponent>} dialog
-   * @param {*} data
+   * @param {MatDialogRef<EditModeDialogComponent>} dialog reference to a dialog opened
+   * @param {*} data data get from inject component
    * @memberof EditModeDialogComponent
    */
   constructor(public dialog: MatDialogRef<EditModeDialogComponent>,

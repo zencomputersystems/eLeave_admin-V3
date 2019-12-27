@@ -337,7 +337,7 @@ export class EmployeeSetupComponent implements OnInit {
      *Creates an instance of EmployeeSetupComponent.
      * @param {AdminInvitesApiService} inviteAPI
      * @param {LeaveApiService} leaveApi
-     * @param {RoleApiService} roleAPI
+     * @param {RoleApiService} roleAPI access role manegement api service
      * @memberof EmployeeSetupComponent
      */
     constructor(private inviteAPI: AdminInvitesApiService, private leaveApi: LeaveApiService, public roleAPI: RoleApiService) {

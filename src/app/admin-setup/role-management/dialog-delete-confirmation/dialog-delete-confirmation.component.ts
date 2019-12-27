@@ -16,8 +16,8 @@ export class DialogDeleteConfirmationComponent {
 
     /**
      *Creates an instance of DialogDeleteConfirmationComponent.
-     * @param {MatDialogRef<DialogDeleteConfirmationComponent>} dialogRef
-     * @param {*} data
+     * @param {MatDialogRef<DialogDeleteConfirmationComponent>} dialogRef reference to a dialog opened
+     * @param {*} data get data from inject component
      * @memberof DialogDeleteConfirmationComponent
      */
     constructor(

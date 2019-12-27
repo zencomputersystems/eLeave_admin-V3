@@ -17,9 +17,9 @@ export class WorkingHourApiService {
 
     /**
      *Creates an instance of WorkingHourApiService.
-     * @param {Http} http
+     * @param {Http} http perform http request
      * @param {APIService} apiService
-     * @param {MatSnackBar} snackBar
+     * @param {MatSnackBar} snackBar show material snackbar message
      * @memberof WorkingHourApiService
      */
     constructor(public http: Http, private apiService: APIService, public snackBar: MatSnackBar) {

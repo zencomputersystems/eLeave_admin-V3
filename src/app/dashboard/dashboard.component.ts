@@ -134,7 +134,7 @@ export class DashboardComponent implements OnInit {
    *Creates an instance of DashboardComponent.
    * @param {MenuController} menu
    * @param {DashboardApiService} dashboardAPI
-   * @param {MatDialog} dialog
+   * @param {MatDialog} dialog open material dialog
    * @memberof DashboardComponent
    */
   constructor(private menu: MenuController, private dashboardAPI: DashboardApiService, public dialog: MatDialog) {

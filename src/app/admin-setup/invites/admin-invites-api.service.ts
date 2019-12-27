@@ -16,8 +16,9 @@ export class AdminInvitesApiService {
 
     /**
      *Creates an instance of AdminInvitesApiService.
-     * @param {APIService} apiService
-     * @param {MatSnackBar} snackBar
+     * @param {APIService} apiService main url from server
+     * @param {MatDialog} popUp material dialog
+     * @param {MenuController} menu ionic menu controller
      * @memberof AdminInvitesApiService
      */
     constructor(public apiService: APIService, public popUp: MatDialog, public menu: MenuController) { }

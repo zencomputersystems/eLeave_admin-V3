@@ -16,7 +16,7 @@ export class LeaveEntitlementByBatchApiService {
 
     /**
      *Creates an instance of LeaveEntitlementByBatchApiService.
-     * @param {Http} http
+     * @param {Http} http to perform http request
      * @param {APIService} apiService
      * @memberof LeaveEntitlementByBatchApiService
      */

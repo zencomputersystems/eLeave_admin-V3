@@ -29,7 +29,7 @@ export class APIService {
 
     /**
      *Creates an instance of APIService.
-     * @param {Http} http
+     * @param {Http} http perform http request
      * @param {LocalStorageService} local
      * @param {AuthService} auth
      * @memberof APIService
@@ -172,6 +172,12 @@ export class APIService {
         return this.getApiWithId('/api/admin/master/', item);
     }
 
+    /**
+     * upload file to azure
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof APIService
+     */
     post_file(data): Observable<any> {
         this.headerAuthorization();
         return this.postApi(data, '/api/azure/upload');

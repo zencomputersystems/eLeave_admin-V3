@@ -25,8 +25,8 @@ export class LeaveApiService {
 
     /**
      *Creates an instance of LeaveApiService.
-     * @param {Http} http
-     * @memberof LeaveApiService
+     * @param {Http} http perform http request
+     * @memberof LeaveApiService show material snackbar message
      */
     constructor(public http: Http, private apiService: APIService, public snackBar: MatSnackBar) {
     }
