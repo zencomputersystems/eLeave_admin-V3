@@ -94,6 +94,10 @@ export class WorkingHourComponent implements OnInit, OnChanges {
         })
     }
 
+    /**
+     * initial method to get working hour details
+     * @memberof WorkingHourComponent
+     */
     async ngOnInit() {
         let items = await this.workingHourAPI.get_working_hours_profile_list().toPromise();
         this._data = await this.workingHourAPI.get_working_hours_details(items[0].working_hours_guid).toPromise();

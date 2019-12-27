@@ -317,8 +317,6 @@ export class EmployeeSetupComponent implements OnInit {
      */
     public showLessDepartment: boolean = false;
 
-    public data: any;
-
     /**
      * selected company guid
      * @private

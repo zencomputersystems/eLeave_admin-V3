@@ -23,9 +23,9 @@ export class DashboardComponent implements OnInit {
      * @type {boolean}
      * @memberof DashboardComponent
      */
-    @HostBinding('class.menuOverlay') menuOpen: boolean = false;
+  @HostBinding('class.menuOverlay') menuOpen: boolean = false;
 
-  /*
+  /**
    * show/hide row content in dashboard
    * @type {boolean}
    * @memberof DashboardComponent
@@ -40,17 +40,17 @@ export class DashboardComponent implements OnInit {
   public showSpinner: boolean = true;
 
   /**
-     * upcoming holiday list
-     * @type {*}
-     * @memberof DashboardComponent
-     */
+   * upcoming holiday list
+   * @type {*}
+   * @memberof DashboardComponent
+   */
   public holidays: any;
 
   /**
-     * announcements list
-     * @type {*}
-     * @memberof DashboardComponent
-     */
+   * announcements list
+   * @type {*}
+   * @memberof DashboardComponent
+   */
   public announcements: any;
 
   /**
@@ -68,10 +68,10 @@ export class DashboardComponent implements OnInit {
   public leaver: any;
 
   /**
-     * show all holiday 
-     * @type {boolean}
-     * @memberof DashboardComponent
-     */
+   * show all holiday 
+   * @type {boolean}
+   * @memberof DashboardComponent
+   */
   public showall: boolean = false;
 
   /**
@@ -96,10 +96,10 @@ export class DashboardComponent implements OnInit {
   public viewLessAnnouncement: boolean = false;
 
   /**
-     * task list
-     * @type {*}
-     * @memberof DashboardComponent
-     */
+   * task list
+   * @type {*}
+   * @memberof DashboardComponent
+   */
   public tasks: any;
 
   /**
@@ -153,11 +153,11 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
-     * get day of the search Date
-     * @param {Date} date
-     * @returns
-     * @memberof DashboardComponent
-     */
+   * get day of the search Date
+   * @param {Date} date
+   * @returns
+   * @memberof DashboardComponent
+   */
   getDayFromDate(date: Date) {
     const weekdays = new Array(
       "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
@@ -167,9 +167,9 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
-     * get holiday list from endpoint
-     * @memberof DashboardComponent
-     */
+   * get holiday list from endpoint
+   * @memberof DashboardComponent
+   */
   async getHolidayList() {
     let details = await this.dashboardAPI.get_upcoming_holidays().toPromise();
     this.holidays = details;
@@ -200,9 +200,9 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
-    * get pending task list
-    * @memberof DashboardComponent
-    */
+  * get pending task list
+  * @memberof DashboardComponent
+  */
   get_task_list() {
     this.dashboardAPI.get_task_list().subscribe(data => {
       this.tasks = data;
@@ -228,10 +228,10 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
-     * method to approve clicked leave transaction GUID
-     * @param {string} leaveGUID
-     * @memberof DashboardComponent
-     */
+   * method to approve clicked leave transaction GUID
+   * @param {string} leaveGUID
+   * @memberof DashboardComponent
+   */
   approveLeave(leaveGUID: string) {
     this.dashboardAPI.post_approve_list({ "id": leaveGUID }).subscribe(response => {
       this.get_task_list();

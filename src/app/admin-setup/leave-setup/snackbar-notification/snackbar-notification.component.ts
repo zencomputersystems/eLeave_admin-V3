@@ -15,7 +15,7 @@ export class SnackbarNotificationComponent {
 
   /**
    *Creates an instance of SnackbarNotificationComponent.
-   * @param {*} data
+   * @param {*} data get data from inject component
    * @memberof SnackbarNotificationComponent
    */
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {
