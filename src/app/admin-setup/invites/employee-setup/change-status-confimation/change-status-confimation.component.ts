@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AdminInvitesApiService } from '../../admin-invites-api.service';
+import { RoleApiService } from 'src/app/admin-setup/role-management/role-api.service';
 
 /**
  * pop up dialog for status changed confirmation
@@ -55,10 +56,11 @@ export class ChangeStatusConfimationComponent implements OnInit {
    * @param {MatDialogRef<ChangeStatusConfimationComponent>} dialog reference to a dialog opened
    * @param {*} data access data from inject component
    * @param {AdminInvitesApiService} API
+   * @param {RoleApiService} roleAPI
    * @memberof ChangeStatusConfimationComponent
    */
   constructor(public dialog: MatDialogRef<ChangeStatusConfimationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private API: AdminInvitesApiService) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private API: AdminInvitesApiService, private roleAPI: RoleApiService) { }
 
   /**
    * initial method
@@ -66,8 +68,8 @@ export class ChangeStatusConfimationComponent implements OnInit {
    */
   async ngOnInit() {
     if (this.data.userId != undefined) {
-      this.userProfile = await this.API.get_user_profile_details(this.data.userId).toPromise();
-      let roleList = await this.API.get_role_profile_list().toPromise();
+      this.userProfile = await this.API.apiService.get_user_profile_details(this.data.userId).toPromise();
+      let roleList = await this.roleAPI.get_role_profile_list().toPromise();
       this.getUser(roleList, this.userProfile);
 
       let workingList = await this.API.get_working_hour_profile_list().toPromise();

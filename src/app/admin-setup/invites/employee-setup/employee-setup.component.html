@@ -28,9 +28,11 @@
             </div>
             <div>
                 <app-add-one-employee *ngIf="individualButton === true" [individual]="individualButton === true"
-                    [disabledEditMode]="false" (closeMenu)="eventOutput($event)">
+                    [disabledEditMode]="false" (closeMenu)="inviteAPI.menu.close('addNewEmployeeDetails');leaveApi.openSnackBar('New employee profile was created successfully', true);
+                    endPoint();">
                 </app-add-one-employee>
-                <app-bulk-import *ngIf="bulkButton === true" (closeMenu)="eventOutput($event)"></app-bulk-import>
+                <app-bulk-import *ngIf="bulkButton === true" (closeMenu)="inviteAPI.menu.close('addNewEmployeeDetails');leaveApi.openSnackBar('New employee profiles was created successfully', true);
+                endPoint();"></app-bulk-import>
             </div>
         </div>
     </ion-content>
@@ -187,7 +189,7 @@
                     Mode: {{mode}}</p>
                 <div style="display: inline-block;position: absolute;margin-top: 12px;">
                     <ion-toggle class="toggleButton" mode="ios" style="--background: #a5a4bf;" color="secondary"
-                        (ionChange)="toggleMode($event)">
+                        (ionChange)="toggleMode($event)" [checked]="mode === 'ON'">
                     </ion-toggle>
                 </div>
             </div>

@@ -349,7 +349,7 @@ export class EmployeeSetupComponent implements OnInit {
      */
     async ngOnInit() {
         this.endPoint();
-        let roleData = await this.inviteAPI.get_role_profile_list().toPromise()
+        let roleData = await this.roleAPI.get_role_profile_list().toPromise()
         this.roleList = roleData;
         let calendarData = await this.inviteAPI.get_calendar_profile_list().toPromise();
         this.calendarList = calendarData;
@@ -374,7 +374,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     async endPoint() {
-        let data = await this.inviteAPI.get_user_profile_list().toPromise();
+        let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
         this.showSpinner = false;
         this.list = data;
         this.config = {
@@ -432,7 +432,7 @@ export class EmployeeSetupComponent implements OnInit {
                 this.dayAvailable = data[0].BALANCE_DAYS;
             }
         })
-        this.inviteAPI.get_user_profile_details(this.userId).subscribe(data => {
+        this.inviteAPI.apiService.get_user_profile_details(this.userId).subscribe(data => {
             this.calendarValue = data.calendarId;
             this.roleValue = data.roleId;
             this.workingValue = data.workingHoursId;
@@ -548,6 +548,15 @@ export class EmployeeSetupComponent implements OnInit {
             if (result === 'Activate') {
                 this.employeeStatus = 'Active';
                 this.status = true;
+                await this.inviteAPI.post_activate_user_info(this.userId).toPromise();
+                let list = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
+                this.list = list;
+                this.mode = 'ON';
+                this.showPersonal = false;
+                this.showEmploy = false;
+                this.showCalendar = true;
+                this.showRole = false;
+                this.showOthers = false;
                 this.leaveApi.openSnackBar(name + ' become Active', true);
             }
         } else {
@@ -560,11 +569,12 @@ export class EmployeeSetupComponent implements OnInit {
             if (result === 'Deactivate') {
                 this.employeeStatus = 'Inactive';
                 this.status = false;
-                this.inviteAPI.disable_user({
+                await this.inviteAPI.disable_user({
                     "user_guid": this.userId,
                     "resign_date": _moment(new Date()).format('YYYY-MM-DD'),
                 }).toPromise();
-                this.endPoint();
+                let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
+                this.list = data;
                 this.leaveApi.openSnackBar(name + ' become Inactive', true);
             }
         }
@@ -670,17 +680,6 @@ export class EmployeeSetupComponent implements OnInit {
     }
 
     /**
-     * close menu 
-     * @param {*} event
-     * @memberof EmployeeSetupComponent
-     */
-    eventOutput(event) {
-        this.inviteAPI.menu.close('addNewEmployeeDetails');
-        this.leaveApi.openSnackBar('New employee profile was created successfully', true);
-        this.endPoint();
-    }
-
-    /**
      * clicked on comapany checkbox
      * @param {*} index
      * @memberof EmployeeSetupComponent
@@ -717,7 +716,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     async filterValue() {
-        let data = await this.inviteAPI.get_user_profile_list().toPromise();
+        let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
         this.list = data;
 
         if (this.active == true) {

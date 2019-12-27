@@ -413,12 +413,24 @@ export class AddOneEmployeeComponent implements OnInit {
             "COST_CENTRE": this.costCentreCtrl.value,
             "JOIN_DATE": _moment(this.invitationForm.controls.joinDate.value).format('YYYY-MM-DD')
         }]
+        this.create_user(data);
+    }
+
+    /**
+     * post new user
+     * @param {*} data
+     * @memberof AddOneEmployeeComponent
+     */
+    create_user(data) {
         this.adminInvite.post_userimport(data).subscribe(data => {
             this.showSmallSpinner = false;
             this.closeMenu.emit(true);
-            // this.dialogAddOneEmployee.close();
+            this.invitationForm.reset();
+            this.branchCtrl.reset();
+            this.divisionCtrl.reset();
+            this.departmentCtrl.reset();
+            this.costCentreCtrl.reset();
         })
-
     }
 
 }

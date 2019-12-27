@@ -55,8 +55,6 @@ export class AdminInvitesApiService {
     delete_user(id: string): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.deleteApi(id, '/api/users/');
-        // return this.http.delete(this.apiService.baseUrl + '/api/users/' + id, { headers: this.apiService.headers })
-        //     .pipe(map((res: Response) => res.json()));
     }
 
     /**
@@ -68,26 +66,6 @@ export class AdminInvitesApiService {
     disable_user(data: any): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.postApi(data, '/api/users/disable');
-    }
-
-    /**
-     * get user list from api service
-     * @returns {Observable<any>}
-     * @memberof AdminInvitesApiService
-     */
-    get_user_profile_list(): Observable<any> {
-        return this.apiService.get_user_profile_list();
-    }
-
-    /**
-     * get requested user profile 
-     * @param {string} guid
-     * @returns {Observable<any>}
-     * @memberof AdminInvitesApiService
-     */
-    get_user_profile_details(guid: string): Observable<any> {
-        this.apiService.headerAuthorization();
-        return this.apiService.getApiWithId('/api/userprofile/', guid);
     }
 
     /**
@@ -128,13 +106,14 @@ export class AdminInvitesApiService {
     }
 
     /**
-     * get role profile list
+     * activate the inactive user
+     * @param {string} userId
      * @returns {Observable<any>}
      * @memberof AdminInvitesApiService
      */
-    get_role_profile_list(): Observable<any> {
+    post_activate_user_info(userId: string): Observable<any> {
         this.apiService.headerAuthorization();
-        return this.apiService.getApi('/api/admin/role/role-profile');
+        return this.apiService.postApi(userId, '/api/admin/user-info-details/activate/' + userId);
     }
 
     /**
