@@ -111,9 +111,9 @@ export class AdminInvitesApiService {
      * @returns {Observable<any>}
      * @memberof AdminInvitesApiService
      */
-    post_activate_user_info(userId: string): Observable<any> {
+    post_activate_user_info(userId: string, data: any): Observable<any> {
         this.apiService.headerAuthorization();
-        return this.apiService.postApi(userId, '/api/admin/user-info-details/activate/' + userId);
+        return this.apiService.postApi(data, '/api/admin/user-info-details/activate/' + userId);
     }
 
     /**

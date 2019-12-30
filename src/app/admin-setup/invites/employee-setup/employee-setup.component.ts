@@ -58,6 +58,13 @@ export class EmployeeSetupComponent implements OnInit {
     public mode: string = 'OFF';
 
     /**
+     * mode is checked or not
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public modeValue: boolean = false;
+
+    /**
      * user info personal-details
      * @type {*}
      * @memberof EmployeeSetupComponent
@@ -517,6 +524,7 @@ export class EmployeeSetupComponent implements OnInit {
     toggleMode(evt) {
         if (evt.detail.checked === true) {
             this.mode = 'ON';
+            this.modeValue = true;
             this.inviteAPI.popUp.open(EditModeDialogComponent, {
                 data: 'employee',
                 height: "333.3px",
@@ -524,6 +532,7 @@ export class EmployeeSetupComponent implements OnInit {
             });
         } else {
             this.mode = 'OFF';
+            this.modeValue = false;
             this.patchPersonalDetails();
             // this.patchEmploymentDetails();
             this.assignProfile();
@@ -548,15 +557,16 @@ export class EmployeeSetupComponent implements OnInit {
             if (result === 'Activate') {
                 this.employeeStatus = 'Active';
                 this.status = true;
-                await this.inviteAPI.post_activate_user_info(this.userId).toPromise();
+                let res = await this.inviteAPI.post_activate_user_info(this.userId, {
+                    "roleProfileId": this.roleValue,
+                    "workingHoursId": this.workingValue,
+                    "calendarId": this.calendarValue
+                }).toPromise();
                 let list = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
                 this.list = list;
+                this.getUserId(this.list[this.clickedIndex], this.clickedIndex, this.config.currentPage);
                 this.mode = 'ON';
-                this.showPersonal = false;
-                this.showEmploy = false;
-                this.showCalendar = true;
-                this.showRole = false;
-                this.showOthers = false;
+                this.modeValue = true;
                 this.leaveApi.openSnackBar(name + ' become Active', true);
             }
         } else {
