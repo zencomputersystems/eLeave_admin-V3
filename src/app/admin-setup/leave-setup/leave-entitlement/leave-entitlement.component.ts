@@ -157,7 +157,7 @@ export class LeaveEntitlementComponent implements OnInit {
    * list of new entitlement profile
    * @memberof LeaveEntitlementComponent
    */
-  public newProfileList = [{ 'name': 'Default', 'description': 'Default Leave Entitlement' }];
+  public newProfileList = { 'name': 'Default', 'description': 'Default Leave Entitlement' };
 
   /**
    * edit leave entitlement profile list
@@ -248,13 +248,13 @@ export class LeaveEntitlementComponent implements OnInit {
    * @param {string} menuName
    * @memberof LeaveEntitlementComponent
    */
-  addNewProfileItem(menuName: string) {
+  addNewProfileItem() {
     const obj = { 'name': '', 'description': '' };
-    if (menuName == 'new') {
-      this.newProfileList.push(obj);
-    } else {
-      this.newEditProfileList.push(obj);
-    }
+    // if (menuName == 'new') {
+    //   this.newProfileList.push(obj);
+    // } else {
+    this.newEditProfileList.push(obj);
+    // }
   }
 
   /**
@@ -263,12 +263,12 @@ export class LeaveEntitlementComponent implements OnInit {
    * @param {number} index
    * @memberof LeaveEntitlementComponent
    */
-  deleteProfile(menu: string, index: number) {
-    if (menu == 'new') {
-      this.newProfileList.splice(index, 1);
-    } else {
-      this.newEditProfileList.splice(index, 1);
-    }
+  deleteProfile(index: number) {
+    // if (menu == 'new') {
+    //   this.newProfileList.splice(index, 1);
+    // } else {
+    this.newEditProfileList.splice(index, 1);
+    // }
   }
 
   /**
@@ -408,18 +408,18 @@ export class LeaveEntitlementComponent implements OnInit {
    * @memberof LeaveEntitlementComponent
    */
   async newTypeEntitlement(data) {
-    for (let i = 0; i < this.newProfileList.length; i++) {
-      data = entitlementData;
-      data.leavetype_id = this.newLeaveTypeId;
-      data.code = this.newProfileList[i].name;
-      data.description = this.newProfileList[i].description;
-      await this.entitlementApi.post_leavetype_entitlement(data).toPromise();
-    }
+    // for (let i = 0; i < this.newProfileList.length; i++) {
+    data = entitlementData;
+    data.leavetype_id = this.newLeaveTypeId;
+    data.code = this.newProfileList.name;
+    data.description = this.newProfileList.description;
+    await this.entitlementApi.post_leavetype_entitlement(data).toPromise();
+    // }
     this.ngOnInit();
     this.newLeaveTypeId = '';
     this.abbreviation.reset();
     this.leaveTypeName.reset();
-    this.newProfileList = [{ 'name': 'Default', 'description': 'Default Leave Entitlement' }];
+    this.newProfileList = { 'name': 'Default', 'description': 'Default Leave Entitlement' };
     this.leaveApi.openSnackBar('New leave entitlement profile was added', true);
     this.menu.close('createNewTypeDetails');
   }
