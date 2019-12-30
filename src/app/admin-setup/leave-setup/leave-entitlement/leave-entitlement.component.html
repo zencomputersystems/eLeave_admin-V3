@@ -231,7 +231,7 @@
                   </div>
                 </ion-col>
                 <ion-col align-self-center style="text-align: right;padding-right: 20px;">
-                  <img src="assets/icon/leave_setup/icon_trash@3x.png" (click)="deleteProfile(i)"
+                  <img src="assets/icon/leave_setup/icon_trash@3x.png" (click)="AddDeleteProfile('delete',i)"
                     style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;">
                 </ion-col>
                 <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;padding-left: 15px;
@@ -239,7 +239,7 @@
                 </ion-item>
               </ion-row>
             </ng-container>
-            <div style="margin: 15px;margin-top: 0;"><img (click)="addNewProfileItem()"
+            <div style="margin: 15px;margin-top: 0;"><img (click)="AddDeleteProfile('add')"
                 style="display: inline-block;cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
                 src="assets/icon/leave_setup/icon_request@3x.png">
               <p style="color: #808495;font-size: 11px;font-weight: bold;

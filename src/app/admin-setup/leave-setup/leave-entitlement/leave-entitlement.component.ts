@@ -194,11 +194,9 @@ export class LeaveEntitlementComponent implements OnInit {
     let data = await this.leaveApi.get_leavetype_entitlement().toPromise();
     let grouppedId = require('lodash').groupBy(data, 'leaveTypeId');
     this.leaveEntitlement = Object.values(grouppedId);
-    let ids = Object.keys(grouppedId);
-    for (let i = 0; i < ids.length; i++) {
+    for (let i = 0; i < this.leaveEntitlement.length; i++) {
       this.leaveContent.push(false);
-      let details = await this.entitlementApi.get_admin_leavetype_id(ids[i]).toPromise();
-      this.leaveTypes.push({ "leaveTypeId": details.LEAVE_TYPE_GUID, "title": details.ABBR + ' - ' + details.CODE, "ABBR": details.ABBR, "name": details.CODE });
+      this.leaveTypes.push({ "leaveTypeId": this.leaveEntitlement[i][0].leaveTypeId, "title": this.leaveEntitlement[i][0].leaveTypeAbbr + ' - ' + this.leaveEntitlement[i][0].leaveType, "ABBR": this.leaveEntitlement[i][0].leaveTypeAbbr, "name": this.leaveEntitlement[i][0].leaveType });
     }
     this.leaveContent.splice(0, 1, true);
     this.getProfileDetails(data[0].leaveEntitlementId);
@@ -243,32 +241,19 @@ export class LeaveEntitlementComponent implements OnInit {
     this.leaveContent.splice(index, 1, true);
   }
 
-  /** 
-   * add new name & description input form
-   * @param {string} menuName
-   * @memberof LeaveEntitlementComponent
-   */
-  addNewProfileItem() {
-    const obj = { 'name': '', 'description': '' };
-    // if (menuName == 'new') {
-    //   this.newProfileList.push(obj);
-    // } else {
-    this.newEditProfileList.push(obj);
-    // }
-  }
-
   /**
    * delete name & description input form
    * @param {string} menu
    * @param {number} index
    * @memberof LeaveEntitlementComponent
    */
-  deleteProfile(index: number) {
-    // if (menu == 'new') {
-    //   this.newProfileList.splice(index, 1);
-    // } else {
-    this.newEditProfileList.splice(index, 1);
-    // }
+  AddDeleteProfile(actionName: string, index?: number) {
+    if (actionName == 'add') {
+      const obj = { 'name': '', 'description': '' };
+      this.newEditProfileList.push(obj);
+    } else {
+      this.newEditProfileList.splice(index, 1);
+    }
   }
 
   /**
@@ -387,7 +372,7 @@ export class LeaveEntitlementComponent implements OnInit {
     } else {
       let value = await this.entitlementApi.get_leavetype_entitlement_id(this.cloneProfileId).toPromise();
       data = {
-        "code": value.LEAVE_ENTITLEMENT_CODE,
+        "code": value.LEAVE_ENTITLEMENT_CODE + ' (copy)',
         "description": value.DESCRIPTION,
         "leavetype_id": this.entitlementTypeNew,
         "property": value.PROPERTIES_XML
@@ -408,13 +393,11 @@ export class LeaveEntitlementComponent implements OnInit {
    * @memberof LeaveEntitlementComponent
    */
   async newTypeEntitlement(data) {
-    // for (let i = 0; i < this.newProfileList.length; i++) {
     data = entitlementData;
     data.leavetype_id = this.newLeaveTypeId;
     data.code = this.newProfileList.name;
     data.description = this.newProfileList.description;
     await this.entitlementApi.post_leavetype_entitlement(data).toPromise();
-    // }
     this.ngOnInit();
     this.newLeaveTypeId = '';
     this.abbreviation.reset();
