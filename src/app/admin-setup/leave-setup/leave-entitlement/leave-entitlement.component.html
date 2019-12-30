@@ -93,7 +93,8 @@
         <div style="text-align: center;">
           <ion-button
             style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
-            color="primary" (click)="createProfile('new')" [disabled]="newLeaveTypeId == undefined">
+            color="primary" (click)="createProfile('new'); clickedIndex=0;clickedHeaderIndex=0"
+            [disabled]="newLeaveTypeId == undefined">
             Add
           </ion-button>
         </div>

@@ -46,14 +46,14 @@ export class LeaveEntitlementComponent implements OnInit {
    * @type {number}
    * @memberof LeaveEntitlementComponent
    */
-  public clickedIndex: number;
+  public clickedIndex: number = 0;
 
   /**
    * clicked index of leave type header
    * @type {number}
    * @memberof LeaveEntitlementComponent
    */
-  public clickedHeaderIndex: number;
+  public clickedHeaderIndex: number = 0;
 
   /**
    * show/hidden of content leave entitlement
@@ -188,9 +188,7 @@ export class LeaveEntitlementComponent implements OnInit {
    * @memberof LeaveEntitlementComponent
    */
   async ngOnInit() {
-    this.leaveTypes = [];
-    this.clickedIndex = 0;
-    this.clickedHeaderIndex = 0;
+    this.leaveTypes = []; this.leaveContent = [];
     let data = await this.leaveApi.get_leavetype_entitlement().toPromise();
     let grouppedId = require('lodash').groupBy(data, 'leaveTypeId');
     this.leaveEntitlement = Object.values(grouppedId);
@@ -198,8 +196,8 @@ export class LeaveEntitlementComponent implements OnInit {
       this.leaveContent.push(false);
       this.leaveTypes.push({ "leaveTypeId": this.leaveEntitlement[i][0].leaveTypeId, "title": this.leaveEntitlement[i][0].leaveTypeAbbr + ' - ' + this.leaveEntitlement[i][0].leaveType, "ABBR": this.leaveEntitlement[i][0].leaveTypeAbbr, "name": this.leaveEntitlement[i][0].leaveType });
     }
-    this.leaveContent.splice(0, 1, true);
-    this.getProfileDetails(data[0].leaveEntitlementId);
+    this.leaveContent.splice(this.clickedHeaderIndex, 1, true);
+    this.getProfileDetails(data[this.clickedIndex].leaveEntitlementId);
   }
 
   /**
@@ -270,7 +268,6 @@ export class LeaveEntitlementComponent implements OnInit {
     }
     this.patchProfile();
     this.addEditProfile();
-    this.ngOnInit();
   }
 
   /**
@@ -278,6 +275,7 @@ export class LeaveEntitlementComponent implements OnInit {
    * @memberof LeaveEntitlementComponent
    */
   async patchProfile() {
+    this.menu.close('editLeaveTypeDetails');
     for (let j = 0; j < this.getEntitlementbyType.length; j++) {
       let XMLDetails = await this.entitlementApi.get_leavetype_entitlement_id(this.getEntitlementbyType[j].leaveEntitlementId).toPromise();
       const data = {
@@ -288,7 +286,7 @@ export class LeaveEntitlementComponent implements OnInit {
       };
       this.entitlementApi.patch_leavetype_entitlement(data).subscribe(data => {
         this.leaveApi.openSnackBar('Leave type & entitlement was saved', true);
-        this.menu.close('editLeaveTypeDetails');
+        this.ngOnInit();
       })
     }
   }
@@ -314,6 +312,7 @@ export class LeaveEntitlementComponent implements OnInit {
       "id": this.entitlementTypeNew
     }
     await this.entitlementApi.patch_leavetype(data).toPromise();
+    this.ngOnInit();
   }
 
   /**
@@ -381,7 +380,6 @@ export class LeaveEntitlementComponent implements OnInit {
         this.ngOnInit();
         this.newLeaveTypeId = '';
         this.leaveApi.openSnackBar('New leave entitlement profile was added', true);
-        this.menu.close('createNewTypeDetails');
         this.menu.close('editLeaveTypeDetails');
       })
     }
