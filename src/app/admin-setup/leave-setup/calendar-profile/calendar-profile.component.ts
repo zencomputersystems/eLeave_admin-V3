@@ -326,8 +326,8 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     async getDragUserId(i: number) {
-        if (this.checkNameExist(this._userList, this.assignedNames[i].FULLNAME) != 0) {
-            const index: number = this.checkNameExist(this._userList, this.assignedNames[i].FULLNAME);
+        if (this.checkNameExist(this._userList, this.assignedNames[i].fullname) != 0) {
+            const index: number = this.checkNameExist(this._userList, this.assignedNames[i].fullname);
             if (!this._employeeList.includes(this._userList[index].userId)) {
                 await this._employeeList.push(this._userList[index].userId);
             }
@@ -358,7 +358,7 @@ export class CalendarProfileComponent implements OnInit {
      */
     onDrop(event, list) {
         for (let i = 0; i < this.assignedNames.length; i++) {
-            if (event.data === this.assignedNames[i].FULLNAME) {
+            if (event.data === this.assignedNames[i].fullname) {
                 this.getDragUserId(i);
                 this.calendarProfileAPI.patch_assign_calendar_profile({
                     "user_guid": this._employeeList,
@@ -463,7 +463,7 @@ export class CalendarProfileComponent implements OnInit {
         this.calendarProfileAPI.get_assigned_employee_list(this.profileList[index].calendar_guid).subscribe(namelist => {
             this.assignedNames = namelist;
             for (let i = 0; i < this.assignedNames.length; i++) {
-                this.assignedNames[i]["content"] = this.assignedNames[i].FULLNAME;
+                this.assignedNames[i]["content"] = this.assignedNames[i].fullname;
                 this.assignedNames[i]["effectAllowed"] = "copyMove";
                 this.assignedNames[i]["disable"] = false;
                 this.assignedNames[i]["handle"] = true;

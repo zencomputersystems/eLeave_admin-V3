@@ -136,7 +136,7 @@ export class WorkingHourListComponent implements OnInit {
         this.workingHrAPI.get_assigned_working_profile_user(list.working_hours_guid).subscribe(response => {
             this.employeeList = response;
             for (let j = 0; j < this.employeeList.length; j++) {
-                this.employeeList[j]["content"] = this.employeeList[j].FULLNAME;
+                this.employeeList[j]["content"] = this.employeeList[j].fullname;
                 this.employeeList[j]["effectAllowed"] = "move";
                 this.employeeList[j]["handle"] = true;
                 this.employeeList[j]["disable"] = false;
@@ -172,7 +172,7 @@ export class WorkingHourListComponent implements OnInit {
      */
     dropEvent(event, item) {
         for (let i = 0; i < this.employeeList.length; i++) {
-            if (event.data === this.employeeList[i].FULLNAME) {
+            if (event.data === this.employeeList[i].fullname) {
                 this.draggedUser(i);
                 this.workingHrAPI.patch_user_working_hours({
                     "user_guid": this._droppedUser,
@@ -206,8 +206,8 @@ export class WorkingHourListComponent implements OnInit {
      * @memberof WorkingHourListComponent
      */
     async draggedUser(i: number) {
-        if (this.checkName(this._users, this.employeeList[i].FULLNAME) != 0) {
-            const indexes = this.checkName(this._users, this.employeeList[i].FULLNAME);
+        if (this.checkName(this._users, this.employeeList[i].fullname) != 0) {
+            const indexes = this.checkName(this._users, this.employeeList[i].fullname);
             if (!this._droppedUser.includes(this._users[indexes].userId)) {
                 await this._droppedUser.push(this._users[indexes].userId);
             }

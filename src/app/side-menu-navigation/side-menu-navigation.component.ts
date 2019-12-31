@@ -28,8 +28,9 @@ export interface ISideMenu {
 
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { APIService } from 'src/services/shared-service/api.service';
+import { filter } from 'rxjs/operators';
 /**
  * Side Menu Navigation Component
  * @export
@@ -157,7 +158,13 @@ export class SideMenuNavigationComponent implements OnInit {
    */
   constructor(private menu: MenuController, private router: Router,
     private apiService: APIService
-  ) { }
+  ) {
+    router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.getRoute(event.urlAfterRedirects);
+      });
+  }
 
   /**
    * This method used to get initial value from personal details API json data
@@ -166,18 +173,26 @@ export class SideMenuNavigationComponent implements OnInit {
    * @memberof SideMenuNavigationComponent
    */
   ngOnInit() {
-    if (this.router.url.split("/").length == 4) {
-      const url = this.router.url.split('/');
-      const lastSegment = url.pop();
-      this.activeUrl(url.join('/'));
-    } else {
-      this.activeUrl(this.router.url);
-    }
-
+    this.getRoute(this.router.url);
     this.openAtBeginning();
     this.apiService.get_personal_details().subscribe(data => {
       this.list = data;
     });
+  }
+
+  /**
+   * get route to highlight active route
+   * @param {*} URL
+   * @memberof SideMenuNavigationComponent
+   */
+  getRoute(URL) {
+    if (URL.split("/").length == 4) {
+      const url = URL.split('/');
+      const lastSegment = url.pop();
+      this.activeUrl(url.join('/'));
+    } else {
+      this.activeUrl(URL);
+    }
   }
 
   /**

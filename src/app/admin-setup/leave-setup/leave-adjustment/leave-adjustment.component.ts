@@ -385,6 +385,7 @@ export class LeaveAdjustmentComponent implements OnInit {
             this.filteredUserItems.forEach(element => {
                 element.isChecked = false;
             });
+            this.enableDisableSubmitButton();
         });
     }
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { LeaveEntitlementByBatchApiService } from './leave-entitlement-by-batch-api.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LeaveApiService } from '../leave-api.service';
-import { SnackbarNotificationComponent } from '../snackbar-notification/snackbar-notification.component';
 
 /**
  * assign leave entitlement according leave type
@@ -114,6 +113,13 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
      * @memberof LeaveEntitlementByBatchComponent
      */
     public showSelectToView: boolean = true;
+
+    /**
+     * filtered entitlement by leave type guid
+     * @type {*}
+     * @memberof LeaveEntitlementByBatchComponent
+     */
+    public filteredEntitlement: any;
 
     /**
      * selected user from filtered user list
@@ -304,6 +310,21 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
         });
     }
 
+    /**
+     * get leavetype entitlement by leavetype guid
+     * @param {string} leaveTypeGuid
+     * @memberof LeaveEntitlementByBatchComponent
+     */
+    getLeaveType(leaveTypeGuid: string) {
+        this.filteredEntitlement = [];
+        for (let i = 0; i < this.entitlementList.length; i++) {
+            if (this.entitlementList[i].leaveTypeId === leaveTypeGuid) {
+                this.filteredEntitlement.push(this.entitlementList[i]);
+            }
+        }
+
+    }
+
 
     /**
      * post leave entitlement by batch
@@ -318,26 +339,15 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
             "leaveEntitlementId": this.entitlementBatch.controls.entitlement_code.value
         };
         this.leaveEntitlementAPI.post_leave_entitlement(body).subscribe(response => {
-            this.openMsg('You have submitted successfully', true);
+            this.leaveAPI.openSnackBar('You have submitted successfully', true);
             this.showSmallSpinner = false;
             this.filteredUser = [];
             this._selected_User = [];
+            this.filteredEntitlement = [];
             this.filteredUser.forEach(element => {
                 element.isChecked = false;
             });
-        });
-    }
-
-    /**
-     * show pop up snackbar
-     * @param {string} popUpText
-     * @memberof LeaveAdjustmentPage
-     */
-    openMsg(popUpText: string, value: boolean) {
-        this.leaveAPI.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 2000,
-            verticalPosition: "top",
-            data: { message: popUpText, response: value }
+            this.checkEnableDisableButton();
         });
     }
 

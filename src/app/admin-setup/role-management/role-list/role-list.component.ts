@@ -181,7 +181,7 @@ export class RoleListComponent implements OnInit {
      */
     onDropped(evt, roleItem) {
         for (let i = 0; i < this.assignedNameList.length; i++) {
-            if (evt.data === this.assignedNameList[i].FULLNAME) {
+            if (evt.data === this.assignedNameList[i].fullname) {
                 this.draggedUserId(i);
                 this.roleAPi.patch_user_profile({
                     "user_guid": this._filteredList,
@@ -201,8 +201,8 @@ export class RoleListComponent implements OnInit {
      * @memberof RoleListComponent
      */
     async draggedUserId(i: number) {
-        if (this.checkDuplicateName(this._userList, this.assignedNameList[i].FULLNAME) != 0) {
-            const indexes: number = this.checkDuplicateName(this._userList, this.assignedNameList[i].FULLNAME);
+        if (this.checkDuplicateName(this._userList, this.assignedNameList[i].fullname) != 0) {
+            const indexes: number = this.checkDuplicateName(this._userList, this.assignedNameList[i].fullname);
             if (!this._filteredList.includes(this._userList[indexes].userId)) {
                 await this._filteredList.push(this._userList[indexes].userId);
             }
@@ -252,7 +252,7 @@ export class RoleListComponent implements OnInit {
         let list = await this.roleAPi.get_assigned_user_profile(item.role_guid).toPromise();
         this.assignedNameList = list;
         for (let j = 0; j < this.assignedNameList.length; j++) {
-            this.assignedNameList[j]["content"] = this.assignedNameList[j].FULLNAME;
+            this.assignedNameList[j]["content"] = this.assignedNameList[j].fullname;
             this.assignedNameList[j]["effectAllowed"] = "move";
             this.assignedNameList[j]["handle"] = true;
             this.assignedNameList[j]["disable"] = false;

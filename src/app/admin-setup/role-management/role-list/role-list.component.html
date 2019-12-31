@@ -254,13 +254,8 @@
                                 <ion-col align-self-center size="9" style="padding-top: 0;padding-bottom: 0;">
                                     <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                         padding-bottom: 13px;">
-                                        {{item.FULLNAME}}</p>
+                                        {{item.fullname}}</p>
                                 </ion-col>
-                                <!-- <ion-col size="3" align-self-center style="text-align: center;">
-                                    <!-- <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="showAddIcon"
-                                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;"> -->
-                                <!-- (click)="deleteEmployee(i, item.FULLNAME)" -- --
-                                </ion-col> -->
                                 <ion-item class="divider" lines="full">
                                 </ion-item>
                             </ion-row>
@@ -284,89 +279,3 @@
         </div>
     </div>
 </ion-card>
-<!-- <div class="container">
-    <div style="width: 100%; height:100%; text-align: center;" *ngIf="showSpinner">
-        <app-spinner></app-spinner>
-    </div>
-    <div class="cardContent" *ngIf="showContent">
-        <ion-card-content style="padding-top: 5px;padding-bottom: 0;">
-            <div style="color: #057dcd;text-align: right;padding-top: 15px;">
-                <div style="display: inline-block" (click)="assignRole()">
-                    <div style="width: 16px;height: 20px;fill: #057dcd;float: left;"
-                        [inlineSVG]="'assets/icon/option/user.svg'"></div>
-                    <ion-label class="label" style="font-size: 14px; color: #057dcd;
-                margin-top: 2px;cursor: pointer;padding-left: 10px;padding-right: 10px;"
-                        (click)="showDetailPage=true;id=''">
-                        Assign role</ion-label>
-                </div>
-            </div>
-            <div style="margin-top: 2%">
-                <ion-row class="titleRow">
-                    <ion-col size="4">
-                        <ion-label class="titleLabel">ROLE NAME</ion-label>
-                        <ion-icon class="arrow" name="arrow-dropdown"
-                            (click)="sortFunction(1, -1, 'code');arrowDownName=false;" *ngIf="arrowDownName">
-                        </ion-icon>
-                        <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownName"
-                            (click)="sortFunction(-1, 1, 'code');arrowDownName=true;">
-                        </ion-icon>
-                    </ion-col>
-                    <ion-col size="5">
-                        <ion-label class="titleLabel">DESCRIPTION</ion-label>
-                        <ion-icon class="arrow" name="arrow-dropdown"
-                            (click)="sortFunction(1, -1, 'description');arrowDownDes=false;" *ngIf="arrowDownDes">
-                        </ion-icon>
-                        <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownDes"
-                            (click)="sortFunction(-1, 1, 'description');arrowDownDes=true;">
-                        </ion-icon>
-                    </ion-col>
-                    <ion-col>
-                    </ion-col>
-                </ion-row>
-                <ion-row class="detailsRow" *ngFor="let role of currentItems">
-                    <ion-col size="4">
-                        <ion-label class="colOfLeave">{{role.code}}</ion-label>
-                    </ion-col>
-                    <ion-col size="6" class="colOfLeave">{{role.description}}
-                    </ion-col>
-                    <ion-col>
-                        <div class="edit-pencil-icon" [inlineSVG]="'assets/icon/option/pencil.svg'"
-                            (click)="getRoleId(role.role_guid)"></div>
-                        <div class="trash-icon" [inlineSVG]="'assets/icon/option/trash.svg'"
-                            (click)="delete(role.role_guid, role.code)"></div>
-                    </ion-col>
-                    <ion-item class="divider" lines="full"></ion-item>
-                </ion-row>
-            </div>
-        </ion-card-content>
-    </div>
-    <div *ngIf="showContent"
-        style="padding-left: 45px;padding-right: 20px;display: inline-flex;width: 97%;min-width: 330px;">
-        <ion-button [disabled]="disabledPrevButton" fill="outline" (click)="onClickPrevPage(pageIndex-1)"
-            style="font-size: 12px;height: 30px;width: 90px;text-transform: capitalize" color="primary">
-            <div style="width: 12px;height: 12px;fill: #057dcd;float: left;cursor: pointer;"
-                [inlineSVG]="'assets/icon/option/arrow-pointing-to-left.svg'">
-            </div><span style="padding-left: 5px; padding-right: 5px">Prev</span>
-        </ion-button>
-        <div style="padding-left: 10px"></div>
-        <ion-button [disabled]="disabledNextButton"
-            style="font-size: 12px;height: 30px;width: 90px;text-transform: capitalize" color="primary"
-            (click)="onClickNextPage(pageIndex+1)">
-            <span style="padding-right: 10px;padding-left: 5px">Next</span>
-            <div style="width: 12px;height: 12px;fill: white;float: left;cursor: pointer;"
-                [inlineSVG]="'assets/icon/option/arrow-pointing-to-right.svg'">
-            </div>
-        </ion-button>
-        <div class="paginator">
-            <span style="padding-right: 10px;">Page</span>
-            <span style="border-radius: 1.5px;border: solid 0.5px #dfe3e6;padding-left: 7px;
-                    padding-right: 7px;">{{pageIndex}}</span>
-            <span style="padding-right: 10px;padding-right: 5px;padding-left: 5px;">of</span>{{sumPageIndex}}
-            <i class="fas fa-angle-left" title="Previous page"
-                style="padding-left: 10px;padding-right: 10px;font-size: 15px;cursor: pointer;"
-                (click)="onClickPrevPage(pageIndex-1)"></i>
-            <i class="fas fa-angle-right" title="Next page" style="cursor:pointer; font-size: 15px;padding-left: 10px"
-                (click)="onClickNextPage(pageIndex+1)"></i>
-        </div>
-    </div>
-</div> -->
