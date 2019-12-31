@@ -134,9 +134,6 @@
             </div>
         </div>
     </ion-card-header>
-    <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
-        <app-spinner></app-spinner>
-    </div>
     <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;">
         <div class="cardContent">
             <ion-card-content style="max-height: 100%;height: 100%;">
@@ -195,66 +192,78 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div *ngIf="filteredPendingList.length > 0" style="height: calc( 100% - 200px);overflow: auto;">
-                            <ion-row class="detailsRow" *ngFor="let item of filteredPendingList; let i=index">
-                                <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
-                                    <ion-avatar class="avatar" (mouseover)="mouseEvent(true, i, item.isChecked)"
-                                        (mouseout)="mouseEvent(false, i, item.isChecked)">
-                                        <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
-                                            [style.display]="displayCheckbox[i] ? 'none' : 'block'">
-                                        <div class="checkboxOnAvatar"
-                                            [style.display]="displayCheckbox[i] ? 'block' : 'none'">
-                                            <ion-checkbox mode="ios"
-                                                style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
-                                                [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
-                                            </ion-checkbox>
+                        <div style="height: calc( 100% - 200px);overflow: auto;">
+                            <ng-container *ngIf="!innerSpinner">
+                                <ion-row class="detailsRow" *ngFor="let item of pendingList; let i=index">
+                                    <ion-col size="1.5" align-self-center
+                                        style="text-align: center;padding-right: 30px;">
+                                        <ion-avatar class="avatar" (mouseover)="mouseEvent(true, i, item.isChecked)"
+                                            (mouseout)="mouseEvent(false, i, item.isChecked)">
+                                            <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                                                [style.display]="displayCheckbox[i] ? 'none' : 'block'">
+                                            <div class="checkboxOnAvatar"
+                                                [style.display]="displayCheckbox[i] ? 'block' : 'none'">
+                                                <ion-checkbox mode="ios"
+                                                    style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                    [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                                                </ion-checkbox>
+                                            </div>
+                                        </ion-avatar>
+                                    </ion-col>
+                                    <ion-col size="8"
+                                        style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                        <ion-label
+                                            style="opacity: 0.8;color:#43425d; font-weight: bold;;font-size: 12px;">
+                                            {{item.employeeName}}</ion-label>
+                                        <div style="display: block;padding-top: 5px;">
+                                            <div style="display: inline-block;padding-right: 20px;">
+                                                <p
+                                                    style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                    <span style="font-weight: bold;">ID:</span> {{item.staffNumber}}</p>
+                                                <p
+                                                    style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                    <span style="font-weight: bold;">Leave Type:</span>
+                                                    {{item.leaveTypeAbbr}}</p>
+                                            </div>
+                                            <div style="display: inline-block;padding-right: 20px;">
+                                                <p
+                                                    style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                    <span style="font-weight: bold;">Status:</span> {{item.status}}</p>
+                                                <p
+                                                    style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                    <span style="font-weight: bold;">Date Applied:</span>
+                                                    {{item.dateApplied | date: 'yyyy-MM-dd'}}
+                                                </p>
+                                            </div>
+                                            <div style="display: inline-block;">
+                                                <p
+                                                    style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                    <span style="font-weight: bold;">Start Date:</span>
+                                                    {{item.startDate}}
+                                                </p>
+                                                <p
+                                                    style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                    <span style="font-weight: bold;">End Date:</span> {{item.endDate}}
+                                                </p>
+                                            </div>
                                         </div>
-                                    </ion-avatar>
-                                </ion-col>
-                                <ion-col size="8" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                    <ion-label style="opacity: 0.8;color:#43425d; font-weight: bold;;font-size: 12px;">
-                                        {{item.employeeName}}</ion-label>
-                                    <div style="display: block;padding-top: 5px;">
-                                        <div style="display: inline-block;padding-right: 20px;">
-                                            <p
-                                                style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                                                <span style="font-weight: bold;">ID:</span> {{item.staffNumber}}</p>
-                                            <p
-                                                style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                                                <span style="font-weight: bold;">Leave Type:</span> {{item.ABBR}}</p>
-                                        </div>
-                                        <div style="display: inline-block;padding-right: 20px;">
-                                            <p
-                                                style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                                                <span style="font-weight: bold;">Status:</span> {{item.STATUS}}</p>
-                                            <p
-                                                style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                                                <span style="font-weight: bold;">Date Applied:</span>
-                                                {{item.CREATION_TS | date: 'yyyy-MM-dd'}}
-                                            </p>
-                                        </div>
-                                        <div style="display: inline-block;">
-                                            <p
-                                                style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                                                <span style="font-weight: bold;">Start Date:</span> {{item.START_DATE}}
-                                            </p>
-                                            <p
-                                                style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                                                <span style="font-weight: bold;">End Date:</span> {{item.END_DATE}}</p>
-                                        </div>
-                                    </div>
-                                </ion-col>
-                                <ion-col size="1.5" align-self-center class="colOfLeave"
-                                    style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                    {{item.NO_OF_DAYS}}
-                                </ion-col>
-                                <ion-col></ion-col>
-                                <ion-item lines="full" style=" --min-height: none;width: 100%;"></ion-item>
-                            </ion-row>
+                                    </ion-col>
+                                    <ion-col size="1.5" align-self-center class="colOfLeave"
+                                        style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                        {{item.noOfDays}}
+                                    </ion-col>
+                                    <ion-col></ion-col>
+                                    <ion-item lines="full" style=" --min-height: none;width: 100%;"></ion-item>
+                                </ion-row>
+                            </ng-container>
+                            <div style="width: 100%; height:100%; text-align: center; margin-top: -30px"
+                                *ngIf="innerSpinner">
+                                <app-spinner></app-spinner>
+                            </div>
                         </div>
-                        <p *ngIf="filteredPendingList.length == 0 " style="color: #a3a6b4;opacity:0.8;font-size: 12px;width: 30%;
+                        <!-- <p *ngIf="filteredPendingList.length == 0 " style="color: #a3a6b4;opacity:0.8;font-size: 12px;width: 30%;
                         margin: 0 auto;padding-top: 30px;">
-                            Nothing to view. Please search & select employee or department first. </p>
+                            Nothing to view. Please search & select employee or department first. </p> -->
                     </div>
                     <div class="selection">
                         <div
@@ -307,165 +316,3 @@
         </div>
     </div>
 </ion-card>
-<!-- <div style="margin-top: 4%;">
-    <form [formGroup]="approvalForm">
-        <div style="display: inline-block;width: 31%;">
-            <span style="padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
-                COMPANY LIST</span>
-            <mat-form-field appearance="outline"
-                style="display: block;font-size: 13px;width: 100%;color:#7a8589;padding-left: 18px;">
-                <mat-label>Please select company tenant</mat-label>
-                <mat-select formControlName="company" required>
-                    <mat-option>None</mat-option>
-                    <mat-option *ngFor="let company of companyList" [value]=company.TENANT_COMPANY_GUID
-                        (click)="selectedCompany(company.TENANT_COMPANY_GUID);enableDisableButton()">
-                        {{company.NAME}}
-                    </mat-option>
-                </mat-select>
-                <mat-error>Company tenant is <strong>required</strong></mat-error>
-            </mat-form-field>
-        </div>
-        &nbsp;&nbsp;
-        <div style="display: inline-block;width: 31%;">
-            <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
-                DEPARTMENT LIST</span>
-            <mat-form-field appearance="outline"
-                style="display: block;font-size: 13px;width: 100%;color:#7a8589;padding-left: 18px;">
-                <mat-label>Please select department</mat-label>
-                <mat-select formControlName="department" required>
-                    <mat-option>None</mat-option>
-                    <mat-option *ngFor="let department of departmentList" [value]=department.department
-                        (click)="selectedDepartment(department.department);enableDisableButton();mainCheckbox=false;indeterminate=false">
-                        {{department.department}}
-                    </mat-option>
-                </mat-select>
-                <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
-                margin-left: -50px;margin-top: -10px;"></ion-spinner>
-                <mat-error>Department is <strong>required</strong></mat-error>
-            </mat-form-field>
-        </div>
-        &nbsp;&nbsp;
-        <div style="display: inline-block;width: 31%;">
-            <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;padding-left: 18px;display: block">
-                REMARK</span>
-            <mat-form-field appearance="outline"
-                style="display: block;font-size: 13px;width: 100%;color:#7a8589;padding-left: 18px;">
-                <mat-label>Please enter remark</mat-label>
-                <input matInput formControlName="remark" required (input)="enableDisableButton()">
-                <mat-error>Remark is <strong>required</strong></mat-error>
-            </mat-form-field>
-        </div>
-
-        <div style="margin: 0 auto;padding-left: 20px;padding-right: 20px;">
-            <span style=" padding-bottom: 10px;font-size: 12px;color:#707070;display: block">STATUS</span>
-            <div style="padding-bottom: 11px;padding-top: 11px;
-        border: 1px solid var(--ion-item-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.13))));
-        border-radius: 5px;border-color: rgba(0, 0, 0, 0.12);width: 280px;margin-bottom: 40px;">
-                <mat-radio-group aria-label="Select an option" formControlName="radio" required
-                    style="padding-left: 10px;white-space: nowrap;color: #7a8589;" (change)="enableDisableButton()">
-                    <mat-radio-button value="CANCELLED">Cancel</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <mat-radio-button value="REJECTED">Reject</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <mat-radio-button value="APPROVED">Approve</mat-radio-button>
-                </mat-radio-group>
-            </div>
-        </div>
-    </form>
-
-    <div class="content" *ngIf="filteredPendingList.length > 0">
-        <ion-row class="titleRow" nowrap>
-            <ion-col size="0.7" style="padding-left: 10px;padding-right: 30px;text-overflow: initial;">
-                <ion-checkbox mode="ios" style="width: 20px; height: 20px;margin-top: 6px;" [(ngModel)]="mainCheckbox"
-                    [indeterminate]="indeterminate" (click)="mainEvent()">
-                </ion-checkbox>
-            </ion-col>
-            <ion-col size="2.5">
-                <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
-                <!-- <ion-icon class="arrow" name="arrow-dropdown" (click)="sortName(false, 1, -1)" *ngIf="arrowDownName">
-                </ion-icon>
-                <ion-icon class="arrow" name="arrow-dropup" *ngIf="!arrowDownName" (click)="sortName(true, -1, 1)">
-                </ion-icon> --
-            </ion-col>
-            <ion-col size="1.7">
-                <ion-label style="font-size: 12px;">LEAVE TYPE</ion-label>
-            </ion-col>
-            <ion-col size="1.5">
-                <ion-label style="font-size: 12px;">DATE APPLIED</ion-label>
-            </ion-col>
-            <ion-col size="1.4">
-                <ion-label style="font-size: 12px;">START DATE</ion-label>
-            </ion-col>
-            <ion-col size="1">
-                <ion-label style="font-size: 12px;">END DATE</ion-label>
-            </ion-col>
-            <ion-col size="1" style="text-align: center">
-                <ion-label style="font-size: 12px;">DAYS</ion-label>
-            </ion-col>
-            <ion-col size="1">
-                <ion-label style="font-size: 12px;">STATUS</ion-label>
-            </ion-col>
-            <ion-col size="1" style="text-align: center">
-                <ion-label style="font-size: 12px">REMARKS</ion-label>
-            </ion-col>
-        </ion-row>
-        <ion-row class="detailsRow" *ngFor="let item of filteredPendingList; let i=index">
-            <ion-col size="0.7" style="padding-left: 10px;padding-right: 30px;">
-                <ion-avatar class="avatar" (mouseover)="mouseEvent(true, i, item.isChecked)"
-                    (mouseout)="mouseEvent(false, i, item.isChecked)">
-                    <img src="assets/icon/evans.jpg" style="margin-left: -4px;"
-                        [style.display]="displayCheckbox[i] ? 'none' : 'block'">
-                    <div class="checkboxOnAvatar" [style.display]="displayCheckbox[i] ? 'block' : 'none'">
-                        <ion-checkbox mode="ios" style="width: 20px; height: 20px;position: absolute;margin-top: 7px;"
-                            [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
-                        </ion-checkbox>
-                    </div>
-                </ion-avatar>
-            </ion-col>
-            <ion-col size="2.5" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                <ion-label style="color:#057dcd; font-size: 13px;">{{item.employeeName}}</ion-label>
-            </ion-col>
-            <ion-col size="1.7" class="colOfLeave"
-                style="color: #7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                {{item.leveTypeName}}
-            </ion-col>
-            <ion-col size="1.5" class="colOfLeave"
-                style="color:#7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                {{item.CREATION_TS | date: 'yyyy-MM-dd'}}
-            </ion-col>
-            <ion-col size="1.4" class="colOfLeave"
-                style="color:#7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                {{item.START_DATE}}
-            </ion-col>
-            <ion-col size="1" class="colOfLeave"
-                style="color: #7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                {{item.END_DATE}}
-            </ion-col>
-            <ion-col size="1" class="colOfLeave"
-                style="color:#7a8589; font-size: 13px;text-align: center;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                {{item.NO_OF_DAYS}}
-            </ion-col>
-            <ion-col size="1" class="colOfLeave"
-                style="color:#7a8589; font-size: 13px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                {{item.STATUS}}
-            </ion-col>
-            <ion-col align-self-center size="1" class="colOfLeave"
-                style="color:#7a8589; font-size: 13px;text-align: center;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                {{item.REMARKS}}
-            </ion-col>
-            <ion-item class="divider" lines="full"></ion-item>
-        </ion-row>
-    </div>
-    <div *ngIf="filteredPendingList.length == 0 && showNoResult" style="width: 100%; text-align:center;padding: 10px">
-        <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
-        <p style="font-size: 20px;color:#bebebe;padding-top:10px ">No Results Found</p>
-    </div>
-    <div style="margin: 0 auto;padding: 20px;text-align: center;">
-        <ion-button style="font-size: 12px;height: 30px;width: 110px;background: white;" color="primary"
-            (click)="patchStatus();mainCheckbox=false;indeterminate=false" [disabled]="disableButton">
-            SUBMIT
-        </ion-button>
-        <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
-            *ngIf="showSmallSpinner">
-            <ion-spinner name="lines-small" color="primary"></ion-spinner>
-        </div>
-    </div>
-</div> -->

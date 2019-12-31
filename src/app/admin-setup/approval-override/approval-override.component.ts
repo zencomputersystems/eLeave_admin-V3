@@ -31,13 +31,6 @@ export class ApprovalOverrideComponent implements OnInit {
     public approvalForm: any;
 
     /**
-     * list of pending approval application
-     * @type {*}
-     * @memberof ApprovalOverrideComponent
-     */
-    public filteredPendingList: any = [];
-
-    /**
      * main checkbox value
      * @type {boolean}
      * @memberof ApprovalOverrideComponent
@@ -80,58 +73,18 @@ export class ApprovalOverrideComponent implements OnInit {
     public showSmallSpinner: boolean = false;
 
     /**
-     * show spinner
+     * show
      * @type {boolean}
      * @memberof ApprovalOverrideComponent
      */
-    public showSpinner: boolean = true;
-
-    /**
-     * show no result when user list is empty
-     * @type {boolean}
-     * @memberof ApprovalOverrideComponent
-     */
-    // public showNoResult: boolean = false;
-
-    /**
-     * users list from API
-     * @private
-     * @type {*}
-     * @memberof ApprovalOverrideComponent
-     */
-    private _userList: any;
+    public innerSpinner: boolean = true;
 
     /**
      * pending approval application list
-     * @private
      * @type {*}
      * @memberof ApprovalOverrideComponent
      */
-    private _pendingList: any;
-
-    /**
-     * user list from selected department
-     * @private
-     * @type {*}
-     * @memberof ApprovalOverrideComponent
-     */
-    private _filteredUserList: any = [];
-
-    /**
-     * leave type list from API
-     * @private
-     * @type {*}
-     * @memberof ApprovalOverrideComponent
-     */
-    private _leaveTypeList: any;
-
-    /**
-     * get company list by id 
-     * @private
-     * @type {*}
-     * @memberof ApprovalOverrideComponent
-     */
-    private _companyList: any;
+    public pendingList: any;
 
     /**
      *Creates an instance of ApprovalOverrideComponent.
@@ -150,16 +103,12 @@ export class ApprovalOverrideComponent implements OnInit {
      * @memberof ApprovalOverrideComponent
      */
     async ngOnInit() {
-        let list = await this.approvalOverrideAPI.get_user_profile_list().toPromise();
-        this._userList = list;
-        this.showSpinner = false;
-        this.approvalOverrideAPI.get_approval_override_list().subscribe(list => this._pendingList = list);
-        for (let i = 0; i < this._userList.length; i++) {
-            if (this._userList[i].companyId != null) {
-                let company = await this.approvalOverrideAPI.get_company_detail(this._userList[i].companyId).toPromise();
-                this._companyList = company;
-                this._userList[i]["companyName"] = this._companyList.companyName;
-            }
+        let pending = await this.approvalOverrideAPI.get_approval_override_list().toPromise();
+        this.pendingList = pending;
+        this.innerSpinner = false;
+        for (let i = 0; i < this.pendingList.length; i++) {
+            this.pendingList[i]["isChecked"] = false;
+            this.displayCheckbox.push(false);
         }
     }
 
@@ -169,14 +118,11 @@ export class ApprovalOverrideComponent implements OnInit {
      * @memberof ApprovalOverrideComponent
      */
     changeDetails(text: any) {
+        this.innerSpinner = true;
         if (text === '') {
             this.ngOnInit();
-            this.filteredPendingList = [];
         } else {
             this.filter(text);
-            if (this._filteredUserList.length == 0) {
-                this.filteredPendingList = [];
-            }
         }
     }
 
@@ -187,43 +133,21 @@ export class ApprovalOverrideComponent implements OnInit {
      */
     async filter(text: any) {
         if (text && text.trim() != '') {
-            let username = this._userList.filter((user: any) => {
+            let username = this.pendingList.filter((user: any) => {
                 return (user.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
-            let departmentName = this._userList.filter((department: any) => {
-                if (department.department != undefined) {
-                    return (department.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
+            let departmentName = this.pendingList.filter((department: any) => {
+                if (department.departmentName != undefined) {
+                    return (department.departmentName.toLowerCase().indexOf(text.toLowerCase()) > -1);
                 }
             })
-            let companyName = this._userList.filter((company: any) => {
+            let companyName = this.pendingList.filter((company: any) => {
                 if (company.companyName != undefined) {
                     return (company.companyName.toLowerCase().indexOf(text.toLowerCase()) > -1)
                 }
             })
-            this._filteredUserList = require('lodash').uniqBy(username.concat(departmentName).concat(companyName), 'id');
-            for (let j = 0; j < this._filteredUserList.length; j++) {
-                this.filterUserGUID(this._pendingList, this._filteredUserList[j].userId, j);
-            }
-        }
-    }
-
-    /**
-     * filter user from approval override list according filteredPendingList
-     * @param {*} list
-     * @param {*} obj
-     * @param {number} index
-     * @memberof ApprovalOverrideComponent
-     */
-    filterUserGUID(list: any, obj: any, index: number) {
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].USER_GUID === obj) {
-                this.filteredPendingList.push(this._pendingList[i]);
-                this.displayCheckbox.push(false);
-                this.filteredPendingList[this.filteredPendingList.length - 1].employeeName = this._filteredUserList[index].employeeName;
-                this.filteredPendingList[this.filteredPendingList.length - 1].staffNumber = this._filteredUserList[index].staffNumber;
-                this.filteredPendingList[this.filteredPendingList.length - 1].isChecked = false;
-                this.getLeaveType(this.filteredPendingList.length - 1, this._pendingList[i].LEAVE_TYPE_GUID);
-            }
+            this.innerSpinner = false;
+            this.pendingList = require('lodash').uniqBy(username.concat(departmentName).concat(companyName), 'leaveTransactionId');
         }
     }
 
@@ -238,90 +162,13 @@ export class ApprovalOverrideComponent implements OnInit {
     }
 
     /**
-     * delete unselected user
-     * @memberof ApprovalOverrideComponent
-     */
-    // showCheckedUser() {
-    //     for (let j = this.filteredPendingList.length - 1; j >= 0; --j) {
-    //         if (this.filteredPendingList[j].isChecked == false || this.filteredPendingList[j].isChecked == undefined) {
-    //             this.filteredPendingList.splice(j, 1);
-    //         }
-    //     }
-    // }
-
-    /**
-     * selected company id to get department list
-     * @param {*} company_guid
-     * @memberof ApprovalOverrideComponent
-     */
-    // selectedCompany(company_guid: string) {
-    //     this.showSpinner = true;
-    //     this._companyId = company_guid;
-    //     this.approvalOverrideAPI.get_company_detail(company_guid).subscribe(list => {
-    //         this.departmentList = list.departmentList;
-    //         this.showSpinner = false;
-    //     })
-    //     this.approvalOverrideAPI.get_approval_override_list().subscribe(list => this._pendingList = list)
-    // }
-
-    /**
-     * selected department name to get user list
-     * @param {*} departmentName
-     * @memberof ApprovalOverrideComponent
-     */
-    // selectedDepartment(departmentName: string) {
-    //     this.filteredPendingList = [];
-    //     this._filteredUserList = [];
-    //     this.leaveTransactionGUID = [];
-    //     this.showSpinner = true;
-    //     this.approvalOverrideAPI.get_user_profile_list().subscribe(list => {
-    //         this._userList = list;
-    //         this.showSpinner = false;
-    //         // this.checkPendingUserList(departmentName);
-    //     })
-    // }
-
-    /**
-     * compare approval override list with user list of selected department
-     * @memberof ApprovalOverrideComponent
-     */
-    // checkPendingUserList() {
-    //     // for (let i = 0; i < this._userList.length; i++) {
-    //     //     if (this._userList[i].department === departmentName && this._userList[i].companyId === this._companyId) {
-    //     //         this._filteredUserList.push(this._userList[i]);
-    //     //     } else {
-    //     //         this.showNoResult = true;
-    //     //     }
-    //     // }
-    //     // for (let j = 0; j < this._filteredUserList.length; j++) {
-    //     //     this.filterUserGUID(this._pendingList, this._filteredUserList[j].userId, j);
-    //     // }
-    // }
-
-    /**
-     * get leave type name from id
-     * @param {number} index
-     * @param {string} leaveTypeGuid
-     * @memberof ApprovalOverrideComponent
-     */
-    async getLeaveType(index: number, leaveTypeGuid: string) {
-        let type = await this.approvalOverrideAPI.get_admin_leavetype().toPromise();
-        this._leaveTypeList = type;
-        for (let i = 0; i < this._leaveTypeList.length; i++) {
-            if (leaveTypeGuid === this._leaveTypeList[i].LEAVE_TYPE_GUID && this.filteredPendingList[index] != undefined) {
-                this.filteredPendingList[index]["ABBR"] = this._leaveTypeList[i].ABBR;
-            }
-        }
-    }
-
-    /**
      * value of main checkbox & indetermine
      * @memberof ApprovalOverrideComponent
      */
     mainEvent() {
         this.displayCheckbox.splice(0, this.displayCheckbox.length);
         setTimeout(() => {
-            this.filteredPendingList.forEach(item => {
+            this.pendingList.forEach(item => {
                 item.isChecked = this.mainCheckbox;
                 if (item.isChecked) {
                     this.displayCheckbox.push(true);
@@ -338,9 +185,9 @@ export class ApprovalOverrideComponent implements OnInit {
      * @memberof ApprovalOverrideComponent
      */
     subEvent() {
-        const total = this.filteredPendingList.length;
+        const total = this.pendingList.length;
         let checkedItem = 0;
-        this.filteredPendingList.map(item => {
+        this.pendingList.map(item => {
             if (item.isChecked) {
                 checkedItem++;
                 this.displayCheckbox.push(true);
@@ -369,15 +216,15 @@ export class ApprovalOverrideComponent implements OnInit {
     mouseEvent(value: boolean, index: number, isChecked: boolean) {
         if (isChecked && (this.mainCheckbox || this.indeterminate)) {
             this.displayCheckbox = [];
-            this.filteredPendingList.map(value => { this.displayCheckbox.push(true); });
+            this.pendingList.map(value => { this.displayCheckbox.push(true); });
         } else if (!isChecked && (this.mainCheckbox || this.indeterminate)) {
             this.displayCheckbox.splice(0, this.displayCheckbox.length);
-            this.filteredPendingList.map(item => { this.displayCheckbox.push(true); });
+            this.pendingList.map(item => { this.displayCheckbox.push(true); });
         } else if (value && !isChecked && !this.indeterminate && !this.mainCheckbox) {
             this.displayCheckbox.splice(index, 1, true);
         } else {
             this.displayCheckbox.splice(0, this.displayCheckbox.length);
-            this.filteredPendingList.map(item => { this.displayCheckbox.push(false); });
+            this.pendingList.map(item => { this.displayCheckbox.push(false); });
         }
     }
 
@@ -393,17 +240,15 @@ export class ApprovalOverrideComponent implements OnInit {
         }
     }
 
-
-
     /**
      * patch selected user pending approval application 
      * @memberof ApprovalOverrideComponent
      */
     patchStatus() {
         this.showSmallSpinner = true;
-        this.filteredPendingList.forEach((element, i) => {
+        this.pendingList.forEach((element, i) => {
             if (element.isChecked) {
-                this.leaveTransactionGUID.push(this.filteredPendingList[i].LEAVE_TRANSACTION_GUID);
+                this.leaveTransactionGUID.push(this.pendingList[i].leaveTransactionId);
             }
         });
         const body = {
@@ -422,7 +267,6 @@ export class ApprovalOverrideComponent implements OnInit {
         this.approvalForm.get('radio').reset();
         this.approvalForm.get('remark').reset();
         this.mainEvent();
-        this.filteredPendingList = [];
         this.leaveTransactionGUID = [];
         this.ngOnInit();
         this.enableDisableButton();
@@ -442,22 +286,7 @@ export class ApprovalOverrideComponent implements OnInit {
                 searchInput.value = '';
                 this.changeDetails('');
             });
-            // for (let i = 0; i < this.filteredPendingList.length; i++) {
-            //     this.deleteSubmittedItem(i);
-            // }
         });
     }
-
-    /**
-     * delete submitted items
-     * @memberof ApprovalOverrideComponent
-     */
-    // deleteSubmittedItem(i: number) {
-    //     for (let j = 0; j < this.leaveTransactionGUID.length; j++) {
-    //         if (this.filteredPendingList[i].LEAVE_TRANSACTION_GUID == this.leaveTransactionGUID[j]) {
-    //             this.filteredPendingList.splice(i, 1);
-    //         }
-    //     }
-    // }
 
 }

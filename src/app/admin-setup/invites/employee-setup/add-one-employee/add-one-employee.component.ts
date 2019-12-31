@@ -202,12 +202,9 @@ export class AddOneEmployeeComponent implements OnInit {
         this.invitationForm = new FormGroup({
             company: new FormControl('', Validators.required),
             name: new FormControl('', Validators.required),
-            // IC: new FormControl('', Validators.required),
             id: new FormControl('', Validators.required),
             joinDate: new FormControl('', Validators.required),
-            // designation: new FormControl('', Validators.required),
             email: new FormControl('', Validators.required),
-            // phone: new FormControl('', Validators.required),
         });
         this.branchCtrl = new FormControl({ value: '', disabled: true });
         this.divisionCtrl = new FormControl({ value: '', disabled: true });
@@ -257,6 +254,15 @@ export class AddOneEmployeeComponent implements OnInit {
                 this.costCentreCtrl.enable();
             }
         }
+        this.detailsChanges(changes);
+    }
+
+    /**
+     * changes of details
+     * @param {*} changes
+     * @memberof AddOneEmployeeComponent
+     */
+    detailsChanges(changes) {
         if (changes.getDetails) {
             if (this.getDetails.employmentDetail != undefined) {
                 this.branchCtrl.patchValue(this.getDetails.employmentDetail.branch);
