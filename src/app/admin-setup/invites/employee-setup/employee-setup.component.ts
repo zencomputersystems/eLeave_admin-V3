@@ -400,9 +400,9 @@ export class EmployeeSetupComponent implements OnInit {
     receiveData(event) {
         if (this.mode = 'OFF') {
             this.employmentDetails.employmentDetail.branch = event[0];
-            this.employmentDetails.employmentDetail.section = event[2];
-            this.employmentDetails.employmentDetail.department = event[3];
-            this.employmentDetails.employmentDetail.costcentre = event[4];
+            this.employmentDetails.employmentDetail.section = event[1];
+            this.employmentDetails.employmentDetail.department = event[2];
+            this.employmentDetails.employmentDetail.costcentre = event[3];
             this.patchEmploymentDetails();
         }
     }

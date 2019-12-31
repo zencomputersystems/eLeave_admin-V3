@@ -64,7 +64,8 @@
                     Edit
                     Mode: {{mode}}</p>
                 <div style="display: inline-block;position: absolute;margin-top: 12px;">
-                    <ion-toggle style="zoom:0.70;--background: #a5a4bf;" mode="ios" color="secondary" (ionChange)="toggleMode($event)">
+                    <ion-toggle style="zoom:0.70;--background: #a5a4bf;" mode="ios" color="secondary"
+                        (ionChange)="toggleMode($event)">
                     </ion-toggle>
                 </div>
             </div>
@@ -200,7 +201,7 @@
                                 </ion-col>
                                 <ion-col size="4" align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                     padding-bottom: 13px;">
-                                    {{item.PERSONAL_ID_TYPE}}</ion-col>
+                                    {{item.personal_id_type}}</ion-col>
                                 <ion-item class="divider" lines="full">
                                 </ion-item>
                             </ion-row>
@@ -223,7 +224,7 @@
                                     <ion-col size="4" align-self-center style="padding:0;">
                                         <p [hidden]="!draggable.handle"
                                             style="color: #4d4f5c;font-size:11px;display: inline-block;">
-                                            {{draggable.PERSONAL_ID_TYPE}}</p>
+                                            {{draggable.personal_id_type}}</p>
                                     </ion-col>
                                 </ion-row>
                             </mat-card>

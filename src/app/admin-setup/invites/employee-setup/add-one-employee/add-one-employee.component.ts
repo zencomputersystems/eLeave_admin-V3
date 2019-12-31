@@ -122,12 +122,12 @@ export class AddOneEmployeeComponent implements OnInit {
      */
     public branchCtrl: FormControl;
 
-    /**
-     * division form control 
-     * @type {FormControl}
-     * @memberof AddOneEmployeeComponent
-     */
-    public divisionCtrl: FormControl;
+    // /**
+    //  * division form control 
+    //  * @type {FormControl}
+    //  * @memberof AddOneEmployeeComponent
+    //  */
+    // public divisionCtrl: FormControl;
 
     /**
      * section form control
@@ -207,7 +207,7 @@ export class AddOneEmployeeComponent implements OnInit {
             email: new FormControl('', Validators.required),
         });
         this.branchCtrl = new FormControl({ value: '', disabled: true });
-        this.divisionCtrl = new FormControl({ value: '', disabled: true });
+        // this.divisionCtrl = new FormControl({ value: '', disabled: true });
         this.sectionCtrl = new FormControl({ value: '', disabled: true });
         this.departmentCtrl = new FormControl({ value: '', disabled: true });
         this.costCentreCtrl = new FormControl({ value: '', disabled: true });
@@ -248,7 +248,7 @@ export class AddOneEmployeeComponent implements OnInit {
             this.toggleOnToOff(changes);
             if (changes.disabledEditMode.currentValue == false) {
                 this.branchCtrl.enable();
-                this.divisionCtrl.enable();
+                // this.divisionCtrl.enable();
                 this.sectionCtrl.enable();
                 this.departmentCtrl.enable();
                 this.costCentreCtrl.enable();
@@ -284,7 +284,7 @@ export class AddOneEmployeeComponent implements OnInit {
         if (changes.disabledEditMode.currentValue == true && changes.disabledEditMode.previousValue == false) {
             const data = [];
             data.push(this.branchCtrl.value);
-            data.push(this.divisionCtrl.value);
+            // data.push(this.divisionCtrl.value);
             data.push(this.sectionCtrl.value);
             data.push(this.departmentCtrl.value);
             data.push(this.costCentreCtrl.value);
@@ -414,7 +414,7 @@ export class AddOneEmployeeComponent implements OnInit {
             "STAFF_ID": this.invitationForm.controls.id.value,
             "FULLNAME": this.invitationForm.controls.name.value,
             "BRANCH": this.branchCtrl.value,
-            "DIVISION": this.divisionCtrl.value,
+            // "DIVISION": this.divisionCtrl.value,
             "DEPARTMENT": this.departmentCtrl.value,
             "COST_CENTRE": this.costCentreCtrl.value,
             "JOIN_DATE": _moment(this.invitationForm.controls.joinDate.value).format('YYYY-MM-DD')
@@ -433,7 +433,7 @@ export class AddOneEmployeeComponent implements OnInit {
             this.closeMenu.emit(true);
             this.invitationForm.reset();
             this.branchCtrl.reset();
-            this.divisionCtrl.reset();
+            // this.divisionCtrl.reset();
             this.departmentCtrl.reset();
             this.costCentreCtrl.reset();
         })
