@@ -84,7 +84,7 @@ export class ApprovalOverrideComponent implements OnInit {
      * @type {*}
      * @memberof ApprovalOverrideComponent
      */
-    public pendingList: any;
+    public pendingList: any = [];
 
     /**
      *Creates an instance of ApprovalOverrideComponent.
@@ -149,6 +149,38 @@ export class ApprovalOverrideComponent implements OnInit {
             this.innerSpinner = false;
             this.pendingList = require('lodash').uniqBy(username.concat(departmentName).concat(companyName), 'leaveTransactionId');
         }
+    }
+
+    /**
+     * filter by status 
+     * @param {string} statusName
+     * @memberof ApprovalOverrideComponent
+     */
+    filterStatus(statusName: string) {
+        document.querySelector('ion-searchbar').getInputElement().then((value) => {
+            if (value.value === '') {
+                this.innerSpinner = true;
+                this.approvalOverrideAPI.get_approval_override_list().subscribe(pending => {
+                    this.pendingList = pending;
+                    this.innerSpinner = false;
+                    this.getPendingNewList(statusName);
+                });
+            } else {
+                this.getPendingNewList(statusName);
+            }
+        });
+    }
+
+    /**
+     * get filtered status list
+     * @param {string} statusName
+     * @memberof ApprovalOverrideComponent
+     */
+    getPendingNewList(statusName: string) {
+        let statusList = this.pendingList.filter((status: any) => {
+            return (status.status.toLowerCase().indexOf(statusName.toLowerCase()) > -1)
+        })
+        this.pendingList = statusList;
     }
 
     /**

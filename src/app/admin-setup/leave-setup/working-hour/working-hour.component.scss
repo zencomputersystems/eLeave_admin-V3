@@ -33,12 +33,6 @@
     text-overflow: ellipsis;
     align-self: center;
   }
-  .search-icon {
-    width: 30px;
-    height: 30px;
-    fill: #bebebe;
-    margin: 0 auto;
-  }
   ::ng-deep ngx-material-timepicker-toggle {
     width: 30px;
     height: 0px;
@@ -84,7 +78,7 @@
     }
     .ngb-tp-input:focus {
       box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;
-      border-color:#7069d8;
+      border-color: #7069d8;
     }
     .ngb-tp-input:active {
       box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;

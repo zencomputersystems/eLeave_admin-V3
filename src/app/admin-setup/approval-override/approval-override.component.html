@@ -185,9 +185,9 @@
                                         </div>
                                     </ion-buttons>
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item>Approved</button>
-                                        <button mat-menu-item>Rejected</button>
-                                        <button mat-menu-item>Pending</button>
+                                        <button mat-menu-item (click)="filterStatus('APPROVED')">Approved</button>
+                                        <button mat-menu-item (click)="filterStatus('REJECTED')">Rejected</button>
+                                        <button mat-menu-item (click)="filterStatus('PENDING')">Pending</button>
                                     </mat-menu>
                                 </ion-col>
                             </ion-row>
@@ -260,7 +260,13 @@
                                 *ngIf="innerSpinner">
                                 <app-spinner></app-spinner>
                             </div>
+                            <div *ngIf="pendingList.length === 0 && !innerSpinner" style="width: 100%; text-align:center;padding: 10px">
+                                <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
+                                <p style="font-size: 20px;color:#a3a6b4;opacity: 0.8;padding-top:10px ">No Results Found
+                                </p>
+                            </div>
                         </div>
+
                         <!-- <p *ngIf="filteredPendingList.length == 0 " style="color: #a3a6b4;opacity:0.8;font-size: 12px;width: 30%;
                         margin: 0 auto;padding-top: 30px;">
                             Nothing to view. Please search & select employee or department first. </p> -->
@@ -289,7 +295,7 @@
                                 </mat-radio-group>
                             </div>
                             <ion-item class="divider" lines="full"></ion-item>
-                            <mat-form-field appearance="outline" style="width: 99%;margin-top: 20px;">
+                            <mat-form-field appearance="outline" style="width: 99%;margin-top: 20px;font-size: 12px;">
                                 <mat-label>Reason</mat-label>
                                 <textarea matInput formControlName="remark" required style="height: 100px;resize: none;"
                                     (input)="enableDisableButton()"></textarea>
