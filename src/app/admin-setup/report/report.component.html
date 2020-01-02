@@ -638,7 +638,7 @@
       </ion-card-content>
 
       <!-- Entitlement Claim History -->
-      <ion-card-content style="max-height: 100%;height: 100%;padding: 0;">
+      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
         <div
           style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
           <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
@@ -804,6 +804,961 @@
               <ion-col size="1.5" class="titleRow text">
               </ion-col>
               <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </ion-card-content>
+
+      <!-- Leave Taken History -->
+      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+        <div
+          style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
+          <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
+            <mat-select placeholder="Save As">
+              <mat-option value="PDF">
+                PDF
+              </mat-option>
+              <mat-option value="CSV">
+                CSV
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <ion-row>
+            <ion-col style="font-weight: bold;white-space: nowrap; font-size: 14px;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Leave Taken History</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="padding-top: 0;color: white;padding-bottom: 0;margin-bottom: 20px;">
+              Start Date: <strong>1st Jan 2019</strong> to <strong>31st Dec 2019</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              No</ion-col>
+            <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Employee No</ion-col>
+            <ion-col size="2" style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Employee Name</ion-col>
+            <ion-col size="1.5" style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Leave Type</ion-col>
+            <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Start Date</ion-col>
+            <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              End Date</ion-col>
+            <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              No of Days</ion-col>
+            <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Approved By</ion-col>
+            <ion-col size="1.5" class="titleRow"
+              style="display: -webkit-box;
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Remarks</ion-col>
+          </ion-row>
+        </div>
+
+        <div class="content">
+          <!-- ngFor under this div -->
+          <div style="padding: 10px;">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                01</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                3017</ion-col>
+              <ion-col size="2" class="text">
+                Nor Hanani
+              </ion-col>
+              <ion-col size="1.5">
+                <p class="text">Annual Leave</p>
+                <p class="text">Medical Leave</p>
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/12/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                01</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                KN</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;background: #f4f4f4">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                02</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                3017</ion-col>
+              <ion-col size="2" class="text">
+                Wan Mohd
+                Fathurrahman
+              </ion-col>
+              <ion-col size="1.5">
+                <p class="text">Annual Leave</p>
+                <p class="text">Medical Leave</p>
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/12/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                01</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                KN</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                03</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                3017</ion-col>
+              <ion-col size="2" class="text">
+                Mohd Fakhri
+              </ion-col>
+              <ion-col size="1.5">
+                <p class="text">Annual Leave</p>
+                <p class="text">Medical Leave</p>
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/12/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                01</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                KN</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;background: #f4f4f4">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                04</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                3017</ion-col>
+              <ion-col size="2" class="text">
+                Amir Yusof
+              </ion-col>
+              <ion-col size="1.5">
+                <p class="text">Annual Leave</p>
+                <p class="text">Medical Leave</p>
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/12/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                01</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                KN</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </ion-card-content>
+
+      <!-- Leave Adjustment History -->
+      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+        <div
+          style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
+          <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
+            <mat-select placeholder="Save As">
+              <mat-option value="PDF">
+                PDF
+              </mat-option>
+              <mat-option value="CSV">
+                CSV
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <ion-row>
+            <ion-col style="font-weight: bold;white-space: nowrap; font-size: 14px;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Leave Adjustment History</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="padding-top: 0;color: white;padding-bottom: 0;margin-bottom: 20px;">
+              Adjustment Date: <strong>1st Jan 2019</strong> to <strong>31st Dec 2019</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              No</ion-col>
+            <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Employee No</ion-col>
+            <ion-col size="2" style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Employee Name</ion-col>
+            <ion-col size="1.5" style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Leave Type</ion-col>
+            <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Adjustment</ion-col>
+            <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Adjusted By</ion-col>
+            <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Adjustment Date</ion-col>
+            <ion-col size="1.5" class="titleRow"
+              style="display: -webkit-box;
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Remarks</ion-col>
+          </ion-row>
+        </div>
+
+        <div class="content">
+          <!-- ngFor under this div -->
+          <div style="padding: 10px;">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                01</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                3017</ion-col>
+              <ion-col size="2" class="text">
+                Nor Hanani
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                +1</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                Bala</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                26/09/2019</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;background: #f4f4f4">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                02</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                3017</ion-col>
+              <ion-col size="2" class="text">
+                Sulaiman
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                +1</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                Bala</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                26/09/2019</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                03</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                3017</ion-col>
+              <ion-col size="2" class="text">
+                Asyraf Husof
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                +1</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                Bala</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                26/09/2019</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;background: #f4f4f4">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                04</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                3017</ion-col>
+              <ion-col size="2" class="text">
+                Jessica
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                +1</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                Bala</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                26/09/2019</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </ion-card-content>
+
+      <!-- Leave Cancellation History -->
+      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+        <div
+          style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
+          <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
+            <mat-select placeholder="Save As">
+              <mat-option value="PDF">
+                PDF
+              </mat-option>
+              <mat-option value="CSV">
+                CSV
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <ion-row>
+            <ion-col style="font-weight: bold;white-space: nowrap; font-size: 14px;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Leave Cancellation History</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="padding-top: 0;color: white;padding-bottom: 0;margin-bottom: 20px;">
+              Start Date: <strong>1st Jan 2019</strong> to <strong>31st Dec 2019</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              No</ion-col>
+            <ion-col size="2" style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Employee Name</ion-col>
+            <ion-col size="1.5" style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Leave Type</ion-col>
+            <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Start Date</ion-col>
+            <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              End Date</ion-col>
+            <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              No of Days</ion-col>
+            <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Cancelled By</ion-col>
+            <ion-col size="1.5" class="titleRow"
+              style="display: -webkit-box;
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Leave Remarks</ion-col>
+            <ion-col size="1.5" class="titleRow"
+              style="display: -webkit-box;
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Cancellation Remarks</ion-col>
+          </ion-row>
+        </div>
+
+        <div class="content">
+          <!-- ngFor under this div -->
+          <div style="padding: 10px;">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                01</ion-col>
+              <ion-col size="2" class="text">
+                Nor Hanani
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/12/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                02</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;background: #f4f4f4">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                02</ion-col>
+              <ion-col size="2" class="text">
+                Muhammad Najib
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/12/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                02</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                03</ion-col>
+              <ion-col size="2" class="text">
+                Abdullah Rahman
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/12/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                02</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;background: #f4f4f4">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                04</ion-col>
+              <ion-col size="2" class="text">
+                Mahathir
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/12/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                02</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </ion-card-content>
+
+      <!-- Leave Rejected history -->
+      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+        <div
+          style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
+          <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
+            <mat-select placeholder="Save As">
+              <mat-option value="PDF">
+                PDF
+              </mat-option>
+              <mat-option value="CSV">
+                CSV
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <ion-row>
+            <ion-col style="font-weight: bold;white-space: nowrap; font-size: 14px;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Leave Rejected History</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="padding-top: 0;color: white;padding-bottom: 0;margin-bottom: 20px;">
+              Start Date: <strong>1st Jan 2019</strong> to <strong>31st Dec 2019</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              No</ion-col>
+            <ion-col size="2" style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Employee Name</ion-col>
+            <ion-col size="1.5" style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Leave Type</ion-col>
+            <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Start Date</ion-col>
+            <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              End Date</ion-col>
+            <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              No of Days</ion-col>
+            <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Rejected By</ion-col>
+            <ion-col size="1.5" class="titleRow"
+              style="display: -webkit-box;
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Leave Remarks</ion-col>
+            <ion-col size="1.5" class="titleRow"
+              style="display: -webkit-box;
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Rejection Remarks</ion-col>
+          </ion-row>
+        </div>
+
+        <div class="content">
+          <!-- ngFor under this div -->
+          <div style="padding: 10px;">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                01</ion-col>
+              <ion-col size="2" class="text">
+                Nor Hanani
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/12/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                02</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                KN
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;background: #f4f4f4">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                02</ion-col>
+              <ion-col size="2" class="text">
+                Muhammad Najib
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/12/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                02</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                KN
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                03</ion-col>
+              <ion-col size="2" class="text">
+                Abdullah Rahman
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/12/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                02</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                KN
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;background: #f4f4f4">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                04</ion-col>
+              <ion-col size="2" class="text">
+                Mahathir
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/12/2018</ion-col>
+              <ion-col size="1" class="titleRow text">
+                02</ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                KN
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </ion-card-content>
+
+      <!-- Forfeited Leave History -->
+      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+        <div
+          style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
+          <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
+            <mat-select placeholder="Save As">
+              <mat-option value="PDF">
+                PDF
+              </mat-option>
+              <mat-option value="CSV">
+                CSV
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <ion-row>
+            <ion-col style="font-weight: bold;white-space: nowrap; font-size: 14px;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Forfeited Leave History</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="padding-top: 0;color: white;padding-bottom: 0;margin-bottom: 20px;">
+              From <strong>1st Jan 2019</strong> to <strong>31st Dec 2019</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              No</ion-col>
+            <ion-col size="1.5"
+              style="text-align: left;display: -webkit-box;
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Employee No</ion-col>
+            <ion-col size="2" style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Employee Name</ion-col>
+            <ion-col size="1.5" style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Leave Type</ion-col>
+            <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              No. Of Days Forfeited</ion-col>
+          </ion-row>
+        </div>
+
+        <div class="content">
+          <!-- ngFor under this div -->
+          <div style="padding: 10px;">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                01</ion-col>
+              <ion-col size="1.5" class="text">
+                2455</ion-col>
+              <ion-col size="2" class="text">
+                Syed Saddiq
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                01</ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;background: #f4f4f4">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                02</ion-col>
+              <ion-col size="1.5" class="text">
+                2455</ion-col>
+              <ion-col size="2" class="text">
+                Syed Saddiq
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                01</ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                03</ion-col>
+              <ion-col size="1.5" class="text">
+                2455</ion-col>
+              <ion-col size="2" class="text">
+                Syed Saddiq
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                01</ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;background: #f4f4f4">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                04</ion-col>
+              <ion-col size="1.5" class="text">
+                2455</ion-col>
+              <ion-col size="2" class="text">
+                Syed Saddiq
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Annual Leave
+              </ion-col>
+              <ion-col size="1.5" class="titleRow text">
+                01</ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </ion-card-content>
+
+      <!-- Master -->
+      <ion-card-content style="max-height: 100%;height: 100%;padding: 0;">
+        <div
+          style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
+          <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
+            <mat-select placeholder="Save As">
+              <mat-option value="PDF">
+                PDF
+              </mat-option>
+              <mat-option value="CSV">
+                CSV
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <ion-row>
+            <ion-col style="font-weight: bold;white-space: nowrap; font-size: 14px;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Employee Master List</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="padding-top: 0;color: white;padding-bottom: 0;margin-bottom: 20px;">
+              Join Date: From <strong>1st Jan 2019</strong> to <strong>31st Dec 2019</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              No</ion-col>
+            <ion-col size="1.5" style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Employee Name</ion-col>
+            <ion-col size="1.5"
+              style="text-align: left;display: -webkit-box;
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Company Name</ion-col>
+            <ion-col size="1.2" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Department</ion-col>
+            <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Designation</ion-col>
+            <ion-col size="1.2" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Email</ion-col>
+            <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Approver</ion-col>
+            <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Joining Date</ion-col>
+            <ion-col size="1" class="titleRow"
+              style="display: -webkit-box;
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Confirmed Date</ion-col>
+            <ion-col size="1" class="titleRow"
+              style="display: -webkit-box;
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Resigned Date</ion-col>
+            <ion-col size="1" class="titleRow"
+              style="display: -webkit-box;
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              Status</ion-col>
+          </ion-row>
+        </div>
+
+        <div class="content">
+          <!-- ngFor under this div -->
+          <div style="padding: 10px;">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                01</ion-col>
+              <ion-col size="1.5" class="text">
+                Wan Mohd Fathurrahman
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Zen Computer Systems Sdn Bhd
+              </ion-col>
+              <ion-col size="1.2" class="titleRow text">
+                R & D</ion-col>
+              <ion-col size="1" class="titleRow text">
+                Designer</ion-col>
+              <ion-col size="1.2" class="titleRow text">
+                fathurahman@zen.com.my</ion-col>
+              <ion-col size="1" class="titleRow text">
+                Khairulnizam
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                Confirmed
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;background: #f4f4f4">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                02</ion-col>
+              <ion-col size="1.5" class="text">
+                Mohd Fakhri
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Zen Computer Systems Sdn Bhd
+              </ion-col>
+              <ion-col size="1.2" class="titleRow text">
+                R & D</ion-col>
+              <ion-col size="1" class="titleRow text">
+                Developer</ion-col>
+              <ion-col size="1.2" class="titleRow text">
+                fathurahman@zen.com.my</ion-col>
+              <ion-col size="1" class="titleRow text">
+                Khairulnizam
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                Confirmed
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                03</ion-col>
+              <ion-col size="1.5" class="text">
+                Nor Hanani
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Zen Computer Systems Sdn Bhd
+              </ion-col>
+              <ion-col size="1.2" class="titleRow text">
+                R & D</ion-col>
+              <ion-col size="1" class="titleRow text">
+                Designer</ion-col>
+              <ion-col size="1.2" class="titleRow text">
+                fathurahman@zen.com.my</ion-col>
+              <ion-col size="1" class="titleRow text">
+                Khairulnizam
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                Confirmed
+              </ion-col>
+            </ion-row>
+          </div>
+          <div style="padding: 10px;background: #f4f4f4">
+            <ion-row>
+              <ion-col size="0.5" class="titleRow text">
+                04</ion-col>
+              <ion-col size="1.5" class="text">
+                Amir Yusof
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+              </ion-col>
+              <ion-col size="1.5" class="text">
+                Zen Computer Systems Sdn Bhd
+              </ion-col>
+              <ion-col size="1.2" class="titleRow text">
+                R & D</ion-col>
+              <ion-col size="1" class="titleRow text">
+                Consultant</ion-col>
+              <ion-col size="1.2" class="titleRow text">
+                fathurahman@zen.com.my</ion-col>
+              <ion-col size="1" class="titleRow text">
+                Khairulnizam
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                26/09/2018
+              </ion-col>
+              <ion-col size="1" class="titleRow text">
+                Confirmed
               </ion-col>
             </ion-row>
           </div>
