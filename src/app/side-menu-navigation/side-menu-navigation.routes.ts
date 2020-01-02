@@ -15,6 +15,7 @@ import { ApplyOnBehalfComponent } from '../admin-setup/apply-on-behalf/apply-on-
 import { YearEndClosingComponent } from '../admin-setup/year-end-closing/year-end-closing.component';
 import { ApprovalOverrideComponent } from '../admin-setup/approval-override/approval-override.component';
 import { LeaveEntitlementComponent } from '../admin-setup/leave-setup/leave-entitlement/leave-entitlement.component';
+import { ReportComponent } from '../admin-setup/report/report.component';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -41,7 +42,7 @@ export const sideMenuNavigationRoutes: Routes = [
             { path: 'apply-on-behalf', component: ApplyOnBehalfComponent },
             { path: 'approval-override', component: ApprovalOverrideComponent },
             { path: 'year-end-closing', component: YearEndClosingComponent },
-            { path: 'report', component: PageNotFoundComponent },
+            { path: 'report', component: ReportComponent },
         ]
     },
     { path: '**', component: PageNotFoundComponent },

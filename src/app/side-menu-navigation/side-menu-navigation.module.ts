@@ -17,6 +17,7 @@ import { GeneralLeavePolicyModule } from '../admin-setup/general-leave-policy/ge
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { MatChipsModule } from '@angular/material/chips';
 import { YearEndClosingModule } from '../admin-setup/year-end-closing/year-end-closing.module';
+import { ReportModule } from '../admin-setup/report/report.module';
 
 @NgModule({
     imports: [
@@ -33,6 +34,7 @@ import { YearEndClosingModule } from '../admin-setup/year-end-closing/year-end-c
         DashboardModule,
         MatChipsModule,
         YearEndClosingModule,
+        ReportModule,
         RouterModule.forChild(sideMenuNavigationRoutes)
     ],
     providers: [AuthGuard],
