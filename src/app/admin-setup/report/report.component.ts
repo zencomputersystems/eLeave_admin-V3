@@ -105,6 +105,14 @@ export class ReportComponent implements OnInit {
    */
   public filterSpinner: boolean;
 
+  public companyList: any;
+
+  public departmentList: any;
+
+  public branchList: any;
+
+  public costcentre: any;
+
   /**
    *Creates an instance of ReportComponent.
    * @param {LeaveApiService} leaveAPI
@@ -129,6 +137,10 @@ export class ReportComponent implements OnInit {
       }
     });
     this.userNameList();
+    this.leaveAPI.get_company_list().subscribe(data => this.companyList = data);
+    this.api.get_master_list('department').subscribe(data => this.departmentList = data);
+    this.api.get_master_list('branch').subscribe(data => this.branchList = data);
+    this.api.get_master_list('costcentre').subscribe(data => this.costcentre = data);
   }
 
   /**
@@ -157,8 +169,8 @@ export class ReportComponent implements OnInit {
       let employeeName = this.userList.filter((item: any) => {
         return (item.employeeName.toLowerCase().indexOf(character.toLowerCase()) > -1);
       })
-      let id = this.userList.filter((item: any) => {
-        return (item.staffNumber.toLowerCase().indexOf(character.toLowerCase()) > -1);
+      let id = this.userList.filter((values: any) => {
+        return (values.staffNumber.toLowerCase().indexOf(character.toLowerCase()) > -1);
       })
       this.userList = require('lodash').uniqBy(employeeName.concat(id), 'id');
       this.filterSpinner = false;
