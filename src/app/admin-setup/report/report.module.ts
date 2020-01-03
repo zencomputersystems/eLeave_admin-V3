@@ -9,8 +9,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatDatepickerModule, MatInputModule } from '@angular/material';
 import { ReportComponent } from './report.component';
+import { InlineSVGModule } from 'ng-inline-svg';
 
 
 const routes: Routes = [
@@ -27,11 +28,14 @@ const routes: Routes = [
         IonicModule,
         MatSelectModule,
         MatFormFieldModule,
+        MatInputModule,
         SpinnerModule,
         ReactiveFormsModule,
         MatSnackBarModule,
         MatButtonModule,
         MatDialogModule,
+        MatDatepickerModule,
+        InlineSVGModule,
         RouterModule.forChild(routes)
     ],
     providers: [],

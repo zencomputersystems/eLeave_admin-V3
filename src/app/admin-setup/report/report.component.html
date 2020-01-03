@@ -12,13 +12,198 @@
           employees
         </ion-card-subtitle>
       </div>
+      <div style="right: 25px;top: 25px;position: absolute;">
+        <ion-button
+          style="--border-radius: 2px;font-size: 11px;height: 30px;width:180px;cursor: pointer;text-transform: none;"
+          color="primary">
+          Downloaded Reports
+        </ion-button>
+      </div>
     </div>
   </ion-card-header>
-  <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
-    <app-spinner></app-spinner>
-  </div>
   <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;">
     <div class="cardContent">
+
+      <!-- main page -->
+      <ion-card-content style="max-height: 100%;">
+        <div style="display: block;white-space: nowrap;margin-bottom: 10px;">
+          <div class="buttonGroup">
+            <ion-button
+              style="--border-radius: 4px 0 0 4px;margin-right: 0;display:inline-block;font-size: 11px;height: 40px;width:195px;cursor: pointer;text-transform: none;"
+              [ngClass]="{
+              'individualClicked': individualButton === true , 'individualUnclicked': individualButton === false}"
+              (click)="groupButton = false; individualButton = true;">
+              Individual Report
+            </ion-button>
+            <ion-button [ngClass]="{ 'groupClicked' : groupButton === true , 'groupUnclicked' : groupButton === false}"
+              (click)="groupButton = true; individualButton = false;"
+              style="--border-radius: 0 4px 4px 0;margin-left: 0;display:inline-block;font-size: 11px;height: 40px;width:195px;cursor: pointer;text-transform: none;">
+              Group Report
+            </ion-button>
+          </div>
+          <div class="dateForm">
+            <mat-form-field class="date" appearance="outline">
+              <mat-label>Start date</mat-label>
+              <input class="dateInput" matInput [matDatepicker]="picker1" [formControl]="firstPicker" required
+                (dateInput)="getValueFrom($event)" [max]="maxDate" (dateChange)="onDateChange()">
+              <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'" (click)="picker1.open()">
+              </div>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <div style="display: inline-block;width:3%"></div>
+            <mat-form-field class="date" appearance="outline">
+              <mat-label>End date</mat-label>
+              <input class="dateInput" matInput [matDatepicker]="picker2" [formControl]="secondPicker" required
+                (dateInput)="getValueTo($event)" [min]="minDate" (dateChange)="onDateChange()">
+              <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'" (click)="picker2.open()">
+              </div>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="report">
+            <div
+              style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+              <ion-row>
+                <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                            text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                  REPORT TYPES</ion-col>
+              </ion-row>
+              <mat-form-field appearance="outline"
+                style="height: 55px;font-size: 12px;width: 100%;color: #43425d;opacity: 0.8;">
+                <mat-select>
+                  <mat-option value="Leave Entitlement Summary">Leave Entitlement Summary</mat-option>
+                  <mat-option value="Approval Override History">Approval Override History</mat-option>
+                  <mat-option value="Apply On Behalf History">Apply On Behalf History</mat-option>
+                  <mat-option value="Entitlement Claim History">Entitlement Claim History</mat-option>
+                  <mat-option value="Leave Taken History">Leave Taken History</mat-option>
+                  <mat-option value="Leave Adjustment History">Leave Adjustment History</mat-option>
+                  <mat-option value="Leave Cancellation History">Leave Cancellation History</mat-option>
+                  <mat-option value="Leave Rejected History">Leave Rejected History</mat-option>
+                  <mat-option value="Forfeited Leave History">Forfeited Leave History</mat-option>
+                  <mat-option value="Employee Master List">Employee Master List</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div
+              style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+              <ion-row>
+                <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                          text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                  LEAVE TYPES</ion-col>
+              </ion-row>
+            </div>
+            <div style="overflow-y: auto;height: calc(100% - 161px)">
+              <ion-item class="ionItem" lines="none">
+                <ion-label><strong>Select All</strong></ion-label>
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="isMain" [indeterminate]="isInde"
+                  (click)="checkLeaveTypes()">
+                </ion-checkbox>
+              </ion-item>
+              <ion-list lines="none" style="padding-top: 0;" *ngFor="let item of leaveTypes">
+                <ion-item class="ionItem">
+                  <ion-label>{{item.CODE}}</ion-label>
+                  <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="item.isChecked"
+                    (ionChange)="checkSubLeaveTypes()">
+                  </ion-checkbox>
+                </ion-item>
+              </ion-list>
+            </div>
+          </div>
+          <div class="listEmployee">
+            <div
+              style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 15px;color: #a5a4bf;">
+              <ion-row>
+                <ion-col style="font-weight: bold;white-space: nowrap;
+                  text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                  EMPLOYEE LIST</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-searchbar mode="md" class="searchbar" placeholder="Find using Employee Name or ID"
+                  (ionChange)="keyUpSearchbar($event.srcElement.value)">
+                </ion-searchbar>
+              </ion-row>
+              <ion-row nowrap style="font-weight: bold;">
+                <ion-col size="1.5"
+                  style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
+                  <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
+                    [(ngModel)]="mainListCheckbox" [indeterminate]="indeterminate" (click)="headerList()">
+                  </ion-checkbox>
+                </ion-col>
+                <ion-col size="1" align-self-center style="white-space: nowrap;
+                  text-overflow: ellipsis;overflow: hidden;">
+                  ID
+                </ion-col>
+                <ion-col size="4" align-self-center style="white-space: nowrap;
+                  text-overflow: ellipsis;overflow: hidden;">
+                  EMPLOYEE NAME
+                </ion-col>
+                <ion-col size="2.3" align-self-center style="white-space: nowrap;
+                  text-overflow: ellipsis;overflow: hidden;">
+                  DESIGNATION
+                </ion-col>
+                <ion-col size="2.3" align-self-center style="text-align: center;white-space: nowrap;
+                  text-overflow: ellipsis;overflow: hidden;">
+                  DEPARTMENT
+                </ion-col>
+              </ion-row>
+            </div>
+
+            <div style="height: calc( 100% - 194px);overflow: auto;" *ngIf="!filterSpinner">
+              <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of userList; let i=index">
+                <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
+                  <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
+                    (mouseout)="hoverValue(i, false, item.isChecked)">
+                    <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                      [style.display]="hideImg[i] ? 'none' : 'block'">
+                    <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                      <ion-checkbox mode="ios"
+                        style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                        [(ngModel)]="item.isChecked" (ionChange)="contentList()">
+                      </ion-checkbox>
+                    </div>
+                  </ion-avatar>
+                </ion-col>
+                <ion-col size="1" align-self-center
+                  style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                  {{item.staffNumber}}
+                </ion-col>
+                <ion-col size="4" align-self-center
+                  style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color: #43425d;opacity: 0.8;">
+                  {{item.employeeName}}
+                </ion-col>
+                <ion-col size="2.3" align-self-center
+                  style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                  {{item.designation}}
+                </ion-col>
+                <ion-col size="2.3" align-self-center
+                  style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                  {{item.department}}
+                </ion-col>
+                <ion-item lines="full" style=" --min-height: none;width: 100%;padding-top: 1%;
+                padding-bottom: 1%;"></ion-item>
+              </ion-row>
+            </div>
+            <div style="text-align: right;">
+              <ion-button fill="outline"
+                style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 190px;font-size: 11px;text-transform: none">
+                Clear
+              </ion-button>
+              <ion-button
+                style="--border-radius: 2px;font-size: 11px;height: 30px;width:320px;cursor: pointer;text-transform: none;"
+                color="primary">
+                Produce Report
+              </ion-button>
+            </div>
+            <div style="height: calc( 100% - 156px);overflow: auto;" *ngIf="filterSpinner">
+              <div style="width: 100%; height:100%; text-align: center; margin-top: -30px">
+                <app-spinner></app-spinner>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
 
       <!-- leave entitlement summary -->
       <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
@@ -1560,7 +1745,7 @@
       </ion-card-content>
 
       <!-- Master -->
-      <ion-card-content style="max-height: 100%;height: 100%;padding: 0;">
+      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
         <div
           style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
           <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
@@ -1766,4 +1951,5 @@
       </ion-card-content>
     </div>
   </div>
+
 </ion-card>
