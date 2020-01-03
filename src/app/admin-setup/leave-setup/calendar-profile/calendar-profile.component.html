@@ -162,9 +162,9 @@
         </ng-container>
         <ion-row style="width: 100%;padding: 10px;">
             <img style="cursor: pointer;;margin-right: 5px;margin-left: 2px;margin-top: 2px;width: 14px;height: 14px;float:left"
-                src="assets/icon/leave_setup/icon_request@3x.png">
-            <p style="color:#43425d; opacity: 0.8;font-weight: bold;cursor: pointer;font-size: 11px;margin-top: 3px;"
-                (click)="addNewPH(undefined, undefined)">Add another new public holiday
+                src="assets/icon/leave_setup/icon_request@3x.png" (click)="addNewPH(undefined, undefined)">
+            <p style="color:#43425d; opacity: 0.8;font-weight: bold;font-size: 11px;margin-top: 3px;">
+                Add another new public holiday
             </p>
         </ion-row>
 
@@ -215,7 +215,8 @@
                     Edit
                     Mode: {{modeValue}}</p>
                 <div style="display: inline-block;position: absolute;margin-top: 12px;">
-                    <ion-toggle style="zoom:0.70;--background: #a5a4bf;" mode="ios" color="secondary" (ionChange)="toggleEvent($event)">
+                    <ion-toggle style="zoom:0.70;--background: #a5a4bf;" mode="ios" color="secondary"
+                        (ionChange)="toggleEvent($event)">
                     </ion-toggle>
                 </div>
             </div>
@@ -241,7 +242,7 @@
                                 <!-- <ion-col align-self-center size="4.5" class="column"> NO. ASSIGNED
                                     EMPLOYEE</ion-col> -->
                                 <ion-col align-self-center style="text-align: right;">
-                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="showAddIcon"
+                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="modeValue == 'ON'"
                                         (click)="dayControl.reset();slideInOut = false;clickedIndex = null;restDay=[]; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.open('createCalendarDetails');">
                                     </ion-icon>
                                     <!-- <p *ngIf="!showAddIcon" style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
@@ -252,7 +253,7 @@
                             </ion-row>
                         </div>
                         <div style="overflow-y: auto;height: calc(100% - 62px);">
-                            <ng-container *ngIf="!showAddIcon">
+                            <ng-container *ngIf="modeValue == 'OFF'">
                                 <ion-row *ngFor="let list of profileList; let i=index" style="padding-left: 5px;">
                                     <ion-col size="10"
                                         style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
@@ -281,7 +282,7 @@
                                         [ngClass]="{
                                         'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
                                     &nbsp;&nbsp; -->
-                                        <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="showAddIcon"
+                                        <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="modeValue == 'ON'"
                                             style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
                                             (click)="deleteCalendarProfile(profileList[i]);selectProfile(list, i)">
                                         <!-- [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}" -->
@@ -290,7 +291,7 @@
                                 </ion-row>
                             </ng-container>
 
-                            <ng-container *ngIf="showAddIcon">
+                            <ng-container *ngIf="modeValue == 'ON'">
                                 <section class="my-dropzone scrollable" dndDropzone dndDragoverClass="custom-drag-over"
                                     (dndDrop)="onDrop($event, list)" [dndDisableIf]="i==clickedIndex"
                                     *ngFor="let list of profileList; let i=index">
@@ -330,8 +331,8 @@
                                     ASSIGNED EMPLOYEE</ion-col>
                             </ion-row>
                         </div>
-                        <div style="overflow-y: auto;height: calc(100% - 62px);" *ngIf="slideInOut && !showAddIcon"
-                            [@slideInOut]="slideInOut ? 'open': 'close'">
+                        <div style="overflow-y: auto;height: calc(100% - 62px);"
+                            *ngIf="slideInOut && modeValue == 'OFF'" [@slideInOut]="slideInOut ? 'open': 'close'">
                             <ion-row *ngFor="let item of assignedNames; let i =index"
                                 style="width: 100%;padding-left: 10px;">
                                 <ion-col align-self-center size="9" style="padding-top: 0;padding-bottom: 0;">
@@ -348,7 +349,7 @@
                                 </ion-item>
                             </ion-row>
                         </div>
-                        <div style="overflow-y: auto;height: calc(100% - 62px);" *ngIf="slideInOut && showAddIcon"
+                        <div style="overflow-y: auto;height: calc(100% - 62px);" *ngIf="slideInOut && modeValue == 'ON'"
                             [@slideInOut]="slideInOut ? 'open': 'close'">
                             <mat-card *ngFor="let draggable of assignedNames" [dndDraggable]="draggable.content"
                                 [dndEffectAllowed]="draggable.effectAllowed" [dndDisableIf]="draggable.disable"
@@ -376,7 +377,7 @@
                             </mat-label>
                             <mat-select style="font-size: 12px;" multiple [formControl]="dayControl">
                                 <mat-option style="font-size: 12px;" *ngFor="let day of weekdays; let j=index"
-                                    (click)="restDaySelected(day)" [value]="day" [disabled]="disabledButton()">
+                                    (click)="restDaySelected(day)" [value]="day" [disabled]="modeValue == 'OFF'">
                                     {{day}}</mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -385,16 +386,14 @@
                             <ion-row>
                                 <ion-col size="4" class="column">
                                     DATE</ion-col>
-                                <ion-col size="3" class="column" *ngIf="!showAddIcon">DAY</ion-col>
+                                <ion-col size="3" class="column" *ngIf="modeValue == 'OFF'">DAY</ion-col>
                                 <ion-col size="5" class="column">
                                     HOLIDAY</ion-col>
-                                <ion-col size="3" align-self-center style="text-align: right;">
-                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="showAddIcon" (click)="menu.enable(true, 'addHolidayDetails');menu.enable(false, 'createCalendarDetails');
+                                <ion-col size="3" align-self-center style="text-align: right;"
+                                    *ngIf="modeValue == 'ON'">
+                                    <ion-icon class="addIcon" name="add-circle-outline" *ngIf="modeValue == 'ON'"
+                                        (click)="menu.enable(true, 'addHolidayDetails');menu.enable(false, 'createCalendarDetails');
                                     menu.open('addHolidayDetails');addNewPH(undefined, undefined)"></ion-icon>
-                                    <!-- <p style="color: #7069d8;; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
-                    margin-top: -21px;margin-left: 20px;" *ngIf="showAddIcon" (click)="menu.enable(true, 'addHolidayDetails');menu.enable(false, 'createCalendarDetails');
-                                        menu.open('addHolidayDetails');addNewPH(undefined, undefined)">
-                                        ADD</p> -->
                                 </ion-col>
                             </ion-row>
                         </div>
@@ -402,11 +401,11 @@
                             [@slideInOut]="slideInOut ? 'open': 'close'">
                             <ion-row *ngFor="let holiday of events; let i=index" style="width: 100%;">
                                 <ion-col size="4" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                    <ion-label *ngIf="!showAddIcon"
+                                    <ion-label *ngIf="modeValue == 'OFF'"
                                         style="padding-left: 5px;color:#4d4f5c; font-size:11px">
                                         {{holiday.start}}
                                     </ion-label>
-                                    <mat-form-field *ngIf="showAddIcon"
+                                    <mat-form-field *ngIf="modeValue == 'ON'"
                                         style="width: 100%;font-size: 11px;color: #4d4f5c">
                                         <input matInput [matDatepicker]="datePicker" [(value)]="holiday.start" required
                                             (dateChange)="dateChanged($event.target.value, i)">
@@ -415,9 +414,9 @@
                                         <mat-datepicker #datePicker></mat-datepicker>
                                     </mat-form-field>
                                 </ion-col>
-                                <ion-col size="3" *ngIf="!showAddIcon"
+                                <ion-col size="3" *ngIf="modeValue == 'OFF'"
                                     style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                    <mat-chip-list [style.display]="showAddIcon ? 'none' : '' ">
+                                    <mat-chip-list [style.display]="modeValue == 'ON' ? 'none' : '' ">
                                         <mat-chip>
                                             <p
                                                 style="white-space: nowrap;width: 100%;text-align: center;color: #f0f0f7;font-size: 10px;line-height: 2.22;">
@@ -428,17 +427,17 @@
                                 <ion-col size="5" style="overflow: hidden;
                                 white-space: nowrap;text-overflow: ellipsis;" align-self-center>
                                     <p style="color: #4d4f5c;font-size: 11px;overflow: hidden;
-                                    white-space: nowrap;text-overflow: ellipsis;" *ngIf="!showAddIcon">
+                                    white-space: nowrap;text-overflow: ellipsis;" *ngIf="modeValue == 'OFF'">
                                         {{holiday.title}}
                                     </p>
-                                    <mat-form-field *ngIf="showAddIcon"
+                                    <mat-form-field *ngIf="modeValue == 'ON'"
                                         style="width: 100%;font-size: 11px;color: #4d4f5c">
                                         <input matInput [(value)]="holiday.title"
                                             (input)=" events[i].title = $event.target.value;">
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="3" align-self-center style="text-align: right;padding-right: 15px;"> <img
-                                        src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="showAddIcon"
+                                        src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="modeValue == 'ON'"
                                         style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
                                         (click)="deletePH(i, events, holiday.title)">
                                 </ion-col>

@@ -162,13 +162,6 @@ export class CalendarProfileComponent implements OnInit {
     public slideInOut: boolean = false;
 
     /**
-     * show add icon when edit mode is toggle to 'ON'
-     * @type {boolean}
-     * @memberof CalendarProfileComponent
-     */
-    public showAddIcon: boolean = false;
-
-    /**
      * new holiday array list
      * @type {*}
      * @memberof CalendarProfileComponent
@@ -373,19 +366,6 @@ export class CalendarProfileComponent implements OnInit {
     }
 
     /**
-     * disabled/enable checkbox of rest day
-     * @returns
-     * @memberof CalendarProfileComponent
-     */
-    disabledButton() {
-        if (this.showAddIcon) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
      * Get calendar profile list from API
      * @memberof CalendarProfileComponent
      */
@@ -405,7 +385,6 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     saveData() {
-        this.showAddIcon = false;
         this.slideInOut = false;
         this.clickedIndex = 0;
         this.reformatHolidayObject(this.events);
@@ -447,8 +426,13 @@ export class CalendarProfileComponent implements OnInit {
                 this._personalProfile = data;
                 this.slideInOut = true;
                 this.events = [];
-                for (let i = 0; i < this._personalProfile.holiday.length; i++) {
-                    this.createHolidayList(this._personalProfile.holiday[i].start, this._personalProfile.holiday[i].title);
+                if (this._personalProfile.holiday != undefined) {
+                    for (let i = 0; i < this._personalProfile.holiday.length; i++) {
+                        this.createHolidayList(this._personalProfile.holiday[i].start, this._personalProfile.holiday[i].title);
+                    }
+                    if (this._personalProfile.holiday instanceof Array == false) {
+                        this.createHolidayList(this._personalProfile.holiday.start, this._personalProfile.holiday.title);
+                    }
                 }
                 if (this._personalProfile["rest"] != undefined && Array.isArray(this._personalProfile.rest) == false) {
                     this.restDay.push(this.titlecasePipe.transform(this._personalProfile.rest.fullname));
@@ -622,7 +606,6 @@ export class CalendarProfileComponent implements OnInit {
     toggleEvent(event) {
         if (event.detail.checked === true) {
             this.modeValue = 'ON';
-            this.showAddIcon = true;
             this.calendarProfileAPI.displayDialog.open(EditModeDialogComponent, {
                 data: 'calendar',
                 height: "343.3px",
