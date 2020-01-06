@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../leave-setup/date.adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { LeaveApiService } from '../leave-setup/leave-api.service';
 import { APIService } from 'src/services/shared-service/api.service';
+import { MenuController } from '@ionic/angular';
 
 /**
  * history report page
@@ -20,6 +21,13 @@ import { APIService } from 'src/services/shared-service/api.service';
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
 })
 export class ReportComponent implements OnInit {
+
+  /**
+    * set menu is open or close by assign new class
+    * @type {boolean}
+    * @memberof ReportComponent
+    */
+  @HostBinding('class.menuOverlay') menuOpened: boolean;
 
   /**
    * clicked individual button
@@ -182,14 +190,14 @@ export class ReportComponent implements OnInit {
    */
   public costCentreValue: string = 'Nothing Selected';
 
-
   /**
    *Creates an instance of ReportComponent.
    * @param {LeaveApiService} leaveAPI
    * @param {APIService} api
+   * @param {MenuController} menu
    * @memberof ReportComponent
    */
-  constructor(private leaveAPI: LeaveApiService, private api: APIService) { }
+  constructor(private leaveAPI: LeaveApiService, private api: APIService, private menu: MenuController) { }
 
   /**
    * initial report
@@ -208,7 +216,6 @@ export class ReportComponent implements OnInit {
     });
     this.userNameList();
     this.leaveAPI.get_company_list().subscribe(data => this.companyList = data);
-    // this.api.get_master_list('department').subscribe(data => this.departmentList = data);
     this.api.get_master_list('branch').subscribe(data => this.branchList = data);
     this.api.get_master_list('costcentre').subscribe(data => this.costcentre = data);
   }
@@ -288,17 +295,17 @@ export class ReportComponent implements OnInit {
         }
       })
       this.filteredBranch = branch;
-    } else if (this.companyValue !== 'Nothing Selected' && this.departmentValue == 'Nothing Selected') {
-      let branch = this.filteredCompany.filter((item: any) => {
-        if (item.branch !== null) {
-          return (item.branch.toLowerCase().indexOf(branchName.toLowerCase()) > -1);
+    } else if (this.departmentValue == 'Nothing Selected') {
+      let branch = this.filteredCompany.filter((list: any) => {
+        if (list.branch !== null) {
+          return (list.branch.toLowerCase().indexOf(branchName.toLowerCase()) > -1);
         }
       })
       this.filteredBranch = branch;
     } else {
-      let branch = this.userList.filter((item: any) => {
-        if (item.branch !== null) {
-          return (item.branch.toLowerCase().indexOf(branchName.toLowerCase()) > -1);
+      let branch = this.userList.filter((object: any) => {
+        if (object.branch !== null) {
+          return (object.branch.toLowerCase().indexOf(branchName.toLowerCase()) > -1);
         }
       })
       this.filteredBranch = branch;
