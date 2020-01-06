@@ -64,13 +64,6 @@ export class ReportComponent implements OnInit {
   public userList: any;
 
   /**
-     * header checkbox checked/unchecked
-     * @type {boolean}
-     * @memberof ReportComponent
-     */
-  public mainListCheckbox: boolean;
-
-  /**
    * value of indeterminate in main checkbox
    * @type {boolean}
    * @memberof ReportComponent
@@ -105,12 +98,32 @@ export class ReportComponent implements OnInit {
    */
   public filterSpinner: boolean;
 
+  /**
+   * company list from endpoint
+   * @type {*}
+   * @memberof ReportComponent
+   */
   public companyList: any;
 
+  /**
+   * department list from master list endpoint
+   * @type {*}
+   * @memberof ReportComponent
+   */
   public departmentList: any;
 
+  /**
+   * branch list from master list endpoint
+   * @type {*}
+   * @memberof ReportComponent
+   */
   public branchList: any;
 
+  /**
+   * cost centre list from master list endpoint
+   * @type {*}
+   * @memberof ReportComponent
+   */
   public costcentre: any;
 
   /**
@@ -153,6 +166,7 @@ export class ReportComponent implements OnInit {
       this.userList = list;
       for (let i = 0; i < this.userList.length; i++) {
         this.userList[i]["isChecked"] = false;
+        this.userList[i]["disabled"] = false;
       }
       this.filterSpinner = false;
     });
@@ -161,7 +175,7 @@ export class ReportComponent implements OnInit {
   /**
      * Filter text key in from searchbar 
      * @param {*} character
-     * @memberof ApplyOnBehalfComponent
+     * @memberof ReportComponent
      */
   async filterSearchbar(character: any) {
     this.filterSpinner = true;
@@ -180,7 +194,7 @@ export class ReportComponent implements OnInit {
   /**
    * To filter entered text
    * @param {*} character
-   * @memberof ApplyOnBehalfComponent
+   * @memberof ReportComponent
    */
   keyUpSearchbar(character: any) {
     if (character === '') {
@@ -238,13 +252,13 @@ export class ReportComponent implements OnInit {
      * @memberof ReportComponent
      */
   hoverValue(index: number, isIn: boolean, isChecked: boolean) {
-    if (isChecked && (this.mainListCheckbox || this.indeterminate)) {
+    if (isChecked && this.indeterminate) {
       this.hideImg = [];
       this.userList.map(value => { this.hideImg.push(true); });
-    } else if (!isChecked && (this.mainListCheckbox || this.indeterminate)) {
+    } else if (!isChecked && this.indeterminate) {
       this.hideImg.splice(0, this.hideImg.length);
       this.userList.map(item => { this.hideImg.push(true); });
-    } else if (isIn && !isChecked && !this.indeterminate && !this.mainListCheckbox) {
+    } else if (isIn && !isChecked && !this.indeterminate) {
       this.hideImg.splice(index, 1, true);
     } else {
       this.hideImg.splice(0, this.hideImg.length);
@@ -260,7 +274,6 @@ export class ReportComponent implements OnInit {
     this.hideImg.splice(0, this.hideImg.length);
     setTimeout(() => {
       this.userList.forEach(item => {
-        item.isChecked = this.mainListCheckbox;
         if (item.isChecked) {
           this.hideImg.push(true);
         } else {
@@ -271,10 +284,10 @@ export class ReportComponent implements OnInit {
   }
 
   /**
-   * check sub checkbox to make changing in main checkbox (interminate/mainCheckBox)
+   * check sub checkbox to make changing in main checkbox (interminate)
    * @memberof ReportComponent
    */
-  contentList() {
+  contentList(itemId) {
     const totalLength = this.userList.length;
     let checkedNo = 0;
     this.userList.map(item => {
@@ -282,16 +295,14 @@ export class ReportComponent implements OnInit {
         checkedNo++;
         this.hideImg.push(true);
       }
+      if (item.id !== itemId) {
+        item.disabled = !item.disabled;
+      }
     });
     if (checkedNo > 0 && checkedNo < totalLength) {
       this.indeterminate = true;
-      this.mainListCheckbox = false;
-    } else if (checkedNo == totalLength) {
-      this.mainListCheckbox = true;
-      this.indeterminate = false;
     } else {
       this.indeterminate = false;
-      this.mainListCheckbox = false;
     }
   }
 

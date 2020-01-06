@@ -182,7 +182,7 @@
                 <ion-col size="1.5" *ngIf="individualButton === true"
                   style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
                   <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
-                    [(ngModel)]="mainListCheckbox" [indeterminate]="indeterminate" (click)="headerList()">
+                    [indeterminate]="indeterminate" [disabled]=true (click)="headerList()">
                   </ion-checkbox>
                 </ion-col>
                 <ion-col size="1.5" *ngIf="individualButton === false"></ion-col>
@@ -205,7 +205,8 @@
               </ion-row>
             </div>
 
-            <div style="height: calc( 100% - 194px);overflow: auto;" *ngIf="!filterSpinner">
+            <div [style.height]="individualButton === true? 'calc( 100% - 194px)':'calc( 100% - 271px)'"
+              style="overflow: auto;" *ngIf="!filterSpinner">
               <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of userList; let i=index">
                 <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
                   <ion-avatar class="avatar" *ngIf="individualButton === true"
@@ -215,7 +216,7 @@
                     <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
                       <ion-checkbox mode="ios"
                         style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
-                        [(ngModel)]="item.isChecked" (ionChange)="contentList()">
+                        [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
                       </ion-checkbox>
                     </div>
                   </ion-avatar>
@@ -243,6 +244,12 @@
                 padding-bottom: 1%;"></ion-item>
               </ion-row>
             </div>
+            <div [style.height]="individualButton === true? 'calc( 100% - 194px)':'calc( 100% - 271px)'"
+              style="overflow: auto;" *ngIf="filterSpinner">
+              <div style="width: 100%; height:100%; text-align: center; margin-top: -30px">
+                <app-spinner></app-spinner>
+              </div>
+            </div>
             <div style="text-align: right;">
               <ion-button fill="outline"
                 style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 190px;font-size: 11px;text-transform: none">
@@ -253,11 +260,6 @@
                 color="primary">
                 Produce Report
               </ion-button>
-            </div>
-            <div style="height: calc( 100% - 156px);overflow: auto;" *ngIf="filterSpinner">
-              <div style="width: 100%; height:100%; text-align: center; margin-top: -30px">
-                <app-spinner></app-spinner>
-              </div>
             </div>
           </div>
         </div>
