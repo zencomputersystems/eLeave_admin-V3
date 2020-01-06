@@ -130,9 +130,12 @@
                     Company</p>
                   <mat-form-field appearance="outline"
                     style="height: 50px;font-size: 12px;width: 90%;color:#43425d;opacity: 0.8;">
-                    <mat-select>
-                      <mat-option selected>Nothing Selected</mat-option>
-                      <mat-option *ngFor="let company of companyList" [value]="company.TENANT_COMPANY_GUID">
+                    <mat-select [(value)]="companyValue">
+                      <mat-option value="Nothing Selected" (click)="filteredCompany = userList;selection = 'company';">
+                        Nothing Selected
+                      </mat-option>
+                      <mat-option *ngFor="let company of companyList" [value]="company.TENANT_COMPANY_GUID"
+                        (click)="selectedCompany(company.TENANT_COMPANY_GUID)">
                         {{company.NAME}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -142,10 +145,13 @@
                     Department</p>
                   <mat-form-field appearance="outline"
                     style="height: 50px;font-size: 12px;width: 90%;color:#43425d;opacity: 0.8;">
-                    <mat-select>
-                      <mat-option>Nothing Selected</mat-option>
-                      <mat-option *ngFor="let department of departmentList" [value]="department.DEPARTMENT">
-                        {{department.DEPARTMENT}}</mat-option>
+                    <mat-select [(value)]="departmentValue">
+                      <mat-option value="Nothing Selected"
+                        (click)="filteredDepartment = filteredCompany;selection = 'department'">Nothing
+                        Selected</mat-option>
+                      <mat-option *ngFor=" let department of departmentList" [value]="department.department"
+                        (click)="selectedDepartment(department.department)">
+                        {{department.department}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </ion-col>
@@ -154,9 +160,12 @@
                     Branch</p>
                   <mat-form-field appearance="outline"
                     style="height: 50px;font-size: 12px;width: 90%;color:#43425d;opacity: 0.8;">
-                    <mat-select>
-                      <mat-option>Nothing Selected</mat-option>
-                      <mat-option *ngFor="let branch of branchList" [value]="branch.BRANCH">
+                    <mat-select [(value)]="branchValue">
+                      <mat-option value="Nothing Selected"
+                        (click)="filteredBranch = filteredDepartment; selection = 'branch';">Nothing
+                        Selected</mat-option>
+                      <mat-option *ngFor="let branch of branchList" [value]="branch.BRANCH"
+                        (click)="selectedBranch(branch.BRANCH)">
                         {{branch.BRANCH}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -168,8 +177,8 @@
                     Cost Centre</p>
                   <mat-form-field appearance="outline"
                     style="height: 50px;font-size: 12px;width: 90%;color:#43425d;opacity: 0.8;">
-                    <mat-select>
-                      <mat-option>Nothing Selected</mat-option>
+                    <mat-select [(value)]="costCentreValue">
+                      <mat-option value="Nothing Selected">Nothing Selected</mat-option>
                       <mat-option *ngFor="let item of costcentre" [value]="item.COSTCENTRE">
                         {{item.COSTCENTRE}}</mat-option>
                     </mat-select>
@@ -198,7 +207,7 @@
                   text-overflow: ellipsis;overflow: hidden;">
                   DESIGNATION
                 </ion-col>
-                <ion-col size="2.3" align-self-center style="text-align: center;white-space: nowrap;
+                <ion-col size="2.3" align-self-center style="white-space: nowrap;
                   text-overflow: ellipsis;overflow: hidden;">
                   DEPARTMENT
                 </ion-col>
@@ -207,42 +216,199 @@
 
             <div [style.height]="individualButton === true? 'calc( 100% - 194px)':'calc( 100% - 271px)'"
               style="overflow: auto;" *ngIf="!filterSpinner">
-              <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of userList; let i=index">
-                <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
-                  <ion-avatar class="avatar" *ngIf="individualButton === true"
-                    (mouseover)="hoverValue(i, true, item.isChecked)" (mouseout)="hoverValue(i, false, item.isChecked)">
-                    <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
-                      [style.display]="hideImg[i] ? 'none' : 'block'">
-                    <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
-                      <ion-checkbox mode="ios"
-                        style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
-                        [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
-                      </ion-checkbox>
-                    </div>
-                  </ion-avatar>
-                  <ion-avatar class="avatar" *ngIf="individualButton === false">
-                    <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
-                  </ion-avatar>
-                </ion-col>
-                <ion-col size="1" align-self-center
-                  style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                  {{item.staffNumber}}
-                </ion-col>
-                <ion-col size="4" align-self-center
-                  style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color: #43425d;opacity: 0.8;">
-                  {{item.employeeName}}
-                </ion-col>
-                <ion-col size="2.3" align-self-center
-                  style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                  {{item.designation}}
-                </ion-col>
-                <ion-col size="2.3" align-self-center
-                  style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                  {{item.department}}
-                </ion-col>
-                <ion-item lines="full" style=" --min-height: none;width: 100%;padding-top: 1%;
+              <ng-container *ngIf="selection == 'noSelection'">
+                <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of userList; let i=index">
+                  <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
+                    <ion-avatar class="avatar" *ngIf="individualButton === true"
+                      (mouseover)="hoverValue(i, true, item.isChecked)"
+                      (mouseout)="hoverValue(i, false, item.isChecked)">
+                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                        [style.display]="hideImg[i] ? 'none' : 'block'">
+                      <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                        <ion-checkbox mode="ios"
+                          style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                          [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                        </ion-checkbox>
+                      </div>
+                    </ion-avatar>
+                    <ion-avatar class="avatar" *ngIf="individualButton === false">
+                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
+                    </ion-avatar>
+                  </ion-col>
+                  <ion-col size="1" align-self-center
+                    style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    {{item.staffNumber}}
+                  </ion-col>
+                  <ion-col size="4" align-self-center
+                    style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color: #43425d;opacity: 0.8;">
+                    {{item.employeeName}}
+                  </ion-col>
+                  <ion-col size="2.3" align-self-center
+                    style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    {{item.designation}}
+                  </ion-col>
+                  <ion-col size="2.3" align-self-center
+                    style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    {{item.department}}
+                  </ion-col>
+                  <ion-item lines="full" style=" --min-height: none;width: 100%;padding-top: 1%;
+                    padding-bottom: 1%;"></ion-item>
+                </ion-row>
+              </ng-container>
+              <ng-container *ngIf="selection == 'company'">
+                <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of filteredCompany; let i=index">
+                  <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
+                    <ion-avatar class="avatar" *ngIf="individualButton === true"
+                      (mouseover)="hoverValue(i, true, item.isChecked)"
+                      (mouseout)="hoverValue(i, false, item.isChecked)">
+                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                        [style.display]="hideImg[i] ? 'none' : 'block'">
+                      <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                        <ion-checkbox mode="ios"
+                          style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                          [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                        </ion-checkbox>
+                      </div>
+                    </ion-avatar>
+                    <ion-avatar class="avatar" *ngIf="individualButton === false">
+                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
+                    </ion-avatar>
+                  </ion-col>
+                  <ion-col size="1" align-self-center
+                    style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    {{item.staffNumber}}
+                  </ion-col>
+                  <ion-col size="4" align-self-center
+                    style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color: #43425d;opacity: 0.8;">
+                    {{item.employeeName}}
+                  </ion-col>
+                  <ion-col size="2.3" align-self-center
+                    style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    {{item.designation}}
+                  </ion-col>
+                  <ion-col size="2.3" align-self-center
+                    style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    {{item.department}}
+                  </ion-col>
+                  <ion-item lines="full" style=" --min-height: none;width: 100%;padding-top: 1%;
+                    padding-bottom: 1%;"></ion-item>
+                </ion-row>
+              </ng-container>
+              <ng-container *ngIf="selection == 'department'">
+                <ion-row class="detailsRow" style="font-size: 12px;"
+                  *ngFor="let item of filteredDepartment; let i=index">
+                  <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
+                    <ion-avatar class="avatar" *ngIf="individualButton === true"
+                      (mouseover)="hoverValue(i, true, item.isChecked)"
+                      (mouseout)="hoverValue(i, false, item.isChecked)">
+                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                        [style.display]="hideImg[i] ? 'none' : 'block'">
+                      <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                        <ion-checkbox mode="ios"
+                          style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                          [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                        </ion-checkbox>
+                      </div>
+                    </ion-avatar>
+                    <ion-avatar class="avatar" *ngIf="individualButton === false">
+                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
+                    </ion-avatar>
+                  </ion-col>
+                  <ion-col size="1" align-self-center
+                    style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    {{item.staffNumber}}
+                  </ion-col>
+                  <ion-col size="4" align-self-center
+                    style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color: #43425d;opacity: 0.8;">
+                    {{item.employeeName}}
+                  </ion-col>
+                  <ion-col size="2.3" align-self-center
+                    style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    {{item.designation}}
+                  </ion-col>
+                  <ion-col size="2.3" align-self-center
+                    style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    {{item.department}}
+                  </ion-col>
+                  <ion-item lines="full" style=" --min-height: none;width: 100%;padding-top: 1%;
+                    padding-bottom: 1%;"></ion-item>
+                </ion-row>
+              </ng-container>
+              <ng-container *ngIf="selection == 'branch'">
+                <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of filteredBranch; let i=index">
+                  <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
+                    <ion-avatar class="avatar" *ngIf="individualButton === true"
+                      (mouseover)="hoverValue(i, true, item.isChecked)"
+                      (mouseout)="hoverValue(i, false, item.isChecked)">
+                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                        [style.display]="hideImg[i] ? 'none' : 'block'">
+                      <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                        <ion-checkbox mode="ios"
+                          style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                          [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                        </ion-checkbox>
+                      </div>
+                    </ion-avatar>
+                    <ion-avatar class="avatar" *ngIf="individualButton === false">
+                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
+                    </ion-avatar>
+                  </ion-col>
+                  <ion-col size="1" align-self-center
+                    style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    {{item.staffNumber}}
+                  </ion-col>
+                  <ion-col size="4" align-self-center
+                    style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color: #43425d;opacity: 0.8;">
+                    {{item.employeeName}}
+                  </ion-col>
+                  <ion-col size="2.3" align-self-center
+                    style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    {{item.designation}}
+                  </ion-col>
+                  <ion-col size="2.3" align-self-center
+                    style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    {{item.department}}
+                  </ion-col>
+                  <ion-item lines="full" style=" --min-height: none;width: 100%;padding-top: 1%;
+                    padding-bottom: 1%;"></ion-item>
+                </ion-row>
+              </ng-container>
+              <!-- <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of userList; let i=index"> -->
+              <!-- <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
+                <ion-avatar class="avatar" *ngIf="individualButton === true"
+                  (mouseover)="hoverValue(i, true, item.isChecked)" (mouseout)="hoverValue(i, false, item.isChecked)">
+                  <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                    [style.display]="hideImg[i] ? 'none' : 'block'">
+                  <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                    <ion-checkbox mode="ios"
+                      style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                      [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                    </ion-checkbox>
+                  </div>
+                </ion-avatar>
+                <ion-avatar class="avatar" *ngIf="individualButton === false">
+                  <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
+                </ion-avatar>
+              </ion-col>
+              <ion-col size="1" align-self-center
+                style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                {{item.staffNumber}}
+              </ion-col>
+              <ion-col size="4" align-self-center
+                style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color: #43425d;opacity: 0.8;">
+                {{item.employeeName}}
+              </ion-col>
+              <ion-col size="2.3" align-self-center
+                style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                {{item.designation}}
+              </ion-col>
+              <ion-col size="2.3" align-self-center
+                style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                {{item.department}}
+              </ion-col>
+              <ion-item lines="full" style=" --min-height: none;width: 100%;padding-top: 1%;
                 padding-bottom: 1%;"></ion-item>
-              </ion-row>
+              </ion-row> -->
             </div>
             <div [style.height]="individualButton === true? 'calc( 100% - 194px)':'calc( 100% - 271px)'"
               style="overflow: auto;" *ngIf="filterSpinner">
@@ -252,6 +418,7 @@
             </div>
             <div style="text-align: right;">
               <ion-button fill="outline"
+                (click)="companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';"
                 style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 190px;font-size: 11px;text-transform: none">
                 Clear
               </ion-button>

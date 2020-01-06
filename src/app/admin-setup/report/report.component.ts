@@ -127,6 +127,63 @@ export class ReportComponent implements OnInit {
   public costcentre: any;
 
   /**
+   * list depends on selections 
+   * @type {string}
+   * @memberof ReportComponent
+   */
+  public selection: string = 'noSelection';
+
+  /**
+   * filtered company list
+   * @type {*}
+   * @memberof ReportComponent
+   */
+  public filteredCompany: any;
+
+  /**
+   * filtered department list
+   * @type {*}
+   * @memberof ReportComponent
+   */
+  public filteredDepartment: any;
+
+  /**
+   * filtered branch list
+   * @type {*}
+   * @memberof ReportComponent
+   */
+  public filteredBranch: any;
+
+  /**
+   * company list ngmodel value
+   * @type {string}
+   * @memberof ReportComponent
+   */
+  public companyValue: string = 'Nothing Selected';
+
+  /**
+   * department list ngmodel value
+   * @type {string}
+   * @memberof ReportComponent
+   */
+  public departmentValue: string = 'Nothing Selected';
+
+  /**
+   * branch list ngmodel value
+   * @type {string}
+   * @memberof ReportComponent
+   */
+  public branchValue: string = 'Nothing Selected';
+
+  /**
+   * costcentre list ngmodel value
+   * @type {string}
+   * @memberof ReportComponent
+   */
+  public costCentreValue: string = 'Nothing Selected';
+
+
+  /**
    *Creates an instance of ReportComponent.
    * @param {LeaveApiService} leaveAPI
    * @param {APIService} api
@@ -151,7 +208,7 @@ export class ReportComponent implements OnInit {
     });
     this.userNameList();
     this.leaveAPI.get_company_list().subscribe(data => this.companyList = data);
-    this.api.get_master_list('department').subscribe(data => this.departmentList = data);
+    // this.api.get_master_list('department').subscribe(data => this.departmentList = data);
     this.api.get_master_list('branch').subscribe(data => this.branchList = data);
     this.api.get_master_list('costcentre').subscribe(data => this.costcentre = data);
   }
@@ -160,7 +217,7 @@ export class ReportComponent implements OnInit {
    * get all user list
    * @memberof ReportComponent
    */
-  userNameList() {
+  userNameList(guid?: string) {
     this.filterSpinner = true;
     this.api.get_user_profile_list().subscribe(list => {
       this.userList = list;
@@ -168,8 +225,84 @@ export class ReportComponent implements OnInit {
         this.userList[i]["isChecked"] = false;
         this.userList[i]["disabled"] = false;
       }
+      if (guid != null) {
+        this.filterCompany(guid);
+      }
       this.filterSpinner = false;
     });
+  }
+
+  /**
+   * filter user list from selected company
+   * @param {string} guid
+   * @memberof ReportComponent
+   */
+  filterCompany(guid: string) {
+    let company = this.userList.filter((item: any) => {
+      if (item.companyId !== null) {
+        return (item.companyId.toLowerCase().indexOf(guid.toLowerCase()) > -1);
+      }
+    })
+    this.filteredCompany = company;
+  }
+
+  /**
+   * select company to filter department
+   * @param {string} guid
+   * @memberof ReportComponent
+   */
+  selectedCompany(guid: string) {
+    this.selection = "company";
+    this.leaveAPI.get_company_details(guid).subscribe(list => {
+      this.departmentList = list.departmentList;
+    })
+    this.userNameList(guid);
+  }
+
+  /**
+   * select department to filter list
+   * @param {string} departmentname
+   * @memberof ReportComponent
+   */
+  selectedDepartment(departmentname: string) {
+    this.selection = "department";
+    let department = this.filteredCompany.filter((item: any) => {
+      if (item.department !== null) {
+        return (item.department.toLowerCase().indexOf(departmentname.toLowerCase()) > -1);
+      }
+    })
+    this.filteredDepartment = department;
+  }
+
+  /**
+   * select branch to filter list
+   * @param {string} branchName
+   * @memberof ReportComponent
+   */
+  selectedBranch(branchName: string) {
+    this.selection = "branch";
+    if (this.departmentValue !== 'Nothing Selected' && this.companyValue !== 'Nothing Selected') {
+      let branch = this.filteredDepartment.filter((item: any) => {
+        if (item.branch !== null) {
+          return (item.branch.toLowerCase().indexOf(branchName.toLowerCase()) > -1);
+        }
+      })
+      this.filteredBranch = branch;
+    } else if (this.companyValue !== 'Nothing Selected' && this.departmentValue == 'Nothing Selected') {
+      let branch = this.filteredCompany.filter((item: any) => {
+        if (item.branch !== null) {
+          return (item.branch.toLowerCase().indexOf(branchName.toLowerCase()) > -1);
+        }
+      })
+      this.filteredBranch = branch;
+    } else {
+      let branch = this.userList.filter((item: any) => {
+        if (item.branch !== null) {
+          return (item.branch.toLowerCase().indexOf(branchName.toLowerCase()) > -1);
+        }
+      })
+      this.filteredBranch = branch;
+    }
   }
 
   /**
