@@ -163,6 +163,13 @@ export class ReportComponent implements OnInit {
   public filteredBranch: any;
 
   /**
+   * filtered cost centre list
+   * @type {*}
+   * @memberof ReportComponent
+   */
+  public filteredCostCentre: any;
+
+  /**
    * company list ngmodel value
    * @type {string}
    * @memberof ReportComponent
@@ -309,6 +316,37 @@ export class ReportComponent implements OnInit {
         }
       })
       this.filteredBranch = branch;
+    }
+  }
+
+  /**
+   * select cost centre to filter list
+   * @param {string} name
+   * @memberof ReportComponent
+   */
+  selectedCostCentre(name: string) {
+    this.selection = "costcentre";
+    if (this.departmentValue !== 'Nothing Selected' && this.companyValue !== 'Nothing Selected') {
+      let costCentre = this.filteredDepartment.filter((val: any) => {
+        if (val.costcentre !== null) {
+          return (val.costcentre.toLowerCase().indexOf(name.toLowerCase()) > -1);
+        }
+      })
+      this.filteredCostCentre = costCentre;
+    } else if (this.departmentValue == 'Nothing Selected') {
+      let costCentreVal = this.filteredCompany.filter((items: any) => {
+        if (items.costcentre !== null) {
+          return (items.costcentre.toLowerCase().indexOf(name.toLowerCase()) > -1);
+        }
+      })
+      this.filteredCostCentre = costCentreVal;
+    } else {
+      let costCentre = this.userList.filter((costCentreItem: any) => {
+        if (costCentreItem.costcentre !== null) {
+          return (costCentreItem.costcentre.toLowerCase().indexOf(name.toLowerCase()) > -1);
+        }
+      })
+      this.filteredCostCentre = costCentre;
     }
   }
 
