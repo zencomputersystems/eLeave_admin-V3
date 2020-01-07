@@ -119,7 +119,7 @@
         <div style="text-align: center;margin:30px">
             <ion-button
                 style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                color="primary" (click)="postData();menu.close('createCalendarDetails');"
+                color="primary" (click)="postData();sharedService.menu.close('createCalendarDetails');"
                 [disabled]="!profileName.valid">
                 Create
             </ion-button>
@@ -243,7 +243,7 @@
                                     EMPLOYEE</ion-col> -->
                                 <ion-col align-self-center style="text-align: right;">
                                     <ion-icon class="addIcon" name="add-circle-outline" *ngIf="modeValue == 'ON'"
-                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null;restDay=[]; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.open('createCalendarDetails');">
+                                        (click)="dayControl.reset();slideInOut = false;clickedIndex = null;restDay=[]; sharedService.menu.enable(true, 'createCalendarDetails');sharedService.menu.enable(false, 'addHolidayDetails');sharedService.menu.enable(false, 'addHolidayDetails');sharedService.menu.open('createCalendarDetails');">
                                     </ion-icon>
                                     <!-- <p *ngIf="!showAddIcon" style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
             margin-top: -21px;margin-left: 20px;"
@@ -392,8 +392,8 @@
                                 <ion-col size="3" align-self-center style="text-align: right;"
                                     *ngIf="modeValue == 'ON'">
                                     <ion-icon class="addIcon" name="add-circle-outline" *ngIf="modeValue == 'ON'"
-                                        (click)="menu.enable(true, 'addHolidayDetails');menu.enable(false, 'createCalendarDetails');
-                                    menu.open('addHolidayDetails');addNewPH(undefined, undefined)"></ion-icon>
+                                        (click)="sharedService.menu.enable(true, 'addHolidayDetails');sharedService.menu.enable(false, 'createCalendarDetails');
+                                        sharedService.menu.open('addHolidayDetails');addNewPH(undefined, undefined)"></ion-icon>
                                 </ion-col>
                             </ion-row>
                         </div>

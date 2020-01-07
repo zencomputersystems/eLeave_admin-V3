@@ -6,6 +6,7 @@ import { DeleteCalendarConfirmationComponent } from '../delete-calendar-confirma
 import { MenuController } from '@ionic/angular';
 import { Validators, FormControl } from '@angular/forms';
 import { entitlementData } from './leave-entitlement-data';
+import { SharedService } from '../shared.service';
 
 /**
  * Leave entitlement setup page
@@ -178,7 +179,7 @@ export class LeaveEntitlementComponent implements OnInit {
    * @param {MenuController} menu
    * @memberof LeaveEntitlementComponent
    */
-  constructor(private entitlementApi: LeaveEntitlementApiService, private leaveApi: LeaveApiService, private menu: MenuController) {
+  constructor(private entitlementApi: LeaveEntitlementApiService, private leaveApi: LeaveApiService, private sharedService: SharedService) {
     this.abbreviation = new FormControl('', Validators.required);
     this.leaveTypeName = new FormControl('', Validators.required);
   }
@@ -275,7 +276,7 @@ export class LeaveEntitlementComponent implements OnInit {
    * @memberof LeaveEntitlementComponent
    */
   async patchProfile() {
-    this.menu.close('editLeaveTypeDetails');
+    this.sharedService.menu.close('editLeaveTypeDetails');
     for (let j = 0; j < this.getEntitlementbyType.length; j++) {
       let XMLDetails = await this.entitlementApi.get_leavetype_entitlement_id(this.getEntitlementbyType[j].leaveEntitlementId).toPromise();
       const data = {
@@ -342,6 +343,7 @@ export class LeaveEntitlementComponent implements OnInit {
         this.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
       })
     }
+    this.sharedService.emitChange(this.mainToggle);
   }
 
   /**
@@ -380,7 +382,7 @@ export class LeaveEntitlementComponent implements OnInit {
         this.ngOnInit();
         this.newLeaveTypeId = '';
         this.leaveApi.openSnackBar('New leave entitlement profile was added', true);
-        this.menu.close('editLeaveTypeDetails');
+        this.sharedService.menu.close('editLeaveTypeDetails');
       })
     }
   }
@@ -402,7 +404,7 @@ export class LeaveEntitlementComponent implements OnInit {
     this.leaveTypeName.reset();
     this.newProfileList = { 'name': 'Default', 'description': 'Default Leave Entitlement' };
     this.leaveApi.openSnackBar('New leave entitlement profile was added', true);
-    this.menu.close('createNewTypeDetails');
+    this.sharedService.menu.close('createNewTypeDetails');
   }
 
   /**
@@ -418,7 +420,7 @@ export class LeaveEntitlementComponent implements OnInit {
     let val = await dialogRef.afterClosed().toPromise();
     if (val === this.entitlementTypeNew) {
       this.entitlementApi.delete_leavetype(this.entitlementTypeNew).subscribe(res => {
-        this.menu.close('editLeaveTypeDetails');
+        this.sharedService.menu.close('editLeaveTypeDetails');
         this.ngOnInit();
         this.leaveApi.openSnackBar('Leave type & attached profile was deleted', true);
       })

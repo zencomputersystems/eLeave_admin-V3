@@ -77,7 +77,7 @@
             <!-- CF leaves -->
             <ion-list lines="none">
                 <ion-item class="ionItem">
-                    <ion-label [style.opacity]="policyForm.controls.CF.value === true ? '1 ': '' ">Forfeit carried
+                    <ion-label [style.opacity]="policyForm.controls.CF.value === true ? '0.8': '' ">Forfeit carried
                         forward leaves on:
                     </ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" (click)="CF = !CF" formControlName="CF"
@@ -116,7 +116,7 @@
             <!-- Year end closing -->
             <ion-list lines="none">
                 <ion-item class="ionItem">
-                    <ion-label [style.opacity]="policyForm.controls.yearEnd.value === true ? '1': '' ">Allow year end
+                    <ion-label [style.opacity]="policyForm.controls.yearEnd.value === true ? '0.8': '' ">Allow year end
                         closing after:
                     </ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" formControlName="yearEnd"
@@ -162,7 +162,8 @@
             <!-- Apply on behalf -->
             <ion-list lines="none">
                 <ion-item class="ionItem">
-                    <ion-label [style.opacity]="policyForm.controls.onBehalf.value === true ? '1': '' ">Apply on behalf
+                    <ion-label [style.opacity]="policyForm.controls.onBehalf.value === true ? '0.8': '' ">Apply on
+                        behalf
                         feature requires
                         employee to confirm the application</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" formControlName="onBehalf"
@@ -175,7 +176,7 @@
             <!-- Email reminder -->
             <ion-list lines="none">
                 <ion-item class="ionItem">
-                    <ion-label [style.opacity]="policyForm.controls.email.value === true ? '1' : '' ">Email reminder
+                    <ion-label [style.opacity]="policyForm.controls.email.value === true ? '0.8' : '' ">Email reminder
                     </ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" formControlName="email"
                         [checked]="email.value" (click)="email = !email">

@@ -11,6 +11,7 @@ import { DeleteCalendarConfirmationComponent } from '../delete-calendar-confirma
 import { trigger, transition, animate, style } from '@angular/animations'
 import { MenuController } from '@ionic/angular';
 import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.component';
+import { SharedService } from '../shared.service';
 
 /**
  * Manage holiday and rest day for employee
@@ -240,10 +241,10 @@ export class CalendarProfileComponent implements OnInit {
      *Creates an instance of CalendarProfileComponent.
      * @param {CalendarProfileApiService} calendarProfileAPI
      * @param {TitleCasePipe} titlecasePipe
-     * @param {MenuController} menu
+     * @param {SharedService} sharedService
      * @memberof CalendarProfileComponent
      */
-    constructor(private calendarProfileAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, private menu: MenuController) {
+    constructor(private calendarProfileAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, private sharedService: SharedService) {
     }
 
     /**
@@ -576,7 +577,7 @@ export class CalendarProfileComponent implements OnInit {
     combineEvent() {
         Array.prototype.push.apply(this.events, this.menuNewHoliday);
         this.calendarProfileAPI.notification('New public holiday(s) was added successfully.', true);
-        this.menu.close('addHolidayDetails');
+        this.sharedService.menu.close('addHolidayDetails');
         this.menuNewHoliday = [];
     }
 
@@ -611,11 +612,11 @@ export class CalendarProfileComponent implements OnInit {
                 height: "343.3px",
                 width: "383px"
             });
-
         } else {
             this.modeValue = 'OFF'
             this.saveData();
         }
+        this.sharedService.emitChange(this.modeValue);
     }
 
     /**

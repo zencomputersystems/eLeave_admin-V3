@@ -329,7 +329,7 @@
                   CREATE NEW LEAVE TYPE HERE</ion-col>
                 <ion-button style="--border-radius: 2px;text-transform: none;height: 29px; width: 29%;font-size: 11px;"
                   color="primary"
-                  (click)="menu.open('createNewTypeDetails');menu.enable(true, 'createNewTypeDetails'); menu.enable(false, 'editLeaveTypeDetails')">
+                  (click)="sharedService.menu.open('createNewTypeDetails');sharedService.menu.enable(true, 'createNewTypeDetails'); sharedService.menu.enable(false, 'editLeaveTypeDetails')">
                   Create New
                 </ion-button>
               </ion-row>
@@ -345,7 +345,7 @@
                   <ion-col align-self-center style="text-align: right;padding-right: 10px;">
                     <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mainToggle === 'ON'"
                       style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
-                      (click)="entitlementTypeNew = type.leaveTypeId;abbr = type.ABBR;name= type.name;menu.open('editLeaveTypeDetails'); menu.enable(false, 'createNewTypeDetails');menu.enable(true,'editLeaveTypeDetails')">
+                      (click)="entitlementTypeNew = type.leaveTypeId;abbr = type.ABBR;name= type.name;sharedService.menu.open('editLeaveTypeDetails'); sharedService.menu.enable(false, 'createNewTypeDetails');sharedService.menu.enable(true,'editLeaveTypeDetails')">
                   </ion-col>
                 </ion-row>
               </div>

@@ -5,6 +5,7 @@ import { MenuController } from '@ionic/angular';
 import { PolicyApiService } from '../policy-api.service';
 import { Validators, FormControl } from '@angular/forms';
 import { DeleteCalendarConfirmationComponent } from '../../leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
+import { SharedService } from '../../leave-setup/shared.service';
 
 /**
  * List for all leave policy
@@ -134,11 +135,11 @@ export class PolicyListComponent implements OnInit {
     /**
      *Creates an instance of PolicyListComponent.
      * @param {LeaveApiService} leaveAPi
-     * @param {MenuController} menu
      * @param {PolicyApiService} policyApi
+     * @param {SharedService} sharedService
      * @memberof PolicyListComponent
      */
-    constructor(private leaveAPi: LeaveApiService, private menu: MenuController, private policyApi: PolicyApiService) { }
+    constructor(private leaveAPi: LeaveApiService, private policyApi: PolicyApiService, private sharedService: SharedService) { }
 
     /**
      * Set initial value to the properties & get endpoint value
@@ -196,10 +197,10 @@ export class PolicyListComponent implements OnInit {
                 height: "316.3px",
                 width: "383px"
             });
-
         } else {
             this.modeValue = 'OFF'
         }
+        this.sharedService.emitChange(this.modeValue);
     }
 
     /**
@@ -223,7 +224,7 @@ export class PolicyListComponent implements OnInit {
     createNewCompany() {
         this.policyApi.post_company_name(this.newName.value).subscribe(response => {
             this.policyApi.message('New company was created successfully', true);
-            this.menu.close('createCompanyDetails');
+            this.sharedService.menu.close('createCompanyDetails');
             this.newName.reset();
             this.ngOnInit();
         });
@@ -257,7 +258,7 @@ export class PolicyListComponent implements OnInit {
     updateCompanyName() {
         this.policyApi.patch_company_name({ "id": this.companyId, "name": this.editName.value }).subscribe(res => {
             this.policyApi.message('New company was updated successfully', true);
-            this.menu.close('editCompanyDetails');
+            this.sharedService.menu.close('editCompanyDetails');
             this.editName.reset();
             this.ngOnInit();
         })

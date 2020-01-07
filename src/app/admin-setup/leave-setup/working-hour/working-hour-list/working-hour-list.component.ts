@@ -4,6 +4,7 @@ import { MatDialog } from "@angular/material";
 import { DeleteCalendarConfirmationComponent } from "../../delete-calendar-confirmation/delete-calendar-confirmation.component";
 import { MenuController } from "@ionic/angular";
 import { EditModeDialogComponent } from "../../edit-mode-dialog/edit-mode-dialog.component";
+import { SharedService } from "../../shared.service";
 
 /**
  * working hour profile list page
@@ -97,7 +98,7 @@ export class WorkingHourListComponent implements OnInit {
      * @param {MenuController} menu
      * @memberof WorkingHourListComponent
      */
-    constructor(private workingHrAPI: WorkingHourApiService, public dialog: MatDialog, private menu: MenuController) {
+    constructor(private workingHrAPI: WorkingHourApiService, public dialog: MatDialog, private sharedService: SharedService) {
     }
 
     /**
@@ -162,6 +163,7 @@ export class WorkingHourListComponent implements OnInit {
             this.mode = 'OFF'
             this.workingHrAPI.showPopUp('Edit mode disabled. Good job!', true);
         }
+        this.sharedService.emitChange(this.mode);
     }
 
     /**

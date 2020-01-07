@@ -42,6 +42,8 @@ import { EditModeDialogComponent } from './edit-mode-dialog/edit-mode-dialog.com
 import { DndModule } from 'ngx-drag-drop';
 import { LeaveEntitlementComponent } from './leave-entitlement/leave-entitlement.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { SharedService } from './shared.service';
+import { RouteDialogComponent } from './route-dialog/route-dialog.component';
 
 const routes: Routes = [
     {
@@ -84,10 +86,10 @@ const routes: Routes = [
         MatMenuModule,
         RouterModule.forChild(routes)
     ],
-    providers: [AssignCalendarTreeviewService],
-    entryComponents: [SnackbarNotificationComponent, DeleteCalendarConfirmationComponent, EditModeDialogComponent],
+    providers: [AssignCalendarTreeviewService, SharedService],
+    entryComponents: [SnackbarNotificationComponent, DeleteCalendarConfirmationComponent, EditModeDialogComponent, RouteDialogComponent],
     declarations: [CalendarProfileComponent, LeaveSetupComponent, SnackbarNotificationComponent, DeleteCalendarConfirmationComponent,
         ApplyOnBehalfComponent, ApprovalOverrideComponent, LeaveAdjustmentComponent, LeaveEntitlementByBatchComponent, WorkingHourComponent,
-        WorkingHourListComponent, EditModeDialogComponent, LeaveEntitlementComponent]
+        WorkingHourListComponent, EditModeDialogComponent, LeaveEntitlementComponent, RouteDialogComponent]
 })
 export class LeaveSetupModule { }

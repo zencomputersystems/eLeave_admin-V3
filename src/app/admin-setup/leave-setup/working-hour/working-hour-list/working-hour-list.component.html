@@ -99,7 +99,7 @@
                                     ASSIGNED EMPLOYEE NO.</ion-col>
                                 <ion-col size="1.5" align-self-center style="text-align: right;padding-right: 10px;">
                                     <ion-icon *ngIf="mode==='ON'" class="addIcon" name="add-circle-outline"
-                                        (click)="clickedIndex=null;id='';menu.enable(true, 'createWorkingHourDetails');menu.enable(false, 'editWorkingHourDetails');menu.open('createWorkingHourDetails');">
+                                        (click)="clickedIndex=null;id='';sharedService.menu.enable(true, 'createWorkingHourDetails');sharedService.menu.enable(false, 'editWorkingHourDetails');sharedService.menu.open('createWorkingHourDetails');">
                                     </ion-icon>
                                 </ion-col>
                             </ion-row>
@@ -163,7 +163,7 @@
                                             <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mode==='ON'"
                                                 style="width: 11px;height:11px;display: inline-block;"
                                                 [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
-                                                (click)="id=item.working_hours_guid;menu.enable(true, 'editWorkingHourDetails');menu.enable(false, 'createWorkingHourDetails');menu.open('editWorkingHourDetails'); ">
+                                                (click)="id=item.working_hours_guid;sharedService.menu.enable(true, 'editWorkingHourDetails');sharedService.menu.enable(false, 'createWorkingHourDetails');sharedService.menu.open('editWorkingHourDetails'); ">
                                             &nbsp;&nbsp;
                                             <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mode==='ON'"
                                                 style="width: 11px;height:11px;display: inline-block;"

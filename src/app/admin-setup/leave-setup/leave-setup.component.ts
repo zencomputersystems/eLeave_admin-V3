@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { SharedService } from './shared.service';
+import { EditModeDialogComponent } from './edit-mode-dialog/edit-mode-dialog.component';
+import { MatDialog } from '@angular/material';
+import { RouteDialogComponent } from './route-dialog/route-dialog.component';
 
 /**
  * Leave header with router-outlet page 
@@ -28,6 +32,13 @@ export class LeaveSetupComponent implements OnInit {
      * @memberof LeaveSetupComponent
      */
     public url: string;
+
+    /**
+     * toggle mode on off value
+     * @type {string}
+     * @memberof LeaveSetupComponent
+     */
+    public emittedValue: string;
 
     /**
      * link of the leave setup
@@ -65,13 +76,20 @@ export class LeaveSetupComponent implements OnInit {
      * @param {Router} router
      * @memberof LeaveSetupComponent
      */
-    constructor(private router: Router) {
+    constructor(private router: Router, private _sharedService: SharedService, public dialog: MatDialog) {
         router.events
             .pipe(filter(e => e instanceof NavigationEnd))
             .subscribe((e: NavigationEnd) => {
                 this.checkUrl(e.urlAfterRedirects);
             });
+
+        _sharedService.changeEmitted$.subscribe(
+            text => {
+                this.emittedValue = text;
+                console.log(this.emittedValue);
+            });
     }
+
 
     /**
      * initial method to check url
@@ -100,8 +118,15 @@ export class LeaveSetupComponent implements OnInit {
      * @memberof LeaveSetupComponent
      */
     showHighlightMenu(index: number) {
-        this.numOfArray = index;
-        this.router.navigate(this.leaveSetupPage[index].url);
+        if (this.emittedValue == 'OFF' || this.emittedValue == null) {
+            this.numOfArray = index;
+            this.router.navigate(this.leaveSetupPage[index].url);
+        } else {
+            this.dialog.open(RouteDialogComponent, {
+                width: "283px",
+                height: "193px"
+            });
+        }
     }
 
 }
