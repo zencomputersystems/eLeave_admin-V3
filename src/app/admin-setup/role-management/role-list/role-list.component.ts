@@ -1,11 +1,10 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { RoleApiService } from '../role-api.service';
-import { MatDialog } from '@angular/material';
 import { DialogDeleteConfirmationComponent } from '../dialog-delete-confirmation/dialog-delete-confirmation.component';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
-import { MenuController } from '@ionic/angular';
 import { FormControl, Validators } from '@angular/forms';
 import { roleDetails } from '../role-details-data';
+import { SharedService } from '../../leave-setup/shared.service';
 
 /**
  * Show list of role
@@ -118,7 +117,6 @@ export class RoleListComponent implements OnInit {
      */
     @HostBinding('class.menuOverlay') menuOpen: boolean = false;
 
-
     /**
      * user list
      * @private
@@ -146,11 +144,10 @@ export class RoleListComponent implements OnInit {
     /**
      *Creates an instance of RoleListComponent.
      * @param {RoleApiService} roleAPi
-     * @param {MatDialog} dialog open material dialog
-     * @param {MenuController} menu
+     * @param {SharedService} _sharedService
      * @memberof RoleListComponent
      */
-    constructor(private roleAPi: RoleApiService, public dialog: MatDialog, private menu: MenuController) {
+    constructor(private roleAPi: RoleApiService, private _sharedService: SharedService) {
         this.newRoleName = new FormControl('', Validators.required);
         this.newRoleDescription = new FormControl('', Validators.required);
     }
@@ -267,7 +264,7 @@ export class RoleListComponent implements OnInit {
     toggleMode(event) {
         if (event.detail.checked === true) {
             this.mode = 'ON';
-            this.dialog.open(EditModeDialogComponent, {
+            this._sharedService.dialog.open(EditModeDialogComponent, {
                 data: 'role',
                 height: "360.3px",
                 width: "383px"
@@ -277,6 +274,7 @@ export class RoleListComponent implements OnInit {
             this.mode = 'OFF'
             this.roleAPi.snackbarMsg('Edit mode disabled. Good job!', true);
         }
+        this._sharedService.emitChange(this.mode);
     }
 
     /**
@@ -298,7 +296,7 @@ export class RoleListComponent implements OnInit {
             this.newRoleDescription.reset();
             this.ngOnInit();
             this.roleAPi.snackbarMsg('New role profile was created successfully', true);
-            this.menu.close('createNewRoleDetails');
+            this._sharedService.menu.close('createNewRoleDetails');
         })
     }
 
@@ -317,7 +315,7 @@ export class RoleListComponent implements OnInit {
         };
         this.roleAPi.patch_role_profile(body).subscribe(response => {
             this.ngOnInit();
-            this.menu.close('editRoleDetails');
+            this._sharedService.menu.close('editRoleDetails');
             this.roleAPi.snackbarMsg('Role profile was updated successfully', true);
         })
     }
@@ -329,7 +327,7 @@ export class RoleListComponent implements OnInit {
      * @memberof RoleListComponent
      */
     delete(role_guid: string, role_name: string) {
-        const dialogRef = this.dialog.open(DialogDeleteConfirmationComponent, {
+        const dialogRef = this._sharedService.dialog.open(DialogDeleteConfirmationComponent, {
             data: { value: role_guid, name: role_name },
             height: "195px",
             width: "270px"

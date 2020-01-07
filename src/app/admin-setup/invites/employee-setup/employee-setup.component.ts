@@ -11,6 +11,7 @@ import { RoleApiService } from '../../role-management/role-api.service';
 import { ChangeStatusConfimationComponent } from './change-status-confimation/change-status-confimation.component';
 import { DeleteCalendarConfirmationComponent } from '../../leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
 import { personal, employment } from './employee-setup-data';
+import { SharedService } from '../../leave-setup/shared.service';
 
 /**
  *
@@ -342,12 +343,13 @@ export class EmployeeSetupComponent implements OnInit {
 
     /**
      *Creates an instance of EmployeeSetupComponent.
-     * @param {AdminInvitesApiService} inviteAPI
+     * @param {AdminInvitesApiService} inviteAPI access invite API
      * @param {LeaveApiService} leaveApi
      * @param {RoleApiService} roleAPI access role manegement api service
+     * @param {SharedService} _sharedService
      * @memberof EmployeeSetupComponent
      */
-    constructor(private inviteAPI: AdminInvitesApiService, private leaveApi: LeaveApiService, public roleAPI: RoleApiService) {
+    constructor(public inviteAPI: AdminInvitesApiService, private leaveApi: LeaveApiService, public roleAPI: RoleApiService, private _sharedService: SharedService) {
     }
 
     /**
@@ -538,6 +540,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.assignProfile();
             this.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
         }
+        this._sharedService.emitChange(this.mode);
     }
 
     /**

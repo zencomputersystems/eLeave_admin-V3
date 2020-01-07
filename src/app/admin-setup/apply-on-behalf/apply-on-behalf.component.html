@@ -560,14 +560,14 @@
 
                             <div style="text-align: center;width: 90%;">
                                 <ion-button fill="outline"
-                                    (click)="applyLeaveForm.reset(); daysAvailable='';daysCount=0;minDate='';maxDate='';clearArrayList();"
+                                    (click)="applyLeaveForm.reset(); daysAvailable=0;daysCount=0;minDate='';maxDate='';clearArrayList();"
                                     style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 40%;font-size: 12px;text-transform: none">
                                     Clear
                                 </ion-button>
                                 <ion-button
                                     style="--border-radius: 2px;height: 30px; width: 57%;font-size: 12px;text-transform: none"
                                     [disabled]="!applyLeaveForm.valid"
-                                    (click)="postData(); applyLeaveForm.reset();daysAvailable='';daysCount=0;minDate='';maxDate='';">
+                                    (click)="postData(); applyLeaveForm.reset();daysAvailable=0;daysCount=0;minDate='';maxDate='';">
                                     Submit
                                 </ion-button>
                                 <!-- <ion-button *ngIf="radioOption == '2'"

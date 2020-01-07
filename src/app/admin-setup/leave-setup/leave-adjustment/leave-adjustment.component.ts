@@ -152,10 +152,10 @@ export class LeaveAdjustmentComponent implements OnInit {
      *Creates an instance of LeaveAdjustmentComponent.
      * @param {LeaveApiService} leaveSetupAPI
      * @param {APIService} apiService
-     * @param {MatSnackBar} snackBar
+     * @param {MenuController} menu access menu controller
      * @memberof LeaveAdjustmentComponent
      */
-    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService, private menu: MenuController) {
+    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService, public menu: MenuController) {
         this.adjustmentForm = new FormGroup({
             company: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),

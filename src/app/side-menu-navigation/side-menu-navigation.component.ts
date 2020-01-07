@@ -27,10 +27,11 @@ export interface ISideMenu {
 }
 
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
 import { Router, NavigationEnd } from '@angular/router';
 import { APIService } from 'src/services/shared-service/api.service';
 import { filter } from 'rxjs/operators';
+import { SharedService } from '../admin-setup/leave-setup/shared.service';
+import { RouteDialogComponent } from '../admin-setup/leave-setup/route-dialog/route-dialog.component';
 /**
  * Side Menu Navigation Component
  * @export
@@ -70,6 +71,13 @@ export class SideMenuNavigationComponent implements OnInit {
    * @memberof SideMenuNavigationComponent
    */
   public list: any;
+
+  /**
+   * emitted toggle value
+   * @type {string}
+   * @memberof SideMenuNavigationComponent
+   */
+  public emittedData: string;
 
   /**
    * This is local property to show list of menu, url & icon name
@@ -151,18 +159,22 @@ export class SideMenuNavigationComponent implements OnInit {
 
   /**
    *Creates an instance of SideMenuNavigationComponent.
-   * @param {MenuController} menu
    * @param {Router} router
    * @param {APIService} apiService
+   * @param {SharedService} sharedService
    * @memberof SideMenuNavigationComponent
    */
-  constructor(private menu: MenuController, private router: Router,
-    private apiService: APIService
+  constructor(private router: Router, private apiService: APIService, private sharedService: SharedService
   ) {
     router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.getRoute(event.urlAfterRedirects);
+      });
+
+    sharedService.changeEmitted$.subscribe(
+      data => {
+        this.emittedData = data;
       });
   }
 
@@ -201,9 +213,26 @@ export class SideMenuNavigationComponent implements OnInit {
    * @memberof SideMenuNavigationComponent
    */
   activeUrl(currentRoute: string) {
+    if (this.emittedData == 'OFF' || this.emittedData == null) {
+      this.navigateUrl(currentRoute);
+    } else {
+      this.sharedService.dialog.open(RouteDialogComponent, {
+        width: "283px",
+        height: "193px"
+      });
+    }
+  }
+
+  /**
+   * navigate to clicked url
+   * @param {string} currentRoute
+   * @memberof SideMenuNavigationComponent
+   */
+  navigateUrl(currentRoute: string) {
     for (let i = 0; i < this.appPages.length; i++) {
       if (currentRoute === this.appPages[i].url) {
         this.activeRoute = this.appPages[i].url;
+        this.router.navigate([this.activeRoute]);
       }
     }
   }
@@ -214,7 +243,7 @@ export class SideMenuNavigationComponent implements OnInit {
    */
   openAtBeginning() {
     if (this.displayFullMenu === true) {
-      this.menu.open('first');
+      this.sharedService.menu.open('first');
     }
   }
 
@@ -225,11 +254,11 @@ export class SideMenuNavigationComponent implements OnInit {
   collapseMenu() {
     this.showFullMenu = false;
     this.showIconMenu = true;
-    this.menu.enable(false, 'first');
-    this.menu.close('first');
-    this.menu.enable(true, 'custom');
+    this.sharedService.menu.enable(false, 'first');
+    this.sharedService.menu.close('first');
+    this.sharedService.menu.enable(true, 'custom');
     setTimeout(() => {
-      this.menu.open('custom');
+      this.sharedService.menu.open('custom');
     }, 10);
   }
 
@@ -240,11 +269,11 @@ export class SideMenuNavigationComponent implements OnInit {
   expandMenu() {
     this.showFullMenu = true;
     this.showIconMenu = false;
-    this.menu.enable(true, 'first');
-    this.menu.enable(false, 'custom');
-    this.menu.close('custom');
+    this.sharedService.menu.enable(true, 'first');
+    this.sharedService.menu.enable(false, 'custom');
+    this.sharedService.menu.close('custom');
     setTimeout(() => {
-      this.menu.open('first');
+      this.sharedService.menu.open('first');
     }, 10);
   }
 
@@ -253,7 +282,7 @@ export class SideMenuNavigationComponent implements OnInit {
    * @memberof SideMenuNavigationComponent
    */
   fullMenuClosedHandler() {
-    this.menu.open('first');
+    this.sharedService.menu.open('first');
   }
 
   /**
@@ -261,7 +290,7 @@ export class SideMenuNavigationComponent implements OnInit {
    * @memberof SideMenuNavigationComponent
    */
   iconMenuClosedHandler() {
-    this.menu.open('custom');
+    this.sharedService.menu.open('custom');
   }
 
   /**

@@ -173,6 +173,13 @@ export class LeaveEntitlementComponent implements OnInit {
   public getEntitlementbyType = [];
 
   /**
+   * show loading spinner
+   * @type {boolean}
+   * @memberof LeaveEntitlementComponent
+   */
+  public showSpinner: boolean = false;
+
+  /**
    *Creates an instance of LeaveEntitlementComponent.
    * @param {LeaveEntitlementApiService} entitlementApi
    * @param {LeaveApiService} leaveApi
@@ -189,8 +196,10 @@ export class LeaveEntitlementComponent implements OnInit {
    * @memberof LeaveEntitlementComponent
    */
   async ngOnInit() {
+    this.showSpinner = true;
     this.leaveTypes = []; this.leaveContent = [];
     let data = await this.leaveApi.get_leavetype_entitlement().toPromise();
+    this.showSpinner = false;
     let grouppedId = require('lodash').groupBy(data, 'leaveTypeId');
     this.leaveEntitlement = Object.values(grouppedId);
     for (let i = 0; i < this.leaveEntitlement.length; i++) {

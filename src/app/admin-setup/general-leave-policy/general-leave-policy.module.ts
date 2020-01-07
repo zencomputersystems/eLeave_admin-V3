@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CreatePolicyComponent } from './create-policy/create-policy.component';
 import { MatRadioModule } from '@angular/material';
 import { PolicyListComponent } from './policy-list/policy-list.component';
+import { SharedService } from '../leave-setup/shared.service';
 
 
 const routes: Routes = [
@@ -49,6 +50,7 @@ const routes: Routes = [
         MatRadioModule,
         RouterModule.forChild(routes)
     ],
+    providers: [SharedService],
     entryComponents: [],
     declarations: [CreatePolicyComponent, PolicyListComponent]
 })

@@ -81,7 +81,7 @@
                         forward leaves on:
                     </ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" (click)="CF = !CF" formControlName="CF"
-                        [checked]="CF.value">
+                        [checked]="CF">
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -120,7 +120,7 @@
                         closing after:
                     </ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" formControlName="yearEnd"
-                        [checked]="yearEnd.value" (click)="yearEnd = !yearEnd">
+                        [checked]="yearEnd" (click)="yearEnd = !yearEnd">
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -167,7 +167,7 @@
                         feature requires
                         employee to confirm the application</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" formControlName="onBehalf"
-                        [checked]="onBehalf.value" (click)="onBehalf = !onBehalf">
+                        [checked]="onBehalf" (click)="onBehalf = !onBehalf">
                     </ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -179,7 +179,7 @@
                     <ion-label [style.opacity]="policyForm.controls.email.value === true ? '0.8' : '' ">Email reminder
                     </ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" formControlName="email"
-                        [checked]="email.value" (click)="email = !email">
+                        [checked]="email" (click)="email = !email">
                     </ion-checkbox>
                 </ion-item>
                 <div style="left: 178px;top: 21px;position: absolute;">

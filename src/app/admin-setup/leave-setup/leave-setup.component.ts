@@ -86,7 +86,6 @@ export class LeaveSetupComponent implements OnInit {
         _sharedService.changeEmitted$.subscribe(
             text => {
                 this.emittedValue = text;
-                console.log(this.emittedValue);
             });
     }
 

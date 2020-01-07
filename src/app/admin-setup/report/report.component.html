@@ -106,8 +106,8 @@
           <div class="dateForm">
             <mat-form-field class="date" appearance="outline">
               <mat-label>Start date</mat-label>
-              <input class="dateInput" matInput [matDatepicker]="picker1" [formControl]="firstPicker" required
-                (dateInput)="getValueFrom($event)" [max]="maxDate" (dateChange)="onDateChange()">
+              <input class="dateInput" matInput [matDatepicker]="picker1" [formControl]="firstPicker" required>
+              <!-- (dateInput)="getValueFrom($event)"  (dateChange)="onDateChange()"-->
               <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'" (click)="picker1.open()">
               </div>
               <mat-datepicker #picker1></mat-datepicker>
@@ -115,8 +115,8 @@
             <div style="display: inline-block;width:3%"></div>
             <mat-form-field class="date" appearance="outline">
               <mat-label>End date</mat-label>
-              <input class="dateInput" matInput [matDatepicker]="picker2" [formControl]="secondPicker" required
-                (dateInput)="getValueTo($event)" [min]="minDate" (dateChange)="onDateChange()">
+              <input class="dateInput" matInput [matDatepicker]="picker2" [formControl]="secondPicker" required>
+              <!-- (dateInput)="getValueTo($event)" (dateChange)="onDateChange()" -->
               <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'" (click)="picker2.open()">
               </div>
               <mat-datepicker #picker2></mat-datepicker>

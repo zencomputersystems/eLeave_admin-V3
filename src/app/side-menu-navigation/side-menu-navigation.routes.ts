@@ -21,7 +21,7 @@ export const sideMenuNavigationRoutes: Routes = [
     {
         path: 'main',
         component: SideMenuNavigationComponent,
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashboardComponent },

@@ -2,6 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { MenuController } from '@ionic/angular';
+import { MatDialog } from '@angular/material';
 
 /**
  * share service for emit data
@@ -25,11 +26,12 @@ export class SharedService {
     changeEmitted$ = this.emitChangeSource.asObservable();
 
     /**
-     * Creates an instance of SharedService.
+     *Creates an instance of SharedService.
      * @param {MenuController} menu ionic menu event
+     * @param {MatDialog} dialog open dialog material
      * @memberof SharedService
      */
-    constructor(public menu: MenuController) { }
+    constructor(public menu: MenuController, public dialog: MatDialog) { }
 
     /**
      * Service message commands

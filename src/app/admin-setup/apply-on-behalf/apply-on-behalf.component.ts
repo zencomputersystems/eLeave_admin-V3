@@ -33,6 +33,13 @@ export class ApplyOnBehalfComponent implements OnInit {
     @HostBinding('class.menuOverlay') menuOpened: boolean;
 
     /**
+     * show/hide namelist
+     * @type {boolean}
+     * @memberof ApplyOnBehalfComponent
+     */
+    public showList: boolean = false;
+
+    /**
      * Local property for leave entitlement details
      * @type {*}
      * @memberof ApplyOnBehalfComponent
@@ -455,10 +462,10 @@ export class ApplyOnBehalfComponent implements OnInit {
      *Creates an instance of ApplyOnBehalfComponent.
      * @param {LeaveApiService} leaveAPI
      * @param {APIService} apiService
-     * @param {MenuController} menu
+     * @param {MenuController} menu access menu controller
      * @memberof ApplyOnBehalfComponent
      */
-    constructor(private leaveAPI: LeaveApiService, private apiService: APIService, private menu: MenuController) {
+    constructor(private leaveAPI: LeaveApiService, private apiService: APIService, public menu: MenuController) {
         this.applyLeaveForm = new FormGroup({
             leaveTypes: new FormControl({ value: '', disabled: false }, Validators.required),
             firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),

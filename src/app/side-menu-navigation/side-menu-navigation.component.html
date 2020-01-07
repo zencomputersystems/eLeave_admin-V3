@@ -16,11 +16,11 @@
       <p style="display:flex; justify-content: center; color: #f9fafc;">ZEN Computer Systems</p>
       <ion-list>
         <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
-          <ion-item class="items" lines="none" [routerLink]="[p.url]" (click)="activeRoute = appPages[i].url"
+          <ion-item class="items" lines="none" (click)="activeUrl(appPages[i].url)"
             [class.background-highlight]="activeRoute === appPages[i].url">
             <!-- <div class="my-icon" aria-label="My icon" [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div> -->
             <img style="width: 18px;" src="assets/icon/sidebar_menus/{{p.icon}}">
-            <ion-label (click)="activeRoute = appPages[i].url" [class.text-color]="activeRoute === appPages[i].url ">
+            <ion-label [class.text-color]="activeRoute === appPages[i].url ">
               {{p.title}}
             </ion-label>
           </ion-item>
@@ -81,10 +81,9 @@
       </ion-avatar>
       <ion-list>
         <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
-          <ion-item class="items" no-padding lines="none" [routerLink]="[p.url]"
-            style="display: block;--inner-padding-end: 0;"
+          <ion-item class="items" no-padding lines="none" style="display: block;--inner-padding-end: 0;"
             [class.background-highlight-icon]="activeRoute === appPages[i].url "
-            [class.first-highlight]="router.url === this.appPages[i].url" (click)="activeRoute = appPages[i].url ">
+            [class.first-highlight]="router.url === this.appPages[i].url" (click)="activeUrl(appPages[i].url)">
             <!-- <div class="my-icon-menu" aria-label="My icon" style="align-items: center; width: 100%;"
               [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div> -->
             <img style="margin: 0 auto; width: 20px;" src="assets/icon/sidebar_menus/{{p.icon}}">

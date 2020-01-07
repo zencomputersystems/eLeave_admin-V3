@@ -198,13 +198,20 @@ export class ReportComponent implements OnInit {
   public costCentreValue: string = 'Nothing Selected';
 
   /**
+   * show/hide table
+   * @type {boolean}
+   * @memberof ReportComponent
+   */
+  public show: boolean = false;
+
+  /**
    *Creates an instance of ReportComponent.
    * @param {LeaveApiService} leaveAPI
    * @param {APIService} api
-   * @param {MenuController} menu
+   * @param {MenuController} menu access menu controller
    * @memberof ReportComponent
    */
-  constructor(private leaveAPI: LeaveApiService, private api: APIService, private menu: MenuController) { }
+  constructor(private leaveAPI: LeaveApiService, private api: APIService, public menu: MenuController) { }
 
   /**
    * initial report

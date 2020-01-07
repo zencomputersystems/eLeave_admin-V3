@@ -241,10 +241,10 @@ export class CalendarProfileComponent implements OnInit {
      *Creates an instance of CalendarProfileComponent.
      * @param {CalendarProfileApiService} calendarProfileAPI
      * @param {TitleCasePipe} titlecasePipe
-     * @param {SharedService} sharedService
+     * @param {SharedService} sharedService shared service for toggle value & constructor menu, dialog
      * @memberof CalendarProfileComponent
      */
-    constructor(private calendarProfileAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, private sharedService: SharedService) {
+    constructor(private calendarProfileAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, public sharedService: SharedService) {
     }
 
     /**

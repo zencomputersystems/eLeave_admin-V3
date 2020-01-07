@@ -19,6 +19,9 @@ button.mat-menu-item {
   ion-icon {
     color: #abacaf;
   }
+  .items {
+    cursor: pointer;
+  }
   .items:hover {
     --background: rgba(0, 0, 0, 0.1);
     // border-left: 2px solid #a3a0fb;
