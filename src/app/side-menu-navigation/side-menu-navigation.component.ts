@@ -121,9 +121,9 @@ export class SideMenuNavigationComponent implements OnInit {
       icon: 'icon_calendar@3x.png'
     },
     {
-      title: 'Report',
+      title: 'Reports',
       url: '/main/report',
-      icon: 'icon_calendar@3x.png'
+      icon: 'icon_reports@3x.png'
     }
   ];
 

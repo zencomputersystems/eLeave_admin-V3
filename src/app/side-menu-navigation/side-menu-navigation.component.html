@@ -19,7 +19,7 @@
           <ion-item class="items" lines="none" (click)="activeUrl(appPages[i].url)"
             [class.background-highlight]="activeRoute === appPages[i].url">
             <!-- <div class="my-icon" aria-label="My icon" [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div> -->
-            <img style="width: 18px;" src="assets/icon/sidebar_menus/{{p.icon}}">
+            <img style="width: 16px;" src="assets/icon/sidebar_menus/{{p.icon}}">
             <ion-label [class.text-color]="activeRoute === appPages[i].url ">
               {{p.title}}
             </ion-label>
@@ -86,7 +86,7 @@
             [class.first-highlight]="router.url === appPages[i].url" (click)="activeUrl(appPages[i].url)">
             <!-- <div class="my-icon-menu" aria-label="My icon" style="align-items: center; width: 100%;"
               [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div> -->
-            <img style="margin: 0 auto; width: 20px;" src="assets/icon/sidebar_menus/{{p.icon}}">
+            <img style="margin: 0 auto; width: 16px;" src="assets/icon/sidebar_menus/{{p.icon}}">
           </ion-item>
           <ion-item no-padding lines="none" *ngIf="i == 3"></ion-item>
         </ion-menu-toggle>
