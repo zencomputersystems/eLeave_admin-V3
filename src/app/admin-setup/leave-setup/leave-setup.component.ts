@@ -123,7 +123,7 @@ export class LeaveSetupComponent implements OnInit {
         } else {
             this.dialog.open(RouteDialogComponent, {
                 width: "283px",
-                height: "193px"
+                height: "194px"
             });
         }
     }

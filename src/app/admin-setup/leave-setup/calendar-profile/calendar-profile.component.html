@@ -194,7 +194,7 @@
                     Profile Setup
                 </ion-card-subtitle>
                 <ion-card-subtitle class="subtitle" style="font-size: 12px;">
-                    Some good & sweet explanation here</ion-card-subtitle>
+                    Create specific holiday and rest day for employee</ion-card-subtitle>
             </div>
             <div style="right: 75px;top: 25px;position: absolute;">
                 <!-- *ngIf="showAddIcon" -->
@@ -227,7 +227,7 @@
     </div>
     <div *ngIf="content" style="background: #f0f0f7; height: 100%;position: absolute;width: 100%;">
         <div class="cardContent">
-            <ion-card-content style="max-height: 100%;">
+            <ion-card-content style="max-height: 100%;min-height: 100%;">
                 <div class="row">
                     <div class="calendar">
                         <div
@@ -393,7 +393,8 @@
                                     *ngIf="modeValue == 'ON'">
                                     <ion-icon class="addIcon" name="add-circle-outline" *ngIf="modeValue == 'ON'"
                                         (click)="sharedService.menu.enable(true, 'addHolidayDetails');sharedService.menu.enable(false, 'createCalendarDetails');
-                                        sharedService.menu.open('addHolidayDetails');addNewPH(undefined, undefined)"></ion-icon>
+                                        sharedService.menu.open('addHolidayDetails');addNewPH(undefined, undefined)">
+                                    </ion-icon>
                                 </ion-col>
                             </ion-row>
                         </div>

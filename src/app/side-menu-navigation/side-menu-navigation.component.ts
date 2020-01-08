@@ -201,9 +201,9 @@ export class SideMenuNavigationComponent implements OnInit {
     if (URL.split("/").length == 4) {
       const url = URL.split('/');
       const lastSegment = url.pop();
-      this.activeUrl(url.join('/'));
+      this.activeRoute = url.join('/');
     } else {
-      this.activeUrl(URL);
+      this.activeRoute = URL;
     }
   }
 
@@ -214,26 +214,13 @@ export class SideMenuNavigationComponent implements OnInit {
    */
   activeUrl(currentRoute: string) {
     if (this.emittedData == 'OFF' || this.emittedData == null) {
-      this.navigateUrl(currentRoute);
+      this.router.navigate([currentRoute]);
+      this.activeRoute = currentRoute;
     } else {
       this.sharedService.dialog.open(RouteDialogComponent, {
         width: "283px",
-        height: "193px"
+        height: "194px"
       });
-    }
-  }
-
-  /**
-   * navigate to clicked url
-   * @param {string} currentRoute
-   * @memberof SideMenuNavigationComponent
-   */
-  navigateUrl(currentRoute: string) {
-    for (let i = 0; i < this.appPages.length; i++) {
-      if (currentRoute === this.appPages[i].url) {
-        this.activeRoute = this.appPages[i].url;
-        this.router.navigate([this.activeRoute]);
-      }
     }
   }
 
