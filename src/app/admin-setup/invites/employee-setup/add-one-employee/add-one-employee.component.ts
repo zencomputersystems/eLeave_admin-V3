@@ -224,7 +224,7 @@ export class AddOneEmployeeComponent implements OnInit {
             this.filteredBranch = this.branchCtrl.valueChanges
                 .pipe(
                     startWith(''),
-                    map(branch => branch ? this.filterBranch(branch) : this.branchList.slice())
+                    map(branch => branch ? this.filterList(branch, this.branchList) : this.branchList.slice())
                 );
         });
         this.apiService.get_master_list('section').subscribe(list => {
@@ -232,7 +232,7 @@ export class AddOneEmployeeComponent implements OnInit {
             this.filteredSection = this.sectionCtrl.valueChanges
                 .pipe(
                     startWith(''),
-                    map(section => section ? this.filterSection(section) : this.sectionList.slice())
+                    map(section => section ? this.filterList(section, this.sectionList) : this.sectionList.slice())
                 );
         });
         this.getValue();
@@ -302,7 +302,7 @@ export class AddOneEmployeeComponent implements OnInit {
             this.filteredDepartment = this.departmentCtrl.valueChanges
                 .pipe(
                     startWith(''),
-                    map(department => department ? this.filterDepartment(department) : this.departmentList.slice())
+                    map(department => department ? this.filterList(department, this.departmentList) : this.departmentList.slice())
                 );
         });
         this.apiService.get_master_list('costcentre').subscribe(list => {
@@ -310,68 +310,23 @@ export class AddOneEmployeeComponent implements OnInit {
             this.filteredCostCentre = this.costCentreCtrl.valueChanges
                 .pipe(
                     startWith(''),
-                    map(cc => cc ? this.filterCC(cc) : this.costcentre.slice())
+                    map(cc => cc ? this.filterList(cc, this.costcentre) : this.costcentre.slice())
                 );
         });
     }
 
 
     /**
-     * filter branch from the list
+     * filter (branch,section, costcentre, department) from the list
      * @param {string} name
      * @returns
      * @memberof AddOneEmployeeComponent
      */
-    filterBranch(name: string) {
-        let results = this.branchList.filter(state =>
-            state.BRANCH.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    filterList(name: string, list: any) {
+        let results = list.filter(state =>
+            state[Object.keys(state)[0]].toLowerCase().indexOf(name.toLowerCase()) === 0);
         if (results.length < 1) {
-            results = [{ 'BRANCH': this._question + name + '"?' }];
-        }
-        return results;
-    }
-
-    /**
-     * filter section from the list
-     * @param {string} name
-     * @returns
-     * @memberof AddOneEmployeeComponent
-     */
-    filterSection(name: string) {
-        let results = this.sectionList.filter(state =>
-            state.SECTION.toLowerCase().indexOf(name.toLowerCase()) === 0);
-        if (results.length < 1) {
-            results = [{ 'SECTION': this._question + name + '"?' }];
-        }
-        return results;
-    }
-
-    /**
-     * filter department from the list
-     * @param {string} name
-     * @returns
-     * @memberof AddOneEmployeeComponent
-     */
-    filterDepartment(name: string) {
-        let results = this.departmentList.filter(state =>
-            state.DEPARTMENT.toLowerCase().indexOf(name.toLowerCase()) === 0);
-        if (results.length < 1) {
-            results = [{ 'DEPARTMENT': this._question + name + '"?' }];
-        }
-        return results;
-    }
-
-    /**
-     * filter cost centre from the list
-     * @param {string} name
-     * @returns
-     * @memberof AddOneEmployeeComponent
-     */
-    filterCC(name: string) {
-        let results = this.costcentre.filter(state =>
-            state.COSTCENTRE.toLowerCase().indexOf(name.toLowerCase()) === 0);
-        if (results.length < 1) {
-            results = [{ 'COSTCENTRE': this._question + name + '"?' }];
+            results = [{ [Object.keys(list[0])[0]]: this._question + name + '"?' }];
         }
         return results;
     }

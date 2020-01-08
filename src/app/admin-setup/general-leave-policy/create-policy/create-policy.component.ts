@@ -1,5 +1,4 @@
 import { Component, Input, SimpleChanges } from "@angular/core";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { PolicyApiService } from "../policy-api.service";
 
 /**
@@ -69,7 +68,7 @@ export class CreatePolicyComponent {
      * @type {*}
      * @memberof CreatePolicyComponent
      */
-    public radioValue: any;
+    // public radioValue: any;
 
     /**
      * number of escalation day 
@@ -123,13 +122,6 @@ export class CreatePolicyComponent {
     public email: boolean = false;
 
     /**
-     * validation form value
-     * @type {*}
-     * @memberof CreatePolicyComponent
-     */
-    public policyForm: any;
-
-    /**
      * email toggle button value
      * @type {string}
      * @memberof CreatePolicyComponent
@@ -173,14 +165,6 @@ export class CreatePolicyComponent {
     private _nextYear = new Date().getFullYear() + 1;
 
     /**
-     * empty object 
-     * @private
-     * @type {*}
-     * @memberof CreatePolicyComponent
-     */
-    private _data: any = {};
-
-    /**
      * Selected policy GUID (to patch to endpoint)
      * @private
      * @type {string}
@@ -194,21 +178,6 @@ export class CreatePolicyComponent {
      * @memberof CreatePolicyComponent
      */
     constructor(private policyApi: PolicyApiService) {
-        this.policyForm = new FormGroup(
-            {
-                anyoneLevel: new FormControl({ value: null, disabled: true }, Validators.required),
-                everyoneLevel: new FormControl({ value: null, disabled: true }, Validators.required),
-                escalateAfterDays: new FormControl({ value: null, disabled: true }, Validators.required),
-                CF: new FormControl({ value: null, disabled: true }, Validators.required),
-                CFMonth: new FormControl({ value: null, disabled: true }, Validators.required),
-                CFDay: new FormControl({ value: null, disabled: true }, Validators.required),
-                yearEnd: new FormControl({ value: null, disabled: true }, Validators.required),
-                YEMonth: new FormControl({ value: null, disabled: true }, Validators.required),
-                YEDay: new FormControl({ value: null, disabled: true }, Validators.required),
-                YEChoice: new FormControl({ value: 'Next year', disabled: true }, Validators.required),
-                onBehalf: new FormControl({ value: null, disabled: true }, Validators.required),
-                email: new FormControl({ value: null, disabled: true }, Validators.required)
-            });
     }
 
     /**
@@ -220,14 +189,7 @@ export class CreatePolicyComponent {
         if (changes.mode != undefined) {
             this.modeInput = changes.mode.currentValue;
             if (this.modeInput === 'ON') {
-                this.policyForm.enable();
-                this.policyForm.controls.CFMonth.enable();
-                this.policyForm.controls.CFDay.enable();
-                this.policyForm.controls.YEMonth.enable();
-                this.policyForm.controls.YEDay.enable();
-                this.policyForm.controls.YEChoice.enable();
             } else {
-                this.policyForm.disable();
                 this.savePolicy(changes);
             }
         }
@@ -257,20 +219,8 @@ export class CreatePolicyComponent {
         if (changes.companyId.currentValue.MAIN_GENERAL_POLICY_GUID != undefined) {
             this.policyList = changes.companyId.currentValue;
             this._policyGUID = this.policyList.MAIN_GENERAL_POLICY_GUID;
-            this.radioValue = this.policyList.PROPERTIES_XML.approvalConfirmation.requirement;
-            if (this.radioValue == 'Anyone') {
-                this.policyForm.patchValue({ anyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
-            } else {
-                this.policyForm.patchValue({ everyoneLevel: this.policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel });
-            }
-            this.policyForm.controls.escalateAfterDays.value = this.policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays;
-            this.policyForm.patchValue({ CF: this.policyList.PROPERTIES_XML.forfeitCFLeave.value });
-            this.policyForm.patchValue({ CFMonth: this.policyList.PROPERTIES_XML.forfeitCFLeave.month });
-            this.policyForm.controls.CFDay.value = this.policyList.PROPERTIES_XML.forfeitCFLeave.day;
             this.editDetails();
         } else {
-            this.policyForm.reset();
-            this.radioValue = null;
             this.emailValue = 'No';
         }
     }
@@ -280,20 +230,14 @@ export class CreatePolicyComponent {
      * @memberof CreatePolicyComponent
      */
     editDetails() {
-        this.policyForm.patchValue({ yearEnd: this.policyList.PROPERTIES_XML.allowYearEndClosing.value });
-        this.policyForm.patchValue({ YEMonth: this.policyList.PROPERTIES_XML.allowYearEndClosing.month });
-        this.policyForm.patchValue({ YEDay: this.policyList.PROPERTIES_XML.allowYearEndClosing.day });
-        this.policyForm.patchValue({ YEChoice: this.policyList.PROPERTIES_XML.allowYearEndClosing.relativeYear });
-        this.policyForm.patchValue({ onBehalf: this.policyList.PROPERTIES_XML.applyOnBehalfConfirmation });
-        this.policyForm.patchValue({ email: this.policyList.PROPERTIES_XML.emailReminder });
-        if (this.policyForm.controls.email.value == true) {
+        if (this.policyList.PROPERTIES_XML.emailReminder == true) {
             this.emailValue = 'Yes';
             this.emailCheck = true;
         } else {
             this.emailValue = 'No';
             this.emailCheck = false;
         }
-        this.yearChanged(this.policyForm.controls.YEChoice.value);
+        this.yearChanged(this.policyList.PROPERTIES_XML.allowYearEndClosing.relativeYear);
         this.monthChanged('monthCF', 0);
     }
 
@@ -315,9 +259,9 @@ export class CreatePolicyComponent {
      * @memberof CreatePolicyComponent
      */
     monthChanged(model: string, year?: number) {
-        if (year == undefined || this.policyForm.controls.YEChoice.value == 'Next year') { year = 0 } else { year = 1 }
+        if (year == undefined || this.policyList.PROPERTIES_XML.allowYearEndClosing.relativeYear == 'Next year') { year = 0 } else { year = 1 }
         if (model == 'monthCF') {
-            const monthCF = this._monthArray.indexOf(this.policyForm.controls.CFMonth.value) + 1;
+            const monthCF = this._monthArray.indexOf(this.policyList.PROPERTIES_XML.forfeitCFLeave.month) + 1;
             let dayCF = this.getTotalDays(monthCF, this._nextYear);
             this.daysOfCF = [];
             for (let i = 1; i < dayCF + 1; i++) {
@@ -335,7 +279,7 @@ export class CreatePolicyComponent {
      */
     monthYEChanged(model: string, year?: number) {
         if (model == 'monthYE') {
-            const monthYE = this._monthArray.indexOf(this.policyForm.controls.YEMonth.value) + 1;
+            const monthYE = this._monthArray.indexOf(this.policyList.PROPERTIES_XML.allowYearEndClosing.month) + 1;
             let dayYE = this.getTotalDays(monthYE, this._nextYear - year);
             this.daysOfYE = [];
             for (let i = 1; i < dayYE + 1; i++) {
@@ -358,57 +302,23 @@ export class CreatePolicyComponent {
     }
 
     /**
-     * data that created to POST to backend API
-     * @memberof CreatePolicyComponent
-     */
-    getValue() {
-        this._data.approvalConfirmation = {};
-        this._data.approvalConfirmation.requirement = this.radioValue;
-        if (this.radioValue == 'Anyone') {
-            this._data.approvalConfirmation.approvalLevel = Number(this.policyForm.controls.anyoneLevel.value);
-        } else {
-            this._data.approvalConfirmation.approvalLevel = Number(this.policyForm.controls.everyoneLevel.value);
-        }
-        this._data.approvalConfirmation.escalateAfterDays = Number(this.policyForm.controls.escalateAfterDays.value);
-        this._data.forfeitCFLeave = {};
-        this._data.forfeitCFLeave.value = this.policyForm.controls.CF.value;
-        this._data.forfeitCFLeave.day = this.policyForm.controls.CFDay.value;
-        this._data.forfeitCFLeave.month = this.policyForm.controls.CFMonth.value;
-        this.saveValue();
-    }
-
-    /**
-     * data that created to POST to backend API
-     * @memberof CreatePolicyComponent
-     */
-    saveValue() {
-        this._data.allowYearEndClosing = {};
-        this._data.allowYearEndClosing.value = this.policyForm.controls.yearEnd.value;
-        this._data.allowYearEndClosing.day = this.policyForm.controls.YEDay.value;
-        this._data.allowYearEndClosing.month = this.policyForm.controls.YEMonth.value;
-        this._data.allowYearEndClosing.relativeYear = this.policyForm.controls.YEChoice.value;
-        this._data.applyOnBehalfConfirmation = this.policyForm.controls.onBehalf.value;
-        this._data.emailReminder = this.policyForm.controls.email.value;
-    }
-
-    /**
      * Update the policy details and PATCH to endpoint
      * @memberof CreatePolicyComponent
      */
     async savePolicy(changes) {
         if (changes.mode.previousValue === 'ON' && changes.mode.currentValue === 'OFF') {
-            this.getValue();
             if (this._policyGUID != undefined) {
                 const data = {
                     'generalPolicyId': this._policyGUID,
-                    'data': this._data
+                    'data': this.policyList.PROPERTIES_XML
                 }
                 await this.policyApi.patch_general_leave_policy(data).toPromise();
                 this.policyApi.message('Edit mode disabled. Good job!', true);
                 this._policyGUID = '';
             } else {
-                this._data["tenantCompanyId"] = this.tenantId;
-                await this.policyApi.post_general_leave_policy(this._data).toPromise();
+                //test this
+                this.policyList.PROPERTIES_XML["tenantCompanyId"] = this.tenantId;
+                await this.policyApi.post_general_leave_policy(this.policyList.PROPERTIES_XML).toPromise();
                 this.tenantId = '';
                 this.policyApi.message('Edit mode disabled. Good job!', true);
             }

@@ -3,7 +3,6 @@ import { LeaveApiService } from '../leave-api.service';
 import { LeaveEntitlementApiService } from './leave-entitlement-api.service';
 import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.component';
 import { DeleteCalendarConfirmationComponent } from '../delete-calendar-confirmation/delete-calendar-confirmation.component';
-import { MenuController } from '@ionic/angular';
 import { Validators, FormControl } from '@angular/forms';
 import { entitlementData } from './leave-entitlement-data';
 import { SharedService } from '../shared.service';
@@ -197,16 +196,15 @@ export class LeaveEntitlementComponent implements OnInit {
    */
   async ngOnInit() {
     this.showSpinner = true;
-    this.leaveTypes = []; this.leaveContent = [];
+    this.leaveTypes = [];
     let data = await this.leaveApi.get_leavetype_entitlement().toPromise();
     this.showSpinner = false;
     let grouppedId = require('lodash').groupBy(data, 'leaveTypeId');
     this.leaveEntitlement = Object.values(grouppedId);
     for (let i = 0; i < this.leaveEntitlement.length; i++) {
-      this.leaveContent.push(false);
       this.leaveTypes.push({ "leaveTypeId": this.leaveEntitlement[i][0].leaveTypeId, "title": this.leaveEntitlement[i][0].leaveTypeAbbr + ' - ' + this.leaveEntitlement[i][0].leaveType, "ABBR": this.leaveEntitlement[i][0].leaveTypeAbbr, "name": this.leaveEntitlement[i][0].leaveType });
     }
-    this.leaveContent.splice(this.clickedHeaderIndex, 1, true);
+    this.showClickedContent(this.clickedHeaderIndex);
     this.getProfileDetails(data[this.clickedIndex].leaveEntitlementId);
   }
 
@@ -243,9 +241,8 @@ export class LeaveEntitlementComponent implements OnInit {
    * @memberof LeaveEntitlementComponent
    */
   showClickedContent(index: number) {
-    for (let i = 0; i < this.leaveContent.length; i++) {
-      this.leaveContent.splice(i, 1, false);
-    }
+    this.leaveContent = [];
+    this.leaveContent.push(...Array(this.leaveEntitlement.length).fill(false));
     this.leaveContent.splice(index, 1, true);
   }
 
