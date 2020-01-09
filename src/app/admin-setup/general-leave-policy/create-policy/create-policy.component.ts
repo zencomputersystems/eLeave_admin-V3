@@ -57,27 +57,6 @@ export class CreatePolicyComponent {
     public showSpinner: boolean = true;
 
     /**
-     * hide container during loading page
-     * @type {boolean}
-     * @memberof CreatePolicyComponent
-     */
-    // public showContainer: boolean = false;
-
-    /**
-     * mat radio button value 
-     * @type {*}
-     * @memberof CreatePolicyComponent
-     */
-    // public radioValue: any;
-
-    /**
-     * number of escalation day 
-     * @type {boolean}
-     * @memberof CreatePolicyComponent
-     */
-    public showEscalateDay: boolean = false;
-
-    /**
      * array list of days in a selected month in carried forward field
      * eg: 1 to 30
      * @type {number[]}
@@ -94,34 +73,6 @@ export class CreatePolicyComponent {
     public daysOfYE: number[];
 
     /**
-     * carried forward checkbox value
-     * @type {boolean}
-     * @memberof CreatePolicyComponent
-     */
-    public CF: boolean = false;
-
-    /**
-     * year end closing checkbox value
-     * @type {boolean}
-     * @memberof CreatePolicyComponent
-     */
-    public yearEnd: boolean = false;
-
-    /**
-     * apply on behalf checkbox value
-     * @type {boolean}
-     * @memberof CreatePolicyComponent
-     */
-    public onBehalf: boolean = false;
-
-    /**
-     * email checkbox value
-     * @type {boolean}
-     * @memberof CreatePolicyComponent
-     */
-    public email: boolean = false;
-
-    /**
      * email toggle button value
      * @type {string}
      * @memberof CreatePolicyComponent
@@ -129,25 +80,11 @@ export class CreatePolicyComponent {
     public emailValue: string = 'No';
 
     /**
-     * email toggle button check/uncheck
-     * @type {boolean}
-     * @memberof CreatePolicyComponent
-     */
-    public emailCheck: boolean = false;
-
-    /**
      * edit mode on/off
      * @type {string}
      * @memberof CreatePolicyComponent
      */
     public modeInput: string;
-
-    /**
-     * show loading spinner when clicked on create policy to API
-     * @type {boolean}
-     * @memberof CreatePolicyComponent
-     */
-    // public showSmallSpinner: boolean = false;
 
     /**
      * to get index of selected month 
@@ -222,6 +159,7 @@ export class CreatePolicyComponent {
             this.editDetails();
         } else {
             this.emailValue = 'No';
+            this._policyGUID = '';
         }
     }
 
@@ -232,10 +170,8 @@ export class CreatePolicyComponent {
     editDetails() {
         if (this.policyList.PROPERTIES_XML.emailReminder == true) {
             this.emailValue = 'Yes';
-            this.emailCheck = true;
         } else {
             this.emailValue = 'No';
-            this.emailCheck = false;
         }
         this.yearChanged(this.policyList.PROPERTIES_XML.allowYearEndClosing.relativeYear);
         this.monthChanged('monthCF', 0);
@@ -307,7 +243,7 @@ export class CreatePolicyComponent {
      */
     async savePolicy(changes) {
         if (changes.mode.previousValue === 'ON' && changes.mode.currentValue === 'OFF') {
-            if (this._policyGUID != undefined) {
+            if (this._policyGUID != '') {
                 const data = {
                     'generalPolicyId': this._policyGUID,
                     'data': this.policyList.PROPERTIES_XML
@@ -316,7 +252,6 @@ export class CreatePolicyComponent {
                 this.policyApi.message('Edit mode disabled. Good job!', true);
                 this._policyGUID = '';
             } else {
-                //test this
                 this.policyList.PROPERTIES_XML["tenantCompanyId"] = this.tenantId;
                 await this.policyApi.post_general_leave_policy(this.policyList.PROPERTIES_XML).toPromise();
                 this.tenantId = '';

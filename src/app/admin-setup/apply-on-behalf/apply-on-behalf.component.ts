@@ -587,15 +587,15 @@ export class ApplyOnBehalfComponent implements OnInit {
     hoverInOut(i: number, mouseIn: boolean, isChecked: boolean) {
         if (isChecked && (this.headCheckbox || this.indeterminateVal)) {
             this.showCheckBox = [];
-            this.filteredUser.map(value => { this.showCheckBox.push(true); });
+            this.showCheckBox.push(...Array(this.filteredUser.length).fill(true));
         } else if (!isChecked && (this.headCheckbox || this.indeterminateVal)) {
             this.showCheckBox.splice(0, this.showCheckBox.length);
-            this.filteredUser.map(item => { this.showCheckBox.push(true); });
+            this.showCheckBox.push(...Array(this.filteredUser.length).fill(true));
         } else if (mouseIn && !isChecked && !this.indeterminateVal && !this.headCheckbox) {
             this.showCheckBox.splice(i, 1, true);
         } else {
             this.showCheckBox.splice(0, this.showCheckBox.length);
-            this.filteredUser.map(item => { this.showCheckBox.push(false); });
+            this.showCheckBox.push(...Array(this.filteredUser.length).fill(false));
         }
     }
 

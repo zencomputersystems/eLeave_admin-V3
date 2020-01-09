@@ -291,15 +291,15 @@ export class LeaveAdjustmentComponent implements OnInit {
     hoverEvent(i: number, mouseIn: boolean, isChecked: boolean) {
         if (isChecked && (this.mainCheckBox || this.indeterminate)) {
             this.showCheckbox = [];
-            this.filteredUserItems.map(value => { this.showCheckbox.push(true); });
+            this.showCheckbox.push(...Array(this.filteredUserItems.length).fill(true));
         } else if (!isChecked && (this.mainCheckBox || this.indeterminate)) {
             this.showCheckbox.splice(0, this.showCheckbox.length);
-            this.filteredUserItems.map(item => { this.showCheckbox.push(true); });
+            this.showCheckbox.push(...Array(this.filteredUserItems.length).fill(true));
         } else if (mouseIn && !isChecked && !this.indeterminate && !this.mainCheckBox) {
             this.showCheckbox.splice(i, 1, true);
         } else {
             this.showCheckbox.splice(0, this.showCheckbox.length);
-            this.filteredUserItems.map(item => { this.showCheckbox.push(false); });
+            this.showCheckbox.push(...Array(this.filteredUserItems.length).fill(false));
         }
     }
 

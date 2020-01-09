@@ -248,15 +248,15 @@ export class ApprovalOverrideComponent implements OnInit {
     mouseEvent(value: boolean, index: number, isChecked: boolean) {
         if (isChecked && (this.mainCheckbox || this.indeterminate)) {
             this.displayCheckbox = [];
-            this.pendingList.map(value => { this.displayCheckbox.push(true); });
+            this.displayCheckbox.push(...Array(this.pendingList.length).fill(true));
         } else if (!isChecked && (this.mainCheckbox || this.indeterminate)) {
             this.displayCheckbox.splice(0, this.displayCheckbox.length);
-            this.pendingList.map(item => { this.displayCheckbox.push(true); });
+            this.displayCheckbox.push(...Array(this.pendingList.length).fill(true));
         } else if (value && !isChecked && !this.indeterminate && !this.mainCheckbox) {
             this.displayCheckbox.splice(index, 1, true);
         } else {
             this.displayCheckbox.splice(0, this.displayCheckbox.length);
-            this.pendingList.map(item => { this.displayCheckbox.push(false); });
+            this.displayCheckbox.push(...Array(this.pendingList.length).fill(false));
         }
     }
 

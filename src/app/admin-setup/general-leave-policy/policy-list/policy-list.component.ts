@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LeaveApiService } from '../../leave-setup/leave-api.service';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
-import { MenuController } from '@ionic/angular';
 import { PolicyApiService } from '../policy-api.service';
 import { Validators, FormControl } from '@angular/forms';
 import { DeleteCalendarConfirmationComponent } from '../../leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
@@ -33,55 +32,6 @@ export class PolicyListComponent implements OnInit {
      * @memberof PolicyListComponent
      */
     public showSpinner: boolean = true;
-
-    /**
-     * Content in page is hide during loading
-     * @type {boolean}
-     * @memberof PolicyListComponent
-     */
-    // public showPage: boolean = false;
-
-    /**
-     * To show arrow up or down icon for Name column
-     * @type {boolean}
-     * @memberof PolicyListComponent
-     */
-    // public arrowDownName: boolean = true;
-
-    /**
-     * Page number on current page
-     * @type {number}
-     * @memberof PolicyListComponent
-     */
-    // public pageIndex: number;
-
-    /**
-     * Total page number 
-     * @type {number}
-     * @memberof PolicyListComponent
-     */
-    // public totalPageNum: number;
-
-    /**
-     * Items of the current showing page
-     * @type {*}
-     * @memberof PolicyListComponent
-     */
-    // public currentItems: any;
-
-    /**
-     * Value of disable next button
-     * @type {boolean}
-     * @memberof PolicyListComponent
-     */
-    // public disableNextButton: boolean;
-
-    /**
-     * Value of disable previous button
-     * @type {boolean}
-     * @memberof PolicyListComponent
-     */
-    // public disablePrevButton: boolean;
 
     /**
      * edit mode value
@@ -194,7 +144,7 @@ export class PolicyListComponent implements OnInit {
             this.modeValue = 'ON';
             this.policyApi.dialog.open(EditModeDialogComponent, {
                 data: 'policy',
-                height: "316.3px",
+                height: "355.3px",
                 width: "383px"
             });
         } else {

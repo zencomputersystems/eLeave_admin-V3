@@ -241,15 +241,15 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
     mouseInOutEvent(index: number, mouseOver: boolean, checked: boolean) {
         if (checked && (this.checkMain || this.indeterminate)) {
             this.hideAvatar.splice(0, this.hideAvatar.length);
-            this.filteredUser.map(item => { this.hideAvatar.push(true); });
+            this.hideAvatar.push(...Array(this.filteredUser.length).fill(true));
         } else if (!checked && (this.checkMain || this.indeterminate)) {
             this.hideAvatar.splice(0, this.hideAvatar.length);
-            this.filteredUser.map(() => { this.hideAvatar.push(true); });
+            this.hideAvatar.push(...Array(this.filteredUser.length).fill(true));
         } else if (mouseOver && !checked && !this.indeterminate && !this.checkMain) {
             this.hideAvatar.splice(index, 1, true);
         } else {
             this.hideAvatar.splice(0, this.hideAvatar.length);
-            this.filteredUser.map(item => { this.hideAvatar.push(false); });
+            this.hideAvatar.push(...Array(this.filteredUser.length).fill(false));
         }
     }
 

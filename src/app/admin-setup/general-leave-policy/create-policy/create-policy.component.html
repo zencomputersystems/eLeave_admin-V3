@@ -10,47 +10,49 @@
         <mat-radio-group class="example-radio-group"
             [value]="policyList.PROPERTIES_XML.approvalConfirmation.requirement">
             <mat-radio-button class="example-radio-button" value="Anyone" style="display:inline-block"
-                (change)="showEscalateDay = false;policyList.PROPERTIES_XML.approvalConfirmation.requirement = $event.value"
+                (change)="policyList.PROPERTIES_XML.approvalConfirmation.requirement = $event.value"
                 [disabled]="modeInput === 'OFF'">
-                <p style="font-size: 11px;color: rgba(160, 160, 160, 0.38);"
+                <p style="font-size: 11px;color: #4d4f5c;"
                     [style.color]="policyList.PROPERTIES_XML.approvalConfirmation.requirement == 'Anyone' && modeInput === 'OFF' || modeInput === 'ON' ? '#4d4f5c':'' ">
                     Anyone in hierarchy
                     approves limit to </p>
             </mat-radio-button>
             <mat-form-field appearance="outline"
                 style="font-size: 12px;width: 56px;color:#43425d;padding-left: 5px;margin-left: 75px;">
-                <input matInput [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel" required>
+                <input matInput [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel"
+                    [disabled]="modeInput === 'OFF'" required>
             </mat-form-field>
             <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Level</p>
             <div style="display: block"></div>
             <mat-radio-button class="example-radio-button" value="Everyone" [disabled]="modeInput === 'OFF'"
-                (change)="showEscalateDay = true;policyList.PROPERTIES_XML.approvalConfirmation.requirement = $event.value"
+                (change)="policyList.PROPERTIES_XML.approvalConfirmation.requirement = $event.value"
                 style="display:inline-block">
-                <p style="font-size: 11px;color: rgba(0, 0, 0, 0.38);"
+                <p style="font-size: 11px;color: #4d4f5c;"
                     [style.color]="policyList.PROPERTIES_XML.approvalConfirmation.requirement === 'Everyone' && modeInput === 'OFF' || modeInput === 'ON' ? '#4d4f5c':'' ">
                     Everyone in hierarchy approves limit to
                 </p>
             </mat-radio-button>
             <mat-form-field appearance="outline"
                 style="font-size: 12px;width: 56px;color:#43425d;padding-left: 5px;margin-left: 66px;">
-                <input matInput [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel" required>
+                <input matInput [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel"
+                    [disabled]="modeInput === 'OFF'" required>
             </mat-form-field>
             <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Level</p>
             <div style="display: block;"
-                *ngIf="showEscalateDay || policyList.PROPERTIES_XML.approvalConfirmation.requirement === 'Everyone'">
+                *ngIf="policyList.PROPERTIES_XML.approvalConfirmation.requirement === 'Everyone'">
                 <p style="padding-left: 53px;color: #4d4f5c;font-size:11px;display: inline-block;">Escalate
                     after &nbsp;</p>
                 <mat-form-field appearance="outline"
                     style="width:56px;font-size: 12px;color:#43425d;display:inline-block">
                     <input matInput [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays"
-                        required>
+                        [disabled]="modeInput === 'OFF'" required>
                 </mat-form-field>
                 <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Days</p>
             </div>
             <mat-radio-button class="example-radio-button" value="Superior"
-                (change)="showEscalateDay = false;policyList.PROPERTIES_XML.approvalConfirmation.requirement = $event.value"
+                (change)="policyList.PROPERTIES_XML.approvalConfirmation.requirement = $event.value"
                 [disabled]="modeInput === 'OFF'">
-                <p style="font-size: 11px;color: rgba(160, 160, 160, 0.38);"
+                <p style="font-size: 11px;color: #4d4f5c;"
                     [style.color]="policyList.PROPERTIES_XML.approvalConfirmation.requirement === 'Superior' && modeInput === 'OFF' || modeInput === 'ON' ? '#4d4f5c':'' ">
                     Superior approves</p>
             </mat-radio-button>
@@ -66,14 +68,14 @@
                 </ion-label>
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="policyList.PROPERTIES_XML.forfeitCFLeave.value"
-                    [checked]="policyList.PROPERTIES_XML.forfeitCFLeave.value">
+                    [checked]="policyList.PROPERTIES_XML.forfeitCFLeave.value" [disabled]="modeInput === 'OFF'">
                 </ion-checkbox>
             </ion-item>
         </ion-list>
         <mat-form-field appearance="outline" style="font-size: 13px;width: 192px;color:#7a8589;padding-left: 50px;">
             <mat-label>Month</mat-label>
             <mat-select [(value)]="policyList.PROPERTIES_XML.forfeitCFLeave.month"
-                (selectionChange)="monthChanged('monthCF')">
+                (selectionChange)="monthChanged('monthCF')" [disabled]="modeInput === 'OFF'">
                 <mat-option>None</mat-option>
                 <mat-option value="January">January</mat-option>
                 <mat-option value="February">February</mat-option>
@@ -91,7 +93,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 12px;">
             <mat-label>Day</mat-label>
-            <mat-select [(value)]="policyList.PROPERTIES_XML.forfeitCFLeave.day">
+            <mat-select [(value)]="policyList.PROPERTIES_XML.forfeitCFLeave.day" [disabled]="modeInput === 'OFF'">
                 <mat-option>None</mat-option>
                 <mat-option *ngFor="let day of daysOfCF" [value]=day>{{day}}</mat-option>
             </mat-select>
@@ -108,14 +110,14 @@
                 </ion-label>
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="policyList.PROPERTIES_XML.allowYearEndClosing.value"
-                    [checked]="policyList.PROPERTIES_XML.allowYearEndClosing.value">
+                    [checked]="policyList.PROPERTIES_XML.allowYearEndClosing.value" [disabled]="modeInput === 'OFF'">
                 </ion-checkbox>
             </ion-item>
         </ion-list>
         <mat-form-field appearance="outline" style="font-size: 13px;width: 192px;color:#7a8589;padding-left: 50px;">
             <mat-label>Month</mat-label>
             <mat-select [(value)]="policyList.PROPERTIES_XML.allowYearEndClosing.month"
-                (selectionChange)="monthChanged('monthYE')">
+                (selectionChange)="monthChanged('monthYE')" [disabled]="modeInput === 'OFF'">
                 <mat-option>None</mat-option>
                 <mat-option value="January">January</mat-option>
                 <mat-option value="February">February</mat-option>
@@ -133,7 +135,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 12px;">
             <mat-label>Day</mat-label>
-            <mat-select [(value)]="policyList.PROPERTIES_XML.allowYearEndClosing.day">
+            <mat-select [(value)]="policyList.PROPERTIES_XML.allowYearEndClosing.day" [disabled]="modeInput === 'OFF'">
                 <mat-option>None</mat-option>
                 <mat-option *ngFor="let day of daysOfYE" [value]=day>{{day}}</mat-option>
             </mat-select>
@@ -141,7 +143,7 @@
         <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 12px;">
             <mat-label>Year</mat-label>
             <mat-select [(value)]="policyList.PROPERTIES_XML.allowYearEndClosing.relativeYear"
-                (selectionChange)="yearChanged($event.value)">
+                (selectionChange)="yearChanged($event.value)" [disabled]="modeInput === 'OFF'">
                 <mat-option>None</mat-option>
                 <mat-option value="This year">This year</mat-option>
                 <mat-option value="Next year">Next year</mat-option>
@@ -159,7 +161,7 @@
                     employee to confirm the application</ion-label>
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="policyList.PROPERTIES_XML.applyOnBehalfConfirmation"
-                    [checked]="policyList.PROPERTIES_XML.applyOnBehalfConfirmation">
+                    [checked]="policyList.PROPERTIES_XML.applyOnBehalfConfirmation" [disabled]="modeInput === 'OFF'">
                 </ion-checkbox>
             </ion-item>
         </ion-list>
@@ -173,7 +175,7 @@
                 </ion-label>
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="policyList.PROPERTIES_XML.emailReminder"
-                    [checked]="policyList.PROPERTIES_XML.emailReminder">
+                    [checked]="policyList.PROPERTIES_XML.emailReminder" [disabled]="modeInput === 'OFF'">
                 </ion-checkbox>
             </ion-item>
             <div style="left: 178px;top: 21px;position: absolute;">
@@ -181,9 +183,9 @@
                     style="opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
                     {{emailValue}}</p>
                 <div style="display: inline-block;position: absolute;" *ngIf="modeInput === 'ON'">
-                    <ion-toggle [checked]="emailCheck" style="zoom:0.70;--background: #a5a4bf;" mode="ios"
-                        color="secondary"
-                        (ionChange)="$event.detail.checked == true? emailValue = 'Yes': emailValue = 'No'">
+                    <ion-toggle [checked]="policyList.PROPERTIES_XML.emailReminder"
+                        style="zoom:0.70;--background: #a5a4bf;" mode="ios" color="secondary"
+                        (ionChange)="$event.detail.checked == true? emailValue = 'Yes': emailValue = 'No'; $event.detail.checked == true? policyList.PROPERTIES_XML.emailReminder = true: policyList.PROPERTIES_XML.emailReminder = false">
                     </ion-toggle>
                 </div>
             </div>
