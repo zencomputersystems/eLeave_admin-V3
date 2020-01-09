@@ -222,17 +222,21 @@ export class LeaveEntitlementComponent implements OnInit {
   }
 
   /**
-   * add level object
+   * add or delete level object
    * @memberof LeaveEntitlementComponent
    */
-  addNewLevel() {
-    const levelObj = {
-      "id": this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.length + 1,
-      "serviceYearFrom": this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement[this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.length - 1].serviceYearTo + 1,
-      "serviceYearTo": 100,
-      "entitledDays": this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement[this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.length - 1].entitledDays + 1, "carryForward": this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement[this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.length - 1].carryForward + 1
-    };
-    this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.push(levelObj);
+  addDeleteLevel(action: string, index?: number) {
+    if (action == 'add') {
+      const levelObj = {
+        "id": this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.length + 1,
+        "serviceYearFrom": this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement[this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.length - 1].serviceYearTo + 1,
+        "serviceYearTo": 100,
+        "entitledDays": this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement[this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.length - 1].entitledDays + 1, "carryForward": this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement[this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.length - 1].carryForward + 1
+      };
+      this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.push(levelObj);
+    } else {
+      this.entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.splice(index, 1);
+    }
   }
 
   /**

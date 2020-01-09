@@ -523,11 +523,13 @@
                                   padding-bottom: 13px;">
                   <div style="display: inline-block;padding-right: 20px;" *ngIf="mainToggle === 'ON'">
                     <mat-checkbox [disableRipple]=true
+                      (change)="entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday = $event.checked"
                       [checked]="entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday">Holiday
                     </mat-checkbox>
                   </div>
                   <div style="display: inline-block;" *ngIf="mainToggle === 'ON'">
                     <mat-checkbox [disableRipple]=true
+                      (change)="entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay = $event.checked"
                       [checked]="entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay">Rest day
                     </mat-checkbox>
                   </div>
@@ -576,11 +578,13 @@
                                   padding-bottom: 13px;">
                   <div style="display: inline-block;padding-right: 20px;" *ngIf="mainToggle === 'ON'">
                     <mat-checkbox [disableRipple]=true
+                      (change)="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday = $event.checked"
                       [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday">
                       Holiday</mat-checkbox>
                   </div>
                   <div style="display: inline-block;" *ngIf="mainToggle === 'ON'">
                     <mat-checkbox [disableRipple]=true
+                      (change)="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay = $event.checked"
                       [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay">
                       Rest day</mat-checkbox>
                   </div>
@@ -683,11 +687,13 @@
                                   padding-bottom: 13px;">
                   <div style="display: inline-block;padding-right: 20px;" *ngIf="mainToggle === 'ON'">
                     <mat-checkbox [disableRipple]=true
+                      (change)="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday = $event.checked"
                       [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday">
                       Holiday</mat-checkbox>
                   </div>
                   <div style="display: inline-block;" *ngIf="mainToggle === 'ON'">
                     <mat-checkbox [disableRipple]=true
+                      (change)="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay = $event.checked"
                       [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay">
                       Rest day</mat-checkbox>
                   </div>
@@ -945,61 +951,64 @@
             <div style="padding-top: 10px;" [style.display]="showLeaveType === false? 'block':'none'"
               [style.height]="showLeaveType === false? 'calc(100% - 120px)':'0'"
               [style.overflow]="showLeaveType === false? 'auto':''">
-              <ng-container *ngFor="let leave of entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement">
-                <div style="display: inline-block;width: 20%;">
-                  <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
-                    LEVEL</p>
-                  <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;padding-left: 15px;">
-                    <mat-select required [disabled]="mainToggle === 'OFF'" [(value)]="leave.id">
-                      <mat-option *ngFor="let item of level; let j=index" [value]="item">
-                        {{item}}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                &nbsp;&nbsp;&nbsp;
-                <div style="display: inline-block;">
-                  <div style="display: inline-block;">
-                    <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
+              <ng-container
+                *ngFor="let leave of entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement; let i =index">
+                <ion-row>
+                  <ion-col size="3">
+                    <p style="padding-left: 10px;font-size: 12px;font-weight: bold;color: #808495;">
+                      LEVEL</p>
+                    <mat-form-field appearance="outline" style="font-size: 12px;width: 70%;padding-left: 10px;">
+                      <mat-select required [disabled]="mainToggle === 'OFF'" [(value)]="leave.id">
+                        <mat-option *ngFor="let item of level; let j=index" [value]="item">
+                          {{item}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </ion-col>
+                  <ion-col style="overflow: hidden;white-space: nowrap;">
+                    <p style="font-size: 12px;font-weight: bold;color: #808495;">
                       SERVICE YEAR FROM</p>
-                    <mat-form-field appearance="outline" style="font-size: 12px;padding-left: 15px;">
+                    <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;">
                       <input type="number" matInput [(ngModel)]="leave.serviceYearFrom"
                         [disabled]="mainToggle === 'OFF'">
                     </mat-form-field>
-                  </div>
-                  &nbsp;
-                  <div style="display: inline-block;">
-                    <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
+                  </ion-col>
+                  <ion-col style="overflow: hidden;white-space: nowrap;">
+                    <p style="font-size: 12px;font-weight: bold;color: #808495;">
                       SERVICE YEAR TO</p>
-                    <mat-form-field appearance="outline" style="font-size: 12px;padding-left: 15px;">
+                    <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;">
                       <input type="number" matInput [(ngModel)]="leave.serviceYearTo" [disabled]="mainToggle === 'OFF'">
                     </mat-form-field>
-                  </div>
-                </div>
-                <div style="display: inline-block;width: 20%;"></div>
-                &nbsp;&nbsp;&nbsp;
-                <div style="display: inline-block;">
-                  <div style="display: inline-block;">
-                    <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
+                  </ion-col>
+                  <ion-col size="1" align-self-center style="text-align: right;padding-right: 10px;">
+                    <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mainToggle === 'ON'"
+                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
+                      (click)="addDeleteLevel('delete', i)">
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="3"></ion-col>
+                  <ion-col style="overflow: hidden;white-space: nowrap;">
+                    <p style="font-size: 12px;font-weight: bold;color: #808495;">
                       ENTITLED DAY</p>
-                    <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;padding-left: 15px;">
+                    <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;">
                       <input type="number" matInput [(ngModel)]="leave.entitledDays" [disabled]="mainToggle === 'OFF'">
                     </mat-form-field>
-                  </div>
-                  &nbsp;&nbsp;
-                  <div style="display: inline-block;">
-                    <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
+                  </ion-col>
+                  <ion-col style="overflow: hidden;white-space: nowrap;">
+                    <p style="font-size: 12px;font-weight: bold;color: #808495;">
                       BRING FORWARD</p>
-                    <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;padding-left: 15px;">
+                    <mat-form-field appearance="outline" style="font-size: 12px;width: 100%;">
                       <input type="number" matInput [(ngModel)]="leave.carryForward" [disabled]="mainToggle === 'OFF'">
                     </mat-form-field>
-                  </div>
-                </div>
+                  </ion-col>
+                  <ion-col size="1"></ion-col>
+                </ion-row>
                 <ion-item class="divider" lines="full" style="padding-bottom: 2%;">
                 </ion-item>
               </ng-container>
               <div *ngIf="mainToggle === 'ON'" style="padding-left: 15px;padding-bottom: 15px;"><img
                   style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;display: inline-block;"
-                  src="assets/icon/leave_setup/icon_request@3x.png" (click)="addNewLevel()">
+                  src="assets/icon/leave_setup/icon_request@3x.png" (click)="addDeleteLevel('add')">
                 <p style="color: #808495;font-size: 11px;font-weight: bold;display: inline-block;">
                   Add Leave Entitlement Level</p>
               </div>
