@@ -258,7 +258,7 @@ export class CalendarProfileComponent implements OnInit {
         this.dayControl = new FormControl('');
         this.country = new FormControl('');
         this.region = new FormControl('');
-        this.yearDefault = new FormControl(2019);
+        this.yearDefault = new FormControl(new Date().getFullYear());
         this.profileName = new FormControl('', Validators.required);
         this.getPublicHolidayList();
         this.getProfileList();
@@ -292,7 +292,7 @@ export class CalendarProfileComponent implements OnInit {
                 this.list = data;
                 this.events = [];
                 for (let i = 0; i < this.list.response.holidays.length; i++) {
-                    this.createHolidayList(this.list.response.holidays[i].date.iso, this.list.response.holidays[i].name);
+                    this.createHolidayList(this.list.response.holidays[i].date.iso, this.list.response.holidays[i].name, this.events);
                 }
             });
     }
@@ -302,12 +302,6 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     getAssignedList() {
-        // for (let i = 0; i < this.profileList.length; i++) {
-        //     this.calendarProfileAPI.get_assigned_employee_list(this.profileList[i].calendar_guid).subscribe(employeeNum => {
-        //         const list = employeeNum;
-        //         this.profileList[i]["employee"] = list.length;
-        //     })
-        // }
         this.calendarProfileAPI.get_user_list().subscribe(
             data => {
                 this._userList = data;
@@ -350,18 +344,17 @@ export class CalendarProfileComponent implements OnInit {
      * @param {*} list
      * @memberof CalendarProfileComponent
      */
-    onDrop(event, list) {
+    async onDrop(event, list) {
         for (let i = 0; i < this.assignedNames.length; i++) {
             if (event.data === this.assignedNames[i].fullname) {
                 this.getDragUserId(i);
-                this.calendarProfileAPI.patch_assign_calendar_profile({
+                await this.calendarProfileAPI.patch_assign_calendar_profile({
                     "user_guid": this._employeeList,
                     "calendar_guid": list.calendar_guid
-                }).subscribe(response => {
-                    this.assignedNames.splice(i, 1);
-                    this._employeeList = [];
-                    this.getAssignedList();
-                });
+                }).toPromise();
+                this.assignedNames.splice(i, 1);
+                this._employeeList = [];
+                this.getAssignedList();
             }
         }
     }
@@ -374,7 +367,7 @@ export class CalendarProfileComponent implements OnInit {
         this.calendarProfileAPI.get_calendar_profile_list().subscribe(
             (data: any[]) => {
                 this.profileList = data;
-                this.clickedCalendar(this.profileList[0], this.clickedIndex);
+                this.selectProfile(this.profileList[0], this.clickedIndex);
                 this.getAssignedList();
                 this.showSpinner = false;
                 this.content = true;
@@ -429,10 +422,10 @@ export class CalendarProfileComponent implements OnInit {
                 this.events = [];
                 if (this._personalProfile.holiday != undefined) {
                     for (let i = 0; i < this._personalProfile.holiday.length; i++) {
-                        this.createHolidayList(this._personalProfile.holiday[i].start, this._personalProfile.holiday[i].title);
+                        this.createHolidayList(this._personalProfile.holiday[i].start, this._personalProfile.holiday[i].title, this.events);
                     }
                     if (this._personalProfile.holiday instanceof Array == false) {
-                        this.createHolidayList(this._personalProfile.holiday.start, this._personalProfile.holiday.title);
+                        this.createHolidayList(this._personalProfile.holiday.start, this._personalProfile.holiday.title, this.events);
                     }
                 }
                 if (this._personalProfile["rest"] != undefined && Array.isArray(this._personalProfile.rest) == false) {
@@ -454,17 +447,6 @@ export class CalendarProfileComponent implements OnInit {
                 this.assignedNames[i]["handle"] = true;
             }
         })
-    }
-
-    /**
-     * click calendar to view details
-     * @param {*} list
-     * @param {*} index
-     * @memberof CalendarProfileComponent
-     */
-    clickedCalendar(list, index) {
-        this.clickedIndex = index;
-        this.selectProfile(list, index);
     }
 
     /**
@@ -522,7 +504,7 @@ export class CalendarProfileComponent implements OnInit {
         this._items = await this.calendarProfileAPI.get_public_holiday_list(params).toPromise();
         this.events = [];
         for (let j = 0; j < this._items.response.holidays.length; j++) {
-            this.createHolidayList(this._items.response.holidays[j].date.iso, this._items.response.holidays[j].name);
+            this.createHolidayList(this._items.response.holidays[j].date.iso, this._items.response.holidays[j].name, this.events);
         }
     }
 
@@ -532,30 +514,14 @@ export class CalendarProfileComponent implements OnInit {
      * @param {string} name
      * @memberof CalendarProfileComponent
      */
-    createHolidayList(dateIso: string, name: string) {
-        this.events.push({
+    createHolidayList(dateIso: string, name: string, list: any) {
+        list.push({
             "start": _moment(dateIso).format('YYYY-MM-DD'),
             "end": _moment(dateIso).format('YYYY-MM-DD'),
             "title": name,
             "holidayName": name,
             "day": this.getWeekDay(new Date(dateIso)),
         });
-    }
-
-    /**
-     * add new PH from menu
-     * @param {*} title
-     * @param {*} start
-     * @memberof CalendarProfileComponent
-     */
-    addNewPH(title, start) {
-        this.menuNewHoliday.push({
-            "start": _moment(start).format('YYYY-MM-DD'),
-            "end": _moment(start).format('YYYY-MM-DD'),
-            "title": title,
-            "holidayName": title,
-            "day": this.getWeekDay(new Date(start))
-        })
     }
 
     /**
@@ -648,36 +614,36 @@ export class CalendarProfileComponent implements OnInit {
             this.region.reset();
             this.countryIso = '';
             this.regionISO = '';
+            this.getProfileList();
         }, error => {
             this.calendarProfileAPI.notification(error.status + ' ' + error.statusText + '.', false);
             this.showSpinner = false;
             this.content = true;
         });
-        this.getProfileList();
+        // this.getProfileList();
     }
 
     /**
      * Delete the calendar profile after confirm by admin
      * @memberof CalendarProfileComponent
      */
-    deleteCalendarProfile(item) {
+    async deleteCalendarProfile(item) {
         const dialog = this.calendarProfileAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
             data: { name: item.code, value: item.calendar_guid, desc: ' calendar profile' },
             height: "195px",
             width: "270px"
         });
-        dialog.afterClosed().subscribe(result => {
-            if (result === item.calendar_guid) {
-                this.calendarProfileAPI.delete_calendar_profile(item.calendar_guid).subscribe(response => {
-                    this.getProfileList();
-                    this.slideInOut = false;
-                    this.clickedIndex = 0;
-                    this.dayControl.reset();
-                    this.restDay = [];
-                    this.calendarProfileAPI.notification('Calendar profile was deleted.', true);
-                })
-            }
-        });
+        let result = await dialog.afterClosed().toPromise();
+        if (result === item.calendar_guid) {
+            this.calendarProfileAPI.delete_calendar_profile(item.calendar_guid).subscribe(response => {
+                this.getProfileList();
+                this.slideInOut = false;
+                this.clickedIndex = 0;
+                this.dayControl.reset();
+                this.restDay = [];
+                this.calendarProfileAPI.notification('Calendar profile was deleted.', true);
+            })
+        }
     }
 
     /**
@@ -695,10 +661,8 @@ export class CalendarProfileComponent implements OnInit {
         });
         popup.afterClosed().subscribe(result => {
             if (result == index && result != undefined) {
-                setTimeout(() => {
-                    event.splice(index, 1);
-                    this.calendarProfileAPI.notification('Public holiday was deleted.', true);
-                }, 1000);
+                event.splice(index, 1);
+                this.calendarProfileAPI.notification('Public holiday was deleted.', true);
             }
         });
     }

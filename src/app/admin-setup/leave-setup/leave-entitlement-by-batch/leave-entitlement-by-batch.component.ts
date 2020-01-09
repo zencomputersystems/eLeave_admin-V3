@@ -242,9 +242,9 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
         if (checked && (this.checkMain || this.indeterminate)) {
             this.hideAvatar.splice(0, this.hideAvatar.length);
             this.hideAvatar.push(...Array(this.filteredUser.length).fill(true));
-        } else if (!checked && (this.checkMain || this.indeterminate)) {
-            this.hideAvatar.splice(0, this.hideAvatar.length);
+        } else if ((this.checkMain || this.indeterminate) && !checked) {
             this.hideAvatar.push(...Array(this.filteredUser.length).fill(true));
+            this.hideAvatar.splice(0, this.hideAvatar.length);
         } else if (mouseOver && !checked && !this.indeterminate && !this.checkMain) {
             this.hideAvatar.splice(index, 1, true);
         } else {

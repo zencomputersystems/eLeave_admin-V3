@@ -51,70 +51,6 @@
             <input matInput [formControl]="yearDefault">
         </mat-form-field>
         &nbsp;&nbsp;
-        <!-- <p style="color: #808495;font-size: 12px;margin: 0px;margin-left:10px;display: block;">Select Employee (you can
-            add later)
-        </p>
-        <mat-form-field appearance="outline" style="width: 93%;cursor: pointer;font-size: 12px;
-        opacity: 0.8;color: #43425d;margin: 10px;margin-top: 5px;z-index: 2;" (click)="showTreeDropdown = true;">
-            <mat-label>Assign employee</mat-label>
-            <input matInput class="inputDropdown" readonly required>
-            <mat-icon matSuffix class="iconDropdown"><i class="material-icons">arrow_drop_down</i></mat-icon>
-            <mat-error>Please select at least one option</mat-error>
-            <div class="dropdownList" *ngIf="showTreeDropdown" (clickOutside)="clickOutside($event)">
-                <mat-tree style="z-index: 82;position: absolute;width: 100%;" [dataSource]="treeview.dataSource"
-                    [treeControl]="treeview.treeControl">
-                    <!-- inner checkbox --
-                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-                        <button mat-icon-button disabled></button>
-                        <mat-checkbox class="checklist-leaf-node"
-                            [checked]="treeview.checklistSelection.isSelected(node)"
-                            (change)="treeview.todoLeafItemSelectionToggle(node)" color="primary">{{node.item}}
-                        </mat-checkbox>
-                    </mat-tree-node>
-
-                    <!-- main checkbox --
-                    <mat-tree-node *matTreeNodeDef="let node; when: treeview.hasChild" matTreeNodePadding>
-                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
-                            <mat-icon class="mat-icon-rtl-mirror">
-                                {{treeview.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                            </mat-icon>
-                        </button>
-                        <mat-checkbox [checked]="treeview.descendantsAllSelected(node)"
-                            [indeterminate]="treeview.descendantsPartiallySelected(node)"
-                            (change)="treeview.todoItemSelectionToggle(node)" color="primary">{{node.item}}
-                        </mat-checkbox>
-                    </mat-tree-node>
-                </mat-tree>
-            </div>
-        </mat-form-field>
-        <div class="showSelection" *ngIf="showSelectedTree">
-            <mat-tree [dataSource]="treeview.dataSource" [treeControl]="treeview.treeControl">
-                <!-- inner checkbox --
-                <mat-tree-node style="font-size: 12px;color: #43425d;opacity: 0.8;"
-                    [style.display]="treeview.checklistSelection.isSelected(node) ? 'inline-flex' : 'none'"
-                    *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-                    <button mat-icon-button disabled></button>
-                    <mat-checkbox class="checklist-leaf-node" [checked]="treeview.checklistSelection.isSelected(node)"
-                        (change)="treeview.todoLeafItemSelectionToggle(node)" color="primary" disabled>{{node.item}}
-                    </mat-checkbox>
-                </mat-tree-node>
-
-                <!-- main checkbox --
-                <mat-tree-node style="font-size: 12px;color: #43425d;opacity: 0.8;"
-                    [style.display]="(treeview.descendantsAllSelected(node) || treeview.descendantsPartiallySelected(node)) ? 'block' : 'none'"
-                    *matTreeNodeDef="let node; when: treeview.hasChild" matTreeNodePadding>
-                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
-                        <mat-icon class="mat-icon-rtl-mirror">
-                            {{treeview.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                        </mat-icon>
-                    </button>
-                    <mat-checkbox [checked]="treeview.descendantsAllSelected(node)"
-                        [indeterminate]="treeview.descendantsPartiallySelected(node)"
-                        (change)="treeview.todoItemSelectionToggle(node)" color="primary" disabled>{{node.item}}
-                    </mat-checkbox>
-                </mat-tree-node>
-            </mat-tree>
-        </div> -->
 
         <div style="text-align: center;margin:30px">
             <ion-button
@@ -162,7 +98,8 @@
         </ng-container>
         <ion-row style="width: 100%;padding: 10px;">
             <img style="cursor: pointer;;margin-right: 5px;margin-left: 2px;margin-top: 2px;width: 14px;height: 14px;float:left"
-                src="assets/icon/leave_setup/icon_request@3x.png" (click)="addNewPH(undefined, undefined)">
+                src="assets/icon/leave_setup/icon_request@3x.png"
+                (click)="createHolidayList(null,null, menuNewHoliday)">
             <p style="color:#43425d; opacity: 0.8;font-weight: bold;font-size: 11px;margin-top: 3px;">
                 Add another new public holiday
             </p>
@@ -197,19 +134,6 @@
                     Create specific holiday and rest day for employee</ion-card-subtitle>
             </div>
             <div style="right: 75px;top: 25px;position: absolute;">
-                <!-- *ngIf="showAddIcon" -->
-                <!-- <ion-button fill="outline" (click)="showAddIcon = false;clickedIndex=null;
-                slideInOut = false;dayControl.reset()"
-                    style="background: #f0f0f7;font-size: 12px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                    color="primary">
-                    Cancel
-                </ion-button>
-                <div style="display: inline-block"></div>
-                <ion-button (click)="saveData()"
-                    style="font-size: 12px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                    color="primary">
-                    Save
-                </ion-button> -->
                 <p
                     style="margin-top: 16px;opacity: 0.8;font-size: 12px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
                     Edit
@@ -259,8 +183,8 @@
                                         style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                         <p class="textHover" style="font-size: 12px;font-weight: bold;cursor: pointer;"
                                             [ngClass]="{
-                                    'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
-                                            (click)="clickedCalendar(list, i)"> {{list.code}}
+                                    'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}" (click)="clickedIndex = i;
+                                            selectProfile(list, i);"> {{list.code}}
                                         </p>
 
                                         <!-- (input)="resize(i)" id="{{ i }}" -->
@@ -301,8 +225,8 @@
                                             <mat-form-field style="font-size: 11px;width: 50%;height: 35px;" [ngClass]="{
                                             'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}">
                                                 <input matInput [(ngModel)]="list.code"
-                                                    [ngModelOptions]="{standalone: true}"
-                                                    (click)="clickedCalendar(list, i)">
+                                                    [ngModelOptions]="{standalone: true}" (click)="clickedIndex = i;
+                                                    selectProfile(list, i);">
                                             </mat-form-field>
                                             <div
                                                 style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
@@ -393,7 +317,7 @@
                                     *ngIf="modeValue == 'ON'">
                                     <ion-icon class="addIcon" name="add-circle-outline" *ngIf="modeValue == 'ON'"
                                         (click)="sharedService.menu.enable(true, 'addHolidayDetails');sharedService.menu.enable(false, 'createCalendarDetails');
-                                        sharedService.menu.open('addHolidayDetails');addNewPH(undefined, undefined)">
+                                        sharedService.menu.open('addHolidayDetails');createHolidayList(null,null, menuNewHoliday)">
                                     </ion-icon>
                                 </ion-col>
                             </ion-row>
@@ -452,221 +376,3 @@
         </div>
     </div>
 </ion-card>
-<!-- <div *ngIf="!editCalendar && !addCalendar && !deleteCalendar"
-    style="color: #057dcd; text-align: right;padding-top: 15px;">
-    <div (click)="deleteCalendar = true;showEditForm = false" style="display: inline-block; color: #f04141">
-        <i class="far fa-calendar-times"></i>
-        <span style="padding-right: 10px;cursor: pointer;">Delete</span>
-    </div>
-    &nbsp;&nbsp;
-    <div (click)="editCalendar = true;showEditForm = false" style="display: inline-block">
-        <i class="far fa-edit personal"></i>
-        <span style="padding-right: 10px;cursor: pointer;">Edit</span>
-    </div>
-    &nbsp;&nbsp;
-    <div style="display: inline-block" (click)="addCalendar = true; showEditForm= false">
-        <i class="far fa-calendar-plus"></i>
-        <span style="padding-right: 10px;cursor: pointer;">Add</span>
-    </div>
-</div>
-
-<form [formGroup]="editCalendarForm">
-    <div style="text-align: right;padding-top: 5px;padding-right: 10px;" *ngIf="editCalendar && !showEditForm">
-        <ion-button fill="clear"
-            (click)="editCalendar = false;addCalendar = false;editCalendarForm.reset();getPublicHolidayList();restDay = [];selectedWeekday = [];"
-            style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-            Cancel
-        </ion-button>
-        <div style="display: inline-block"></div>
-        <ion-button shape="round" fill="outline" (click)="saveData()" [disabled]="!editCalendarForm.valid"
-            style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary">
-            Save
-        </ion-button>
-    </div>
-
-    <div style="text-align: right;padding-top: 5px;padding-right: 10px;" *ngIf="deleteCalendar">
-        <ion-button fill="clear"
-            (click)="editCalendar = false;addCalendar = false;deleteCalendar=false;editCalendarForm.reset();getPublicHolidayList();restDay = [];selectedWeekday = [];"
-            style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-            Cancel
-        </ion-button>
-        <div style="display: inline-block"></div>
-        <ion-button shape="round" fill="outline" (click)="deleteData()" [disabled]="!editCalendarForm.valid"
-            style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary">
-            Delete
-        </ion-button>
-    </div>
-
-    <div style="text-align: right;padding-top: 5px;padding-right: 10px;" *ngIf="showEditForm">
-        <ion-button fill="clear"
-            (click)="addCalendar = false;editCalendar = false;showEditForm=false;getPublicHolidayList();profileName.reset(); restDay = [];selectedWeekday = [];"
-            style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-            Cancel
-        </ion-button>
-        <div style="display: inline-block"></div>
-        <ion-button shape="round" fill="outline"
-            (click)="postData(); addCalendar = false;editCalendar = false;showEditForm=false;"
-            [disabled]="!profileName.valid"
-            style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary">
-            Save
-        </ion-button>
-    </div>
-    <!------------------------------------- POST Added calendar  ------------------------------------
-    <div style="text-align: right;padding-top: 5px;padding-right: 10px;" *ngIf="addCalendar">
-        <ion-button fill="clear" (click)="addCalendar = false; profileName.reset();getPublicHolidayList();"
-            style="font-size: 12px;height: 30px;cursor: pointer;text-transform: none;" color="primary">
-            Cancel
-        </ion-button>
-        <div style="display: inline-block"></div>
-        <ion-button shape="round" fill="outline" (click)="callParamAPI(year, month); showEditForm= true"
-            style="font-size: 12px;height: 23px;width: 55px;cursor: pointer;text-transform: none;" color="primary"
-            [disabled]="!profileName.valid">
-            Next
-        </ion-button>
-    </div>
-
-    <div class='app-calendar' (window:resize)="height = ($event.target.innerHeight - 153) - (5 / 100)">
-        <full-calendar #calendar defaultView="dayGridMonth" [header]="{
-                          left: 'prev,next today',
-                          center: 'title',
-                          right: 'dayGridMonth,timeGridWeek, listYear'
-                        }" [plugins]="calendarPlugins" [events]="leaveEvent" [eventLimit]=true
-            (eventClick)="text = $event.el.text; start = $event.event.start; end = $event.event.end;color = $event.event.backgroundColor; onEventClick($event)">
-        </full-calendar>
-        <div *ngIf="text" style="height: 30px;float: left;margin-top: 29px;width: 5px;"
-            [style.border]="color=='' ? '2px solid #057dcd':'2px solid #c2185b'"></div>
-        <div *ngIf="text" style=" font-size: 16px;padding-top: 5px;position: absolute;padding-left: 20px;">
-            {{start | date:'EEEE, MMM d'}} <span *ngIf="endDate !== start && end !== null">-
-                {{endDate | date:'EEEE, MMM d'}}</span></div><br>
-        <div *ngIf="text" style="padding-left: 20px;padding-top: 13px;position: absolute;">{{timeslot}}</div>
-        <div *ngIf="text" style="padding-left: 120px;padding-top: 13px;position: absolute;">{{text}}</div>
-    </div>
-
-    <div class="holidayView" [style.max-height.px]="height">
-        <!------------------------------- Edit calendar -----------------------------------------
-        <div style="display:block; white-space: nowrap;" *ngIf="!showEditForm">
-            <mat-form-field appearance="outline" [style.width.%]="editCalendar ? '47': '94'"
-                *ngIf="editCalendar || deleteCalendar">
-                <mat-label>Calendar profile</mat-label>
-                <mat-select class="selectLeave" formControlName="calendarProfile">
-                    <mat-option *ngFor="let list of profileList; let i=index" [value]="list.calendar_guid"
-                        (click)="selectProfile(list)">
-                        {{list.code}}</mat-option>
-                </mat-select>
-                <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
-                margin-left: -50px;margin-top: -10px;"></ion-spinner>
-                <mat-error *ngIf="!editCalendarForm.calendarProfile" style="padding: 5px;padding-left: 0;">
-                    Please select calendar profile</mat-error>
-            </mat-form-field>
-            <span *ngIf="editCalendar">&nbsp;&nbsp;</span>
-            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="editCalendar ">
-                <mat-label>Rest day</mat-label>
-                <mat-select class="selectLeave" formControlName="dayControl"
-                    (openedChange)="editCalendarForm.patchValue({ dayControl: this.restDay });" multiple>
-                    <mat-option *ngFor="let day of weekdays; let j=index" [value]="day" (click)="restDaySelected(day)"
-                        [disabled]="!editCalendarForm.valid">
-                        {{day}}</mat-option>
-                </mat-select>
-                <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
-                margin-left: -50px;margin-top: -10px;"></ion-spinner>
-            </mat-form-field>
-        </div>
-
-        <!------------------------------- add calendar ------------------------------------------
-        <div style="display:block; white-space: nowrap;">
-            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
-                <mat-label>Calendar profile name</mat-label>
-                <input matInput [formControl]="profileName" required>
-                <mat-error>Please enter profile name</mat-error>
-            </mat-form-field>
-            <span *ngIf="addCalendar">&nbsp;&nbsp;</span>
-            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
-                <mat-label>Rest day</mat-label>
-                <mat-select class="selectLeave" multiple>
-                    <mat-option *ngFor="let day of weekdays; let j=index" [value]="day" (click)="restDaySelected(day)">
-                        {{day}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div style="display:block; white-space: nowrap;">
-            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
-                <mat-label>Country list</mat-label>
-                <mat-select>
-                    <mat-option selected>None</mat-option>
-                    <mat-option *ngFor="let list of countryList; let i=index" [value]="list.iso"
-                        (click)="countryRegion = countryDB[list.iso].regions; countryIso = list.iso;">
-                        {{list.name}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <span *ngIf="addCalendar">&nbsp;&nbsp;</span>
-            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
-                <mat-label>Regions</mat-label>
-                <mat-select>
-                    <mat-option selected>None</mat-option>
-                    <mat-option *ngFor="let list of countryRegion; let i=index" [value]="list.iso"
-                        (click)=" regionISO = list.iso">
-                        {{list.name}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div style="display:block; white-space: nowrap;">
-            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
-                <input matInput placeholder="Year(yyyy)" [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
-            </mat-form-field>
-            <!-- <span *ngIf="addCalendar">&nbsp;&nbsp;</span>
-            <mat-form-field appearance="outline" style="width: 47%;" *ngIf="addCalendar ">
-                <input matInput placeholder="Month(mm)" [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
-            </mat-form-field> --
-        </div>
-
-        <ion-item class="divider" lines="full" *ngIf="editCalendar || addCalendar"></ion-item>
-
-        <ion-row class="titleRow" *ngIf="!addCalendar" style="background: #057dcd;height: 37px;margin-bottom: 10px">
-            <ion-col size="3">
-                <ion-label style="color: white">Day</ion-label>
-            </ion-col>
-            <ion-col size="3.5">
-                <ion-label style="color: white">Date</ion-label>
-            </ion-col>
-            <ion-col size="4">
-                <ion-label style="color: white">Holiday</ion-label>
-            </ion-col>
-        </ion-row>
-
-        <div *ngIf="!addCalendar ">
-            <ion-row class="detailsRow" *ngFor="let holiday of events; let i=index">
-                <ion-col size="3">
-                    <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" *ngIf="!editCalendar">
-                        {{holiday.day}}</p>
-                    <mat-form-field *ngIf="editCalendar" style="width: 100%">
-                        <input matInput [(value)]="holiday.day" disabled>
-                    </mat-form-field>
-                </ion-col>
-
-                <ion-col size="3.5" class="colOfLeave">
-                    <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" *ngIf="!editCalendar">
-                        {{holiday.str}}</p>
-                    <mat-form-field *ngIf="editCalendar" style="width: 100%">
-                        <input matInput [matDatepicker]="datePicker" [(value)]="holiday.start" required
-                            (dateChange)="dateChanged($event.target.value, i)">
-                        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
-                        <mat-datepicker #datePicker></mat-datepicker>
-                    </mat-form-field>
-                </ion-col>
-
-                <ion-col size="4" class="colOfLeave">
-                    <p *ngIf="!editCalendar">
-                        {{holiday.title}}</p>
-                    <mat-form-field *ngIf="editCalendar" style="width: 100%">
-                        <input matInput [(value)]="holiday.title" (input)=" events[i].title = $event.target.value;">
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="1.5" *ngIf="editCalendar"
-                    style="display: flex;align-items: center;justify-content: center;">
-                    <i class="far fa-trash-alt" (click)="deletePH(i, events, holiday.title)"></i>
-                </ion-col>
-                <ion-item class="divider" lines="full"></ion-item>
-            </ion-row>
-        </div>
-    </div>
-</form> -->
