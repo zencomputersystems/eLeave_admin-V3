@@ -108,7 +108,6 @@ export class WorkingHourListComponent implements OnInit {
     async ngOnInit() {
         this.showSpinner = true;
         this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
-        this.get_assigned_employee();
         this.showSpinner = false;
         this.clickedCalendar(this.list[this.clickedIndex], this.clickedIndex);
         this.workingHrAPI.get_all_users_list().subscribe(
@@ -160,7 +159,7 @@ export class WorkingHourListComponent implements OnInit {
             });
 
         } else {
-            this.mode = 'OFF'
+            this.mode = 'OFF';
             this.workingHrAPI.showPopUp('Edit mode disabled. Good job!', true);
         }
         this.sharedService.emitChange(this.mode);
@@ -172,33 +171,18 @@ export class WorkingHourListComponent implements OnInit {
      * @param {*} item
      * @memberof WorkingHourListComponent
      */
-    dropEvent(event, item) {
+    async dropEvent(event, item) {
         for (let i = 0; i < this.employeeList.length; i++) {
             if (event.data === this.employeeList[i].fullname) {
                 this.draggedUser(i);
-                this.workingHrAPI.patch_user_working_hours({
+                await this.workingHrAPI.patch_user_working_hours({
                     "user_guid": this._droppedUser,
                     "working_hours_guid": item.working_hours_guid
-                }).subscribe(response => {
-                    this.employeeList.splice(i, 1);
-                    this._droppedUser = [];
-                    this.get_assigned_employee();
-                });
+                }).toPromise();
+                this.employeeList.splice(i, 1);
+                this._droppedUser = [];
+                this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
             }
-        }
-    }
-
-    /**
-     * get assigned employee from request id
-     * @memberof WorkingHourListComponent
-     */
-    async get_assigned_employee() {
-        for (let i = 0; i < this.list.length; i++) {
-            let number = await this.workingHrAPI.get_assigned_working_profile_user(this.list[i].working_hours_guid).toPromise();
-            let details = await this.workingHrAPI.get_working_hours_details(this.list[i].working_hours_guid).toPromise();
-            this.list[i].strtime = details.property.fullday.start_time;
-            this.list[i].endtime = details.property.fullday.end_time;
-            // this.list[i]["employee"] = number.length;
         }
     }
 
