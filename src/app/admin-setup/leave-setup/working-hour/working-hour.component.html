@@ -30,8 +30,9 @@
                     Start time</mat-label>
                 <div style="padding-bottom: 5px;margin-left: 18px;border: 0.5px solid #80808057;
                 padding: 4px;border-radius: 4px;">
-                    <ngb-timepicker class="ngbTime" formControlName="startpicker" [meridian]="meridian"
-                        [spinners]="spinners"></ngb-timepicker>
+                    <ngb-timepicker class="ngbTime" formControlName="startpicker"
+                        (ngModelChange)="onChange($event, 'start')" [meridian]="meridian" [spinners]="spinners">
+                    </ngb-timepicker>
                 </div>
             </div>
             <div style="display: inline-block;margin-left: 10px;padding-bottom: 10px;">
@@ -39,8 +40,8 @@
                     End time</mat-label>
                 <div style="padding-bottom: 5px;padding-left: 18px;border: 0.5px solid #80808057;
                 padding: 4px;border-radius: 4px;">
-                    <ngb-timepicker class="ngbTime" formControlName="endpicker" [meridian]="meridian"
-                        [spinners]="spinners">
+                    <ngb-timepicker class="ngbTime" formControlName="endpicker"
+                        (ngModelChange)="onChange($event, 'end')" [meridian]="meridian" [spinners]="spinners">
                     </ngb-timepicker>
                 </div>
             </div>
@@ -220,14 +221,15 @@
             BACK
         </ion-button> -->
         <ion-button *ngIf="id==''"
-            style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary"
+            style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+            color="primary"
             (click)="postWorkingHourSetup();workingHourForm.reset();menu.close('createWorkingHourDetails')"
             [disabled]="!workingHourForm.valid">
             Create
         </ion-button>
         <ion-button *ngIf="id != ''"
-            style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary"
-            (click)="postWorkingHourSetup();menu.close('editWorkingHourDetails'); refreshProfile(id)"
+            style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+            color="primary" (click)="postWorkingHourSetup();menu.close('editWorkingHourDetails'); refreshProfile(id)"
             [disabled]="!workingHourForm.valid">
             Update
         </ion-button>

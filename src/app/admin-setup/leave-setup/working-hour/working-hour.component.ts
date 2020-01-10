@@ -2,6 +2,7 @@ import { OnInit, Component, Input, OnChanges, SimpleChanges, Output, EventEmitte
 import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { WorkingHourApiService } from "./working-hour-api.service";
 import { MenuController } from "@ionic/angular";
+import * as _moment from 'moment';
 
 /**
  * create or update working hour profile
@@ -52,6 +53,20 @@ export class WorkingHourComponent implements OnInit, OnChanges {
      * @memberof WorkingHourComponent
      */
     private _data: any;
+
+    /**
+     * get the full day start time in utc format
+     * @private
+     * @memberof WorkingHourComponent
+     */
+    private _startTime;
+
+    /**
+     * get the full day end time in utc format
+     * @private
+     * @memberof WorkingHourComponent
+     */
+    private _endTime;
 
     /** 
      * get value of clicked working_hour_guid from parent page
@@ -141,6 +156,72 @@ export class WorkingHourComponent implements OnInit, OnChanges {
     splitTime(time) {
         return {
             "hour": Number((time.split(':'))[0]), "minute": Number((time.split(':'))[1])
+        }
+    }
+
+    /**
+     * full day on changed
+     * @param {*} date
+     * @param {string} name
+     * @memberof WorkingHourComponent
+     */
+    onChange(date, name: string) {
+        if (date !== null) {
+            if (name == 'start') {
+                let timeStart = this.timeReformat(date);
+                this._startTime = _moment.utc(timeStart, "HH:mm");
+            } else {
+                let timeEnd = this.timeReformat(date);
+                this._endTime = _moment.utc(timeEnd, "HH:mm");
+            }
+            this.calculateTime(this._startTime, this._endTime);
+
+        }
+    }
+
+    /**
+     * calculate time to fill up half day & quarter day time
+     * @param {*} str
+     * @param {*} end
+     * @memberof WorkingHourComponent
+     */
+    calculateTime(str, end) {
+        if ((str && end) != undefined) {
+            const d = _moment.duration(end.diff(str));
+            const s = _moment.utc(+d).format('H:mm');
+            if (s == "9:00") {
+                this.workingHourForm.patchValue(
+                    {
+                        starthalfdayAMpicker: this.splitTime(_moment(str).format("HH:mm")),
+                        endhalfdayAMpicker: this.splitTime(_moment(str).add(4, 'hours').format("HH:mm")),
+                        starthalfdayPMpicker: this.splitTime(_moment(end).subtract(4, 'hours').format("HH:mm")),
+                        endhalfdayPMpicker: this.splitTime(_moment(end).format("HH:mm")),
+                        startQ1picker: this.splitTime(_moment(str).format("HH:mm")),
+                        endQ1picker: this.splitTime(_moment(str).add(2, 'hours').format("HH:mm")),
+                        startQ2picker: this.splitTime(_moment(str).add(2, 'hours').format("HH:mm")),
+                        endQ2picker: this.splitTime(_moment(str).add(4, 'hours').format("HH:mm")),
+                        startQ3picker: this.splitTime(_moment(end).subtract(4, 'hours').format("HH:mm")),
+                        endQ3picker: this.splitTime(_moment(end).subtract(2, 'hours').format("HH:mm")),
+                        startQ4picker: this.splitTime(_moment(end).subtract(2, 'hours').format("HH:mm")),
+                        endQ4picker: this.splitTime(_moment(end).format("HH:mm"))
+                    });
+            } else {
+                this.workingHourForm.patchValue(
+                    {
+                        starthalfdayAMpicker: null,
+                        endhalfdayAMpicker: null,
+                        starthalfdayPMpicker: null,
+                        endhalfdayPMpicker: null,
+                        startQ1picker: null,
+                        endQ1picker: null,
+                        startQ2picker: null,
+                        endQ2picker: null,
+                        startQ3picker: null,
+                        endQ3picker: null,
+                        startQ4picker: null,
+                        endQ4picker: null
+                    });
+            }
         }
     }
 
