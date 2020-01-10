@@ -231,6 +231,7 @@ export class WorkingHourListComponent implements OnInit {
         dialogRef.afterClosed().subscribe(val => {
             if (val === working_hour_guid) {
                 this.workingHrAPI.delete_working_hours_profile(working_hour_guid).subscribe(response => {
+                    this.clickedIndex = 0;
                     this.ngOnInit();
                     this.workingHrAPI.showPopUp('Working hour profile was deleted', true);
                 })
