@@ -43,13 +43,23 @@ export class DashboardApiService {
     }
 
     /**
+     * edit announcement data
+     * @param {*} body
+     * @returns
+     * @memberof DashboardApiService
+     */
+    patch_announcement(body: any) {
+        return this.apiService.patchApi(body, '/api/admin/announcement');
+    }
+
+    /**
      * delete announcement
      * @param {*} id
      * @returns
      * @memberof DashboardApiService
      */
     delete_announcement_list(id: any) {
-        return this.apiService.deleteApi(id, '/api​/admin​/announcement​/');
+        return this.apiService.deleteApi(id, '/api/admin/announcement/');
     }
 
 

@@ -16,10 +16,12 @@
           <ion-label>
             <p style="color:#4d4f5c; font-weight: bold;font-size: 11px;line-height: 1.82;white-space: normal;">
               {{item.TITLE}}</p>
-            <p style="opacity: 0.8;font-size: 9px;line-height: 2.22;color: #4d4f5c;">{{item.FROM_DATE}}
+            <p style="opacity: 0.8;font-size: 9px;line-height: 2.22;color: #4d4f5c;">
+              {{item.CREATION_TS | date:'d MMM yyyy'}}
             </p>
-            <p style="white-space: normal;font-size: 10px;color: #4d4f5c;line-height:1.4;text-align: justify;">
-              {{item.MESSAGE}}
+            <p class="innerText"
+              style="white-space: normal;font-size: 10px;color: #4d4f5c;line-height:1.4;text-align: justify;"
+              [innerHTML]="item.MESSAGE">
             </p>
           </ion-label>
         </ion-item>
@@ -27,10 +29,14 @@
           <ion-label>
             <p style="color:#4d4f5c; font-weight: bold;font-size: 11px;line-height: 1.82;white-space: normal;">
               {{item.TITLE}}</p>
-            <p style="opacity: 0.8;font-size: 9px;line-height: 2.22;color: #4d4f5c;">{{item.FROM_DATE}}
+            <p style="opacity: 0.8;font-size: 9px;line-height: 2.22;color: #4d4f5c;">
+              {{item.CREATION_TS | date:'d MMM yyyy'}}
             </p>
-            <p style="white-space: normal;font-size: 10px;color: #4d4f5c;line-height:1.4;text-align: justify;">
-              {{item.MESSAGE}}
+            <p [innerHTML]="item.MESSAGE" class="listInnerText" style="white-space: normal;
+            font-size: 10px;
+            color: #4d4f5c;
+            line-height: 1.4;
+            text-align: justify;">
             </p>
           </ion-label>
         </ion-item>
@@ -87,10 +93,16 @@
           Save Draft
         </ion-button>
         &nbsp; -->
-        <ion-button
+        <ion-button *ngIf="createNew === true"
           style="display: inline-block;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-          color="primary" (click)="onClickPublish()">
+          color="primary" (click)="onClickPublish('add')">
           Publish
+        </ion-button>
+
+        <ion-button *ngIf="createNew === false"
+          style="display: inline-block;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+          color="primary" (click)="onClickPublish('edit')">
+          Save
         </ion-button>
       </div>
     </div>
@@ -171,20 +183,6 @@
   <div class="row" *ngIf="row" style="margin-top: 20px;">
     <div class="annoucement">
       <div style="background-color: #ffffff;padding: 10px;">
-        <!-- <div style="font-size: 12px;width:100%;background: #f5f6fa;padding:10px;padding-left: 15px;padding-top: 1px;
-        padding-bottom: 1px;color: #a3a6b4;font-weight: bold;">
-        <p style="float: left;margin-top: 10px;">LATEST ANNOUNCEMENT</p>
-        <ion-button
-          style="--border-radius:2px;margin-left: 10px;font-size: 11px;height: 26px;width:92px;cursor: pointer;text-transform: none;font-weight: bold;"
-          color="primary" (click)="menu.enable(true, 'createAnnouncementDetails');menu.enable(false, 'viewHolidayDetails');
-          menu.enable(false, 'viewAnnouncementDetails');menu.open('createAnnouncementDetails');">
-          Create New
-        </ion-button>
-        <p (click)="menu.enable(true, 'viewAnnouncementDetails');menu.enable(false, 'viewReplacementDetails');menu.enable(false, 'viewAnnualDetails');menu.enable(false, 'viewHolidayDetails');menu.open('viewAnnouncementDetails');"
-          style="cursor: pointer;margin-top: 0px;float: right;margin-right: 15px;margin-top: 10px;color:#3b86ff;opacity: 0.8;line-height: 1.36;font-size: 11px;font-weight: bold;">
-          VIEW DETAILS</p>
-      </div> -->
-
         <div
           style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
           <ion-row>
@@ -192,7 +190,7 @@
               LATEST ANNOUNCEMENT
               <ion-button
                 style="position: absolute;margin-top: -4px;--border-radius:2px;margin-left: 10px;font-size: 11px;height: 26px;width:92px;cursor: pointer;text-transform: none;font-weight: bold;"
-                color="primary" (click)="menuOpen=true;menu.enable(true, 'createAnnouncementDetails');menu.enable(false, 'viewHolidayDetails');
+                color="primary" (click)="createNew=true;title='';message='';checked=false;menuOpen=true;menu.enable(true, 'createAnnouncementDetails');menu.enable(false, 'viewHolidayDetails');
             menu.enable(false, 'viewAnnouncementDetails');menu.open('createAnnouncementDetails');">
                 Create New
               </ion-button>
@@ -207,22 +205,23 @@
           <ng-container style="padding-top: 2%;" *ngIf="i<3">
             <ion-col align-self-center size="3"
               style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;padding: 0;padding-left: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
-              {{item.FROM_DATE}}
+              {{item.CREATION_TS | date:'d MMM yyyy'}}
             </ion-col>
-            <ion-col size="7" style="padding: 0;color:#4d4f5c;font-size:11px;line-height: 1.82;overflow: hidden;
+            <ion-col align-self-center size="7" style="padding: 0;color:#4d4f5c;font-size:11px;line-height: 1.82;overflow: hidden;
                   white-space: nowrap;text-overflow: ellipsis;">
               <span *ngIf="item.IS_PINNED === 1" style="font-weight: bold;color:#43425d;font-size:11px">
                 {{item.TITLE}} <br></span>
-              <span>{{item.MESSAGE}}</span>
+              <p class="mainInnerText" [innerHTML]="item.MESSAGE" style="margin-bottom: 0;"></p>
             </ion-col>
             <ion-col size="2" align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-              <div style="margin-right: 42px;text-align: right;">
-                <ion-icon name="close" style="color: #ff6768;padding-top: 3px;padding-right: 5px;
-                font-size: 15px;cursor: pointer;">
-                </ion-icon>
-                <p style="position: absolute;display: inline-block;color: #ff6768;cursor: pointer;font-size: 11px;line-height: 1.82;"
+              <div style="margin-right: 10px;text-align: right;">
+                <img src="assets/icon/leave_setup/icon_edit@3x.png" style="width: 11px;height:11px;cursor: pointer;"
+                  (click)="editAnnouncement(item);createNew=false;menuOpen=true;menu.enable(true, 'createAnnouncementDetails');menu.enable(false, 'viewHolidayDetails');
+                  menu.enable(false, 'viewAnnouncementDetails');menu.open('createAnnouncementDetails');">
+                &nbsp;&nbsp;
+                <ion-icon name="close" style="color: #ff6768;font-size: 15px;cursor: pointer;"
                   (click)="deleteAnnouncement(item)">
-                  Delete</p>
+                </ion-icon>
               </div>
             </ion-col>
             <ion-item *ngIf="i<2" class="divider" lines="full"></ion-item>

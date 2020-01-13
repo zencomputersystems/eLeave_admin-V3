@@ -131,6 +131,20 @@ export class DashboardComponent implements OnInit {
   public longLeave: any;
 
   /**
+   * clicked create new button
+   * @type {boolean}
+   * @memberof DashboardComponent
+   */
+  public createNew: boolean;
+
+  /**
+   * clicked announcement id
+   * @type {string}
+   * @memberof DashboardComponent
+   */
+  public announcementId: string;
+
+  /**
    *Creates an instance of DashboardComponent.
    * @param {MenuController} menu
    * @param {DashboardApiService} dashboardAPI
@@ -249,12 +263,11 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-
   /**
    * create new announcement
    * @memberof DashboardComponent
    */
-  onClickPublish() {
+  onClickPublish(name: string) {
     let isChecked: number;
     if (this.checked === true) {
       isChecked = 1;
@@ -262,10 +275,32 @@ export class DashboardComponent implements OnInit {
       isChecked = 0;
     }
     const data = { "title": this.title, "message": this.message, "isPinned": isChecked };
-    this.dashboardAPI.post_announcement_list(data).subscribe(response => {
-      this.getAnnouncementList();
-      this.menu.close('createAnnouncementDetails');
-    });
+    if (name === 'add') {
+      this.dashboardAPI.post_announcement_list(data).subscribe(response => {
+        this.getAnnouncementList();
+        this.title = ''; this.message = ''; this.checked = false;
+      });
+    } else {
+      data["announcementId"] = this.announcementId;
+      this.dashboardAPI.patch_announcement(data).subscribe(res => this.getAnnouncementList())
+    }
+    this.menu.close('createAnnouncementDetails');
+  }
+
+  /**
+   * data binding to clicked announcement
+   * @param {*} data
+   * @memberof DashboardComponent
+   */
+  editAnnouncement(data) {
+    this.title = data.TITLE;
+    this.message = data.MESSAGE;
+    this.announcementId = data.ANNOUNCEMENT_GUID;
+    if (data.IS_PINNED === 1) {
+      this.checked = true;
+    } else {
+      this.checked = false;
+    }
   }
 
   /**
@@ -282,7 +317,6 @@ export class DashboardComponent implements OnInit {
     dialog.afterClosed().subscribe(result => {
       if (result === item.ANNOUNCEMENT_GUID) {
         this.dashboardAPI.delete_announcement_list(item.ANNOUNCEMENT_GUID).subscribe(response => {
-          console.log(response);
           this.getAnnouncementList();
         })
       }

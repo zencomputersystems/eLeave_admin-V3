@@ -14,6 +14,23 @@
   //   overflow: hidden;
   // }
   z-index: 0 !important;
+  p.innerText::ng-deep p {
+    white-space: normal;
+    font-size: 10px;
+    color: #4d4f5c;
+    line-height: 1.4;
+    text-align: justify;
+  }
+  p.listInnerText::ng-deep p {
+    white-space: normal;
+    font-size: 10px;
+    color: #4d4f5c;
+    line-height: 1.4;
+    text-align: justify;
+  }
+  p.mainInnerText::ng-deep p {
+    margin-bottom: 0;
+  }
   .main {
     top: 48px;
     background: #f0f0f7;
