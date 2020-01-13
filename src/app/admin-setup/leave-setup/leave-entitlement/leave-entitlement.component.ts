@@ -176,7 +176,7 @@ export class LeaveEntitlementComponent implements OnInit {
    * @type {boolean}
    * @memberof LeaveEntitlementComponent
    */
-  public showSpinner: boolean = false;
+  public showSpinner: boolean = true;
 
   /**
    *Creates an instance of LeaveEntitlementComponent.
@@ -195,7 +195,6 @@ export class LeaveEntitlementComponent implements OnInit {
    * @memberof LeaveEntitlementComponent
    */
   async ngOnInit() {
-    this.showSpinner = true;
     this.leaveTypes = [];
     let data = await this.leaveApi.get_leavetype_entitlement().toPromise();
     this.showSpinner = false;
@@ -205,7 +204,7 @@ export class LeaveEntitlementComponent implements OnInit {
       this.leaveTypes.push({ "leaveTypeId": this.leaveEntitlement[i][0].leaveTypeId, "title": this.leaveEntitlement[i][0].leaveTypeAbbr + ' - ' + this.leaveEntitlement[i][0].leaveType, "ABBR": this.leaveEntitlement[i][0].leaveTypeAbbr, "name": this.leaveEntitlement[i][0].leaveType });
     }
     this.showClickedContent(this.clickedHeaderIndex);
-    this.getProfileDetails(data[this.clickedIndex].leaveEntitlementId);
+    this.getProfileDetails(this.leaveEntitlement[this.clickedHeaderIndex][this.clickedIndex].leaveEntitlementId);
   }
 
   /**
@@ -277,7 +276,6 @@ export class LeaveEntitlementComponent implements OnInit {
         }
       }
     }
-    this.patchProfile();
     this.addEditProfile();
   }
 
@@ -295,11 +293,10 @@ export class LeaveEntitlementComponent implements OnInit {
         "description": this.getEntitlementbyType[j].leaveEntitlementDescription,
         "property": XMLDetails.PROPERTIES_XML
       };
-      this.entitlementApi.patch_leavetype_entitlement(data).subscribe(data => {
-        this.leaveApi.openSnackBar('Leave type & entitlement was saved', true);
-        this.ngOnInit();
-      })
+      await this.entitlementApi.patch_leavetype_entitlement(data).toPromise();
     }
+    this.leaveApi.openSnackBar('Leave type & entitlement was saved', true);
+    this.ngOnInit();
   }
 
   /**
@@ -323,7 +320,7 @@ export class LeaveEntitlementComponent implements OnInit {
       "id": this.entitlementTypeNew
     }
     await this.entitlementApi.patch_leavetype(data).toPromise();
-    this.ngOnInit();
+    this.patchProfile();
   }
 
   /**
