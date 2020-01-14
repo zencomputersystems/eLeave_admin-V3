@@ -295,19 +295,20 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  confirmAction(data) {
+  async confirmAction(data) {
     const dialog = this.dialog.open(TaskConfirmationDialogComponent, {
       data: { value: data.leave_transaction_guid, detail: data },
       height: "470px",
       width: "440px"
     });
-    dialog.afterClosed().subscribe(result => {
-      if (result[1] === 'APPROVED' && result[0] != undefined) {
+    let result = await dialog.afterClosed().toPromise();
+    if (result != undefined) {
+      if (result[1] === 'APPROVED') {
         this.leaveStatus(result[0], result[2], 'approved');
       } else {
         this.leaveStatus(result[0], result[2], 'rejected');
       }
-    });
+    }
   }
 
   /**
