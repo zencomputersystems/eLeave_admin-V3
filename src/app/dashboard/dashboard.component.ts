@@ -245,22 +245,13 @@ export class DashboardComponent implements OnInit {
   /**
    * method to approve clicked leave transaction GUID
    * @param {string} leaveGUID
+   * @param {string} reason
    * @memberof DashboardComponent
    */
-  approveLeave(leaveGUID: string) {
-    this.dashboardAPI.post_approve_list({ "id": leaveGUID }).subscribe(response => {
+  leaveStatus(leaveGUID: string, reason: string, action: string) {
+    this.dashboardAPI.post_leave_status(action, { "id": leaveGUID, "reason": reason }).subscribe(response => {
       this.get_task_list();
-    })
-  }
-
-  /**
-   * method to reject clicked leave transaction GUID
-   * @param {*} leave_transaction_guid
-   * @memberof DashboardComponent
-   */
-  rejectLeave(leave_transaction_guid) {
-    this.dashboardAPI.post_reject_list({ "id": leave_transaction_guid }).subscribe(response => {
-      this.get_task_list();
+      this.dashboardAPI.snackbarMessage('Your tasks has been submitted successfully', true);
     })
   }
 
@@ -311,8 +302,10 @@ export class DashboardComponent implements OnInit {
       width: "440px"
     });
     dialog.afterClosed().subscribe(result => {
-      if (result === data.leave_transaction_guid) {
-
+      if (result[1] === 'APPROVED' && result[0] != undefined) {
+        this.leaveStatus(result[0], result[2], 'approved');
+      } else {
+        this.leaveStatus(result[0], result[2], 'rejected');
       }
     });
   }

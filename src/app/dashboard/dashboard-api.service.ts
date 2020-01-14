@@ -3,6 +3,8 @@ import { APIService } from 'src/services/shared-service/api.service';
 import { Observable } from 'rxjs';
 import { Http, Response } from '@angular/http';
 import { map } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
+import { SnackbarNotificationComponent } from '../admin-setup/leave-setup/snackbar-notification/snackbar-notification.component';
 
 /**
  * ALl API for dashboard page
@@ -20,7 +22,7 @@ export class DashboardApiService {
      * @param {Http} http perform http request
      * @memberof DashboardApiService
      */
-    constructor(private apiService: APIService, public http: Http) {
+    constructor(private apiService: APIService, public http: Http, private snackBar: MatSnackBar) {
     }
 
     /**
@@ -91,22 +93,12 @@ export class DashboardApiService {
     }
 
     /**
-     * admin approve task leave from dashboard
+     * admin take action on task leave from dashboard
      * @returns {Observable<any>}
      * @memberof DashboardApiService
      */
-    post_approve_list(leaveTransactionGUID): Observable<any> {
-        return this.http.post(this.apiService.baseUrl + '/api/leave/approved', leaveTransactionGUID, { headers: this.apiService.headers })
-            .pipe(map((res: Response) => res.text()))
-    }
-
-    /**
-     * admin reject task leave from dashboard
-     * @returns {Observable<any>}
-     * @memberof DashboardApiService
-     */
-    post_reject_list(GUID): Observable<any> {
-        return this.http.post(this.apiService.baseUrl + '/api/leave/rejected', GUID, { headers: this.apiService.headers })
+    post_leave_status(action: string, data): Observable<any> {
+        return this.http.post(this.apiService.baseUrl + '/api/leave/' + action, data, { headers: this.apiService.headers })
             .pipe(map((value: Response) => value.text()))
     }
 
@@ -126,5 +118,18 @@ export class DashboardApiService {
      */
     upcoming_leaver(): Observable<any> {
         return this.apiService.getApi('/api/admin/dashboard/upcoming-leaver');
+    }
+
+    /**
+     * show POST action request after click send confirmation
+     * @param {string} msg
+     * @memberof DashboardApiService
+     */
+    snackbarMessage(msg: string, value: boolean) {
+        this.snackBar.openFromComponent(SnackbarNotificationComponent, {
+            duration: 2000,
+            verticalPosition: "top",
+            data: { message: msg, response: value }
+        });
     }
 }

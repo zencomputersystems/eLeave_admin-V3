@@ -25,7 +25,7 @@ export class TaskConfirmationDialogComponent {
    * @type {string}
    * @memberof TaskConfirmationDialogComponent
    */
-  public reason: string;
+  public reason: string = '';
 
   /**
    *Creates an instance of TaskConfirmationDialogComponent.
