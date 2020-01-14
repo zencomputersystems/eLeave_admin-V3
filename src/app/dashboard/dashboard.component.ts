@@ -4,6 +4,7 @@ import { DashboardApiService } from './dashboard-api.service';
 import * as _moment from 'moment';
 import { MatDialog } from '@angular/material';
 import { DeleteCalendarConfirmationComponent } from '../admin-setup/leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
+import { TaskConfirmationDialogComponent } from './task-confirmation-dialog/task-confirmation-dialog.component';
 
 /**
  * Dashboard page
@@ -301,6 +302,19 @@ export class DashboardComponent implements OnInit {
     } else {
       this.checked = false;
     }
+  }
+
+  confirmAction(data) {
+    const dialog = this.dialog.open(TaskConfirmationDialogComponent, {
+      data: { value: data.leave_transaction_guid, detail: data },
+      height: "470px",
+      width: "440px"
+    });
+    dialog.afterClosed().subscribe(result => {
+      if (result === data.leave_transaction_guid) {
+
+      }
+    });
   }
 
   /**

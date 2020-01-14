@@ -1,0 +1,48 @@
+::ng-deep .mat-dialog-container {
+  padding: 0 !important;
+}
+button {
+  outline: none;
+}
+:host {
+  .title {
+    border-radius: 2px;
+    text-align: center;
+    color: #f0f0f7;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #7069d8;
+    height: 50px;
+    vertical-align: middle;
+    line-height: 50px;
+    margin-bottom: 25px;
+  }
+  .divider {
+    --min-height: none;
+    padding-top: 1%;
+    padding-bottom: 4%;
+    width: 100%;
+  }
+  ::ng-deep .mat-radio-outer-circle {
+    border-width: 2px;
+    height: 20px;
+    width: 20px;
+    border-color: #7069d8;
+  }
+  ::ng-deep .mat-radio-inner-circle {
+    height: 20px;
+    width: 20px;
+  }
+  ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #7069d8;
+  }
+  ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #7069d8;
+  }
+  ::ng-deep .mat-radio-button .mat-radio-ripple {
+    display: none;
+  }
+  ::ng-deep .mat-radio-label-content {
+    font-size: 11px;
+  }
+}

@@ -10,13 +10,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
-import { MatTooltipModule } from '@angular/material';
+import { MatTooltipModule, MatDialogModule, MatRadioModule } from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
 import { BrowserModule } from '@angular/platform-browser';
 import { EditorModule } from 'primeng/editor';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TaskConfirmationDialogComponent } from './task-confirmation-dialog/task-confirmation-dialog.component';
 
 const routes: Routes = [
     {
@@ -42,9 +43,12 @@ const routes: Routes = [
         MatInputModule,
         MatFormFieldModule,
         MatCheckboxModule,
+        MatDialogModule,
+        MatRadioModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [DashboardComponent]
+    declarations: [DashboardComponent, TaskConfirmationDialogComponent],
+    entryComponents: [TaskConfirmationDialogComponent]
 })
 export class DashboardModule { }
 

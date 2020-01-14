@@ -442,40 +442,47 @@
               <ion-item *ngFor="let item of tasks; let i = index;">
                 <ion-row style="width: 100%;">
                   <ng-container style="padding-top: 2%;">
-                    <ion-col align-self-center size="8"
+                    <ion-col align-self-center
                       style="padding-left: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
                       {{item.message}}
                     </ion-col>
-                    <!-- <ion-col align-self-center>
+                    <ion-col align-self-center size="1">
                       <div style="display: inline;padding-right: 30px;">
                         <ion-icon name="add-circle-outline" style="color: #3b86ff;padding-top: 2px;padding-right: 10px;
-                            padding-left: 0.5%;font-size: 16px;cursor: pointer;">
+                            padding-left: 0.5%;font-size: 16px;cursor: pointer;" (click)="confirmAction(item)">
                         </ion-icon>
                         <p
-                          style="position: absolute;font-weight: bold;display: inline-block;color: #3b86ff;cursor: pointer;font-size: 11px;line-height: 1.82;">
+                          style="position: absolute;font-weight: bold;display: inline-block;color: #3b86ff;font-size: 11px;line-height: 1.82;">
                           Action</p>
                       </div>
-                    </ion-col> -->
-                    <ion-col size="2" align-self-center style="text-align: center;">
+                    </ion-col>
+                    <!-- <ion-col size="2" align-self-center style="text-align: center;">
                       <div style="display: inline;padding-right: 30px;">
                         <ion-icon name="checkmark" style="color: #46cdcf;padding-top: 2px;padding-right: 10px;
                                 padding-left: 0.5%;font-size: 16px;cursor: pointer;"
                           (click)="approveLeave(item.leave_transaction_guid)">
                         </ion-icon>
-                        <p style="position: absolute;font-weight: bold;display: inline-block;color: #46cdcf;cursor: pointer;font-size: 11px;line-height: 1.82;"
-                          (click)="approveLeave(item.leave_transaction_guid)">Accept</p>
+                        <p *ngIf="item.status !== 'APPROVED'"
+                          style="position: absolute;font-weight: bold;display: inline-block;color: #46cdcf;font-size: 11px;line-height: 1.82;">
+                          Accept</p>
+                        <p *ngIf="item.status === 'APPROVED'"
+                          style="position: absolute;font-weight: bold;display: inline-block;color: #46cdcf;font-size: 11px;line-height: 1.82;">
+                          Accepted</p>
                       </div>
-                    </ion-col>
-                    <ion-col size="2" align-self-center style="text-align: center;">
-                      <div style="display: inline;padding-right: 30px;">
-                        <ion-icon name="close" style="color: #ff6768;padding-top: 2px;padding-right: 10px;
+                    </ion-col> -->
+                    <!--<ion-col size="2" align-self-center style="text-align: center;">
+                       <ion-icon name="close" style="color: #ff6768;padding-top: 2px;padding-right: 10px;
                                             padding-left: 0.5%;font-size: 16px;cursor: pointer;"
                           (click)="rejectLeave(item.leave_transaction_guid)">
                         </ion-icon>
-                        <p style="position: absolute;font-weight: bold;display: inline-block;color: #ff6768;cursor: pointer;font-size: 11px;line-height: 1.82;"
-                          (click)="rejectLeave(item.leave_transaction_guid)">Reject</p>
-                      </div>
-                    </ion-col>
+                        <p *ngIf="item.status !== 'REJECTED'"
+                          style="position: absolute;font-weight: bold;display: inline-block;color: #ff6768;font-size: 11px;line-height: 1.82;">
+                          Reject</p>
+                        <p *ngIf="item.status === 'REJECTED'"
+                          style="position: absolute;font-weight: bold;display: inline-block;color: #ff6768;font-size: 11px;line-height: 1.82;">
+                          Rejected</p> 
+        </div>
+        </ion-col> -->
                     <!-- <ion-item *ngIf="i<notification.length-1" class="divider" lines="full"></ion-item> -->
                   </ng-container>
                 </ion-row>
