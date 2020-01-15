@@ -47,8 +47,8 @@
 
         <mat-form-field appearance="outline" style="width: 93%;font-size: 12px;opacity: 0.8;
         color: #43425d;margin-left: 10px;margin-right: 10px;">
-            <mat-label>Year (yyyy)</mat-label>
-            <input matInput [formControl]="yearDefault">
+            <mat-label>Year (readonly)</mat-label>
+            <input matInput [value]="yearDefault" readonly>
         </mat-form-field>
         &nbsp;&nbsp;
 

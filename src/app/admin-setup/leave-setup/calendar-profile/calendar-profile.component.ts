@@ -258,7 +258,7 @@ export class CalendarProfileComponent implements OnInit {
         this.dayControl = new FormControl('');
         this.country = new FormControl('');
         this.region = new FormControl('');
-        this.yearDefault = new FormControl(new Date().getFullYear());
+        this.yearDefault = new Date().getFullYear();
         this.profileName = new FormControl('', Validators.required);
         this.getPublicHolidayList();
         this.getProfileList();
@@ -594,11 +594,11 @@ export class CalendarProfileComponent implements OnInit {
         this.content = false;
         this.clickedIndex = 0;
         this.reformatHolidayObject(this.events);
-        await this.callParamAPI(this.yearDefault.value);
+        await this.callParamAPI(this.yearDefault);
         const newProfile = {
             "code": this.profileName.value,
             "filter": {
-                "year": this.yearDefault.value,
+                "year": this.yearDefault,
                 "country": this.countryIso,
                 "region": this.regionISO
             },
@@ -614,6 +614,9 @@ export class CalendarProfileComponent implements OnInit {
             this.region.reset();
             this.countryIso = '';
             this.regionISO = '';
+            this.restDay = [];
+            this.dayControl.reset();
+            this._selectedWeekday = [];
             this.getProfileList();
         }, error => {
             this.calendarProfileAPI.notification(error.status + ' ' + error.statusText + '.', false);
