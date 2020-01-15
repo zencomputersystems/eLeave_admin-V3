@@ -204,6 +204,9 @@ export class LeaveEntitlementComponent implements OnInit {
       this.leaveTypes.push({ "leaveTypeId": this.leaveEntitlement[i][0].leaveTypeId, "title": this.leaveEntitlement[i][0].leaveTypeAbbr + ' - ' + this.leaveEntitlement[i][0].leaveType, "ABBR": this.leaveEntitlement[i][0].leaveTypeAbbr, "name": this.leaveEntitlement[i][0].leaveType });
     }
     this.showClickedContent(this.clickedHeaderIndex);
+    if (this.leaveEntitlement[this.clickedHeaderIndex][this.clickedIndex] == undefined) {
+      this.clickedIndex = 0;
+    }
     this.getProfileDetails(this.leaveEntitlement[this.clickedHeaderIndex][this.clickedIndex].leaveEntitlementId);
   }
 
@@ -341,8 +344,8 @@ export class LeaveEntitlementComponent implements OnInit {
       // only save selected profile 
       const data = {
         "id": this.entitlementDetails.ENTITLEMENT_GUID,
-        "code": "Annual Leave",
-        "description": "Annual leave for junior executive",
+        "code": this.entitlementDetails.LEAVE_ENTITLEMENT_CODE,
+        "description": this.entitlementDetails.DESCRIPTION,
         "property": this.entitlementDetails.PROPERTIES_XML
       };
       this.entitlementApi.patch_leavetype_entitlement(data).subscribe(data => {
@@ -451,6 +454,12 @@ export class LeaveEntitlementComponent implements OnInit {
     if (val === leaveEntitlementId) {
       this.entitlementApi.delete_leavetype_entitlement(leaveEntitlementId).subscribe(res => {
         this.ngOnInit();
+        if (this.leaveEntitlement[this.clickedHeaderIndex].length == 1) {
+          this.deleteLeaveType(this.abbr, this.name);
+          this.sharedService.menu.close('editLeaveTypeDetails');
+          this.clickedHeaderIndex = 0;
+          this.clickedIndex = 0;
+        }
         this.leaveApi.openSnackBar('Leave entitlement profile was deleted', true);
       });
     }
