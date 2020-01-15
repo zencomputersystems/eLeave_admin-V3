@@ -270,11 +270,15 @@ export class DashboardComponent implements OnInit {
     if (name === 'add') {
       this.dashboardAPI.post_announcement_list(data).subscribe(response => {
         this.getAnnouncementList();
+        this.dashboardAPI.snackbarMessage('New announcement was created successfully', true);
         this.title = ''; this.message = ''; this.checked = false;
       });
     } else {
       data["announcementId"] = this.announcementId;
-      this.dashboardAPI.patch_announcement(data).subscribe(res => this.getAnnouncementList())
+      this.dashboardAPI.patch_announcement(data).subscribe(res => {
+        this.getAnnouncementList();
+        this.dashboardAPI.snackbarMessage('You have saved this announcement successfully', true);
+      })
     }
     this.menu.close('createAnnouncementDetails');
   }
@@ -295,6 +299,11 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  /**
+   * action taken to approve or reject leave
+   * @param {*} data
+   * @memberof DashboardComponent
+   */
   async confirmAction(data) {
     const dialog = this.dialog.open(TaskConfirmationDialogComponent, {
       data: { value: data.leave_transaction_guid, detail: data },
