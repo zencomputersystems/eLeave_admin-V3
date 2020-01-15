@@ -9,7 +9,7 @@
     </ion-header>
 
     <ion-content>
-        <app-working-hour [id]="id" (valueChange)="refreshProfileDetails($event)">
+        <app-working-hour [id]="id" (valueChange)="ngOnInit()">
         </app-working-hour>
     </ion-content>
 </ion-menu>
@@ -27,7 +27,7 @@
     </ion-header>
 
     <ion-content>
-        <app-working-hour [id]="id" (valueChange)="refreshProfileDetails($event)">
+        <app-working-hour [id]="id" (valueChange)="ngOnInit()">
         </app-working-hour>
     </ion-content>
 </ion-menu>
@@ -99,7 +99,7 @@
                                     ASSIGNED EMPLOYEE NO.</ion-col>
                                 <ion-col size="1.5" align-self-center style="text-align: right;padding-right: 10px;">
                                     <ion-icon *ngIf="mode==='ON'" class="addIcon" name="add-circle-outline"
-                                        (click)="clickedIndex=null;id='';sharedService.menu.enable(true, 'createWorkingHourDetails');sharedService.menu.enable(false, 'editWorkingHourDetails');sharedService.menu.open('createWorkingHourDetails');">
+                                        (click)="id='';sharedService.menu.enable(true, 'createWorkingHourDetails');sharedService.menu.enable(false, 'editWorkingHourDetails');sharedService.menu.open('createWorkingHourDetails');">
                                     </ion-icon>
                                 </ion-col>
                             </ion-row>

@@ -45,7 +45,7 @@ export class WorkingHourListComponent implements OnInit {
      * @type {boolean}
      * @memberof WorkingHourListComponent
      */
-    public showSpinner: boolean = false;
+    public showSpinner: boolean = true;
 
     /**
      * set id as selected working hour guid
@@ -106,7 +106,6 @@ export class WorkingHourListComponent implements OnInit {
      * @memberof WorkingHourListComponent
      */
     async ngOnInit() {
-        this.showSpinner = true;
         this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
         this.showSpinner = false;
         this.clickedCalendar(this.list[this.clickedIndex], this.clickedIndex);
@@ -114,15 +113,6 @@ export class WorkingHourListComponent implements OnInit {
             data => {
                 this._users = data;
             });
-    }
-
-    /**
-     * show/hide details page (value from child component)
-     * @param {*} value
-     * @memberof WorkingHourListComponent
-     */
-    refreshProfileDetails(id: string) {
-        this.ngOnInit();
     }
 
     /**

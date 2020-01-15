@@ -355,6 +355,7 @@ export class CalendarProfileComponent implements OnInit {
                 this.assignedNames.splice(i, 1);
                 this._employeeList = [];
                 this.getAssignedList();
+                this.profileList = await this.calendarProfileAPI.get_calendar_profile_list().toPromise();
             }
         }
     }
