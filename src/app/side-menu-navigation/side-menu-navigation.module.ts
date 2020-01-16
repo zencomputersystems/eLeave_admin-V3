@@ -13,7 +13,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AdminInvitesModule } from '../admin-setup/invites/admin-invites.module';
 import { LeaveSetupModule } from '../admin-setup/leave-setup/leave-setup.module';
 import { RoleManagementModule } from '../admin-setup/role-management/role-management.module';
-import { GeneralLeavePolicyModule } from '../admin-setup/general-leave-policy/general-leave-policy.module';
+import { GeneralLeavePolicyModule } from '../admin-setup/leave-setup/general-leave-policy/general-leave-policy.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { MatChipsModule } from '@angular/material/chips';
 import { YearEndClosingModule } from '../admin-setup/year-end-closing/year-end-closing.module';

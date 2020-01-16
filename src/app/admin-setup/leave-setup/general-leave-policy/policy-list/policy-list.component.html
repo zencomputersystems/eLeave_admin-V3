@@ -17,8 +17,9 @@
         </div>
         <div style="margin: 30px;text-align: center;">
             <ion-button style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                color="primary" (click)="createNewCompany()" [disabled]="!newName.valid">
-                Create
+                color="primary" (click)="createNewCompany();showSmallSpinner=true" [disabled]="!newName.valid">
+                Create<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
+                </ion-spinner>
             </ion-button>
         </div>
     </ion-content>
@@ -44,8 +45,9 @@
         </div>
         <div style="margin: 30px;text-align: center;">
             <ion-button style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                color="primary" (click)="updateCompanyName()">
-                Update
+                color="primary" (click)="updateCompanyName(); showSmallSpinner =true">
+                Update<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
+                </ion-spinner>
             </ion-button>
         </div>
     </ion-content>

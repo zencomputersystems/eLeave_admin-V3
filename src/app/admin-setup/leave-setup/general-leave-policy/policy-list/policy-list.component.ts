@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { LeaveApiService } from '../../leave-setup/leave-api.service';
-import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
 import { PolicyApiService } from '../policy-api.service';
 import { Validators, FormControl } from '@angular/forms';
-import { DeleteCalendarConfirmationComponent } from '../../leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
-import { SharedService } from '../../leave-setup/shared.service';
+import { LeaveApiService } from '../../leave-api.service';
+import { SharedService } from '../../shared.service';
+import { EditModeDialogComponent } from '../../edit-mode-dialog/edit-mode-dialog.component';
+import { DeleteCalendarConfirmationComponent } from '../../delete-calendar-confirmation/delete-calendar-confirmation.component';
 
 /**
  * List for all leave policy
@@ -81,6 +81,13 @@ export class PolicyListComponent implements OnInit {
      * @memberof PolicyListComponent
      */
     public companyId: string;
+
+    /**
+     * show loading spinner
+     * @type {boolean}
+     * @memberof PolicyListComponent
+     */
+    public showSmallSpinner: boolean;
 
     /**
      *Creates an instance of PolicyListComponent.
@@ -174,6 +181,7 @@ export class PolicyListComponent implements OnInit {
     createNewCompany() {
         this.policyApi.post_company_name(this.newName.value).subscribe(response => {
             this.policyApi.message('New company was created successfully', true);
+            this.showSmallSpinner = false;
             this.sharedService.menu.close('createCompanyDetails');
             this.newName.reset();
             this.ngOnInit();
@@ -195,6 +203,7 @@ export class PolicyListComponent implements OnInit {
             if (value === item.TENANT_COMPANY_GUID) {
                 this.policyApi.delete_company_name(item.TENANT_COMPANY_GUID).subscribe(response => {
                     this.ngOnInit();
+                    this.policyApi.message('Company name was deleted successfully', true);
                 })
             }
         });
@@ -207,7 +216,8 @@ export class PolicyListComponent implements OnInit {
      */
     updateCompanyName() {
         this.policyApi.patch_company_name({ "id": this.companyId, "name": this.editName.value }).subscribe(res => {
-            this.policyApi.message('New company was updated successfully', true);
+            this.policyApi.message('Company name was updated successfully', true);
+            this.showSmallSpinner = false;
             this.sharedService.menu.close('editCompanyDetails');
             this.editName.reset();
             this.ngOnInit();

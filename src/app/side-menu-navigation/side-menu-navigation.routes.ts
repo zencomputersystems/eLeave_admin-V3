@@ -4,7 +4,6 @@ import { SideMenuNavigationComponent } from './side-menu-navigation.component';
 import { PageNotFoundComponent } from '../page-not-found.component';
 import { LeaveSetupComponent } from '../admin-setup/leave-setup/leave-setup.component';
 import { RoleListComponent } from '../admin-setup/role-management/role-list/role-list.component';
-import { PolicyListComponent } from '../admin-setup/general-leave-policy/policy-list/policy-list.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { CalendarProfileComponent } from '../admin-setup/leave-setup/calendar-profile/calendar-profile.component';
 import { LeaveAdjustmentComponent } from '../admin-setup/leave-setup/leave-adjustment/leave-adjustment.component';
@@ -16,6 +15,7 @@ import { YearEndClosingComponent } from '../admin-setup/year-end-closing/year-en
 import { ApprovalOverrideComponent } from '../admin-setup/approval-override/approval-override.component';
 import { LeaveEntitlementComponent } from '../admin-setup/leave-setup/leave-entitlement/leave-entitlement.component';
 import { ReportComponent } from '../admin-setup/report/report.component';
+import { PolicyListComponent } from '../admin-setup/leave-setup/general-leave-policy/policy-list/policy-list.component';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
