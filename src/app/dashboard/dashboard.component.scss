@@ -46,10 +46,9 @@
     padding: 0 10px;
     margin: 0;
   }
-  .annoucement,
-  .holiday {
-    flex: 48%;
-    max-width: 48%;
+  .annoucement {
+    flex: 98%;
+    max-width: 98%;
     background: #ffffff;
     margin: 1%;
     border-radius: 2px;
@@ -65,14 +64,13 @@
     border-radius: 2px;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
   }
-  .tasks {
+  .holiday {
     flex: 64.667%;
     max-width: 64.667%;
     background: #ffffff;
     margin: 1%;
     border-radius: 2px;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
-    margin-bottom: 30px;
   }
   .birthday {
     flex: 31.333%;
