@@ -154,9 +154,9 @@
                             <ion-row nowrap>
                                 <ion-col size="1.5"
                                     style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
-                                    <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
-                                        [(ngModel)]="headCheckbox" [indeterminate]="indeterminateVal"
-                                        (click)="headerCheckbox()">
+                                    <ion-checkbox mode="ios" class="ionCheckbox"
+                                        style="margin-top: 6px;" [(ngModel)]="headCheckbox"
+                                        [indeterminate]="indeterminateVal" (click)="headerCheckbox()">
                                     </ion-checkbox>
                                 </ion-col>
                                 <ion-col size="1" align-self-center style="white-space: nowrap;
@@ -194,8 +194,8 @@
                                             [style.display]="showCheckBox[i] ? 'none' : 'block'">
                                         <div class="checkboxOnAvatar"
                                             [style.display]="showCheckBox[i] ? 'block' : 'none'">
-                                            <ion-checkbox mode="ios"
-                                                style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                            <ion-checkbox mode="ios" class="ionCheckbox"
+                                                style="position: absolute;margin-top: 7px;margin-left: -4px;"
                                                 [(ngModel)]="item.isChecked" (ionChange)="contentCheckbox()">
                                             </ion-checkbox>
                                         </div>

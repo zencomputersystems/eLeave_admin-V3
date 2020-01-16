@@ -140,7 +140,7 @@ export class CalendarProfileApiService {
      */
     notification(text: string, val: boolean) {
         this.leaveApi.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 2000,
+            duration: 3000,
             verticalPosition: "top",
             data: { message: text, response: val }
         });

@@ -52,10 +52,10 @@
     width: 24%;
   }
   .ionCheckbox {
+    --border-width: 2px;
+    --border-color: #a5a4bf;
     width: 20px;
     height: 20px;
-    --border-color: rgba(122, 102, 102, 0.12);
-    margin: 0;
   }
   mat-radio-button {
     top: -5.5px;

@@ -53,6 +53,12 @@ button.mat-menu-item {
   ::ng-deep .mat-select-value-text {
     color: #7a8589;
   }
+  .ionCheckbox {
+    --border-width: 2px;
+    --border-color: #a5a4bf;
+    width: 20px;
+    height: 20px;
+  }
   // ion-col {
   //   overflow: hidden;
   //   white-space: nowrap;

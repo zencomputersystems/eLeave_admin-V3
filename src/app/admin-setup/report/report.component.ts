@@ -437,11 +437,8 @@ export class ReportComponent implements OnInit {
      * @memberof ReportComponent
      */
   hoverValue(index: number, isIn: boolean, isChecked: boolean) {
-    if (isChecked && this.indeterminate) {
+    if (this.indeterminate) {
       this.hideImg = [];
-      this.hideImg.push(...Array(this.userList.length).fill(true));
-    } else if (!isChecked && this.indeterminate) {
-      this.hideImg.splice(0, this.hideImg.length);
       this.hideImg.push(...Array(this.userList.length).fill(true));
     } else if (isIn && !isChecked && !this.indeterminate) {
       this.hideImg.splice(index, 1, true);

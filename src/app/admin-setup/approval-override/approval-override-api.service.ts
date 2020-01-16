@@ -90,7 +90,7 @@ export class ApprovalOverrideApiService {
      */
     notification(text: string, value: boolean) {
         this.snackbar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 2000,
+            duration: 3000,
             verticalPosition: "top",
             data: { message: text, response: value }
         });

@@ -179,6 +179,20 @@ export class LeaveEntitlementComponent implements OnInit {
   public showSpinner: boolean = true;
 
   /**
+   * small loading spinner
+   * @type {boolean}
+   * @memberof LeaveEntitlementComponent
+   */
+  public showSmallSpinner: boolean;
+
+  /**
+   * small loading spinner for add button
+   * @type {boolean}
+   * @memberof LeaveEntitlementComponent
+   */
+  public showSmallSpinnerAdd: boolean;
+
+  /**
    *Creates an instance of LeaveEntitlementComponent.
    * @param {LeaveEntitlementApiService} entitlementApi
    * @param {LeaveApiService} leaveApi
@@ -287,7 +301,6 @@ export class LeaveEntitlementComponent implements OnInit {
    * @memberof LeaveEntitlementComponent
    */
   async patchProfile() {
-    this.sharedService.menu.close('editLeaveTypeDetails');
     for (let j = 0; j < this.getEntitlementbyType.length; j++) {
       let XMLDetails = await this.entitlementApi.get_leavetype_entitlement_id(this.getEntitlementbyType[j].leaveEntitlementId).toPromise();
       const data = {
@@ -297,6 +310,8 @@ export class LeaveEntitlementComponent implements OnInit {
         "property": XMLDetails.PROPERTIES_XML
       };
       await this.entitlementApi.patch_leavetype_entitlement(data).toPromise();
+      this.showSmallSpinner = false;
+      this.sharedService.menu.close('editLeaveTypeDetails');
     }
     this.leaveApi.openSnackBar('Leave type & entitlement was saved', true);
     this.ngOnInit();
@@ -368,6 +383,7 @@ export class LeaveEntitlementComponent implements OnInit {
     }
     this.entitlementApi.post_leavetype(content).subscribe(res => {
       this.newLeaveTypeId = res.resource[0].LEAVE_TYPE_GUID;
+      this.showSmallSpinner = false;
     })
   }
 
@@ -392,6 +408,7 @@ export class LeaveEntitlementComponent implements OnInit {
         this.ngOnInit();
         this.newLeaveTypeId = '';
         this.leaveApi.openSnackBar('New leave entitlement profile was added', true);
+        this.showSmallSpinner = false;
         this.sharedService.menu.close('editLeaveTypeDetails');
       })
     }
@@ -408,6 +425,7 @@ export class LeaveEntitlementComponent implements OnInit {
     data.code = this.newProfileList.name;
     data.description = this.newProfileList.description;
     await this.entitlementApi.post_leavetype_entitlement(data).toPromise();
+    this.showSmallSpinnerAdd = false;
     this.ngOnInit();
     this.newLeaveTypeId = '';
     this.abbreviation.reset();

@@ -129,7 +129,7 @@ export class PolicyApiService {
      */
     message(message: string, value: boolean) {
         this.leaveAPi.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 2000,
+            duration: 3000,
             verticalPosition: "top",
             data: { message: message, response: value }
         });

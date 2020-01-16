@@ -111,7 +111,7 @@ export class WorkingHourApiService {
      */
     showPopUp(txt: string, value: boolean) {
         this.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 2000,
+            duration: 3000,
             verticalPosition: "top",
             data: { message: txt, response: value }
         });

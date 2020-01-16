@@ -255,7 +255,7 @@
               <ion-row>
                 <ion-col size="1.5" *ngIf="individualButton === true"
                   style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
-                  <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
+                  <ion-checkbox mode="ios" class="ionCheckboxList" style="margin-top: 6px;"
                     [indeterminate]="indeterminate" [disabled]=true (click)="headerList()">
                   </ion-checkbox>
                 </ion-col>
@@ -290,8 +290,8 @@
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                         [style.display]="hideImg[i] ? 'none' : 'block'">
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
-                        <ion-checkbox mode="ios"
-                          style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                        <ion-checkbox mode="ios" class="ionCheckboxList"
+                          style="position: absolute;margin-top: 7px;margin-left: -4px;"
                           [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
                         </ion-checkbox>
                       </div>
@@ -329,8 +329,8 @@
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                         [style.display]="hideImg[i] ? 'none' : 'block'">
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
-                        <ion-checkbox mode="ios"
-                          style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                        <ion-checkbox mode="ios" class="ionCheckboxList"
+                          style="position: absolute;margin-top: 7px;margin-left: -4px;"
                           [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
                         </ion-checkbox>
                       </div>
@@ -369,8 +369,8 @@
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                         [style.display]="hideImg[i] ? 'none' : 'block'">
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
-                        <ion-checkbox mode="ios"
-                          style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                        <ion-checkbox mode="ios" class="ionCheckboxList"
+                          style="position: absolute;margin-top: 7px;margin-left: -4px;"
                           [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
                         </ion-checkbox>
                       </div>
@@ -408,8 +408,8 @@
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                         [style.display]="hideImg[i] ? 'none' : 'block'">
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
-                        <ion-checkbox mode="ios"
-                          style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                        <ion-checkbox mode="ios" class="ionCheckboxList"
+                          style="position: absolute;margin-top: 7px;margin-left: -4px;"
                           [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
                         </ion-checkbox>
                       </div>
@@ -448,8 +448,8 @@
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                         [style.display]="hideImg[i] ? 'none' : 'block'">
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
-                        <ion-checkbox mode="ios"
-                          style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                        <ion-checkbox mode="ios" class="ionCheckboxList"
+                          style="position: absolute;margin-top: 7px;margin-left: -4px;"
                           [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
                         </ion-checkbox>
                       </div>

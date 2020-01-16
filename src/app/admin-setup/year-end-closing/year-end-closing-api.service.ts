@@ -61,7 +61,7 @@ export class YearEndClosingApiService {
      */
     snackbar(text: string, value: boolean) {
         this.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 2000,
+            duration: 3000,
             verticalPosition: "top",
             data: { message: text, response: value }
         });
