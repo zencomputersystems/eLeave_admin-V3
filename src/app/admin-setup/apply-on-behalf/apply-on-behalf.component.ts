@@ -278,11 +278,10 @@ export class ApplyOnBehalfComponent implements OnInit {
 
     /**
      * Local private property for value get from API
-     * @private
      * @type {*}
      * @memberof ApplyOnBehalfComponent
      */
-    private _userList: any;
+    public _userList: any;
 
     /**
      * Local private property to get number of day from a week
@@ -467,7 +466,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     constructor(private leaveAPI: LeaveApiService, private apiService: APIService, public menu: MenuController) {
         this.applyLeaveForm = new FormGroup({
-            leaveTypes: new FormControl({ value: '', disabled: false }, Validators.required),
+            leaveTypes: new FormControl({ value: '', disabled: true }, Validators.required),
             firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
             secondPicker: new FormControl({ value: '', disabled: true }, Validators.required),
             inputReason: new FormControl('', Validators.required)
@@ -491,34 +490,10 @@ export class ApplyOnBehalfComponent implements OnInit {
                 this._company = list;
                 this._userList[i]["companyName"] = this._company.companyName;
             }
+            this.addShortCode(this._userList[i]);
         }
-    }
 
-    /**
-     * This method is used to form group for validation
-     * @returns
-     * @memberof ApplyOnBehalfComponent
-     */
-    // formGroup() {
-    //     return new FormGroup({
-    //         // company: new FormControl('', Validators.required),
-    //         // userControl: new FormControl({ value: '', disabled: true }, Validators.required),
-    //         // dayTypes: new FormArray([
-    //         //     new FormGroup({
-    //         //         name: new FormControl(0),
-    //         //         selectArray: new FormArray([
-    //         //             new FormControl(['0']),
-    //         //             new FormControl(''),
-    //         //         ]),
-    //         //         status: new FormControl([false])
-    //         //     })
-    //         // ]),
-    //         leaveTypes: new FormControl({ value: '', disabled: false }, Validators.required),
-    //         firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
-    //         secondPicker: new FormControl({ value: '', disabled: true }, Validators.required),
-    //         inputReason: new FormControl('', Validators.required),
-    //     });
-    // }
+    }
 
     /**
      * Filter text key in from searchbar 
@@ -540,8 +515,8 @@ export class ApplyOnBehalfComponent implements OnInit {
                     return (items.companyName.toLowerCase().indexOf(text.toLowerCase()) > -1)
                 }
             })
-            this.filteredUser = require('lodash').uniqBy(name.concat(department).concat(company), 'id');
-            this.addShortCode();
+            this._userList = require('lodash').uniqBy(name.concat(department).concat(company), 'id');
+            // this.addShortCode();
         }
     }
 
@@ -549,18 +524,18 @@ export class ApplyOnBehalfComponent implements OnInit {
      * push short code of leave type
      * @memberof ApplyOnBehalfComponent
      */
-    async addShortCode() {
-        for (let i = 0; i < this.filteredUser.length; i++) {
-            let details = await this.leaveAPI.get_entilement_details(this.filteredUser[i].userId).toPromise();
-            let array = new Array();
-            for (let j = 0; j < details.length; j++) {
-                array.push(details[j].ABBR);
-            }
-            if (this.filteredUser[i] != undefined) {
-                this.filteredUser[i]["shortCode"] = array.join();
-                this.filteredUser[i]["balance"] = '-';
-            }
+    async addShortCode(item) {
+        // for (let i = 0; i < this._userList.length; i++) {
+        let details = await this.leaveAPI.get_entilement_details(item.userId).toPromise();
+        let array = new Array();
+        for (let j = 0; j < details.length; j++) {
+            array.push(details[j].ABBR);
         }
+        // if (this._userList[i] != undefined) {
+        item["shortCode"] = array.join();
+        item["balance"] = '-';
+        // }
+        // }
     }
 
     /**
@@ -571,7 +546,7 @@ export class ApplyOnBehalfComponent implements OnInit {
     changeDetails(text: any) {
         if (text === '') {
             this.ngOnInit();
-            this.filteredUser = [];
+            // this.filteredUser = [];
         } else {
             this.filter(text);
         }
@@ -587,12 +562,12 @@ export class ApplyOnBehalfComponent implements OnInit {
     hoverInOut(i: number, mouseIn: boolean, isChecked: boolean) {
         if (this.headCheckbox || this.indeterminateVal) {
             this.showCheckBox = [];
-            this.showCheckBox.push(...Array(this.filteredUser.length).fill(true));
+            this.showCheckBox.push(...Array(this._userList.length).fill(true));
         } else if (mouseIn && !isChecked && !this.indeterminateVal && !this.headCheckbox) {
             this.showCheckBox.splice(i, 1, true);
         } else {
             this.showCheckBox.splice(0, this.showCheckBox.length);
-            this.showCheckBox.push(...Array(this.filteredUser.length).fill(false));
+            this.showCheckBox.push(...Array(this._userList.length).fill(false));
         }
     }
 
@@ -603,7 +578,7 @@ export class ApplyOnBehalfComponent implements OnInit {
     headerCheckbox() {
         this.showCheckBox.splice(0, this.showCheckBox.length);
         setTimeout(() => {
-            this.filteredUser.forEach(item => {
+            this._userList.forEach(item => {
                 item.isChecked = this.headCheckbox;
                 if (item.isChecked) {
                     this.showCheckBox.push(true);
@@ -620,9 +595,9 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     contentCheckbox() {
-        const totalLength = this.filteredUser.length;
+        const totalLength = this._userList.length;
         let checkedValue = 0;
-        this.filteredUser.map(item => {
+        this._userList.map(item => {
             if (item.isChecked) {
                 checkedValue++;
                 this.showCheckBox.push(true);
@@ -646,15 +621,17 @@ export class ApplyOnBehalfComponent implements OnInit {
      * add balance of selected leave type
      * @memberof ApplyOnBehalfComponent
      */
-    async addEntitlementBal() {
-        for (let i = 0; i < this.filteredUser.length; i++) {
-            let details = await this.leaveAPI.get_entilement_details(this.filteredUser[i].userId).toPromise();
-            if (this.filteredUser[i] != undefined) {
-                for (let j = 0; j < details.length; j++) {
-                    this.filteredUser[i]["entitled"] = details[j].ENTITLED_DAYS;
-                    this.filteredUser[i]["balance"] = details[j].BALANCE_DAYS;
+    async addEntitlementBal(leaveTypeGuid: string) {
+        for (let i = 0; i < this._userList.length; i++) {
+            let details = await this.leaveAPI.get_entilement_details(this._userList[i].userId).toPromise();
+            // if (this._userList[i] != undefined) {
+            for (let j = 0; j < details.length; j++) {
+                if (details[j].LEAVE_TYPE_GUID === leaveTypeGuid) {
+                    this._userList[i]["entitled"] = details[j].ENTITLED_DAYS;
+                    this._userList[i]["balance"] = details[j].BALANCE_DAYS;
                 }
             }
+            // }
         }
     }
 
@@ -760,9 +737,9 @@ export class ApplyOnBehalfComponent implements OnInit {
             this._arrayDateSlot.push(remainingFullDay);
         }
         console.log(this._arrayDateSlot);
-        for (let i = 0; i < this.filteredUser.length; i++) {
-            if (this.filteredUser[i].isChecked) {
-                this._employeeId.push(this.filteredUser[i].userId);
+        for (let i = 0; i < this._userList.length; i++) {
+            if (this._userList[i].isChecked) {
+                this._employeeId.push(this._userList[i].userId);
             }
         }
     }
@@ -1198,9 +1175,9 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     showCheckedUser() {
-        for (let i = this.filteredUser.length - 1; i >= 0; --i) {
-            if (this.filteredUser[i].isChecked == false || this.filteredUser[i].isChecked == undefined) {
-                this.filteredUser.splice(i, 1);
+        for (let i = this._userList.length - 1; i >= 0; --i) {
+            if (this._userList[i].isChecked == false || this._userList[i].isChecked == undefined) {
+                this._userList.splice(i, 1);
             }
         }
     }

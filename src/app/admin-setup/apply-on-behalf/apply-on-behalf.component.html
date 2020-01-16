@@ -154,9 +154,9 @@
                             <ion-row nowrap>
                                 <ion-col size="1.5"
                                     style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
-                                    <ion-checkbox mode="ios" class="ionCheckbox"
-                                        style="margin-top: 6px;" [(ngModel)]="headCheckbox"
-                                        [indeterminate]="indeterminateVal" (click)="headerCheckbox()">
+                                    <ion-checkbox mode="ios" class="ionCheckbox" style="margin-top: 6px;"
+                                        [(ngModel)]="headCheckbox" [indeterminate]="indeterminateVal"
+                                        (click)="headerCheckbox()">
                                     </ion-checkbox>
                                 </ion-col>
                                 <ion-col size="1" align-self-center style="white-space: nowrap;
@@ -185,8 +185,8 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div *ngIf="filteredUser != undefined" style="height: calc( 100% - 200px);overflow: auto;">
-                            <ion-row class="detailsRow" *ngFor="let item of filteredUser; let i=index">
+                        <div style="height: calc( 100% - 200px);overflow: auto;">
+                            <ion-row class="detailsRow" *ngFor="let item of _userList; let i=index">
                                 <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
                                     <ion-avatar class="avatar" (mouseover)="hoverInOut(i, true, item.isChecked)"
                                         (mouseout)="hoverInOut(i, false, item.isChecked)">
@@ -230,9 +230,6 @@
                                 <ion-item lines="full" style=" --min-height: none;width: 100%;"></ion-item>
                             </ion-row>
                         </div>
-                        <p *ngIf="filteredUser == undefined" style="color: #a3a6b4;opacity:0.8;font-size: 12px;width: 30%;
-                        margin: 0 auto;padding-top: 30px;">
-                            Nothing to view. Please search & select employee or department first. </p>
                     </div>
                     <div class="selection">
                         <div
@@ -368,13 +365,13 @@
                                         formControlName="leaveTypes" required>
                                         <mat-option *ngFor="let leave of entitlement; let i=index"
                                             [value]="leave.LEAVE_CODE"
-                                            (click)="addEntitlementBal();daysAvailable = leave.BALANCE_DAYS;leaveTypeId = leave.LEAVE_TYPE_GUID; applyLeaveForm.controls.firstPicker.enable();applyLeaveForm.controls.secondPicker.enable();">
+                                            (click)="addEntitlementBal(leave.LEAVE_TYPE_GUID);daysAvailable = leave.BALANCE_DAYS;leaveTypeId = leave.LEAVE_TYPE_GUID; applyLeaveForm.controls.firstPicker.enable();applyLeaveForm.controls.secondPicker.enable();">
                                             {{leave.LEAVE_CODE}}</mat-option>
                                     </mat-select>
                                     <mat-select class="selectLeave" name="leave" *ngIf="radioOption == '2'"
                                         formControlName="leaveTypes" required>
                                         <mat-option *ngFor="let leave of leaveTypes; let i=index" [value]="leave.CODE"
-                                            (click)="addEntitlementBal();leaveTypeId = leave.LEAVE_TYPE_GUID; applyLeaveForm.controls.firstPicker.enable();applyLeaveForm.controls.secondPicker.enable();">
+                                            (click)="addEntitlementBal(leave.LEAVE_TYPE_GUID);leaveTypeId = leave.LEAVE_TYPE_GUID; applyLeaveForm.controls.firstPicker.enable();applyLeaveForm.controls.secondPicker.enable();">
                                             {{leave.CODE}}</mat-option>
                                     </mat-select>
                                     <mat-error *ngIf="!applyLeaveForm.leaveTypes" style="padding: 5px;padding-left: 0;">
@@ -568,7 +565,7 @@
                                 <ion-button
                                     style="--border-radius: 2px;height: 30px; width: 57%;font-size: 12px;text-transform: none"
                                     [disabled]="!applyLeaveForm.valid"
-                                    (click)="postData(); applyLeaveForm.reset();daysAvailable=0;daysCount=0;minDate='';maxDate='';">
+                                    (click)="postData(); applyLeaveForm.reset();applyLeaveForm.controls.leaveTypes.disable();applyLeaveForm.controls.firstPicker.disable();applyLeaveForm.controls.secondPicker.disable();daysAvailable=0;daysCount=0;minDate='';maxDate='';">
                                     Submit
                                 </ion-button>
                                 <!-- <ion-button *ngIf="radioOption == '2'"
