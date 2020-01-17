@@ -525,17 +525,13 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     async addShortCode(item) {
-        // for (let i = 0; i < this._userList.length; i++) {
         let details = await this.leaveAPI.get_entilement_details(item.userId).toPromise();
         let array = new Array();
         for (let j = 0; j < details.length; j++) {
             array.push(details[j].ABBR);
         }
-        // if (this._userList[i] != undefined) {
         item["shortCode"] = array.join();
         item["balance"] = '-';
-        // }
-        // }
     }
 
     /**
@@ -546,7 +542,6 @@ export class ApplyOnBehalfComponent implements OnInit {
     changeDetails(text: any) {
         if (text === '') {
             this.ngOnInit();
-            // this.filteredUser = [];
         } else {
             this.filter(text);
         }
@@ -585,7 +580,6 @@ export class ApplyOnBehalfComponent implements OnInit {
                 } else {
                     this.showCheckBox.push(false);
                 }
-                // this.enableDisableSubmitButton();
             });
         })
     }
@@ -613,8 +607,10 @@ export class ApplyOnBehalfComponent implements OnInit {
         } else {
             this.indeterminateVal = false;
             this.headCheckbox = false;
+            this.applyLeaveForm.controls.leaveTypes.reset();
+            this.daysAvailable = 0;
+            this.applyLeaveForm.controls.leaveTypes.disable();
         }
-        // this.enableDisableSubmitButton();
     }
 
     /**
@@ -624,14 +620,12 @@ export class ApplyOnBehalfComponent implements OnInit {
     async addEntitlementBal(leaveTypeGuid: string) {
         for (let i = 0; i < this._userList.length; i++) {
             let details = await this.leaveAPI.get_entilement_details(this._userList[i].userId).toPromise();
-            // if (this._userList[i] != undefined) {
             for (let j = 0; j < details.length; j++) {
                 if (details[j].LEAVE_TYPE_GUID === leaveTypeGuid) {
                     this._userList[i]["entitled"] = details[j].ENTITLED_DAYS;
                     this._userList[i]["balance"] = details[j].BALANCE_DAYS;
                 }
             }
-            // }
         }
     }
 
@@ -698,7 +692,9 @@ export class ApplyOnBehalfComponent implements OnInit {
         this.leaveAPI.post_apply_leave_onBehalf(details).subscribe(
             response => {
                 this.clearArrayList();
-                this.leaveAPI.openSnackBar('You have submitted successfully', true);
+                if (response.status === 201) {
+                    this.leaveAPI.openSnackBar('You have submitted successfully', true);
+                }
                 if (response.status === 401) {
                     this.leaveAPI.openSnackBar(response.message, false);
                 }
@@ -754,6 +750,8 @@ export class ApplyOnBehalfComponent implements OnInit {
         this._arrayDateSlot = [];
         this._slot = [];
         this._selectedQuarterHour = [];
+        this.quarterDayIndex = [];
+        this.halfDayIndex = [];
         this.dayName = [];
         this._employeeId = [];
         this.dateSelection = [];
