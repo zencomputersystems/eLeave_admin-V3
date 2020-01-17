@@ -111,6 +111,13 @@ export class RoleListComponent implements OnInit {
     public cloneRoleId: string;
 
     /**
+     * show loading spinner
+     * @type {boolean}
+     * @memberof RoleListComponent
+     */
+    public showSmallSpinner: boolean;
+
+    /**
      * set menu is open or close by assign new class
      * @type {boolean}
      * @memberof RoleListComponent
@@ -164,8 +171,6 @@ export class RoleListComponent implements OnInit {
             this.showSpinner = false;
             this.clickedIndex = 0;
             this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);
-            // this.getAssignedEmployee();
-
         });
         this.roleAPi.get_user_list().subscribe(list => this._userList = list);
     }
@@ -176,18 +181,18 @@ export class RoleListComponent implements OnInit {
      * @param {*} roleItem
      * @memberof RoleListComponent
      */
-    onDropped(evt, roleItem) {
+    async onDropped(evt, roleItem) {
         for (let i = 0; i < this.assignedNameList.length; i++) {
             if (evt.data === this.assignedNameList[i].fullname) {
                 this.draggedUserId(i);
-                this.roleAPi.patch_user_profile({
+                let response = await this.roleAPi.patch_user_profile({
                     "user_guid": this._filteredList,
                     "role_guid": roleItem.role_guid
-                }).subscribe(response => {
-                    this.assignedNameList.splice(i, 1);
-                    this._filteredList = [];
-                    // this.getAssignedEmployee();
-                });
+                }).toPromise();
+                this.assignedNameList.splice(i, 1);
+                this._filteredList = [];
+                let data = await this.roleAPi.get_role_profile_list().toPromise();
+                this.roleList = data;
             }
         }
     }
@@ -221,19 +226,6 @@ export class RoleListComponent implements OnInit {
         }
         return 0;
     }
-
-    /**
-     * get assigned employee from requested role iid
-     * @param {string} roleId
-     * @param {number} index
-     * @memberof RoleListComponent
-     */
-    // async getAssignedEmployee() {
-    //     for (let i = 0; i < this.roleList.length; i++) {
-    //         let a = await this.roleAPi.get_assigned_user_profile(this.roleList[i].role_guid).toPromise();
-    //         this.roleList[i]["employee"] = a.length;
-    //     }
-    // }
 
     /**
      * selected role profile
@@ -290,11 +282,13 @@ export class RoleListComponent implements OnInit {
             details.description = this.newRoleDescription.value;
         } else {
             details = await this.roleAPi.get_role_details_profile(this.cloneRoleId).toPromise();
+            details.code = details.code + ' (copy)';
         }
         this.roleAPi.post_role_profile(details).subscribe(res => {
             this.newRoleName.reset();
             this.newRoleDescription.reset();
             this.ngOnInit();
+            this.showSmallSpinner = false;
             this.roleAPi.snackbarMsg('New role profile was created successfully', true);
             this._sharedService.menu.close('createNewRoleDetails');
         })
@@ -315,6 +309,7 @@ export class RoleListComponent implements OnInit {
         };
         this.roleAPi.patch_role_profile(body).subscribe(response => {
             this.ngOnInit();
+            this.showSmallSpinner = false;
             this._sharedService.menu.close('editRoleDetails');
             this.roleAPi.snackbarMsg('Role profile was updated successfully', true);
         })
@@ -341,118 +336,4 @@ export class RoleListComponent implements OnInit {
             }
         });
     }
-
-    /**
-     * Go to assign role page
-     * @memberof RoleListComponent
-     */
-    // assignRole() {
-    //     this.router.navigate(['/main/role-management/assign-role']);
-    // }
-
-    /**
-     * Sort ascending /descending order of rolename & description column
-     * @param {number} ascValue
-     * @param {number} desValue
-     * @param {*} variable
-     * @memberof RoleListComponent
-     */
-    // sortFunction(ascValue: number, desValue: number, variable: any) {
-    //     this.roleList.sort(function (a, b) {
-    //         if (variable == 'code') {
-    //             const x = a.code.toLowerCase();
-    //             const y = b.code.toLowerCase();
-    //             return x < y ? ascValue : x > y ? desValue : 0;
-    //         } else {
-    //             const x1 = a.description.toLowerCase();
-    //             const x2 = b.description.toLowerCase();
-    //             return x1 < x2 ? ascValue : x1 > x2 ? desValue : 0;
-    //         }
-    //     });
-    //     this.renderItemPerPage(1);
-    //     this.disabledNextButton = false;
-    //     this.disabledPrevButton = true;
-    // }
-
-    /**
-     * Calculate number of item show in each page
-     * @param {number} i
-     * @memberof RoleListComponent
-     */
-    // renderItemPerPage(i: number) {
-    //     let totalItem;
-    //     const pageItems = 7;
-    //     const startEndNumber = 6;
-    //     this.pageIndex = i;
-    //     totalItem = this.roleList.length;
-    //     this.sumPageIndex = totalItem / pageItems;
-    //     this.sumPageIndex = Math.ceil(this.sumPageIndex);
-    //     const startNum = (this.pageIndex * pageItems) - startEndNumber;
-    //     const endNum = this.pageIndex * pageItems;
-    //     const currentPageItems = [];
-    //     for (let j = startNum - 1; j < endNum; j++) {
-    //         const itemNum = this.roleList[j];
-    //         if (itemNum !== undefined) {
-    //             currentPageItems.push(itemNum);
-    //         }
-    //     }
-    //     this.currentItems = currentPageItems;
-    // }
-
-    /**
-     * Click to display next page of rendered items
-     * @param {number} i
-     * @memberof RoleListComponent
-     */
-    // onClickNextPage(i: number) {
-    //     if (!(i > this.sumPageIndex)) {
-    //         this.renderItemPerPage(i);
-    //     }
-    //     this.nextButton();
-    // }
-
-    /**
-     * Click to display previous page of rendered items
-     * @param {number} i
-     * @memberof RoleListComponent
-     */
-    // onClickPrevPage(i: number) {
-    //     if (!(i < 1)) {
-    //         this.renderItemPerPage(i);
-    //     }
-    //     this.prevButton();
-    // }
-
-    /**
-     * Enable or disable next button
-     * @memberof RoleListComponent
-     */
-    // nextButton() {
-    //     if (this.pageIndex === this.sumPageIndex) {
-    //         this.disabledNextButton = true;
-    //     }
-    //     if (this.pageIndex > 0 && this.pageIndex < this.sumPageIndex) {
-    //         this.disabledNextButton = false;
-    //     }
-    //     if (this.pageIndex > 1) {
-    //         this.disabledPrevButton = false;
-    //     }
-    // }
-
-    /**
-     * Enable or disable previous button
-     * @memberof RoleListComponent
-     */
-    // prevButton() {
-    //     if (this.pageIndex < 2) {
-    //         this.disabledPrevButton = true;
-    //     }
-    //     if (this.pageIndex > 1 && this.pageIndex === this.sumPageIndex) {
-    //         this.disabledPrevButton = false;
-    //     }
-    //     if (this.pageIndex < this.sumPageIndex) {
-    //         this.disabledNextButton = false;
-    //     }
-    // }
-
 }

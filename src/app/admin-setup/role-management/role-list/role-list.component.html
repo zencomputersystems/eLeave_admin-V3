@@ -23,8 +23,9 @@
         <div style="margin: 20px;text-align: center;">
             <ion-button
                 style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                color="primary" (click)="updateRole()">
-                Update
+                color="primary" (click)="updateRole();showSmallSpinner=true">
+                Update <ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
+                </ion-spinner>
             </ion-button>
         </div>
     </ion-content>
@@ -83,9 +84,10 @@
                 <div style="margin: 20px;text-align: center;">
                     <ion-button
                         style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                        color="primary" (click)="createNew('new')"
+                        color="primary" (click)="createNew('new');showSmallSpinner=true"
                         [disabled]="!newRoleName.valid || !newRoleDescription.valid">
-                        Create
+                        Create <ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
+                        </ion-spinner>
                     </ion-button>
                 </div>
             </div>
@@ -100,8 +102,10 @@
                 <div style="margin: 20px;text-align: center;">
                     <ion-button
                         style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                        color="primary" (click)="createNew('clone')" [disabled]="cloneRoleId == null">
-                        Create
+                        color="primary" (click)="createNew('clone');showSmallSpinner=true"
+                        [disabled]="cloneRoleId == null">
+                        Create <ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
+                        </ion-spinner>
                     </ion-button>
                 </div>
             </div>
