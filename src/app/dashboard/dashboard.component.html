@@ -42,7 +42,7 @@
         </ion-item>
       </ng-container>
     </ion-list>
-    <div style="text-align: center;margin:30px">
+    <div style="text-align: center;margin:30px" *ngIf="announcements && announcements.length > 6">
       <ion-button *ngIf="!viewLessAnnouncement" (click)="showallannouncement = true; viewLessAnnouncement = true"
         style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary">
         View More
@@ -162,7 +162,7 @@
       </ng-container>
     </ion-list>
 
-    <div style="text-align: center;margin:30px">
+    <div style="text-align: center;margin:30px" *ngIf="holidays && holidays.length > 6">
       <ion-button *ngIf="!showViewLessButton" (click)="showall = true; showViewLessButton = true"
         style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary">
         View More
@@ -201,8 +201,9 @@
               VIEW DETAILS</ion-col>
           </ion-row>
         </div>
-        <ion-row style="width: 100%;margin-top: 1%;" *ngFor="let item of announcements; let i = index;">
-          <ng-container style="padding-top: 2%;" *ngIf="i<3">
+        <ng-container *ngFor="let item of announcements; let i = index;">
+        <ion-row style="width: 100%;margin-top: 1%;" *ngIf="i<3">
+          <ng-container style="padding-top: 2%;" >
             <ion-col align-self-center size="1.5"
               style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;padding: 0;padding-left: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
               {{item.CREATION_TS | date:'d MMM yyyy'}}
@@ -227,6 +228,7 @@
             <ion-item *ngIf="i<2" class="divider" style="padding-bottom: 0;" lines="full"></ion-item>
           </ng-container>
         </ion-row>
+        </ng-container>
       </div>
     </div>
 

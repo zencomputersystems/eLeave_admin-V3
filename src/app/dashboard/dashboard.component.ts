@@ -162,7 +162,6 @@ export class DashboardComponent implements OnInit {
   async ngOnInit() {
     this.getHolidayList();
     this.getAnnouncementList();
-    this.get_task_list();
     this.get_joiner_leaver_list();
     this.dashboardAPI.get_long_leave_reminder().subscribe(res => this.longLeave = res);
   }
@@ -215,16 +214,6 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
-  * get pending task list
-  * @memberof DashboardComponent
-  */
-  get_task_list() {
-    this.dashboardAPI.get_task_list().subscribe(data => {
-      this.tasks = data;
-    })
-  }
-
-  /**
    * get joiner & leaver list
    * @memberof DashboardComponent
    */
@@ -250,7 +239,6 @@ export class DashboardComponent implements OnInit {
    */
   leaveStatus(leaveGUID: string, reason: string, action: string) {
     this.dashboardAPI.post_leave_status(action, { "id": leaveGUID, "reason": reason }).subscribe(response => {
-      this.get_task_list();
       this.dashboardAPI.snackbarMessage('Your tasks has been submitted successfully', true);
     })
   }

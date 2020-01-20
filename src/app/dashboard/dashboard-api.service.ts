@@ -84,15 +84,6 @@ export class DashboardApiService {
     }
 
     /**
-     * get dashboard task to be done
-     * @returns {Observable<any>}
-     * @memberof DashboardApiService
-     */
-    get_task_list(): Observable<any> {
-        return this.apiService.getApi('/api/employee/dashboard-my-task');
-    }
-
-    /**
      * admin take action on task leave from dashboard
      * @returns {Observable<any>}
      * @memberof DashboardApiService
