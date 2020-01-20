@@ -94,21 +94,13 @@ export class DashboardApiService {
     }
 
     /**
-     * upcoming joiner list 
+     * upcoming joiner, leaver, birthday
+     * @param {string} item
      * @returns {Observable<any>}
      * @memberof DashboardApiService
      */
-    upcoming_joiner(): Observable<any> {
-        return this.apiService.getApi('/api/admin/dashboard/upcoming-joiner');
-    }
-
-    /**
-     * upcoming leaver list
-     * @returns {Observable<any>}
-     * @memberof DashboardApiService
-     */
-    upcoming_leaver(): Observable<any> {
-        return this.apiService.getApi('/api/admin/dashboard/upcoming-leaver');
+    upcoming_item(item: string): Observable<any> {
+        return this.apiService.getApi('/api/admin/dashboard/' + item);
     }
 
     /**

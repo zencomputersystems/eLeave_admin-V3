@@ -1,110 +1,109 @@
 // @import "~quill/dist/quill.core.css";
 :host(.menuOverlay) {
-  z-index: 101 !important;
+    z-index: 101 !important;
 }
-:host {
-  // top: 48px;
-  // background: #f0f0f7;
-  // overflow: auto;
-  // justify-content: flex-start !important;
 
-  // ::-webkit-scrollbar,
-  // *::-webkit-scrollbar {
-  //   display: none;
-  //   overflow: hidden;
-  // }
-  z-index: 0 !important;
-  p.innerText::ng-deep p {
-    white-space: normal;
-    font-size: 10px;
-    color: #4d4f5c;
-    line-height: 1.4;
-    text-align: justify;
-  }
-  p.listInnerText::ng-deep p {
-    white-space: normal;
-    font-size: 10px;
-    color: #4d4f5c;
-    line-height: 1.4;
-    text-align: justify;
-  }
-  p.mainInnerText::ng-deep p {
-    margin-bottom: 0;
-  }
-  .main {
-    top: 48px;
-    background: #f0f0f7;
-    overflow: auto;
-    position: absolute;
-    width: 100%;
-    max-height: calc(100% - 48px);
-    height: 100%;
-  }
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0 10px;
-    margin: 0;
-  }
-  .annoucement {
-    flex: 98%;
-    max-width: 98%;
-    background: #ffffff;
-    margin: 1%;
-    border-radius: 2px;
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
-  }
-  .joiner,
-  .leaver,
-  .longleave {
-    flex: 31.333%;
-    max-width: 31.333%;
-    background: #ffffff;
-    margin: 1%;
-    border-radius: 2px;
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
-  }
-  .holiday {
-    flex: 64.667%;
-    max-width: 64.667%;
-    background: #ffffff;
-    margin: 1%;
-    border-radius: 2px;
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
-  }
-  .birthday {
-    flex: 31.333%;
-    max-width: 31.333%;
-    background: #ffffff;
-    margin: 1%;
-    border-radius: 2px;
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
-    margin-bottom: 30px;
-  }
-  .divider {
-    --min-height: none;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    width: 99%;
-    padding-left: 1%;
-    opacity: 0.5;
-  }
-  mat-chip {
-    max-width: 69px;
-    min-height: 20px;
-    min-width: 69px;
-  }
-  .mat-chip.mat-standard-chip {
-    background-color: #46cdcf;
-  }
-  ::ng-deep .item-inner {
-    border-color: rgb(0, 0, 0);
-  }
-  .labelText {
-    margin: 0;
-  }
-  .avatar {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
+:host {
+    // top: 48px;
+    // background: #f0f0f7;
+    // overflow: auto;
+    // justify-content: flex-start !important;
+    // ::-webkit-scrollbar,
+    // *::-webkit-scrollbar {
+    //   display: none;
+    //   overflow: hidden;
+    // }
+    z-index: 0 !important;
+    p.innerText::ng-deep p {
+        white-space: normal;
+        font-size: 10px;
+        color: #4d4f5c;
+        line-height: 1.4;
+        text-align: justify;
+    }
+    p.listInnerText::ng-deep p {
+        white-space: normal;
+        font-size: 10px;
+        color: #4d4f5c;
+        line-height: 1.4;
+        text-align: justify;
+    }
+    p.mainInnerText::ng-deep p {
+        margin-bottom: 0;
+    }
+    .main {
+        top: 48px;
+        background: #f0f0f7;
+        overflow: auto;
+        position: absolute;
+        width: 100%;
+        max-height: calc(100% - 48px);
+        height: 100%;
+    }
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0 10px;
+        margin: 0;
+    }
+    .annoucement {
+        flex: 98%;
+        max-width: 98%;
+        background: #ffffff;
+        margin: 1%;
+        border-radius: 2px;
+        box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
+    }
+    .joiner,
+    .leaver,
+    .longleave {
+        flex: 31.333%;
+        max-width: 31.333%;
+        background: #ffffff;
+        margin: 1%;
+        border-radius: 2px;
+        box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
+    }
+    .holiday {
+        flex: 64.667%;
+        max-width: 64.667%;
+        background: #ffffff;
+        margin: 1%;
+        border-radius: 2px;
+        box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
+    }
+    .birthday {
+        flex: 31.333%;
+        max-width: 31.333%;
+        background: #ffffff;
+        margin: 1%;
+        border-radius: 2px;
+        box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);
+    }
+    .divider {
+        --min-height: none;
+        padding-top: 1%;
+        padding-bottom: 1%;
+        width: 99%;
+        padding-left: 1%;
+        opacity: 0.5;
+    }
+    mat-chip {
+        max-width: 69px;
+        min-height: 20px;
+        min-width: 69px;
+    }
+    .mat-chip.mat-standard-chip {
+        background-color: #46cdcf;
+    }
+     ::ng-deep .item-inner {
+        border-color: rgb(0, 0, 0);
+    }
+    .labelText {
+        margin: 0;
+    }
+    .avatar {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 }

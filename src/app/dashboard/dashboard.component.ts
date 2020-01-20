@@ -146,6 +146,13 @@ export class DashboardComponent implements OnInit {
   public announcementId: string;
 
   /**
+   * upcoming birthday list
+   * @type {*}
+   * @memberof DashboardComponent
+   */
+  public birthdayList: any;
+
+  /**
    *Creates an instance of DashboardComponent.
    * @param {MenuController} menu
    * @param {DashboardApiService} dashboardAPI
@@ -218,16 +225,22 @@ export class DashboardComponent implements OnInit {
    * @memberof DashboardComponent
    */
   async get_joiner_leaver_list() {
-    let nameList = await this.dashboardAPI.upcoming_joiner().toPromise();
+    let nameList = await this.dashboardAPI.upcoming_item('upcoming-joiner').toPromise();
     this.joiners = nameList;
     for (let i = 0; i < this.joiners.length; i++) {
       this.joiners[i].JOIN_DATE = (_moment(this.joiners[i].JOIN_DATE).format('DD MMM YYYY'))
     }
 
-    let leaver = await this.dashboardAPI.upcoming_leaver().toPromise();
+    let leaver = await this.dashboardAPI.upcoming_item('upcoming-leaver').toPromise();
     this.leaver = leaver;
     for (let i = 0; i < this.leaver.length; i++) {
       this.leaver[i].RESIGNATION_DATE = (_moment(this.leaver[i].RESIGNATION_DATE).format('DD MMM YYYY'))
+    }
+
+    let birthday = await this.dashboardAPI.upcoming_item('upcoming-birthday').toPromise();
+    this.birthdayList = birthday;
+    for (let i = 0; i < this.birthdayList.length; i++) {
+      this.birthdayList[i].DOB = (_moment(this.birthdayList[i].DOB).format('DD MMM'))
     }
   }
 
