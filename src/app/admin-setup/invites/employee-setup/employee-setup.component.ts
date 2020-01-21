@@ -154,7 +154,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @type {number}
      * @memberof EmployeeSetupComponent
      */
-    public dayAvailable: number = 0;
+    // public dayAvailable: number[] = [];
 
     /**
      * clicked index 
@@ -182,7 +182,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @type {*}
      * @memberof EmployeeSetupComponent
      */
-    public entitlementValue: any;
+    public entitlementValue: any = [];
 
     /**
      * role guid
@@ -196,7 +196,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @type {*}
      * @memberof EmployeeSetupComponent
      */
-    public addEntitlement: any = [0];
+    public addEntitlement: any = [];
 
     /** 
      * active/inactive status from endpoint
@@ -326,6 +326,20 @@ export class EmployeeSetupComponent implements OnInit {
     public showLessDepartment: boolean = false;
 
     /**
+     * need to remove exsiting leave entitlement or vice versa
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public remove: boolean;
+
+    /**
+     * clicked user leave entitlement id
+     * @type {string}
+     * @memberof EmployeeSetupComponent
+     */
+    public userLeaveEntitled: string;
+
+    /**
      * selected company guid
      * @private
      * @type {*}
@@ -437,8 +451,10 @@ export class EmployeeSetupComponent implements OnInit {
         })
         this.leaveApi.get_entilement_details(this.userId).subscribe(data => {
             if (data.length > 0) {
-                this.entitlementValue = data[0].LEAVE_TYPE_GUID;
-                this.dayAvailable = data[0].BALANCE_DAYS;
+                this.addEntitlement = [];
+                for (let i = 0; i < data.length; i++) {
+                    this.addEntitlement.push({ "leavetype": data[i].LEAVE_TYPE_GUID, "userLeaveEntitlement": data[i].USER_LEAVE_ENTITLEMENT_GUID, "balance": data[i].BALANCE_DAYS });
+                }
             }
         })
         this.inviteAPI.apiService.get_user_profile_details(this.userId).subscribe(data => {
@@ -485,20 +501,39 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {*} leaveEntitlementId
      * @memberof EmployeeSetupComponent
      */
-    async getLeaveTypeEntitlementId(leaveTypeId, leaveEntitlementId) {
+    async getLeaveTypeEntitlementId(leaveTypeId: string, leaveEntitlementId: string, index: number) {
         // POST and create directly
         const data = {
             "userId": [this.userId], "leaveTypeId": leaveTypeId, "leaveEntitlementId": leaveEntitlementId
         }
         let res = await this.leaveApi.post_leave_entitlement(data).toPromise();
-        console.log(res);
-        let val = await this.leaveApi.get_entilement_details(this.userId).toPromise();
-        for (let i = 0; i < val.length; i++) {
-            if (val[i].LEAVE_TYPE_GUID == leaveTypeId) {
-                this.dayAvailable = val[i].BALANCE_DAYS;
+        if (res.successList.length != 0) {
+            let val = await this.leaveApi.get_entilement_details(this.userId).toPromise();
+            for (let i = 0; i < val.length; i++) {
+                if (val[i].USER_LEAVE_ENTITLEMENT_GUID == this.userLeaveEntitled && this.remove === true) {
+                    let remove = await this.leaveApi.delete_user_leave_entitlement(this.userLeaveEntitled).toPromise();
+                    this.addEntitlement.splice(i, 1, { "leavetype": leaveTypeId, "userLeaveEntitlement": val[val.length - 1].USER_LEAVE_ENTITLEMENT_GUID, "balance": val[val.length - 1].BALANCE_DAYS });
+                }
+                if (val[i].LEAVE_TYPE_GUID == leaveTypeId && this.remove === false) {
+                    this.addEntitlement.splice(index, 1, { "leavetype": leaveTypeId, "userLeaveEntitlement": val[val.length - 1].USER_LEAVE_ENTITLEMENT_GUID, "balance": val[val.length - 1].BALANCE_DAYS });
+                }
             }
         }
-        console.log(leaveTypeId, leaveEntitlementId);
+    }
+
+    /**
+     * change selection detection
+     * @param {*} list
+     * @param {string} userEntitled
+     * @memberof EmployeeSetupComponent
+     */
+    async changeLeaveEntitlement(list, userEntitled: string) {
+        if (list[list.length - 1].balance == 0) {
+            this.remove = false;
+        } else {
+            this.remove = true;
+            this.userLeaveEntitled = userEntitled;
+        }
     }
 
     /**
@@ -506,7 +541,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     addNewEntitlement() {
-        this.addEntitlement.push(0);
+        this.addEntitlement.push({ "leavetype": "", "userLeaveEntitlement": "", "balance": 0 });
     }
 
     /**
@@ -514,7 +549,9 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {number} index
      * @memberof EmployeeSetupComponent
      */
-    deleteEntitlement(index: number) {
+    async deleteEntitlement(index: number) {
+        let remove = await this.leaveApi.delete_user_leave_entitlement(this.addEntitlement[index].userLeaveEntitlement).toPromise();
+        console.log(remove);
         this.addEntitlement.splice(index, 1);
     }
 

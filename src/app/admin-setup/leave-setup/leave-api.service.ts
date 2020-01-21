@@ -167,6 +167,17 @@ export class LeaveApiService {
     }
 
     /**
+     * delete assigned leave entitlement from specifc user
+     * @param {string} id
+     * @returns {Observable<any>}
+     * @memberof LeaveApiService
+     */
+    delete_user_leave_entitlement(id: string): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.deleteApi(id, '/api/leave-entitlement/');
+    }
+
+    /**
     * Show message of pass or fail after post data
     * @param {string} message
     * @memberof LeaveApiService
