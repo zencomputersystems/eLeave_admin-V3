@@ -512,13 +512,24 @@ export class EmployeeSetupComponent implements OnInit {
             for (let i = 0; i < val.length; i++) {
                 if (val[i].USER_LEAVE_ENTITLEMENT_GUID == this.userLeaveEntitled && this.remove === true) {
                     let remove = await this.leaveApi.delete_user_leave_entitlement(this.userLeaveEntitled).toPromise();
-                    this.addEntitlement.splice(i, 1, { "leavetype": leaveTypeId, "userLeaveEntitlement": val[val.length - 1].USER_LEAVE_ENTITLEMENT_GUID, "balance": val[val.length - 1].BALANCE_DAYS });
+                    this.spliceEntitlement(i, leaveTypeId, val);
                 }
-                if (val[i].LEAVE_TYPE_GUID == leaveTypeId && this.remove === false) {
-                    this.addEntitlement.splice(index, 1, { "leavetype": leaveTypeId, "userLeaveEntitlement": val[val.length - 1].USER_LEAVE_ENTITLEMENT_GUID, "balance": val[val.length - 1].BALANCE_DAYS });
+                if (this.remove === false) {
+                    this.spliceEntitlement(index, leaveTypeId, val);
                 }
             }
         }
+    }
+
+    /**
+     * splice method
+     * @param {number} index
+     * @param {string} leaveTypeId
+     * @param {*} val
+     * @memberof EmployeeSetupComponent
+     */
+    spliceEntitlement(index: number, leaveTypeId: string, val) {
+        this.addEntitlement.splice(index, 1, { "leavetype": leaveTypeId, "userLeaveEntitlement": val[val.length - 1].USER_LEAVE_ENTITLEMENT_GUID, "balance": val[val.length - 1].BALANCE_DAYS });
     }
 
     /**
@@ -550,9 +561,12 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     async deleteEntitlement(index: number) {
-        let remove = await this.leaveApi.delete_user_leave_entitlement(this.addEntitlement[index].userLeaveEntitlement).toPromise();
-        console.log(remove);
-        this.addEntitlement.splice(index, 1);
+        let response = await this.leaveApi.delete_user_leave_entitlement(this.addEntitlement[index].userLeaveEntitlement).toPromise().then(() => {
+            this.leaveApi.openSnackBar('Selected leave entitlement was deleted', true);
+            this.addEntitlement.splice(index, 1);
+        }).catch(err => {
+            this.leaveApi.openSnackBar('Error occurred', false);
+        });
     }
 
     /**
