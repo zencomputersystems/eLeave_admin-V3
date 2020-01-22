@@ -134,7 +134,6 @@ export class BulkImportComponent implements OnInit {
                     this.fileform.get('file').setValue(file);
                     this.chooseFileButton = false;
                     this.showUploadButton = true;
-                    this.onSubmit();
                 });
             } else {
                 // It was a directory (empty directories are added, otherwise only files)
@@ -148,10 +147,9 @@ export class BulkImportComponent implements OnInit {
      * Get the uploaded file details
      * Set value to fileform (form data)
      * @param {*} event
-     * @param {*} uploadedFileName
      * @memberof BulkImportComponent
      */
-    openFile(event, uploadedFileName) {
+    openFile(event) {
         if (event.target.files.length > 0) {
             const file = event.target.files[0];
             this.filename = file.name;
@@ -178,14 +176,30 @@ export class BulkImportComponent implements OnInit {
                 })).subscribe(
                     (response) => {
                         resolve(response.json());
-                        this.closeMenu.emit('true');
-                        this.ngOnInit();
-                        this.formData = new FormData();
-                        this.filename = '';
-                        this.chooseFileButton = true;
-                        this.showUploadButton = false;
+                        this.responseHandler(response.json());
                     }
                 )
         })
+    }
+
+    /**
+     * response handler
+     * @param {*} response
+     * @memberof BulkImportComponent
+     */
+    responseHandler(response: any) {
+        response.forEach(item => {
+            if (item.category == 'Success' && item.data.length != 0) {
+                this.leaveApi.openSnackBar('New employee profiles was created successfully', true);
+            } else {
+                this.leaveApi.openSnackBar('Error occurred - ' + item.category, false);
+            }
+        });
+        this.closeMenu.emit('true');
+        this.ngOnInit();
+        this.formData = new FormData();
+        this.filename = '';
+        this.chooseFileButton = true;
+        this.showUploadButton = false;
     }
 }
