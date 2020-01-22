@@ -291,6 +291,8 @@ export class RoleListComponent implements OnInit {
             this.showSmallSpinner = false;
             this.roleAPi.snackbarMsg('New role profile was created successfully', true);
             this._sharedService.menu.close('createNewRoleDetails');
+        }, error => {
+            this.roleAPi.snackbarMsg('Error occurred', false);
         })
     }
 
@@ -312,6 +314,8 @@ export class RoleListComponent implements OnInit {
             this.showSmallSpinner = false;
             this._sharedService.menu.close('editRoleDetails');
             this.roleAPi.snackbarMsg('Role profile was updated successfully', true);
+        }, error => {
+            this.roleAPi.snackbarMsg('Error occurred', false);
         })
     }
 
@@ -332,6 +336,8 @@ export class RoleListComponent implements OnInit {
                 this.roleAPi.delete_role_profile(role_guid).subscribe(response => {
                     this.ngOnInit();
                     this.roleAPi.snackbarMsg('Selected role profile was deleted', true);
+                }, error => {
+                    this.roleAPi.snackbarMsg('Error occurred', false);
                 })
             }
         });
