@@ -145,4 +145,16 @@ export class AdminInvitesApiService {
         this.apiService.headerAuthorization();
         return this.apiService.getApi('/api/admin/master/department');
     }
+
+    /**
+     * delete assigned leave entitlement from specifc user
+     * @param {string} id
+     * @returns {Observable<any>}
+     * @memberof AdminInvitesApiService
+     */
+    delete_user_leave_entitlement(id: string): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.deleteApi(id, '/api/leave-entitlement/');
+    }
+
 }

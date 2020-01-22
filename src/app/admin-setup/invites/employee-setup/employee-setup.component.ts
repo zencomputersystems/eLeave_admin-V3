@@ -511,7 +511,7 @@ export class EmployeeSetupComponent implements OnInit {
             let val = await this.leaveApi.get_entilement_details(this.userId).toPromise();
             for (let i = 0; i < val.length; i++) {
                 if (val[i].USER_LEAVE_ENTITLEMENT_GUID == this.userLeaveEntitled && this.remove === true) {
-                    let remove = await this.leaveApi.delete_user_leave_entitlement(this.userLeaveEntitled).toPromise();
+                    let remove = await this.inviteAPI.delete_user_leave_entitlement(this.userLeaveEntitled).toPromise();
                     this.spliceEntitlement(i, leaveTypeId, val);
                 }
                 if (this.remove === false) {
@@ -561,7 +561,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     async deleteEntitlement(index: number) {
-        let response = await this.leaveApi.delete_user_leave_entitlement(this.addEntitlement[index].userLeaveEntitlement).toPromise().then(() => {
+        let response = await this.inviteAPI.delete_user_leave_entitlement(this.addEntitlement[index].userLeaveEntitlement).toPromise().then(() => {
             this.leaveApi.openSnackBar('Selected leave entitlement was deleted', true);
             this.addEntitlement.splice(index, 1);
         }).catch(err => {

@@ -27,10 +27,10 @@
             </div>
             <div>
                 <app-add-one-employee *ngIf="individualButton === true" [individual]="individualButton === true"
-                    [disabledEditMode]="false" (closeMenu)="inviteAPI.menu.close('addNewEmployeeDetails');leaveApi.openSnackBar('New employee profile was created successfully', true);
+                    [disabledEditMode]="false" (closeMenu)="inviteAPI.menu.close('addNewEmployeeDetails');
                     endPoint();">
                 </app-add-one-employee>
-                <app-bulk-import *ngIf="bulkButton === true" (closeMenu)="inviteAPI.menu.close('addNewEmployeeDetails');leaveApi.openSnackBar('New employee profiles was created successfully', true);
+                <app-bulk-import *ngIf="bulkButton === true" (closeMenu)="inviteAPI.menu.close('addNewEmployeeDetails');
                 endPoint();"></app-bulk-import>
             </div>
         </div>

@@ -386,11 +386,18 @@ export class AddOneEmployeeComponent implements OnInit {
         this.adminInvite.post_userimport(data).subscribe(data => {
             this.showSmallSpinner = false;
             this.closeMenu.emit(true);
-            this.invitationForm.reset();
-            this.branchCtrl.reset();
-            // this.divisionCtrl.reset();
-            this.departmentCtrl.reset();
-            this.costCentreCtrl.reset();
+            data.forEach(element => {
+                if (element.data.length != 0 && element.category == 'Success') {
+                    this.leaveSetupService.openSnackBar('New employee profile was created successfully', true)
+                    this.invitationForm.reset();
+                    this.branchCtrl.reset();
+                    // this.divisionCtrl.reset();
+                    this.departmentCtrl.reset();
+                    this.costCentreCtrl.reset();
+                } else {
+                    this.leaveSetupService.openSnackBar('Error occurred - ' + element.category, false)
+                }
+            });
         })
     }
 
