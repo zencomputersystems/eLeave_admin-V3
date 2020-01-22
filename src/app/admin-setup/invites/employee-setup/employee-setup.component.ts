@@ -6,7 +6,6 @@ import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit
 import { LeaveApiService } from '../../leave-setup/leave-api.service';
 import { FormControl, Validators } from '@angular/forms';
 import { APP_DATE_FORMATS, AppDateAdapter } from '../../leave-setup/date.adapter';
-import { genderStatus, maritalStatus } from './employee-setup.service';
 import { RoleApiService } from '../../role-management/role-api.service';
 import { ChangeStatusConfimationComponent } from './change-status-confimation/change-status-confimation.component';
 import { DeleteCalendarConfirmationComponent } from '../../leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
