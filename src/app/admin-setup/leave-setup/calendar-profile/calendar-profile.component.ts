@@ -255,9 +255,7 @@ export class CalendarProfileComponent implements OnInit {
         this.countryDB = reduce(getDataSet(), "en");
         this.countryList = Object.keys(this.countryDB).map(key => this.countryDB[key]);
         this.countryList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-        this.dayControl = new FormControl('');
-        this.country = new FormControl('');
-        this.region = new FormControl('');
+        this.dayControl = this.country = this.region = new FormControl('');
         this.yearDefault = new Date().getFullYear();
         this.profileName = new FormControl('', Validators.required);
         this.getPublicHolidayList();
@@ -394,9 +392,8 @@ export class CalendarProfileComponent implements OnInit {
         }
         this.calendarProfileAPI.patch_calendar_profile(body).subscribe(
             (data: any[]) => {
-                this.restDay = [];
+                this.restDay = this._selectedWeekday = [];
                 this.dayControl.reset();
-                this._selectedWeekday = [];
                 this.getProfileList();
                 this.calendarProfileAPI.notification('Edit mode disabled. Good job!', true);
             }, error => {
@@ -411,43 +408,40 @@ export class CalendarProfileComponent implements OnInit {
      * @param {*} list
      * @memberof CalendarProfileComponent
      */
-    selectProfile(list, index) {
+    async selectProfile(list, index) {
         this.slideInOut = false;
         this._selectedCalendarProfile = list;
         this.clickedIndex = index;
         this.restDay = [];
-        this.calendarProfileAPI.get_personal_holiday_calendar(this._selectedCalendarProfile.calendar_guid, (new Date()).getFullYear()).subscribe(
-            (data: any) => {
-                this._personalProfile = data;
-                this.slideInOut = true;
-                this.events = [];
-                if (this._personalProfile.holiday != undefined) {
-                    for (let i = 0; i < this._personalProfile.holiday.length; i++) {
-                        this.createHolidayList(this._personalProfile.holiday[i].start, this._personalProfile.holiday[i].title, this.events);
-                    }
-                    if (this._personalProfile.holiday instanceof Array == false) {
-                        this.createHolidayList(this._personalProfile.holiday.start, this._personalProfile.holiday.title, this.events);
-                    }
-                }
-                if (this._personalProfile["rest"] != undefined && Array.isArray(this._personalProfile.rest) == false) {
-                    this.restDay.push(this.titlecasePipe.transform(this._personalProfile.rest.fullname));
-                }
-                if (this._personalProfile["rest"] != undefined && Array.isArray(this._personalProfile.rest) == true) {
-                    for (let i = 0; i < this._personalProfile.rest.length; i++) {
-                        this.restDay.push(this.titlecasePipe.transform(this._personalProfile.rest[i].fullname));
-                    }
-                }
-                this.dayControl.setValue(this.restDay);
-            })
-        this.calendarProfileAPI.get_assigned_employee_list(this.profileList[index].calendar_guid).subscribe(namelist => {
-            this.assignedNames = namelist;
-            for (let i = 0; i < this.assignedNames.length; i++) {
-                this.assignedNames[i]["content"] = this.assignedNames[i].fullname;
-                this.assignedNames[i]["effectAllowed"] = "copyMove";
-                this.assignedNames[i]["disable"] = false;
-                this.assignedNames[i]["handle"] = true;
+        let data = await this.calendarProfileAPI.get_personal_holiday_calendar(this._selectedCalendarProfile.calendar_guid, (new Date()).getFullYear()).toPromise();
+        this._personalProfile = data;
+        this.slideInOut = true;
+        this.events = [];
+        if (this._personalProfile.holiday != undefined) {
+            for (let i = 0; i < this._personalProfile.holiday.length; i++) {
+                this.createHolidayList(this._personalProfile.holiday[i].start, this._personalProfile.holiday[i].title, this.events);
             }
-        })
+            if (this._personalProfile.holiday instanceof Array == false) {
+                this.createHolidayList(this._personalProfile.holiday.start, this._personalProfile.holiday.title, this.events);
+            }
+        }
+        if (this._personalProfile["rest"] != undefined && Array.isArray(this._personalProfile.rest) == false) {
+            this.restDay.push(this.titlecasePipe.transform(this._personalProfile.rest.fullname));
+        }
+        if (this._personalProfile["rest"] != undefined && Array.isArray(this._personalProfile.rest) == true) {
+            for (let i = 0; i < this._personalProfile.rest.length; i++) {
+                this.restDay.push(this.titlecasePipe.transform(this._personalProfile.rest[i].fullname));
+            }
+        }
+        this.dayControl.setValue(this.restDay);
+        let namelist = await this.calendarProfileAPI.get_assigned_employee_list(this.profileList[index].calendar_guid).toPromise();
+        this.assignedNames = namelist;
+        for (let i = 0; i < this.assignedNames.length; i++) {
+            this.assignedNames[i]["content"] = this.assignedNames[i].fullname;
+            this.assignedNames[i]["effectAllowed"] = "copyMove";
+            this.assignedNames[i]["disable"] = false;
+            this.assignedNames[i]["handle"] = true;
+        }
     }
 
     /**
@@ -613,11 +607,9 @@ export class CalendarProfileComponent implements OnInit {
             this.profileName.reset();
             this.country.reset();
             this.region.reset();
-            this.countryIso = '';
-            this.regionISO = '';
-            this.restDay = [];
+            this.countryIso = this.regionISO = '';
+            this.restDay = this._selectedWeekday = [];
             this.dayControl.reset();
-            this._selectedWeekday = [];
             this.getProfileList();
         }, error => {
             this.calendarProfileAPI.notification(error.status + ' ' + error.statusText + '.', false);
