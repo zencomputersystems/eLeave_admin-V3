@@ -69,6 +69,7 @@
     display: flex;
     flex-wrap: nowrap;
     margin: 0;
+    height: 100%;
     // padding: 0 10px;
   }
   .details {
@@ -79,9 +80,10 @@
     flex: 70%;
     max-width: 70%;
     margin-left: 10px;
+    height: 100%;
   }
   .content {
-    height: 512px;
+    height: calc(100% - 46px);
     overflow: auto;
   }
   .subtitle {

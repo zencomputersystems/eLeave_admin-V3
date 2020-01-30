@@ -336,15 +336,22 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
             "leaveEntitlementId": this.entitlementBatch.controls.entitlement_code.value
         };
         this.leaveEntitlementAPI.post_leave_entitlement(body).subscribe(response => {
-            this.leaveAPI.openSnackBar('You have submitted successfully', true);
+            if (response.failedList.length != 0) {
+                this.leaveAPI.openSnackBar(response.failedList[0].status, false);
+            } else {
+                this.leaveAPI.openSnackBar('You have submitted successfully', true);
+                this.entitlementBatch.reset();
+                this.checkMain = false;
+                this.indeterminate = false;
+                this.filteredUser = [];
+                this._selected_User = [];
+                this.filteredEntitlement = [];
+                this.filteredUser.forEach(element => {
+                    element.isChecked = false;
+                });
+                this.checkEnableDisableButton();
+            }
             this.showSmallSpinner = false;
-            this.filteredUser = [];
-            this._selected_User = [];
-            this.filteredEntitlement = [];
-            this.filteredUser.forEach(element => {
-                element.isChecked = false;
-            });
-            this.checkEnableDisableButton();
         });
     }
 

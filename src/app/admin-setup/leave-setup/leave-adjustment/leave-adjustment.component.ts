@@ -375,14 +375,18 @@ export class LeaveAdjustmentComponent implements OnInit {
             "reason": this.adjustmentForm.controls.reason.value
         };
         this.leaveSetupAPI.patch_leave_adjustment(data).subscribe(response => {
-            this.leaveSetupAPI.openSnackBar('You have submitted successfully', true);
-            this.showSmallSpinner = false;
-            this.filteredUserItems = [];
-            this._selectedUser = [];
-            this.filteredUserItems.forEach(element => {
-                element.isChecked = false;
-            });
-            this.enableDisableSubmitButton();
+            if (response.successList.length != 0) {
+                this.leaveSetupAPI.openSnackBar('You have submitted successfully', true);
+                this.showSmallSpinner = false;
+                this.filteredUserItems = [];
+                this._selectedUser = [];
+                this.filteredUserItems.forEach(element => {
+                    element.isChecked = false;
+                });
+                this.enableDisableSubmitButton();
+            } else {
+                this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
+            }
         });
     }
 
