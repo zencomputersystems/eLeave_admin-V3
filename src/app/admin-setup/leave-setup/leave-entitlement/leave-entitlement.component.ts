@@ -439,21 +439,21 @@ export class LeaveEntitlementComponent implements OnInit {
    * delete leave type 
    * @memberof LeaveEntitlementComponent
    */
-  async deleteLeaveType(abbr: string, name: string) {
-    const dialogRef = this.entitlementApi.dialog.open(DeleteCalendarConfirmationComponent, {
-      data: { name: abbr + ' - ' + name, value: this.entitlementTypeNew, desc: ' leave type' },
-      height: "230px",
-      width: "270px"
-    });
-    let val = await dialogRef.afterClosed().toPromise();
-    if (val === this.entitlementTypeNew) {
-      this.entitlementApi.delete_leavetype(this.entitlementTypeNew).subscribe(res => {
-        this.sharedService.menu.close('editLeaveTypeDetails');
-        this.ngOnInit();
-        this.leaveApi.openSnackBar('Leave type & attached profile was deleted', true);
-      })
-    }
-  }
+  // async deleteLeaveType(abbr: string, name: string) {
+  //   const dialogRef = this.entitlementApi.dialog.open(DeleteCalendarConfirmationComponent, {
+  //     data: { name: abbr + ' - ' + name, value: this.entitlementTypeNew, desc: ' leave type' },
+  //     height: "230px",
+  //     width: "270px"
+  //   });
+  //   let val = await dialogRef.afterClosed().toPromise();
+  //   if (val === this.entitlementTypeNew) {
+  //     this.entitlementApi.delete_leavetype(this.entitlementTypeNew).subscribe(res => {
+  //       this.sharedService.menu.close('editLeaveTypeDetails');
+  //       this.ngOnInit();
+  //       this.leaveApi.openSnackBar('Leave type & attached profile was deleted', true);
+  //     })
+  //   }
+  // }
 
   /**
    * delete leave entitlement profile
@@ -471,14 +471,19 @@ export class LeaveEntitlementComponent implements OnInit {
     let val = await dialogRef.afterClosed().toPromise();
     if (val === leaveEntitlementId) {
       this.entitlementApi.delete_leavetype_entitlement(leaveEntitlementId).subscribe(res => {
-        this.ngOnInit();
-        if (this.leaveEntitlement[this.clickedHeaderIndex].length == 1) {
-          this.deleteLeaveType(this.abbr, this.name);
-          this.sharedService.menu.close('editLeaveTypeDetails');
-          this.clickedHeaderIndex = 0;
-          this.clickedIndex = 0;
+        if (res[0].USER_LEAVE_ENTITLEMENT_GUID != undefined) {
+          this.leaveApi.openSnackBar('Reassign employee to delete this leave entitlement', false);
+        } else {
+          this.ngOnInit();
+          if (this.leaveEntitlement[this.clickedHeaderIndex].length == 1) {
+            this.entitlementApi.delete_leavetype(this.entitlementTypeNew).subscribe(res => {
+            })
+            this.sharedService.menu.close('editLeaveTypeDetails');
+            this.clickedHeaderIndex = 0;
+            this.clickedIndex = 0;
+          }
+          this.leaveApi.openSnackBar('Leave entitlement profile was deleted', true);
         }
-        this.leaveApi.openSnackBar('Leave entitlement profile was deleted', true);
       });
     }
   }

@@ -224,6 +224,8 @@ export class WorkingHourListComponent implements OnInit {
                     this.clickedIndex = 0;
                     this.ngOnInit();
                     this.workingHrAPI.showPopUp('Working hour profile was deleted', true);
+                }, error => {
+                    this.workingHrAPI.showPopUp('Sorry. Error occurred.', false);
                 })
             }
         });

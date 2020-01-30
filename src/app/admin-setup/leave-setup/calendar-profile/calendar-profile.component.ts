@@ -638,6 +638,8 @@ export class CalendarProfileComponent implements OnInit {
                 this.dayControl.reset();
                 this.restDay = [];
                 this.calendarProfileAPI.notification('Calendar profile was deleted.', true);
+            }, error => {
+                this.calendarProfileAPI.notification('Sorry. Error occurred.', false);
             })
         }
     }

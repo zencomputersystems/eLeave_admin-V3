@@ -175,7 +175,6 @@ export class WorkingHourComponent implements OnInit, OnChanges {
                 this._endTime = _moment.utc(timeEnd, "HH:mm");
             }
             this.calculateTime(this._startTime, this._endTime);
-
         }
     }
 
