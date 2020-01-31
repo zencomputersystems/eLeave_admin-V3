@@ -346,10 +346,13 @@ export class CalendarProfileComponent implements OnInit {
         for (let i = 0; i < this.assignedNames.length; i++) {
             if (event.data === this.assignedNames[i].fullname) {
                 this.getDragUserId(i);
-                await this.calendarProfileAPI.patch_assign_calendar_profile({
+                let res = await this.calendarProfileAPI.patch_assign_calendar_profile({
                     "user_guid": this._employeeList,
                     "calendar_guid": list.calendar_guid
                 }).toPromise();
+                if (res[0].USER_INFO_GUID == undefined) {
+                    this.calendarProfileAPI.notification(res.status, false);
+                }
                 this.assignedNames.splice(i, 1);
                 this._employeeList = [];
                 this.getAssignedList();
@@ -391,13 +394,15 @@ export class CalendarProfileComponent implements OnInit {
             }
         }
         this.calendarProfileAPI.patch_calendar_profile(body).subscribe(
-            (data: any[]) => {
-                this.restDay = this._selectedWeekday = [];
-                this.dayControl.reset();
-                this.getProfileList();
-                this.calendarProfileAPI.notification('Edit mode disabled. Good job!', true);
-            }, error => {
-                this.calendarProfileAPI.notification('Sorry. Error occurred.', false);
+            (data: any) => {
+                if (data[0].CALENDAR_GUID != undefined) {
+                    this.restDay = this._selectedWeekday = [];
+                    this.dayControl.reset();
+                    this.getProfileList();
+                    this.calendarProfileAPI.notification('Edit mode disabled. Good job!', true);
+                } else {
+                    this.calendarProfileAPI.notification(data.status, false);
+                }
             })
     }
 
@@ -601,20 +606,22 @@ export class CalendarProfileComponent implements OnInit {
             "rest": this._selectedWeekday
         }
         this.calendarProfileAPI.post_calendar_profile(newProfile).subscribe(response => {
-            this.calendarProfileAPI.notification('New calendar profile was created successfully.', true);
-            this.showSpinner = false;
-            this.content = true;
-            this.profileName.reset();
-            this.country.reset();
-            this.region.reset();
-            this.countryIso = this.regionISO = '';
-            this.restDay = this._selectedWeekday = [];
-            this.dayControl.reset();
-            this.getProfileList();
-        }, error => {
-            this.calendarProfileAPI.notification(error.status + ' ' + error.statusText + '.', false);
-            this.showSpinner = false;
-            this.content = true;
+            if (response[0].CALENDAR_DETAILS_GUID != undefined) {
+                this.calendarProfileAPI.notification('New calendar profile was created successfully.', true);
+                this.showSpinner = false;
+                this.content = true;
+                this.profileName.reset();
+                this.country.reset();
+                this.region.reset();
+                this.countryIso = this.regionISO = '';
+                this.restDay = this._selectedWeekday = [];
+                this.dayControl.reset();
+                this.getProfileList();
+            } else {
+                this.calendarProfileAPI.notification(response.status, false);
+                this.showSpinner = false;
+                this.content = true;
+            }
         });
         // this.getProfileList();
     }
@@ -632,14 +639,16 @@ export class CalendarProfileComponent implements OnInit {
         let result = await dialog.afterClosed().toPromise();
         if (result === item.calendar_guid) {
             this.calendarProfileAPI.delete_calendar_profile(item.calendar_guid).subscribe(response => {
-                this.getProfileList();
-                this.slideInOut = false;
-                this.clickedIndex = 0;
-                this.dayControl.reset();
-                this.restDay = [];
-                this.calendarProfileAPI.notification('Calendar profile was deleted.', true);
-            }, error => {
-                this.calendarProfileAPI.notification('Sorry. Error occurred.', false);
+                if (response[0].CALENDAR_GUID != undefined) {
+                    this.getProfileList();
+                    this.slideInOut = false;
+                    this.clickedIndex = 0;
+                    this.dayControl.reset();
+                    this.restDay = [];
+                    this.calendarProfileAPI.notification('Calendar profile was deleted.', true);
+                } else {
+                    this.calendarProfileAPI.notification(response.status, false);
+                }
             })
         }
     }

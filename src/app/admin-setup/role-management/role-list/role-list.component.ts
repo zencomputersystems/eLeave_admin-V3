@@ -189,6 +189,9 @@ export class RoleListComponent implements OnInit {
                     "user_guid": this._filteredList,
                     "role_guid": roleItem.role_guid
                 }).toPromise();
+                if (response[0].USER_INFO_GUID == undefined) {
+                    this.roleAPi.snackbarMsg(response.status, false);
+                }
                 this.assignedNameList.splice(i, 1);
                 this._filteredList = [];
                 let data = await this.roleAPi.get_role_profile_list().toPromise();

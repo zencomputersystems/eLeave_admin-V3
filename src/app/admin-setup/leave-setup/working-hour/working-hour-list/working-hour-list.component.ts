@@ -165,10 +165,13 @@ export class WorkingHourListComponent implements OnInit {
         for (let i = 0; i < this.employeeList.length; i++) {
             if (event.data === this.employeeList[i].fullname) {
                 this.draggedUser(i);
-                await this.workingHrAPI.patch_user_working_hours({
+                let value = await this.workingHrAPI.patch_user_working_hours({
                     "user_guid": this._droppedUser,
                     "working_hours_guid": item.working_hours_guid
                 }).toPromise();
+                if (value[0].USER_INFO_GUID == undefined) {
+                    this.workingHrAPI.showPopUp(value.status, false);
+                }
                 this.employeeList.splice(i, 1);
                 this._droppedUser = [];
                 this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
@@ -221,11 +224,13 @@ export class WorkingHourListComponent implements OnInit {
         dialogRef.afterClosed().subscribe(val => {
             if (val === working_hour_guid) {
                 this.workingHrAPI.delete_working_hours_profile(working_hour_guid).subscribe(response => {
-                    this.clickedIndex = 0;
-                    this.ngOnInit();
-                    this.workingHrAPI.showPopUp('Working hour profile was deleted', true);
-                }, error => {
-                    this.workingHrAPI.showPopUp('Sorry. Error occurred.', false);
+                    if (response[0].WORKING_HOURS_GUID != undefined) {
+                        this.clickedIndex = 0;
+                        this.ngOnInit();
+                        this.workingHrAPI.showPopUp('Working hour profile was deleted', true);
+                    } else {
+                        this.workingHrAPI.showPopUp(response.status, false);
+                    }
                 })
             }
         });

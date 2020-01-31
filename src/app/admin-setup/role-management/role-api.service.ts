@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers } from "@angular/http";
 import { Observable } from "rxjs";
 import { MatSnackBar } from "@angular/material";
 import { SnackbarNotificationComponent } from "../leave-setup/snackbar-notification/snackbar-notification.component";
@@ -14,12 +13,6 @@ import { APIService } from "src/services/shared-service/api.service";
     providedIn: 'root'
 })
 export class RoleApiService {
-
-    /**
-     * header authorization value 
-     * @memberof RoleApiService
-     */
-    public headerApp = new Headers();
 
     /**
      * main url of server
@@ -45,8 +38,6 @@ export class RoleApiService {
     get_role_profile_list(): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.getApi('/api/admin/role/role-profile');
-        // return this.http.get(this.baseUrl + '/api/admin/role/role-profile', { headers: this.headerApp })
-        //     .pipe(map((res: Response) => res.json()))
     }
 
     /**
@@ -58,8 +49,6 @@ export class RoleApiService {
     get_role_details_profile(id): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.getApiWithId('/api/admin/role/', id);
-        // return this.http.get(this.baseUrl + '/api/admin/role/' + id, { headers: this.headerApp })
-        //     .pipe(map((res: Response) => res.json()));
     }
 
     /**
@@ -71,7 +60,6 @@ export class RoleApiService {
     patch_role_profile(body): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.patchApi(body, '/api/admin/role/role-profile');
-        // return this.http.patch(this.baseUrl + '/api/admin/role/role-profile', body, { headers: this.headerApp })
     }
 
     /**
@@ -83,7 +71,6 @@ export class RoleApiService {
     post_role_profile(data): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.postApi(data, '/api/admin/role/role-profile');
-        // return this.http.post(this.baseUrl + '/api/admin/role/role-profile', data, { headers: this.headerApp })
     }
 
     /**
@@ -95,8 +82,6 @@ export class RoleApiService {
     delete_role_profile(roleId): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.deleteApi(roleId, '/api/admin/role/role-profile/');
-        // return this.http.delete(this.baseUrl + '/api/admin/role/role-profile/' + roleId, { headers: this.headerApp })
-        //     .pipe(map((res: Response) => res.json()));
     }
 
     /**
@@ -108,7 +93,6 @@ export class RoleApiService {
     patch_user_profile(id): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.patchApi(id, '/api/admin/role/user-role');
-        // return this.http.patch(this.baseUrl + '/api/admin/role/user-role', id, { headers: this.headerApp });
     }
 
     /**
@@ -120,9 +104,6 @@ export class RoleApiService {
     get_assigned_user_profile(role_id: string): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.getApiWithId('/api/admin/role/role-profile/users/', role_id);
-        // return this.http.get(this.baseUrl + '/api/admin/role/role-profile/users/' + role_id, { headers: this.headerApp })
-        //     .pipe(map((response: Response) => response.json()));
-
     }
 
     /**

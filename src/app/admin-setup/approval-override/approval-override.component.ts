@@ -308,7 +308,11 @@ export class ApprovalOverrideComponent implements OnInit {
      */
     submitData(body: any) {
         this.approvalOverrideAPI.patch_approval_override(body).subscribe(response => {
-            this.approvalOverrideAPI.notification('You have submitted successfully ', true);
+            if (response[0].USER_GUID != undefined) {
+                this.approvalOverrideAPI.notification('You have submitted successfully', true);
+            } else {
+                this.approvalOverrideAPI.notification(response.status, false);
+            }
             this.showSmallSpinner = false;
             this.clearValue();
             document.querySelector('ion-searchbar').getInputElement().then((searchInput) => {

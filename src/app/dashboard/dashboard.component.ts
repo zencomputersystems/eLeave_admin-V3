@@ -270,15 +270,23 @@ export class DashboardComponent implements OnInit {
     const data = { "title": this.title, "message": this.message, "isPinned": isChecked };
     if (name === 'add') {
       this.dashboardAPI.post_announcement_list(data).subscribe(response => {
-        this.getAnnouncementList();
-        this.dashboardAPI.snackbarMessage('New announcement was created successfully', true);
+        if (response[0].ANNOUNCEMENT_GUID != undefined) {
+          this.getAnnouncementList();
+          this.dashboardAPI.snackbarMessage('New announcement was created successfully', true);
+        } else {
+          this.dashboardAPI.snackbarMessage(response.status, false);
+        }
         this.title = ''; this.message = ''; this.checked = false;
       });
     } else {
       data["announcementId"] = this.announcementId;
       this.dashboardAPI.patch_announcement(data).subscribe(res => {
-        this.getAnnouncementList();
-        this.dashboardAPI.snackbarMessage('You have saved this announcement successfully', true);
+        if (res[0].ANNOUNCEMENT_GUID != undefined) {
+          this.getAnnouncementList();
+          this.dashboardAPI.snackbarMessage('Announcement was updated successfully', true);
+        } else {
+          this.dashboardAPI.snackbarMessage(res.status, false);
+        }
       })
     }
     this.menu.close('createAnnouncementDetails');
@@ -335,7 +343,12 @@ export class DashboardComponent implements OnInit {
     dialog.afterClosed().subscribe(result => {
       if (result === item.ANNOUNCEMENT_GUID) {
         this.dashboardAPI.delete_announcement_list(item.ANNOUNCEMENT_GUID).subscribe(response => {
-          this.getAnnouncementList();
+          if (response[0].ANNOUNCEMENT_GUID != undefined) {
+            this.getAnnouncementList();
+            this.dashboardAPI.snackbarMessage('Selected announcement was deleted', true);
+          } else {
+            this.dashboardAPI.snackbarMessage(response.status, false);
+          }
         })
       }
     });

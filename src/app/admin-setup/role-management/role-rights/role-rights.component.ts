@@ -234,6 +234,9 @@ export class RoleRightsComponent implements OnInit {
             "data": this._body
         };
         this.roleAPi.patch_role_profile(body).subscribe(response => {
+            if (response[0].ROLE_GUID == undefined) {
+                this.roleAPi.snackbarMsg(response.status, false);
+            }
             this._body = {};
         });
     }

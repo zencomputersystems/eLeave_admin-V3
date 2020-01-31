@@ -288,18 +288,22 @@ export class WorkingHourComponent implements OnInit, OnChanges {
                 "working_hours_guid": this.id,
                 "data": body
             }).subscribe(res => {
-                this.workingHourAPI.showPopUp('Working hour profile was updated successfully', true);
+                if (res[0].WORKING_HOURS_GUID != undefined) {
+                    this.workingHourAPI.showPopUp('Working hour profile was updated successfully', true);
+                } else {
+                    this.workingHourAPI.showPopUp(res.status, false);
+                }
                 this.showSmallSpinner = false;
-            }, error => {
-                this.workingHourAPI.showPopUp('Sorry. Error occurred.', false);
             })
         } else {
             this.workingHourAPI.post_working_hours(body).subscribe(response => {
-                this.workingHourAPI.showPopUp('New working hour profile was created successfully', true);
+                if (response[0].WORKING_HOURS_GUID != undefined) {
+                    this.workingHourAPI.showPopUp('New working hour profile was created successfully', true);
+                    this.refreshProfile(response[0].WORKING_HOURS_GUID);
+                } else {
+                    this.workingHourAPI.showPopUp(response.status, false);
+                }
                 this.showSmallSpinner = false;
-                this.refreshProfile(response[0].WORKING_HOURS_GUID);
-            }, error => {
-                this.workingHourAPI.showPopUp(error.status + ' ' + error.statusText + '.', false);
             })
         }
     }

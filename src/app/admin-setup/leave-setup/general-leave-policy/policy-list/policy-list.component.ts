@@ -210,7 +210,7 @@ export class PolicyListComponent implements OnInit {
                         this.ngOnInit();
                         this.policyApi.message('Company name was deleted successfully', true);
                     } else {
-                        this.policyApi.message('Reassign employee to delete this company', false);
+                        this.policyApi.message(response.status, false);
                     }
                 })
             }

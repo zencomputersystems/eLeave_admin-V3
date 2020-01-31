@@ -23,12 +23,12 @@
   </p>
   <div style="display: block;">
     <ion-button *ngIf="data.status == 'Deactivate'"
-      style="--border-radius:0px;margin:0;--box-shadow: none;font-size: 11px;height: 30px;width:140px;cursor: pointer;text-transform: none;"
-      color="primary">
+      style="pointer-events: none;--border-radius:0px;margin:0;--box-shadow: none;font-size: 11px;height: 30px;width:140px;cursor: pointer;text-transform: none;"
+      color="primary" readonly>
       <span style="margin-right: auto;">User Roles</span>
     </ion-button>
     <ion-button fill="outline" *ngIf="data.status == 'Deactivate'"
-      style="color: #43425d;--border-radius:0px;margin:0;font-size: 11px;height: 30px;width:153px;cursor: pointer;text-transform: none;">
+      style="pointer-events: none;color: #43425d;--border-radius:0px;margin:0;font-size: 11px;height: 30px;width:153px;cursor: pointer;text-transform: none;">
       <span style="margin-right: auto;">{{userRole}}</span>
       <ion-spinner *ngIf="userRole == undefined && userProfile == undefined"
         style="width: 20px;height: 20px;position: absolute;"></ion-spinner>
@@ -36,12 +36,12 @@
   </div>
   <div style="display: block;">
     <ion-button *ngIf="data.status == 'Deactivate'"
-      style="--border-radius:0px;margin:0;--box-shadow: none;font-size: 11px;height: 30px;width:140px;cursor: pointer;text-transform: none;"
+      style="pointer-events: none;--border-radius:0px;margin:0;--box-shadow: none;font-size: 11px;height: 30px;width:140px;cursor: pointer;text-transform: none;"
       color="primary">
       <span style="margin-right: auto;">Working Hour Profile</span>
     </ion-button>
     <ion-button fill="outline" *ngIf="data.status == 'Deactivate'"
-      style="color: #43425d;--border-radius:0px;margin:0;font-size: 11px;height: 30px;width:153px;cursor: pointer;text-transform: none;">
+      style="pointer-events: none;color: #43425d;--border-radius:0px;margin:0;font-size: 11px;height: 30px;width:153px;cursor: pointer;text-transform: none;">
       <span style="margin-right: auto;">{{workingHour}}</span>
       <ion-spinner *ngIf="workingHour == undefined && userProfile == undefined"
         style="width: 20px;height: 20px;position: absolute;"></ion-spinner>
@@ -49,12 +49,12 @@
   </div>
   <div style="display: block;">
     <ion-button *ngIf="data.status == 'Deactivate'"
-      style="--border-radius:0px;margin:0;--box-shadow: none;font-size: 11px;height: 30px;width:140px;cursor: pointer;text-transform: none;"
+      style="pointer-events: none;--border-radius:0px;margin:0;--box-shadow: none;font-size: 11px;height: 30px;width:140px;cursor: pointer;text-transform: none;"
       color="primary">
       <span style="margin-right: auto;">Calendar Profile</span>
     </ion-button>
     <ion-button fill="outline" *ngIf="data.status == 'Deactivate'"
-      style="color: #43425d;--border-radius:0px;margin:0;font-size: 11px;height: 30px;width:153px;cursor: pointer;text-transform: none;">
+      style="pointer-events: none;color: #43425d;--border-radius:0px;margin:0;font-size: 11px;height: 30px;width:153px;cursor: pointer;text-transform: none;">
       <span style="margin-right: auto;">{{calendar}}</span>
       <ion-spinner *ngIf="calendar == undefined && userProfile == undefined"
         style="width: 20px;height: 20px;position: absolute;"></ion-spinner>
@@ -62,12 +62,12 @@
   </div>
   <div style="display: block;">
     <ion-button *ngIf="data.status == 'Deactivate'"
-      style="--border-radius:0px;margin:0;--box-shadow: none;font-size: 11px;height: 30px;width:140px;cursor: pointer;text-transform: none;"
+      style="pointer-events: none;--border-radius:0px;margin:0;--box-shadow: none;font-size: 11px;height: 30px;width:140px;cursor: pointer;text-transform: none;"
       color="primary">
       <span style="margin-right: auto;">Leave Entitlement</span>
     </ion-button>
     <ion-button fill="outline" *ngIf="data.status == 'Deactivate'"
-      style="color: #43425d;--border-radius:0px;margin:0;font-size: 11px;height: 30px;width:153px;cursor: pointer;text-transform: none;">
+      style="pointer-events: none;color: #43425d;--border-radius:0px;margin:0;font-size: 11px;height: 30px;width:153px;cursor: pointer;text-transform: none;">
       <span style="margin-right: auto;">{{entitlement}}</span>
       <ion-spinner *ngIf="entitlement == undefined && userProfile == undefined"
         style="width: 20px;height: 20px;position: absolute;"></ion-spinner>
