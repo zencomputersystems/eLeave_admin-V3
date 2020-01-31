@@ -341,17 +341,17 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
             } else {
                 this.leaveAPI.openSnackBar('You have submitted successfully', true);
                 this.entitlementBatch.reset();
-                this.checkMain = false;
-                this.indeterminate = false;
                 this.filteredUser = [];
-                this._selected_User = [];
                 this.filteredEntitlement = [];
-                this.filteredUser.forEach(element => {
-                    element.isChecked = false;
-                });
-                this.checkEnableDisableButton();
             }
             this.showSmallSpinner = false;
+            this.checkMain = false;
+            this.indeterminate = false;
+            this._selected_User = [];
+            this.filteredUser.forEach(element => {
+                element.isChecked = false;
+            });
+            this.checkEnableDisableButton();
         });
     }
 
