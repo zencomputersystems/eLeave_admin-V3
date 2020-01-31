@@ -179,12 +179,16 @@ export class PolicyListComponent implements OnInit {
      * @memberof PolicyListComponent
      */
     createNewCompany() {
-        this.policyApi.post_company_name(this.newName.value).subscribe(response => {
-            this.policyApi.message('New company was created successfully', true);
-            this.showSmallSpinner = false;
-            this.sharedService.menu.close('createCompanyDetails');
-            this.newName.reset();
-            this.ngOnInit();
+        this.policyApi.post_company_name(this.newName.value).subscribe(result => {
+            if (result[0].TENANT_COMPANY_GUID != undefined) {
+                this.policyApi.message('New company was created successfully', true);
+                this.showSmallSpinner = false;
+                this.sharedService.menu.close('createCompanyDetails');
+                this.newName.reset();
+                this.ngOnInit();
+            } else {
+                this.policyApi.message('Fail to create resource', true);
+            }
         });
     }
 
@@ -202,8 +206,12 @@ export class PolicyListComponent implements OnInit {
         dialog.afterClosed().subscribe(value => {
             if (value === item.TENANT_COMPANY_GUID) {
                 this.policyApi.delete_company_name(item.TENANT_COMPANY_GUID).subscribe(response => {
-                    this.ngOnInit();
-                    this.policyApi.message('Company name was deleted successfully', true);
+                    if (response[0].TENANT_COMPANY_GUID != undefined) {
+                        this.ngOnInit();
+                        this.policyApi.message('Company name was deleted successfully', true);
+                    } else {
+                        this.policyApi.message('Reassign employee to delete this company', false);
+                    }
                 })
             }
         });
@@ -216,11 +224,15 @@ export class PolicyListComponent implements OnInit {
      */
     updateCompanyName() {
         this.policyApi.patch_company_name({ "id": this.companyId, "name": this.editName.value }).subscribe(res => {
-            this.policyApi.message('Company name was updated successfully', true);
+            if (res[0].TENANT_COMPANY_GUID != undefined) {
+                this.policyApi.message('Company name was updated successfully', true);
+                this.ngOnInit();
+            } else {
+                this.policyApi.message('Failed to update resource', false);
+            }
             this.showSmallSpinner = false;
             this.sharedService.menu.close('editCompanyDetails');
             this.editName.reset();
-            this.ngOnInit();
         })
     }
 
