@@ -187,7 +187,7 @@ export class PolicyListComponent implements OnInit {
                 this.newName.reset();
                 this.ngOnInit();
             } else {
-                this.policyApi.message('Fail to create resource', true);
+                this.policyApi.message(result.status, true);
             }
         });
     }
@@ -228,7 +228,7 @@ export class PolicyListComponent implements OnInit {
                 this.policyApi.message('Company name was updated successfully', true);
                 this.ngOnInit();
             } else {
-                this.policyApi.message('Failed to update resource', false);
+                this.policyApi.message(res.status, false);
             }
             this.showSmallSpinner = false;
             this.sharedService.menu.close('editCompanyDetails');

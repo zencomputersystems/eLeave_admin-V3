@@ -261,7 +261,6 @@ export class RoleListComponent implements OnInit {
                 height: "360.3px",
                 width: "383px"
             });
-
         } else {
             this.mode = 'OFF'
             this.roleAPi.snackbarMsg('Edit mode disabled. Good job!', true);
@@ -285,14 +284,16 @@ export class RoleListComponent implements OnInit {
             details.code = details.code + ' (copy)';
         }
         this.roleAPi.post_role_profile(details).subscribe(res => {
+            if (res[0].ROLE_GUID != undefined) {
+                this.ngOnInit();
+                this.roleAPi.snackbarMsg('New role profile was created successfully', true);
+            } else {
+                this.roleAPi.snackbarMsg(res.status, false);
+            }
+            this._sharedService.menu.close('createNewRoleDetails');
             this.newRoleName.reset();
             this.newRoleDescription.reset();
-            this.ngOnInit();
             this.showSmallSpinner = false;
-            this.roleAPi.snackbarMsg('New role profile was created successfully', true);
-            this._sharedService.menu.close('createNewRoleDetails');
-        }, error => {
-            this.roleAPi.snackbarMsg('Error occurred', false);
         })
     }
 
@@ -310,12 +311,14 @@ export class RoleListComponent implements OnInit {
             "data": data
         };
         this.roleAPi.patch_role_profile(body).subscribe(response => {
-            this.ngOnInit();
-            this.showSmallSpinner = false;
+            if (response[0].ROLE_GUID != undefined) {
+                this.ngOnInit();
+                this.roleAPi.snackbarMsg('Role profile was updated successfully', true);
+            } else {
+                this.roleAPi.snackbarMsg(response.status, false);
+            }
             this._sharedService.menu.close('editRoleDetails');
-            this.roleAPi.snackbarMsg('Role profile was updated successfully', true);
-        }, error => {
-            this.roleAPi.snackbarMsg('Error occurred', false);
+            this.showSmallSpinner = false;
         })
     }
 
@@ -334,10 +337,12 @@ export class RoleListComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             if (result === role_guid) {
                 this.roleAPi.delete_role_profile(role_guid).subscribe(response => {
-                    this.ngOnInit();
-                    this.roleAPi.snackbarMsg('Selected role profile was deleted', true);
-                }, error => {
-                    this.roleAPi.snackbarMsg('Error occurred', false);
+                    if (response[0].ROLE_GUID != undefined) {
+                        this.ngOnInit();
+                        this.roleAPi.snackbarMsg('Selected role profile was deleted', true);
+                    } else {
+                        this.roleAPi.snackbarMsg(response.status, false);
+                    }
                 })
             }
         });
