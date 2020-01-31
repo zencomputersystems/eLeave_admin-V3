@@ -269,12 +269,12 @@ export class DashboardComponent implements OnInit {
     }
     const data = { "title": this.title, "message": this.message, "isPinned": isChecked };
     if (name === 'add') {
-      this.dashboardAPI.post_announcement_list(data).subscribe(response => {
-        if (response[0].ANNOUNCEMENT_GUID != undefined) {
-          this.getAnnouncementList();
+      this.dashboardAPI.post_announcement_list(data).subscribe(val => {
+        if (val[0].ANNOUNCEMENT_GUID != undefined) {
           this.dashboardAPI.snackbarMessage('New announcement was created successfully', true);
+          this.getAnnouncementList();
         } else {
-          this.dashboardAPI.snackbarMessage(response.status, false);
+          this.dashboardAPI.snackbarMessage(val.status, false);
         }
         this.title = ''; this.message = ''; this.checked = false;
       });
