@@ -313,12 +313,12 @@ export class RoleListComponent implements OnInit {
             "role_guid": this.roleIdOutput,
             "data": data
         };
-        this.roleAPi.patch_role_profile(body).subscribe(response => {
-            if (response[0].ROLE_GUID != undefined) {
-                this.ngOnInit();
+        this.roleAPi.patch_role_profile(body).subscribe(results => {
+            if (results[0].ROLE_GUID != undefined) {
                 this.roleAPi.snackbarMsg('Role profile was updated successfully', true);
+                this.ngOnInit();
             } else {
-                this.roleAPi.snackbarMsg(response.status, false);
+                this.roleAPi.snackbarMsg(results.status, false);
             }
             this._sharedService.menu.close('editRoleDetails');
             this.showSmallSpinner = false;
