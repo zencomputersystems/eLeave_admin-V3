@@ -297,6 +297,8 @@ export class RoleListComponent implements OnInit {
             this.newRoleName.reset();
             this.newRoleDescription.reset();
             this.showSmallSpinner = false;
+        }, error => {
+            this.roleAPi.snackbarMsg(JSON.parse(error._body).status, false);
         })
     }
 
@@ -322,6 +324,8 @@ export class RoleListComponent implements OnInit {
             }
             this._sharedService.menu.close('editRoleDetails');
             this.showSmallSpinner = false;
+        }, error => {
+            this.roleAPi.snackbarMsg(JSON.parse(error._body).status, false);
         })
     }
 
@@ -346,6 +350,8 @@ export class RoleListComponent implements OnInit {
                     } else {
                         this.roleAPi.snackbarMsg(response.status, false);
                     }
+                }, err => {
+                    this.roleAPi.snackbarMsg(JSON.parse(err._body).status, false);
                 })
             }
         });

@@ -319,6 +319,8 @@ export class ApprovalOverrideComponent implements OnInit {
                 searchInput.value = '';
                 this.changeDetails('');
             });
+        }, error => {
+            this.approvalOverrideAPI.notification(JSON.parse(error._body).status, false);
         });
     }
 

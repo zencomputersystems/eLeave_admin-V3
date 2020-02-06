@@ -294,6 +294,8 @@ export class WorkingHourComponent implements OnInit, OnChanges {
                     this.workingHourAPI.showPopUp(res.status, false);
                 }
                 this.showSmallSpinner = false;
+            }, error => {
+                this.workingHourAPI.showPopUp(JSON.parse(error._body).status, false);
             })
         } else {
             this.workingHourAPI.post_working_hours(body).subscribe(response => {
@@ -304,6 +306,8 @@ export class WorkingHourComponent implements OnInit, OnChanges {
                     this.workingHourAPI.showPopUp(response.status, false);
                 }
                 this.showSmallSpinner = false;
+            }, err => {
+                this.workingHourAPI.showPopUp(JSON.parse(err._body).status, false);
             })
         }
     }

@@ -231,6 +231,8 @@ export class WorkingHourListComponent implements OnInit {
                     } else {
                         this.workingHrAPI.showPopUp(response.status, false);
                     }
+                }, error => {
+                    this.workingHrAPI.showPopUp(JSON.parse(error._body).status, false);
                 })
             }
         });

@@ -403,6 +403,8 @@ export class CalendarProfileComponent implements OnInit {
                 } else {
                     this.calendarProfileAPI.notification(data.status, false);
                 }
+            }, err => {
+                this.calendarProfileAPI.notification(JSON.parse(err._body).status, false);
             })
     }
 
@@ -622,6 +624,8 @@ export class CalendarProfileComponent implements OnInit {
                 this.showSpinner = false;
                 this.content = true;
             }
+        }, catchErr => {
+            this.calendarProfileAPI.notification(JSON.parse(catchErr._body).status, false);
         });
         // this.getProfileList();
     }
@@ -649,6 +653,8 @@ export class CalendarProfileComponent implements OnInit {
                 } else {
                     this.calendarProfileAPI.notification(response.status, false);
                 }
+            }, error => {
+                this.calendarProfileAPI.notification(JSON.parse(error._body).status, false);
             })
         }
     }

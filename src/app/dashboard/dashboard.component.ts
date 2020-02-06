@@ -277,6 +277,8 @@ export class DashboardComponent implements OnInit {
           this.dashboardAPI.snackbarMessage(val.status, false);
         }
         this.title = ''; this.message = ''; this.checked = false;
+      }, error => {
+        this.dashboardAPI.snackbarMessage(JSON.parse(error._body).status, false);
       });
     } else {
       data["announcementId"] = this.announcementId;
@@ -287,6 +289,8 @@ export class DashboardComponent implements OnInit {
         } else {
           this.dashboardAPI.snackbarMessage(res.status, false);
         }
+      }, error => {
+        this.dashboardAPI.snackbarMessage(JSON.parse(error._body).status, false);
       })
     }
     this.menu.close('createAnnouncementDetails');
@@ -349,6 +353,8 @@ export class DashboardComponent implements OnInit {
           } else {
             this.dashboardAPI.snackbarMessage(response.status, false);
           }
+        }, error => {
+          this.dashboardAPI.snackbarMessage(JSON.parse(error._body).status, false);
         })
       }
     });

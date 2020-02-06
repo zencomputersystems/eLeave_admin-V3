@@ -189,6 +189,8 @@ export class PolicyListComponent implements OnInit {
             } else {
                 this.policyApi.message(result.status, true);
             }
+        }, error => {
+            this.policyApi.message(JSON.parse(error._body).status, false);
         });
     }
 
@@ -212,6 +214,8 @@ export class PolicyListComponent implements OnInit {
                     } else {
                         this.policyApi.message(response.status, false);
                     }
+                }, error => {
+                    this.policyApi.message(JSON.parse(error._body).status, false);
                 })
             }
         });
@@ -233,6 +237,8 @@ export class PolicyListComponent implements OnInit {
             this.showSmallSpinner = false;
             this.sharedService.menu.close('editCompanyDetails');
             this.editName.reset();
+        }, error => {
+            this.policyApi.message(JSON.parse(error._body).status, false);
         })
     }
 
