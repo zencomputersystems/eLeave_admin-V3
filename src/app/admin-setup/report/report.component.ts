@@ -209,9 +209,9 @@ export class ReportComponent implements OnInit {
 
   public tableDetails: any;
 
-  private _selectedLeaveTypesList: string[] = [];
-
   private _selectedUserId: string;
+
+  private _selectedLeaveTypesList: string[] = [];
 
   /**
    *Creates an instance of ReportComponent.
@@ -421,27 +421,10 @@ export class ReportComponent implements OnInit {
   checkSubLeaveTypes(id: string) {
     const total = this.leaveTypes.length;
     let checkedNumber = 0;
-
-
     this.leaveTypes.map(value => {
       if (value.isChecked) {
         checkedNumber++;
-        if (this._selectedLeaveTypesList.indexOf(value.LEAVE_TYPE_GUID) < 1) {
-          this._selectedLeaveTypesList.push(value.LEAVE_TYPE_GUID);
-          console.log('push', this._selectedLeaveTypesList);
-        }
       }
-      // else {
-      //   this.selectedLeaveTypesList.splice(this.selectedLeaveTypesList.indexOf(value.LEAVE_TYPE_GUID), 1);
-      //   console.log('splice', this.selectedLeaveTypesList);
-      // }
-      // else {
-      //   for (let i = 0; i < this.selectedLeaveTypesList.length; i++) {
-      //     if (value.LEAVE_TYPE_GUID == this.selectedLeaveTypesList[i]) {
-      //       this.selectedLeaveTypesList.splice(i, 1);
-      //     }
-      //   }
-      // }
     });
     if (checkedNumber > 0 && checkedNumber < total) {
       this.isInde = true;
@@ -502,7 +485,6 @@ export class ReportComponent implements OnInit {
       if (item.isChecked) {
         checkedNo++;
         this._selectedUserId = item.userId;
-        console.log(this._selectedUserId, item);
         this.hideImg.push(true);
       }
       if (item.id !== itemId) {
@@ -516,9 +498,30 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  produceReport() {
-    console.log(this.selects);
-    this.reportAPI.get_individual_report(this._selectedUserId, this.selects).subscribe(data => this.tableDetails = data);
+  produceIndividualReport() {
+    for (let i = 0; i < this.leaveTypes.length; i++) {
+      if (this.leaveTypes[i].isChecked === true) {
+        this._selectedLeaveTypesList.push(this.leaveTypes[i].LEAVE_TYPE_GUID);
+      }
+    }
+    console.log(this._selectedLeaveTypesList);
+    this.reportAPI.get_individual_report(this._selectedUserId, this.selects).subscribe(data => {
+      this.tableDetails = data;
+      // for (let i = 0; i < this.tableDetails.length; i++) {
+      //   if (this.tableDetails[i].leaveDetail != undefined) {
+      //     for (let j = 0; j < this.tableDetails[i].leaveDetail.length; j++) {
+      //       if (!this._selectedLeaveTypesList.includes(this.tableDetails[i].leaveDetail[j].leaveType)) {
+      //         this.tableDetails[i].leaveDetail.splice(j, 1);
+      //       }
+      //     }
+      //   }
+      // }
+      console.log(this.tableDetails);
+    });
+  }
+
+  produceGroupReport() {
+    this.reportAPI.get_bundle_report(this.selects).subscribe(value => this.tableDetails = value);
   }
 
 }

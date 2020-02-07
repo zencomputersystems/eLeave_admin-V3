@@ -485,7 +485,7 @@
                 <app-spinner></app-spinner>
               </div>
             </div>
-            <div style="text-align: right;">
+            <div style="text-align: right;" *ngIf="individualButton === true">
               <ion-button fill="outline"
                 (click)="companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';"
                 style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 190px;font-size: 11px;text-transform: none">
@@ -493,7 +493,20 @@
               </ion-button>
               <ion-button
                 style="--border-radius: 2px;font-size: 11px;height: 30px;width:320px;cursor: pointer;text-transform: none;"
-                color="primary" (click)="produceReport(); clickedProduce=true">
+                color="primary" (click)="produceIndividualReport(); clickedProduce=true"
+                [disabled]="selects == null || _selectedUserId == null">
+                Produce Report
+              </ion-button>
+            </div>
+            <div style="text-align: right;" *ngIf="groupButton === true">
+              <ion-button fill="outline"
+                (click)="companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';"
+                style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 190px;font-size: 11px;text-transform: none">
+                Clear
+              </ion-button>
+              <ion-button
+                style="--border-radius: 2px;font-size: 11px;height: 30px;width:320px;cursor: pointer;text-transform: none;"
+                color="primary" (click)="produceGroupReport(); clickedProduce=true" [disabled]="selects == null">
                 Produce Report
               </ion-button>
             </div>
@@ -574,7 +587,8 @@
               <ion-col size="1.2" class="titleRow text">{{item.yearService}}</ion-col>
               <ion-col size="1.5" style=" text-align: left;">
                 <ng-container *ngFor="let leaveItems of item.leaveDetail">
-                  <p class="text">{{leaveItems.leaveType}}</p>
+                  <p class="text">{{leaveItems.leaveType}}
+                  </p>
                 </ng-container>
               </ion-col>
               <ion-col size="1" class="titleRow">
