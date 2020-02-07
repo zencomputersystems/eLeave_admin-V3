@@ -28,7 +28,7 @@
           <ion-item class="ionItem">
             <ion-label class="checkLabel">{{item.CODE}}</ion-label>
             <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="item.isChecked"
-              (ionChange)="checkSubLeaveTypes()">
+              (ionChange)="checkSubLeaveTypes(item.LEAVE_TYPE_GUID)">
             </ion-checkbox>
           </ion-item>
         </ion-list>
@@ -87,7 +87,7 @@
     <div class="cardContent">
 
       <!-- main page -->
-      <ion-card-content style="max-height: 100%;">
+      <ion-card-content style="max-height: 100%;" [style.display]="clickedProduce==true? 'none': ''">
         <div style="display: block;white-space: nowrap;margin-bottom: 10px;">
           <div class="buttonGroup">
             <ion-button
@@ -134,17 +134,17 @@
               </ion-row>
               <mat-form-field appearance="outline"
                 style="height: 55px;font-size: 12px;width: 100%;color: #43425d;opacity: 0.8;">
-                <mat-select>
-                  <mat-option value="Leave Entitlement Summary">Leave Entitlement Summary</mat-option>
-                  <mat-option value="Approval Override History">Approval Override History</mat-option>
-                  <mat-option value="Apply On Behalf History">Apply On Behalf History</mat-option>
-                  <mat-option value="Entitlement Claim History">Entitlement Claim History</mat-option>
-                  <mat-option value="Leave Taken History">Leave Taken History</mat-option>
-                  <mat-option value="Leave Adjustment History">Leave Adjustment History</mat-option>
-                  <mat-option value="Leave Cancellation History">Leave Cancellation History</mat-option>
-                  <mat-option value="Leave Rejected History">Leave Rejected History</mat-option>
-                  <mat-option value="Forfeited Leave History">Forfeited Leave History</mat-option>
-                  <mat-option value="Employee Master List">Employee Master List</mat-option>
+                <mat-select [(value)]="selects">
+                  <mat-option value="leave-entitlement">Leave Entitlement Summary</mat-option>
+                  <mat-option value="approval-override">Approval Override History</mat-option>
+                  <mat-option value="apply-on-behalf">Apply On Behalf History</mat-option>
+                  <mat-option value="entitlement-claim">Entitlement Claim History</mat-option>
+                  <mat-option value="leave-taken">Leave Taken History</mat-option>
+                  <mat-option value="leave-adjustment">Leave Adjustment History</mat-option>
+                  <mat-option value="leave-cancellation">Leave Cancellation History</mat-option>
+                  <mat-option value="leave-rejected">Leave Rejected History</mat-option>
+                  <mat-option value="leave-forfeited">Forfeited Leave History</mat-option>
+                  <mat-option value="employee-master-list">Employee Master List</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -291,8 +291,8 @@
                         [style.display]="hideImg[i] ? 'none' : 'block'">
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" class="ionCheckboxList"
-                          style="position: absolute;margin-top: 7px;margin-left: -4px;"
-                          [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                          style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                          (ionChange)="contentList(item.id)" [disabled]=item.disabled>
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
@@ -330,8 +330,8 @@
                         [style.display]="hideImg[i] ? 'none' : 'block'">
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" class="ionCheckboxList"
-                          style="position: absolute;margin-top: 7px;margin-left: -4px;"
-                          [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                          style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                          (ionChange)="contentList(item.id)" [disabled]=item.disabled>
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
@@ -370,8 +370,8 @@
                         [style.display]="hideImg[i] ? 'none' : 'block'">
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" class="ionCheckboxList"
-                          style="position: absolute;margin-top: 7px;margin-left: -4px;"
-                          [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                          style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                          (ionChange)="contentList(item.id)" [disabled]=item.disabled>
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
@@ -409,8 +409,8 @@
                         [style.display]="hideImg[i] ? 'none' : 'block'">
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" class="ionCheckboxList"
-                          style="position: absolute;margin-top: 7px;margin-left: -4px;"
-                          [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                          style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                          (ionChange)="contentList(item.id)" [disabled]=item.disabled>
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
@@ -449,8 +449,8 @@
                         [style.display]="hideImg[i] ? 'none' : 'block'">
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" class="ionCheckboxList"
-                          style="position: absolute;margin-top: 7px;margin-left: -4px;"
-                          [(ngModel)]="item.isChecked" (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                          style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                          (ionChange)="contentList(item.id)" [disabled]=item.disabled>
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
@@ -493,7 +493,7 @@
               </ion-button>
               <ion-button
                 style="--border-radius: 2px;font-size: 11px;height: 30px;width:320px;cursor: pointer;text-transform: none;"
-                color="primary">
+                color="primary" (click)="produceReport(); clickedProduce=true">
                 Produce Report
               </ion-button>
             </div>
@@ -502,7 +502,8 @@
       </ion-card-content>
 
       <!-- leave entitlement summary -->
-      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+      <ion-card-content *ngIf="selects == 'leave-entitlement' && clickedProduce==true"
+        style=" max-height: 100%;height: 100%;padding: 0;">
         <div
           style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
           <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
@@ -564,175 +565,47 @@
 
         <div class="content">
           <!-- ngFor under this div -->
-          <div style="padding: 10px;">
+          <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
+            [ngClass]="{ odd: odd }">
             <ion-row>
-              <ion-col size="0.3" class="titleRow text">01</ion-col>
-              <ion-col size="1" class="titleRow text">3037</ion-col>
-              <ion-col size="2" class="text" style="text-align: left;">Wan Mohd Fathurrahman</ion-col>
-              <ion-col size="1.2" class="titleRow text">02</ion-col>
+              <ion-col size="0.3" class="titleRow text">{{i + 1}}</ion-col>
+              <ion-col size="1" class="titleRow text">{{item.employeeNo}}</ion-col>
+              <ion-col size="2" class="text" style="text-align: left;">{{item.employeeName}}</ion-col>
+              <ion-col size="1.2" class="titleRow text">{{item.yearService}}</ion-col>
               <ion-col size="1.5" style=" text-align: left;">
-                <p class="text">Annual Leave</p>
-                <p class="text">Medical Leave</p>
-                <p class="text">Emergency Leave</p>
+                <ng-container *ngFor="let leaveItems of item.leaveDetail">
+                  <p class="text">{{leaveItems.leaveType}}</p>
+                </ng-container>
               </ion-col>
               <ion-col size="1" class="titleRow">
-                <p class="text">14</p>
-                <p class="text">14</p>
-                <p class="text">14</p>
+                <ng-container *ngFor="let leaveItems of item.leaveDetail">
+                  <p class="text">{{leaveItems.entitledDays}}</p>
+                </ng-container>
               </ion-col>
               <ion-col size="1" class="titleRow">
-                <p class="text">03</p>
-                <p class="text">03</p>
-                <p class="text">03</p>
+                <ng-container *ngFor="let leaveItems of item.leaveDetail">
+                  <p class="text">{{leaveItems.carriedForward}}</p>
+                </ng-container>
               </ion-col>
               <ion-col size="1" class="titleRow">
-                <p class="text">02</p>
-                <p class="text">02</p>
-                <p class="text">02</p>
+                <ng-container *ngFor="let leaveItems of item.leaveDetail">
+                  <p class="text">{{leaveItems.forfeited}}</p>
+                </ng-container>
               </ion-col>
               <ion-col size="1" class="titleRow">
-                <p class="text">10</p>
-                <p class="text">10</p>
-                <p class="text">10</p>
+                <ng-container *ngFor="let leaveItems of item.leaveDetail">
+                  <p class="text">{{leaveItems.taken}}</p>
+                </ng-container>
               </ion-col>
               <ion-col size="1" class="titleRow">
-                <p class="text">03</p>
-                <p class="text">03</p>
-                <p class="text">03</p>
+                <ng-container *ngFor="let leaveItems of item.leaveDetail">
+                  <p class="text">{{leaveItems.pending}}</p>
+                </ng-container>
               </ion-col>
               <ion-col size="1" class="titleRow">
-                <p class="text">01</p>
-                <p class="text">01</p>
-                <p class="text">01</p>
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;background: #f4f4f4">
-            <ion-row>
-              <ion-col size="0.3" class="titleRow text">02</ion-col>
-              <ion-col size="1" class="titleRow text">2190</ion-col>
-              <ion-col size="2" class="text" style="text-align: left;">Amanda Hart</ion-col>
-              <ion-col size="1.2" class="titleRow text">05</ion-col>
-              <ion-col size="1.5" style=" text-align: left;">
-                <p class="text">Annual Leave</p>
-                <p class="text">Medical Leave</p>
-                <p class="text">Emergency Leave</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">14</p>
-                <p class="text">14</p>
-                <p class="text">14</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">03</p>
-                <p class="text">03</p>
-                <p class="text">03</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">02</p>
-                <p class="text">02</p>
-                <p class="text">02</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">10</p>
-                <p class="text">10</p>
-                <p class="text">10</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">03</p>
-                <p class="text">03</p>
-                <p class="text">03</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">01</p>
-                <p class="text">01</p>
-                <p class="text">01</p>
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;">
-            <ion-row>
-              <ion-col size="0.3" class="titleRow text">03</ion-col>
-              <ion-col size="1" class="titleRow text">3062</ion-col>
-              <ion-col size="2" class="text" style="text-align: left;">Lee Chong Wei</ion-col>
-              <ion-col size="1.2" class="titleRow text">02</ion-col>
-              <ion-col size="1.5" style=" text-align: left;">
-                <p class="text">Annual Leave</p>
-                <p class="text">Medical Leave</p>
-                <p class="text">Emergency Leave</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">14</p>
-                <p class="text">14</p>
-                <p class="text">14</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">03</p>
-                <p class="text">03</p>
-                <p class="text">03</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">02</p>
-                <p class="text">02</p>
-                <p class="text">02</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">10</p>
-                <p class="text">10</p>
-                <p class="text">10</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">03</p>
-                <p class="text">03</p>
-                <p class="text">03</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">01</p>
-                <p class="text">01</p>
-                <p class="text">01</p>
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;background: #f4f4f4">
-            <ion-row>
-              <ion-col size="0.3" class="titleRow text">04</ion-col>
-              <ion-col size="1" class="titleRow text">3038</ion-col>
-              <ion-col size="2" class="text" style="text-align: left;">Amanda Hart</ion-col>
-              <ion-col size="1.2" class="titleRow text">05</ion-col>
-              <ion-col size="1.5" style=" text-align: left;">
-                <p class="text">Annual Leave</p>
-                <p class="text">Medical Leave</p>
-                <p class="text">Emergency Leave</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">14</p>
-                <p class="text">14</p>
-                <p class="text">14</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">03</p>
-                <p class="text">03</p>
-                <p class="text">03</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">02</p>
-                <p class="text">02</p>
-                <p class="text">02</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">10</p>
-                <p class="text">10</p>
-                <p class="text">10</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">03</p>
-                <p class="text">03</p>
-                <p class="text">03</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow">
-                <p class="text">01</p>
-                <p class="text">01</p>
-                <p class="text">01</p>
+                <ng-container *ngFor="let leaveItems of item.leaveDetail">
+                  <p class="text">{{leaveItems.balance}}</p>
+                </ng-container>
               </ion-col>
             </ion-row>
           </div>
@@ -740,7 +613,8 @@
       </ion-card-content>
 
       <!-- approval override history-->
-      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+      <ion-card-content *ngIf="selects == 'approval-override' && clickedProduce==true"
+        style="max-height: 100%;height: 100%;padding: 0;">
         <div
           style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
           <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
@@ -920,7 +794,8 @@
       </ion-card-content>
 
       <!-- Apply on Behalf History -->
-      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+      <ion-card-content *ngIf="selects == 'apply-on-behalf' && clickedProduce==true"
+        style="max-height: 100%;height: 100%;padding: 0;">
         <div
           style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
           <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
@@ -987,131 +862,35 @@
 
         <div class="content">
           <!-- ngFor under this div -->
-          <div style="padding: 10px;">
+          <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
+            [ngClass]="{ odd: odd }">
             <ion-row>
               <ion-col size="0.4" class="titleRow text">
-                01</ion-col>
+                {{i+1}}</ion-col>
               <ion-col size="1.3" class="text">
-                Wan Mohd
-                Fathurrahman
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+                {{item.employeeName}}
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: {{item.employeeNo}}</p>
               </ion-col>
               <ion-col size="1" class="titleRow text">
-                02</ion-col>
+                {{item.yearService}}</ion-col>
               <ion-col size="1" class="text">
-                Annual Leave</ion-col>
+                {{item.leaveType}}</ion-col>
               <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
+                {{item.applicationDate | date:'yyyy-MM-dd'}}</ion-col>
               <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
+                {{item.confirmedDate | date:'yyyy-MM-dd'}}</ion-col>
               <ion-col size="1" class="titleRow text">
-                Jessie</ion-col>
+                {{item.appliedBy}}</ion-col>
               <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
+                {{item.startDate}}</ion-col>
               <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
+                {{item.endDate}}</ion-col>
               <ion-col size="1" class="titleRow text">
-                01</ion-col>
+                {{item.noOfDays}}</ion-col>
               <ion-col size="1" class="titleRow text">
-                Approve</ion-col>
+                {{item.status}}</ion-col>
               <ion-col size="1" class="titleRow text">
-                None
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;background: #f4f4f4">
-            <ion-row>
-              <ion-col size="0.4" class="titleRow text">
-                01</ion-col>
-              <ion-col size="1.3" class="text">
-                Wan Mohd
-                Fathurrahman
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                02</ion-col>
-              <ion-col size="1" class="text">
-                Annual Leave</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                Jessie</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                01</ion-col>
-              <ion-col size="1" class="titleRow text">
-                Approve</ion-col>
-              <ion-col size="1" class="titleRow text">
-                None
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;">
-            <ion-row>
-              <ion-col size="0.4" class="titleRow text">
-                01</ion-col>
-              <ion-col size="1.3" class="text">
-                Wan Mohd
-                Fathurrahman
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                02</ion-col>
-              <ion-col size="1" class="text">
-                Annual Leave</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                Jessie</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                01</ion-col>
-              <ion-col size="1" class="titleRow text">
-                Approve</ion-col>
-              <ion-col size="1" class="titleRow text">
-                None
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;background: #f4f4f4">
-            <ion-row>
-              <ion-col size="0.4" class="titleRow text">
-                01</ion-col>
-              <ion-col size="1.3" class="text">
-                Wan Mohd
-                Fathurrahman
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                02</ion-col>
-              <ion-col size="1" class="text">
-                Annual Leave</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                Jessie</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                01</ion-col>
-              <ion-col size="1" class="titleRow text">
-                Approve</ion-col>
-              <ion-col size="1" class="titleRow text">
-                None
+                {{item.remarks}}
               </ion-col>
             </ion-row>
           </div>
@@ -1119,7 +898,8 @@
       </ion-card-content>
 
       <!-- Entitlement Claim History -->
-      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+      <ion-card-content *ngIf="selects == 'entitlement-claim' && clickedProduce==true"
+        style="max-height: 100%;height: 100%;padding: 0;">
         <div
           style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
           <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
@@ -1292,7 +1072,8 @@
       </ion-card-content>
 
       <!-- Leave Taken History -->
-      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+      <ion-card-content *ngIf="selects == 'leave-taken' && clickedProduce==true"
+        style="max-height: 100%;height: 100%;padding: 0;">
         <div
           style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
           <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
@@ -1349,104 +1130,45 @@
 
         <div class="content">
           <!-- ngFor under this div -->
-          <div style="padding: 10px;">
+          <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
+            [ngClass]="{ odd: odd }">
             <ion-row>
               <ion-col size="0.5" class="titleRow text">
-                01</ion-col>
+                {{i + 1}}</ion-col>
               <ion-col size="1.5" class="titleRow text">
-                3017</ion-col>
+                {{item.employeeNo}}</ion-col>
               <ion-col size="2" class="text">
-                Nor Hanani
+                {{item.employeeName}}
               </ion-col>
               <ion-col size="1.5">
-                <p class="text">Annual Leave</p>
-                <p class="text">Medical Leave</p>
+                <ng-container *ngFor="let leaveItems of item.leaveDetail">
+                  <p class="text">{{leaveItems.leaveType}}</p>
+                </ng-container>
               </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                01</ion-col>
-              <ion-col size="1.5" class="titleRow text">
-                KN</ion-col>
-              <ion-col size="1.5" class="titleRow text">
+              <ion-col size="1" class="titleRow">
+                <ng-container *ngFor="let leaveItems of item.leaveDetail">
+                  <p class="text">{{leaveItems.startDate}}</p>
+                </ng-container>
               </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;background: #f4f4f4">
-            <ion-row>
-              <ion-col size="0.5" class="titleRow text">
-                02</ion-col>
-              <ion-col size="1.5" class="titleRow text">
-                3017</ion-col>
-              <ion-col size="2" class="text">
-                Wan Mohd
-                Fathurrahman
+              <ion-col size="1" class="titleRow">
+                <ng-container *ngFor="let leaveItems of item.leaveDetail">
+                  <p class="text">{{leaveItems.endDate}}</p>
+                </ng-container>
               </ion-col>
-              <ion-col size="1.5">
-                <p class="text">Annual Leave</p>
-                <p class="text">Medical Leave</p>
+              <ion-col size="1" class="titleRow">
+                <ng-container *ngFor="let leaveItems of item.leaveDetail">
+                  <p class="text">{{leaveItems.noOfDays}}</p>
+                </ng-container>
               </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                01</ion-col>
               <ion-col size="1.5" class="titleRow text">
-                KN</ion-col>
-              <ion-col size="1.5" class="titleRow text">
+                <ng-container *ngFor="let leaveItems of item.leaveDetail">
+                  {{leaveItems.approveBy}}
+                </ng-container>
               </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;">
-            <ion-row>
-              <ion-col size="0.5" class="titleRow text">
-                03</ion-col>
-              <ion-col size="1.5" class="titleRow text">
-                3017</ion-col>
-              <ion-col size="2" class="text">
-                Mohd Fakhri
-              </ion-col>
-              <ion-col size="1.5">
-                <p class="text">Annual Leave</p>
-                <p class="text">Medical Leave</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                01</ion-col>
-              <ion-col size="1.5" class="titleRow text">
-                KN</ion-col>
-              <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;background: #f4f4f4">
-            <ion-row>
-              <ion-col size="0.5" class="titleRow text">
-                04</ion-col>
-              <ion-col size="1.5" class="titleRow text">
-                3017</ion-col>
-              <ion-col size="2" class="text">
-                Amir Yusof
-              </ion-col>
-              <ion-col size="1.5">
-                <p class="text">Annual Leave</p>
-                <p class="text">Medical Leave</p>
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                01</ion-col>
-              <ion-col size="1.5" class="titleRow text">
-                KN</ion-col>
-              <ion-col size="1.5" class="titleRow text">
+              <ion-col size="1.5" class="titleRow">
+                <ng-container *ngFor="let leaveItems of item.leaveDetail">
+                  <p class="text">{{leaveItems.remarks}}</p>
+                </ng-container>
               </ion-col>
             </ion-row>
           </div>
@@ -1454,7 +1176,8 @@
       </ion-card-content>
 
       <!-- Leave Adjustment History -->
-      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+      <ion-card-content *ngIf="selects == 'leave-adjustment' && clickedProduce==true"
+        style="max-height: 100%;height: 100%;padding: 0;">
         <div
           style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
           <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
@@ -1600,7 +1323,8 @@
       </ion-card-content>
 
       <!-- Leave Cancellation History -->
-      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+      <ion-card-content *ngIf="selects == 'leave-cancellation' && clickedProduce==true"
+        style="max-height: 100%;height: 100%;padding: 0;">
         <div
           style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
           <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
@@ -1658,103 +1382,32 @@
 
         <div class="content">
           <!-- ngFor under this div -->
-          <div style="padding: 10px;">
+          <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
+            [ngClass]="{ odd: odd }">
             <ion-row>
               <ion-col size="0.5" class="titleRow text">
-                01</ion-col>
+                {{i+1}}</ion-col>
               <ion-col size="2" class="text">
-                Nor Hanani
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+                {{item.employeeName}}
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: {{item.employeeNo}}</p>
               </ion-col>
               <ion-col size="1.5" class="text">
-                Annual Leave
+                {{item.leaveType}}
               </ion-col>
               <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
+                {{item.startDate}}</ion-col>
               <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
+                {{item.endDate}}</ion-col>
               <ion-col size="1" class="titleRow text">
-                02</ion-col>
+                {{item.noOfDays}}</ion-col>
               <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-              <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-              <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;background: #f4f4f4">
-            <ion-row>
-              <ion-col size="0.5" class="titleRow text">
-                02</ion-col>
-              <ion-col size="2" class="text">
-                Muhammad Najib
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-              </ion-col>
-              <ion-col size="1.5" class="text">
-                Annual Leave
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                02</ion-col>
-              <ion-col size="1.5" class="titleRow text">
+                {{item.cancelBy}}
               </ion-col>
               <ion-col size="1.5" class="titleRow text">
+                {{item.leaveRemarks}}
               </ion-col>
               <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;">
-            <ion-row>
-              <ion-col size="0.5" class="titleRow text">
-                03</ion-col>
-              <ion-col size="2" class="text">
-                Abdullah Rahman
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-              </ion-col>
-              <ion-col size="1.5" class="text">
-                Annual Leave
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                02</ion-col>
-              <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-              <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-              <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;background: #f4f4f4">
-            <ion-row>
-              <ion-col size="0.5" class="titleRow text">
-                04</ion-col>
-              <ion-col size="2" class="text">
-                Mahathir
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-              </ion-col>
-              <ion-col size="1.5" class="text">
-                Annual Leave
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                02</ion-col>
-              <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-              <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-              <ion-col size="1.5" class="titleRow text">
+                {{item.cancelRemarks}}
               </ion-col>
             </ion-row>
           </div>
@@ -1762,7 +1415,8 @@
       </ion-card-content>
 
       <!-- Leave Rejected history -->
-      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+      <ion-card-content *ngIf="selects == 'leave-rejected' && clickedProduce==true"
+        style="max-height: 100%;height: 100%;padding: 0;">
         <div
           style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
           <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
@@ -1820,105 +1474,29 @@
 
         <div class="content">
           <!-- ngFor under this div -->
-          <div style="padding: 10px;">
+          <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
+            [ngClass]="{ odd: odd }">
             <ion-row>
               <ion-col size="0.5" class="titleRow text">
-                01</ion-col>
+                {{i+1}}</ion-col>
               <ion-col size="2" class="text">
-                Nor Hanani
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+                {{item.employeeName}}
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: {{item.employeeNo}}</p>
               </ion-col>
               <ion-col size="1.5" class="text">
-                Annual Leave
+                {{item.leaveType}}
               </ion-col>
               <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
+                {{item.startDate}}</ion-col>
               <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
+                {{item.endDate}}</ion-col>
               <ion-col size="1" class="titleRow text">
-                02</ion-col>
+                {{item.noOfDays}}</ion-col>
               <ion-col size="1.5" class="titleRow text">
-                KN
-              </ion-col>
-              <ion-col size="1.5" class="titleRow text">
+                {{item.rejectBy}}
               </ion-col>
               <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;background: #f4f4f4">
-            <ion-row>
-              <ion-col size="0.5" class="titleRow text">
-                02</ion-col>
-              <ion-col size="2" class="text">
-                Muhammad Najib
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-              </ion-col>
-              <ion-col size="1.5" class="text">
-                Annual Leave
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                02</ion-col>
-              <ion-col size="1.5" class="titleRow text">
-                KN
-              </ion-col>
-              <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-              <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;">
-            <ion-row>
-              <ion-col size="0.5" class="titleRow text">
-                03</ion-col>
-              <ion-col size="2" class="text">
-                Abdullah Rahman
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-              </ion-col>
-              <ion-col size="1.5" class="text">
-                Annual Leave
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                02</ion-col>
-              <ion-col size="1.5" class="titleRow text">
-                KN
-              </ion-col>
-              <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-              <ion-col size="1.5" class="titleRow text">
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;background: #f4f4f4">
-            <ion-row>
-              <ion-col size="0.5" class="titleRow text">
-                04</ion-col>
-              <ion-col size="2" class="text">
-                Mahathir
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-              </ion-col>
-              <ion-col size="1.5" class="text">
-                Annual Leave
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/12/2018</ion-col>
-              <ion-col size="1" class="titleRow text">
-                02</ion-col>
-              <ion-col size="1.5" class="titleRow text">
-                KN
-              </ion-col>
-              <ion-col size="1.5" class="titleRow text">
+                {{item.remarks}}
               </ion-col>
               <ion-col size="1.5" class="titleRow text">
               </ion-col>
@@ -1928,7 +1506,8 @@
       </ion-card-content>
 
       <!-- Forfeited Leave History -->
-      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+      <ion-card-content *ngIf="selects == 'leave-forfeited' && clickedProduce==true"
+        style="max-height: 100%;height: 100%;padding: 0;">
         <div
           style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
           <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
@@ -2041,7 +1620,8 @@
       </ion-card-content>
 
       <!-- Master -->
-      <ion-card-content *ngIf="show" style="max-height: 100%;height: 100%;padding: 0;">
+      <ion-card-content *ngIf="selects == 'employee-master-list' && clickedProduce==true"
+        style="max-height: 100%;height: 100%;padding: 0;">
         <div
           style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
           <mat-form-field appearance="outline" style="font-size: 12px;width: 130px;color: #43425d;float: right;">
@@ -2107,139 +1687,38 @@
 
         <div class="content">
           <!-- ngFor under this div -->
-          <div style="padding: 10px;">
+          <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
+            [ngClass]="{ odd: odd }">
             <ion-row>
               <ion-col size="0.5" class="titleRow text">
-                01</ion-col>
+                {{i+1}}</ion-col>
               <ion-col size="1.5" class="text">
-                Wan Mohd Fathurrahman
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+                {{item.employeeName}}
+                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: {{item.employeeNo}}</p>
               </ion-col>
               <ion-col size="1.5" class="text">
-                Zen Computer Systems Sdn Bhd
+                {{item.companyName}}
               </ion-col>
               <ion-col size="1.2" class="titleRow text">
-                R & D</ion-col>
+                {{item.department}}</ion-col>
               <ion-col size="1" class="titleRow text">
                 Designer</ion-col>
               <ion-col size="1.2" class="titleRow text">
-                fathurahman@zen.com.my</ion-col>
+                {{item.email}}</ion-col>
               <ion-col size="1" class="titleRow text">
-                Khairulnizam
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018
+                {{item.approver}}
               </ion-col>
               <ion-col size="1" class="titleRow text">
-                26/09/2018
+                {{item.joinDate}}
               </ion-col>
               <ion-col size="1" class="titleRow text">
-                26/09/2018
+                {{item.confirmDate}}
               </ion-col>
               <ion-col size="1" class="titleRow text">
-                Confirmed
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;background: #f4f4f4">
-            <ion-row>
-              <ion-col size="0.5" class="titleRow text">
-                02</ion-col>
-              <ion-col size="1.5" class="text">
-                Mohd Fakhri
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-              </ion-col>
-              <ion-col size="1.5" class="text">
-                Zen Computer Systems Sdn Bhd
-              </ion-col>
-              <ion-col size="1.2" class="titleRow text">
-                R & D</ion-col>
-              <ion-col size="1" class="titleRow text">
-                Developer</ion-col>
-              <ion-col size="1.2" class="titleRow text">
-                fathurahman@zen.com.my</ion-col>
-              <ion-col size="1" class="titleRow text">
-                Khairulnizam
+                {{item.resignDate}}
               </ion-col>
               <ion-col size="1" class="titleRow text">
-                26/09/2018
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                Confirmed
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;">
-            <ion-row>
-              <ion-col size="0.5" class="titleRow text">
-                03</ion-col>
-              <ion-col size="1.5" class="text">
-                Nor Hanani
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-              </ion-col>
-              <ion-col size="1.5" class="text">
-                Zen Computer Systems Sdn Bhd
-              </ion-col>
-              <ion-col size="1.2" class="titleRow text">
-                R & D</ion-col>
-              <ion-col size="1" class="titleRow text">
-                Designer</ion-col>
-              <ion-col size="1.2" class="titleRow text">
-                fathurahman@zen.com.my</ion-col>
-              <ion-col size="1" class="titleRow text">
-                Khairulnizam
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                Confirmed
-              </ion-col>
-            </ion-row>
-          </div>
-          <div style="padding: 10px;background: #f4f4f4">
-            <ion-row>
-              <ion-col size="0.5" class="titleRow text">
-                04</ion-col>
-              <ion-col size="1.5" class="text">
-                Amir Yusof
-                <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-              </ion-col>
-              <ion-col size="1.5" class="text">
-                Zen Computer Systems Sdn Bhd
-              </ion-col>
-              <ion-col size="1.2" class="titleRow text">
-                R & D</ion-col>
-              <ion-col size="1" class="titleRow text">
-                Consultant</ion-col>
-              <ion-col size="1.2" class="titleRow text">
-                fathurahman@zen.com.my</ion-col>
-              <ion-col size="1" class="titleRow text">
-                Khairulnizam
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                26/09/2018
-              </ion-col>
-              <ion-col size="1" class="titleRow text">
-                Confirmed
+                {{item.status}}
               </ion-col>
             </ion-row>
           </div>

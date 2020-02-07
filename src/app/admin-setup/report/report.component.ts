@@ -5,6 +5,7 @@ import { FormControl } from '@angular/forms';
 import { LeaveApiService } from '../leave-setup/leave-api.service';
 import { APIService } from 'src/services/shared-service/api.service';
 import { MenuController } from '@ionic/angular';
+import { ReportApiService } from './report-api.service';
 
 /**
  * history report page
@@ -204,6 +205,14 @@ export class ReportComponent implements OnInit {
    */
   public show: boolean = false;
 
+  public selects: string;
+
+  public tableDetails: any;
+
+  private _selectedLeaveTypesList: string[] = [];
+
+  private _selectedUserId: string;
+
   /**
    *Creates an instance of ReportComponent.
    * @param {LeaveApiService} leaveAPI
@@ -211,7 +220,7 @@ export class ReportComponent implements OnInit {
    * @param {MenuController} menu access menu controller
    * @memberof ReportComponent
    */
-  constructor(private leaveAPI: LeaveApiService, private api: APIService, public menu: MenuController) { }
+  constructor(private leaveAPI: LeaveApiService, private api: APIService, public menu: MenuController, private reportAPI: ReportApiService) { }
 
   /**
    * initial report
@@ -409,13 +418,30 @@ export class ReportComponent implements OnInit {
      * @param {number} [index]
      * @memberof ReportComponent
      */
-  checkSubLeaveTypes() {
+  checkSubLeaveTypes(id: string) {
     const total = this.leaveTypes.length;
     let checkedNumber = 0;
 
+
     this.leaveTypes.map(value => {
-      if (value.isChecked)
+      if (value.isChecked) {
         checkedNumber++;
+        if (this._selectedLeaveTypesList.indexOf(value.LEAVE_TYPE_GUID) < 1) {
+          this._selectedLeaveTypesList.push(value.LEAVE_TYPE_GUID);
+          console.log('push', this._selectedLeaveTypesList);
+        }
+      }
+      // else {
+      //   this.selectedLeaveTypesList.splice(this.selectedLeaveTypesList.indexOf(value.LEAVE_TYPE_GUID), 1);
+      //   console.log('splice', this.selectedLeaveTypesList);
+      // }
+      // else {
+      //   for (let i = 0; i < this.selectedLeaveTypesList.length; i++) {
+      //     if (value.LEAVE_TYPE_GUID == this.selectedLeaveTypesList[i]) {
+      //       this.selectedLeaveTypesList.splice(i, 1);
+      //     }
+      //   }
+      // }
     });
     if (checkedNumber > 0 && checkedNumber < total) {
       this.isInde = true;
@@ -475,6 +501,8 @@ export class ReportComponent implements OnInit {
     this.userList.map(item => {
       if (item.isChecked) {
         checkedNo++;
+        this._selectedUserId = item.userId;
+        console.log(this._selectedUserId, item);
         this.hideImg.push(true);
       }
       if (item.id !== itemId) {
@@ -486,6 +514,11 @@ export class ReportComponent implements OnInit {
     } else {
       this.indeterminate = false;
     }
+  }
+
+  produceReport() {
+    console.log(this.selects);
+    this.reportAPI.get_individual_report(this._selectedUserId, this.selects).subscribe(data => this.tableDetails = data);
   }
 
 }
