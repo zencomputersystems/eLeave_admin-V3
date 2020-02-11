@@ -24,7 +24,7 @@ import { LoginModule } from './login/login.module';
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({mode: 'md'}),
     AppRoutingModule,
     LoginModule,
     SideMenuNavigationModule,
