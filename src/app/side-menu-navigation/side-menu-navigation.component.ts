@@ -229,8 +229,13 @@ export class SideMenuNavigationComponent implements OnInit {
    * @memberof SideMenuNavigationComponent
    */
   openAtBeginning() {
+    console.log(window.innerWidth)
     if (this.displayFullMenu === true) {
       this.sharedService.menu.open('first');
+
+      if(window.innerWidth < 768) {
+        this.collapseMenu();
+      }
     }
   }
 

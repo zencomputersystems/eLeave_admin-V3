@@ -351,3 +351,38 @@ app-report
   width: 16px;
   box-shadow: none;
 }
+
+
+$screen-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+@each $keySize, $valueSize in $screen-breakpoints {
+  .hide-#{$keySize}-down {
+    @media screen and (max-width: $valueSize) {
+      display: none;
+    }
+  }
+
+  .hide-#{$keySize}-up {
+    @media screen and (min-width: $valueSize) {
+      display: none;
+    }
+
+    .show-flex-#{$keySize}-down {
+      @media screen and (max-width: $valueSize) {
+        display: flex;
+      }
+    }
+
+    .show-flex-#{$keySize}-up {
+      @media screen and (min-width: $valueSize) {
+        display: flex;
+      }
+    }
+  }
+}
