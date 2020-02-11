@@ -4,8 +4,9 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { LeaveApiService } from '../leave-setup/leave-api.service';
 import { APIService } from 'src/services/shared-service/api.service';
-import { MenuController } from '@ionic/angular';
 import { ReportApiService } from './report-api.service';
+import * as jsPDF from 'jspdf';
+import domtoimage from 'dom-to-image';
 
 /**
  * history report page
@@ -205,22 +206,50 @@ export class ReportComponent implements OnInit {
    */
   public show: boolean = false;
 
+  /**
+   * selection value of report types
+   * @type {string}
+   * @memberof ReportComponent
+   */
   public selects: string;
 
+  /**
+   * requested report table details
+   * @type {*}
+   * @memberof ReportComponent
+   */
   public tableDetails: any;
 
-  private _selectedUserId: string;
+  /**
+   * clicked produce report button 
+   * @type {boolean}
+   * @memberof ReportComponent
+   */
+  public clickedProduce: boolean;
 
+  /**
+   * selected user id
+   * @type {string}
+   * @memberof ReportComponent
+   */
+  public selectedUserId: string;
+
+  /**
+   * leave types list that have been selected
+   * @private
+   * @type {string[]}
+   * @memberof ReportComponent
+   */
   private _selectedLeaveTypesList: string[] = [];
 
   /**
    *Creates an instance of ReportComponent.
    * @param {LeaveApiService} leaveAPI
    * @param {APIService} api
-   * @param {MenuController} menu access menu controller
+   * @param {ReportApiService} reportAPI
    * @memberof ReportComponent
    */
-  constructor(private leaveAPI: LeaveApiService, private api: APIService, public menu: MenuController, private reportAPI: ReportApiService) { }
+  constructor(private leaveAPI: LeaveApiService, private api: APIService, private reportAPI: ReportApiService) { }
 
   /**
    * initial report
@@ -241,6 +270,53 @@ export class ReportComponent implements OnInit {
     this.leaveAPI.get_company_list().subscribe(data => this.companyList = data);
     this.api.get_master_list('branch').subscribe(data => this.branchList = data);
     this.api.get_master_list('costcentre').subscribe(data => this.costcentre = data);
+  }
+
+  /**
+   * download report in pdf
+   * @memberof ReportComponent
+   */
+  savePDF(): void {
+    const node = document.getElementById('template');
+    const input = document.getElementById('saveas');
+    let img;
+    let filename;
+    let newImage;
+
+    node.style.height = "auto";
+    input.style.display = "none";
+    domtoimage.toPng(node, { bgcolor: '#fff' })
+      .then(function (dataUrl) {
+        img = new Image();
+        img.src = dataUrl;
+        newImage = img.src;
+
+        img.onload = function () {
+          const pdfWidth = img.width;
+          const pdfHeight = img.height;
+          let doc;
+
+          if (pdfWidth > pdfHeight) {
+            doc = new jsPDF('l', 'px', [pdfWidth, pdfHeight]);
+          }
+          else {
+            doc = new jsPDF('p', 'px', [pdfWidth, pdfHeight]);
+          }
+
+          const width = doc.internal.pageSize.getWidth();
+          const height = doc.internal.pageSize.getHeight();
+          doc.addImage(newImage, 'PNG', 5, 5, width - 10, height - 10);
+          filename = 'mypdf_' + '.pdf';
+          doc.save(filename);
+          node.style.height = "100%";
+          input.style.display = "block";
+        };
+      })
+      .catch(function (error) {
+
+        // Error Handling
+
+      });
   }
 
   /**
@@ -484,7 +560,7 @@ export class ReportComponent implements OnInit {
     this.userList.map(item => {
       if (item.isChecked) {
         checkedNo++;
-        this._selectedUserId = item.userId;
+        this.selectedUserId = item.userId;
         this.hideImg.push(true);
       }
       if (item.id !== itemId) {
@@ -498,6 +574,10 @@ export class ReportComponent implements OnInit {
     }
   }
 
+  /**
+   * produce individual report from selected user and table type
+   * @memberof ReportComponent
+   */
   produceIndividualReport() {
     for (let i = 0; i < this.leaveTypes.length; i++) {
       if (this.leaveTypes[i].isChecked === true) {
@@ -505,7 +585,7 @@ export class ReportComponent implements OnInit {
       }
     }
     console.log(this._selectedLeaveTypesList);
-    this.reportAPI.get_individual_report(this._selectedUserId, this.selects).subscribe(data => {
+    this.reportAPI.get_individual_report(this.selectedUserId, this.selects).subscribe(data => {
       this.tableDetails = data;
       // for (let i = 0; i < this.tableDetails.length; i++) {
       //   if (this.tableDetails[i].leaveDetail != undefined) {
@@ -520,6 +600,10 @@ export class ReportComponent implements OnInit {
     });
   }
 
+  /**
+   * produce group report table from selected table type
+   * @memberof ReportComponent
+   */
   produceGroupReport() {
     this.reportAPI.get_bundle_report(this.selects).subscribe(value => this.tableDetails = value);
   }

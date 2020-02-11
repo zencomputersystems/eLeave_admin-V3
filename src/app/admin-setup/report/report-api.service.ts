@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { APIService } from 'src/services/shared-service/api.service';
 import { Observable } from 'rxjs';
+import { MenuController } from '@ionic/angular';
 
 /**
  * report API
@@ -15,9 +16,10 @@ export class ReportApiService {
     /**
      *Creates an instance of ReportApiService.
      * @param {APIService} apiService
+     * @param {MenuController} menu access menu controller
      * @memberof ReportApiService
      */
-    constructor(public apiService: APIService) { }
+    constructor(public apiService: APIService, public menu: MenuController) { }
 
     /**
      * get individual reports
