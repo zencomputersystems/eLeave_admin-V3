@@ -86,13 +86,13 @@
           <input style="display:none" type="text" name="fakeusernameremembered" />
           <input style="display:none" type="password" name="nnnnfakepasswordremembered" />
           <mat-form-field>
-            <input matInput #emailInput placeholder="Username" formControlName="email" required>
+            <input matInput style="color: #fff;" #emailInput placeholder="Username" formControlName="email" required>
             <mat-error *ngIf="formGroupValidation.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
           <br>
           <br>
-          <mat-form-field>
-            <input matInput placeholder="Password" #passwordInput [type]="showPassword ? 'text' : 'password'" formControlName="pass"
+          <mat-form-field> 
+            <input matInput style="color: #fff;" placeholder="Password" #passwordInput [type]="showPassword ? 'text' : 'password'" formControlName="pass"
               autocomplete="new-password" required (keyup.enter)="signIn(emailInput.value, passwordInput.value)">
             <mat-error *ngIf="formGroupValidation.controls['pass'].invalid">{{getPassErrorMessage()}}</mat-error>
             <mat-icon class="showHidePassword" matSuffix>
