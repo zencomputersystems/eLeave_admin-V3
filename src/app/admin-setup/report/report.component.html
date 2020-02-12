@@ -77,7 +77,8 @@
       <div style="right: 25px;top: 25px;position: absolute;">
         <ion-button
           style="--border-radius: 2px;font-size: 11px;height: 30px;width:180px;cursor: pointer;text-transform: none;"
-          color="primary" (click)="reportAPI.menu.open('reportDetails');reportAPI.menu.enable(true, 'reportDetails');menuOpened = true;">
+          color="primary"
+          (click)="reportAPI.menu.open('reportDetails');reportAPI.menu.enable(true, 'reportDetails');menuOpened = true;">
           Downloaded Reports
         </ion-button>
       </div>
@@ -526,7 +527,8 @@
                 <mat-option value="PDF" (click)="savePDF()">
                   PDF
                 </mat-option>
-                <mat-option value="CSV">
+                <mat-option value="CSV"
+                  (click)="saveCSV('Leave Entitlement Summary',['employeeNo', 'employeeName', 'yearService', 'leaveDetail.leaveType', 'leaveDetail.entitledDays', 'leaveDetail.carriedForward', 'leaveDetail.forfeited', 'leaveDetail.taken', 'leaveDetail.pending', 'leaveDetail.balance']);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -825,7 +827,8 @@
                 <mat-option value="PDF" (click)="savePDF()">
                   PDF
                 </mat-option>
-                <mat-option value="CSV">
+                <mat-option value="CSV"
+                  (click)="saveCSV('Apply On Behalf History',['employeeName', 'yearService', 'leaveType', 'applicationDate', 'confirmedDate', 'appliedBy', 'startDate', 'endDate', 'noOfDays', 'status', 'remarks']);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1109,7 +1112,8 @@
                 <mat-option value="PDF" (click)="savePDF()">
                   PDF
                 </mat-option>
-                <mat-option value="CSV">
+                <mat-option value="CSV"
+                  (click)="saveCSV('Leave Taken History',['employeeNo', 'employeeName', 'leaveDetail.leaveType', 'leaveDetail.startDate', 'leaveDetail.endDate', 'leaveDetail.noOfDays', 'leaveDetail.approveBy', 'leaveDetail.remarks']);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1366,7 +1370,8 @@
                 <mat-option value="PDF" (click)="savePDF()">
                   PDF
                 </mat-option>
-                <mat-option value="CSV">
+                <mat-option value="CSV"
+                  (click)="saveCSV('Leave Cancellation History',['employeeName', 'leaveType', 'startDate', 'endDate', 'noOfDays', 'cancelBy', 'leaveRemarks', 'cancelRemarks']);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1461,7 +1466,8 @@
                 <mat-option value="PDF" (click)="savePDF()">
                   PDF
                 </mat-option>
-                <mat-option value="CSV">
+                <mat-option value="CSV"
+                  (click)="saveCSV('Leave Rejected History',['employeeName', 'leaveType', 'startDate', 'endDate', 'noOfDays', 'rejectBy', 'remarks']);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1672,7 +1678,8 @@
                 <mat-option value="PDF" (click)="savePDF()">
                   PDF
                 </mat-option>
-                <mat-option value="CSV">
+                <mat-option value="CSV"
+                  (click)="saveCSV('Employee Master List',['employeeName', 'companyName', 'department', 'email', 'approver', 'joinDate', 'confirmDate', 'resignDate', 'status']);">
                   CSV
                 </mat-option>
               </mat-select>
