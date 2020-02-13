@@ -7,6 +7,7 @@ import { APIService } from 'src/services/shared-service/api.service';
 import { ReportApiService } from './report-api.service';
 import * as jsPDF from 'jspdf';
 import domtoimage from 'dom-to-image';
+const { Parser } = require('json2csv');
 
 /**
  * history report page
@@ -276,7 +277,7 @@ export class ReportComponent implements OnInit {
    * download report in pdf
    * @memberof ReportComponent
    */
-  savePDF(): void {
+  savePDF() {
     const node = document.getElementById('template');
     const input = document.getElementById('saveas');
     let img;
@@ -317,6 +318,24 @@ export class ReportComponent implements OnInit {
         // Error Handling
 
       });
+  }
+
+  /**
+   * download report in CSV
+   * @param {string} title
+   * @param {*} fields
+   * @memberof ReportComponent
+   */
+  saveCSV(title: string, fields) {
+    const json2csvParser = new Parser({ fields, unwind: ['leaveDetail', 'leaveDetail.leaveDetail'] });
+    const csv = json2csvParser.parse(this.tableDetails);
+    const blob = new Blob([csv], { type: "text/plain" });
+    const csvFile = window.document.createElement("a");
+    csvFile.href = window.URL.createObjectURL(blob);
+    csvFile.download = title + ".csv";
+    document.body.appendChild(csvFile);
+    csvFile.click();
+    document.body.removeChild(csvFile);
   }
 
   /**
