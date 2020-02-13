@@ -59,10 +59,10 @@
     </ion-header>
 
     <ion-content>
-        <mat-form-field appearance="outline" style="width: 94%;margin: 20px;margin-top: 30px;margin-bottom: 0;font-size: 13px;color:#43425d;opacity: 0.8;">
+        <mat-form-field appearance="outline" class="create-annoucement">
             <input matInput placeholder=" Add Announcement's Title" [(ngModel)]=title>
         </mat-form-field>
-        <div style="width: 94%;margin: 20px;">
+        <div style="flex: 2 1 94%;margin: 20px;">
             <p-editor placeholder="Write Something" [style]="{'height':'230px','border-radius': '4px',
       'border': 'solid 1px #e8e9ec', 'font-size': '13px','color':'#43425d','opacity': '0.8'}" [(ngModel)]="message">
                 <p-header>
@@ -77,7 +77,8 @@
                 </p-header>
             </p-editor>
             <div style="height: 40px;width:100%"></div>
-            <mat-checkbox color="primary" style="opacity: 0.8;color: #4d4f5c;font-size: 13px;" [(ngModel)]="checked">Make annoucement as featured (stick on the top)</mat-checkbox>
+            <mat-checkbox color="primary" class="create-annucement-checkbox" 
+                [(ngModel)]="checked">Make annoucement as featured (stick on the top)</mat-checkbox>
             <div style="text-align: right;padding: 30px;padding-right: 0;">
                 <!-- <ion-button
           style="display: inline-block;--background: #43425d;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;">
