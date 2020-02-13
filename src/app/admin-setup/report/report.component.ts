@@ -659,4 +659,18 @@ export class ReportComponent implements OnInit {
     }
   }
 
+  /**
+   * clear checkbox
+   * @memberof ReportComponent
+   */
+  clearCheckbox() {
+    this.leaveTypes.forEach(items => {
+      items.isChecked = false;
+    });
+
+    this.userList.forEach(list => {
+      list.isChecked = false;
+    });
+  }
+
 }

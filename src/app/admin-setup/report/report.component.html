@@ -491,7 +491,7 @@
             </div>
             <div style="text-align: right;" *ngIf="individualButton === true">
               <ion-button fill="outline"
-                (click)="companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';"
+                (click)="selects= null;clearCheckbox();companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';"
                 style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 190px;font-size: 11px;text-transform: none">
                 Clear
               </ion-button>
@@ -504,7 +504,7 @@
             </div>
             <div style="text-align: right;" *ngIf="groupButton === true">
               <ion-button fill="outline"
-                (click)="companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';"
+                (click)="selects= null;clearCheckbox();companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';"
                 style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 190px;font-size: 11px;text-transform: none">
                 Clear
               </ion-button>
