@@ -136,4 +136,14 @@
             white-space: pre-wrap;
         }
     }
+
+    .create-annoucemnet-menu {
+        @media screen and (max-width: 1000px) {
+            --width: 660px;
+        }
+
+        @media screen and (max-width: 932px) {
+            --width: 304px;
+        } 
+    }
 }
