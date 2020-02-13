@@ -603,19 +603,9 @@ export class ReportComponent implements OnInit {
         this._selectedLeaveTypesList.push(this.leaveTypes[i].LEAVE_TYPE_GUID);
       }
     }
-    console.log(this._selectedLeaveTypesList);
     this.reportAPI.get_individual_report(this.selectedUserId, this.selects).subscribe(data => {
       this.tableDetails = data;
-      // for (let i = 0; i < this.tableDetails.length; i++) {
-      //   if (this.tableDetails[i].leaveDetail != undefined) {
-      //     for (let j = 0; j < this.tableDetails[i].leaveDetail.length; j++) {
-      //       if (!this._selectedLeaveTypesList.includes(this.tableDetails[i].leaveDetail[j].leaveType)) {
-      //         this.tableDetails[i].leaveDetail.splice(j, 1);
-      //       }
-      //     }
-      //   }
-      // }
-      console.log(this.tableDetails);
+      this.filter();
     });
   }
 
@@ -624,7 +614,49 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   produceGroupReport() {
-    this.reportAPI.get_bundle_report(this.selects).subscribe(value => this.tableDetails = value);
+    this.reportAPI.get_bundle_report(this.selects).subscribe(value => {
+      this.tableDetails = value;
+      this.filter();
+    });
+  }
+
+  /**
+   * filter date range from selected table
+   * @memberof ReportComponent
+   */
+  filter() {
+    if (this.selects == 'apply-on-behalf') {
+      let selectedMembers = this.tableDetails.filter(
+        m => new Date(m.applicationDate) >= this.firstPicker.value && new Date(m.applicationDate) <= this.secondPicker.value
+      );
+      this.tableDetails = selectedMembers;
+    }
+    if (this.selects == 'leave-taken') {
+      const newLeaveDetails = [];
+      this.tableDetails.filter(
+        m => {
+          m.leaveDetail.filter(
+            details => {
+              if (new Date(details.startDate) >= this.firstPicker.value && new Date(details.endDate) <= this.secondPicker.value) {
+                newLeaveDetails.push(details);
+                m.leaveDetail = newLeaveDetails;
+              }
+            })
+        }
+      );
+    }
+    if (this.selects == 'leave-cancellation' || this.selects == 'leave-rejected') {
+      let selectedMembers = this.tableDetails.filter(
+        value => new Date(value.startDate) >= this.firstPicker.value && new Date(value.endDate) <= this.secondPicker.value
+      );
+      this.tableDetails = selectedMembers;
+    }
+    if (this.selects == 'employee-master-list') {
+      let filteredEmployee = this.tableDetails.filter(
+        value => new Date(value.joinDate) >= this.firstPicker.value && new Date(value.joinDate) <= this.secondPicker.value
+      );
+      this.tableDetails = filteredEmployee;
+    }
   }
 
 }
