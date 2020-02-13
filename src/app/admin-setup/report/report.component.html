@@ -77,6 +77,11 @@
       <div style="right: 25px;top: 25px;position: absolute;">
         <ion-button
           style="--border-radius: 2px;font-size: 11px;height: 30px;width:180px;cursor: pointer;text-transform: none;"
+          color="primary" [style.display]="clickedProduce==true? 'inline-block': 'none'" (click)="clickedProduce=false">
+          Back To Main
+        </ion-button>
+        <ion-button
+          style="--border-radius: 2px;font-size: 11px;height: 30px;width:180px;cursor: pointer;text-transform: none;"
           color="primary"
           (click)="reportAPI.menu.open('reportDetails');reportAPI.menu.enable(true, 'reportDetails');menuOpened = true;">
           Downloaded Reports
@@ -108,7 +113,6 @@
             <mat-form-field class="date" appearance="outline">
               <mat-label>Start date</mat-label>
               <input class="dateInput" matInput [matDatepicker]="picker1" [formControl]="firstPicker" required>
-              <!-- (dateInput)="getValueFrom($event)"  (dateChange)="onDateChange()"-->
               <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'" (click)="picker1.open()">
               </div>
               <mat-datepicker #picker1></mat-datepicker>
@@ -117,7 +121,6 @@
             <mat-form-field class="date" appearance="outline">
               <mat-label>End date</mat-label>
               <input class="dateInput" matInput [matDatepicker]="picker2" [formControl]="secondPicker" required>
-              <!-- (dateInput)="getValueTo($event)" (dateChange)="onDateChange()" -->
               <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'" (click)="picker2.open()">
               </div>
               <mat-datepicker #picker2></mat-datepicker>

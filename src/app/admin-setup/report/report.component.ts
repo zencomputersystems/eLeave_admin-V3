@@ -653,7 +653,7 @@ export class ReportComponent implements OnInit {
     }
     if (this.selects == 'employee-master-list') {
       let filteredEmployee = this.tableDetails.filter(
-        value => new Date(value.joinDate) >= this.firstPicker.value && new Date(value.joinDate) <= this.secondPicker.value
+        items => new Date(items.joinDate) >= this.firstPicker.value && new Date(items.joinDate) <= this.secondPicker.value
       );
       this.tableDetails = filteredEmployee;
     }
