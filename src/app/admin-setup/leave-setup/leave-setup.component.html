@@ -1,4 +1,4 @@
-<ion-content class="contentMenu" contentId="content">
+<ion-content [class]="'hide-lg-down'" style="width: 230px; --background: #8b89b4;" contentId="content">
     <ion-list lines="none" style="background: #8b89b4;">
         <ion-title style="font-weight: bold;display: inline-block;color: #f0f0f7;font-size: 15px;padding-bottom: 20px;
         padding-top: 10px;">
@@ -15,6 +15,32 @@
     </ion-list>
 </ion-content>
 
-<ion-content class="content2">
+<ion-content [class]="'hide-lg-up'" style="width: -webkit-fill-available; --background: #8b89b4; max-height: 120px;"
+    contentId="content">
+    <ion-list lines="none" style="background: #8b89b4;">
+        <ion-title style="font-weight: bold;display: inline-block;color: #f0f0f7;font-size: 15px;padding: 8px 15px;">
+            Leave Setup
+        </ion-title>
+        <!-- <ion-menu-toggle auto-hide="false" *ngFor="let p of leaveSetupPage; let i=index">
+            <ion-item class="items" lines="none" (click)="showHighlightMenu(i)" [ngClass]="{
+                    'mainColor': numOfArray === i,'highlightColor': numOfArray !== i}">
+                <ion-label>
+                    {{p.title}}
+                </ion-label>
+            </ion-item>
+        </ion-menu-toggle> -->
+        <mat-select placeholder="Leave Setup" [(value)]="numOfArray" class="dropdownList">
+            <mat-option *ngFor="let p of leaveSetupPage; let i=index" [value]="i"
+                (click)="showHighlightMenu(i)">
+                <ion-label style="padding-left: 15px;">
+                    {{p.title}}
+                </ion-label>
+            </mat-option>
+        </mat-select>
+    </ion-list>
+</ion-content>
+
+
+<ion-content class="content2"> 
     <ion-router-outlet></ion-router-outlet>
 </ion-content>

@@ -52,11 +52,35 @@
     // border-left: 2px solid #a3a0fb;
   }
   .content2 {
-    position: absolute;
-    // top: 37px;
-    width: calc(100% - 230px);
-    right: 0;
-    // height: calc(100% - 38px);
-    left: 230px;
+    @media screen and (min-width: 992px) {
+      position: absolute;
+      // top: 37px;
+      width: calc(100% - 230px);
+      right: 0;
+      // height: calc(100% - 38px);
+      left: 230px;
+    }
   }
+  .dropdownList {
+    font-weight: bold;
+    display: inline-block;
+    background: #8b89b4;
+    padding: 15px;
+    width: -webkit-fill-available;
+    margin: 7px;
+    border-radius: 2px;
+    border: solid 1px #a5a4bf;
+    font-size: 13px;
+    opacity: 0.8;
+    color: #43425d !important;
+
+    ::ng-deep .mat-select-value {
+      color: #ffffff !important;
+    }
+
+    ::ng-deep .mat-select-arrow {
+      color: #ffffff !important;
+    }
+  }
+  
 }
