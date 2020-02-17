@@ -1,129 +1,131 @@
-<!------------------------------ Full menu ---------------------------------------->
-<ion-split-pane contentId="fullSideMenuContent" when="xs" *ngIf="displayFullMenu">
-  <ion-menu class="fullMenu" contentId="fullSideMenuContent" side="start" type="reveal" menuId="first"
-    (ionDidClose)="fullMenuClosedHandler()">
-    <ion-header style="background-color:#2d3037; color: #f9fafc;">
-      <ion-icon slot="start" color="medium" name="arrow-dropleft"
-        style="cursor: pointer;position: absolute; margin: 56px; margin-left: 17px; font-size: 24px"
-        (click)="collapseMenu()">
-      </ion-icon>
-    </ion-header>
+<div (window:resize)="onResize()">  
+  <!------------------------------ Full menu ---------------------------------------->
+  <ion-split-pane contentId="fullSideMenuContent" when="xs" *ngIf="displayFullMenu">
+    <ion-menu class="fullMenu" contentId="fullSideMenuContent" side="start" type="reveal" menuId="first"
+      (ionDidClose)="fullMenuClosedHandler()">
+      <ion-header style="background-color:#2d3037; color: #f9fafc;">
+        <ion-icon slot="start" color="medium" name="arrow-dropleft"
+          style="cursor: pointer;position: absolute; margin: 56px; margin-left: 17px; font-size: 24px"
+          (click)="collapseMenu()">
+        </ion-icon>
+      </ion-header>
 
-    <ion-content class="fullMenuContent">
-      <ion-avatar style="width: 70px; height: 70px; margin: 74px; margin-bottom: 0; margin-top: 31px;">
-        <img src="assets/icon/logo.PNG">
-      </ion-avatar>
-      <p style="display:flex; justify-content: center; color: #f9fafc;font-size: 15px;">ZEN Computer Systems</p>
-      <ion-list>
-        <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
-          <ion-item class="items" lines="none" (click)="activeUrl(appPages[i].url)"
-            [class.background-highlight]="activeRoute === appPages[i].url">
-            <!-- <div class="my-icon" aria-label="My icon" [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div> -->
-            <img style="width: 16px;" src="assets/icon/sidebar_menus/{{p.icon}}">
-            <ion-label [class.text-color]="activeRoute === appPages[i].url ">
-              {{p.title}}
-            </ion-label>
-          </ion-item>
-          <ion-item lines="none" *ngIf="i == 3"></ion-item>
-        </ion-menu-toggle>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-  <ion-router-outlet id="fullSideMenuContent" class="fullRouterOutlet">
-    <ion-toolbar class="toolbar1">
-      <ion-avatar style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top: -5px;"
-        [matMenuTriggerFor]="menu">
-        <img src="assets/icon/chris.jpg">
-      </ion-avatar>
-      <div style="float: right;margin-top: 7px;margin-right: 5px;cursor: pointer;" [matMenuTriggerFor]="menu"><img
-          src="assets/icon/top_header/Path 26@3x.png" style="width: 8px;height: 5px;float: right;"></div>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>My Profile</button>
-        <!-- (click)="router.navigate(['/main/employee-setup']);" -->
-        <button mat-menu-item (click)="logout($event)">Logout</button>
-      </mat-menu>
-      <ion-label class="labelName" *ngIf="personalList">
-        {{personalList.employeeName}}
-      </ion-label>
-      <div class="verticalLine"></div>
-      <div style="padding-right: 20px;float: right;" *ngIf="personalList">
-        <mat-chip>
-          <p
-            style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
-            Human Resource</p>
-        </mat-chip>
-      </div>
+      <ion-content class="fullMenuContent">
+        <ion-avatar style="width: 70px; height: 70px; margin: 74px; margin-bottom: 0; margin-top: 31px;">
+          <img src="assets/icon/logo.PNG">
+        </ion-avatar>
+        <p style="display:flex; justify-content: center; color: #f9fafc;font-size: 15px;">ZEN Computer Systems</p>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
+            <ion-item class="items" lines="none" (click)="activeUrl(appPages[i].url)"
+              [class.background-highlight]="activeRoute === appPages[i].url">
+              <!-- <div class="my-icon" aria-label="My icon" [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div> -->
+              <img style="width: 16px;" src="assets/icon/sidebar_menus/{{p.icon}}">
+              <ion-label [class.text-color]="activeRoute === appPages[i].url ">
+                {{p.title}}
+              </ion-label>
+            </ion-item>
+            <ion-item lines="none" *ngIf="i == 3"></ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="fullSideMenuContent" class="fullRouterOutlet">
+      <ion-toolbar class="toolbar1">
+        <ion-avatar style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top: -5px;"
+          [matMenuTriggerFor]="menu">
+          <img src="assets/icon/chris.jpg">
+        </ion-avatar>
+        <div style="float: right;margin-top: 7px;margin-right: 5px;cursor: pointer;" [matMenuTriggerFor]="menu"><img
+            src="assets/icon/top_header/Path 26@3x.png" style="width: 8px;height: 5px;float: right;"></div>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>My Profile</button>
+          <!-- (click)="router.navigate(['/main/employee-setup']);" -->
+          <button mat-menu-item (click)="logout($event)">Logout</button>
+        </mat-menu>
+        <ion-label class="labelName" *ngIf="personalList">
+          {{personalList.employeeName}}
+        </ion-label>
+        <div class="verticalLine"></div>
+        <div style="padding-right: 20px;float: right;" *ngIf="personalList">
+          <mat-chip>
+            <p
+              style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
+              Human Resource</p>
+          </mat-chip>
+        </div>
 
-      <!-- <div style="width:15px; float: right; height: 20px"></div>
-      <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
-      <div style="width: 12px; float:right; height: 20px"></div>
-      <div class="edit-icon" [inlineSVG]="'assets/icon/top_header/action.svg'"></div>
-      <div style="width:15px; float: left; height: 20px"></div>
-      <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div> -->
-    </ion-toolbar>
-  </ion-router-outlet>
-</ion-split-pane>
+        <!-- <div style="width:15px; float: right; height: 20px"></div>
+        <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
+        <div style="width: 12px; float:right; height: 20px"></div>
+        <div class="edit-icon" [inlineSVG]="'assets/icon/top_header/action.svg'"></div>
+        <div style="width:15px; float: left; height: 20px"></div>
+        <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div> -->
+      </ion-toolbar>
+    </ion-router-outlet>
+  </ion-split-pane>
 
 
-<!---------------------------------------- Icon Menu ---------------------------------->
-<ion-split-pane contentId="iconSideMenuContent" when="xs" *ngIf="displayIconMenu">
-  <ion-menu side="start" contentId="iconSideMenuContent" menuId="custom" type="reveal" class="iconMenu"
-    (ionDidClose)="iconMenuClosedHandler()" style="max-width: 3%; min-width: 35px;">
-    <ion-header style="background-color:#2d3037; color: #f9fafc;">
-      <ion-icon slot="start" name="menu" style="margin-top: 6px;font-size: 24px;cursor: pointer;width: 100%;"
-        (click)="expandMenu()">
-      </ion-icon>
-    </ion-header>
+  <!---------------------------------------- Icon Menu ---------------------------------->
+  <ion-split-pane contentId="iconSideMenuContent" when="xs" *ngIf="displayIconMenu">
+    <ion-menu side="start" contentId="iconSideMenuContent" menuId="custom" type="reveal" class="iconMenu"
+      (ionDidClose)="iconMenuClosedHandler()" style="max-width: 3%; min-width: 35px;">
+      <ion-header style="background-color:#2d3037; color: #f9fafc;">
+        <ion-icon slot="start" name="menu" style="margin-top: 6px;font-size: 24px;cursor: pointer;width: 100%;"
+          (click)="expandMenu()">
+        </ion-icon>
+      </ion-header>
 
-    <ion-content class="iconMenuContent">
-      <ion-avatar style="width: 28px;height: 28px;margin-top: 10px;margin-left: auto;margin-right: auto;">
-        <img src="assets/icon/logo.PNG">
-      </ion-avatar>
-      <ion-list>
-        <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
-          <ion-item class="items" no-padding lines="none" style="display: block;--inner-padding-end: 0;"
-            [class.background-highlight-icon]="activeRoute === appPages[i].url "
-            [class.first-highlight]="router.url === appPages[i].url" (click)="activeUrl(appPages[i].url)">
-            <!-- <div class="my-icon-menu" aria-label="My icon" style="align-items: center; width: 100%;"
-              [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div> -->
-            <img style="margin: 0 auto; width: 16px;" src="assets/icon/sidebar_menus/{{p.icon}}">
-          </ion-item>
-          <ion-item no-padding lines="none" *ngIf="i == 3"></ion-item>
-        </ion-menu-toggle>
-      </ion-list>
-    </ion-content>
+      <ion-content class="iconMenuContent">
+        <ion-avatar style="width: 28px;height: 28px;margin-top: 10px;margin-left: auto;margin-right: auto;">
+          <img src="assets/icon/logo.PNG">
+        </ion-avatar>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
+            <ion-item class="items" no-padding lines="none" style="display: block;--inner-padding-end: 0;"
+              [class.background-highlight-icon]="activeRoute === appPages[i].url "
+              [class.first-highlight]="router.url === appPages[i].url" (click)="activeUrl(appPages[i].url)">
+              <!-- <div class="my-icon-menu" aria-label="My icon" style="align-items: center; width: 100%;"
+                [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div> -->
+              <img style="margin: 0 auto; width: 16px;" src="assets/icon/sidebar_menus/{{p.icon}}">
+            </ion-item>
+            <ion-item no-padding lines="none" *ngIf="i == 3"></ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
 
-  </ion-menu>
-  <ion-router-outlet id="iconSideMenuContent" class="iconRouterOutlet">
-    <ion-toolbar class="toolbar1">
-      <ion-avatar style=" width: 32px; height: 32px; float: right; cursor: pointer;margin-top:-5px"
-        [matMenuTriggerFor]="menu">
-        <img src="assets/icon/chris.jpg">
-      </ion-avatar>
-      <div style="float: right;margin-top: 7px;margin-right: 5px;cursor: pointer;" [matMenuTriggerFor]="menu"><img
-          src="assets/icon/top_header/Path 26@3x.png" style="width: 8px;height: 5px;float: right;"></div>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>My Profile</button>
-        <!-- (click)="router.navigate(['/main/employee-setup']);" -->
-        <button mat-menu-item (click)="logout($event)">Logout</button>
-      </mat-menu>
-      <ion-label class="labelName" *ngIf="personalList" [matMenuTriggerFor]="menu">
-        {{personalList.employeeName}}
-      </ion-label>
-      <div class="verticalLine"></div>
-      <div style="padding-right: 20px;float: right;" *ngIf="personalList">
-        <mat-chip>
-          <p
-            style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
-            Human Resource</p>
-        </mat-chip>
-      </div>
-      <!-- <div style="width:15px; float: right; height: 20px"></div>
-      <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
-      <div style="width: 12px; float:right; height: 20px"></div>
-      <div class="edit-icon" [inlineSVG]="'assets/icon/top_header/action.svg'"></div>
-      <div style="width:15px; float: left; height: 20px"></div>
-      <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div> -->
-    </ion-toolbar>
-  </ion-router-outlet>
-</ion-split-pane>
+    </ion-menu>
+    <ion-router-outlet id="iconSideMenuContent" class="iconRouterOutlet">
+      <ion-toolbar class="toolbar1">
+        <ion-avatar style=" width: 32px; height: 32px; float: right; cursor: pointer;margin-top:-5px"
+          [matMenuTriggerFor]="menu">
+          <img src="assets/icon/chris.jpg">
+        </ion-avatar>
+        <div style="float: right;margin-top: 7px;margin-right: 5px;cursor: pointer;" [matMenuTriggerFor]="menu"><img
+            src="assets/icon/top_header/Path 26@3x.png" style="width: 8px;height: 5px;float: right;"></div>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>My Profile</button>
+          <!-- (click)="router.navigate(['/main/employee-setup']);" -->
+          <button mat-menu-item (click)="logout($event)">Logout</button>
+        </mat-menu>
+        <ion-label class="labelName" *ngIf="personalList" [matMenuTriggerFor]="menu">
+          {{personalList.employeeName}}
+        </ion-label>
+        <div class="verticalLine"></div>
+        <div style="padding-right: 20px;float: right;" *ngIf="personalList">
+          <mat-chip>
+            <p
+              style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
+              Human Resource</p>
+          </mat-chip>
+        </div>
+        <!-- <div style="width:15px; float: right; height: 20px"></div>
+        <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
+        <div style="width: 12px; float:right; height: 20px"></div>
+        <div class="edit-icon" [inlineSVG]="'assets/icon/top_header/action.svg'"></div>
+        <div style="width:15px; float: left; height: 20px"></div>
+        <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div> -->
+      </ion-toolbar>
+    </ion-router-outlet>
+  </ion-split-pane>
+</div>

@@ -229,13 +229,9 @@ export class SideMenuNavigationComponent implements OnInit {
    * @memberof SideMenuNavigationComponent
    */
   openAtBeginning() {
-    console.log(window.innerWidth)
     if (this.displayFullMenu === true) {
       this.sharedService.menu.open('first');
-
-      if(window.innerWidth < 768) {
-        this.collapseMenu();
-      }
+      this.onResize();
     }
   }
 
@@ -293,6 +289,17 @@ export class SideMenuNavigationComponent implements OnInit {
   logout(event) {
     window.location.href = '/login';
     localStorage.clear();
+  }
+
+  /**
+   * This method is used to check window inner width. Once the width < 992px,
+   * it will collapse side menu nav bar
+   * @memberof SideMenuNavigationComponent
+   */
+  onResize() {
+    if (window.innerWidth < 992) {
+      this.collapseMenu();
+    }
   }
 
 }
