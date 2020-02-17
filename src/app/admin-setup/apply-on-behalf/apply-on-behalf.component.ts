@@ -5,8 +5,8 @@ import * as _moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../leave-setup/date.adapter';
-import { MenuController } from '@ionic/angular';
 import { LeaveApiService } from '../leave-setup/leave-api.service';
+import { ReportApiService } from '../report/report-api.service';
 
 
 /**
@@ -284,6 +284,20 @@ export class ApplyOnBehalfComponent implements OnInit {
     public _userList: any;
 
     /**
+     * get report history for apply on behalf
+     * @type {*}
+     * @memberof ApplyOnBehalfComponent
+     */
+    public reportDetails: any;
+
+    /**
+     * start date to end date range
+     * @type {Date[]}
+     * @memberof ApplyOnBehalfComponent
+     */
+    public dateRange: Date[];
+
+    /**
      * Local private property to get number of day from a week
      * eg: sunday-saturday is 0-6
      * @private
@@ -338,94 +352,6 @@ export class ApplyOnBehalfComponent implements OnInit {
     private _firstForm = [];
 
     /**
-     * Date selected for 2nd day types selection 
-     * @private
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private _secondForm = [];
-
-    /**
-     * Date selected for 3rd day types selection 
-     * @private
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private _thirdForm = [];
-
-    /**
-     * Index number of selected date from selection list (_dateArray) for 1st day types selection
-     * @private
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private _firstFormIndex = [];
-
-    /**
-     * Index number of selected date from selection list (_dateArray) for 2nd day types selection
-     * @private
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private _secondFormIndex = [];
-
-    /**
-     * Index number of selected date from selection list (_dateArray) for 3rd day types selection
-     * @private
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private _thirdFormIndex = [];
-
-    /**
-     * Disable date option list (true/false)
-     * @private
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private _arrayList = [];
-
-    /**
-     * AM/PM for 1st day types selection
-     * @private
-     * @type {string}
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private _slot1: string;
-
-    /**
-     * AM/PM for 2nd day types selection
-     * @private
-     * @type {string}
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private _slot2: string;
-
-    /**
-     * AM/PM for 3rd day types selection
-     * @private
-     * @type {string}
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private _slot3: string;
-
-    /**
-     * {startDate: "YYYY-MM-DD 00:00:00", endDate: "YYYY-MM-DD 00:00:00", dayType: number, slot: string, quarterDay: string}
-     * Object for 1st day types selection
-     * @private
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private _objSlot1 = [];
-
-    /**
-     * Object for 2nd day types selection
-     * @private
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private _objSlot2 = [];
-
-    /**
-     * Object for 3rd day types selection
-     * @private
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private _objSlot3 = [];
-
-    /**
      * Data collected from (_objSlot1, _objSlot2, _objSlot3) POST to apply leave API
      * @private
      * @memberof ApplyOnBehalfComponent
@@ -441,30 +367,13 @@ export class ApplyOnBehalfComponent implements OnInit {
     private _company: any;
 
     /**
-     * This is local property for Full Calendar Component
-     * @type {FullCalendarComponent}
-     * @memberof ApplyOnBehalfComponent
-     */
-    // @ViewChild('calendar') calendarComponent: FullCalendarComponent;
-
-    /**
-     * get day types of form array
-     * @readonly
-     * @type {FormArray}
-     * @memberof ApplyOnBehalfComponent
-     */
-    // get dayTypes(): FormArray {
-    //     return this.applyLeaveForm.get('dayTypes') as FormArray;
-    // }
-
-    /**
      *Creates an instance of ApplyOnBehalfComponent.
      * @param {LeaveApiService} leaveAPI
      * @param {APIService} apiService
-     * @param {MenuController} menu access menu controller
+     * @param {ReportApiService} reportApi
      * @memberof ApplyOnBehalfComponent
      */
-    constructor(private leaveAPI: LeaveApiService, private apiService: APIService, public menu: MenuController) {
+    constructor(private leaveAPI: LeaveApiService, private apiService: APIService, private reportApi: ReportApiService) {
         this.applyLeaveForm = new FormGroup({
             leaveTypes: new FormControl({ value: '', disabled: true }, Validators.required),
             firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
@@ -493,6 +402,27 @@ export class ApplyOnBehalfComponent implements OnInit {
             this.addShortCode(this._userList[i]);
         }
 
+    }
+
+    /**
+     * get report history
+     * @memberof ApplyOnBehalfComponent
+     */
+    showHistory() {
+        this.reportApi.get_bundle_report('apply-on-behalf').subscribe(report => {
+            this.reportDetails = report;
+            this.reportDetails.forEach(element => {
+                const arr = new Array();
+                const dt = new Date(element.startDate);
+                const de = new Date(element.endDate);
+                while (dt <= de) {
+                    arr.push(new Date(dt));
+                    dt.setDate(dt.getDate() + 1);
+                }
+                this.dateRange = arr;
+                element["date"] = this.dateRange;
+            });
+        });
     }
 
     /**

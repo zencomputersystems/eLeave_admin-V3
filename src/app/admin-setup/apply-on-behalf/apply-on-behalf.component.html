@@ -9,15 +9,16 @@
     </ion-header>
 
     <ion-content>
-        <div style="display: block;width: 100%;">
+        <div style="display: block;width: 100%;" *ngFor="let item of reportDetails">
             <div
                 style="font-size: 11px;background: #f5f6fa;padding: 10px;padding-left: 15px;margin: 10px;color: #a3a6b4;font-weight: bold;">
                 <ion-row>
                     <ion-col size="7">DATE APPLIED: <p
-                            style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">20 NOV 2019</p>
+                            style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">
+                            {{item.applicationDate | date: 'dd MMM yyyy' | uppercase}}</p>
                     </ion-col>
                     <ion-col>DONE BY: <p style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">
-                            JESSIE</p>
+                            {{item.appliedBy}}</p>
                     </ion-col>
                 </ion-row>
             </div>
@@ -28,33 +29,33 @@
                             Leave Type</ion-label>
                         <p
                             style="color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;margin: 0">
-                            ML-Medical Leave</p>
+                            {{item.leaveType}}</p>
                     </ion-col>
                     <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                         <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
                             No. of Days</ion-label>
                         <p
                             style="margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                            2 days</p>
+                            {{item.noOfDays}} days</p>
                     </ion-col>
                     <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                         <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
                             No. of Employees</ion-label>
                         <p
                             style="margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                            8 persons</p>
+                            1 persons</p>
                     </ion-col>
                 </ion-row>
-                <ion-row>
+                <ion-row *ngFor="let date of item.date">
                     <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
-                            Date: 01 Dec 2019</ion-label>
+                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;font-size: 12px;">
+                            Date: {{date | date: 'dd MMM yyyy'}}</ion-label>
                         <p
                             style="margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                             Fullday</p>
                     </ion-col>
                 </ion-row>
-                <ion-row>
+                <!-- <ion-row>
                     <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                         <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
                             Date: 02 Dec 2019</ion-label>
@@ -62,7 +63,7 @@
                             style="margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                             Q3</p>
                     </ion-col>
-                </ion-row>
+                </ion-row> -->
                 <div style="margin-left: 5px;"><img style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
                         src="assets/icon/leave_setup/icon_request@3x.png" (click)="showList = !showList ">
                     <p style="color: #43425d;opacity: 0.8;font-size: 11px;font-weight: bold;width: 23%;
@@ -72,20 +73,8 @@
                 <div *ngIf="showList" style="font-size: 12px;color: #43425d;
                 opacity: 0.8;margin-left: 20px;">
                     <ion-row>
-                        <ion-col style="padding-top: 0;">Zulkifli bin Arrifin</ion-col>
-                        <ion-col style="padding-top: 0;">Rajaputra Balasingh</ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col style="padding-top: 0;">Clement Chee Siong Yee</ion-col>
-                        <ion-col style="padding-top: 0;">Mohd Akmar bin Ab.Karim</ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col style="padding-top: 0;">Pratap K.Singh</ion-col>
-                        <ion-col style="padding-top: 0;">Asmidar binti Mohd Fauzi</ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col style="padding-top: 0;">Shewon Lee Kim Choo</ion-col>
-                        <ion-col style="padding-top: 0;">Tammy Tee Yen Wei</ion-col>
+                        <ion-col style="padding-top: 0;">{{item.employeeName}}</ion-col>
+                        <!-- <ion-col style="padding-top: 0;">Rajaputra Balasingh</ion-col> -->
                     </ion-row>
                 </div>
             </div>
@@ -114,7 +103,7 @@
                 <ion-button
                     style="--border-radius: 2px;font-size: 11px;height: 30px;width:193px;cursor: pointer;text-transform: none;"
                     color="primary"
-                    (click)="menu.open('applybehalfDetails');menu.enable(true, 'applybehalfDetails');menuOpened = true;">
+                    (click)="reportApi.menu.open('applybehalfDetails');reportApi.menu.enable(true, 'applybehalfDetails');menuOpened = true;showHistory()">
                     View Apply On Behalf History
                 </ion-button>
             </div>
