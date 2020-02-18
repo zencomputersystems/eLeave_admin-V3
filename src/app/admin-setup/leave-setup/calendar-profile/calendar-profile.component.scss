@@ -8,6 +8,7 @@
   ion-card {
     height: 100%;
     margin: 0;
+    overflow-y: auto;
   }
   .fullContainer {
     display: flex;
@@ -31,7 +32,7 @@
   .cardContent {
     line-height: 1.25;
     background: white;
-    height: calc(100% - 154px);
+    height: calc(70vh - 60px); // calc(100% - 154px);
     display: flex;
     flex-direction: column;
     margin-left: 20px;
@@ -49,18 +50,25 @@
   }
   .calendar,
   .assigned {
-    flex: 30%;
-    max-width: 30%;
-    max-height: 100%;
+    // flex: 30%;
+    // max-width: 30%;
+    // max-height: 100%;
+    flex: 1;
+    max-height: calc(70vh - 60px);
+    min-width: 200px;
   }
   .assigned {
     margin-right: 10px;
     margin-left: 10px;
   }
   .restday {
-    flex: 38.5%;
-    max-width: 38.5%;
-    max-height: 100%;
+    // flex: 38.5%;
+    // max-width: 38.5%;
+    // max-height: 100%;
+    flex: 1.5;
+    max-height: calc(70vh - 60px);
+    min-width: 200px;
+    
   }
   .column {
     font-size: 12px;
