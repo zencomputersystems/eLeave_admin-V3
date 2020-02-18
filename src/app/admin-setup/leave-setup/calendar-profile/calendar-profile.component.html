@@ -1,4 +1,4 @@
-<!------------------------------------------ create new calendar profile menu --------------------->
+<!-- ---------------------------------------- create new calendar profile menu ------------------- -->
 <ion-menu contentId="createCalendarContent" side="end" type="overlay" menuId="createCalendarDetails">
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
         <img style="margin: 17px;width: 22px;height: 17px;float:left"
@@ -65,7 +65,7 @@
 <ion-router-outlet id="createCalendarContent">
 </ion-router-outlet>
 
-<!------------------------------------------ add holiday date & name ------------------------->
+<!-- ---------------------------------------- add holiday date & name ----------------------- -->
 <ion-menu contentId="addHolidayContent" side="end" type="overlay" menuId="addHolidayDetails">
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
         <img style="margin: 17px;width: 22px;height: 17px;float:left"
@@ -119,46 +119,55 @@
 
 
 
-<!------------------------------------------ calendar profile content --------------------------->
-<ion-card>
-    <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
-        <div class="fullContainer">
-            <div class="left">
-                <img src="assets/icon/leave_setup/icon_year_end_closing@3x.png" style="width:34px;height:33px">
-            </div>
-            <div class="right">
-                <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Calendar
-                    Profile Setup
-                </ion-card-subtitle>
-                <ion-card-subtitle class="subtitle" style="font-size: 12px;">
-                    Create specific holiday and rest day for employee</ion-card-subtitle>
-            </div>
-            <div style="right: 75px;top: 25px;position: absolute;">
-                <p
-                    style="margin-top: 16px;opacity: 0.8;font-size: 12px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
-                    Edit
-                    Mode: {{modeValue}}</p>
-                <div style="display: inline-block;position: absolute;margin-top: 12px;">
-                    <ion-toggle style="zoom:0.70;--background: #a5a4bf;" mode="ios" color="secondary"
-                        (ionChange)="toggleEvent($event)">
-                    </ion-toggle>
+<!-- ---------------------------------------- calendar profile content ------------------------- -->
+<ion-card style="overflow-y;">
+    <ion-card-header style="border-radius: 2px; box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
+        <div class="fullContainer" style=" place-content: space-between;">
+            <ion-item-group style="display: flex;">
+                <div class="left">
+                    <img src="assets/icon/leave_setup/icon_year_end_closing@3x.png" style="width:34px;height:33px">
                 </div>
-            </div>
+                <div class="right">
+                    <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Calendar
+                        Profile Setup
+                    </ion-card-subtitle>
+                    <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                        Create specific holiday and rest day for employee</ion-card-subtitle>
+                </div>
+            </ion-item-group>
+            <ion-item-group style=" margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
+                <div style="right: 75px;top: 25px;">
+                    <p
+                        style="margin-top: 16px;opacity: 0.8;font-size: 12px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
+                        Edit
+                        Mode: {{modeValue}}</p>
+                    <div style="display: inline-block;position: absolute;margin-top: 12px;">
+                        <ion-toggle style="zoom:0.70;--background: #a5a4bf;" mode="ios" color="secondary"
+                            (ionChange)="toggleEvent($event)">
+                        </ion-toggle>
+                    </div>
+                </div>
+            </ion-item-group>
         </div>
     </ion-card-header>
     <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
         <app-spinner></app-spinner>
     </div>
-    <div *ngIf="content" style="background: #f0f0f7; height: 100%;position: absolute;width: 100%;">
-        <div class="cardContent">
-            <ion-card-content style="max-height: 100%;min-height: 100%;">
-                <div class="row">
-                    <div class="calendar">
+    <div *ngIf="content" style="background: #f0f0f7; position: absolute;width: 100%;">
+        <div class="cardContent" style="flex-flow: column wrap; flex: 1; height: fit-content; display: block;">
+            <ion-card-content style="max-height: 100%;min-height: 100%; display: inherit; flex-flow: row wrap;">
+            <!-- <ion-card-content style="max-height: 100%;min-height: 100%; display: flex; flex-flow: row wrap;"> -->
+                <div class="row" style=" flex-flow: row wrap; flex: 1;">
+
+                    <!-- calendar profile -->
+                    <div class="calendar" style="flex: 1 1 25%;">
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
                                 <ion-col size="10" style="font-size: 12px;white-space: nowrap;
                                     text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                <!-- <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                                    text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;"> -->
                                     CALENDAR PROFILE</ion-col>
                                 <!-- <ion-col align-self-center size="9" class="column"> CALENDAR
                                     PROFILE
@@ -170,7 +179,7 @@
                                         (click)="dayControl.reset();slideInOut = false;clickedIndex = null;restDay=[]; sharedService.menu.enable(true, 'createCalendarDetails');sharedService.menu.enable(false, 'addHolidayDetails');sharedService.menu.enable(false, 'addHolidayDetails');sharedService.menu.open('createCalendarDetails');">
                                     </ion-icon>
                                     <!-- <p *ngIf="!showAddIcon" style="color: #7069d8; cursor: pointer;font-size: 12px;font-weight: bold;position: absolute;
-            margin-top: -21px;margin-left: 20px;"
+                                    margin-top: -21px;margin-left: 20px;"
                                         (click)="dayControl.reset();slideInOut = false;clickedIndex = null; menu.enable(true, 'createCalendarDetails');menu.enable(false, 'addHolidayDetails');menu.enable(false, 'addHolidayDetails');menu.open('createCalendarDetails');">
                                         ADD</p> -->
                                 </ion-col>
@@ -244,9 +253,10 @@
                                 </section>
                             </ng-container>
                         </div>
-                    </div>
+                </div>
 
-                    <div class="assigned">
+                    <!-- assigned employee -->
+                    <div class="assigned" style="flex: 1 1 25%;">
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
@@ -264,11 +274,6 @@
                                         padding-bottom: 13px;">
                                         {{item.fullname}}</p>
                                 </ion-col>
-                                <!-- <ion-col size="3" align-self-center style="text-align: center;">
-                                    <!-- <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="showAddIcon"
-                                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;"> -->
-                                <!-- (click)="deleteEmployee(i, item.FULLNAME)" -- --
-                                </ion-col> -->
                                 <ion-item class="divider" lines="full">
                                 </ion-item>
                             </ion-row>
@@ -288,7 +293,8 @@
                         </div>
                     </div>
 
-                    <div class="restday">
+                    <!-- restday -->
+                    <div class="restday" style="flex: 1.5 1 28%;">
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
@@ -307,10 +313,10 @@
                         </mat-form-field>
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
-                            <ion-row>
-                                <ion-col size="4" class="column">
+                            <ion-row style="flex-flow: row nowrap;">
+                                <ion-col size="3.5" class="column">
                                     DATE</ion-col>
-                                <ion-col size="3" class="column" *ngIf="modeValue == 'OFF'">DAY</ion-col>
+                                <ion-col size="3.5" class="column" *ngIf="modeValue == 'OFF'">DAY</ion-col>
                                 <ion-col size="5" class="column">
                                     HOLIDAY</ion-col>
                                 <ion-col size="3" align-self-center style="text-align: right;"
@@ -324,8 +330,9 @@
                         </div>
                         <div style="overflow-y: auto;height: calc(100% - 190.5px);" *ngIf="slideInOut"
                             [@slideInOut]="slideInOut ? 'open': 'close'">
-                            <ion-row *ngFor="let holiday of events; let i=index" style="width: 100%;">
-                                <ion-col size="4" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                            <ion-row *ngFor="let holiday of events; let i=index"
+                                style="width: 100%; flex-flow: row nowrap; border-bottom: 1px solid #f0f0f7;">
+                                <ion-col size="3.5" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                     <ion-label *ngIf="modeValue == 'OFF'"
                                         style="padding-left: 5px;color:#4d4f5c; font-size:11px">
                                         {{holiday.start}}
@@ -339,8 +346,9 @@
                                         <mat-datepicker #datePicker></mat-datepicker>
                                     </mat-form-field>
                                 </ion-col>
-                                <ion-col size="3" *ngIf="modeValue == 'OFF'"
-                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                <ion-col size="3.5" *ngIf="modeValue == 'OFF'"
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; min-width:
+                                    fit-content;">
                                     <mat-chip-list [style.display]="modeValue == 'ON' ? 'none' : '' ">
                                         <mat-chip>
                                             <p
@@ -349,10 +357,8 @@
                                         </mat-chip>
                                     </mat-chip-list>
                                 </ion-col>
-                                <ion-col size="5" style="overflow: hidden;
-                                white-space: nowrap;text-overflow: ellipsis;" align-self-center>
-                                    <p style="color: #4d4f5c;font-size: 11px;overflow: hidden;
-                                    white-space: nowrap;text-overflow: ellipsis;" *ngIf="modeValue == 'OFF'">
+                                <ion-col size="5" style="flex-flow: column wrap;" align-self-center>
+                                    <p style="color: #4d4f5c;font-size: 11px;" *ngIf="modeValue == 'OFF'">
                                         {{holiday.title}}
                                     </p>
                                     <mat-form-field *ngIf="modeValue == 'ON'"
@@ -366,7 +372,7 @@
                                         style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
                                         (click)="deletePH(i, events, holiday.title)">
                                 </ion-col>
-                                <ion-item class="divider" lines="full"></ion-item>
+                                <!-- <ion-item class="divider" lines="full"></ion-item> -->
                             </ion-row>
                         </div>
                     </div>
