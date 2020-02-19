@@ -218,4 +218,13 @@
     display: none;
     overflow: hidden;
   }
+  .working-hour-popup {
+    @media screen and (min-width: 576px) {
+      --width: 700px;
+    }
+
+    @media screen and (max-width: 576px) {
+      --width: 350px;
+    }
+  } 
 }

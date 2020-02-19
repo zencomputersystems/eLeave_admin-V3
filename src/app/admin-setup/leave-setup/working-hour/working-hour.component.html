@@ -1,172 +1,125 @@
-<div style="margin-top: 4%;">
-    <form [formGroup]="workingHourForm">
-        <div style="display: inline-block;width: 40%;">
-            <span style="padding-bottom: 10px;font-size: 12px;color:#808495;padding-left: 18px;display: block">
-                WORKING HOUR PROFILE NAME</span>
-            <mat-form-field appearance="outline" style="display: block;font-size: 12px;width: 100%;color: #43425d;
+<div [class]="'hide-sm-down'">
+    <div style="margin-top: 4%;">
+        <form [formGroup]="workingHourForm">
+            <div style="display: inline-block;width: 40%;">
+                <span style="padding-bottom: 10px;font-size: 12px;color:#808495;padding-left: 18px;display: block">
+                    WORKING HOUR PROFILE NAME</span>
+                <mat-form-field appearance="outline" style="display: block;font-size: 12px;width: 100%;color: #43425d;
                 opacity: 0.8;padding-left: 18px;">
-                <mat-label>Working hour profile name</mat-label>
-                <input matInput formControlName="profileName" required>
-                <mat-error>Working hour profile name is <strong>required</strong></mat-error>
-            </mat-form-field>
-        </div>
+                    <mat-label>Working hour profile name</mat-label>
+                    <input matInput formControlName="profileName" required>
+                    <mat-error>Working hour profile name is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
 
-        <div style="display: inline-block;width: 40%;margin-left: 18px;">
-            <span style=" padding-bottom: 10px;font-size: 12px;color:#808495;display: block">
-                DESCRIPTION</span>
-            <mat-form-field appearance="outline" style="display: block;font-size: 12px;width: 100%;color: #43425d;
+            <div style="display: inline-block;width: 40%;margin-left: 18px;">
+                <span style=" padding-bottom: 10px;font-size: 12px;color:#808495;display: block">
+                    DESCRIPTION</span>
+                <mat-form-field appearance="outline" style="display: block;font-size: 12px;width: 100%;color: #43425d;
                 opacity: 0.8;">
-                <mat-label>Working hour profile description</mat-label>
-                <input matInput formControlName="description" required>
-                <mat-error>Description is <strong>required</strong></mat-error>
-            </mat-form-field>
-        </div>
-        <div style="display: block;width:49.5%;padding-bottom: 15px;">
-            <span style="font-size: 12px;color:#808495;padding-left: 18px;display: block">
-                WORKING HOUR</span>
-            <div style="display: inline-block;padding-bottom: 10px;">
-                <mat-label
-                    style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 18px;display: block">
-                    Start time</mat-label>
-                <div style="padding-bottom: 5px;margin-left: 18px;border: 0.5px solid #80808057;
+                    <mat-label>Working hour profile description</mat-label>
+                    <input matInput formControlName="description" required>
+                    <mat-error>Description is <strong>required</strong></mat-error>
+                </mat-form-field>
+            </div>
+            <div style="display: block;width:49.5%;padding-bottom: 15px;">
+                <span style="font-size: 12px;color:#808495;padding-left: 18px;display: block">
+                    WORKING HOUR</span>
+                <div style="display: inline-block;padding-bottom: 10px;">
+                    <mat-label
+                        style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 18px;display: block">
+                        Start time</mat-label>
+                    <div style="padding-bottom: 5px;margin-left: 18px;border: 0.5px solid #80808057;
                 padding: 4px;border-radius: 4px;">
-                    <ngb-timepicker class="ngbTime" formControlName="startpicker"
-                        (ngModelChange)="onChange($event, 'start')" [meridian]="meridian" [spinners]="spinners">
-                    </ngb-timepicker>
+                        <ngb-timepicker class="ngbTime" formControlName="startpicker"
+                            (ngModelChange)="onChange($event, 'start')" [meridian]="meridian" [spinners]="spinners">
+                        </ngb-timepicker>
+                    </div>
+                </div>
+                <div style="display: inline-block;margin-left: 10px;padding-bottom: 10px;">
+                    <mat-label
+                        style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;display: block">
+                        End time</mat-label>
+                    <div style="padding-bottom: 5px;padding-left: 18px;border: 0.5px solid #80808057;
+                padding: 4px;border-radius: 4px;">
+                        <ngb-timepicker class="ngbTime" formControlName="endpicker"
+                            (ngModelChange)="onChange($event, 'end')" [meridian]="meridian" [spinners]="spinners">
+                        </ngb-timepicker>
+                    </div>
                 </div>
             </div>
-            <div style="display: inline-block;margin-left: 10px;padding-bottom: 10px;">
-                <mat-label style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;display: block">
-                    End time</mat-label>
-                <div style="padding-bottom: 5px;padding-left: 18px;border: 0.5px solid #80808057;
-                padding: 4px;border-radius: 4px;">
-                    <ngb-timepicker class="ngbTime" formControlName="endpicker"
-                        (ngModelChange)="onChange($event, 'end')" [meridian]="meridian" [spinners]="spinners">
-                    </ngb-timepicker>
-                </div>
-            </div>
-        </div>
 
-        <div style="display: block;width: 100%;padding-bottom: 15px;">
-            <div style="font-size: 12px;width:95%;background: #f5f6fa;padding: 10px;padding-left: 15px;margin: 18px;
+            <div style="display: block;width: 100%;padding-bottom: 15px;">
+                <div style="font-size: 12px;width:95%;background: #f5f6fa;padding: 10px;padding-left: 15px;margin: 18px;
                 margin-top: 0;color: #a3a6b4;font-weight: bold;">
-                HALF DAY SETUP
-            </div>
-            <div style="width: 50%;display: inline-block;">
-                <span style="font-size: 12px;color:#808495;padding-left: 18px;display: block">
-                    HALF DAY (AM)</span>
-                <div style="display: inline-block;padding-bottom: 10px;">
-                    <mat-label
-                        style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 18px;display: block">
-                        Start time</mat-label>
-                    <div style="margin-left: 18px;border: 0.5px solid #80808057;
-                        padding: 4px;border-radius: 4px;">
-                        <ngb-timepicker class="ngbTime" formControlName="starthalfdayAMpicker" [meridian]="meridian"
-                            [spinners]="spinners"></ngb-timepicker>
-                    </div>
+                    HALF DAY SETUP
                 </div>
-                <div style="display: inline-block;padding-bottom: 10px;">
-                    <mat-label
-                        style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
-                        End time</mat-label>
-                    <div style="margin-left: 10px;border: 0.5px solid #80808057;
-                            padding: 4px;border-radius: 4px;">
-                        <ngb-timepicker class="ngbTime" formControlName="endhalfdayAMpicker" [meridian]="meridian"
-                            [spinners]="spinners"></ngb-timepicker>
-                    </div>
-                </div>
-            </div>
-
-            <div style="width: 50%;display: inline-block;padding-left: 15px;">
-                <span style="font-size: 12px;color:#808495;display: block">
-                    HALF DAY (PM)</span>
-                <div style="display: inline-block;padding-bottom: 10px;">
-                    <mat-label
-                        style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;display: block">
-                        Start time</mat-label>
-                    <div style="padding-bottom: 5px;border: 0.5px solid #80808057;
-                                    padding: 4px;border-radius: 4px;">
-                        <ngb-timepicker class="ngbTime" formControlName="starthalfdayPMpicker" [meridian]="meridian"
-                            [spinners]="spinners"></ngb-timepicker>
-                    </div>
-                </div>
-                <div style="display: inline-block;padding-bottom: 10px;">
-                    <mat-label
-                        style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
-                        End time</mat-label>
-                    <div style="margin-left: 10px;border: 0.5px solid #80808057;
-                                        padding: 4px;border-radius: 4px;">
-                        <ngb-timepicker class="ngbTime" formControlName="endhalfdayPMpicker" [meridian]="meridian"
-                            [spinners]="spinners"></ngb-timepicker>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div style="display: block;width: 100%;">
-            <div
-                style="font-size: 12px;width:95%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;margin: 18px;margin-top: 0;">
-                QUARTER DAY SETUP
-            </div>
-            <div style="width: 50%;display: inline-block;">
-                <span style="font-size: 12px;color:#808495;padding-left: 18px;display: block">
-                    QUARTER DAY (Q1)</span>
-                <div style="display: inline-block;padding-bottom: 10px;">
-                    <mat-label
-                        style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 18px;display: block">
-                        Start time</mat-label>
-                    <div style="margin-left: 18px;border: 0.5px solid #80808057;
-                                padding: 4px;border-radius: 4px;">
-                        <ngb-timepicker class="ngbTime" formControlName="startQ1picker" [meridian]="meridian"
-                            [spinners]="spinners"></ngb-timepicker>
-                    </div>
-                </div>
-                <div style="display: inline-block;padding-bottom: 10px;">
-                    <mat-label
-                        style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
-                        End time</mat-label>
-                    <div style="margin-left: 10px;border: 0.5px solid #80808057;
-                                    padding: 4px;border-radius: 4px;">
-                        <ngb-timepicker class="ngbTime" formControlName="endQ1picker" [meridian]="meridian"
-                            [spinners]="spinners"></ngb-timepicker>
-                    </div>
-                </div>
-            </div>
-            <div style="width: 50%;display: inline-block;padding-left: 15px;">
-                <span style="font-size: 12px;color:#808495;display: block">
-                    QUARTER DAY (Q2)</span>
-                <div style="display: inline-block;padding-bottom: 10px;">
-                    <mat-label
-                        style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;display: block">
-                        Start time</mat-label>
-                    <div style="padding-bottom: 5px;border: 0.5px solid #80808057;
-                                            padding: 4px;border-radius: 4px;">
-                        <ngb-timepicker class="ngbTime" formControlName="startQ2picker" [meridian]="meridian"
-                            [spinners]="spinners"></ngb-timepicker>
-                    </div>
-                </div>
-                <div style="display: inline-block;padding-bottom: 10px;">
-                    <mat-label
-                        style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
-                        End time</mat-label>
-                    <div style="margin-left: 10px;border: 0.5px solid #80808057;
-                                                padding: 4px;border-radius: 4px;">
-                        <ngb-timepicker class="ngbTime" formControlName="endQ2picker" [meridian]="meridian"
-                            [spinners]="spinners"></ngb-timepicker>
-                    </div>
-                </div>
-            </div>
-            <div style="display: block;width: 100%;padding-top: 15px;">
                 <div style="width: 50%;display: inline-block;">
                     <span style="font-size: 12px;color:#808495;padding-left: 18px;display: block">
-                        QUARTER DAY (Q3)</span>
+                        HALF DAY (AM)</span>
                     <div style="display: inline-block;padding-bottom: 10px;">
                         <mat-label
                             style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 18px;display: block">
                             Start time</mat-label>
                         <div style="margin-left: 18px;border: 0.5px solid #80808057;
-                                            padding: 4px;border-radius: 4px;">
-                            <ngb-timepicker class="ngbTime" formControlName="startQ3picker" [meridian]="meridian"
+                        padding: 4px;border-radius: 4px;">
+                            <ngb-timepicker class="ngbTime" formControlName="starthalfdayAMpicker"
+                                [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                        </div>
+                    </div>
+                    <div style="display: inline-block;padding-bottom: 10px;">
+                        <mat-label
+                            style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
+                            End time</mat-label>
+                        <div style="margin-left: 10px;border: 0.5px solid #80808057;
+                            padding: 4px;border-radius: 4px;">
+                            <ngb-timepicker class="ngbTime" formControlName="endhalfdayAMpicker"
+                                [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="width: 50%;display: inline-block;padding-left: 15px;">
+                    <span style="font-size: 12px;color:#808495;display: block">
+                        HALF DAY (PM)</span>
+                    <div style="display: inline-block;padding-bottom: 10px;">
+                        <mat-label
+                            style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;display: block">
+                            Start time</mat-label>
+                        <div style="padding-bottom: 5px;border: 0.5px solid #80808057;
+                                    padding: 4px;border-radius: 4px;">
+                            <ngb-timepicker class="ngbTime" formControlName="starthalfdayPMpicker"
+                                [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                        </div>
+                    </div>
+                    <div style="display: inline-block;padding-bottom: 10px;">
+                        <mat-label
+                            style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
+                            End time</mat-label>
+                        <div style="margin-left: 10px;border: 0.5px solid #80808057;
+                                        padding: 4px;border-radius: 4px;">
+                            <ngb-timepicker class="ngbTime" formControlName="endhalfdayPMpicker"
+                                [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: block;width: 100%;">
+                <div
+                    style="font-size: 12px;width:95%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;margin: 18px;margin-top: 0;">
+                    QUARTER DAY SETUP
+                </div>
+                <div style="width: 50%;display: inline-block;">
+                    <span style="font-size: 12px;color:#808495;padding-left: 18px;display: block">
+                        QUARTER DAY (Q1)</span>
+                    <div style="display: inline-block;padding-bottom: 10px;">
+                        <mat-label
+                            style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 18px;display: block">
+                            Start time</mat-label>
+                        <div style="margin-left: 18px;border: 0.5px solid #80808057;
+                                padding: 4px;border-radius: 4px;">
+                            <ngb-timepicker class="ngbTime" formControlName="startQ1picker" [meridian]="meridian"
                                 [spinners]="spinners"></ngb-timepicker>
                         </div>
                     </div>
@@ -175,22 +128,22 @@
                             style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
                             End time</mat-label>
                         <div style="margin-left: 10px;border: 0.5px solid #80808057;
-                                                padding: 4px;border-radius: 4px;">
-                            <ngb-timepicker class="ngbTime" formControlName="endQ3picker" [meridian]="meridian"
+                                    padding: 4px;border-radius: 4px;">
+                            <ngb-timepicker class="ngbTime" formControlName="endQ1picker" [meridian]="meridian"
                                 [spinners]="spinners"></ngb-timepicker>
                         </div>
                     </div>
                 </div>
                 <div style="width: 50%;display: inline-block;padding-left: 15px;">
                     <span style="font-size: 12px;color:#808495;display: block">
-                        QUARTER DAY (Q4)</span>
+                        QUARTER DAY (Q2)</span>
                     <div style="display: inline-block;padding-bottom: 10px;">
                         <mat-label
                             style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;display: block">
                             Start time</mat-label>
                         <div style="padding-bottom: 5px;border: 0.5px solid #80808057;
-                                                        padding: 4px;border-radius: 4px;">
-                            <ngb-timepicker class="ngbTime" formControlName="startQ4picker" [meridian]="meridian"
+                                            padding: 4px;border-radius: 4px;">
+                            <ngb-timepicker class="ngbTime" formControlName="startQ2picker" [meridian]="meridian"
                                 [spinners]="spinners"></ngb-timepicker>
                         </div>
                     </div>
@@ -199,43 +152,347 @@
                             style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
                             End time</mat-label>
                         <div style="margin-left: 10px;border: 0.5px solid #80808057;
-                                                            padding: 4px;border-radius: 4px;">
-                            <ngb-timepicker class="ngbTime" formControlName="endQ4picker" [meridian]="meridian"
+                                                padding: 4px;border-radius: 4px;">
+                            <ngb-timepicker class="ngbTime" formControlName="endQ2picker" [meridian]="meridian"
                                 [spinners]="spinners"></ngb-timepicker>
                         </div>
                     </div>
                 </div>
+                <div style="display: block;width: 100%;padding-top: 15px;">
+                    <div style="width: 50%;display: inline-block;">
+                        <span style="font-size: 12px;color:#808495;padding-left: 18px;display: block">
+                            QUARTER DAY (Q3)</span>
+                        <div style="display: inline-block;padding-bottom: 10px;">
+                            <mat-label
+                                style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 18px;display: block">
+                                Start time</mat-label>
+                            <div style="margin-left: 18px;border: 0.5px solid #80808057;
+                                            padding: 4px;border-radius: 4px;">
+                                <ngb-timepicker class="ngbTime" formControlName="startQ3picker"
+                                    [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                            </div>
+                        </div>
+                        <div style="display: inline-block;padding-bottom: 10px;">
+                            <mat-label
+                                style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
+                                End time</mat-label>
+                            <div style="margin-left: 10px;border: 0.5px solid #80808057;
+                                                padding: 4px;border-radius: 4px;">
+                                <ngb-timepicker class="ngbTime" formControlName="endQ3picker" [meridian]="meridian"
+                                    [spinners]="spinners"></ngb-timepicker>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 50%;display: inline-block;padding-left: 15px;">
+                        <span style="font-size: 12px;color:#808495;display: block">
+                            QUARTER DAY (Q4)</span>
+                        <div style="display: inline-block;padding-bottom: 10px;">
+                            <mat-label
+                                style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;display: block">
+                                Start time</mat-label>
+                            <div style="padding-bottom: 5px;border: 0.5px solid #80808057;
+                                                        padding: 4px;border-radius: 4px;">
+                                <ngb-timepicker class="ngbTime" formControlName="startQ4picker"
+                                    [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                            </div>
+                        </div>
+                        <div style="display: inline-block;padding-bottom: 10px;">
+                            <mat-label
+                                style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
+                                End time</mat-label>
+                            <div style="margin-left: 10px;border: 0.5px solid #80808057;
+                                                            padding: 4px;border-radius: 4px;">
+                                <ngb-timepicker class="ngbTime" formControlName="endQ4picker" [meridian]="meridian"
+                                    [spinners]="spinners"></ngb-timepicker>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
 
-    <!-- <div style="text-align: center;margin:30px">
+        <!-- <div style="text-align: center;margin:30px">
         <ion-button style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
             color="primary" (click)="postWorkingHourSetup();menu.close('createCalendarDetails');" [disabled]="!profileName.valid">
             Save
         </ion-button>
     </div> -->
-    <div style="margin: 30px;text-align: center;">
-        <!-- <ion-button style="font-size: 12px;height: 30px;width: 110px;background: white;" fill="outline" color="primary"
+        <div style="margin: 30px;text-align: center;">
+            <!-- <ion-button style="font-size: 12px;height: 30px;width: 110px;background: white;" fill="outline" color="primary"
             (click)="hideDetailPage()">
             BACK
         </ion-button> -->
-        <ion-button *ngIf="id==''"
-            style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-            color="primary"
-            (click)="postWorkingHourSetup();workingHourForm.reset();menu.close('createWorkingHourDetails')"
-            [disabled]="!workingHourForm.valid">
-            Create
+            <ion-button *ngIf="id==''"
+                style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                color="primary"
+                (click)="postWorkingHourSetup();workingHourForm.reset();menu.close('createWorkingHourDetails')"
+                [disabled]="!workingHourForm.valid">
+                Create
+            </ion-button>
+            <ion-button *ngIf="id != ''"
+                style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                color="primary"
+                (click)="postWorkingHourSetup();menu.close('editWorkingHourDetails'); refreshProfile(id)"
+                [disabled]="!workingHourForm.valid">
+                Update
+            </ion-button>
+            <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
+                *ngIf="showSmallSpinner">
+                <ion-spinner name="lines-small" color="primary"></ion-spinner>
+            </div>
+        </div>
+    </div>
+</div>
+<div [class]="'hide-sm-up'">
+    <div style="margin-top: 4%;">
+        <form [formGroup]="workingHourForm">
+            <div style="display: flex; flex-flow: column wrap;">
+                <div style="margin-right: 15px;">
+                    <span style="padding-bottom: 10px;font-size: 12px;color:#808495;padding-left: 18px;display: block">
+                        111WORKING HOUR PROFILE NAME</span>
+                    <mat-form-field appearance="outline" style="display: block;font-size: 12px;width: 100%;color: #43425d;
+                    opacity: 0.8;padding-left: 18px;">
+                        <mat-label>Profile name</mat-label>
+                        <input matInput formControlName="profileName" required>
+                        <mat-error>Working hour profile name is <strong>required</strong></mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div style="margin-right: 15px;margin-left: 18px;">
+                    <span style=" padding-bottom: 10px;font-size: 12px;color:#808495;display: block">
+                        DESCRIPTION</span>
+                    <mat-form-field appearance="outline" style="display: block;font-size: 12px;width: 100%;color: #43425d;
+                    opacity: 0.8;">
+                        <mat-label>Profile description</mat-label>
+                        <input matInput formControlName="description" required>
+                        <mat-error>Description is <strong>required</strong></mat-error>
+                    </mat-form-field>
+                </div>
+                <div style="padding-bottom: 15px;">
+                    <span style="font-size: 12px;color:#808495;padding-left: 18px;display: block">
+                        WORKING HOUR</span>
+                    <div style="display: inline-block;padding-bottom: 10px;">
+                        <mat-label
+                            style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 18px;display: block">
+                            Start time</mat-label>
+                        <div style="padding-bottom: 5px;margin-left: 18px;border: 0.5px solid #80808057;
+                    padding: 4px;border-radius: 4px;">
+                            <ngb-timepicker class="ngbTime" formControlName="startpicker"
+                                (ngModelChange)="onChange($event, 'start')" [meridian]="meridian" [spinners]="spinners">
+                            </ngb-timepicker>
+                        </div>
+                    </div>
+                    <div style="display: inline-block;margin-left: 10px;padding-bottom: 10px;">
+                        <mat-label
+                            style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;display: block">
+                            End time</mat-label>
+                        <div style="padding-bottom: 5px;padding-left: 18px;border: 0.5px solid #80808057;
+                    padding: 4px;border-radius: 4px;">
+                            <ngb-timepicker class="ngbTime" formControlName="endpicker"
+                                (ngModelChange)="onChange($event, 'end')" [meridian]="meridian" [spinners]="spinners">
+                            </ngb-timepicker>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+            <div style="display: block;width: 100%;padding-bottom: 15px;">
+                <div
+                    style="font-size: 12px;background: #f5f6fa;padding: 10px;padding-left: 15px;margin: 0px 10px 18px
+                    10px;color: #a3a6b4;font-weight: bold;">
+                    HALF DAY SETUP
+                </div>
+                <div style="display: flex;">
+                    <div style="width: 50%;display: inline-block;">
+                        <span style="font-size: 12px;color:#808495;padding-left: 18px;display: block">
+                            HALF DAY (AM)</span>
+                        <div style="display: inline-block;padding-bottom: 10px;">
+                            <mat-label
+                                style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 18px;display: block">
+                                Start time</mat-label>
+                            <div style="margin-left: 18px;border: 0.5px solid #80808057;
+                        padding: 4px;border-radius: 4px;">
+                                <ngb-timepicker class="ngbTime" formControlName="starthalfdayAMpicker"
+                                    [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                            </div>
+                        </div>
+                        <div style="display: inline-block;padding-bottom: 10px;">
+                            <mat-label
+                                style="padding-top: 5px; padding-bottom: 5px; font-size: 11px; color: #808495; padding-left: 18px; display: block;">
+                                End time</mat-label>
+                            <div style="margin-left: 18px;  border: 0.5px solid #80808057; padding: 4px; border-radius: 4px;">
+                                <ngb-timepicker class="ngbTime" formControlName="endhalfdayAMpicker"
+                                    [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: inline-block;padding-left: 10px;">
+                        <span style="font-size: 12px;color:#808495;display: block">
+                            HALF DAY (PM)</span>
+                        <div style="display: inline-block;padding-bottom: 10px;">
+                            <mat-label
+                                style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;display: block">
+                                Start time</mat-label>
+                            <div style="padding-bottom: 5px;border: 0.5px solid #80808057;
+                                    padding: 4px;border-radius: 4px;">
+                                <ngb-timepicker class="ngbTime" formControlName="starthalfdayPMpicker"
+                                    [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                            </div>
+                        </div>
+                        <div style="display: inline-block;padding-bottom: 10px;">
+                            <mat-label
+                                style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
+                                End time</mat-label>
+                            <div style="border: 0.5px solid #80808057;
+                                        padding: 4px;border-radius: 4px;">
+                                <ngb-timepicker class="ngbTime" formControlName="endhalfdayPMpicker"
+                                    [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div style="display: block;width: 100%;">
+                <div
+                    style="font-size: 12px;background: #f5f6fa;padding: 10px;padding-left: 15px;margin: 0px 10px 18px
+                    10px;color: #a3a6b4;font-weight: bold;">
+                    QUARTER DAY SETUP
+                </div>
+                <div style="display: flex; flex-flow: column wrap;">
+                    <div style="display: inline-block;">
+                        <span style="font-size: 12px;color:#808495;padding-left: 18px;display: block">
+                            QUARTER DAY (Q1)</span>
+                        <div style="display: inline-block;padding-bottom: 10px;">
+                            <mat-label
+                                style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 18px;display: block">
+                                Start time</mat-label>
+                            <div style="margin-left: 18px;border: 0.5px solid #80808057;
+                                padding: 4px;border-radius: 4px;">
+                                <ngb-timepicker class="ngbTime" formControlName="startQ1picker" [meridian]="meridian"
+                                    [spinners]="spinners"></ngb-timepicker>
+                            </div>
+                        </div>
+                        <div style="display: inline-block;padding-bottom: 10px;">
+                            <mat-label
+                                style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
+                                End time</mat-label>
+                            <div style="margin-left: 10px;border: 0.5px solid #80808057;
+                                    padding: 4px;border-radius: 4px;">
+                                <ngb-timepicker class="ngbTime" formControlName="endQ1picker" [meridian]="meridian"
+                                    [spinners]="spinners"></ngb-timepicker>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: inline-block;padding-left: 18px;">
+                        <span style="font-size: 12px;color:#808495;display: block">
+                            QUARTER DAY (Q2)</span>
+                        <div style="display: inline-block;padding-bottom: 10px;">
+                            <mat-label
+                                style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;display: block">
+                                Start time</mat-label>
+                            <div style="padding-bottom: 5px;border: 0.5px solid #80808057;
+                                            padding: 4px;border-radius: 4px;">
+                                <ngb-timepicker class="ngbTime" formControlName="startQ2picker" [meridian]="meridian"
+                                    [spinners]="spinners"></ngb-timepicker>
+                            </div>
+                        </div>
+                        <div style="display: inline-block;padding-bottom: 10px;">
+                            <mat-label
+                                style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
+                                End time</mat-label>
+                            <div style="margin-left: 10px;border: 0.5px solid #80808057;
+                                                padding: 4px;border-radius: 4px;">
+                                <ngb-timepicker class="ngbTime" formControlName="endQ2picker" [meridian]="meridian"
+                                    [spinners]="spinners"></ngb-timepicker>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: block;padding-top: 15px;">
+                        <div style="width: 50%;display: inline-block;">
+                            <span style="font-size: 12px;color:#808495;padding-left: 18px;display: block">
+                                QUARTER DAY (Q3)</span>
+                            <div style="display: inline-block;padding-bottom: 10px;">
+                                <mat-label
+                                    style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 18px;display: block">
+                                    Start time</mat-label>
+                                <div style="margin-left: 18px;border: 0.5px solid #80808057;
+                                            padding: 4px;border-radius: 4px;">
+                                    <ngb-timepicker class="ngbTime" formControlName="startQ3picker"
+                                        [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                                </div>
+                            </div>
+                            <div style="display: inline-block;padding-bottom: 10px;">
+                                <mat-label
+                                    style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
+                                    End time</mat-label>
+                                <div style="margin-left: 10px;border: 0.5px solid #80808057;
+                                                padding: 4px;border-radius: 4px;">
+                                    <ngb-timepicker class="ngbTime" formControlName="endQ3picker" [meridian]="meridian"
+                                        [spinners]="spinners"></ngb-timepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 50%;display: inline-block;padding-left: 15px;">
+                            <span style="font-size: 12px;color:#808495;display: block">
+                                QUARTER DAY (Q4)</span>
+                            <div style="display: inline-block;padding-bottom: 10px;">
+                                <mat-label
+                                    style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;display: block">
+                                    Start time</mat-label>
+                                <div style="padding-bottom: 5px;border: 0.5px solid #80808057;
+                                                        padding: 4px;border-radius: 4px;">
+                                    <ngb-timepicker class="ngbTime" formControlName="startQ4picker"
+                                        [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                                </div>
+                            </div>
+                            <div style="display: inline-block;padding-bottom: 10px;">
+                                <mat-label
+                                    style="padding-top: 5px;padding-bottom: 5px;font-size: 11px;color:#808495;padding-left: 10px;display: block">
+                                    End time</mat-label>
+                                <div style="border: 0.5px solid #80808057;
+                                                            padding: 4px;border-radius: 4px;">
+                                    <ngb-timepicker class="ngbTime" formControlName="endQ4picker" [meridian]="meridian"
+                                        [spinners]="spinners"></ngb-timepicker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+        <!-- <div style="text-align: center;margin:30px">
+        <ion-button style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+            color="primary" (click)="postWorkingHourSetup();menu.close('createCalendarDetails');" [disabled]="!profileName.valid">
+            Save
         </ion-button>
-        <ion-button *ngIf="id != ''"
-            style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-            color="primary" (click)="postWorkingHourSetup();menu.close('editWorkingHourDetails'); refreshProfile(id)"
-            [disabled]="!workingHourForm.valid">
-            Update
-        </ion-button>
-        <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
-            *ngIf="showSmallSpinner">
-            <ion-spinner name="lines-small" color="primary"></ion-spinner>
+    </div> -->
+        <div style="margin: 30px;text-align: center;">
+            <!-- <ion-button style="font-size: 12px;height: 30px;width: 110px;background: white;" fill="outline" color="primary"
+            (click)="hideDetailPage()">
+            BACK
+        </ion-button> -->
+            <ion-button *ngIf="id==''"
+                style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                color="primary"
+                (click)="postWorkingHourSetup();workingHourForm.reset();menu.close('createWorkingHourDetails')"
+                [disabled]="!workingHourForm.valid">
+                Create
+            </ion-button>
+            <ion-button *ngIf="id != ''"
+                style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                color="primary"
+                (click)="postWorkingHourSetup();menu.close('editWorkingHourDetails'); refreshProfile(id)"
+                [disabled]="!workingHourForm.valid">
+                Update
+            </ion-button>
+            <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
+                *ngIf="showSmallSpinner">
+                <ion-spinner name="lines-small" color="primary"></ion-spinner>
+            </div>
         </div>
     </div>
 </div>
