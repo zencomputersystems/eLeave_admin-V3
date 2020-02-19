@@ -198,6 +198,11 @@
                                                             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
                                         PROFILE
                                     </ion-col>
+                                    <ion-col size="1" style="display: flex; align-items: center;">
+                                        <ion-icon *ngIf="mode==='ON'" class="addIcon" name="add-circle-outline"
+                                            (click)="id='';sharedService.menu.enable(true, 'createWorkingHourDetails');sharedService.menu.enable(false, 'editWorkingHourDetails');sharedService.menu.open('createWorkingHourDetails');">
+                                        </ion-icon>
+                                    </ion-col>
                                 </ion-row>
                             </div>
                             <div style="height: 150px; overflow-y: auto;">
