@@ -6,7 +6,8 @@ import { LeaveApiService } from '../leave-setup/leave-api.service';
 import { APIService } from 'src/services/shared-service/api.service';
 import { ReportApiService } from './report-api.service';
 import * as jsPDF from 'jspdf';
-import domtoimage from 'dom-to-image';
+import 'jspdf-autotable';
+import * as _moment from 'moment';
 const { Parser } = require('json2csv');
 
 /**
@@ -273,51 +274,96 @@ export class ReportComponent implements OnInit {
     this.api.get_master_list('costcentre').subscribe(data => this.costcentre = data);
   }
 
+
   /**
    * download report in pdf
+   * @param {*} title
+   * @param {*} headerKey
    * @memberof ReportComponent
    */
-  savePDF() {
-    const node = document.getElementById('template');
-    const input = document.getElementById('saveas');
-    let img;
-    let filename;
-    let newImage;
+  savePDF(title, headerKey) {
+    const doc = new jsPDF('l', 'mm', 'a4');
+    doc.setFontSize(9);
+    doc.text(5, 7, title);
+    doc.text(5, 11, 'From ' + _moment(this.firstPicker.value).format('DD MMM YYYY') + ' to ' + _moment(this.secondPicker.value).format('DD MMM YYYY'));
+    doc.autoTable({
+      headStyles: { fillColor: [67, 66, 93], fontSize: 7.5, minCellWidth: 2 },
+      bodyStyles: { fontSize: 7.5, minCellWidth: 10 },
+      margin: { top: 13, left: 5, right: 5, bottom: 5 },
+      showHead: 'everyPage',
+      body: this.tableDetails,
+      columns: headerKey,
+    })
+    doc.save(title + '.pdf')
+  }
 
-    node.style.height = "auto";
-    input.style.display = "none";
-    domtoimage.toPng(node, { bgcolor: '#fff' })
-      .then(function (dataUrl) {
-        img = new Image();
-        img.src = dataUrl;
-        newImage = img.src;
-
-        img.onload = function () {
-          const pdfWidth = img.width;
-          const pdfHeight = img.height;
-          let doc;
-
-          if (pdfWidth > pdfHeight) {
-            doc = new jsPDF('l', 'px', [pdfWidth, pdfHeight]);
+  /**
+   * create table body value from api data
+   * @returns
+   * @memberof ReportComponent
+   */
+  bodyValue(title: string) {
+    let allBody = [];
+    if (title === 'Leave Entitlement Summary') {
+      for (let i = 0; i < this.tableDetails.length; i++) {
+        let body = new Array();
+        body.push(i + 1);
+        body.push(this.tableDetails[i].employeeNo);
+        body.push(this.tableDetails[i].employeeName);
+        body.push(this.tableDetails[i].yearService);
+        for (let j = 0; j < this.tableDetails[i].leaveDetail.length; j++) {
+          body.push(this.tableDetails[i].leaveDetail[j].leaveType);
+          body.push(this.tableDetails[i].leaveDetail[j].entitledDays);
+          body.push(this.tableDetails[i].leaveDetail[j].carriedForward);
+          body.push(this.tableDetails[i].leaveDetail[j].forfeited);
+          body.push(this.tableDetails[i].leaveDetail[j].taken);
+          body.push(this.tableDetails[i].leaveDetail[j].pending);
+          body.push(this.tableDetails[i].leaveDetail[j].balance);
+        }
+        allBody.push(body);
+      }
+    }
+    if (title === 'Apply On Behalf History') {
+      for (let i = 0; i < this.tableDetails.length; i++) {
+        let body = new Array();
+        body.push(i + 1);
+        body.push(this.tableDetails[i].employeeName);
+        body.push(this.tableDetails[i].yearService);
+        body.push(this.tableDetails[i].leaveType);
+        body.push(this.tableDetails[i].applicationDate);
+        body.push(this.tableDetails[i].confirmedDate);
+        body.push(this.tableDetails[i].appliedBy);
+        body.push(this.tableDetails[i].startDate);
+        body.push(this.tableDetails[i].endDate);
+        body.push(this.tableDetails[i].noOfDays);
+        body.push(this.tableDetails[i].status);
+        body.push(this.tableDetails[i].remarks);
+        allBody.push(body);
+      }
+    }
+    if (title === 'Leave Taken History') {
+      for (let i = 0; i < this.tableDetails.length; i++) {
+        let body = new Array();
+        body.push(i + 1);
+        body.push(this.tableDetails[i].employeeNo);
+        body.push(this.tableDetails[i].employeeName);
+        for (let j = 0; j < this.tableDetails[i].leaveDetail.length; j++) {
+          if (this.tableDetails[i].leaveDetail.length > 1 && j != 0) {
+            // let body = new Array();
+            body.push(''); body.push(''); body.push('');
           }
-          else {
-            doc = new jsPDF('p', 'px', [pdfWidth, pdfHeight]);
-          }
+          body.push(this.tableDetails[i].leaveDetail[j].leaveType);
+          body.push(this.tableDetails[i].leaveDetail[j].startDate);
+          body.push(this.tableDetails[i].leaveDetail[j].endDate);
+          body.push(this.tableDetails[i].leaveDetail[j].noOfDays);
+          body.push(this.tableDetails[i].leaveDetail[j].approveBy);
+          body.push(this.tableDetails[i].leaveDetail[j].remarks);
+        }
+        allBody.push(body);
+      }
+    }
+    return allBody;
 
-          const width = doc.internal.pageSize.getWidth();
-          const height = doc.internal.pageSize.getHeight();
-          doc.addImage(newImage, 'PNG', 5, 5, width - 10, height - 10);
-          filename = 'mypdf_' + '.pdf';
-          doc.save(filename);
-          node.style.height = "100%";
-          input.style.display = "block";
-        };
-      })
-      .catch(function (error) {
-
-        // Error Handling
-
-      });
   }
 
   /**
@@ -657,6 +703,9 @@ export class ReportComponent implements OnInit {
       );
       this.tableDetails = filteredEmployee;
     }
+    this.tableDetails.forEach((element, index) => {
+      element["no"] = index + 1;
+    });
   }
 
   /**
