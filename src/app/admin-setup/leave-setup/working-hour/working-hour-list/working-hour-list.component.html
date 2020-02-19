@@ -87,70 +87,40 @@
             <ion-card-content style="max-height:100%;height: 100%;">
                 <div class="row" style="flex-flow: row wrap;">
                     <div class="working" style="flex: 2 1 auto;">
-                        <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
+                        <div [class]="'hide-sm-down'"> 
+                            <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
                                     padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
-                            <ion-row>
-                                <ion-col size="5" align-self-center
-                                    style="display: -webkit-box;
+                                <ion-row>
+                                    <ion-col size="5" align-self-center
+                                        style="display: -webkit-box;
                                 -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
-                                    PROFILE NAME
-                                </ion-col>
-                                <ion-col size="3" align-self-center
-                                    style="display: -webkit-box;
-                                -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
-                                    WORKING HOUR</ion-col>
-                                <ion-col size="2.5" align-self-center
-                                    style="display: -webkit-box;
-                                -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
-                                    ASSIGNED EMPLOYEE NO.</ion-col>
-                                <ion-col size="1.5" align-self-center style="text-align: right;padding-right: 10px;">
-                                    <ion-icon *ngIf="mode==='ON'" class="addIcon" name="add-circle-outline"
-                                        (click)="id='';sharedService.menu.enable(true, 'createWorkingHourDetails');sharedService.menu.enable(false, 'editWorkingHourDetails');sharedService.menu.open('createWorkingHourDetails');">
-                                    </ion-icon>
-                                </ion-col>
-                            </ion-row>
-                        </div>
-                        <div style="height: calc(100% - 62px);overflow-y: auto;">
-                            <ng-container *ngIf="mode==='OFF'">
-                                <ion-row *ngFor="let item of list; let i=index" style="padding-left: 5px;">
-                                    <ion-col size="5"
-                                        style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                        <p class="textHover"
-                                            style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
-                                            [ngClass]="{
-                                            'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
-                                            (click)="clickedCalendar(item, i)">
-                                            {{item.code}}
-                                        </p>
-                                        <p
-                                            style="font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                            {{item.description}}
-                                        </p>
+                                        PROFILE NAME
                                     </ion-col>
-                                    <ion-col align-self-center size="3" style="color: #4d4f5c;font-size: 11px;">
-                                        {{item.time.start_time}} - {{item.time.end_time}}</ion-col>
-                                    <ion-col align-self-center size="2.5"
-                                        style="text-align: center;color: #4d4f5c;font-size: 11px;">
-                                        {{item.total_employee_attach}}</ion-col>
+                                    <ion-col size="3" align-self-center
+                                        style="display: -webkit-box;
+                                -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+                                        WORKING HOUR</ion-col>
+                                    <ion-col size="2.5" align-self-center
+                                        style="display: -webkit-box;
+                                -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+                                        ASSIGNED EMPLOYEE NO.</ion-col>
                                     <ion-col size="1.5" align-self-center
                                         style="text-align: right;padding-right: 10px;">
+                                        <ion-icon *ngIf="mode==='ON'" class="addIcon" name="add-circle-outline"
+                                            (click)="id='';sharedService.menu.enable(true, 'createWorkingHourDetails');sharedService.menu.enable(false, 'editWorkingHourDetails');sharedService.menu.open('createWorkingHourDetails');">
+                                        </ion-icon>
                                     </ion-col>
-                                    <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 0;">
-                                    </ion-item>
                                 </ion-row>
-                            </ng-container>
-
-                            <ng-container *ngIf="mode==='ON'">
-                                <section class="my-dropzone scrollable" dndDropzone dndDragoverClass="custom-drag-over"
-                                    (dndDrop)="dropEvent($event, item)" [dndDisableIf]="i==clickedIndex"
-                                    *ngFor="let item of list; let i=index">
-                                    <ion-row class="sectionRow">
+                            </div>
+                            <div style="height: calc(100% - 62px);overflow-y: auto;">
+                                <ng-container *ngIf="mode==='OFF'">
+                                    <ion-row *ngFor="let item of list; let i=index" style="padding-left: 5px;">
                                         <ion-col size="5"
                                             style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                             <p class="textHover"
                                                 style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
                                                 [ngClass]="{
-                                                    'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
+                                            'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
                                                 (click)="clickedCalendar(item, i)">
                                                 {{item.code}}
                                             </p>
@@ -166,19 +136,268 @@
                                             {{item.total_employee_attach}}</ion-col>
                                         <ion-col size="1.5" align-self-center
                                             style="text-align: right;padding-right: 10px;">
-                                            <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mode==='ON'"
-                                                style="width: 11px;height:11px;display: inline-block;"
-                                                [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
-                                                (click)="id=item.working_hours_guid;sharedService.menu.enable(true, 'editWorkingHourDetails');sharedService.menu.enable(false, 'createWorkingHourDetails');sharedService.menu.open('editWorkingHourDetails'); ">
-                                            &nbsp;&nbsp;
-                                            <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mode==='ON'"
-                                                style="width: 11px;height:11px;display: inline-block;"
-                                                [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
-                                                (click)="deleteWorkingHrProfile(item.working_hours_guid, item.code)">
                                         </ion-col>
+                                        <ion-item class="divider" lines="full"
+                                            style="padding-top: 0;padding-bottom: 0;">
+                                        </ion-item>
                                     </ion-row>
-                                </section>
-                            </ng-container>
+                                </ng-container>
+
+                                <ng-container *ngIf="mode==='ON'">
+                                    <section class="my-dropzone scrollable" dndDropzone
+                                        dndDragoverClass="custom-drag-over" (dndDrop)="dropEvent($event, item)"
+                                        [dndDisableIf]="i==clickedIndex" *ngFor="let item of list; let i=index">
+                                        <ion-row class="sectionRow">
+                                            <ion-col size="5"
+                                                style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                <p class="textHover"
+                                                    style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
+                                                    [ngClass]="{
+                                                    'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
+                                                    (click)="clickedCalendar(item, i)">
+                                                    {{item.code}}
+                                                </p>
+                                                <p
+                                                    style="font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                    {{item.description}}
+                                                </p>
+                                            </ion-col>
+                                            <ion-col align-self-center size="3" style="color: #4d4f5c;font-size: 11px;">
+                                                {{item.time.start_time}} - {{item.time.end_time}}</ion-col>
+                                            <ion-col align-self-center size="2.5"
+                                                style="text-align: center;color: #4d4f5c;font-size: 11px;">
+                                                {{item.total_employee_attach}}</ion-col>
+                                            <ion-col size="1.5" align-self-center
+                                                style="text-align: right;padding-right: 10px;">
+                                                <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mode==='ON'"
+                                                    style="width: 11px;height:11px;display: inline-block;"
+                                                    [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
+                                                    (click)="id=item.working_hours_guid;sharedService.menu.enable(true, 'editWorkingHourDetails');sharedService.menu.enable(false, 'createWorkingHourDetails');sharedService.menu.open('editWorkingHourDetails'); ">
+                                                &nbsp;&nbsp;
+                                                <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mode==='ON'"
+                                                    style="width: 11px;height:11px;display: inline-block;"
+                                                    [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
+                                                    (click)="deleteWorkingHrProfile(item.working_hours_guid, item.code)">
+                                            </ion-col>
+                                        </ion-row>
+                                    </section>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div [class]="'hide-sm-up'" style="margin-bottom: 5px;">
+
+                            <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
+                                                                padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                                <ion-row>
+                                    <ion-col align-self-center
+                                        style="display: -webkit-box;
+                                                            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+                                        PROFILE
+                                    </ion-col>
+                                </ion-row>
+                            </div>
+                            <div style="height: 150px; overflow-y: auto;">
+                                <div style="margin: auto 5px;">
+
+                                    <ng-container *ngIf="mode==='ON'">
+                                        <section class="my-dropzone scrollable textHover" dndDropzone
+                                            dndDragoverClass="custom-drag-over" (dndDrop)="dropEvent($event, item)"
+                                            [dndDisableIf]="i==clickedIndex" style="cursor: pointer;"
+                                            (click)="clickedCalendar(item, i)" *ngFor="let item of list; let i=index">
+
+                                            <ion-row class="sectionRow" style="display: flex; flex-flow: row nowrap;">
+
+                                                <ion-item-group style="flex: 1;">
+                                                    <ion-item-group
+                                                        style="display: flex; align-items: center; flex-flow: row wrap;">
+                                                        <p class="textHover" style="cursor: pointer;font-size: 12px;font-weight: bold;white-space: pre-line;margin-bottom:
+                                                    0;" [ngClass]="{ 'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}">
+                                                            {{item.code}}
+                                                        </p>
+                                                        <p style="margin: auto 5px;color: #4d4f5c;">|</p>
+                                                        <p
+                                                            style="font-size: 11px;color: #4d4f5c;padding: 0;white-space: pre-line;">
+                                                            {{item.description}}
+                                                        </p>
+                                                    </ion-item-group>
+                                                    <ion-item-group>
+                                                        <ion-grid style="padding: unset; font-size: 11px; display: flex; flex-flow:
+                                                    column nowrap;color: #4d4f5c;">
+                                                            <ion-row style="height: 15px;">
+                                                                <ion-col>
+                                                                    Working Hour
+                                                                </ion-col>
+                                                                <ion-col>
+                                                                    : {{item.time.start_time}} - {{item.time.end_time}}
+                                                                </ion-col>
+                                                            </ion-row>
+                                                            <ion-row>
+                                                                <ion-col>
+                                                                    Assigned Employee No.:
+                                                                </ion-col>
+                                                                <ion-col>
+                                                                    : {{item.total_employee_attach}}
+                                                                </ion-col>
+                                                            </ion-row>
+                                                        </ion-grid>
+                                                    </ion-item-group>
+                                                </ion-item-group>
+
+                                                <ion-item-group 
+                                                    style="text-align: right;padding-right: 10px;">
+                                                    <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mode==='ON'"
+                                                        style="width: 11px;height:11px;display: inline-block;"
+                                                        [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
+                                                        (click)="id=item.working_hours_guid;sharedService.menu.enable(true, 'editWorkingHourDetails');sharedService.menu.enable(false, 'createWorkingHourDetails');sharedService.menu.open('editWorkingHourDetails'); ">
+                                                    &nbsp;&nbsp;
+                                                    <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mode==='ON'"
+                                                        style="width: 11px;height:11px;display: inline-block;"
+                                                        [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
+                                                        (click)="deleteWorkingHrProfile(item.working_hours_guid, item.code)">
+                                                </ion-item-group>
+                                            </ion-row>
+                                        </section>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode==='OFF'">
+                                        <ion-card *ngFor="let item of list; let i=index" class="textHover"
+                                            style="cursor: pointer;" (click)="clickedCalendar(item, i)">
+                                            <ion-card-content>
+                                                <ion-item-group
+                                                    style="display: flex; align-items: center; flex-flow: row wrap;">
+                                                    <p class="textHover" style="cursor: pointer;font-size: 12px;font-weight: bold;white-space: pre-line;margin-bottom:
+                                                0;" [ngClass]="{ 'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}">
+                                                        {{item.code}}
+                                                    </p>
+                                                    <p style="margin: auto 5px;color: #4d4f5c;">|</p>
+                                                    <p
+                                                        style="font-size: 11px;color: #4d4f5c;padding: 0;white-space: pre-line;">
+                                                        {{item.description}}
+                                                    </p>
+                                                </ion-item-group>
+                                                <ion-item-group>
+                                                    <ion-grid style="padding: unset; font-size: 11px; display: flex; flex-flow:
+                                                column nowrap;color: #4d4f5c;">
+                                                        <ion-row style="height: 15px;">
+                                                            <ion-col>
+                                                                Working Hour
+                                                            </ion-col>
+                                                            <ion-col>
+                                                                : {{item.time.start_time}} - {{item.time.end_time}}
+                                                            </ion-col>
+                                                        </ion-row>
+                                                        <ion-row>
+                                                            <ion-col>
+                                                                Assigned Employee No.:
+                                                            </ion-col>
+                                                            <ion-col>
+                                                                : {{item.total_employee_attach}}
+                                                            </ion-col>
+                                                        </ion-row>
+                                                    </ion-grid>
+                                                </ion-item-group>
+                                            </ion-card-content>
+                                        </ion-card>
+                                    </ng-container>
+
+                                </div>
+                            </div>
+
+
+                            <!-- <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
+                                    padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                                <ion-row>
+                                    <ion-col size="5" align-self-center
+                                        style="display: -webkit-box;
+                                -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+                                        PROFILE NAME111
+                                    </ion-col>
+                                    <ion-col size="3" align-self-center
+                                        style="display: -webkit-box;
+                                -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+                                        WORKING HOUR</ion-col>
+                                    <ion-col size="2.5" align-self-center
+                                        style="display: -webkit-box;
+                                -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+                                        ASSIGNED EMPLOYEE NO.</ion-col>
+                                    <ion-col size="1.5" align-self-center
+                                        style="text-align: right;padding-right: 10px;">
+                                        <ion-icon *ngIf="mode==='ON'" class="addIcon" name="add-circle-outline"
+                                            (click)="id='';sharedService.menu.enable(true, 'createWorkingHourDetails');sharedService.menu.enable(false, 'editWorkingHourDetails');sharedService.menu.open('createWorkingHourDetails');">
+                                        </ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                            </div> -->
+                            <!-- <div style="height: calc(100% - 62px);overflow-y: auto;">
+                                <ng-container *ngIf="mode==='OFF'">
+                                    <ion-row *ngFor="let item of list; let i=index" style="padding-left: 5px;">
+                                        <ion-col size="5"
+                                            style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                            <p class="textHover"
+                                                style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
+                                                [ngClass]="{
+                                            'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
+                                                (click)="clickedCalendar(item, i)">
+                                                {{item.code}}
+                                            </p>
+                                            <p
+                                                style="font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                {{item.description}}
+                                            </p>
+                                        </ion-col>
+                                        <ion-col align-self-center size="3" style="color: #4d4f5c;font-size: 11px;">
+                                            {{item.time.start_time}} - {{item.time.end_time}}</ion-col>
+                                        <ion-col align-self-center size="2.5"
+                                            style="text-align: center;color: #4d4f5c;font-size: 11px;">
+                                            {{item.total_employee_attach}}</ion-col>
+                                        <ion-col size="1.5" align-self-center
+                                            style="text-align: right;padding-right: 10px;">
+                                        </ion-col>
+                                        <ion-item class="divider" lines="full"
+                                            style="padding-top: 0;padding-bottom: 0;">
+                                        </ion-item>
+                                    </ion-row>
+                                </ng-container>
+
+                                <ng-container *ngIf="mode==='ON'">
+                                    <section class="my-dropzone scrollable" dndDropzone
+                                        dndDragoverClass="custom-drag-over" (dndDrop)="dropEvent($event, item)"
+                                        [dndDisableIf]="i==clickedIndex" *ngFor="let item of list; let i=index">
+                                        <ion-row class="sectionRow">
+                                            <ion-col size="5"
+                                                style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                <p class="textHover"
+                                                    style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
+                                                    [ngClass]="{
+                                                    'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
+                                                    (click)="clickedCalendar(item, i)">
+                                                    {{item.code}}
+                                                </p>
+                                                <p
+                                                    style="font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                    {{item.description}}
+                                                </p>
+                                            </ion-col>
+                                            <ion-col align-self-center size="3" style="color: #4d4f5c;font-size: 11px;">
+                                                {{item.time.start_time}} - {{item.time.end_time}}</ion-col>
+                                            <ion-col align-self-center size="2.5"
+                                                style="text-align: center;color: #4d4f5c;font-size: 11px;">
+                                                {{item.total_employee_attach}}</ion-col>
+                                            <ion-col size="1.5" align-self-center
+                                                style="text-align: right;padding-right: 10px;">
+                                                <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mode==='ON'"
+                                                    style="width: 11px;height:11px;display: inline-block;"
+                                                    [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
+                                                    (click)="id=item.working_hours_guid;sharedService.menu.enable(true, 'editWorkingHourDetails');sharedService.menu.enable(false, 'createWorkingHourDetails');sharedService.menu.open('editWorkingHourDetails'); ">
+                                                &nbsp;&nbsp;
+                                                <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mode==='ON'"
+                                                    style="width: 11px;height:11px;display: inline-block;"
+                                                    [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
+                                                    (click)="deleteWorkingHrProfile(item.working_hours_guid, item.code)">
+                                            </ion-col>
+                                        </ion-row>
+                                    </section>
+                                </ng-container>
+                            </div> -->
                         </div>
                     </div>
                     <div class="assigned" style="flex: 2 1 auto;">

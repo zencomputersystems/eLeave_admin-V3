@@ -144,14 +144,18 @@
     // flex: 60%;
     // max-width: 60%;
     max-height: 100%;
-    height: 100%;
+    @media screen and (min-width: 576px) {
+      height: 100%;
+    }
   }
   .assigned {
     // flex: 40%;
     // max-width: 40%;
-    margin-left: 10px;
-    max-height: 100%;
+    @media screen and (min-width: 576px) {
+      margin-left: 10px;
+    }
     height: 100%;
+    max-height: 100%;
   }
   .mainDivider {
     --min-height: none;
