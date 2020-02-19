@@ -5,6 +5,7 @@ import { DeleteCalendarConfirmationComponent } from "../../delete-calendar-confi
 import { MenuController } from "@ionic/angular";
 import { EditModeDialogComponent } from "../../edit-mode-dialog/edit-mode-dialog.component";
 import { SharedService } from "../../shared.service";
+import { Platform } from "@ionic/angular";
 
 /**
  * working hour profile list page
@@ -98,7 +99,8 @@ export class WorkingHourListComponent implements OnInit {
      * @param {MenuController} menu
      * @memberof WorkingHourListComponent
      */
-    constructor(private workingHrAPI: WorkingHourApiService, public dialog: MatDialog, private sharedService: SharedService) {
+    constructor(private workingHrAPI: WorkingHourApiService, public dialog: MatDialog, private sharedService: SharedService,
+        public workingHrPlatform: Platform) {
     }
 
     /**

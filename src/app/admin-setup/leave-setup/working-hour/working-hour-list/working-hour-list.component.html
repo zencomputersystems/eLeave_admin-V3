@@ -1,4 +1,4 @@
-<!------------------------------------------ edit working hour menu --------------------->
+<!-- ---------------------------------------- edit working hour menu ------------------- -->
 <ion-menu style="--width: 700px;" contentId="editWorkingHourContent" side="end" type="overlay"
     menuId="editWorkingHourDetails">
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
@@ -16,7 +16,7 @@
 <ion-router-outlet id="editWorkingHourContent">
 </ion-router-outlet>
 
-<!------------------------------------------ create new working hour menu --------------------->
+<!-- ---------------------------------------- create new working hour menu ------------------- -->
 <ion-menu style="--width: 700px;" contentId="createWorkingHourContent" side="end" type="overlay"
     menuId="createWorkingHourDetails">
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
@@ -34,22 +34,27 @@
 <ion-router-outlet id="createWorkingHourContent">
 </ion-router-outlet>
 
-<!------------------------------  content of working hour page ------------------------------------->
-<ion-card>
+<!-- ----------------------------  content of working hour page ----------------------------------- -->
+<ion-card style="overflow-y: auto;">
     <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
         <div class="fullContainer">
-            <div class="left">
-                <img src="assets/icon/leave_setup/icon_year_end_closing@3x.png" style="width:34px;height:33px">
-            </div>
-            <div class="right">
-                <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Working Hour
-                    Setup
-                </ion-card-subtitle>
-                <ion-card-subtitle class="subtitle" style="font-size: 12px;">
-                    Create office working hour for employee</ion-card-subtitle>
-            </div>
-            <div style="right: 75px;top: 25px;position: absolute;">
-                <!-- <ion-button fill="outline"
+            <ion-item-group style="display: flex;">
+                <div class="left">
+                    <img src="assets/icon/leave_setup/icon_year_end_closing@3x.png" style="width:34px;height:33px">
+                </div>
+                <div class="right">
+                    <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Working
+                        Hour
+                        Setup
+                    </ion-card-subtitle>
+                    <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                        Create office working hour for employee</ion-card-subtitle>
+                </div>
+            </ion-item-group>
+            <ion-item-group *ngIf="workingHrPlatform.is('desktop' || 'electron')"
+                style="margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
+                <div style="right: 75px;top: 25px;">
+                    <!-- <ion-button fill="outline"
                     style="background: #f0f0f7;font-size: 12px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
                     color="primary">
                     Cancel
@@ -59,16 +64,17 @@
                     color="primary">
                     Save
                 </ion-button> -->
-                <p
-                    style="margin-top: 16px;opacity: 0.8;font-size: 12px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
-                    Edit
-                    Mode: {{mode}}</p>
-                <div style="display: inline-block;position: absolute;margin-top: 12px;">
-                    <ion-toggle style="zoom:0.70;--background: #a5a4bf;" mode="ios" color="secondary"
-                        (ionChange)="toggleMode($event)">
-                    </ion-toggle>
+                    <p
+                        style="margin-top: 16px;opacity: 0.8;font-size: 12px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
+                        Edit
+                        Mode: {{mode}}</p>
+                    <div style="display: inline-block;position: absolute;margin-top: 12px;">
+                        <ion-toggle style="zoom:0.70;--background: #a5a4bf;" mode="ios" color="secondary"
+                            (ionChange)="toggleMode($event)">
+                        </ion-toggle>
+                    </div>
                 </div>
-            </div>
+            </ion-item-group>
         </div>
     </ion-card-header>
     <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
@@ -77,10 +83,10 @@
 
     <!-- class="container" -->
     <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;" *ngIf="!showSpinner">
-        <div class="cardContent">
+        <div class="cardContent" style="overflow-y: auto;">
             <ion-card-content style="max-height:100%;height: 100%;">
-                <div class="row">
-                    <div class="working">
+                <div class="row" style="flex-flow: row wrap;">
+                    <div class="working" style="flex: 2 1 auto;">
                         <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
                                     padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
@@ -175,7 +181,7 @@
                             </ng-container>
                         </div>
                     </div>
-                    <div class="assigned">
+                    <div class="assigned" style="flex: 2 1 auto;">
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
