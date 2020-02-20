@@ -1,3 +1,4 @@
+import { Platform } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { LeaveApiService } from '../leave-api.service';
 import { LeaveEntitlementApiService } from './leave-entitlement-api.service';
@@ -199,7 +200,7 @@ export class LeaveEntitlementComponent implements OnInit {
    * @param {MenuController} menu
    * @memberof LeaveEntitlementComponent
    */
-  constructor(private entitlementApi: LeaveEntitlementApiService, private leaveApi: LeaveApiService, private sharedService: SharedService) {
+  constructor(private entitlementApi: LeaveEntitlementApiService, private leaveApi: LeaveApiService, private sharedService: SharedService, public leaveEntitlementPlatform: Platform) {
     this.abbreviation = new FormControl('', Validators.required);
     this.leaveTypeName = new FormControl('', Validators.required);
   }

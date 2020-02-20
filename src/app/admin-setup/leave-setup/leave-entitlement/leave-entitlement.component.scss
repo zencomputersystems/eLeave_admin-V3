@@ -29,6 +29,13 @@
     width: 100%;
     padding-left: 15px;
   }
+  .rowMobileDetails {
+    display: flex;
+    flex-flow: column;
+    ion-col {
+      flex: 1;
+    }
+  }
   .row {
     display: flex;
     flex-wrap: nowrap;
