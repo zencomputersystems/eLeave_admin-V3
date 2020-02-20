@@ -250,5 +250,16 @@
   }
   ::ng-deep .fc-event-container {
     cursor: pointer;
+  
+  }
+
+  .calendar-profile-popup {
+    @media screen and (min-width: 576px) {
+      --width: 600px;
+    }
+
+    @media screen and (max-width: 576px) {
+      --width: 304px;
+    }
   }
 }
