@@ -528,7 +528,7 @@
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
                 <mat-option value="PDF"
-                  (click)="savePDF('Leave Entitlement Summary', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Length of Service (Years)', dataKey: 'yearService' }, { header: 'Leave Type', dataKey: 'leaveDetails' }, { header: 'Entitlement (Days)', dataKey: 'entitledDays' }, { header: 'Carried Forward (Days)', dataKey: 'carriedForward' }, { header: 'Forfeited (Days)', dataKey: 'forfeited' }, { header: 'Taken (Days)', dataKey: 'taken' }, { header: 'Pending (Days)', dataKey: 'pending' }, { header: 'Balance (Days)', dataKey: 'balance' }])">
+                  (click)="savePDF('Leave Entitlement Summary', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Length of Service (Years)', dataKey: 'yearService' }, { header: 'Leave Type', dataKey: 'leaveType' }, { header: 'Entitlement (Days)', dataKey: 'entitledDays' }, { header: 'Carried Forward (Days)', dataKey: 'carriedForward' }, { header: 'Forfeited (Days)', dataKey: 'forfeited' }, { header: 'Taken (Days)', dataKey: 'taken' }, { header: 'Pending (Days)', dataKey: 'pending' }, { header: 'Balance (Days)', dataKey: 'balance' }])">
                   PDF
                 </mat-option>
                 <mat-option value="CSV"
@@ -1118,7 +1118,7 @@
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
                 <mat-option value="PDF"
-                  (click)="savePDF('Leave Taken History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveDetail.leaveType' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Approved By', dataKey: 'approveBy' }, { header: 'Remarks', dataKey: 'remarks' }])">
+                  (click)="savePDF('Leave Taken History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveType' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Approved By', dataKey: 'approveBy' }, { header: 'Remarks', dataKey: 'remarks' }])">
                   PDF
                 </mat-option>
                 <mat-option value="CSV"

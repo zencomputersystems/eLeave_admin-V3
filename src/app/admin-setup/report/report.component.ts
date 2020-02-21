@@ -293,77 +293,76 @@ export class ReportComponent implements OnInit {
       showHead: 'everyPage',
       body: this.tableDetails,
       columns: headerKey,
+      didParseCell: (data) => {
+        if (title === 'Leave Entitlement Summary' || title === 'Leave Taken History') {
+          let type = '', start = '', end = '', days = '', approved = '', remark = '',
+            entitled = '', carried = '', forfeited = '', taken = '', pending = '', balance = '';
+          for (let i = 0; i < data.table.body.length; i++) {
+            for (let j = 0; j < data.table.body[i].raw.leaveDetail.length; j++) {
+              if (data.row.index === i && data.section === 'body') {
+                if (title === 'Leave Entitlement Summary') {
+                  if (data.column.index === 4) {
+                    type += data.table.body[i].raw.leaveDetail[j].leaveType + '\n';
+                    data.cell.text = type;
+                  }
+                  if (data.column.index === 5) {
+                    entitled += data.table.body[i].raw.leaveDetail[j].entitledDays + '\n';
+                    data.cell.text = entitled;
+                  }
+                  if (data.column.index === 6) {
+                    carried += data.table.body[i].raw.leaveDetail[j].carriedForward + '\n';
+                    data.cell.text = carried;
+                  }
+                  if (data.column.index === 7) {
+                    forfeited += data.table.body[i].raw.leaveDetail[j].forfeited + '\n';
+                    data.cell.text = forfeited;
+                  }
+                  if (data.column.index === 8) {
+                    taken += data.table.body[i].raw.leaveDetail[j].taken + '\n';
+                    data.cell.text = taken;
+                  }
+                  if (data.column.index === 9) {
+                    pending += data.table.body[i].raw.leaveDetail[j].pending + '\n';
+                    data.cell.text = pending;
+                  }
+                  if (data.column.index === 10) {
+                    balance += data.table.body[i].raw.leaveDetail[j].balance + '\n';
+                    data.cell.text = balance;
+                  }
+                }
+                if (title === 'Leave Taken History') {
+                  if (data.column.index === 3) {
+                    type += data.table.body[i].raw.leaveDetail[j].leaveType + '\n';
+                    data.cell.text = type;
+                  }
+                  if (data.column.index === 4) {
+                    start += data.table.body[i].raw.leaveDetail[j].startDate + '\n';
+                    data.cell.text = start;
+                  }
+                  if (data.column.index === 5) {
+                    end += data.table.body[i].raw.leaveDetail[j].endDate + '\n';
+                    data.cell.text = end;
+                  }
+                  if (data.column.index === 6) {
+                    days += (data.table.body[i].raw.leaveDetail[j].noOfDays) + '\n';
+                    data.cell.text = days
+                  }
+                  if (data.column.index === 7) {
+                    approved += data.table.body[i].raw.leaveDetail[j].approveBy + '\n';
+                    data.cell.text = approved;
+                  }
+                  if (data.column.index === 8) {
+                    remark += data.table.body[i].raw.leaveDetail[j].remarks + '\n';
+                    data.cell.text = remark;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     })
     doc.save(title + '.pdf')
-  }
-
-  /**
-   * create table body value from api data
-   * @returns
-   * @memberof ReportComponent
-   */
-  bodyValue(title: string) {
-    let allBody = [];
-    if (title === 'Leave Entitlement Summary') {
-      for (let i = 0; i < this.tableDetails.length; i++) {
-        let body = new Array();
-        body.push(i + 1);
-        body.push(this.tableDetails[i].employeeNo);
-        body.push(this.tableDetails[i].employeeName);
-        body.push(this.tableDetails[i].yearService);
-        for (let j = 0; j < this.tableDetails[i].leaveDetail.length; j++) {
-          body.push(this.tableDetails[i].leaveDetail[j].leaveType);
-          body.push(this.tableDetails[i].leaveDetail[j].entitledDays);
-          body.push(this.tableDetails[i].leaveDetail[j].carriedForward);
-          body.push(this.tableDetails[i].leaveDetail[j].forfeited);
-          body.push(this.tableDetails[i].leaveDetail[j].taken);
-          body.push(this.tableDetails[i].leaveDetail[j].pending);
-          body.push(this.tableDetails[i].leaveDetail[j].balance);
-        }
-        allBody.push(body);
-      }
-    }
-    if (title === 'Apply On Behalf History') {
-      for (let i = 0; i < this.tableDetails.length; i++) {
-        let body = new Array();
-        body.push(i + 1);
-        body.push(this.tableDetails[i].employeeName);
-        body.push(this.tableDetails[i].yearService);
-        body.push(this.tableDetails[i].leaveType);
-        body.push(this.tableDetails[i].applicationDate);
-        body.push(this.tableDetails[i].confirmedDate);
-        body.push(this.tableDetails[i].appliedBy);
-        body.push(this.tableDetails[i].startDate);
-        body.push(this.tableDetails[i].endDate);
-        body.push(this.tableDetails[i].noOfDays);
-        body.push(this.tableDetails[i].status);
-        body.push(this.tableDetails[i].remarks);
-        allBody.push(body);
-      }
-    }
-    if (title === 'Leave Taken History') {
-      for (let i = 0; i < this.tableDetails.length; i++) {
-        let body = new Array();
-        body.push(i + 1);
-        body.push(this.tableDetails[i].employeeNo);
-        body.push(this.tableDetails[i].employeeName);
-        for (let j = 0; j < this.tableDetails[i].leaveDetail.length; j++) {
-          if (this.tableDetails[i].leaveDetail.length > 1 && j != 0) {
-            // let body = new Array();
-            body.push(''); body.push(''); body.push('');
-          }
-          body.push(this.tableDetails[i].leaveDetail[j].leaveType);
-          body.push(this.tableDetails[i].leaveDetail[j].startDate);
-          body.push(this.tableDetails[i].leaveDetail[j].endDate);
-          body.push(this.tableDetails[i].leaveDetail[j].noOfDays);
-          body.push(this.tableDetails[i].leaveDetail[j].approveBy);
-          body.push(this.tableDetails[i].leaveDetail[j].remarks);
-        }
-        allBody.push(body);
-      }
-    }
-    return allBody;
-
   }
 
   /**
