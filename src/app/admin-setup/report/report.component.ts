@@ -295,7 +295,7 @@ export class ReportComponent implements OnInit {
       columns: headerKey,
       didParseCell: (data) => {
         if (title === 'Leave Entitlement Summary' || title === 'Leave Taken History') {
-          let type = '', start = '', end = '', days = '', approved = '', remark = '',
+          let type = '', start = '', end = '', days = '', approved = '', remark = '', takenLeaveType = '',
             entitled = '', carried = '', forfeited = '', taken = '', pending = '', balance = '';
           for (let i = 0; i < data.table.body.length; i++) {
             for (let j = 0; j < data.table.body[i].raw.leaveDetail.length; j++) {
@@ -332,8 +332,8 @@ export class ReportComponent implements OnInit {
                 }
                 if (title === 'Leave Taken History') {
                   if (data.column.index === 3) {
-                    type += data.table.body[i].raw.leaveDetail[j].leaveType + '\n';
-                    data.cell.text = type;
+                    takenLeaveType += data.table.body[i].raw.leaveDetail[j].leaveType + '\n';
+                    data.cell.text = takenLeaveType;
                   }
                   if (data.column.index === 4) {
                     start += data.table.body[i].raw.leaveDetail[j].startDate + '\n';

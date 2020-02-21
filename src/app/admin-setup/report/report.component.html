@@ -704,116 +704,33 @@
 
           <div class="content">
             <!-- ngFor under this div -->
-            <div style="padding: 10px;">
+            <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
+              [ngClass]="{ odd: odd }">
               <ion-row>
                 <ion-col size="0.4" class="titleRow text">
-                  01</ion-col>
+                  {{i+1}}</ion-col>
                 <ion-col size="1.5" class="text">
-                  Wan Mohd
-                  Fathurrahman
-                  <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+                  {{item.employeeName}}
+                  <p class="text" style="font-weight: 600;padding-top: 10px;">ID: {{item.employeeNo}}</p>
                 </ion-col>
                 <ion-col size="1.3" class="text">
-                  Annual Leave</ion-col>
+                  {{item.leaveType}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
+                  {{item.applicationDate}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  Jessie</ion-col>
+                  {{item.overrideBy}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  26/12/2018</ion-col>
+                  {{item.overrideDate}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
+                  {{item.startDate}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
+                  {{item.endDate}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  01</ion-col>
+                  {{item.noOfDays}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  Approve</ion-col>
+                  {{item.status}}</ion-col>
                 <ion-col size="1.5" class="titleRow text">
-                </ion-col>
-              </ion-row>
-            </div>
-            <div style="padding: 10px;background: #f4f4f4">
-              <ion-row>
-                <ion-col size="0.4" class="titleRow text">
-                  02</ion-col>
-                <ion-col size="1.5" class="text">
-                  Goh Liu Ying
-                  <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-                </ion-col>
-                <ion-col size="1.3" class="text">
-                  Annual Leave</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  Jessie</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/12/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  01</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  Approve</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                </ion-col>
-              </ion-row>
-            </div>
-            <div style="padding: 10px;">
-              <ion-row>
-                <ion-col size="0.4" class="titleRow text">
-                  03</ion-col>
-                <ion-col size="1.5" class="text">
-                  Chan Peng Soon
-                  <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-                </ion-col>
-                <ion-col size="1.3" class="text">
-                  Annual Leave</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  Jessie</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/12/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  01</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  Approve</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                </ion-col>
-              </ion-row>
-            </div>
-            <div style="padding: 10px;background: #f4f4f4">
-              <ion-row>
-                <ion-col size="0.4" class="titleRow text">
-                  04</ion-col>
-                <ion-col size="1.5" class="text">
-                  Lee Zi Jia
-                  <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-                </ion-col>
-                <ion-col size="1.3" class="text">
-                  Annual Leave</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  Jessie</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/12/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  01</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  Approve</ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                  {{item.remarks}}
                 </ion-col>
               </ion-row>
             </div>
@@ -996,111 +913,32 @@
 
           <div class="content">
             <!-- ngFor under this div -->
-            <div style="padding: 10px;">
+            <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
+              [ngClass]="{ odd: odd }">
               <ion-row>
                 <ion-col size="0.5" class="titleRow text">
-                  01</ion-col>
+                  {{i+1}}</ion-col>
                 <ion-col size="2" class="text">
-                  Wan Mohd
-                  Fathurrahman
-                  <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
+                  {{item.employeeName}}
+                  <p class="text" style="font-weight: 600;padding-top: 10px;">ID: {{item.employeeNo}}</p>
                 </ion-col>
                 <ion-col size="1" class="text">
-                  Annual Leave</ion-col>
+                  {{item.leaveType}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
+                  {{item.applyDate}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  26/12/2018</ion-col>
+                  {{item.startDate}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
+                  {{item.endDate}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  01</ion-col>
+                  {{item.noOfDays}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  Approve</ion-col>
+                  {{item.status}}</ion-col>
                 <ion-col size="1.5" class="titleRow text">
-                </ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                </ion-col>
-              </ion-row>
-            </div>
-            <div style="padding: 10px;background: #f4f4f4">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
-                  02</ion-col>
-                <ion-col size="2" class="text">
-                  Wan Mohd
-                  Fathurrahman
-                  <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-                </ion-col>
-                <ion-col size="1" class="text">
-                  Annual Leave</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/12/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  01</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  Approve</ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                  {{item.requestRemarks}}
                 </ion-col>
                 <ion-col size="1.5" class="titleRow text">
-                </ion-col>
-              </ion-row>
-            </div>
-            <div style="padding: 10px;">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
-                  03</ion-col>
-                <ion-col size="2" class="text">
-                  Wan Mohd
-                  Fathurrahman
-                  <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-                </ion-col>
-                <ion-col size="1" class="text">
-                  Annual Leave</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/12/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  01</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  Approve</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                </ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                </ion-col>
-              </ion-row>
-            </div>
-            <div style="padding: 10px;background: #f4f4f4">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
-                  04</ion-col>
-                <ion-col size="2" class="text">
-                  Wan Mohd
-                  Fathurrahman
-                  <p class="text" style="font-weight: 600;padding-top: 10px;">ID: 3017</p>
-                </ion-col>
-                <ion-col size="1" class="text">
-                  Annual Leave</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/12/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  26/09/2018</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  01</ion-col>
-                <ion-col size="1" class="titleRow text">
-                  Approve</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                </ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                  {{item.finalApproveRemarks}}
                 </ion-col>
               </ion-row>
             </div>
@@ -1276,91 +1114,27 @@
 
           <div class="content">
             <!-- ngFor under this div -->
-            <div style="padding: 10px;">
+            <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
+              [ngClass]="{ odd: odd }">
               <ion-row>
                 <ion-col size="0.5" class="titleRow text">
-                  01</ion-col>
+                  {{i+1}}</ion-col>
                 <ion-col size="1.5" class="titleRow text">
-                  3017</ion-col>
+                  {{item.employeeNo}}</ion-col>
                 <ion-col size="2" class="text">
-                  Nor Hanani
+                  {{item.employeeName}}
                 </ion-col>
                 <ion-col size="1.5" class="text">
-                  Annual Leave
+                  {{item.leaveType}}
                 </ion-col>
                 <ion-col size="1.5" class="titleRow text">
-                  +1</ion-col>
+                  {{item.adjustment}}</ion-col>
                 <ion-col size="1.5" class="titleRow text">
-                  Bala</ion-col>
+                  {{item.adjustBy}}</ion-col>
                 <ion-col size="1.5" class="titleRow text">
-                  26/09/2019</ion-col>
+                  {{item.adjustDate}}</ion-col>
                 <ion-col size="1.5" class="titleRow text">
-                </ion-col>
-              </ion-row>
-            </div>
-            <div style="padding: 10px;background: #f4f4f4">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
-                  02</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  3017</ion-col>
-                <ion-col size="2" class="text">
-                  Sulaiman
-                </ion-col>
-                <ion-col size="1.5" class="text">
-                  Annual Leave
-                </ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  +1</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  Bala</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  26/09/2019</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                </ion-col>
-              </ion-row>
-            </div>
-            <div style="padding: 10px;">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
-                  03</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  3017</ion-col>
-                <ion-col size="2" class="text">
-                  Asyraf Husof
-                </ion-col>
-                <ion-col size="1.5" class="text">
-                  Annual Leave
-                </ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  +1</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  Bala</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  26/09/2019</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                </ion-col>
-              </ion-row>
-            </div>
-            <div style="padding: 10px;background: #f4f4f4">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
-                  04</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  3017</ion-col>
-                <ion-col size="2" class="text">
-                  Jessica
-                </ion-col>
-                <ion-col size="1.5" class="text">
-                  Annual Leave
-                </ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  +1</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  Bala</ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  26/09/2019</ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                  {{item.remarks}}
                 </ion-col>
               </ion-row>
             </div>
@@ -1612,68 +1386,21 @@
 
           <div class="content">
             <!-- ngFor under this div -->
-            <div style="padding: 10px;">
+            <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
+              [ngClass]="{ odd: odd }">
               <ion-row>
                 <ion-col size="0.5" class="titleRow text">
-                  01</ion-col>
+                  {{i+1}}</ion-col>
                 <ion-col size="1.5" class="text">
-                  2455</ion-col>
+                  {{item.employeeNo}}</ion-col>
                 <ion-col size="2" class="text">
-                  Syed Saddiq
+                  {{item.employeeName}}
                 </ion-col>
                 <ion-col size="1.5" class="text">
-                  Annual Leave
+                  {{item.leaveType}}
                 </ion-col>
                 <ion-col size="1.5" class="titleRow text">
-                  01</ion-col>
-              </ion-row>
-            </div>
-            <div style="padding: 10px;background: #f4f4f4">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
-                  02</ion-col>
-                <ion-col size="1.5" class="text">
-                  2455</ion-col>
-                <ion-col size="2" class="text">
-                  Syed Saddiq
-                </ion-col>
-                <ion-col size="1.5" class="text">
-                  Annual Leave
-                </ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  01</ion-col>
-              </ion-row>
-            </div>
-            <div style="padding: 10px;">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
-                  03</ion-col>
-                <ion-col size="1.5" class="text">
-                  2455</ion-col>
-                <ion-col size="2" class="text">
-                  Syed Saddiq
-                </ion-col>
-                <ion-col size="1.5" class="text">
-                  Annual Leave
-                </ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  01</ion-col>
-              </ion-row>
-            </div>
-            <div style="padding: 10px;background: #f4f4f4">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
-                  04</ion-col>
-                <ion-col size="1.5" class="text">
-                  2455</ion-col>
-                <ion-col size="2" class="text">
-                  Syed Saddiq
-                </ion-col>
-                <ion-col size="1.5" class="text">
-                  Annual Leave
-                </ion-col>
-                <ion-col size="1.5" class="titleRow text">
-                  01</ion-col>
+                  {{item.noOfDays}}</ion-col>
               </ion-row>
             </div>
           </div>
