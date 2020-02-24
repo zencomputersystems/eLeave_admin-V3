@@ -177,4 +177,51 @@
   ::ng-deep .mat-radio-label-content {
     padding-left: 13px;
   }
+
+  // .leave-entitlement-popup {
+  //   @media screen and (min-width: 576px) {
+  //     --width: 600px;
+  //   }
+
+  //   @media screen and (max-width: 576px) {
+  //     --width: 304px;
+  //   }
+  // }
+  // .edit-leave-entitlement-profile {
+  //   @media screen and (min-width: 576px) {
+  //     height: calc(100% - 247px);
+  //     overflow: auto;
+  //   }
+
+  //   @media screen and (max-width: 576px) {
+  //     height: auto;
+  //     overflow: auto;
+  //   }
+  // }
+
+  @media screen and (min-width: 576px) {
+
+    .leave-entitlement-popup {
+      --width: 600px;
+    }
+    .edit-leave-entitlement-profile {
+      height: calc(100% - 247px);
+      overflow: auto;
+    }
+    .edit-leave-entitlement-profile-items {
+      height: calc(100% - 75px);
+    }
+  }
+  @media screen and (max-width: 576px) {
+    .leave-entitlement-popup {
+      --width: 304px;
+    }
+    .edit-leave-entitlement-profile {
+      height: auto;
+      overflow: auto;
+    }
+    .edit-leave-entitlement-profile-items {
+      height: auto;
+    }
+  }
 }

@@ -223,6 +223,7 @@ export class LeaveEntitlementComponent implements OnInit {
       this.clickedIndex = 0;
     }
     this.getProfileDetails(this.leaveEntitlement[this.clickedHeaderIndex][this.clickedIndex].leaveEntitlementId);
+    console.log('leaveEntitlementPlatform: ' + this.leaveEntitlementPlatform.is('desktop' || 'electron'));
   }
 
   /**
