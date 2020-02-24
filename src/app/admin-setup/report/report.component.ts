@@ -672,9 +672,15 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   filter() {
-    if (this.selects == 'apply-on-behalf') {
+    if (this.selects == 'apply-on-behalf' || this.selects == 'approval-override') {
       let selectedMembers = this.tableDetails.filter(
         m => new Date(m.applicationDate) >= this.firstPicker.value && new Date(m.applicationDate) <= this.secondPicker.value
+      );
+      this.tableDetails = selectedMembers;
+    }
+    if (this.selects == 'entitlement-claim') {
+      let selectedMembers = this.tableDetails.filter(
+        claim => new Date(claim.applyDate) >= this.firstPicker.value && new Date(claim.applyDate) <= this.secondPicker.value
       );
       this.tableDetails = selectedMembers;
     }
@@ -687,6 +693,20 @@ export class ReportComponent implements OnInit {
               if (new Date(details.startDate) >= this.firstPicker.value && new Date(details.endDate) <= this.secondPicker.value) {
                 newLeaveDetails.push(details);
                 m.leaveDetail = newLeaveDetails;
+              }
+            })
+        }
+      );
+    }
+    if (this.selects == 'leave-adjustment') {
+      const newLeaveDetails = [];
+      this.tableDetails.filter(
+        adjust => {
+          adjust.leaveDetail.filter(
+            details => {
+              if (new Date(details.adjustDate) >= this.firstPicker.value && new Date(details.adjustDate) <= this.secondPicker.value) {
+                newLeaveDetails.push(details);
+                adjust.leaveDetail = newLeaveDetails;
               }
             })
         }
