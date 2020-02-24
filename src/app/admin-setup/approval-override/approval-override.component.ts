@@ -2,6 +2,7 @@ import { Component, OnInit, HostBinding } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApprovalOverrideApiService } from './approval-override-api.service';
 import { MenuController } from '@ionic/angular';
+import { ReportApiService } from '../report/report-api.service';
 
 /**
  * override approval for pending leave applciation 
@@ -87,11 +88,20 @@ export class ApprovalOverrideComponent implements OnInit {
     public pendingList: any = [];
 
     /**
-     *Creates an instance of ApprovalOverrideComponent.
-     * @param {ApprovalOverrideApiService} approvalOverrideAPI
+     * approval-override history data
+     * @type {*}
      * @memberof ApprovalOverrideComponent
      */
-    constructor(private approvalOverrideAPI: ApprovalOverrideApiService, private menu: MenuController) {
+    public history: any;
+
+    /**
+     *Creates an instance of ApprovalOverrideComponent.
+     * @param {ApprovalOverrideApiService} approvalOverrideAPI
+     * @param {MenuController} menu
+     * @param {ReportApiService} reportApi
+     * @memberof ApprovalOverrideComponent
+     */
+    constructor(private approvalOverrideAPI: ApprovalOverrideApiService, private menu: MenuController, private reportApi: ReportApiService) {
         this.approvalForm = new FormGroup({
             remark: new FormControl('', Validators.required),
             radio: new FormControl('', Validators.required)
@@ -191,6 +201,7 @@ export class ApprovalOverrideComponent implements OnInit {
         this.menu.open('approvalOverrideDetails');
         this.menu.enable(true, 'approvalOverrideDetails');
         this.overlay = true;
+        this.reportApi.get_bundle_report('approval-override').subscribe(data => this.history = data);
     }
 
     /**
