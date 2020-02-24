@@ -48,15 +48,17 @@
                         Hour
                         Setup
                     </ion-card-subtitle>
-                    <ion-card-subtitle class="subtitle" style="font-size: 12px;"
-                        *ngIf="workingHrPlatform.is('desktop' || 'electron')">
-                        Create office working hour for employee</ion-card-subtitle>
-                    <ion-card-subtitle class="subtitle" style="font-size: 12px;"
-                        *ngIf="!workingHrPlatform.is('desktop' || 'electron')">
-                        View office working hour for employee</ion-card-subtitle>
+                    <div [class]="'hide-sm-down'">
+                        <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                            Create office working hour for employee</ion-card-subtitle>
+                    </div>
+                    <div [class]="'hide-sm-up'">
+                        <ion-card-subtitle class="subtitle" style="font-size: 12px;"> 
+                            View office working hour for employee</ion-card-subtitle>
+                    </div>
                 </div>
             </ion-item-group>
-            <ion-item-group *ngIf="workingHrPlatform.is('desktop' || 'electron')"
+            <ion-item-group [class]="'hide-sm-down'"
                 style="margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
                 <div style="right: 75px;top: 25px;">
                     <!-- <ion-button fill="outline"
@@ -206,7 +208,7 @@
                                     </ion-col>
                                 </ion-row>
                             </div>
-                            <div style="height: 150px; overflow-y: auto;">
+                            <div style="height: 220px; overflow-y: auto;">
                                 <div style="margin: auto 5px;">
 
                                     <ng-container *ngIf="mode==='ON'">
