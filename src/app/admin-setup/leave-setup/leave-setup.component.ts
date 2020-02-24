@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { SharedService } from './shared.service';
-import { EditModeDialogComponent } from './edit-mode-dialog/edit-mode-dialog.component';
-import { MatDialog } from '@angular/material';
 import { RouteDialogComponent } from './route-dialog/route-dialog.component';
 
 /**
@@ -74,9 +72,10 @@ export class LeaveSetupComponent implements OnInit {
     /**
      *Creates an instance of LeaveSetupComponent.
      * @param {Router} router
+     * @param {SharedService} _sharedService
      * @memberof LeaveSetupComponent
      */
-    constructor(private router: Router, private _sharedService: SharedService, public dialog: MatDialog) {
+    constructor(private router: Router, private _sharedService: SharedService) {
         router.events
             .pipe(filter(e => e instanceof NavigationEnd))
             .subscribe((e: NavigationEnd) => {
@@ -121,7 +120,7 @@ export class LeaveSetupComponent implements OnInit {
             this.numOfArray = index;
             this.router.navigate(this.leaveSetupPage[index].url);
         } else {
-            this.dialog.open(RouteDialogComponent, {
+            this._sharedService.dialog.open(RouteDialogComponent, {
                 width: "283px",
                 height: "194px"
             });

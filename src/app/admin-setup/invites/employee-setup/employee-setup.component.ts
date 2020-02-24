@@ -3,7 +3,6 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AdminInvitesApiService } from '../admin-invites-api.service';
 import * as _moment from 'moment';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
-import { LeaveApiService } from '../../leave-setup/leave-api.service';
 import { FormControl, Validators } from '@angular/forms';
 import { APP_DATE_FORMATS, AppDateAdapter } from '../../leave-setup/date.adapter';
 import { RoleApiService } from '../../role-management/role-api.service';
@@ -357,12 +356,11 @@ export class EmployeeSetupComponent implements OnInit {
     /**
      *Creates an instance of EmployeeSetupComponent.
      * @param {AdminInvitesApiService} inviteAPI access invite API
-     * @param {LeaveApiService} leaveApi
      * @param {RoleApiService} roleAPI access role manegement api service
      * @param {SharedService} _sharedService
      * @memberof EmployeeSetupComponent
      */
-    constructor(public inviteAPI: AdminInvitesApiService, private leaveApi: LeaveApiService, public roleAPI: RoleApiService, private _sharedService: SharedService) {
+    constructor(public inviteAPI: AdminInvitesApiService, public roleAPI: RoleApiService, private _sharedService: SharedService) {
     }
 
     /**
@@ -377,9 +375,9 @@ export class EmployeeSetupComponent implements OnInit {
         this.calendarList = calendarData;
         let workingData = await this.inviteAPI.get_working_hour_profile_list().toPromise();
         this.workingList = workingData;
-        let entitlement = await this.leaveApi.get_leavetype_entitlement().toPromise();
+        let entitlement = await this._sharedService.leaveApi.get_leavetype_entitlement().toPromise();
         this.entitlementList = entitlement;
-        let company = await this.leaveApi.get_company_list().toPromise();
+        let company = await this._sharedService.leaveApi.get_company_list().toPromise();
         this.companyList = company;
         for (let i = 0; i < this.companyList.length; i++) {
             this.companyList[i]['checked'] = false;
@@ -448,7 +446,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails = data;
             this.getEmploymentDetails();
         })
-        this.leaveApi.get_entilement_details(this.userId).subscribe(data => {
+        this._sharedService.leaveApi.get_entilement_details(this.userId).subscribe(data => {
             if (data.length > 0) {
                 this.addEntitlement = [];
                 for (let i = 0; i < data.length; i++) {
@@ -505,9 +503,9 @@ export class EmployeeSetupComponent implements OnInit {
         const data = {
             "userId": [this.userId], "leaveTypeId": leaveTypeId, "leaveEntitlementId": leaveEntitlementId
         }
-        let res = await this.leaveApi.post_leave_entitlement(data).toPromise();
+        let res = await this._sharedService.leaveApi.post_leave_entitlement(data).toPromise();
         if (res.successList.length != 0) {
-            let val = await this.leaveApi.get_entilement_details(this.userId).toPromise();
+            let val = await this._sharedService.leaveApi.get_entilement_details(this.userId).toPromise();
             for (let i = 0; i < val.length; i++) {
                 if (val[i].USER_LEAVE_ENTITLEMENT_GUID == this.userLeaveEntitled && this.remove === true) {
                     let remove = await this.inviteAPI.delete_user_leave_entitlement(this.userLeaveEntitled).toPromise();
@@ -562,10 +560,10 @@ export class EmployeeSetupComponent implements OnInit {
     async deleteEntitlement(index: number) {
         let response = await this.inviteAPI.delete_user_leave_entitlement(this.addEntitlement[index].userLeaveEntitlement).toPromise();
         if (response[0].USER_GUID != undefined) {
-            this.leaveApi.openSnackBar('Selected leave entitlement was deleted', true);
+            this._sharedService.leaveApi.openSnackBar('Selected leave entitlement was deleted', true);
             this.addEntitlement.splice(index, 1);
         } else {
-            this.leaveApi.openSnackBar(response.status, false);
+            this._sharedService.leaveApi.openSnackBar(response.status, false);
         }
     }
 
@@ -591,7 +589,7 @@ export class EmployeeSetupComponent implements OnInit {
             }
             // this.patchEmploymentDetails();
             this.assignProfile();
-            this.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
+            this._sharedService.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
         }
         this._sharedService.emitChange(this.mode);
     }
@@ -623,7 +621,7 @@ export class EmployeeSetupComponent implements OnInit {
                 this.getUserId(this.list[this.clickedIndex], this.clickedIndex, this.config.currentPage);
                 this.mode = 'ON';
                 this.modeValue = true;
-                this.leaveApi.openSnackBar(name + ' become Active', true);
+                this._sharedService.leaveApi.openSnackBar(name + ' become Active', true);
             }
         } else {
             const dialog = this.inviteAPI.popUp.open(ChangeStatusConfimationComponent, {
@@ -642,9 +640,9 @@ export class EmployeeSetupComponent implements OnInit {
                     this.status = false;
                     let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
                     this.list = data;
-                    this.leaveApi.openSnackBar(name + ' become Inactive', true);
+                    this._sharedService.leaveApi.openSnackBar(name + ' become Inactive', true);
                 } else {
-                    this.leaveApi.openSnackBar(value.status, false);
+                    this._sharedService.leaveApi.openSnackBar(value.status, false);
                 }
             }
         }
@@ -706,23 +704,23 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     async assignProfile() {
-        let data = await this.leaveApi.patch_assign_calendar_profile({
+        let data = await this._sharedService.leaveApi.patch_assign_calendar_profile({
             "user_guid": [this.userId], "calendar_guid": this.calendarValue
         }).toPromise();
         if (data[0].USER_INFO_GUID == undefined) {
-            this.leaveApi.openSnackBar(data.status, false);
+            this._sharedService.leaveApi.openSnackBar(data.status, false);
         }
-        let workingData = await this.leaveApi.patch_user_working_hours({
+        let workingData = await this._sharedService.leaveApi.patch_user_working_hours({
             "user_guid": [this.userId], "working_hours_guid": this.workingValue
         }).toPromise();
         if (workingData[0].USER_INFO_GUID == undefined) {
-            this.leaveApi.openSnackBar(workingData.status, false);
+            this._sharedService.leaveApi.openSnackBar(workingData.status, false);
         }
         let roleData = await this.roleAPI.patch_user_profile({
             "user_guid": [this.userId], "role_guid": this.roleValue
         }).toPromise();
         if (roleData[0].USER_INFO_GUID == undefined) {
-            this.leaveApi.openSnackBar(data.status, false);
+            this._sharedService.leaveApi.openSnackBar(data.status, false);
         }
     }
 
@@ -860,10 +858,10 @@ export class EmployeeSetupComponent implements OnInit {
         if (val === userId) {
             let result = await this.inviteAPI.delete_user(userId).toPromise();
             if (result[0].USER_GUID != undefined) {
-                this.leaveApi.openSnackBar('Selected employee profile was deleted', true);
+                this._sharedService.leaveApi.openSnackBar('Selected employee profile was deleted', true);
                 this.endPoint();
             } else {
-                this.leaveApi.openSnackBar(result.status, false);
+                this._sharedService.leaveApi.openSnackBar(result.status, false);
             }
         }
     }

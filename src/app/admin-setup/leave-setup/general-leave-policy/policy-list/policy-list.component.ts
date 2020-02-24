@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PolicyApiService } from '../policy-api.service';
 import { Validators, FormControl } from '@angular/forms';
-import { LeaveApiService } from '../../leave-api.service';
 import { SharedService } from '../../shared.service';
 import { EditModeDialogComponent } from '../../edit-mode-dialog/edit-mode-dialog.component';
 import { DeleteCalendarConfirmationComponent } from '../../delete-calendar-confirmation/delete-calendar-confirmation.component';
@@ -91,12 +90,11 @@ export class PolicyListComponent implements OnInit {
 
     /**
      *Creates an instance of PolicyListComponent.
-     * @param {LeaveApiService} leaveAPi
      * @param {PolicyApiService} policyApi
      * @param {SharedService} sharedService
      * @memberof PolicyListComponent
      */
-    constructor(private leaveAPi: LeaveApiService, private policyApi: PolicyApiService, private sharedService: SharedService) { }
+    constructor(private policyApi: PolicyApiService, private sharedService: SharedService) { }
 
     /**
      * Set initial value to the properties & get endpoint value
@@ -105,7 +103,7 @@ export class PolicyListComponent implements OnInit {
     ngOnInit() {
         this.newName = new FormControl('', Validators.required);
         this.editName = new FormControl('', Validators.required);
-        this.leaveAPi.get_company_list().subscribe(data => {
+        this.sharedService.leaveApi.get_company_list().subscribe(data => {
             this.companyName = data;
             this.clickedPolicy(this.companyName[0], 0);
             this.showSpinner = false;

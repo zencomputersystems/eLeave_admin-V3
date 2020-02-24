@@ -1,8 +1,6 @@
 import { OnInit, Component } from "@angular/core";
 import { WorkingHourApiService } from "../working-hour-api.service";
-import { MatDialog } from "@angular/material";
 import { DeleteCalendarConfirmationComponent } from "../../delete-calendar-confirmation/delete-calendar-confirmation.component";
-import { MenuController } from "@ionic/angular";
 import { EditModeDialogComponent } from "../../edit-mode-dialog/edit-mode-dialog.component";
 import { SharedService } from "../../shared.service";
 import { Platform } from "@ionic/angular";
@@ -95,11 +93,11 @@ export class WorkingHourListComponent implements OnInit {
     /**
      *Creates an instance of WorkingHourListComponent.
      * @param {WorkingHourApiService} workingHrAPI
-     * @param {MatDialog} dialog open material dialog
-     * @param {MenuController} menu
+     * @param {SharedService} sharedService
+     * @param {Platform} workingHrPlatform
      * @memberof WorkingHourListComponent
      */
-    constructor(private workingHrAPI: WorkingHourApiService, public dialog: MatDialog, private sharedService: SharedService,
+    constructor(private workingHrAPI: WorkingHourApiService, private sharedService: SharedService,
         public workingHrPlatform: Platform) {
     }
 
@@ -144,7 +142,7 @@ export class WorkingHourListComponent implements OnInit {
     toggleMode(evt) {
         if (evt.detail.checked === true) {
             this.mode = 'ON';
-            this.dialog.open(EditModeDialogComponent, {
+            this.sharedService.dialog.open(EditModeDialogComponent, {
                 data: 'working',
                 height: "360.3px",
                 width: "383px"
@@ -218,7 +216,7 @@ export class WorkingHourListComponent implements OnInit {
      * @memberof WorkingHourListComponent
      */
     deleteWorkingHrProfile(working_hour_guid: string, name: string) {
-        const dialogRef = this.dialog.open(DeleteCalendarConfirmationComponent, {
+        const dialogRef = this.sharedService.dialog.open(DeleteCalendarConfirmationComponent, {
             data: { name: name, value: working_hour_guid, desc: ' profile name' },
             height: "195px",
             width: "270px"

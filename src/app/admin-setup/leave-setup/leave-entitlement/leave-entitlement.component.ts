@@ -1,6 +1,5 @@
 import { Platform } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { LeaveApiService } from '../leave-api.service';
 import { LeaveEntitlementApiService } from './leave-entitlement-api.service';
 import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.component';
 import { DeleteCalendarConfirmationComponent } from '../delete-calendar-confirmation/delete-calendar-confirmation.component';
@@ -196,11 +195,11 @@ export class LeaveEntitlementComponent implements OnInit {
   /**
    *Creates an instance of LeaveEntitlementComponent.
    * @param {LeaveEntitlementApiService} entitlementApi
-   * @param {LeaveApiService} leaveApi
-   * @param {MenuController} menu
+   * @param {SharedService} sharedService
+   * @param {Platform} leaveEntitlementPlatform
    * @memberof LeaveEntitlementComponent
    */
-  constructor(private entitlementApi: LeaveEntitlementApiService, private leaveApi: LeaveApiService, private sharedService: SharedService, public leaveEntitlementPlatform: Platform) {
+  constructor(private entitlementApi: LeaveEntitlementApiService, private sharedService: SharedService, public leaveEntitlementPlatform: Platform) {
     this.abbreviation = new FormControl('', Validators.required);
     this.leaveTypeName = new FormControl('', Validators.required);
   }
@@ -211,7 +210,7 @@ export class LeaveEntitlementComponent implements OnInit {
    */
   async ngOnInit() {
     this.leaveTypes = [];
-    let data = await this.leaveApi.get_leavetype_entitlement().toPromise();
+    let data = await this.sharedService.leaveApi.get_leavetype_entitlement().toPromise();
     this.showSpinner = false;
     let grouppedId = require('lodash').groupBy(data, 'leaveTypeId');
     this.leaveEntitlement = Object.values(grouppedId);
@@ -315,7 +314,7 @@ export class LeaveEntitlementComponent implements OnInit {
       this.showSmallSpinner = false;
       this.sharedService.menu.close('editLeaveTypeDetails');
     }
-    this.leaveApi.openSnackBar('Leave type & entitlement was saved', true);
+    this.sharedService.leaveApi.openSnackBar('Leave type & entitlement was saved', true);
     this.ngOnInit();
   }
 
@@ -367,7 +366,7 @@ export class LeaveEntitlementComponent implements OnInit {
       };
       this.entitlementApi.patch_leavetype_entitlement(data).subscribe(data => {
         this.ngOnInit();
-        this.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
+        this.sharedService.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
       })
     }
     this.sharedService.emitChange(this.mainToggle);
@@ -409,7 +408,7 @@ export class LeaveEntitlementComponent implements OnInit {
       this.entitlementApi.post_leavetype_entitlement(data).subscribe(res => {
         this.ngOnInit();
         this.newLeaveTypeId = '';
-        this.leaveApi.openSnackBar('New leave entitlement profile was added', true);
+        this.sharedService.leaveApi.openSnackBar('New leave entitlement profile was added', true);
         this.showSmallSpinner = false;
         this.sharedService.menu.close('editLeaveTypeDetails');
       })
@@ -433,7 +432,7 @@ export class LeaveEntitlementComponent implements OnInit {
     this.abbreviation.reset();
     this.leaveTypeName.reset();
     this.newProfileList = { 'name': 'Default', 'description': 'Default Leave Entitlement' };
-    this.leaveApi.openSnackBar('New leave entitlement profile was added', true);
+    this.sharedService.leaveApi.openSnackBar('New leave entitlement profile was added', true);
     this.sharedService.menu.close('createNewTypeDetails');
   }
 
@@ -474,7 +473,7 @@ export class LeaveEntitlementComponent implements OnInit {
     if (val === leaveEntitlementId) {
       this.entitlementApi.delete_leavetype_entitlement(leaveEntitlementId).subscribe(res => {
         if (res[0].USER_LEAVE_ENTITLEMENT_GUID != undefined) {
-          this.leaveApi.openSnackBar('Reassign employee to delete this leave entitlement', false);
+          this.sharedService.leaveApi.openSnackBar('Reassign employee to delete this leave entitlement', false);
         } else {
           this.ngOnInit();
           if (this.leaveEntitlement[this.clickedHeaderIndex].length == 1) {
@@ -484,7 +483,7 @@ export class LeaveEntitlementComponent implements OnInit {
             this.clickedHeaderIndex = 0;
             this.clickedIndex = 0;
           }
-          this.leaveApi.openSnackBar('Leave entitlement profile was deleted', true);
+          this.sharedService.leaveApi.openSnackBar('Leave entitlement profile was deleted', true);
         }
       });
     }
