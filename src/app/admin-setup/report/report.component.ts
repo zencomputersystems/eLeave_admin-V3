@@ -720,6 +720,7 @@ export class ReportComponent implements OnInit {
 
     this.userList.forEach(list => {
       list.isChecked = false;
+      list.disabled = false;
     });
   }
 

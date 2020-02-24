@@ -100,11 +100,11 @@
               style="--border-radius: 4px 0 0 4px;margin-right: 0;display:inline-block;font-size: 11px;height: 40px;width:195px;cursor: pointer;text-transform: none;"
               [ngClass]="{
               'individualClicked': individualButton === true , 'individualUnclicked': individualButton === false}"
-              (click)="groupButton = false; individualButton = true;">
+              (click)="groupButton = false; individualButton = true;companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';">
               Individual Report
             </ion-button>
             <ion-button [ngClass]="{ 'groupClicked' : groupButton === true , 'groupUnclicked' : groupButton === false}"
-              (click)="groupButton = true; individualButton = false;"
+              (click)="groupButton = true; individualButton = false; clearCheckbox()"
               style="--border-radius: 0 4px 4px 0;margin-left: 0;display:inline-block;font-size: 11px;height: 40px;width:195px;cursor: pointer;text-transform: none;">
               Group Report
             </ion-button>
