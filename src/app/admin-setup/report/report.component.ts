@@ -302,7 +302,7 @@ export class ReportComponent implements OnInit {
               if (data.row.index === i && data.section === 'body') {
                 if (title === 'Leave Entitlement Summary') {
                   if (data.column.index === 4) {
-                    type += data.table.body[i].raw.leaveDetail[j].leaveType + '\n';
+                    type += data.table.body[i].raw.leaveDetail[j].leaveTypeName + '\n';
                     data.cell.text = type;
                   }
                   if (data.column.index === 5) {
@@ -332,7 +332,7 @@ export class ReportComponent implements OnInit {
                 }
                 if (title === 'Leave Taken History') {
                   if (data.column.index === 3) {
-                    takenLeaveType += data.table.body[i].raw.leaveDetail[j].leaveType + '\n';
+                    takenLeaveType += data.table.body[i].raw.leaveDetail[j].leaveTypeName + '\n';
                     data.cell.text = takenLeaveType;
                   }
                   if (data.column.index === 4) {
@@ -643,11 +643,13 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   produceIndividualReport() {
+    this._selectedLeaveTypesList = [];
     for (let i = 0; i < this.leaveTypes.length; i++) {
       if (this.leaveTypes[i].isChecked === true) {
         this._selectedLeaveTypesList.push(this.leaveTypes[i].LEAVE_TYPE_GUID);
       }
     }
+    console.log(this._selectedLeaveTypesList);
     this.reportAPI.get_individual_report(this.selectedUserId, this.selects).subscribe(data => {
       this.tableDetails = data;
       this.filter();
