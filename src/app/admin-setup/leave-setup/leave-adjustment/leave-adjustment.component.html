@@ -21,7 +21,7 @@
                     </ion-col>
                 </ion-row>
             </div>
-            <div style="margin: 20px;">
+            <div  [class]="'hide-sm-down'" style="margin: 20px;">
                 <ion-row>
                     <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                         <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
@@ -80,6 +80,57 @@
                         <ion-col style="padding-top: 0;">Pratap K.Singh</ion-col>
                         <ion-col style="padding-top: 0;">Asmidar binti Mohd Fauzi</ion-col>
                     </ion-row>
+                </div>
+            </div>
+            <div [class]="'hide-sm-up'" style="margin: 20px;">
+                <ion-row style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; display: grid;">
+                    <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
+                        Company</ion-label>
+                    <p
+                        style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                        Zen Computer Systems Sdn Bhd</p>
+                </ion-row>
+                <ion-row style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; display: grid;">
+                    <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
+                        Department</ion-label>
+                    <p
+                        style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                        Research & Development</p>
+                </ion-row>
+                <ion-row style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; display: grid;">
+                    <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
+                        Leave Type</ion-label>
+                    <p
+                        style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                        ML-Medical Leave</p>
+                </ion-row>
+                <ion-row style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; display: grid;">
+                    <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
+                        No. of Days</ion-label>
+                    <p
+                        style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                        +2 days</p>
+                </ion-row>
+                <ion-row style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; display: grid;">
+                    <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
+                        Affected Employee</ion-label>
+                    <p
+                        style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                        8 persons</p>
+                </ion-row>
+                <div><img style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
+                        src="assets/icon/leave_setup/icon_request@3x.png" (click)="showList = !showList ">
+                    <p style="color: #43425d;opacity: 0.8;font-size: 11px;font-weight: bold;width: 23%;
+                    display: inline;"> List of Employees</p>
+                    <div style="border-top: 1px solid rgba(67, 66, 93, 0.2);display: inline-block;width: 72%;"></div>
+                </div>
+                <div *ngIf="showList" style="font-size: 11px;color: #808495;margin-left: 15px;">
+                    <ion-row style="padding-top: 0;">Zulkifli bin Arrifin</ion-row>
+                    <ion-row style="padding-top: 0;">Rajaputra Balasingh</ion-row>
+                    <ion-row style="padding-top: 0;">Clement Chee Siong Yee</ion-row>
+                    <ion-row style="padding-top: 0;">Mohd Akmar bin Ab.Karim</ion-row>
+                    <ion-row style="padding-top: 0;">Pratap K.Singh</ion-row>
+                    <ion-row style="padding-top: 0;">Asmidar binti Mohd Fauzi</ion-row>
                 </div>
             </div>
         </div>
