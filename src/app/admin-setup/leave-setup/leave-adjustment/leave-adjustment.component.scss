@@ -90,4 +90,22 @@
     color: #43425d;
     opacity: 0.8;
   }
+
+
+  @media screen and (min-width: 576px) {
+
+    .leave-adjustment-popup {
+      --width: 600px;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .leave-adjustmnet-table {
+      margin: 15px 0;
+    }
+    
+    .leave-adjustment-popup {
+      --width: 304px;
+    }
+  }
 }
