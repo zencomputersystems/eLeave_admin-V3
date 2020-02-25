@@ -649,7 +649,6 @@ export class ReportComponent implements OnInit {
         this._selectedLeaveTypesList.push(this.leaveTypes[i].LEAVE_TYPE_GUID);
       }
     }
-    console.log(this._selectedLeaveTypesList);
     this.reportAPI.get_individual_report(this.selectedUserId, this.selects).subscribe(data => {
       this.tableDetails = data;
       this.filter();
@@ -661,6 +660,12 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   produceGroupReport() {
+    this._selectedLeaveTypesList = [];
+    for (let i = 0; i < this.leaveTypes.length; i++) {
+      if (this.leaveTypes[i].isChecked === true) {
+        this._selectedLeaveTypesList.push(this.leaveTypes[i].LEAVE_TYPE_GUID);
+      }
+    }
     this.reportAPI.get_bundle_report(this.selects).subscribe(value => {
       this.tableDetails = value;
       this.filter();
@@ -727,6 +732,26 @@ export class ReportComponent implements OnInit {
     this.tableDetails.forEach((element, index) => {
       element["no"] = index + 1;
     });
+    if (this.selects != 'leave-entitlement') {
+      for (let i = this.tableDetails.length - 1; i >= 0; --i) {
+        for (let j = 0; j < this._selectedLeaveTypesList.length; j++) {
+          if (this.tableDetails[i].leaveTypeId !== this._selectedLeaveTypesList[j]) {
+            this.tableDetails.splice(i, 1);
+          }
+        }
+      }
+    } else {
+      for (let i = this.tableDetails.length - 1; i >= 0; --i) {
+        for (let k = this.tableDetails[i].leaveDetail.length - 1; k >= 0; --k) {
+          for (let j = 0; j < this._selectedLeaveTypesList.length; j++) {
+            if (this.tableDetails[i].leaveDetail[k].leaveTypeId !== this._selectedLeaveTypesList[j]) {
+              this.tableDetails[i].leaveDetail.splice(k, 1);
+              if (this.tableDetails[i].leaveDetail.length == 0) { this.tableDetails.splice(i, 1); }
+            }
+          }
+        }
+      }
+    }
   }
 
   /**
