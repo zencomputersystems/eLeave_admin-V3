@@ -380,8 +380,9 @@
                             <div
                                 style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                                 <ion-row nowrap>
-                                    <ion-col size="2.2"
-                                        style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
+                                    <ion-col size="2.5"
+                                        style="text-align: center;padding-left: 15px;padding-right: 30px;text-overflow:
+                                        initial; margin-right: 10px;">
                                         <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
                                             [(ngModel)]="mainCheckBox" [indeterminate]="indeterminate"
                                             (click)="mainCheckboxEvent()">
@@ -402,7 +403,7 @@
                             <div class="content" *ngIf="filteredUserItems.length > 0">
                                 <ion-row style="height: auto;" *ngFor="let item of filteredUserItems; let i=index">
                                     <ion-col size="1.5"
-                                        style="text-align: center;padding-left: 10px;padding-right: 30px;min-width:
+                                        style="text-align: center;padding-left: 10px;padding-right: 20px;min-width:
                                         fit-content;">
                                         <ion-avatar class="avatar" (mouseover)="hoverEvent(i, true, item.isChecked)"
                                             (mouseout)="hoverEvent(i, false, item.isChecked)">
