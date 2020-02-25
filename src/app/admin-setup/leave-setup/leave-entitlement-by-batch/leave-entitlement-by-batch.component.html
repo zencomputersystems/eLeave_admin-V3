@@ -1,7 +1,7 @@
 <ion-card>
     <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
         <div class="fullContainer">
-            <div class="left">
+            <div class="left" style="min-width: fit-content;">
                 <img src="assets/icon/leave_setup/icon_year_end_closing@3x.png" style="width:34px;height:33px">
             </div>
             <div class="right">
@@ -107,18 +107,17 @@
                                 </div>
                             </form>
                         </div>
-                        <div style="margin: 0 auto;padding: 15px;padding-top: 0;;text-align: center;">
+                        <div [class]="'hide-sm-down'" style="margin: 0 auto;padding: 15px;padding-top: 0;;text-align: center;">
                             <ion-button
                                 style="--border-radius: 2px;font-size: 11px;height: 30px;width: 100%;background: white;text-transform: none;"
                                 color="primary" (click)="postLeaveEntitlement()" [disabled]="disableSubmit">
                                 Submit <ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
                                 </ion-spinner>
                             </ion-button>
-
                         </div>
                     </div>
                     <div class="assigned">
-                        <div
+                        <div [class]="'hide-sm-down'"
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row nowrap>
                                 <ion-col size="1.5"
@@ -135,6 +134,20 @@
                                 </ion-col>
                             </ion-row>
                         </div>
+                        <div [class]="'hide-sm-up'"
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                            <ion-row nowrap>
+                                <ion-col size="1.5"
+                                    style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
+                                    <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
+                                        [(ngModel)]="checkMain" [indeterminate]="indeterminate" (click)="checkEvent()">
+                                    </ion-checkbox>
+                                </ion-col>
+                                <ion-col>
+                                    <ion-label style="font-size: 12px;">EMPLOYEE DETAILS</ion-label>
+                                </ion-col>
+                            </ion-row>
+                        </div>
                         <div style="width: 100%; height: calc(100% - 46px); text-align: center; margin-top: -30px"
                             *ngIf="showSpinner">
                             <app-spinner></app-spinner>
@@ -144,38 +157,82 @@
                             Nothing to view. Please select company and department first. </p>
                         <div class="content" *ngIf="filteredUser.length > 0">
                             <ion-row class="detailsRow" *ngFor="let item of filteredUser; let i=index">
-                                <ion-col size="1.5" style="text-align: center;padding-left: 10px;padding-right: 30px;">
-                                    <ion-avatar class="avatar" (mouseover)="mouseInOutEvent(i, true, item.isChecked)"
-                                        (mouseout)="mouseInOutEvent(i, false, item.isChecked)">
-                                        <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
-                                            [style.display]="hideAvatar[i] ? 'none' : 'block'">
-                                        <div class="checkboxOnAvatar"
-                                            [style.display]="hideAvatar[i] ? 'block' : 'none'">
-                                            <ion-checkbox mode="ios"
-                                                style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
-                                                [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
-                                            </ion-checkbox>
-                                        </div>
-                                    </ion-avatar>
-                                </ion-col>
-                                <ion-col size="2"
-                                    style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                    {{item.staffNumber}}
-                                </ion-col>
-                                <ion-col size="6" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                    <ion-label style="color:#43425d; font-weight: bold;;font-size: 12px;">
-                                        {{item.employeeName}}</ion-label>
-                                    <p
-                                        style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                                        {{item.designation}}</p>
-                                </ion-col>
-                                <ion-item class="divider" lines="full"></ion-item>
+                                <div [class]="'hide-sm-down'">
+                                    <ion-col size="1.5" style="text-align: center;min-width: fit-content;">
+                                        <ion-avatar class="avatar"
+                                            (mouseover)="mouseInOutEvent(i, true, item.isChecked)"
+                                            (mouseout)="mouseInOutEvent(i, false, item.isChecked)">
+                                            <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                                                [style.display]="hideAvatar[i] ? 'none' : 'block'">
+                                            <div class="checkboxOnAvatar"
+                                                [style.display]="hideAvatar[i] ? 'block' : 'none'">
+                                                <ion-checkbox mode="ios"
+                                                    style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                    [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                                                </ion-checkbox>
+                                            </div>
+                                        </ion-avatar>
+                                    </ion-col>
+                                    <ion-col size="2"
+                                        style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                        {{item.staffNumber}}
+                                    </ion-col>
+                                    <ion-col size="6"
+                                        style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;">
+                                        <ion-label style="color:#43425d; font-weight: bold;;font-size: 12px;">
+                                            {{item.employeeName}}</ion-label>
+                                        <p
+                                            style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: pre-line;">
+                                            {{item.designation}}</p>
+                                    </ion-col>
+                                    <ion-item class="divider" lines="full"></ion-item>
+                                </div>
+                                <div [class]="'hide-sm-up'" style="display: contents;">
+                                    <ion-col size="1.5" style="text-align: center;min-width: fit-content;">
+                                        <ion-avatar class="avatar"
+                                            (mouseover)="mouseInOutEvent(i, true, item.isChecked)"
+                                            (mouseout)="mouseInOutEvent(i, false, item.isChecked)">
+                                            <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                                                [style.display]="hideAvatar[i] ? 'none' : 'block'">
+                                            <div class="checkboxOnAvatar"
+                                                [style.display]="hideAvatar[i] ? 'block' : 'none'">
+                                                <ion-checkbox mode="ios"
+                                                    style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                    [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                                                </ion-checkbox>
+                                            </div>
+                                        </ion-avatar>
+                                    </ion-col>
+                                    <ion-col class="colOfLeave">
+                                        <ion-grid style="font-size: 11px;">
+                                            <ion-item-group>
+                                                <ion-row style="font-weight: bold;">{{item.employeeName}}</ion-row>
+                                                <ion-row>{{item.designation}}</ion-row>
+                                            </ion-item-group>
+                                            <ion-item-group style="border-top: 1px solid #e2e2e2; margin-top: 5px; padding-top: 5px;">
+                                                <ion-row>ID : {{item.staffNumber}}</ion-row>
+                                                <ion-row>Entitlement: {{item.entitlement}}</ion-row>
+                                            </ion-item-group>
+                                        </ion-grid> 
+                                    </ion-col>
+                                    <ion-item class="divider" lines="full"></ion-item>
+                                </div>
                             </ion-row>
                         </div>
                         <div *ngIf="showNoResult && !showSpinner" style="width: 100%; text-align:center;padding: 10px">
                             <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
                             <p style="font-size: 20px;color:#a3a6b4;opacity: 0.8;padding-top:10px ">No Results Found</p>
                         </div>
+                    </div>
+                    <div [class]="'hide-sm-up'"
+                        style="margin: 5px auto 25px;padding: 15px;padding-top: 0;;text-align: center; flex: 1;
+                        min-width: 200px;">
+                        <ion-button
+                            style="--border-radius: 2px;font-size: 11px;height: 30px;width: 100%;background: white;text-transform: none;"
+                            color="primary" (click)="postLeaveEntitlement()" [disabled]="disableSubmit">
+                            Submit <ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
+                            </ion-spinner>
+                        </ion-button>
                     </div>
                 </div>
             </ion-card-content>
