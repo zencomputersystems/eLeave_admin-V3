@@ -158,4 +158,25 @@
   .item-interactive-disabled .sc-ion-label-md-h {
     opacity: 0.6;
   }
+  .cf-leave-label { 
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  .item-label {
+    ion-label {
+      white-space: pre-line;
+    }
+  }
+  // .cf-leave-next-year {
+  //   margin: auto 3px;
+  //   max-width: 45.23px;
+  //   @media screen and (min-width: 576px) {
+  //       display: inline-flex;
+  //   }
+
+  //   @media screen and (max-width: 576px) {
+  //       display: none;
+  //   }
+  // }
 }

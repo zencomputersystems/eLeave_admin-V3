@@ -9,62 +9,77 @@
             Employee can go leave, if:</span>
         <mat-radio-group class="example-radio-group"
             [value]="policyList.PROPERTIES_XML.approvalConfirmation.requirement">
-            <mat-radio-button class="example-radio-button" value="Anyone" style="display:inline-block"
-                (change)="policyList.PROPERTIES_XML.approvalConfirmation.requirement = $event.value"
-                [disabled]="modeInput === 'OFF'">
-                <p style="font-size: 11px;color: #4d4f5c;"
-                    [style.color]="policyList.PROPERTIES_XML.approvalConfirmation.requirement == 'Anyone' && modeInput === 'OFF' || modeInput === 'ON' ? '#4d4f5c':'' ">
-                    Anyone in hierarchy
-                    approves limit to </p>
-            </mat-radio-button>
-            <mat-form-field appearance="outline"
-                style="font-size: 12px;width: 56px;color:#43425d;padding-left: 5px;margin-left: 75px;">
-                <input matInput [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel"
-                    [disabled]="modeInput === 'OFF'" required>
-            </mat-form-field>
-            <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Level</p>
-            <div style="display: block"></div>
-            <mat-radio-button class="example-radio-button" value="Everyone" [disabled]="modeInput === 'OFF'"
-                (change)="policyList.PROPERTIES_XML.approvalConfirmation.requirement = $event.value"
-                style="display:inline-block">
-                <p style="font-size: 11px;color: #4d4f5c;"
-                    [style.color]="policyList.PROPERTIES_XML.approvalConfirmation.requirement === 'Everyone' && modeInput === 'OFF' || modeInput === 'ON' ? '#4d4f5c':'' ">
-                    Everyone in hierarchy approves limit to
-                </p>
-            </mat-radio-button>
-            <mat-form-field appearance="outline"
-                style="font-size: 12px;width: 56px;color:#43425d;padding-left: 5px;margin-left: 66px;">
-                <input matInput [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel"
-                    [disabled]="modeInput === 'OFF'" required>
-            </mat-form-field>
-            <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Level</p>
-            <div style="display: block;"
-                *ngIf="policyList.PROPERTIES_XML.approvalConfirmation.requirement === 'Everyone'">
-                <p style="padding-left: 53px;color: #4d4f5c;font-size:11px;display: inline-block;">Escalate
-                    after &nbsp;</p>
-                <mat-form-field appearance="outline"
-                    style="width:56px;font-size: 12px;color:#43425d;display:inline-block">
-                    <input matInput [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays"
-                        [disabled]="modeInput === 'OFF'" required>
-                </mat-form-field>
-                <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Days</p>
-            </div>
-            <mat-radio-button class="example-radio-button" value="Superior"
-                (change)="policyList.PROPERTIES_XML.approvalConfirmation.requirement = $event.value"
-                [disabled]="modeInput === 'OFF'">
-                <p style="font-size: 11px;color: #4d4f5c;"
-                    [style.color]="policyList.PROPERTIES_XML.approvalConfirmation.requirement === 'Superior' && modeInput === 'OFF' || modeInput === 'ON' ? '#4d4f5c':'' ">
-                    Superior approves</p>
-            </mat-radio-button>
+            <ion-item-group style="display: flex; flex-flow: row wrap;">
+                <mat-radio-button class="example-radio-button" value="Anyone" style="display:inline-block; flex: 1;"
+                    (change)="policyList.PROPERTIES_XML.approvalConfirmation.requirement = $event.value"
+                    [disabled]="modeInput === 'OFF'">
+                    <p style="font-size: 11px;color: #4d4f5c;min-width: 191px;"
+                        [style.color]="policyList.PROPERTIES_XML.approvalConfirmation.requirement == 'Anyone' && modeInput === 'OFF' || modeInput === 'ON' ? '#4d4f5c':'' ">
+                        Anyone in hierarchy
+                        approves limit to </p>
+                </mat-radio-button>
+                <div style="flex: 2; margin-left: 50px;">
+                    <mat-form-field appearance="outline"
+                        style="font-size: 12px;width: 56px;color:#43425d;padding-left: 5px;">
+                        <input matInput [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel"
+                            [disabled]="modeInput === 'OFF'" required>
+                    </mat-form-field>
+                    <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Level</p>
+                    <div style="display: block"></div>
+                </div>
+            </ion-item-group>
+            <ion-item-group style="display: flex; flex-flow: row wrap;">
+                <mat-radio-button class="example-radio-button" style="display:inline-block; flex: 1;" value="Everyone"
+                    [disabled]="modeInput === 'OFF'"
+                    (change)="policyList.PROPERTIES_XML.approvalConfirmation.requirement = $event.value"
+                    style="display:inline-block">
+                    <p style="font-size: 11px;color: #4d4f5c;min-width: 191px;"
+                        [style.color]="policyList.PROPERTIES_XML.approvalConfirmation.requirement === 'Everyone' && modeInput === 'OFF' || modeInput === 'ON' ? '#4d4f5c':'' ">
+                        Everyone in hierarchy approves limit to
+                    </p>
+                </mat-radio-button>
+                <div style="flex: 2; margin-left: 50px;">
+                    <mat-form-field appearance="outline"
+                        style="font-size: 12px;width: 56px;color:#43425d;padding-left: 5px;">
+                        <input matInput [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel"
+                            [disabled]="modeInput === 'OFF'" required>
+                    </mat-form-field>
+                    <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Level</p>
+                    <div style="display: block;"
+                        *ngIf="policyList.PROPERTIES_XML.approvalConfirmation.requirement === 'Everyone'">
+                        <p style="padding-left: 53px;color: #4d4f5c;font-size:11px;display: inline-block;">Escalate
+                            after &nbsp;</p>
+                        <mat-form-field appearance="outline"
+                            style="width:56px;font-size: 12px;color:#43425d;display:inline-block">
+                            <input matInput
+                                [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays"
+                                [disabled]="modeInput === 'OFF'" required>
+                        </mat-form-field>
+                        <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Days</p>
+                    </div>
+                </div>
+            </ion-item-group>
+            <ion-item-group>
+                <mat-radio-button class="example-radio-button" value="Superior"
+                    (change)="policyList.PROPERTIES_XML.approvalConfirmation.requirement = $event.value"
+                    [disabled]="modeInput === 'OFF'">
+                    <p style="font-size: 11px;color: #4d4f5c;"
+                        [style.color]="policyList.PROPERTIES_XML.approvalConfirmation.requirement === 'Superior' && modeInput === 'OFF' || modeInput === 'ON' ? '#4d4f5c':'' ">
+                        Superior approves</p>
+                </mat-radio-button>
+            </ion-item-group>
         </mat-radio-group>
         <ion-item class="divider" lines="full"></ion-item>
 
         <!-- CF leaves -->
         <ion-list lines="none">
             <ion-item class="ionItem">
-                <ion-label [style.opacity]="policyList.PROPERTIES_XML.forfeitCFLeave.value ? '0.8': '' ">Forfeit
+                <ion-label class="cf-leave-label" [style.opacity]="policyList.PROPERTIES_XML.forfeitCFLeave.value ? '0.8': '' ">Forfeit
                     carried
-                    forward leaves on:
+                    forward leaves on
+                    <div [class]="'hide-sm-up'" style="margin: auto 3px; max-width: 45.23px"> next year
+                    </div>
+                    :
                 </ion-label>
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
                     [(ngModel)]="policyList.PROPERTIES_XML.forfeitCFLeave.value"
@@ -72,34 +87,40 @@
                 </ion-checkbox>
             </ion-item>
         </ion-list>
-        <mat-form-field appearance="outline" style="font-size: 13px;width: 192px;color:#7a8589;padding-left: 50px;">
-            <mat-label>Month</mat-label>
-            <mat-select [(value)]="policyList.PROPERTIES_XML.forfeitCFLeave.month"
-                (selectionChange)="monthChanged('monthCF')" [disabled]="modeInput === 'OFF'">
-                <mat-option>None</mat-option>
-                <mat-option value="January">January</mat-option>
-                <mat-option value="February">February</mat-option>
-                <mat-option value="March">March</mat-option>
-                <mat-option value="April">April</mat-option>
-                <mat-option value="May">May</mat-option>
-                <mat-option value="Jun">Jun</mat-option>
-                <mat-option value="July">July</mat-option>
-                <mat-option value="August">August</mat-option>
-                <mat-option value="September">September</mat-option>
-                <mat-option value="October">October</mat-option>
-                <mat-option value="November">November</mat-option>
-                <mat-option value="December">December</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 12px;">
-            <mat-label>Day</mat-label>
-            <mat-select [(value)]="policyList.PROPERTIES_XML.forfeitCFLeave.day" [disabled]="modeInput === 'OFF'">
-                <mat-option>None</mat-option>
-                <mat-option *ngFor="let day of daysOfCF" [value]=day>{{day}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-        &nbsp;
-        <span style="font-size: 11px;color: #43425d;opacity:0.8">Next year</span>
+        <ion-item-group style="padding-left: 44px;">
+            <mat-form-field appearance="outline" style="font-size: 13px;width: 166px; padding-left: 6px;
+                padding-right: 6px;color:#7a8589;">
+                <mat-label>Month</mat-label>
+                <mat-select [(value)]="policyList.PROPERTIES_XML.forfeitCFLeave.month"
+                    (selectionChange)="monthChanged('monthCF')" [disabled]="modeInput === 'OFF'">
+                    <mat-option>None</mat-option>
+                    <mat-option value="January">January</mat-option>
+                    <mat-option value="February">February</mat-option>
+                    <mat-option value="March">March</mat-option>
+                    <mat-option value="April">April</mat-option>
+                    <mat-option value="May">May</mat-option>
+                    <mat-option value="Jun">Jun</mat-option>
+                    <mat-option value="July">July</mat-option>
+                    <mat-option value="August">August</mat-option>
+                    <mat-option value="September">September</mat-option>
+                    <mat-option value="October">October</mat-option>
+                    <mat-option value="November">November</mat-option>
+                    <mat-option value="December">December</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline"
+                style="font-size: 13px;color:#7a8589;width: 166px; padding-left: 6px;
+                padding-right: 6px;">
+                <mat-label>Day</mat-label>
+                <mat-select [(value)]="policyList.PROPERTIES_XML.forfeitCFLeave.day" [disabled]="modeInput === 'OFF'">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let day of daysOfCF" [value]=day>{{day}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            &nbsp;
+            <span [class]="'hide-sm-down'" style="font-size: 11px;color: #43425d;opacity:0.8">Next year</span>
+
+        </ion-item-group>
         <ion-item class="divider" lines="full"></ion-item>
         <!-- Year end closing -->
         <ion-list lines="none">
@@ -114,46 +135,50 @@
                 </ion-checkbox>
             </ion-item>
         </ion-list>
-        <mat-form-field appearance="outline" style="font-size: 13px;width: 192px;color:#7a8589;padding-left: 50px;">
-            <mat-label>Month</mat-label>
-            <mat-select [(value)]="policyList.PROPERTIES_XML.allowYearEndClosing.month"
-                (selectionChange)="monthChanged('monthYE')" [disabled]="modeInput === 'OFF'">
-                <mat-option>None</mat-option>
-                <mat-option value="January">January</mat-option>
-                <mat-option value="February">February</mat-option>
-                <mat-option value="March">March</mat-option>
-                <mat-option value="April">April</mat-option>
-                <mat-option value="May">May</mat-option>
-                <mat-option value="Jun">Jun</mat-option>
-                <mat-option value="July">July</mat-option>
-                <mat-option value="August">August</mat-option>
-                <mat-option value="September">September</mat-option>
-                <mat-option value="October">October</mat-option>
-                <mat-option value="November">November</mat-option>
-                <mat-option value="December">December</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 12px;">
-            <mat-label>Day</mat-label>
-            <mat-select [(value)]="policyList.PROPERTIES_XML.allowYearEndClosing.day" [disabled]="modeInput === 'OFF'">
-                <mat-option>None</mat-option>
-                <mat-option *ngFor="let day of daysOfYE" [value]=day>{{day}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" style="font-size: 13px;width: 154px;color:#7a8589;padding-left: 12px;">
-            <mat-label>Year</mat-label>
-            <mat-select [(value)]="policyList.PROPERTIES_XML.allowYearEndClosing.relativeYear"
-                (selectionChange)="yearChanged($event.value)" [disabled]="modeInput === 'OFF'">
-                <mat-option>None</mat-option>
-                <mat-option value="This year">This year</mat-option>
-                <mat-option value="Next year">Next year</mat-option>
-            </mat-select>
-        </mat-form-field>
+        <ion-item-group style="padding-left:44px;">
+            <mat-form-field appearance="outline"
+                style="font-size: 13px;width: 166px;color:#7a8589;padding-left: 6px; padding-right: 6px;">
+                <mat-label>Month</mat-label>
+                <mat-select [(value)]="policyList.PROPERTIES_XML.allowYearEndClosing.month"
+                    (selectionChange)="monthChanged('monthYE')" [disabled]="modeInput === 'OFF'">
+                    <mat-option>None</mat-option>
+                    <mat-option value="January">January</mat-option>
+                    <mat-option value="February">February</mat-option>
+                    <mat-option value="March">March</mat-option>
+                    <mat-option value="April">April</mat-option>
+                    <mat-option value="May">May</mat-option>
+                    <mat-option value="Jun">Jun</mat-option>
+                    <mat-option value="July">July</mat-option>
+                    <mat-option value="August">August</mat-option>
+                    <mat-option value="September">September</mat-option>
+                    <mat-option value="October">October</mat-option>
+                    <mat-option value="November">November</mat-option>
+                    <mat-option value="December">December</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="font-size: 13px;width: 166px;color:#7a8589;padding-left: 6px; padding-right: 6px;">
+                <mat-label>Day</mat-label>
+                <mat-select [(value)]="policyList.PROPERTIES_XML.allowYearEndClosing.day"
+                    [disabled]="modeInput === 'OFF'">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let day of daysOfYE" [value]=day>{{day}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="font-size: 13px;width: 166px;color:#7a8589;padding-left: 6px; padding-right: 6px;">
+                <mat-label>Year</mat-label>
+                <mat-select [(value)]="policyList.PROPERTIES_XML.allowYearEndClosing.relativeYear"
+                    (selectionChange)="yearChanged($event.value)" [disabled]="modeInput === 'OFF'">
+                    <mat-option>None</mat-option>
+                    <mat-option value="This year">This year</mat-option>
+                    <mat-option value="Next year">Next year</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ion-item-group>
         <ion-item class="divider" lines="full"></ion-item>
 
         <!-- Apply on behalf -->
         <ion-list lines="none">
-            <ion-item class="ionItem">
+            <ion-item class="ionItem item-label">
                 <ion-label [style.opacity]="policyList.PROPERTIES_XML.applyOnBehalfConfirmation === true ? '0.8': '' ">
                     Apply on
                     behalf
