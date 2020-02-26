@@ -1,5 +1,4 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
-import { APIService } from 'src/services/shared-service/api.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import * as _moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -47,13 +46,6 @@ export class ApplyOnBehalfComponent implements OnInit {
     public entitlement: any;
 
     /**
-     * Get calendar id from user profile API & request data from calendar API
-     * @type {string}
-     * @memberof ApplyOnBehalfComponent
-     */
-    // public calendarId: string;
-
-    /**
      * Local property for leave day available
      * @type {string}
      * @memberof ApplyOnBehalfComponent
@@ -66,26 +58,6 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     public daysCount: number = 0;
-
-    /**
-     * Local property for show or hide Add icon
-     * @type {boolean}
-     * @memberof ApplyOnBehalfComponent
-     */
-    // public showAddIcon: boolean = true;
-
-    /**
-     * This is input property for plugins of Full Calendar Component
-     * @memberof ApplyOnBehalfComponent
-     */
-    // public calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
-
-    /**
-     * Property for alias Event Input of Full Calendar Component
-     * @type {EventInput[]}
-     * @memberof ApplyOnBehalfComponent
-     */
-    // public calendarEvents: EventInput[];
 
     /**
      * Local property for min. date range
@@ -114,20 +86,6 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     public leaveTypeId: string;
-
-    /**
-     * show/hide the tree view 
-     * @type {boolean}
-     * @memberof ApplyOnBehalfComponent
-     */
-    // public showTreeDropdown: boolean = false;
-
-    /**
-     * show selected tree value after clicked outside the div
-     * @type {boolean}
-     * @memberof ApplyOnBehalfComponent
-     */
-    // public showSelectedTree: boolean = false;
 
     /**
      * radio button value
@@ -252,22 +210,6 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     public quarterDayIndex: number[] = [];
 
-
-    /**
-     * company Id get from selected company list
-     * @private
-     * @type {string}
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private _selectedCompanyId: string;
-
-    /**
-     * user guid from selected employee (option == 1)
-     * @private
-     * @type {string}
-     * @memberof ApplyOnBehalfComponent
-     */
-    // private guid: string;
     /**
      * selected user id
      * @private
@@ -296,6 +238,13 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     public dateRange: Date[];
+
+    /**
+     * employee list from 'leave-entitlement' report
+     * @type {*}
+     * @memberof ApplyOnBehalfComponent
+     */
+    public employeeList: any;
 
     /**
      * Local private property to get number of day from a week
@@ -359,21 +308,12 @@ export class ApplyOnBehalfComponent implements OnInit {
     private _arrayDateSlot = [];
 
     /**
-     * details list from companyId
-     * @private
-     * @type {*}
-     * @memberof ApplyOnBehalfComponent
-     */
-    private _company: any;
-
-    /**
      *Creates an instance of ApplyOnBehalfComponent.
      * @param {LeaveApiService} leaveAPI
-     * @param {APIService} apiService
      * @param {ReportApiService} reportApi
      * @memberof ApplyOnBehalfComponent
      */
-    constructor(private leaveAPI: LeaveApiService, private apiService: APIService, private reportApi: ReportApiService) {
+    constructor(private leaveAPI: LeaveApiService, private reportApi: ReportApiService) {
         this.applyLeaveForm = new FormGroup({
             leaveTypes: new FormControl({ value: '', disabled: true }, Validators.required),
             firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
@@ -382,26 +322,17 @@ export class ApplyOnBehalfComponent implements OnInit {
         });
     }
 
-
     /**
      * Initial method
      * Get user profile list from API
      * @memberof ApplyOnBehalfComponent
      */
     async ngOnInit() {
-        let list = await this.apiService.get_user_profile_list().toPromise();
-        this._userList = list;
-        this.showSpinner = false;
-        this.leaveAPI.get_admin_leavetype().subscribe(leave => this.leaveTypes = leave)
-        for (let i = 0; i < this._userList.length; i++) {
-            if (this._userList[i].companyId != null) {
-                let list = await this.leaveAPI.get_company_details(this._userList[i].companyId).toPromise();
-                this._company = list;
-                this._userList[i]["companyName"] = this._company.companyName;
-            }
-            this.addShortCode(this._userList[i]);
-        }
-
+        this.leaveAPI.get_admin_leavetype().subscribe(leave => {
+            this.leaveTypes = leave;
+            this.showSpinner = false;
+        })
+        this.reportApi.get_bundle_report('leave-entitlement').subscribe(data => this.employeeList = data)
     }
 
     /**
@@ -432,36 +363,21 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     async filter(text: any) {
         if (text && text.trim() != '') {
-            let name = this._userList.filter((item: any) => {
+            let name = this.employeeList.filter((item: any) => {
                 return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
-            let department = this._userList.filter((value: any) => {
+            let department = this.employeeList.filter((value: any) => {
                 if (value.department != undefined) {
                     return (value.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
                 }
             })
-            let company = this._userList.filter((items: any) => {
+            let company = this.employeeList.filter((items: any) => {
                 if (items.companyName != undefined) {
                     return (items.companyName.toLowerCase().indexOf(text.toLowerCase()) > -1)
                 }
             })
-            this._userList = require('lodash').uniqBy(name.concat(department).concat(company), 'id');
-            // this.addShortCode();
+            this.employeeList = require('lodash').uniqBy(name.concat(department).concat(company), 'id');
         }
-    }
-
-    /**
-     * push short code of leave type
-     * @memberof ApplyOnBehalfComponent
-     */
-    async addShortCode(item) {
-        let details = await this.leaveAPI.get_entilement_details(item.userId).toPromise();
-        let array = new Array();
-        for (let j = 0; j < details.length; j++) {
-            array.push(details[j].ABBR);
-        }
-        item["shortCode"] = array.join();
-        item["balance"] = '-';
     }
 
     /**
@@ -487,12 +403,12 @@ export class ApplyOnBehalfComponent implements OnInit {
     hoverInOut(i: number, mouseIn: boolean, isChecked: boolean) {
         if (this.headCheckbox || this.indeterminateVal) {
             this.showCheckBox = [];
-            this.showCheckBox.push(...Array(this._userList.length).fill(true));
+            this.showCheckBox.push(...Array(this.employeeList.length).fill(true));
         } else if (mouseIn && !isChecked && !this.indeterminateVal && !this.headCheckbox) {
             this.showCheckBox.splice(i, 1, true);
         } else {
             this.showCheckBox.splice(0, this.showCheckBox.length);
-            this.showCheckBox.push(...Array(this._userList.length).fill(false));
+            this.showCheckBox.push(...Array(this.employeeList.length).fill(false));
         }
     }
 
@@ -503,7 +419,7 @@ export class ApplyOnBehalfComponent implements OnInit {
     headerCheckbox() {
         this.showCheckBox.splice(0, this.showCheckBox.length);
         setTimeout(() => {
-            this._userList.forEach(item => {
+            this.employeeList.forEach(item => {
                 item.isChecked = this.headCheckbox;
                 if (item.isChecked) {
                     this.showCheckBox.push(true);
@@ -519,13 +435,13 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     contentCheckbox() {
-        const totalLength = this._userList.length;
+        const totalLength = this.employeeList.length;
         let checkedValue = 0;
-        this._userList.map(item => {
+        this.employeeList.map(item => {
             if (item.isChecked) {
                 checkedValue++;
                 this.showCheckBox.push(true);
-                this.getSelectedEmployee(item.userId, checkedValue);
+                this.getSelectedEmployee(item.userGuid, checkedValue);
             }
         });
         if (checkedValue > 0 && checkedValue < totalLength) {
@@ -548,17 +464,16 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     async addEntitlementBal(leaveTypeGuid: string) {
-        for (let i = 0; i < this._userList.length; i++) {
-            let details = await this.leaveAPI.get_entilement_details(this._userList[i].userId).toPromise();
+        for (let i = 0; i < this.employeeList.length; i++) {
+            let details = await this.leaveAPI.get_entilement_details(this.employeeList[i].userGuid).toPromise();
             for (let j = 0; j < details.length; j++) {
                 if (details[j].LEAVE_TYPE_GUID === leaveTypeGuid) {
-                    this._userList[i]["entitled"] = details[j].ENTITLED_DAYS;
-                    this._userList[i]["balance"] = details[j].BALANCE_DAYS;
+                    this.employeeList[i]["entitled"] = details[j].ENTITLED_DAYS;
+                    this.employeeList[i]["balance"] = details[j].BALANCE_DAYS;
                 }
             }
         }
     }
-
 
     /**
      * This method is used to create consecutive date as an array list
@@ -663,9 +578,9 @@ export class ApplyOnBehalfComponent implements OnInit {
             this._arrayDateSlot.push(remainingFullDay);
         }
         console.log(this._arrayDateSlot);
-        for (let i = 0; i < this._userList.length; i++) {
-            if (this._userList[i].isChecked) {
-                this._employeeId.push(this._userList[i].userId);
+        for (let i = 0; i < this.employeeList.length; i++) {
+            if (this.employeeList[i].isChecked) {
+                this._employeeId.push(this.employeeList[i].userGuid);
             }
         }
     }
@@ -851,237 +766,6 @@ export class ApplyOnBehalfComponent implements OnInit {
     }
 
     /**
-     * This method is used to detect selection change of day types
-     * @param {*} event
-     * @param {*} index
-     * @memberof ApplyOnBehalfComponent
-     */
-    // dayTypesChanged(event: any, index: any) {
-    //     this._index = index;
-    //     this.showAddIcon = true;
-    //     if (event.value == '1') {
-    //         this.open(index);
-    //     }
-    // }
-
-    /**
-     * This method is used to patch value to form control status
-     * @param {number} i
-     * @param {*} value
-     * @param {boolean} disabled
-     * @memberof ApplyOnBehalfComponent
-     */
-    // patchValueFunction(i: number, value: any, disabled: boolean) {
-    //     for (let j = 0; j < value.length; j++) {
-    //         const valueFirst = (this.dayTypes.controls[i].value.status[0]).splice(value[j], 1, disabled);
-    //         this.dayTypes.controls[0].patchValue([{ status: valueFirst }]);
-    //     }
-    // }
-
-    /**
-     * This method is used to detect opened change of half day dates
-     * @param {number} index
-     * @memberof ApplyOnBehalfComponent
-     */
-    // open(index: number) {
-    //     if (this._arrayList.length === 0) {
-    //         for (let j = 0; j < this.dayTypes.controls[index].value.selectArray[0].length; j++) {
-    //             this._arrayList.push(false);
-    //         }
-    //     }
-    //     const selected = (this.dayTypes.controls[index].value.status).splice(0, 1, this._arrayList);
-    //     this.dayTypes.controls[index].patchValue([{ status: selected }]);
-    //     if (index == 0) {
-    //         this.patchValueFunction(index, this._firstFormIndex, false);
-    //         this.patchValueFunction(index, this._secondFormIndex, true);
-    //         this.patchValueFunction(index, this._thirdFormIndex, true);
-    //     } if (index == 1) {
-    //         this.patchValueFunction(index, this._firstFormIndex, true);
-    //         this.patchValueFunction(index, this._secondFormIndex, false);
-    //         this.patchValueFunction(index, this._thirdFormIndex, true);
-    //     } if (index == 2) {
-    //         this.patchValueFunction(index, this._firstFormIndex, true);
-    //         this.patchValueFunction(index, this._secondFormIndex, true);
-    //         this.patchValueFunction(index, this._thirdFormIndex, false);
-    //     }
-    // }
-
-    /**
-     * This method is used to calculate days of leave apply
-     * @param {*} date
-     * @param {*} form
-     * @memberof ApplyOnBehalfComponent
-     */
-    // calculate(date: any, form: any) {
-    //     let missing = null;
-    //     for (let i = 0; i < form.length; i++) {
-    //         if (date.indexOf(form[i]) == -1) {
-    //             missing = form[i];
-    //             this.daysCount = this.daysCount + 0.5;
-    //         }
-    //     }
-    //     if (!missing) { this.daysCount = this.daysCount - 0.5; }
-    // }
-
-    /**
-     * This method is used to check duplicate start date
-     * @param {*} obj
-     * @param {*} list
-     * @returns
-     * @memberof ApplyOnBehalfComponent
-     */
-    // containsObject(obj: any, list: any) {
-    //     for (let i = 0; i < list.length; i++) {
-    //         if (list[i].startDate === obj.startDate) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
-    /**
-     * This method is used to format body to be send to POST API
-     * @param {*} form
-     * @param {*} array
-     * @param {string} slot
-     * @memberof ApplyOnBehalfComponent
-     */
-    // postValueReformat(form: any, array: any, slot: string) {
-    //     for (let j = 0; j < form.length; j++) {
-    //         const obj = {
-    //             "startDate": _moment(form[j]).format('YYYY-MM-DD HH:mm:ss'),
-    //             "endDate": _moment(form[j]).format('YYYY-MM-DD HH:mm:ss'),
-    //             "dayType": Number(this.dayTypes.controls[this._index].value.name),
-    //             "slot": slot,
-    //             "quarterDay": this.selectedQuarterHour,
-    //         }
-    //         if (this.containsObject(obj, array) === false) {
-    //             array.push(obj);
-    //         }
-    //         if (obj.slot !== array[j].slot) {
-    //             array.splice(j, 1, obj);
-    //         }
-    //     }
-    // }
-
-    /**
-     * This method is used to calculate days when selected date options
-     * @param {*} selectedDate
-     * @param {number} index
-     * @memberof ApplyOnBehalfComponent
-     */
-    // halfDaySelectionChanged(selectedDate: any, index: number) {
-    //     if (index == 0) {
-    //         this.calculate(selectedDate, this._firstForm);
-    //         this._firstForm = selectedDate;
-    //         this.postValueReformat(this._firstForm, this._objSlot1, this._slot1);
-    //     }
-    //     if (index == 1) {
-    //         this.calculate(selectedDate, this._secondForm);
-    //         this._secondForm = selectedDate;
-    //         this.postValueReformat(this._secondForm, this._objSlot2, this._slot2);
-    //     }
-    //     if (index == 2) {
-    //         this.calculate(selectedDate, this._thirdForm);
-    //         this._thirdForm = selectedDate;
-    //         this.postValueReformat(this._thirdForm, this._objSlot3, this._slot3);
-    //     }
-    //     this._arrayDateSlot = this._objSlot1.concat(this._objSlot2).concat(this._objSlot3);
-    // }
-
-    /**
-     * This method is used to assign value of selected date option
-     * @param {number} i
-     * @param {number} indexj
-     * @memberof ApplyOnBehalfComponent
-     */
-    // valueSelected(i: number, indexj: number) {
-    //     if (i == 0) {
-    //         const index = this._firstFormIndex.findIndex(item => item === indexj);
-    //         if (index > -1) {
-    //             this._firstFormIndex.splice(index, 1);
-    //         } else {
-    //             this._firstFormIndex.push(indexj);
-    //         }
-    //     } if (i == 1) {
-    //         const index = this._secondFormIndex.findIndex(item => item === indexj);
-    //         if (index > -1) {
-    //             this._secondFormIndex.splice(index, 1);
-    //         } else {
-    //             this._secondFormIndex.push(indexj);
-    //         }
-    //     } if (i == 2) {
-    //         const index = this._thirdFormIndex.findIndex(item => item === indexj);
-    //         if (index > -1) {
-    //             this._thirdFormIndex.splice(index, 1);
-    //         } else {
-    //             this._thirdFormIndex.push(indexj);
-    //         }
-    //     }
-    // }
-
-    /**
-     * This method is used to get time slot AM/PM when detect change
-     * @param {*} event
-     * @param {*} i
-     * @memberof ApplyOnBehalfComponent
-     */
-    // timeSlotChanged(event: any, i: any) {
-    //     this._index = i;
-    //     const selected = (this.dayTypes.controls[this._index].value.selectArray).splice(1, 1, event.value);
-    //     this.dayTypes.controls[i].patchValue([{ selectArray: selected }]);
-    //     if (i === 0) {
-    //         this._slot1 = event.value;
-    //         this.postValueReformat(this._firstForm, this._objSlot1, this._slot1);
-    //     }
-    //     if (i === 1) {
-    //         this._slot2 = event.value;
-    //         this.postValueReformat(this._secondForm, this._objSlot2, this._slot2);
-    //     }
-    //     if (i === 2) {
-    //         this._slot3 = event.value;
-    //         this.postValueReformat(this._thirdForm, this._objSlot3, this._slot3);
-    //     }
-    //     this._arrayDateSlot = this._objSlot1.concat(this._objSlot2).concat(this._objSlot3);
-    // }
-
-    /**
-     * This method is used for add new form group after clicked add button
-     * @memberof ApplyOnBehalfComponent
-     */
-    // addFormField() {
-    //     if (this.dayTypes.controls.length < Object.keys(DayType).length / 2) {
-    //         this.dayTypes.push(new FormGroup({
-    //             name: new FormControl(0),
-    //             selectArray: new FormArray([new FormControl(this._dateArray), new FormControl('')]),
-    //             status: new FormControl([false])
-    //         }));
-    //     } else {
-    //         this.showAddIcon = false;
-    //         alert("No other option");
-    //     }
-    // }
-
-    /**
-     * pass selected companyId to get department list
-     * @param {*} selectedCompanyId
-     * @memberof ApplyOnBehalfComponent
-     */
-    // selectedCompany(selectedCompanyId) {
-    //     this.departmentlist = [];
-    //     this.leaveAPI.get_company_details(selectedCompanyId).subscribe(list => {
-    //         this.applyLeaveForm.controls.userControl.enable();
-    //         for (let i = 0; i < this.tree.dataSource.data.length; i++) {
-    //             if (list.companyName == this.tree.dataSource.data[i].item) {
-    //                 for (let j = 0; j < this.tree.dataSource.data[i].children.length; j++) {
-    //                     this.departmentlist.push(this.tree.dataSource.data[i].children[j]);
-    //                 }
-    //             }
-    //         }
-    //     })
-    // }
-
-    /**
      * get selected employee's user profile details
      * @param {string} name
      * @memberof ApplyOnBehalfComponent
@@ -1103,45 +787,11 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     showCheckedUser() {
-        for (let i = this._userList.length - 1; i >= 0; --i) {
-            if (this._userList[i].isChecked == false || this._userList[i].isChecked == undefined) {
-                this._userList.splice(i, 1);
+        for (let i = this.employeeList.length - 1; i >= 0; --i) {
+            if (this.employeeList[i].isChecked == false || this.employeeList[i].isChecked == undefined) {
+                this.employeeList.splice(i, 1);
             }
         }
     }
-
-    /**
-     * close treeview div & get the selected  value
-     * @param {*} evt
-     * @memberof ApplyOnBehalfComponent
-     */
-    // clickOutside(evt) {
-    //     if (!evt.target.className.includes("material-icons") && !evt.target.className.includes("dropdownDiv") && !evt.target.className.includes("mat-form-field-infix")) {
-    //         this.showTreeDropdown = false;
-    //         this.showSelectedTree = true;
-    //     }
-    //     for (let i = 0; i < this.tree.checklistSelection.selected.length; i++) {
-    //         if (this.tree.checklistSelection.selected[i].level == 2 && this._employeeTree.indexOf(this.tree.checklistSelection.selected[i].item) < 0) {
-    //             this._employeeTree.push(this.tree.checklistSelection.selected[i].item);
-    //         }
-    //     }
-    //     if (this.tree.checklistSelection.selected.length === 0) {
-    //         this._employeeTree.length = 0;
-    //     }
-    // }
-
-    /**
-     * filter employee name that exist in user list
-     * @param {*} array
-     * @param {*} obj
-     * @memberof ApplyOnBehalfComponent
-     */
-    // checkIdExist(array: any, obj: any) {
-    //     for (let j = 0; j < array.length; j++) {
-    //         if (array[j].employeeName === obj) {
-    //             this._employeeId.push(this._userList[j].userId);
-    //         }
-    //     }
-    // }
 
 }

@@ -166,7 +166,7 @@
                             </ion-row>
                         </div>
                         <div style="height: calc( 100% - 200px);overflow: auto;">
-                            <ion-row class="detailsRow" *ngFor="let item of _userList; let i=index">
+                            <ion-row class="detailsRow" *ngFor="let item of employeeList; let i=index">
                                 <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
                                     <ion-avatar class="avatar" (mouseover)="hoverInOut(i, true, item.isChecked)"
                                         (mouseout)="hoverInOut(i, false, item.isChecked)">
@@ -183,7 +183,7 @@
                                 </ion-col>
                                 <ion-col size="1" class="colOfLeave" align-self-center
                                     style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                    {{item.staffNumber}}
+                                    {{item.employeeNo}}
                                 </ion-col>
                                 <ion-col size="4" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                     <ion-label style="color:#43425d; font-weight: bold;;font-size: 12px;">
@@ -195,7 +195,7 @@
                                 <ion-col size="2.3" align-self-center class="colOfLeave"
                                     *ngIf="!applyLeaveForm.controls.leaveTypes.valid"
                                     style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                    {{item.shortCode}}
+                                    {{item.abbr}}
                                 </ion-col>
                                 <ion-col size="2.3" align-self-center class="colOfLeave"
                                     *ngIf="applyLeaveForm.controls.leaveTypes.valid"
