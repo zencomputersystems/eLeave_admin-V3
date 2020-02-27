@@ -38,25 +38,25 @@
                         Everyone in hierarchy approves limit to
                     </p>
                 </mat-radio-button>
-                <div style="flex: 2; margin-left: 50px;">
+                <div style="flex: 2; margin-left: 50px; min-width: fit-content;">
                     <mat-form-field appearance="outline"
                         style="font-size: 12px;width: 56px;color:#43425d;padding-left: 5px;">
                         <input matInput [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.approvalLevel"
                             [disabled]="modeInput === 'OFF'" required>
                     </mat-form-field>
                     <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Level</p>
-                    <div style="display: block;"
-                        *ngIf="policyList.PROPERTIES_XML.approvalConfirmation.requirement === 'Everyone'">
-                        <p style="padding-left: 53px;color: #4d4f5c;font-size:11px;display: inline-block;">Escalate
-                            after &nbsp;</p>
-                        <mat-form-field appearance="outline"
-                            style="width:56px;font-size: 12px;color:#43425d;display:inline-block">
-                            <input matInput
-                                [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays"
-                                [disabled]="modeInput === 'OFF'" required>
-                        </mat-form-field>
-                        <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Days</p>
-                    </div>
+                </div>
+                <div style="display: block; flex: 2; margin-right: 30px;"
+                    *ngIf="policyList.PROPERTIES_XML.approvalConfirmation.requirement === 'Everyone'">
+                    <p style="padding-left: 53px;color: #4d4f5c;font-size:11px;display: inline-block;">Escalate
+                        after &nbsp;</p>
+                    <mat-form-field appearance="outline"
+                        style="width:56px;font-size: 12px;color:#43425d;display:inline-block">
+                        <input matInput
+                            [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays"
+                            [disabled]="modeInput === 'OFF'" required>
+                    </mat-form-field>
+                    <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Days</p>
                 </div>
             </ion-item-group>
             <ion-item-group>
