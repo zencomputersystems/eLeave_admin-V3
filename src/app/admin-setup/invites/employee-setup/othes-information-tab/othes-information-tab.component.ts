@@ -266,25 +266,16 @@ export class OthesInformationTabComponent implements OnInit {
   }
 
   /**
-   * click to download uploaded attachment
-   * @param {number} index
-   * @memberof OthesInformationTabComponent
-   */
-  downloadFile(index: number) {
-    window.location.href = (this.details.link + this.awards[index].certificationAttachment)
-  }
-
-  /**
    * upload attached file to endpoint (api/azure/upload)
    * @param {*} file
    * @memberof OthesInformationTabComponent
    */
   upload(file, i: number) {
-    this.awards[i].certificationAttachment = file[0].name;
     const fileToUpload = file.item(0);
     let formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
-    let res = this.apiService.post_file(formData).subscribe(res => console.log(res));
+    this.apiService.post_file(formData).subscribe(res =>
+      this.awards[i].certificationAttachment = res.filename);
   }
 
 }

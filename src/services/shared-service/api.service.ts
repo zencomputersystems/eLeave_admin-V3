@@ -129,17 +129,6 @@ export class APIService {
     }
 
     /**
-     * Update employment details to endpoint
-     * @param {*} updateData
-     * @returns {Observable<any>}
-     * @memberof APIService
-     */
-    patch_employment_details(updateData: any): Observable<any> {
-        this.headerAuthorization();
-        return this.patchApi(updateData, '/api/userprofile/employment-detail');
-    }
-
-    /**
      * Get user profile list JSON data from endpoint
      * @returns {Observable<any>}
      * @memberof APIService
