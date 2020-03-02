@@ -716,11 +716,11 @@
                 <ion-col size="1.3" class="text">
                   {{item.leaveTypeName}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  {{item.applicationDate}}</ion-col>
+                  {{item.applicationDate | date:'yyyy-MM-dd'}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  {{item.overrideBy}}</ion-col>
+                  {{item.overrideBy }}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  {{item.overrideDate}}</ion-col>
+                  {{item.overrideDate | date:'yyyy-MM-dd'}}</ion-col>
                 <ion-col size="1" class="titleRow text">
                   {{item.startDate}}</ion-col>
                 <ion-col size="1" class="titleRow text">
@@ -728,7 +728,7 @@
                 <ion-col size="1" class="titleRow text">
                   {{item.noOfDays}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  {{item.status}}</ion-col>
+                  {{item.status | titlecase}}</ion-col>
                 <ion-col size="1.5" class="titleRow text">
                   {{item.remarks}}
                 </ion-col>
@@ -838,7 +838,7 @@
                 <ion-col size="1" class="titleRow text">
                   {{item.noOfDays}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  {{item.status}}</ion-col>
+                  {{item.status | titlecase}}</ion-col>
                 <ion-col size="1" class="titleRow text">
                   {{item.remarks}}
                 </ion-col>
@@ -1041,9 +1041,9 @@
                     <p class="text">{{leaveItems.noOfDays}}</p>
                   </ng-container>
                 </ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow">
                   <ng-container *ngFor="let leaveItems of item.leaveDetail">
-                    {{leaveItems.approveBy}}
+                    <p class="text">{{leaveItems.approveBy}}</p>
                   </ng-container>
                 </ion-col>
                 <ion-col size="1.5" class="titleRow">
@@ -1134,7 +1134,7 @@
                 <ion-col size="1.5" class="titleRow text">
                   {{item.adjustBy}}</ion-col>
                 <ion-col size="1.5" class="titleRow text">
-                  {{item.adjustDate}}</ion-col>
+                  {{item.adjustDate | date:'yyyy-MM-dd' }}</ion-col>
                 <ion-col size="1.5" class="titleRow text">
                   {{item.remarks}}
                 </ion-col>
@@ -1498,7 +1498,7 @@
                 <ion-col size="1.2" class="titleRow text">
                   {{item.department}}</ion-col>
                 <ion-col size="1" class="titleRow text">
-                  Designer</ion-col>
+                  {{item.designation}}</ion-col>
                 <ion-col size="1.2" class="titleRow text">
                   {{item.email}}</ion-col>
                 <ion-col size="1" class="titleRow text">

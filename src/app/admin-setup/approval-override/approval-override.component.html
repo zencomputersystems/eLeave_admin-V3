@@ -18,7 +18,7 @@
                             {{item.applicationDate | date: 'dd MMM yyyy' | uppercase}}</p>
                     </ion-col>
                     <ion-col>DONE BY: <p style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">
-                            {{item.overrideBy}}</p>
+                            {{item.overrideBy | uppercase}}</p>
                     </ion-col>
                 </ion-row>
             </div>
@@ -54,7 +54,7 @@
                         <p class="pStyle"></p>
                         <p
                             style="margin-bottom: 5px;margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                            {{item.status}}</p>
+                            {{item.status | titlecase}}</p>
                     </ion-col>
                 </ion-row>
             </div>
