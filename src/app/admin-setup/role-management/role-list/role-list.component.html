@@ -119,26 +119,30 @@
 <ion-card>
     <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
         <div class="fullContainer">
-            <div class="left">
-                <img src="assets/icon/leave_setup/icon_role_management@3x.png" style="width:35px;height:33px">
-            </div>
-            <div class="right">
-                <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Role
-                    Management
-                </ion-card-subtitle>
-                <ion-card-subtitle class="subtitle" style="font-size: 12px;">
-                    Create the user role and the configuration based on their access level</ion-card-subtitle>
-            </div>
-            <div style="right: 75px;top: 25px;position: absolute;">
-                <p
-                    style="margin-top: 16px;opacity: 0.8;font-size: 12px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
-                    Edit
-                    Mode: {{mode}}</p>
-                <div style="display: inline-block;position: absolute;margin-top: 12px;">
-                    <ion-toggle class="toggleButton" mode="ios" color="secondary" (ionChange)="toggleMode($event)">
-                    </ion-toggle>
+            <ion-item-group style="display: flex;">
+                <div class="left" style="min-width: fit-content;">
+                    <img src="assets/icon/leave_setup/icon_role_management@3x.png" style="width:35px;height:33px">
                 </div>
-            </div>
+                <div class="right">
+                    <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Role
+                        Management
+                    </ion-card-subtitle>
+                    <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                        Create the user role and the configuration based on their access level</ion-card-subtitle>
+                </div>
+            </ion-item-group>
+            <ion-item-group style="margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
+                <div style="right: 75px;top: 25px;">
+                    <p
+                        style="margin-top: 16px;opacity: 0.8;font-size: 12px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
+                        Edit
+                        Mode: {{mode}}</p>
+                    <div style="display: inline-block;position: absolute;margin-top: 12px;">
+                        <ion-toggle class="toggleButton" mode="ios" color="secondary" (ionChange)="toggleMode($event)">
+                        </ion-toggle>
+                    </div>
+                </div>
+            </ion-item-group>
         </div>
     </ion-card-header>
     <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
@@ -147,8 +151,8 @@
     <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;">
         <div class="cardContent">
             <ion-card-content style="max-height: 100%;height: 100%;">
-                <div class="row">
-                    <div class="role">
+                <div class="row" style="flex-wrap: wrap; overflow-y: auto;">
+                    <div class="role" style="flex: 1; min-width: 200px;">
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
@@ -168,14 +172,14 @@
                                     <ion-col size="9"
                                         style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                         <p class="textHover"
-                                            style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
+                                            style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;"
                                             [ngClass]="{
                                             'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
                                             (click)="selectedProfile(role, i)">
                                             {{role.code}}
                                         </p>
                                         <p
-                                            style="font-style: italic;font-weight: 600;padding-bottom: 5px;font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                            style="font-style: italic;font-weight: 600;padding-bottom: 5px;font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
                                             {{role.description}}
                                         </p>
                                         <div
@@ -209,14 +213,14 @@
                                         <ion-col size="9"
                                             style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                             <p class="textHover"
-                                                style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 0;"
+                                                style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;"
                                                 [ngClass]="{
                                             'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
                                                 (click)="selectedProfile(role, i)">
                                                 {{role.code}}
                                             </p>
                                             <p
-                                                style="font-style: italic;font-weight: 600;padding-bottom: 5px;font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                style="font-style: italic;font-weight: 600;padding-bottom: 5px;font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
                                                 {{role.description}}
                                             </p>
                                             <div
@@ -243,7 +247,7 @@
                             </ng-container>
                         </div>
                     </div>
-                    <div class="assigned">
+                    <div class="assigned" style="flex: 1; min-width: 200px;">
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
@@ -256,7 +260,7 @@
                             <ion-row *ngFor="let item of assignedNameList; let i =index"
                                 style="width: 100%;padding-left: 10px;">
                                 <ion-col align-self-center size="9" style="padding-top: 0;padding-bottom: 0;">
-                                    <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
+                                    <p style="overflow: hidden;white-space: pre-line;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                         padding-bottom: 13px;">
                                         {{item.fullname}}</p>
                                 </ion-col>
@@ -276,7 +280,7 @@
                             </mat-card>
                         </div>
                     </div>
-                    <app-role-rights [leaveSetup]=true [roleID]="roleIdOutput" [editMode]="mode">
+                    <app-role-rights style="flex: 2; min-width: -webkit-fill-available; flex-wrap: wrap;" [leaveSetup]=true [roleID]="roleIdOutput" [editMode]="mode">
                     </app-role-rights>
                 </div>
             </ion-card-content>

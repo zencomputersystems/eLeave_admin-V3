@@ -137,8 +137,10 @@
   }
   .leave,
   .manage {
-    flex: 49%;
+    // flex: 49%;
     // max-width: 50%;
+    flex: 1;
+    min-width: 200px;
     max-height: 100%;
     overflow: auto;
   }
