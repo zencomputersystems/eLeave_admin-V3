@@ -35,4 +35,14 @@
   .colContent {
     padding-top: 0;
   }
+  .education-mini {
+    ion-item-group {
+      display: flex;
+      div {
+        ion-label {
+          width: 100px;
+        }
+      }
+    }
+  }
 }
