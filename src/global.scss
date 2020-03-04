@@ -369,20 +369,20 @@ $screen-breakpoints: (
   }
 
   .hide-#{$keySize}-up {
+      @media screen and (min-width: $valueSize + 1) {
+        display: none;
+    } 
+  }
+
+  .show-flex-#{$keySize}-down {
+    @media screen and (max-width: $valueSize) {
+      display: flex;
+    }
+  }
+
+  .show-flex-#{$keySize}-up {
     @media screen and (min-width: $valueSize) {
-      display: none;
-    }
-
-    .show-flex-#{$keySize}-down {
-      @media screen and (max-width: $valueSize) {
-        display: flex;
-      }
-    }
-
-    .show-flex-#{$keySize}-up {
-      @media screen and (min-width: $valueSize) {
-        display: flex;
-      }
+      display: flex;
     }
   }
 }
