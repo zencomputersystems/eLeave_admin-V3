@@ -322,56 +322,60 @@
                                 </div>
                             </div>
 
-                            <div style="display: block; white-space: nowrap;width: 90%;overflow: hidden;margin-top: 10px;"
+                            <div style="display: block; white-space: pre-line;width: 90%;overflow: hidden;margin-top: 10px;"
                                 *ngFor="let date of dateSelection; let j = index">
-                                <mat-radio-group [value]="dayName[j]" (change)="dayNameChanged($event, j)">
-                                    <mat-radio-button value="0" color="primary" style="padding-right: 15px;"
-                                        [checked]=true>Full Day
-                                    </mat-radio-button>
-                                    <mat-radio-button value="1" color="primary" style="padding-right: 15px;">Half Day
-                                    </mat-radio-button>
-                                    <mat-radio-button value="2" color="primary" style="padding-right: 15px;">Quarter Day
-                                    </mat-radio-button>
-                                </mat-radio-group>
-                                <mat-form-field style="width: 35%;height: 60px;" appearance="outline">
-                                    <mat-label>Date Selection</mat-label>
-                                    <input matInput [(value)]="date" disabled>
-                                </mat-form-field>
-                                <div *ngIf="dayName[j] == '1'">
-                                    <p style="font-size: 12px;color: #43425d;">Half Day selection</p>
-                                    <ion-button (click)="amButton[j] = true;getHalfQuarterValue(j,'AM')"
-                                        [fill]="amButton[j] ? 'solid':'outline'"
-                                        style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
-                                        AM
-                                    </ion-button>
-                                    <ion-button (click)="amButton[j] = false;getHalfQuarterValue(j,'PM')"
-                                        [fill]="!amButton[j] ? 'solid':'outline'"
-                                        style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
-                                        PM
-                                    </ion-button>
+                                <div style="display: flex; max-width: 90%;">
+                                    <mat-radio-group style="align-self: center; margin-top: 7px;" [value]="dayName[j]" (change)="dayNameChanged($event, j)">
+                                        <mat-radio-button value="0" color="primary" style="padding-right: 15px;"
+                                            [checked]=true>Full Day
+                                        </mat-radio-button>
+                                        <mat-radio-button value="1" color="primary" style="padding-right: 15px;">Half Day
+                                        </mat-radio-button>
+                                        <mat-radio-button value="2" color="primary" style="padding-right: 15px;">Quarter Day
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                    <mat-form-field style="width: 35%;height: 60px;" appearance="outline">
+                                        <mat-label>Date Selection</mat-label>
+                                        <input matInput [(value)]="date" disabled>
+                                    </mat-form-field>
                                 </div>
-                                <div *ngIf="dayName[j] == '2'">
-                                    <p style="font-size: 12px;color: #43425d;">Select your time-off here</p>
-                                    <ion-button [fill]="Q1Button[j]? 'solid':'outline'"
-                                        (click)="Q1Button[j]=true;Q2Button[j]=false;Q3Button[j]=false;Q4Button[j]=false; getHalfQuarterValue(j,'Q1')"
-                                        style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
-                                        Q1
-                                    </ion-button>
-                                    <ion-button [fill]="Q2Button[j]? 'solid':'outline'"
-                                        (click)="Q1Button[j]=false;Q2Button[j]=true;Q3Button[j]=false;Q4Button[j]=false; getHalfQuarterValue(j,'Q2')"
-                                        style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
-                                        Q2
-                                    </ion-button>
-                                    <ion-button [fill]="Q3Button[j]? 'solid':'outline'"
-                                        (click)="Q1Button[j]=false;Q2Button[j]=false;Q3Button[j]=true;Q4Button[j]=false; getHalfQuarterValue(j,'Q3')"
-                                        style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
-                                        Q3
-                                    </ion-button>
-                                    <ion-button [fill]="Q4Button[j]? 'solid':'outline'"
-                                        (click)="Q1Button[j]=false;Q2Button[j]=false;Q3Button[j]=false;Q4Button[j]=true; getHalfQuarterValue(j,'Q4')"
-                                        style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
-                                        Q4
-                                    </ion-button>
+                                <div>
+                                    <div *ngIf="dayName[j] == '1'">
+                                        <p style="font-size: 12px;color: #43425d;">Half Day selection</p>
+                                        <ion-button (click)="amButton[j] = true;getHalfQuarterValue(j,'AM')"
+                                            [fill]="amButton[j] ? 'solid':'outline'"
+                                            style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
+                                            AM
+                                        </ion-button>
+                                        <ion-button (click)="amButton[j] = false;getHalfQuarterValue(j,'PM')"
+                                            [fill]="!amButton[j] ? 'solid':'outline'"
+                                            style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
+                                            PM
+                                        </ion-button>
+                                    </div>
+                                    <div *ngIf="dayName[j] == '2'">
+                                        <p style="font-size: 12px;color: #43425d;">Select your time-off here</p>
+                                        <ion-button [fill]="Q1Button[j]? 'solid':'outline'"
+                                            (click)="Q1Button[j]=true;Q2Button[j]=false;Q3Button[j]=false;Q4Button[j]=false; getHalfQuarterValue(j,'Q1')"
+                                            style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
+                                            Q1
+                                        </ion-button>
+                                        <ion-button [fill]="Q2Button[j]? 'solid':'outline'"
+                                            (click)="Q1Button[j]=false;Q2Button[j]=true;Q3Button[j]=false;Q4Button[j]=false; getHalfQuarterValue(j,'Q2')"
+                                            style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
+                                            Q2
+                                        </ion-button>
+                                        <ion-button [fill]="Q3Button[j]? 'solid':'outline'"
+                                            (click)="Q1Button[j]=false;Q2Button[j]=false;Q3Button[j]=true;Q4Button[j]=false; getHalfQuarterValue(j,'Q3')"
+                                            style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
+                                            Q3
+                                        </ion-button>
+                                        <ion-button [fill]="Q4Button[j]? 'solid':'outline'"
+                                            (click)="Q1Button[j]=false;Q2Button[j]=false;Q3Button[j]=false;Q4Button[j]=true; getHalfQuarterValue(j,'Q4')"
+                                            style="--border-radius: 2px;height: 32px; width: 63px;font-size: 12px;">
+                                            Q4
+                                        </ion-button>
+                                    </div>
                                 </div>
                             </div>
                             <ion-item class="divider" lines="full" style="width:90%;"></ion-item>
