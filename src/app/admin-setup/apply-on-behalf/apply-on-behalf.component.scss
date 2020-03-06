@@ -39,7 +39,18 @@
     display: inline;
   }
   .date {
-    width: 35%;
+    // width: 35%;
+    @media screen and (max-width: 577px) {
+      flex: 2 1 100px;
+      width: 50px;
+      margin-right: 5px;
+    }
+
+    @media screen and (min-width: 576px) {
+      flex: 2 1 90px;
+      margin-right: 15px;
+      width: 50px;
+    }
   }
   .button-outline {
     --border-width: 1px;
@@ -170,24 +181,50 @@
   }
   .row {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+    overflow-y: auto;
     margin: 0;
     max-height: 100%;
     height: 100%;
   }
   .filter {
-    flex: 52%;
-    max-width: 52%;
+    // flex: 52%;
+    // max-width: 52%;
+    flex: 3;
+    // min-width: 400px;
     max-height: 100%;
+    width: -webkit-fill-available;
+  }
+  .selection-column {
+    text-align: center;
+    padding-right: 30px;
+    @media screen and (max-width: 576px) {
+      margin-right: 8px;
+    }
   }
   .selection {
-    flex: 48%;
-    max-width: 48%;
+    // flex: 48%;
+    // max-width: 48%;
+    flex: 2;
+    // min-width: 370px;
+    width: -webkit-fill-available;
     max-height: 100%;
-    margin-left: 10px;
+    @media screen and (min-width: 769px) {
+      margin-left: 10px;
+    }
+
+    @media screen and (max-width: 768px) {
+      margin-top: 25px;
+
+      @media screen and (max-width: 576px) {
+        margin-top: 55px;
+      }
+    }
   }
   .searchbar {
-    width: 70%;
+    @media screen and (min-width: 576px) {
+      width: 70%;
+    }
     height: 40px;
     color: #43425d;
     font-size: 12px;
@@ -208,5 +245,16 @@
   .mat-input-element:disabled {
     color: #43425d;
     opacity: 0.8;
+  }
+  .days-available {
+    flex: 1;
+    @media screen and (min-width: 576px) {
+      display: inline-block;
+    }
+
+    @media screen and (max-width: 576px) {
+      display: none;
+    }
+
   }
 }

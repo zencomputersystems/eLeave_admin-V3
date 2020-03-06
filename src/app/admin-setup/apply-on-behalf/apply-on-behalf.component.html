@@ -78,18 +78,20 @@
 <ion-card>
     <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
         <div class="fullContainer">
-            <div class="left">
-                <img src="assets/icon/leave_setup/icon_applyonbehalf@3x.png" style="width:30px;height:33px">
-            </div>
-            <div class="right">
-                <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Apply on
-                    Behalf
-                </ion-card-subtitle>
-                <ion-card-subtitle class="subtitle" style="font-size: 12px;">
-                    A section for administrator to apply on behalf for any type of leave for
-                    employee</ion-card-subtitle>
-            </div>
-            <div style="right: 25px;top: 25px;position: absolute;">
+            <ion-item-group style="display: flex; width: auto;">
+                <div class="left" style="min-width: fit-content;">
+                    <img src="assets/icon/leave_setup/icon_applyonbehalf@3x.png" style="width:30px;height:33px">
+                </div>
+                <div class="right">
+                    <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Apply on
+                        Behalf
+                    </ion-card-subtitle>
+                    <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                        A section for administrator to apply on behalf for any type of leave for
+                        employee</ion-card-subtitle>
+                </div>
+            </ion-item-group>
+            <div style="margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
                 <ion-button
                     style="--border-radius: 2px;font-size: 11px;height: 30px;width:193px;cursor: pointer;text-transform: none;"
                     color="primary"
@@ -106,7 +108,7 @@
         <div class="cardContent">
             <ion-card-content style="max-height: 100%;height: 100%;">
                 <div class="row">
-                    <div class="filter">
+                    <div class="filter" >
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 15px;color: #a5a4bf;">
                             <ion-row>
@@ -138,22 +140,28 @@
                                         (click)="headerCheckbox()">
                                     </ion-checkbox>
                                 </ion-col>
-                                <ion-col size="1" align-self-center style="white-space: nowrap;
+                                <ion-col size="1" align-self-center [class]="'hide-md-down'" style="white-space: nowrap;
                                 text-overflow: ellipsis;overflow: hidden;">
                                     ID
                                 </ion-col>
-                                <ion-col size="4" align-self-center style="white-space: nowrap;
+                                <ion-col size="4.5" align-self-center style="white-space: pre-line;
                                 text-overflow: ellipsis;overflow: hidden;">
                                     EMPLOYEE NAME
                                 </ion-col>
-                                <ion-col size="2.3" align-self-center style="white-space: nowrap;
+                                <ion-col size="2.3" align-self-center [class]="'hide-sm-down'" style="white-space: nowrap;
                                 text-overflow: ellipsis;overflow: hidden;"
                                     [style.text-align]="applyLeaveForm.controls.leaveTypes.valid? 'center':'left'">
                                     ENTITLEMENT
                                 </ion-col>
-                                <ion-col size="2.3" align-self-center style="text-align: center;white-space: nowrap;
+                                <ion-col size="2.3" align-self-center [class]="'hide-sm-down'"
+                                    style="text-align: center;white-space: nowrap;
                                 text-overflow: ellipsis;overflow: hidden;">
                                     BALANCE
+                                </ion-col>
+                                <ion-col size="4.6" align-self-center [class]="'hide-sm-up'" style="white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;"
+                                    [style.text-align]="applyLeaveForm.controls.leaveTypes.valid? 'center':'left'">
+                                    ENTITLEMENT
                                 </ion-col>
                                 <ion-col align-self-center>
                                     <ion-buttons end style="height: 26px;" *ngIf="indeterminateVal || headCheckbox"
@@ -167,10 +175,11 @@
                         </div>
                         <div style="height: calc( 100% - 200px);overflow: auto;">
                             <ion-row class="detailsRow" *ngFor="let item of employeeList; let i=index">
-                                <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
+                                <ion-col size="1.5" align-self-center class="selection-column" >
                                     <ion-avatar class="avatar" (mouseover)="hoverInOut(i, true, item.isChecked)"
-                                        (mouseout)="hoverInOut(i, false, item.isChecked)">
-                                        <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                                        (mouseout)="hoverInOut(i, false, item.isChecked)" > 
+                                        <img src="assets/icon/evans.jpg"
+                                            style="margin-left: 5px;"
                                             [style.display]="showCheckBox[i] ? 'none' : 'block'">
                                         <div class="checkboxOnAvatar"
                                             [style.display]="showCheckBox[i] ? 'block' : 'none'">
@@ -181,29 +190,47 @@
                                         </div>
                                     </ion-avatar>
                                 </ion-col>
-                                <ion-col size="1" class="colOfLeave" align-self-center
+                                <ion-col size="1" [class]="'hide-md-down'" style=" color: #7a8589; font-size: 13px;" align-self-center
                                     style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                     {{item.employeeNo}}
                                 </ion-col>
-                                <ion-col size="4" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                <ion-col size="4.5"
+                                    style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;">
                                     <ion-label style="color:#43425d; font-weight: bold;;font-size: 12px;">
                                         {{item.employeeName}}</ion-label>
                                     <p
-                                        style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                        style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: pre-line;">
                                         {{item.designation}}</p>
+                                    <p [class]="'hide-md-up'"
+                                        style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                        ID: {{item.employeeNo}}</p>
                                 </ion-col>
-                                <ion-col size="2.3" align-self-center class="colOfLeave"
+                                <ion-col size="2.3" align-self-center [class]="'hide-sm-down'"
                                     *ngIf="!applyLeaveForm.controls.leaveTypes.valid"
-                                    style="color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow:
+                                    hidden;text-overflow: ellipsis; color: #7a8589; font-size: 13px;">
                                     {{item.abbr}}
                                 </ion-col>
-                                <ion-col size="2.3" align-self-center class="colOfLeave"
-                                    *ngIf="applyLeaveForm.controls.leaveTypes.valid"
-                                    style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                    {{item.entitled}}
+                                <ion-col size="4.6" align-self-center [class]="'hide-sm-up'"
+                                    *ngIf="!applyLeaveForm.controls.leaveTypes.valid" style="color: #808495; font-size: 11px;white-space: pre-line;overflow:
+                                    hidden;text-overflow: ellipsis; color: #7a8589; font-size: 13px;">
+                                    {{item.abbr}}
                                 </ion-col>
-                                <ion-col size="2.3" align-self-center class="colOfLeave"
-                                    style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                <ion-col size="2.3" align-self-center
+                                    *ngIf="applyLeaveForm.controls.leaveTypes.valid" [class]="'hide-sm-down'"
+                                    style="text-align: center;color: #808495; font-size: 11px;white-space:
+                                    nowrap;overflow: hidden;text-overflow: ellipsis; color: #7a8589; font-size: 13px;">
+                                        {{item.entitled}}
+                                </ion-col>
+                                <ion-col size="4.6" align-self-center 
+                                    *ngIf="applyLeaveForm.controls.leaveTypes.valid" [class]="'hide-sm-up'"
+                                    style="text-align: center;color: #808495; font-size: 11px;white-space:
+                                    pre-line;overflow: hidden;text-overflow: ellipsis; color: #7a8589; font-size: 13px;">
+                                        <div style="font-weight: bold;">{{item.entitled}} day(s)</div>
+                                        <div>Balance: {{item.balance}}</div>
+                                    <!-- </div> -->
+                                </ion-col>
+                                <ion-col size="2.3" align-self-center [class]="'hide-sm-down'" style="color: #7a8589; font-size: 13px; text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                     {{item.balance}}
                                 </ion-col>
                                 <ion-col></ion-col>
@@ -223,8 +250,8 @@
 
                         <form [formGroup]="applyLeaveForm" style="height: calc( 100% - 62px);
                         overflow: auto;padding-left: 15px;">
-                            <div style="display:block; white-space: nowrap;width: 90%;overflow: hidden;">
-                                <mat-form-field appearance="outline" style="width:73%">
+                            <div style="display:flex;flex-wrap: wrap; white-space: pre;width: 90%;overflow: hidden;">
+                                <mat-form-field appearance="outline" style="flex: 3; min-width: 200px;">
                                     <mat-label>Leave types</mat-label>
                                     <mat-select class="selectLeave" name="leave" *ngIf="radioOption == '1'"
                                         formControlName="leaveTypes" required>
@@ -243,7 +270,7 @@
                                         Please select one leave type</mat-error>
                                 </mat-form-field>
                                 &nbsp;&nbsp;
-                                <div style="display: inline-block;" *ngIf="radioOption == '1'">
+                                <div class="days-available" *ngIf="radioOption == '1'">
                                     <mat-label style="color: #808495;font-size: 12px;">Days available</mat-label>
                                     <p *ngIf="daysAvailable != undefined"
                                         style="color: #43425d;font-size: 13px;font-weight: bold;opacity: 0.8;margin-top: 12px">
@@ -257,7 +284,8 @@
                                     <input matInput [(value)]="daysAvailable" disabled>
                                 </mat-form-field> -->
                             </div>
-                            <div style="display:block; white-space: nowrap;width: 90%;overflow: hidden;">
+                            <div style="display: flex;overflow: hidden;flex-flow: row wrap;max-width: 90%;">
+                            <!-- <div style="display:block; white-space: nowrap;width: 90%;overflow: hidden;"> -->
                                 <mat-form-field class="date" appearance="outline">
                                     <mat-label>Start date</mat-label>
                                     <input class="dateInput" matInput [matDatepicker]="picker1"
@@ -271,7 +299,7 @@
                                         style="padding: 5px;padding-left: 0;">
                                         Invalid start date</mat-error>
                                 </mat-form-field>
-                                <div style="display: inline-block;width:3%"></div>
+                                <!-- <div style="display: inline-block;width:3%"></div> -->
                                 <mat-form-field class="date" appearance="outline">
                                     <mat-label>End date</mat-label>
                                     <input class="dateInput" matInput [matDatepicker]="picker2"
@@ -285,8 +313,8 @@
                                         style="padding: 5px;padding-left: 0;">
                                         Invalid end date</mat-error>
                                 </mat-form-field>
-                                &nbsp;&nbsp;
-                                <div style="display: inline-block">
+                                <!-- &nbsp;&nbsp; -->
+                                <div style="flex: 1 1 70px;min-width: 50px;">
                                     <mat-label style="color: #808495;font-size: 12px;">No. of days</mat-label>
                                     <p
                                         style="color: #43425d;font-size: 13px;font-weight: bold;opacity: 0.8;margin-top: 12px">
@@ -348,7 +376,7 @@
                             </div>
                             <ion-item class="divider" lines="full" style="width:90%;"></ion-item>
                             <ion-button fill="outline" *ngIf="radioOption == '1'"
-                                style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 40%;font-size: 12px;text-transform: none">
+                                style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: auto;font-size: 12px;text-transform: none">
                                 Upload Attachment
                             </ion-button>
                             <p *ngIf="radioOption == '1'" style="color: #808495;font-size:11px;">File Allowed: .jpg,
