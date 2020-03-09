@@ -1,3 +1,4 @@
+import { Platform } from '@ionic/angular';
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import * as _moment from 'moment';
@@ -313,7 +314,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {ReportApiService} reportApi
      * @memberof ApplyOnBehalfComponent
      */
-    constructor(private leaveAPI: LeaveApiService, private reportApi: ReportApiService) {
+    constructor(private leaveAPI: LeaveApiService, private reportApi: ReportApiService, public applyonbehalfPlatformApi: Platform) {
         this.applyLeaveForm = new FormGroup({
             leaveTypes: new FormControl({ value: '', disabled: true }, Validators.required),
             firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
@@ -328,6 +329,9 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     async ngOnInit() {
+        console.log('applyonbehalfPlatformApi:' + this.applyonbehalfPlatformApi);
+        console.log('platform:' + this.applyonbehalfPlatformApi.platforms());
+        (this.applyonbehalfPlatformApi.platforms().includes('tablet' || 'desktop')) ? console.log('is tab & web') : console.log('mobile app');
         this.leaveAPI.get_admin_leavetype().subscribe(leave => {
             this.leaveTypes = leave;
             this.showSpinner = false;
