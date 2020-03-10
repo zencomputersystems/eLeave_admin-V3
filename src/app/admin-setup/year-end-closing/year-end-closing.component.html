@@ -1,7 +1,7 @@
 <ion-card>
   <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
     <div class="fullContainer">
-      <div class="left">
+      <div class="left" style="min-width:fit-content;">
         <img src="assets/icon/leave_setup/icon_year_end_closing@3x.png" style="width:34px;height:33px">
       </div>
       <div class="right">
@@ -30,46 +30,49 @@
               </ion-row>
             </div>
             <div *ngIf="pendingList" style="margin: 15px;margin-left:10px">
-              <ion-row>
-                <ion-col align-self-center>
+              <ion-row style="display: flex; flex-wrap: wrap;">
+                <ion-col align-self-center style="flex: 5.5 1 0px; min-width: 250px;">
                   <p
-                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;opacity: 0.8;font-size:12px;">
+                    style="overflow: hidden;white-space: pre-line;text-overflow: ellipsis;color: #4d4f5c;opacity: 0.8;font-size:12px;">
                     Clear pending leaves. There are {{pendingList.length}} pending leaves. Click here to take action</p>
                 </ion-col>
-                <ion-col>
+                <ion-col style="flex: 1; min-width: fit-content;">
                   <ion-button
                     style="--border-radius: 2px;font-size: 11px;height: 30px;width:165px;cursor: pointer;text-transform: none;"
                     color="primary" routerLink="/main/approval-override"> Take Action
                   </ion-button>
                 </ion-col>
+                <ion-col style="flex: 4; min-width: 1px;"></ion-col>
               </ion-row>
-              <ion-row>
-                <ion-col align-self-center>
+              <ion-row style="display: flex; flex-wrap: wrap;">
+                <ion-col align-self-center style="flex: 5.5 1 0px; min-width: 250px;">
                   <p
-                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;opacity: 0.8;font-size:12px;">
+                    style="overflow: hidden;white-space: pre-line;text-overflow: ellipsis;color: #4d4f5c;opacity: 0.8;font-size:12px;">
                     Please backup or print out the necessary report. Click here to take action</p>
                 </ion-col>
-                <ion-col>
+                <ion-col style="flex: 1; min-width: fit-content;">
                   <ion-button
                     style="--border-radius: 2px;font-size: 11px;height: 30px;width:165px;cursor: pointer;text-transform: none;"
                     color="primary" routerLink="/main/report">
                     Take Action
                   </ion-button>
                 </ion-col>
+                <ion-col style="flex: 4; min-width: 1px;"></ion-col>
               </ion-row>
-              <ion-row>
-                <ion-col align-self-center>
+              <ion-row style="display: flex; flex-wrap: wrap;">
+                <ion-col align-self-center style="flex: 5.5 1 0px; min-width: 250px;">
                   <p
-                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;opacity: 0.8;font-size:12px;">
+                    style="overflow: hidden;white-space: pre-line;text-overflow: ellipsis;color: #4d4f5c;opacity: 0.8;font-size:12px;">
                     Update resigned staff info in the employee master list. Click here to take action</p>
                 </ion-col>
-                <ion-col>
+                <ion-col style="flex: 1; min-width: fit-content;">
                   <ion-button
                     style="--border-radius: 2px;font-size: 11px;height: 30px;width:165px;cursor: pointer;text-transform: none;"
                     color="primary" routerLink="/main/employee-setup">
                     Take Action
                   </ion-button>
                 </ion-col>
+                <ion-col style="flex: 4; min-width: 1px;"></ion-col>
               </ion-row>
             </div>
 
@@ -83,19 +86,22 @@
             </div>
             <div style="margin: 15px;margin-left:10px">
               <p style="color: #4d4f5c;font-size:12px;">Closing Year</p>
-              <mat-form-field appearance="outline" style="display: inline-block;
-                font-size: 12px;width: 20%;color: #43425d;opacity: 0.8;">
-                <mat-select [(value)]="selected" placeholder="Nothing Selected" required>
-                  <mat-option>Nothing Selected</mat-option>
-                  <mat-option *ngFor="let item of yearList" [value]=item>
-                    {{item}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <ion-button style="--border-radius: 2px;font-size: 11px;height: 38px;width:165px;cursor: pointer;text-transform: none;
-                margin-left: 15px;" color="primary" (click)="showDialog()">
-                Submit
-              </ion-button>
+              <div style="display: flex; flex-wrap: wrap;">
+                <mat-form-field appearance="outline" style="display: inline-block; min-width: 150px;
+                  font-size: 12px;width: 20%;color: #43425d;opacity: 0.8;flex: 1;">
+                  <mat-select [(value)]="selected" placeholder="Nothing Selected" required>
+                    <mat-option>Nothing Selected</mat-option>
+                    <mat-option *ngFor="let item of yearList" [value]=item>
+                      {{item}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <ion-button style="--border-radius: 2px;font-size: 11px;height: 38px;width:165px;cursor: pointer;text-transform: none;
+                  margin-left: 15px; flex: 1; min-width: 150px;" color="primary" (click)="showDialog()">
+                  Submit
+                </ion-button>
+                <div style="flex: 3"></div>
+              </div>
             </div>
           </div>
         </div>
