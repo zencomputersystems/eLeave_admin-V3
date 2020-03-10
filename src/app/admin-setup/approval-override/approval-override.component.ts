@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApprovalOverrideApiService } from './approval-override-api.service';
 import { MenuController } from '@ionic/angular';
 import { ReportApiService } from '../report/report-api.service';
+import { Platform } from '@ionic/angular';
 
 /**
  * override approval for pending leave applciation 
@@ -101,7 +102,7 @@ export class ApprovalOverrideComponent implements OnInit {
      * @param {ReportApiService} reportApi
      * @memberof ApprovalOverrideComponent
      */
-    constructor(private approvalOverrideAPI: ApprovalOverrideApiService, private menu: MenuController, private reportApi: ReportApiService) {
+    constructor(private approvalOverrideAPI: ApprovalOverrideApiService, private menu: MenuController, private reportApi: ReportApiService, public approvalOverridePlatform: Platform) {
         this.approvalForm = new FormGroup({
             remark: new FormControl('', Validators.required),
             radio: new FormControl('', Validators.required)

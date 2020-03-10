@@ -105,29 +105,60 @@ button.mat-menu-item {
   }
   .row {
     display: flex;
-    flex-wrap: nowrap;
+    // flex-wrap: nowrap;
     margin: 0;
     max-height: 100%;
     height: 100%;
   }
   .filter {
-    flex: 52%;
-    max-width: 52%;
+    flex: 1.5;
+    // flex: 52%;
+    // max-width: 52%;
     max-height: 100%;
+    width: -webkit-fill-available;
+
+    @media screen and (min-width: 576px) {
+      min-width: 450px;
+    }
   }
   .selection {
-    flex: 48%;
-    max-width: 48%;
+    flex: 1;
+    // flex: 48%;
+    // max-width: 48%;
+    width: -webkit-fill-available;
+    min-width: 250px;
     max-height: 100%;
-    margin-left: 10px;
+
+    @media screen and (min-width: 576px) {
+      margin-left: 10px;
+    }
+
+    @media screen and (max-width: 577px) {
+      margin-top: 5px;
+    }
   }
   .searchbar {
-    width: 70%;
     height: 40px;
     color: #43425d;
     font-size: 12px;
     float: left;
     margin-top: 4px;
+
+    @media screen and (min-width: 576px) {
+      width: 70%;
+    }
+
+    @media screen and (max-width: 577px) {
+      width: 100%;
+    }
+  }
+  .action-form {
+    height: calc(100% - 62px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    @media screen and (min-width: 576px) {
+      padding-left: 15px;
+    }
   }
   .avatar {
     width: 30px;
@@ -164,5 +195,36 @@ button.mat-menu-item {
   }
   ::ng-deep .mat-radio-label-content {
     font-size: 11px;
+  }
+  .employee-list-container {
+
+    @media screen and (min-width: 576px) {
+      height: calc(100% - 200px);
+    }
+
+    @media screen and (max-width: 577px) {
+      height: calc(100% - 260px);
+    }
+
+  }
+  .leave-application-details {
+    padding-top: 5px;
+    color: #808495;
+    font-size:11px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    flex: 1 1 30%;
+    min-width: 135px;
+  }
+  .applicant-leave-details-content {
+    white-space: pre-line;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @media screen and (max-width: 577px) {
+      padding-left: 15px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
   }
 }

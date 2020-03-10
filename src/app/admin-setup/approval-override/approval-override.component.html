@@ -67,17 +67,19 @@
 <ion-card>
     <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
         <div class="fullContainer">
-            <div class="left">
-                <img src="assets/icon/leave_setup/icon_override@3x.png" style="width:24px;height:32px">
+            <div style="display: flex; width: auto;">
+                <div class="left">
+                    <img src="assets/icon/leave_setup/icon_override@3x.png" style="width:24px;height:32px">
+                </div>
+                <div class="right"> 
+                    <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Approval
+                        Override
+                    </ion-card-subtitle>
+                    <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                        Override leave application status for employee</ion-card-subtitle>
+                </div>
             </div>
-            <div class="right">
-                <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Approval
-                    Override
-                </ion-card-subtitle>
-                <ion-card-subtitle class="subtitle" style="font-size: 12px;">
-                    Override leave application status for employee</ion-card-subtitle>
-            </div>
-            <div style="right: 25px;top: 25px;position: absolute;">
+            <div style="margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
                 <ion-button
                     style="--border-radius: 2px;font-size: 11px;height: 30px;width:193px;cursor: pointer;text-transform: none;"
                     color="primary" (click)="openMenu()">
@@ -88,8 +90,8 @@
     </ion-card-header>
     <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;">
         <div class="cardContent">
-            <ion-card-content style="max-height: 100%;height: 100%;">
-                <div class="row">
+            <ion-card-content style="max-height: 100%;height: 100%;overflow-y: auto;">
+                <div class="row" >
                     <div class="filter">
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 15px;color: #a5a4bf;">
@@ -122,11 +124,11 @@
                                         (click)="mainEvent()">
                                     </ion-checkbox>
                                 </ion-col>
-                                <ion-col size="8" align-self-center style="white-space: nowrap;
+                                <ion-col size="8" align-self-center style="white-space: pre-line;
                                 text-overflow: ellipsis;overflow: hidden;">
                                     EMPLOYEE & LEAVE APPLICATION DETAILS
                                 </ion-col>
-                                <ion-col size="1.5" align-self-center style="text-align: center;white-space: nowrap;
+                                <ion-col size="1.5" align-self-center [class]="'hide-sm-down'" style="text-align: center;white-space: nowrap;
                                 text-overflow: ellipsis;overflow: hidden;">
                                     DAYS
                                 </ion-col>
@@ -144,12 +146,14 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div style="height: calc( 100% - 200px);overflow: auto;">
+                        <div class="employee-list-container" style="overflow: auto;">
                             <ng-container *ngIf="!innerSpinner">
                                 <ion-row class="detailsRow" *ngFor="let item of pendingList; let i=index">
                                     <ion-col size="1.5" align-self-center
                                         style="text-align: center;padding-right: 30px;">
-                                        <ion-avatar class="avatar" (mouseover)="mouseEvent(true, i, item.isChecked)"
+                                        <ion-avatar class="avatar"
+                                            *ngIf="this.approvalOverridePlatform.platforms().includes('tablet' || 'desktop')"
+                                            (mouseover)="mouseEvent(true, i, item.isChecked)"
                                             (mouseout)="mouseEvent(false, i, item.isChecked)">
                                             <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                                                 [style.display]="displayCheckbox[i] ? 'none' : 'block'">
@@ -161,47 +165,59 @@
                                                 </ion-checkbox>
                                             </div>
                                         </ion-avatar>
+                                        <ion-avatar class="avatar"
+                                            *ngIf="!this.approvalOverridePlatform.platforms().includes('tablet' || 'desktop')"
+                                            (mouseover)="mouseEvent(true, i, item.isChecked)"
+                                            (mouseout)="mouseEvent(false, i, item.isChecked)">
+                                            <!-- <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                                                [style.display]="displayCheckbox[i] ? 'none' : 'block'"> -->
+                                            <div class="checkboxOnAvatar"
+                                                style="display: block;">
+                                                <ion-checkbox mode="ios" class="ionCheckbox"
+                                                    style="position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                    [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                                                </ion-checkbox>
+                                            </div>
+                                        </ion-avatar>
                                     </ion-col>
                                     <ion-col size="8"
-                                        style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                        <ion-label
-                                            style="opacity: 0.8;color:#43425d; font-weight: bold;;font-size: 12px;">
-                                            {{item.employeeName}}</ion-label>
-                                        <div style="display: block;padding-top: 5px;">
-                                            <div style="display: inline-block;padding-right: 20px;">
-                                                <p
-                                                    style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                        class="applicant-leave-details-content">
+                                        <div>
+                                            <ion-label
+                                                style="opacity: 0.8;color:#43425d; font-weight: bold;;font-size: 12px;">
+                                                {{item.employeeName}} | </ion-label>
+                                            <ion-label [class]="hide-sm-up">{{item.noOfDays}} day(s)</ion-label>
+                                        </div>
+                                        <div style="display: flex;padding-top: 5px; flex-wrap: wrap;">
+                                            <!-- <div style="display: inline-block;padding-right: 20px;"> -->
+                                                <p class="leave-application-details">
                                                     <span style="font-weight: bold;">ID:</span> {{item.staffNumber}}</p>
-                                                <p
-                                                    style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                <p class="leave-application-details">
                                                     <span style="font-weight: bold;">Leave Type:</span>
                                                     {{item.leaveTypeAbbr}}</p>
-                                            </div>
-                                            <div style="display: inline-block;padding-right: 20px;">
-                                                <p
-                                                    style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                            <!-- </div>
+                                            <div style="display: inline-block;padding-right: 20px;"> -->
+                                                <p class="leave-application-details">
                                                     <span style="font-weight: bold;">Status:</span> {{item.status}}</p>
-                                                <p
-                                                    style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                <p class="leave-application-details">
                                                     <span style="font-weight: bold;">Date Applied:</span>
                                                     {{item.dateApplied | date: 'yyyy-MM-dd'}}
                                                 </p>
-                                            </div>
-                                            <div style="display: inline-block;">
-                                                <p
-                                                    style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                            <!-- </div>
+                                            <div style="display: inline-block;"> -->
+                                                <p class="leave-application-details">
                                                     <span style="font-weight: bold;">Start Date:</span>
                                                     {{item.startDate}}
                                                 </p>
-                                                <p
-                                                    style="padding-top: 5px;color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                <p class="leave-application-details">
                                                     <span style="font-weight: bold;">End Date:</span> {{item.endDate}}
                                                 </p>
-                                            </div>
+                                            <!-- </div> -->
                                         </div>
                                     </ion-col>
-                                    <ion-col size="1.5" align-self-center class="colOfLeave"
-                                        style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                    <ion-col size="1.5" align-self-center [class]="'hide-sm-down'"
+                                        style=" color: #7a8589; font-size: 13px;text-align: center;color: #808495; font-size: 11px;white-space:
+                                        nowrap;overflow: hidden;text-overflow: ellipsis;">
                                         {{item.noOfDays}}
                                     </ion-col>
                                     <ion-col></ion-col>
@@ -233,8 +249,7 @@
                                     ACTION REQUIRED</ion-col>
                             </ion-row>
                         </div>
-                        <form [formGroup]="approvalForm" style="height: calc( 100% - 62px);
-                        overflow: auto;padding-left: 15px;">
+                        <form [formGroup]="approvalForm" class="action-form">
                             <div style="margin-top: 30px; margin-bottom: 20px;">
                                 <mat-radio-group formControlName="radio" required
                                     style="padding-left: 10px;white-space: nowrap;color: #7a8589;"
