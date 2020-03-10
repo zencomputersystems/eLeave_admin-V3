@@ -227,4 +227,47 @@ button.mat-menu-item {
       padding-bottom: 15px;
     }
   }
+  .approval-override-history {
+
+    @media screen and (min-width: 576px) {
+      --width: 500px;
+      .popup-content {
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1;
+        min-width: 90px;
+      }
+      .popup-content-employee {
+        flex: 1.75;
+        min-width: 140px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    @media screen and (max-width: 577px) {
+      --width: 304px;
+
+      .popup-content {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1;
+        min-width: 90px;
+      }
+
+      .popup-content-employee {
+        flex: 1;
+        min-width: 90px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+    }
+
+  }
 }

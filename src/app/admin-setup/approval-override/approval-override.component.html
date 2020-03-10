@@ -1,4 +1,4 @@
-<ion-menu style="--width: 500px;" contentId="approvalOverrideContent" side="end" type="overlay"
+<ion-menu class="approval-override-history" contentId="approvalOverrideContent" side="end" type="overlay"
     menuId="approvalOverrideDetails" (ionDidClose)="overlay=false">
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
         <img style="margin: 17px;width: 22px;height: 17px;float:left"
@@ -12,27 +12,27 @@
         <div style="display: block;width: 100%;" *ngFor="let item of history">
             <div
                 style="font-size: 11px;background: #f5f6fa;padding: 10px;padding-left: 15px;margin: 10px;color: #a3a6b4;font-weight: bold;">
-                <ion-row>
-                    <ion-col size="7">DATE: <p
+                <ion-row style=" display: flex; flex-wrap: wrap;">
+                    <ion-col style=" flex: 1; white-space: nowrap;">DATE: <p 
                             style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">
                             {{item.applicationDate | date: 'dd MMM yyyy' | uppercase}}</p>
                     </ion-col>
-                    <ion-col>DONE BY: <p style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">
+                    <ion-col style=" flex: 1; white-space: nowrap;">DONE BY: <p style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">
                             {{item.overrideBy | uppercase}}</p>
                     </ion-col>
                 </ion-row>
             </div>
             <div style="margin: 20px;margin-top:10px;margin-left: 25px;">
-                <ion-row>
-                    <ion-col size="4" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                <ion-row style="display: flex;flex-wrap: wrap;">
+                    <ion-col class="popup-content-employee">
                         <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
                             Affected Employees</ion-label>
                         <p class="pStyle"></p>
                         <p
-                            style="margin-bottom: 5px;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;margin: 0">
+                            style="margin-bottom: 5px;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: pre-line;margin: 0">
                             {{item.employeeName}}</p>
                     </ion-col>
-                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: center;">
+                    <ion-col class="popup-content">
                         <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
                             Leave Type</ion-label>
                         <p class="pStyle"></p>
@@ -40,7 +40,7 @@
                             style="margin-bottom: 5px;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;margin: 0">
                             {{item.leaveTypeName}}</p>
                     </ion-col>
-                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: center;">
+                    <ion-col class="popup-content">
                         <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
                             Total Days</ion-label>
                         <p class="pStyle"></p>
@@ -48,7 +48,7 @@
                             style="margin-bottom: 5px;margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                             {{item.noOfDays}}</p>
                     </ion-col>
-                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: center;">
+                    <ion-col class="popup-content">
                         <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
                             Status</ion-label>
                         <p class="pStyle"></p>
