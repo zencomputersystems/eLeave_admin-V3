@@ -119,7 +119,7 @@
         <div class="cardContent">
             <ion-card-content class="overflow-style" style="max-height: 100%;height: 100%;overflow-y: auto;">
                 <div class="row">
-                    <div class="filter" >
+                    <div class="filter">
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 15px;color: #a5a4bf;">
                             <ion-row>
@@ -220,7 +220,8 @@
 
                                     </div>
                                 </ion-col>
-                                <ion-col size="1" [class]="'hide-md-down'" style=" color: #7a8589; font-size: 13px;" align-self-center
+                                <ion-col size="1" [class]="'hide-md-down'" style=" color: #7a8589; font-size: 13px;"
+                                    align-self-center
                                     style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                     {{item.employeeNo}}
                                 </ion-col>
@@ -250,14 +251,14 @@
                                     *ngIf="applyLeaveForm.controls.leaveTypes.valid" [class]="'hide-md-down'"
                                     style="text-align: center;color: #808495; font-size: 11px;white-space:
                                     nowrap;overflow: hidden;text-overflow: ellipsis; color: #7a8589; font-size: 13px;">
-                                        {{item.entitled}}
+                                    {{item.entitled}}
                                 </ion-col>
                                 <ion-col size="4.6" align-self-center 
                                     *ngIf="applyLeaveForm.controls.leaveTypes.valid" [class]="'hide-md-up'"
                                     style="text-align: center;color: #808495; font-size: 11px;white-space:
                                     pre-line;overflow: hidden;text-overflow: ellipsis; color: #7a8589; font-size: 13px;">
-                                        <div style="font-weight: bold;">{{item.entitled}} day(s)</div>
-                                        <div>Balance: {{item.balance}}</div>
+                                    <div style="font-weight: bold;">{{item.entitled}} day(s)</div>
+                                    <div>Balance: {{item.balance}}</div>
                                     <!-- </div> -->
                                 </ion-col>
                                 <ion-col size="2.3" align-self-center [class]="'hide-md-down'"
@@ -316,7 +317,7 @@
                                 </mat-form-field> -->
                             </div>
                             <div style="display: flex;overflow: hidden;flex-flow: row wrap;max-width: 90%;">
-                            <!-- <div style="display:block; white-space: nowrap;width: 90%;overflow: hidden;"> -->
+                                <!-- <div style="display:block; white-space: nowrap;width: 90%;overflow: hidden;"> -->
                                 <mat-form-field class="date" appearance="outline">
                                     <mat-label>Start date</mat-label>
                                     <input class="dateInput" matInput [matDatepicker]="picker1"
@@ -360,9 +361,11 @@
                                         <mat-radio-button value="0" color="primary" style="padding-right: 15px;"
                                             [checked]=true>Full Day
                                         </mat-radio-button>
-                                        <mat-radio-button value="1" color="primary" style="padding-right: 15px;">Half Day
+                                        <mat-radio-button value="1" color="primary" style="padding-right: 15px;">Half
+                                            Day
                                         </mat-radio-button>
-                                        <mat-radio-button value="2" color="primary" style="padding-right: 15px;">Quarter Day
+                                        <mat-radio-button value="2" color="primary" style="padding-right: 15px;">Quarter
+                                            Day
                                         </mat-radio-button>
                                     </mat-radio-group>
                                     <mat-form-field style="height: 60px;flex: 1; width: 150px;" appearance="outline">
@@ -413,9 +416,15 @@
                             </div>
                             <ion-item class="divider" lines="full" style="width:90%;"></ion-item>
                             <ion-button fill="outline" *ngIf="radioOption == '1'"
-                                style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: auto;font-size: 12px;text-transform: none">
+                                style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: auto;font-size: 12px;text-transform: none"
+                                (click)="file.click();">
                                 Upload Attachment
                             </ion-button>
+                            <a *ngIf="uploadedFile != undefined"
+                                style="color: #7069d8;display: block;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
+                                [href]="uploadedFile.link" download>{{uploadedFile.filename}}</a>
+                            <input style="display:none" #file name="file" type="file"
+                                (change)="uploadEvent($event.target.files)">
                             <p *ngIf="radioOption == '1'" style="color: #808495;font-size:11px;">File Allowed: .jpg,
                                 .png, .pdf only (max size 1MB)
                             </p>

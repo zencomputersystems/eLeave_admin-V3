@@ -7,6 +7,7 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../leave-setup/date.adapter';
 import { LeaveApiService } from '../leave-setup/leave-api.service';
 import { ReportApiService } from '../report/report-api.service';
+import { APIService } from 'src/services/shared-service/api.service';
 
 
 /**
@@ -248,6 +249,13 @@ export class ApplyOnBehalfComponent implements OnInit {
     public employeeList: any;
 
     /**
+     * uploaded file response from API
+     * @type {*}
+     * @memberof ApplyOnBehalfComponent
+     */
+    public uploadedFile: any;
+
+    /**
      * Local private property to get number of day from a week
      * eg: sunday-saturday is 0-6
      * @private
@@ -308,13 +316,15 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     private _arrayDateSlot = [];
 
-    /**
-     *Creates an instance of ApplyOnBehalfComponent.
-     * @param {LeaveApiService} leaveAPI
-     * @param {ReportApiService} reportApi
-     * @memberof ApplyOnBehalfComponent
-     */
-    constructor(private leaveAPI: LeaveApiService, private reportApi: ReportApiService, public applyonbehalfPlatformApi: Platform) {
+   /**
+    *Creates an instance of ApplyOnBehalfComponent.
+    * @param {LeaveApiService} leaveAPI
+    * @param {ReportApiService} reportApi
+    * @param {Platform} applyonbehalfPlatformApi 
+    * @param {APIService} apiService
+    * @memberof ApplyOnBehalfComponent
+    */
+   constructor(private leaveAPI: LeaveApiService, private reportApi: ReportApiService, public applyonbehalfPlatformApi: Platform, private apiService: APIService) {
         this.applyLeaveForm = new FormGroup({
             leaveTypes: new FormControl({ value: '', disabled: true }, Validators.required),
             firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
@@ -357,6 +367,22 @@ export class ApplyOnBehalfComponent implements OnInit {
                 this.dateRange = arr;
                 element["date"] = this.dateRange;
             });
+        });
+    }
+
+    /**
+     * get details of file after upload from local file
+     * @param {*} files
+     * @param {number} i
+     * @returns
+     * @memberof ApplyOnBehalfComponent
+     */
+    uploadEvent(document: any) {
+        const fileToSave = document.item(0);
+        let formData = new FormData();
+        formData.append('file', fileToSave, fileToSave.name);
+        this.apiService.post_file(formData).subscribe(res => {
+            this.uploadedFile = res;
         });
     }
 
@@ -605,6 +631,7 @@ export class ApplyOnBehalfComponent implements OnInit {
         this._employeeId = [];
         this.dateSelection = [];
         this.showCheckBox = [];
+        this.uploadedFile = null;
         this.headCheckbox = false;
         this.indeterminateVal = false;
         document.querySelector('ion-searchbar').getInputElement().then((searchInput) => {
