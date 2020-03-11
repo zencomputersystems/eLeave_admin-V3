@@ -152,7 +152,7 @@
                                     <ion-col size="1.5" align-self-center
                                         style="text-align: center;padding-right: 30px;">
                                         <ion-avatar class="avatar"
-                                            *ngIf="this.approvalOverridePlatform.platforms().includes('tablet' || 'desktop')"
+                                            *ngIf="approvalOverridePlatform.platforms().includes('tablet' || 'desktop')"
                                             (mouseover)="mouseEvent(true, i, item.isChecked)"
                                             (mouseout)="mouseEvent(false, i, item.isChecked)">
                                             <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
@@ -166,7 +166,7 @@
                                             </div>
                                         </ion-avatar>
                                         <ion-avatar class="avatar"
-                                            *ngIf="!this.approvalOverridePlatform.platforms().includes('tablet' || 'desktop')"
+                                            *ngIf="!approvalOverridePlatform.platforms().includes('tablet' || 'desktop')"
                                             (mouseover)="mouseEvent(true, i, item.isChecked)"
                                             (mouseout)="mouseEvent(false, i, item.isChecked)">
                                             <!-- <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
