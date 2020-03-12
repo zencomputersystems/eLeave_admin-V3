@@ -661,7 +661,7 @@
                 Produce Report
               </ion-button>
             </div>
-            <div style="display: flex; flex-wrap: wrap;justify-content: flex-end;" *ngIf="groupButton === true">
+            <div  class="buttons" style="display: flex; flex-wrap: wrap;justify-content: flex-end;" *ngIf="groupButton === true">
               <div [class]="'hide-sm-down'" style="flex:1.5; min-width: 0px;"></div>
               <ion-button fill="outline"
                 (click)="selects= null;clearCheckbox();companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';"
