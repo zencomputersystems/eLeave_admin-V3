@@ -8,6 +8,8 @@ import { ReportApiService } from './report-api.service';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as _moment from 'moment';
+import { Platform } from '@ionic/angular';
+
 const { Parser } = require('json2csv');
 
 /**
@@ -249,15 +251,18 @@ export class ReportComponent implements OnInit {
    * @param {LeaveApiService} leaveAPI
    * @param {APIService} api
    * @param {ReportApiService} reportAPI
+   * @param {Platform} reportPlatform
    * @memberof ReportComponent
    */
-  constructor(private leaveAPI: LeaveApiService, private api: APIService, private reportAPI: ReportApiService) { }
+  constructor(private leaveAPI: LeaveApiService, private api: APIService, private reportAPI: ReportApiService, public reportPlatform: Platform) { }
 
   /**
    * initial report
    * @memberof ReportComponent
    */
   ngOnInit() {
+    console.log('reportPlatform: ' + this.reportPlatform.platforms());
+    console.log('reportPlatform: ' + this.reportPlatform.platforms().includes('desktop'));
     const f = new Date(new Date().getFullYear(), 0, 1);
     const l = new Date(new Date().getFullYear(), 11, 31);
     this.firstPicker = new FormControl(f);
