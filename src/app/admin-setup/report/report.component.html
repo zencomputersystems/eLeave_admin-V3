@@ -102,7 +102,7 @@
     <div class="cardContent">
 
       <!-- main page -->
-      <ion-card-content style="max-height: 100%;" [style.display]="clickedProduce==true? 'none': ''">
+      <ion-card-content style="max-height: 100%; overflow-y: auto;" [style.display]="clickedProduce==true? 'none': ''">
         <div style="display: flex; flex-wrap: wrap;margin-bottom: 10px;">
           <div class="buttonGroup">
             <ion-button
@@ -173,7 +173,8 @@
                   LEAVE TYPES</ion-col>
               </ion-row>
             </div>
-            <div style="overflow-y: auto;height: calc(100% - 161px)">
+            <div style="overflow-y: auto;height: calc(100% - 13em)">
+            <!-- <div style="overflow-y: auto;height: calc(100% - 161px)"> -->
               <ion-item class="ionItem" lines="none">
                 <ion-label class="checkLabel">Select All</ion-label>
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="isMain" [indeterminate]="isInde"
@@ -310,7 +311,7 @@
               </ion-row>
             </div>
 
-            <div [style.height]="individualButton === true? 'calc( 100% - 194px)':'calc( 100% - 271px)'" 
+            <div [style.height]="individualButton === true? 'calc( 100% - 12em)':'calc( 100% - 15.5em)'" 
               style="overflow: auto;min-height: 250px;" *ngIf="!filterSpinner">
               <ng-container *ngIf="selection == 'noSelection'">
                 <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of userList; let i=index">
@@ -649,7 +650,7 @@
                 </ion-row>
               </ng-container>
             </div>
-            <div [style.height]="individualButton === true? 'calc( 100% - 194px)':'calc( 100% - 271px)'"
+            <div [style.height]="individualButton === true? 'calc( 100% - 12em)':'calc( 100% - 20em)'"
               style="overflow: auto;min-height: 250px;" *ngIf="filterSpinner">
               <div style="width: 100%; height:100%; text-align: center; margin-top: -30px">
                 <app-spinner></app-spinner>
@@ -733,7 +734,7 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 105px;">
                 Length of Service (Years)</ion-col>
               <ion-col size="1.5" class="titleRow" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 132px;;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 132px;">
                 Leave Type</ion-col>
               <ion-col size="1" class="titleRow" style="text-align: left;display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 88px;">
@@ -817,9 +818,9 @@
       <!-- approval override history-->
       <ion-card-content *ngIf="selects == 'approval-override' && clickedProduce==true"
         style="max-height: 100%;height: 100%;padding: 0;">
-        <div id="template" style="height: 100%;">
+        <div id="template" style="height: 100%;overflow-x: auto; overflow-y: hidden;">
           <div
-            style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
+            style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;min-width: fit-content;">
             <mat-form-field id="saveas" appearance="outline"
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
@@ -842,72 +843,83 @@
                 <strong>{{secondPicker.value | date:'dd MMM yyyy' }}</strong>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row style="display: flex; flex-flow: row nowrap;">
               <ion-col size="0.4" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 26px;">
                 No</ion-col>
               <ion-col size="1.5" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Employee Name</ion-col>
               <ion-col size="1.3" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 132px;">
                 Leave Type</ion-col>
               <ion-col size="1" class="titleRow" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 Application Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px">
                 Overriden By</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px">
                 Overriden Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px">
                 Start Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px">
                 End Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px">
                 No of Days</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px">
                 Status</ion-col>
               <ion-col size="1.5" class="titleRow"
                 style="display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 175px">
                 Remarks</ion-col>
             </ion-row>
           </div>
 
-          <div class="content">
+          <div class="content" style="min-width: fit-content;">
             <!-- ngFor under this div -->
             <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
               [ngClass]="{ odd: odd }">
-              <ion-row>
-                <ion-col size="0.4" class="titleRow text">
+              <ion-row style="display: flex; flex-flow: row nowrap;">
+                <ion-col size="0.4" class="titleRow text" style="min-width: 26px;">
                   {{i+1}}</ion-col>
-                <ion-col size="1.5" class="text">
+                <ion-col size="1.5" class="text" style="min-width: 175px;white-space: pre-line;">
                   {{item.employeeName}}
                   <p class="text" style="font-weight: 600;padding-top: 10px;">ID: {{item.employeeNo}}</p>
                 </ion-col>
-                <ion-col size="1.3" class="text">
+                <ion-col size="1.3" class="text" style="white-space: pre-line; min-width: 132px;">
                   {{item.leaveTypeName}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="white-space: pre-line; min-width: 88px;">
                   {{item.applicationDate | date:'yyyy-MM-dd'}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="white-space: pre-line; min-width: 88px;">
                   {{item.overrideBy }}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="white-space: pre-line; min-width: 88px;">
                   {{item.overrideDate | date:'yyyy-MM-dd'}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="white-space: pre-line; min-width: 88px;">
                   {{item.startDate}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="white-space: pre-line; min-width: 88px;">
                   {{item.endDate}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="white-space: pre-line; min-width: 88px;">
                   {{item.noOfDays}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="white-space: pre-line; min-width: 88px;">
                   {{item.status | titlecase}}</ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="white-space: pre-line; min-width: 175px;">
                   {{item.remarks}}
                 </ion-col>
               </ion-row>
@@ -919,7 +931,7 @@
       <!-- Apply on Behalf History -->
       <ion-card-content *ngIf="selects == 'apply-on-behalf' && clickedProduce==true"
         style="max-height: 100%;height: 100%;padding: 0;">
-        <div id="template" style="height: 100%;">
+        <div id="template" style="height: 100%;overflow-x: auto; overflow-y: hidden;">
           <div
             style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
             <mat-form-field id="saveas" appearance="outline"
@@ -946,78 +958,89 @@
                 <strong>{{secondPicker.value | date:'dd MMM yyyy' }}</strong>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row style="display: flex; flex-flow: row nowrap;">
               <ion-col size="0.4" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 26px;">
                 No</ion-col>
               <ion-col size="1.3" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Employee Name</ion-col>
               <ion-col size="1" class="titleRow"
                 style="display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 105px;">
                 Length of Service (Years)</ion-col>
               <ion-col size="1" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 132px;">
                 Leave Type</ion-col>
               <ion-col size="1" class="titleRow" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
+            min-width: 88px;">
                 Application Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
+            min-width: 88px;">
                 Date Confirmed</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
+            min-width: 88px;">
                 Applied By</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
+            min-width: 88px;">
                 Start Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;"
+            min-width: 88px;>
                 End Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
+            min-width: 88px;">
                 No of Days</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                 Status</ion-col>
               <ion-col size="1" class="titleRow"
                 style="display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
+              min-width: 88px;">
                 Remarks</ion-col>
             </ion-row>
           </div>
 
-          <div class="content">
+          <div class="content" style="min-width: fit-content;">
             <!-- ngFor under this div -->
             <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
               [ngClass]="{ odd: odd }">
-              <ion-row>
+              <ion-row style="display: flex; flex-flow: row nowrap;">
                 <ion-col size="0.4" class="titleRow text">
                   {{i+1}}</ion-col>
                 <ion-col size="1.3" class="text">
                   {{item.employeeName}}
                   <p class="text" style="font-weight: 600;padding-top: 10px;">ID: {{item.employeeNo}}</p>
                 </ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 105px;white-space: pre-line;">
                   {{item.yearService}}</ion-col>
-                <ion-col size="1" class="text">
+                <ion-col size="1" class="text" style="min-width: 132px;white-space: pre-line;">
                   {{item.leaveTypeName}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
                   {{item.applicationDate | date:'yyyy-MM-dd'}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
                   {{item.confirmedDate | date:'yyyy-MM-dd'}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
                   {{item.appliedBy}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
                   {{item.startDate}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
                   {{item.endDate}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
                   {{item.noOfDays}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
                   {{item.status | titlecase}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
                   {{item.remarks}}
                 </ion-col>
               </ion-row>
@@ -1029,7 +1052,7 @@
       <!-- Entitlement Claim History -->
       <ion-card-content *ngIf="selects == 'entitlement-claim' && clickedProduce==true"
         style="max-height: 100%;height: 100%;padding: 0;">
-        <div id="template" style="height: 100%;">
+        <div id="template" style="height: 100%;overflow-x: auto; overflow-y: hidden;">
           <div
             style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
             <mat-form-field id="saveas" appearance="outline"
@@ -1054,69 +1077,79 @@
                 <strong>{{secondPicker.value | date:'dd MMM yyyy' }}</strong>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row style="display: flex; flex-flow: row nowrap;">
               <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 26px;">
                 No</ion-col>
               <ion-col size="2" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Employee Name</ion-col>
               <ion-col size="1" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 132px;">
                 Leave Type</ion-col>
               <ion-col size="1" class="titleRow" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 Application Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 Start Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 End Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 No of Days</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 Status</ion-col>
               <ion-col size="1.5" class="titleRow"
                 style="display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 88px;">
                 Request Remarks</ion-col>
               <ion-col size="1.5" class="titleRow"
                 style="display: -webkit-box;
-               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+               5px;min-width: 88px;">
                 Final Approval Remarks</ion-col>
             </ion-row>
           </div>
 
-          <div class="content">
+          <div class="content" style="min-width: fit-content;">
             <!-- ngFor under this div -->
             <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
               [ngClass]="{ odd: odd }">
-              <ion-row>
+              <ion-row style="display: flex; flex-flow: row nowrap;">
                 <ion-col size="0.5" class="titleRow text">
                   {{i+1}}</ion-col>
                 <ion-col size="2" class="text">
                   {{item.employeeName}}
                   <p class="text" style="font-weight: 600;padding-top: 10px;">ID: {{item.employeeNo}}</p>
                 </ion-col>
-                <ion-col size="1" class="text">
+                <ion-col size="1" class="text" style="min-width: 132px; white-space: pre-line;">
                   {{item.leaveTypeName}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.applyDate}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.startDate}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.endDate}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.noOfDays}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.status}}</ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.requestRemarks}}
                 </ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.finalApproveRemarks}}
                 </ion-col>
               </ion-row>
@@ -1128,7 +1161,7 @@
       <!-- Leave Taken History -->
       <ion-card-content *ngIf="selects == 'leave-taken' && clickedProduce==true"
         style="max-height: 100%;height: 100%;padding: 0;">
-        <div id="template" style="height: 100%;">
+        <div id="template" style="height: 100%;overflow-x: auto; overflow-y: hidden;">
           <div
             style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
             <mat-form-field id="saveas" appearance="outline"
@@ -1155,76 +1188,85 @@
                 <strong>{{secondPicker.value | date:'dd MMM yyyy' }}</strong>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row style="display: flex; flex-flow: row nowrap;">
               <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 26px;">
                 No</ion-col>
               <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Employee No</ion-col>
               <ion-col size="2" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Employee Name</ion-col>
               <ion-col size="1.5" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 132px;">
                 Leave Type</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 Start Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 End Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 No of Days</ion-col>
               <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Approved By</ion-col>
               <ion-col size="1.5" class="titleRow"
                 style="display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 175px;">
                 Remarks</ion-col>
             </ion-row>
           </div>
 
-          <div class="content">
+          <div class="content" style="min-width: fit-content;">
             <!-- ngFor under this div -->
             <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
               [ngClass]="{ odd: odd }">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
+              <ion-row style="display: flex; flex-flow: row nowrap;">
+                <ion-col size="0.5" class="titleRow text" style="min-width:26px;">
                   {{i + 1}}</ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width:175px; white-space:pre-line;">
                   {{item.employeeNo}}</ion-col>
-                <ion-col size="2" class="text">
+                <ion-col size="2" class="text" style="min-width:175px; white-space:pre-line;">
                   {{item.employeeName}}
                 </ion-col>
-                <ion-col size="1.5">
+                <ion-col size="1.5" style="min-width:175px; white-space:pre-line;">
                   <ng-container *ngFor="let leaveItems of item.leaveDetail">
                     <p class="text">{{leaveItems.leaveTypeName}}</p>
                   </ng-container>
                 </ion-col>
-                <ion-col size="1" class="titleRow">
+                <ion-col size="1" class="titleRow" style="min-width:88px; white-space:pre-line;">
                   <ng-container *ngFor="let leaveItems of item.leaveDetail">
                     <p class="text">{{leaveItems.startDate}}</p>
                   </ng-container>
                 </ion-col>
-                <ion-col size="1" class="titleRow">
+                <ion-col size="1" class="titleRow" style="min-width:88px; white-space:pre-line;">
                   <ng-container *ngFor="let leaveItems of item.leaveDetail">
                     <p class="text">{{leaveItems.endDate}}</p>
                   </ng-container>
                 </ion-col>
-                <ion-col size="1" class="titleRow">
+                <ion-col size="1" class="titleRow" style="min-width:88px; white-space:pre-line;">
                   <ng-container *ngFor="let leaveItems of item.leaveDetail">
                     <p class="text">{{leaveItems.noOfDays}}</p>
                   </ng-container>
                 </ion-col>
-                <ion-col size="1.5" class="titleRow">
+                <ion-col size="1.5" class="titleRow" style="min-width:175px; white-space:pre-line;">
                   <ng-container *ngFor="let leaveItems of item.leaveDetail">
                     <p class="text">{{leaveItems.approveBy}}</p>
                   </ng-container>
                 </ion-col>
-                <ion-col size="1.5" class="titleRow">
+                <ion-col size="1.5" class="titleRow" style="min-width:175px; white-space:pre-line;">
                   <ng-container *ngFor="let leaveItems of item.leaveDetail">
                     <p class="text">{{leaveItems.remarks}}</p>
                   </ng-container>
@@ -1238,7 +1280,7 @@
       <!-- Leave Adjustment History -->
       <ion-card-content *ngIf="selects == 'leave-adjustment' && clickedProduce==true"
         style="max-height: 100%;height: 100%;padding: 0;">
-        <div id="template" style="height: 100%;">
+        <div id="template" style="height: 100%;overflow-x: auto; overflow-y: hidden;">
           <div
             style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
             <mat-form-field id="saveas" appearance="outline"
@@ -1263,57 +1305,65 @@
                 <strong>{{secondPicker.value | date:'dd MMM yyyy' }}</strong>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row style="display: flex; flex-flow: row nowrap;">
               <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 26px;">
                 No</ion-col>
               <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Employee No</ion-col>
               <ion-col size="2" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 200px;">
                 Employee Name</ion-col>
               <ion-col size="1.5" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 132px;">
                 Leave Type</ion-col>
               <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Adjustment</ion-col>
               <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Adjusted By</ion-col>
               <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Adjustment Date</ion-col>
               <ion-col size="1.5" class="titleRow"
                 style="display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 175px;">
                 Remarks</ion-col>
             </ion-row>
           </div>
 
-          <div class="content">
+          <div class="content" style="min-width: fit-content;">
             <!-- ngFor under this div -->
             <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
               [ngClass]="{ odd: odd }">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
+              <ion-row style="display: flex; flex-flow: row nowrap;">
+                <ion-col size="0.5" class="titleRow text" style="min-width: 26px;">
                   {{i+1}}</ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 175px; white-space: pre-line;">
                   {{item.employeeNo}}</ion-col>
-                <ion-col size="2" class="text">
+                <ion-col size="2" class="text" style="min-width: 200px; white-space: pre-line;">
                   {{item.employeeName}}
                 </ion-col>
-                <ion-col size="1.5" class="text">
+                <ion-col size="1.5" class="text" style="min-width: 132px; white-space: pre-line;">
                   {{item.leaveTypeName}}
                 </ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 175px; white-space: pre-line;">
                   {{item.adjustment}}</ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 175px; white-space: pre-line;">
                   {{item.adjustBy}}</ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 175px; white-space: pre-line;">
                   {{item.adjustDate | date:'yyyy-MM-dd' }}</ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 175px; white-space: pre-line;">
                   {{item.remarks}}
                 </ion-col>
               </ion-row>
@@ -1325,7 +1375,7 @@
       <!-- Leave Cancellation History -->
       <ion-card-content *ngIf="selects == 'leave-cancellation' && clickedProduce==true"
         style="max-height: 100%;height: 100%;padding: 0;">
-        <div id="template" style="height: 100%;">
+        <div id="template" style="height: 100%;overflow-x: auto; overflow-y: hidden;">
           <div
             style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
             <mat-form-field id="saveas" appearance="outline"
@@ -1352,66 +1402,75 @@
                 <strong>{{secondPicker.value | date:'dd MMM yyyy' }}</strong>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row style="display: flex; flex-flow: row nowrap;">
               <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 26px;">
                 No</ion-col>
               <ion-col size="2" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Employee Name</ion-col>
               <ion-col size="1.5" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 132px;">
                 Leave Type</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 Start Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 End Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 No of Days</ion-col>
               <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Cancelled By</ion-col>
               <ion-col size="1.5" class="titleRow"
                 style="display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 175px;">
                 Leave Remarks</ion-col>
               <ion-col size="1.5" class="titleRow"
                 style="display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 175px;">
                 Cancellation Remarks</ion-col>
             </ion-row>
           </div>
 
-          <div class="content">
+          <div class="content" style="min-width: fit-content;">
             <!-- ngFor under this div -->
             <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
               [ngClass]="{ odd: odd }">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
+              <ion-row style="display: flex; flex-flow: row nowrap;">
+                <ion-col size="0.5" class="titleRow text" style="min-width: 26px;">
                   {{i+1}}</ion-col>
-                <ion-col size="2" class="text">
+                <ion-col size="2" class="text" style="min-width: 200px; white-space:pre-line;">
                   {{item.employeeName}}
                   <p class="text" style="font-weight: 600;padding-top: 10px;">ID: {{item.employeeNo}}</p>
                 </ion-col>
-                <ion-col size="1.5" class="text">
+                <ion-col size="1.5" class="text" style="min-width: 175px; white-space:pre-line;">
                   {{item.leaveTypeName}}
                 </ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space:pre-line;">
                   {{item.startDate}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space:pre-line;">
                   {{item.endDate}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space:pre-line;">
                   {{item.noOfDays}}</ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 175px; white-space:pre-line;">
                   {{item.cancelBy}}
                 </ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 175px; white-space:pre-line;">
                   {{item.leaveRemarks}}
                 </ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 175px; white-space:pre-line;">
                   {{item.cancelRemarks}}
                 </ion-col>
               </ion-row>
@@ -1423,7 +1482,7 @@
       <!-- Leave Rejected history -->
       <ion-card-content *ngIf="selects == 'leave-rejected' && clickedProduce==true"
         style="max-height: 100%;height: 100%;padding: 0;">
-        <div id="template" style="height: 100%;">
+        <div id="template" style="height: 100%;overflow-x: auto; overflow-y: hidden;">
           <div
             style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
             <mat-form-field id="saveas" appearance="outline"
@@ -1450,66 +1509,75 @@
                 <strong>{{secondPicker.value | date:'dd MMM yyyy' }}</strong>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row style="display: flex; flex-flow: row nowrap;">
               <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 26px;">
                 No</ion-col>
               <ion-col size="2" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 200px;">
                 Employee Name</ion-col>
               <ion-col size="1.5" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 132px;">
                 Leave Type</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 Start Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 End Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 No of Days</ion-col>
               <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Rejected By</ion-col>
               <ion-col size="1.5" class="titleRow"
                 style="display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 175px;">
                 Leave Remarks</ion-col>
               <ion-col size="1.5" class="titleRow"
                 style="display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 175px;">
                 Rejection Remarks</ion-col>
             </ion-row>
           </div>
 
-          <div class="content">
+          <div class="content" style="min-width: fit-content;">
             <!-- ngFor under this div -->
             <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
               [ngClass]="{ odd: odd }">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
+              <ion-row style="display: flex; flex-flow: row nowrap;">
+                <ion-col size="0.5" class="titleRow text" style="min-width: 26px;">
                   {{i+1}}</ion-col>
-                <ion-col size="2" class="text">
+                <ion-col size="2" class="text" style="min-width: 200px; white-space: pre-line;">
                   {{item.employeeName}}
                   <p class="text" style="font-weight: 600;padding-top: 10px;">ID: {{item.employeeNo}}</p>
                 </ion-col>
-                <ion-col size="1.5" class="text">
+                <ion-col size="1.5" class="text" style="min-width: 175px; white-space: pre-line;">
                   {{item.leaveTypeName}}
                 </ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.startDate}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.endDate}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.noOfDays}}</ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 175px; white-space: pre-line;">
                   {{item.rejectBy}}
                 </ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 175px; white-space: pre-line;">
                   {{item.leaveRemarks}}
                 </ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 175px; white-space: pre-line;">
                   {{item.rejectRemarks}}
                 </ion-col>
               </ion-row>
@@ -1521,7 +1589,7 @@
       <!-- Forfeited Leave History -->
       <ion-card-content *ngIf="selects == 'leave-forfeited' && clickedProduce==true"
         style="max-height: 100%;height: 100%;padding: 0;">
-        <div id="template" style="height: 100%;">
+        <div id="template" style="height: 100%;overflow-x: auto; overflow-y: hidden;">
           <div
             style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
             <mat-form-field id="saveas" appearance="outline"
@@ -1546,42 +1614,47 @@
                 <strong>{{secondPicker.value | date:'dd MMM yyyy' }}</strong>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row style="display: flex; flex-flow: row nowrap;">
               <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 26px;">
                 No</ion-col>
               <ion-col size="1.5"
                 style="text-align: left;display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 175px;">
                 Employee No</ion-col>
               <ion-col size="2" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Employee Name</ion-col>
               <ion-col size="1.5" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 132px;">
                 Leave Type</ion-col>
               <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 No. Of Days Forfeited</ion-col>
             </ion-row>
           </div>
 
-          <div class="content">
+          <div class="content" style="min-width: fit-content;">
             <!-- ngFor under this div -->
             <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
               [ngClass]="{ odd: odd }">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
+              <ion-row style="display: flex; flex-flow: row nowrap;">
+                <ion-col size="0.5" class="titleRow text" style="min-width: 26px;">
                   {{i+1}}</ion-col>
-                <ion-col size="1.5" class="text">
+                <ion-col size="1.5" class="text" style="min-width: 175px; white-space: pre-line;">
                   {{item.employeeNo}}</ion-col>
-                <ion-col size="2" class="text">
+                <ion-col size="2" class="text" style="min-width: 200px; white-space: pre-line;">
                   {{item.employeeName}}
                 </ion-col>
-                <ion-col size="1.5" class="text">
+                <ion-col size="1.5" class="text" style="min-width: 132px; white-space: pre-line;">
                   {{item.leaveTypeName}}
                 </ion-col>
-                <ion-col size="1.5" class="titleRow text">
+                <ion-col size="1.5" class="titleRow text" style="min-width: 175px; white-space: pre-line;">
                   {{item.noOfDays}}</ion-col>
               </ion-row>
             </div>
@@ -1592,7 +1665,7 @@
       <!-- Master -->
       <ion-card-content *ngIf="selects == 'employee-master-list' && clickedProduce==true"
         style="max-height: 100%;height: 100%;padding: 0;">
-        <div id="template" style="height: 100%;">
+        <div id="template" style="height: 100%;overflow-x: auto; overflow-y: hidden;">
           <div
             style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;">
             <mat-form-field id="saveas" appearance="outline"
@@ -1619,80 +1692,91 @@
                 <strong>{{secondPicker.value | date:'dd MMM yyyy' }}</strong>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row style="display: flex; flex-flow: row nowrap;">
               <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 26px;">
                 No</ion-col>
               <ion-col size="1.5" style="text-align: left;display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 175px;">
                 Employee Name</ion-col>
               <ion-col size="1.5"
                 style="text-align: left;display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 175px;">
                 Company Name</ion-col>
               <ion-col size="1.2" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 125px;">
                 Department</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 Designation</ion-col>
               <ion-col size="1.2" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 125px;">
                 Email</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 Approver</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 88px;">
                 Joining Date</ion-col>
               <ion-col size="1" class="titleRow"
                 style="display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 88px;">
                 Confirmed Date</ion-col>
               <ion-col size="1" class="titleRow"
                 style="display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 88px;">
                 Resigned Date</ion-col>
               <ion-col size="1" class="titleRow"
                 style="display: -webkit-box;
-              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+              5px;min-width: 88px;">
                 Status</ion-col>
             </ion-row>
           </div>
 
-          <div class="content">
+          <div class="content" style="min-width: fit-content;">
             <!-- ngFor under this div -->
             <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
               [ngClass]="{ odd: odd }">
-              <ion-row>
-                <ion-col size="0.5" class="titleRow text">
+              <ion-row style="display: flex; flex-flow: row nowrap;">
+                <ion-col size="0.5" class="titleRow text" style="min-width: 26px;">
                   {{i+1}}</ion-col>
-                <ion-col size="1.5" class="text">
+                <ion-col size="1.5" class="text" style="min-width: 175px; white-space: pre-line;">
                   {{item.employeeName}}
                   <p class="text" style="font-weight: 600;padding-top: 10px;">ID: {{item.employeeNo}}</p>
                 </ion-col>
-                <ion-col size="1.5" class="text">
+                <ion-col size="1.5" class="text" style="min-width: 175px; white-space: pre-line;">
                   {{item.companyName}}
                 </ion-col>
-                <ion-col size="1.2" class="titleRow text">
+                <ion-col size="1.2" class="titleRow text" style="min-width: 125px; white-space: pre-line;">
                   {{item.department}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 8px; white-space: pre-line;">
                   {{item.designation}}</ion-col>
-                <ion-col size="1.2" class="titleRow text">
+                <ion-col size="1.2" class="titleRow text" style="min-width: 1725px; white-space: pre-line;">
                   {{item.email}}</ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.approver}}
                 </ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.joinDate}}
                 </ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.confirmDate}}
                 </ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.resignDate}}
                 </ion-col>
-                <ion-col size="1" class="titleRow text">
+                <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                   {{item.status}}
                 </ion-col>
               </ion-row>
