@@ -122,6 +122,13 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
     public filteredEntitlement: any;
 
     /**
+     * url of profile picture
+     * @type {*}
+     * @memberof LeaveEntitlementByBatchComponent
+     */
+    public url: any;
+
+    /**
      * selected user from filtered user list
      * @private
      * @type {any[]}
@@ -157,6 +164,10 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
             department: new FormControl('', Validators.required),
             leavetype: new FormControl('', Validators.required),
             entitlement_code: new FormControl('', Validators.required)
+        })
+
+        this.leaveEntitlementAPI.apiService.get_profile_pic('all').subscribe(data => {
+            this.url = data;
         })
     }
 

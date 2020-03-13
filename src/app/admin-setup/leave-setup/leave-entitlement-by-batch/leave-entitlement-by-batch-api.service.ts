@@ -15,10 +15,10 @@ export class LeaveEntitlementByBatchApiService {
 
     /**
      *Creates an instance of LeaveEntitlementByBatchApiService.
-     * @param {APIService} apiService
+     * @param {APIService} apiService get all API
      * @memberof LeaveEntitlementByBatchApiService
      */
-    constructor(private apiService: APIService) {
+    constructor(public apiService: APIService) {
     }
 
     /**

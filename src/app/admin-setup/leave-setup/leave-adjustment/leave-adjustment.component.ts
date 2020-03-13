@@ -117,6 +117,13 @@ export class LeaveAdjustmentComponent implements OnInit {
     public showList: boolean = false;
 
     /**
+     * get url of profile picture
+     * @type {*}
+     * @memberof LeaveAdjustmentComponent
+     */
+    public url: any;
+
+    /**
      * selected company guid
      * @private
      * @type {string}
@@ -163,6 +170,9 @@ export class LeaveAdjustmentComponent implements OnInit {
             reason: new FormControl('', Validators.required),
             noOfDay: new FormControl('', Validators.required),
             symbol: new FormControl('add', Validators.required)
+        })
+        this.apiService.get_profile_pic('all').subscribe(data => {
+            this.url = data;
         })
     }
 

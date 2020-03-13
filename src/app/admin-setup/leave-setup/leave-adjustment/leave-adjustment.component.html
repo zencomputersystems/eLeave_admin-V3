@@ -21,7 +21,7 @@
                     </ion-col>
                 </ion-row>
             </div>
-            <div  [class]="'hide-sm-down'" style="margin: 20px;">
+            <div [class]="'hide-sm-down'" style="margin: 20px;">
                 <ion-row>
                     <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                         <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
@@ -292,7 +292,8 @@
                                 </div>
                             </form>
                         </div>
-                        <div [class]="'hide-sm-down'" style="margin: 0 auto;padding: 15px;padding-top: 0;text-align: center;">
+                        <div [class]="'hide-sm-down'"
+                            style="margin: 0 auto;padding: 15px;padding-top: 0;text-align: center;">
                             <ion-button
                                 style="--border-radius: 2px;font-size: 11px;height: 30px;width: 100%;background: white;text-transform: none;"
                                 color="primary"
@@ -337,7 +338,7 @@
                                 <ion-row class="detailsRow" *ngFor="let item of filteredUserItems; let i=index">
                                     <ion-col size="1.5"
                                         style="text-align: center;padding-left: 10px;padding-right: 30px;">
-                                        <ion-avatar class="avatar" (mouseover)="hoverEvent(i, true, item.isChecked)"
+                                        <!-- <ion-avatar class="avatar" (mouseover)="hoverEvent(i, true, item.isChecked)"
                                             (mouseout)="hoverEvent(i, false, item.isChecked)">
                                             <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                                                 [style.display]="showCheckbox[i] ? 'none' : 'block'">
@@ -348,7 +349,40 @@
                                                     [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
                                                 </ion-checkbox>
                                             </div>
-                                        </ion-avatar>
+                                        </ion-avatar> -->
+                                        <ng-container *ngFor="let list of url.details; let j= index">
+                                            <ng-container *ngIf="url.details[j].USER_GUID == item.userId">
+                                                <ion-avatar class="avatar"
+                                                    (mouseover)="hoverEvent(i, true, item.isChecked)"
+                                                    (mouseout)="hoverEvent(i, false, item.isChecked)"
+                                                    *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                    <img src="{{url.link + url.details[j].PROFILE_PICTURE}}"
+                                                        style="margin-left: 5px;"
+                                                        [style.display]="showCheckbox[i] ? 'none' : 'block'">
+                                                    <div class="checkboxOnAvatar"
+                                                        [style.display]="showCheckbox[i] ? 'block' : 'none'">
+                                                        <ion-checkbox mode="ios"
+                                                            style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                            [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                                                        </ion-checkbox>
+                                                    </div>
+                                                </ion-avatar>
+                                                <ion-avatar class="avatar"
+                                                    (mouseover)="hoverEvent(i, true, item.isChecked)"
+                                                    (mouseout)="hoverEvent(i, false, item.isChecked)"
+                                                    *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                    <img src="assets/icon/picture.png" style="margin-left: 5px;"
+                                                        [style.display]="showCheckbox[i] ? 'none' : 'block'">
+                                                    <div class="checkboxOnAvatar"
+                                                        [style.display]="showCheckbox[i] ? 'block' : 'none'">
+                                                        <ion-checkbox mode="ios"
+                                                            style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                            [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                                                        </ion-checkbox>
+                                                    </div>
+                                                </ion-avatar>
+                                            </ng-container>
+                                        </ng-container>
                                     </ion-col>
                                     <ion-col size="2" class="colOfLeave"
                                         style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
@@ -380,8 +414,7 @@
                             <div
                                 style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                                 <ion-row nowrap>
-                                    <ion-col size="2.5"
-                                        style="text-align: center;padding-left: 15px;padding-right: 30px;text-overflow:
+                                    <ion-col size="2.5" style="text-align: center;padding-left: 15px;padding-right: 30px;text-overflow:
                                         initial; margin-right: 10px;">
                                         <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
                                             [(ngModel)]="mainCheckBox" [indeterminate]="indeterminate"
@@ -402,10 +435,9 @@
                                 Nothing to view. Please select company and department first. </p>
                             <div class="content" *ngIf="filteredUserItems.length > 0">
                                 <ion-row style="height: auto;" *ngFor="let item of filteredUserItems; let i=index">
-                                    <ion-col size="1.5"
-                                        style="text-align: center;padding-left: 10px;padding-right: 20px;min-width:
+                                    <ion-col size="1.5" style="text-align: center;padding-left: 10px;padding-right: 20px;min-width:
                                         fit-content;">
-                                        <ion-avatar class="avatar" (mouseover)="hoverEvent(i, true, item.isChecked)"
+                                        <!-- <ion-avatar class="avatar" (mouseover)="hoverEvent(i, true, item.isChecked)"
                                             (mouseout)="hoverEvent(i, false, item.isChecked)">
                                             <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                                                 [style.display]="showCheckbox[i] ? 'none' : 'block'">
@@ -416,7 +448,40 @@
                                                     [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
                                                 </ion-checkbox>
                                             </div>
-                                        </ion-avatar>
+                                        </ion-avatar> -->
+                                        <ng-container *ngFor="let list of url.details; let j= index">
+                                            <ng-container *ngIf="url.details[j].USER_GUID == item.userGuid">
+                                                <ion-avatar class="avatar"
+                                                    (mouseover)="hoverEvent(i, true, item.isChecked)"
+                                                    (mouseout)="hoverEvent(i, false, item.isChecked)"
+                                                    *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                    <img src="{{url.link + url.details[j].PROFILE_PICTURE}}"
+                                                        style="margin-left: 5px;"
+                                                        [style.display]="showCheckbox[i] ? 'none' : 'block'">
+                                                    <div class="checkboxOnAvatar"
+                                                        [style.display]="showCheckbox[i] ? 'block' : 'none'">
+                                                        <ion-checkbox mode="ios"
+                                                            style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                            [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                                                        </ion-checkbox>
+                                                    </div>
+                                                </ion-avatar>
+                                                <ion-avatar class="avatar"
+                                                    (mouseover)="hoverEvent(i, true, item.isChecked)"
+                                                    (mouseout)="hoverEvent(i, false, item.isChecked)"
+                                                    *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                    <img src="assets/icon/picture.png" style="margin-left: 5px;"
+                                                        [style.display]="showCheckbox[i] ? 'none' : 'block'">
+                                                    <div class="checkboxOnAvatar"
+                                                        [style.display]="showCheckbox[i] ? 'block' : 'none'">
+                                                        <ion-checkbox mode="ios"
+                                                            style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                            [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                                                        </ion-checkbox>
+                                                    </div>
+                                                </ion-avatar>
+                                            </ng-container>
+                                        </ng-container>
                                     </ion-col>
                                     <ion-col class="colOfLeave">
                                         <ion-grid style="font-size: 11px;">
@@ -424,11 +489,12 @@
                                                 <ion-row style="font-weight: bold;">{{item.employeeName}}</ion-row>
                                                 <ion-row>{{item.designation}}</ion-row>
                                             </ion-item-group>
-                                            <ion-item-group style="border-top: 1px solid #e2e2e2; margin-top: 5px; padding-top: 5px;">
+                                            <ion-item-group
+                                                style="border-top: 1px solid #e2e2e2; margin-top: 5px; padding-top: 5px;">
                                                 <ion-row>ID : {{item.staffNumber}}</ion-row>
                                                 <ion-row>Entitlement: {{item.entitlement}}</ion-row>
                                             </ion-item-group>
-                                        </ion-grid> 
+                                        </ion-grid>
                                     </ion-col>
                                     <ion-item class="divider" lines="full"></ion-item>
                                 </ion-row>

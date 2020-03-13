@@ -107,7 +107,8 @@
                                 </div>
                             </form>
                         </div>
-                        <div [class]="'hide-sm-down'" style="margin: 0 auto;padding: 15px;padding-top: 0;;text-align: center;">
+                        <div [class]="'hide-sm-down'"
+                            style="margin: 0 auto;padding: 15px;padding-top: 0;;text-align: center;">
                             <ion-button
                                 style="--border-radius: 2px;font-size: 11px;height: 30px;width: 100%;background: white;text-transform: none;"
                                 color="primary" (click)="postLeaveEntitlement()" [disabled]="disableSubmit">
@@ -159,7 +160,7 @@
                             <div class="content" *ngIf="filteredUser.length > 0">
                                 <ion-row class="detailsRow" *ngFor="let item of filteredUser; let i=index">
                                     <ion-col size="1.5" style="text-align: center;min-width: fit-content;">
-                                        <ion-avatar class="avatar"
+                                        <!-- <ion-avatar class="avatar"
                                             (mouseover)="mouseInOutEvent(i, true, item.isChecked)"
                                             (mouseout)="mouseInOutEvent(i, false, item.isChecked)">
                                             <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
@@ -171,7 +172,40 @@
                                                     [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
                                                 </ion-checkbox>
                                             </div>
-                                        </ion-avatar>
+                                        </ion-avatar> -->
+                                        <ng-container *ngFor="let list of url.details; let j= index">
+                                            <ng-container *ngIf="url.details[j].USER_GUID == item.userId">
+                                                <ion-avatar class="avatar"
+                                                    (mouseover)="mouseInOutEvent(i, true, item.isChecked)"
+                                                    (mouseout)="mouseInOutEvent(i, false, item.isChecked)"
+                                                    *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                    <img src="{{url.link + url.details[j].PROFILE_PICTURE}}"
+                                                        style="margin-left: 5px;"
+                                                        [style.display]="hideAvatar[i] ? 'none' : 'block'">
+                                                    <div class="checkboxOnAvatar"
+                                                        [style.display]="hideAvatar[i] ? 'block' : 'none'">
+                                                        <ion-checkbox mode="ios"
+                                                            style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                            [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                                                        </ion-checkbox>
+                                                    </div>
+                                                </ion-avatar>
+                                                <ion-avatar class="avatar"
+                                                    (mouseover)="mouseInOutEvent(i, true, item.isChecked)"
+                                                    (mouseout)="mouseInOutEvent(i, false, item.isChecked)"
+                                                    *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                    <img src="assets/icon/picture.png" style="margin-left: 5px;"
+                                                        [style.display]="hideAvatar[i] ? 'none' : 'block'">
+                                                    <div class="checkboxOnAvatar"
+                                                        [style.display]="hideAvatar[i] ? 'block' : 'none'">
+                                                        <ion-checkbox mode="ios"
+                                                            style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                            [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                                                        </ion-checkbox>
+                                                    </div>
+                                                </ion-avatar>
+                                            </ng-container>
+                                        </ng-container>
                                     </ion-col>
                                     <ion-col size="2"
                                         style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
@@ -195,7 +229,7 @@
                                 <ion-row class="detailsRow" *ngFor="let item of filteredUser; let i=index">
                                     <div style="display: contents;">
                                         <ion-col size="1.5" style="text-align: center;min-width: fit-content;">
-                                            <ion-avatar class="avatar"
+                                            <!-- <ion-avatar class="avatar"
                                                 (mouseover)="mouseInOutEvent(i, true, item.isChecked)"
                                                 (mouseout)="mouseInOutEvent(i, false, item.isChecked)">
                                                 <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
@@ -207,7 +241,40 @@
                                                         [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
                                                     </ion-checkbox>
                                                 </div>
-                                            </ion-avatar>
+                                            </ion-avatar> -->
+                                            <ng-container *ngFor="let list of url.details; let j= index">
+                                                <ng-container *ngIf="url.details[j].USER_GUID == item.userId">
+                                                    <ion-avatar class="avatar"
+                                                        (mouseover)="mouseInOutEvent(i, true, item.isChecked)"
+                                                        (mouseout)="mouseInOutEvent(i, false, item.isChecked)"
+                                                        *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                        <img src="{{url.link + url.details[j].PROFILE_PICTURE}}"
+                                                            style="margin-left: 5px;"
+                                                            [style.display]="hideAvatar[i] ? 'none' : 'block'">
+                                                        <div class="checkboxOnAvatar"
+                                                            [style.display]="hideAvatar[i] ? 'block' : 'none'">
+                                                            <ion-checkbox mode="ios"
+                                                                style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                                [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                                                            </ion-checkbox>
+                                                        </div>
+                                                    </ion-avatar>
+                                                    <ion-avatar class="avatar"
+                                                        (mouseover)="mouseInOutEvent(i, true, item.isChecked)"
+                                                        (mouseout)="mouseInOutEvent(i, false, item.isChecked)"
+                                                        *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                        <img src="assets/icon/picture.png" style="margin-left: 5px;"
+                                                            [style.display]="hideAvatar[i] ? 'none' : 'block'">
+                                                        <div class="checkboxOnAvatar"
+                                                            [style.display]="hideAvatar[i] ? 'block' : 'none'">
+                                                            <ion-checkbox mode="ios"
+                                                                style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                                [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
+                                                            </ion-checkbox>
+                                                        </div>
+                                                    </ion-avatar>
+                                                </ng-container>
+                                            </ng-container>
                                         </ion-col>
                                         <ion-col class="colOfLeave">
                                             <ion-grid style="font-size: 11px;">
@@ -233,8 +300,7 @@
                             <p style="font-size: 20px;color:#a3a6b4;opacity: 0.8;padding-top:10px ">No Results Found</p>
                         </div>
                     </div>
-                    <div [class]="'hide-sm-up'"
-                        style="margin: 5px auto 25px;padding: 15px;padding-top: 0;;text-align: center; flex: 1;
+                    <div [class]="'hide-sm-up'" style="margin: 5px auto 25px;padding: 15px;padding-top: 0;;text-align: center; flex: 1;
                         min-width: 200px;">
                         <ion-button
                             style="--border-radius: 2px;font-size: 11px;height: 30px;width: 100%;background: white;text-transform: none;"
