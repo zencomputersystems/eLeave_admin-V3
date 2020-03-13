@@ -1,7 +1,9 @@
 <!-- ------------------------------ show announcement menu -------------------------------- -->
-<ion-menu contentId="announcedMenuContent" side="end" type="overlay" menuId="viewAnnouncementDetails" (ionDidClose)="menuOpen=false">
+<ion-menu contentId="announcedMenuContent" side="end" type="overlay" menuId="viewAnnouncementDetails"
+    (ionDidClose)="menuOpen=false">
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
-        <img style="margin: 17px;width: 20px;height:21px;float:left" src="assets/icon/dashboard/icon announcement@3x.png">
+        <img style="margin: 17px;width: 20px;height:21px;float:left"
+            src="assets/icon/dashboard/icon announcement@3x.png">
         <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">ANNOUNCEMENT</p>
     </ion-header>
 
@@ -13,18 +15,22 @@
             <ng-container *ngFor="let item of announcements; let i =index">
                 <ion-item *ngIf="i<6 && showallannouncement===false">
                     <ion-label>
-                        <p style="color:#4d4f5c; font-weight: bold;font-size: 11px;line-height: 1.82;white-space: normal;">
+                        <p
+                            style="color:#4d4f5c; font-weight: bold;font-size: 11px;line-height: 1.82;white-space: normal;">
                             {{item.TITLE}}</p>
                         <p style="opacity: 0.8;font-size: 9px;line-height: 2.22;color: #4d4f5c;">
                             {{item.CREATION_TS | date:'d MMM yyyy'}}
                         </p>
-                        <p class="innerText" style="white-space: normal;font-size: 10px;color: #4d4f5c;line-height:1.4;text-align: justify;" [innerHTML]="item.MESSAGE">
+                        <p class="innerText"
+                            style="white-space: normal;font-size: 10px;color: #4d4f5c;line-height:1.4;text-align: justify;"
+                            [innerHTML]="item.MESSAGE">
                         </p>
                     </ion-label>
                 </ion-item>
                 <ion-item *ngIf="showallannouncement">
                     <ion-label>
-                        <p style="color:#4d4f5c; font-weight: bold;font-size: 11px;line-height: 1.82;white-space: normal;">
+                        <p
+                            style="color:#4d4f5c; font-weight: bold;font-size: 11px;line-height: 1.82;white-space: normal;">
                             {{item.TITLE}}</p>
                         <p style="opacity: 0.8;font-size: 9px;line-height: 2.22;color: #4d4f5c;">
                             {{item.CREATION_TS | date:'d MMM yyyy'}}
@@ -40,10 +46,12 @@
             </ng-container>
         </ion-list>
         <div style="text-align: center;margin:30px" *ngIf="announcements && announcements.length > 6">
-            <ion-button *ngIf="!viewLessAnnouncement" (click)="showallannouncement = true; viewLessAnnouncement = true" style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary">
+            <ion-button *ngIf="!viewLessAnnouncement" (click)="showallannouncement = true; viewLessAnnouncement = true"
+                style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary">
                 View More
             </ion-button>
-            <ion-button *ngIf="viewLessAnnouncement" (click)="showallannouncement = false; viewLessAnnouncement = false" style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary">
+            <ion-button *ngIf="viewLessAnnouncement" (click)="showallannouncement = false; viewLessAnnouncement = false"
+                style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary">
                 View Less
             </ion-button>
         </div>
@@ -52,10 +60,12 @@
 <ion-router-outlet id="announcedMenuContent"></ion-router-outlet>
 
 <!-- ------------------------------- create announcement ----------------------------------- -->
-<ion-menu contentId="createAnnouncementContent" side="end" type="overlay" menuId="createAnnouncementDetails" (ionDidClose)="menuOpen=false" class="create-annoucemnet-menu">
-<!-- <ion-menu contentId="createAnnouncementContent" side="end" type="overlay" menuId="createAnnouncementDetails" (ionDidClose)="menuOpen=false" style="--width: 660px;"> -->
+<ion-menu contentId="createAnnouncementContent" side="end" type="overlay" menuId="createAnnouncementDetails"
+    (ionDidClose)="menuOpen=false" class="create-annoucemnet-menu">
+    <!-- <ion-menu contentId="createAnnouncementContent" side="end" type="overlay" menuId="createAnnouncementDetails" (ionDidClose)="menuOpen=false" style="--width: 660px;"> -->
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
-        <img style="margin: 17px;width: 20px;height:21px;float:left" src="assets/icon/dashboard/icon announcement@3x.png">
+        <img style="margin: 17px;width: 20px;height:21px;float:left"
+            src="assets/icon/dashboard/icon announcement@3x.png">
         <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">ANNOUNCEMENT</p>
     </ion-header>
 
@@ -68,29 +78,33 @@
       'border': 'solid 1px #e8e9ec', 'font-size': '13px','color':'#43425d','opacity': '0.8'}" [(ngModel)]="message">
                 <p-header>
                     <span class="ql-formats">
-            <button class="ql-bold" aria-label="Bold"></button>
-            <button class="ql-list" value="bullet"></button>
-            <button class="ql-image" aria-label="Image"></button>
-          </span>
+                        <button class="ql-bold" aria-label="Bold"></button>
+                        <button class="ql-list" value="bullet"></button>
+                        <button class="ql-image" aria-label="Image"></button>
+                    </span>
                     <span class="ql-formats">
-            <button class="ql-clean"></button>
-          </span>
+                        <button class="ql-clean"></button>
+                    </span>
                 </p-header>
             </p-editor>
             <div style="height: 40px;width:100%"></div>
-            <mat-checkbox color="primary" class="create-annucement-checkbox" 
-                [(ngModel)]="checked">Make annoucement as featured (stick on the top)</mat-checkbox>
+            <mat-checkbox color="primary" class="create-annucement-checkbox" [(ngModel)]="checked">Make annoucement as
+                featured (stick on the top)</mat-checkbox>
             <div style="text-align: right;padding: 30px;padding-right: 0;">
                 <!-- <ion-button
           style="display: inline-block;--background: #43425d;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;">
           Save Draft
         </ion-button>
         &nbsp; -->
-                <ion-button *ngIf="createNew === true" style="display: inline-block;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary" (click)="onClickPublish('add')">
+                <ion-button *ngIf="createNew === true"
+                    style="display: inline-block;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                    color="primary" (click)="onClickPublish('add')">
                     Publish
                 </ion-button>
 
-                <ion-button *ngIf="createNew === false" style="display: inline-block;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary" (click)="onClickPublish('edit')">
+                <ion-button *ngIf="createNew === false"
+                    style="display: inline-block;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                    color="primary" (click)="onClickPublish('edit')">
                     Save
                 </ion-button>
             </div>
@@ -100,9 +114,11 @@
 <ion-router-outlet id="createAnnouncementContent"></ion-router-outlet>
 
 <!-- ------------------------------ show holiday menu -------------------------------- -->
-<ion-menu contentId="holidayMenuContent" side="end" type="overlay" menuId="viewHolidayDetails" (ionDidClose)="menuOpen=false">
+<ion-menu contentId="holidayMenuContent" side="end" type="overlay" menuId="viewHolidayDetails"
+    (ionDidClose)="menuOpen=false">
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
-        <img style="margin: 17px;width: 22px;height: 17px;float:left" src="assets/icon/dashboard/icon All Holidays@3x.png">
+        <img style="margin: 17px;width: 22px;height: 17px;float:left"
+            src="assets/icon/dashboard/icon All Holidays@3x.png">
         <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">ALL HOLIDAYS</p>
     </ion-header>
 
@@ -113,16 +129,19 @@
                     <ion-row style="width: 100%;padding-bottom: 10px;">
                         <ion-col size="4">
                             <mat-chip-list>
-                                <ion-label style="padding: 5px;padding-bottom: 0;color:#4d4f5c; font-size:9px;line-height:2.22">
+                                <ion-label
+                                    style="padding: 5px;padding-bottom: 0;color:#4d4f5c; font-size:9px;line-height:2.22">
                                     {{item.start}}
                                 </ion-label>
                                 <mat-chip>
-                                    <p style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
+                                    <p
+                                        style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
                                         {{item.day}}</p>
                                 </mat-chip>
                             </mat-chip-list>
                         </ion-col>
-                        <ion-col align-self-center style="padding-top: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
+                        <ion-col align-self-center
+                            style="padding-top: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
                             {{item.title}}
                         </ion-col>
                     </ion-row>
@@ -131,16 +150,19 @@
                     <ion-row style="width: 100%;padding-bottom: 10px;">
                         <ion-col size="4">
                             <mat-chip-list>
-                                <ion-label style="padding: 5px;padding-bottom: 0;color:#4d4f5c; font-size:9px;line-height:2.22">
+                                <ion-label
+                                    style="padding: 5px;padding-bottom: 0;color:#4d4f5c; font-size:9px;line-height:2.22">
                                     {{item.start}}
                                 </ion-label>
                                 <mat-chip>
-                                    <p style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
+                                    <p
+                                        style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
                                         {{item.day}}</p>
                                 </mat-chip>
                             </mat-chip-list>
                         </ion-col>
-                        <ion-col align-self-center style="padding-top: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
+                        <ion-col align-self-center
+                            style="padding-top: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
                             {{item.title}}
                         </ion-col>
                     </ion-row>
@@ -149,10 +171,12 @@
         </ion-list>
 
         <div style="text-align: center;margin:30px" *ngIf="holidays && holidays.length > 6">
-            <ion-button *ngIf="!showViewLessButton" (click)="showall = true; showViewLessButton = true" style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary">
+            <ion-button *ngIf="!showViewLessButton" (click)="showall = true; showViewLessButton = true"
+                style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary">
                 View More
             </ion-button>
-            <ion-button *ngIf="showViewLessButton" (click)="showall = false; showViewLessButton = false" style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary">
+            <ion-button *ngIf="showViewLessButton" (click)="showall = false; showViewLessButton = false"
+                style="font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;" color="primary">
                 View Less
             </ion-button>
         </div>
@@ -181,14 +205,18 @@
                     </ion-row>
                 </div> -->
                 <div [class]="'hide-md-down'">
-                    <div style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                    <div
+                        style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                         <ion-row style="display: flex; justify-content: space-between;">
                             <ion-item-group style="display: flex;">
-                                <ion-title style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;font-size: 12px;font-weight: bold; padding: 0px 5px;">
+                                <ion-title
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;font-size: 12px;font-weight: bold; padding: 0px 5px;">
                                     LATEST ANNOUNCEMENT
                                 </ion-title>
-                                <ion-button style="--border-radius:2px;margin-left: 15px;font-size: 10px;height: 26px;width:92px;cursor: pointer;text-transform: none; 
-                                    border-radius: 2px; border: solid 1px #7069d8; background-color: #7069d8; color: #fff;" color="#fff" fill="clear"
+                                <ion-button
+                                    style="--border-radius:2px;margin-left: 15px;font-size: 10px;height: 26px;width:92px;cursor: pointer;text-transform: none; 
+                                    border-radius: 2px; border: solid 1px #7069d8; background-color: #7069d8; color: #fff;"
+                                    color="#fff" fill="clear"
                                     (click)="createNew=true;title='';message='';checked=false;menuOpen=true;menu.enable(true, 'createAnnouncementDetails');menu.enable(false, 'viewHolidayDetails');
                                                                     menu.enable(false, 'viewAnnouncementDetails');menu.open('createAnnouncementDetails');">
                                     Create New
@@ -196,8 +224,8 @@
                             </ion-item-group>
                             <ion-item-group style="display: flex;">
                                 <ion-title style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;
-                                opacity: 0.8;font-size: 12px;font-weight: bold;" 
-                                (click)="menuOpen=true;menu.enable(true, 'viewAnnouncementDetails');menu.enable(false, 
+                                opacity: 0.8;font-size: 12px;font-weight: bold;"
+                                    (click)="menuOpen=true;menu.enable(true, 'viewAnnouncementDetails');menu.enable(false, 
                                 'viewReplacementDetails');menu.enable(false, 'viewAnnualDetails');menu.enable(false, 'viewHolidayDetails');menu.open('viewAnnouncementDetails');">
                                     VIEW DETAILS
                                 </ion-title>
@@ -216,47 +244,60 @@
                     <ng-container *ngFor="let item of announcements; let i = index;">
                         <ion-row style="width: 100%;margin-top: 1%;" *ngIf="i<3">
                             <ng-container style="padding-top: 2%;">
-                                <ion-col align-self-center size="1.5" style="overflow: hidden;white-space: nowrap;min-width: fit-content;padding: 0px 10px 0px 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
+                                <ion-col align-self-center size="1.5"
+                                    style="overflow: hidden;white-space: nowrap;min-width: fit-content;padding: 0px 10px 0px 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
                                     {{item.CREATION_TS | date:'d MMM yyyy'}}
                                 </ion-col>
                                 <ion-col align-self-center style="padding: 0;color:#4d4f5c;font-size:11px;line-height: 1.82;overflow: hidden;
                                                     white-space: nowrap;text-overflow: ellipsis;">
-                                    <span *ngIf="item.IS_PINNED === 1" style="font-weight: bold;color:#43425d;font-size:11px;white-space: pre-wrap;">
+                                    <span *ngIf="item.IS_PINNED === 1"
+                                        style="font-weight: bold;color:#43425d;font-size:11px;white-space: pre-wrap;">
                                         {{item.TITLE}}
                                         <br>
                                     </span>
-                                    <p class="mainInnerText" [innerHTML]="item.MESSAGE" style="margin-bottom: 0; white-space: pre-wrap;"></p>
+                                    <p class="mainInnerText" [innerHTML]="item.MESSAGE"
+                                        style="margin-bottom: 0; white-space: pre-wrap;"></p>
                                 </ion-col>
-                                <ion-col size="2" align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                <ion-col size="2" align-self-center
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                     <div style="margin-right: 10px;text-align: right;">
-                                        <img src="assets/icon/leave_setup/icon_edit@3x.png" style="width: 11px;height:11px;cursor: pointer;" (click)="editAnnouncement(item);createNew=false;menuOpen=true;menu.enable(true, 'createAnnouncementDetails');menu.enable(false, 'viewHolidayDetails');
+                                        <img src="assets/icon/leave_setup/icon_edit@3x.png"
+                                            style="width: 11px;height:11px;cursor: pointer;"
+                                            (click)="editAnnouncement(item);createNew=false;menuOpen=true;menu.enable(true, 'createAnnouncementDetails');menu.enable(false, 'viewHolidayDetails');
                                                             menu.enable(false, 'viewAnnouncementDetails');menu.open('createAnnouncementDetails');"> &nbsp;&nbsp;
-                    
-                                        <img src="assets/icon/dashboard/icon-cancel@3x.png" style="width: 11px;height:11px;cursor: pointer;" (click)="deleteAnnouncement(item)">
+
+                                        <img src="assets/icon/dashboard/icon-cancel@3x.png"
+                                            style="width: 11px;height:11px;cursor: pointer;"
+                                            (click)="deleteAnnouncement(item)">
                                     </div>
                                 </ion-col>
-                                <ion-item *ngIf="i<2" class="divider" style="padding-bottom: 0;" lines="full"></ion-item>
+                                <ion-item *ngIf="i<2" class="divider" style="padding-bottom: 0;" lines="full">
+                                </ion-item>
                             </ng-container>
                         </ion-row>
                     </ng-container>
                 </div>
                 <div [class]="'hide-md-up'">
-                    <div style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
-                        <ion-row  style="display: flex; justify-content: space-between;">
+                    <div
+                        style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                        <ion-row style="display: flex; justify-content: space-between;">
                             <ion-item-group style="display: flex;">
-                                <ion-title style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;font-size: 12px;font-weight: bold; padding: 0px 5px;">
+                                <ion-title
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;font-size: 12px;font-weight: bold; padding: 0px 5px;">
                                     LATEST ANNOUNCEMENT
                                 </ion-title>
                             </ion-item-group>
                             <ion-item-group style="display: flex;">
-                                <ion-button style="--border-radius:2px;margin-left: 15px;font-size: 10px;height: 26px;width:92px;cursor: pointer;text-transform: none; 
-                                    border-radius: 2px; border: solid 1px #7069d8; background-color: #7069d8; color: #fff;" color="#fff" fill="clear"
+                                <ion-button
+                                    style="--border-radius:2px;margin-left: 15px;font-size: 10px;height: 26px;width:92px;cursor: pointer;text-transform: none; 
+                                    border-radius: 2px; border: solid 1px #7069d8; background-color: #7069d8; color: #fff;"
+                                    color="#fff" fill="clear"
                                     (click)="createNew=true;title='';message='';checked=false;menuOpen=true;menu.enable(true, 'createAnnouncementDetails');menu.enable(false, 'viewHolidayDetails');
                                                                     menu.enable(false, 'viewAnnouncementDetails');menu.open('createAnnouncementDetails');">
                                     Create New
                                 </ion-button>
                                 <ion-title style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;
-                                    opacity: 0.8;font-size: 12px;font-weight: bold;" 
+                                    opacity: 0.8;font-size: 12px;font-weight: bold;"
                                     (click)="menuOpen=true;menu.enable(true, 'viewAnnouncementDetails');menu.enable(false, 
                                     'viewReplacementDetails');menu.enable(false, 'viewAnnualDetails');menu.enable(false, 'viewHolidayDetails');menu.open('viewAnnouncementDetails');">
                                     VIEW DETAILS
@@ -269,7 +310,8 @@
                             <ng-container style="padding-top: 2%;">
                                 <ion-item-group style="display: flex; flex-flow: column nowrap; font-size:11px; width: -webkit-fill-available; margin: auto 15px;
                                     border-bottom-style: inset;">
-                                    <ion-label style="color: #4d4f5c; margin: 10px auto; width: -webkit-fill-available; ">
+                                    <ion-label
+                                        style="color: #4d4f5c; margin: 10px auto; width: -webkit-fill-available; ">
                                         {{item.CREATION_TS | date:'d MMM yyyy'}}
                                     </ion-label>
                                     <ion-label style="font-weight: bold; color: #43425d;">
@@ -277,13 +319,13 @@
                                     </ion-label>
                                     <p [innerHTML]="item.MESSAGE" style="margin:0px;"></p>
                                     <ion-item-group style="align-self: flex-end; padding: 0px 25px 15px 0px;">
-                                        <img src="assets/icon/leave_setup/icon_edit@3x.png" 
-                                            style="width: 13px;height:13px;cursor: pointer;" 
-                                            (click)="editAnnouncement(item);createNew=false;menuOpen=true;menu.enable(true, 'createAnnouncementDetails');
+                                        <img src="assets/icon/leave_setup/icon_edit@3x.png"
+                                            style="width: 13px;height:13px;cursor: pointer;" (click)="editAnnouncement(item);createNew=false;menuOpen=true;menu.enable(true, 'createAnnouncementDetails');
                                             menu.enable(false, 'viewHolidayDetails'); menu.enable(false, 'viewAnnouncementDetails');
                                             menu.open('createAnnouncementDetails');"> &nbsp;&nbsp;
-                                        <img src="assets/icon/dashboard/icon-cancel@3x.png" style="width: 13px;height:13px;cursor: pointer;" 
-                                        (click)="deleteAnnouncement(item)">
+                                        <img src="assets/icon/dashboard/icon-cancel@3x.png"
+                                            style="width: 13px;height:13px;cursor: pointer;"
+                                            (click)="deleteAnnouncement(item)">
                                     </ion-item-group>
                                 </ion-item-group>
                             </ng-container>
@@ -298,42 +340,50 @@
         <div style="width: -webkit-fill-available;">
             <div class="row" style="flex: 1;">
                 <!-- upcoming holiday -->
-                <div class="holiday" style="max-width: -webkit-fill-available;flex: 2 1 560px;">    
+                <div class="holiday" style="max-width: -webkit-fill-available;flex: 2 1 560px;">
                     <div style="background-color: #ffffff;padding: 10px;">
-                        <div style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                             <ion-item-group style="display: flex; min-width: 197px; flex-flow: row wrap;;">
-                                <ion-title style="white-space: nowrap;text-overflow: ellipsis;font-size: 12px;font-weight: bold; padding: 0px 5px;">
+                                <ion-title
+                                    style="white-space: nowrap;text-overflow: ellipsis;font-size: 12px;font-weight: bold; padding: 0px 5px;">
                                     UPCOMING HOLIDAYS
                                 </ion-title>
                                 <ion-title style="white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;
-                                opacity: 0.8;font-weight: bold; font-size: 12px;" (click)="menuOpen=true;menu.enable(true, 'viewHolidayDetails');
-                                menu.enable(false, 'createAnnouncementDetails');;menu.enable(false,'viewAnnouncementDetails');menu.open('viewHolidayDetails');"> 
-                                VIEW DETAILS
+                                opacity: 0.8;font-weight: bold; font-size: 12px;"
+                                    (click)="menuOpen=true;menu.enable(true, 'viewHolidayDetails');
+                                menu.enable(false, 'createAnnouncementDetails');;menu.enable(false,'viewAnnouncementDetails');menu.open('viewHolidayDetails');">
+                                    VIEW DETAILS
                                 </ion-title>
                             </ion-item-group>
                         </div>
                         <ng-container *ngIf="(holidays | json) != '{}'">
                             <ion-row style="width: 100%;" *ngFor="let item of holidays; let i = index;">
                                 <ng-container style="padding-top: 2%;" *ngIf="i<3">
-                                    <ion-col size="2" style="overflow: hidden;white-space: nowrap; min-width: fit-content;padding-left: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
+                                    <ion-col size="2"
+                                        style="overflow: hidden;white-space: nowrap; min-width: fit-content;padding-left: 15px;color:#4d4f5c;font-size:11px;line-height: 1.82;">
                                         <ion-label>{{item.start}}</ion-label>
                                     </ion-col>
-                                    <ion-col size="2" style="overflow: hidden;white-space: nowrap;min-width: fit-content;">
+                                    <ion-col size="2"
+                                        style="overflow: hidden;white-space: nowrap;min-width: fit-content;">
                                         <mat-chip-list>
                                             <mat-chip>
-                                                <p style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
+                                                <p
+                                                    style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
                                                     {{item.day}}</p>
                                             </mat-chip>
                                         </mat-chip-list>
                                     </ion-col>
-                                    <ion-col style="color:#4d4f5c;font-size:11px;line-height: 1.82;overflow: hidden;white-space: pre-wrap;min-width: fit-content; margin: auto 7px;">
+                                    <ion-col
+                                        style="color:#4d4f5c;font-size:11px;line-height: 1.82;overflow: hidden;white-space: pre-wrap;min-width: fit-content; margin: auto 7px;">
                                         {{item.title}}
                                     </ion-col>
                                     <ion-item *ngIf="i<2" class="divider" lines="full"></ion-item>
                                 </ng-container>
                             </ion-row>
                         </ng-container>
-                        <p *ngIf="(holidays | json) == '{}'" style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
+                        <p *ngIf="(holidays | json) == '{}'"
+                            style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                             No upcoming holiday</p>
                     </div>
                 </div>
@@ -341,36 +391,57 @@
                 <!-- long leave reminder (full view) -->
                 <div class="longleave" style="min-width: 230px; flex: 1 1 auto; max-width: -webkit-fill-available;">
                     <div style="background-color: #ffffff;padding: 10px;">
-                        <div style="font-size: 12px;width:100%;background: #f8bb40;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
+                        <div
+                            style="font-size: 12px;width:100%;background: #f8bb40;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
                             <ion-row>
-                                <ion-col align-self-center size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                <ion-col align-self-center size="9"
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                     Long Leave Reminder</ion-col>
-                                <ion-col align-self-center size="3" style="white-space: nowrap;text-overflow: ellipsis;text-align: right;">Start On</ion-col>
+                                <ion-col align-self-center size="3"
+                                    style="white-space: nowrap;text-overflow: ellipsis;padding-left: 10px;">Start On
+                                </ion-col>
                             </ion-row>
                         </div>
                         <!-- <div style="max-height: 192px;overflow: auto;width: 100%;"> -->
-                        <div style="max-height: 192px;overflow: auto;width: 100%;" *ngIf="longLeave && longLeave.status == undefined">
+                        <div style="max-height: 192px;overflow: auto;width: 100%;"
+                            *ngIf="longLeave && longLeave.status == undefined">
                             <ion-list class="list" style="width: 100%;">
                                 <ion-row *ngFor="let item of longLeave.downline">
-                                    <ion-col size="8" style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                    <ion-col size="9"
+                                        style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                         <ion-item lines="none">
-                                            <ion-avatar slot="start" class="avatar">
-                                                <img src="assets/icon/picture.png">
-                                            </ion-avatar>
+                                            <ng-container *ngFor="let list of url.details; let j= index">
+                                                <ng-container *ngIf="url.details[j].USER_GUID == item.userGuid">
+                                                    <ion-avatar slot="start" class="avatar"
+                                                        *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                        <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
+                                                    </ion-avatar>
+                                                    <ion-avatar slot="start" class="avatar"
+                                                        *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                        <img src="assets/icon/picture.png">
+                                                    </ion-avatar>
+                                                </ng-container>
+                                            </ng-container>
                                             <ion-label text-wrap class="labelText">
-                                                <p style="color: #4d4f5c; font-size: 11px;white-space: pre-wrap; line-height: normal;margin: 5px 0px;">{{item.fullname}}
+                                                <p
+                                                    style="color: #4d4f5c; font-size: 11px;white-space: pre-wrap; line-height: normal;margin: 5px 0px;">
+                                                    {{item.fullname}}
                                                 </p>
-                                                <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: pre-wrap; line-height: normal;margin: 5px 0px;">
+                                                <p
+                                                    style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: pre-wrap; line-height: normal;margin: 5px 0px;">
                                                     {{item.designation}}
                                                 </p>
                                             </ion-label>
                                         </ion-item>
                                     </ion-col>
-                                    <ion-col align-self-center size="3" style="overflow: initial;white-space: nowrap;text-overflow: ellipsis;text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">
+                                    <ion-col align-self-center size="3"
+                                        style="overflow: initial;white-space: nowrap;text-overflow: ellipsis;font-size: 11px;line-height: 1.82;color: #4d4f5c;">
                                         <ion-label text-wrap class="labelText">
-                                            <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">{{item.startDate}}
+                                            <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">
+                                                {{item.startDate | date: 'dd MMM yyyy'}}
                                             </p>
-                                            <p style="margin-bottom: 0;margin-right: 7px;color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap">
+                                            <p
+                                                style="margin-bottom: 0;margin-right: 7px;color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap">
                                                 Total: {{item.noOfDays}} Days
                                             </p>
                                         </ion-label>
@@ -379,7 +450,8 @@
                                 </ion-row>
                             </ion-list>
                         </div>
-                        <p *ngIf="longLeave && longLeave.status != undefined" style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
+                        <p *ngIf="longLeave && longLeave.status != undefined"
+                            style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                             No long leave reminder</p>
                     </div>
                 </div>
@@ -387,38 +459,58 @@
                 <!-- upcoming new joiner -->
                 <div class="joiner" style="min-width: 230px; flex: 1 1 auto; max-width: -webkit-fill-available;">
                     <div style="background-color: #ffffff;padding: 10px;">
-                        <div style="font-size: 12px;width:100%;background: #7069d8;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
+                        <div
+                            style="font-size: 12px;width:100%;background: #7069d8;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
                             <ion-row style="flex-flow: nowrap;">
-                                <ion-col align-self-center size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                <ion-col align-self-center size="8"
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                     Upcoming New Joiner</ion-col>
-                                <ion-col align-self-center size="3" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right; min-width: fit-content;">Date of Join
+                                <ion-col align-self-center size="3"
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right; min-width: fit-content;">
+                                    Date of Join
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div *ngIf="joiners && joiners.length > 0" style="max-height: 192px;overflow: auto;width: 100%;">
+                        <div *ngIf="joiners && joiners.length > 0"
+                            style="max-height: 192px;overflow: auto;width: 100%;">
                             <ion-list style="width: 100%;" *ngFor="let item of joiners">
                                 <ion-row>
-                                    <ion-col size="8" style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                    <ion-col size="8"
+                                        style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                         <ion-item lines="none">
-                                            <ion-avatar slot="start" class="avatar">
-                                                <img src="assets/icon/picture.png">
-                                            </ion-avatar>
+                                            <ng-container *ngFor="let list of url.details; let j= index">
+                                                <ng-container *ngIf="url.details[j].FULLNAME == item.FULLNAME">
+                                                    <ion-avatar slot="start" class="avatar"
+                                                        *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                        <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
+                                                    </ion-avatar>
+                                                    <ion-avatar slot="start" class="avatar"
+                                                        *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                        <img src="assets/icon/picture.png">
+                                                    </ion-avatar>
+                                                </ng-container>
+                                            </ng-container>
                                             <ion-label text-wrap class="labelText">
-                                                <p style="color: #4d4f5c; font-size: 11px;white-space: pre-wrap; line-height: normal; margin: 5px 0px;">{{item.FULLNAME}}
+                                                <p
+                                                    style="color: #4d4f5c; font-size: 11px;white-space: pre-wrap; line-height: normal; margin: 5px 0px;">
+                                                    {{item.FULLNAME}}
                                                 </p>
-                                                <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px; white-space: pre-wrap; line-height: normal; margin: 5px 0px;">
+                                                <p
+                                                    style="color: #4d4f5c; opacity: 0.8;font-size: 10px; white-space: pre-wrap; line-height: normal; margin: 5px 0px;">
                                                     {{item.DESIGNATION}}
                                                 </p>
                                             </ion-label>
                                         </ion-item>
                                     </ion-col>
-                                    <ion-col align-self-center size="3" style="overflow: hidden;white-space: nowrap;min-width: fit-content;text-overflow: ellipsis;text-align: right;font-size: 11px;color: #4d4f5c;">
+                                    <ion-col align-self-center size="3"
+                                        style="overflow: hidden;white-space: nowrap;min-width: fit-content;text-overflow: ellipsis;text-align: right;font-size: 11px;color: #4d4f5c;">
                                         {{item.JOIN_DATE}}</ion-col>
                                     <ion-item class="divider" lines="full"></ion-item>
                                 </ion-row>
                             </ion-list>
                         </div>
-                        <p *ngIf="joiners && joiners.length == 0" style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
+                        <p *ngIf="joiners && joiners.length == 0"
+                            style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                             No upcoming new joiner</p>
                     </div>
                 </div>
@@ -426,37 +518,56 @@
                 <!-- upcoming leaver -->
                 <div class="leaver" style="min-width: 230px; flex: 1 1 auto; max-width: -webkit-fill-available;">
                     <div style="background-color: #ffffff;padding: 10px;">
-                        <div style="font-size: 12px;width:100%;background: #43425d;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
+                        <div
+                            style="font-size: 12px;width:100%;background: #43425d;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
                             <ion-row>
-                                <ion-col align-self-center size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                <ion-col align-self-center size="8.5"
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                     Upcoming Leaver</ion-col>
-                                <ion-col align-self-center size="3" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;">Last Day</ion-col>
+                                <ion-col align-self-center size="3"
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                    Last Day</ion-col>
                             </ion-row>
                         </div>
                         <div *ngIf="leaver && leaver.length > 0" style="max-height: 192px;overflow: auto;width: 100%;">
                             <ion-list class="list" style="width: 100%;">
                                 <ion-row *ngFor="let item of leaver">
-                                    <ion-col size="8" style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                    <ion-col size="8.5"
+                                        style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                         <ion-item lines="none">
-                                            <ion-avatar slot="start" class="avatar">
-                                                <img src="assets/icon/picture.png">
-                                            </ion-avatar>
+                                            <ng-container *ngFor="let list of url.details; let j= index">
+                                                <ng-container *ngIf="url.details[j].FULLNAME == item.FULLNAME">
+                                                    <ion-avatar slot="start" class="avatar"
+                                                        *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                        <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
+                                                    </ion-avatar>
+                                                    <ion-avatar slot="start" class="avatar"
+                                                        *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                        <img src="assets/icon/picture.png">
+                                                    </ion-avatar>
+                                                </ng-container>
+                                            </ng-container>
                                             <ion-label text-wrap class="labelText">
-                                                <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">{{item.FULLNAME}}
+                                                <p
+                                                    style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">
+                                                    {{item.FULLNAME}}
                                                 </p>
-                                                <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
+                                                <p
+                                                    style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
                                                     {{item.DESIGNATION}}
                                                 </p>
                                             </ion-label>
                                         </ion-item>
                                     </ion-col>
-                                    <ion-col align-self-center size="3" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;font-size: 11px;color: #4d4f5c; min-width: fit-content;">
+                                    <ion-col align-self-center size="3"
+                                        style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;font-size: 11px;color: #4d4f5c; min-width: fit-content;">
                                         {{item.RESIGNATION_DATE}}</ion-col>
                                     <ion-item class="divider" lines="full"></ion-item>
                                 </ion-row>
                             </ion-list>
                         </div>
-                        <p *ngIf="leaver && leaver.length == 0" style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
+                        <p *ngIf="leaver && leaver.length == 0"
+                            style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                             No upcoming leaver</p>
                     </div>
                 </div>
@@ -464,38 +575,59 @@
                 <!-- upcoming birthday -->
                 <div class="birthday" style="min-width: 230px; flex: 1 1 auto; max-width: -webkit-fill-available;">
                     <div style="background-color: #ffffff;padding: 10px;">
-                        <div style="font-size: 12px;width:100%;background: #46cdcf;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
+                        <div
+                            style="font-size: 12px;width:100%;background: #46cdcf;padding: 10px;padding-left: 15px;color: #ffffff;font-weight: bold;">
                             <ion-row>
-                                <ion-col align-self-center size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                <ion-col align-self-center size="9"
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                     Upcoming Birthday</ion-col>
-                                <ion-col align-self-center size="3" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;min-width: fit-content;">Date of Birth
+                                <ion-col align-self-center size="3"
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                    Date of Birth
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div *ngIf="birthdayList && birthdayList.length > 0" style="max-height: 192px;overflow: auto;width: 100%;">
+                        <div *ngIf="birthdayList && birthdayList.length > 0"
+                            style="max-height: 192px;overflow: auto;width: 100%;">
                             <ion-list class="list" style="width: 100%;">
                                 <ion-row *ngFor="let item of birthdayList">
-                                    <ion-col size="8" style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                    <ion-col size="9"
+                                        style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                         <ion-item lines="none">
-                                            <ion-avatar slot="start" class="avatar">
-                                                <img src="assets/icon/picture.png">
-                                            </ion-avatar>
+                                            <ng-container *ngFor="let list of url.details; let j= index">
+                                                <ng-container *ngIf="url.details[j].FULLNAME == item.FULLNAME">
+                                                    <ion-avatar slot="start" class="avatar"
+                                                        *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                        <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
+                                                    </ion-avatar>
+                                                    <ion-avatar slot="start" class="avatar"
+                                                        *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                        <img src="assets/icon/picture.png">
+                                                    </ion-avatar>
+                                                </ng-container>
+                                            </ng-container>
+
                                             <ion-label text-wrap class="labelText">
-                                                <p style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">{{item.FULLNAME}}
+                                                <p
+                                                    style="color: #4d4f5c; font-size: 11px;white-space: nowrap;margin: 0">
+                                                    {{item.FULLNAME}}
                                                 </p>
-                                                <p style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
+                                                <p
+                                                    style="color: #4d4f5c; opacity: 0.8;font-size: 10px;white-space: nowrap;margin: 0">
                                                     {{item.DESIGNATION}}
                                                 </p>
                                             </ion-label>
                                         </ion-item>
                                     </ion-col>
-                                    <ion-col align-self-center size="3" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;margin-right: 10px;font-size: 11px;line-height: 1.82;color: #4d4f5c;">
-                                        {{item.DOB}}</ion-col>
+                                    <ion-col align-self-center size="3"
+                                        style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;font-size: 11px;line-height: 1.82;color: #4d4f5c;">
+                                        {{item.DOB}} {{year}}</ion-col>
                                     <ion-item class="divider" lines="full"></ion-item>
                                 </ion-row>
                             </ion-list>
                         </div>
-                        <p *ngIf="birthdayList && birthdayList.length == 0" style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
+                        <p *ngIf="birthdayList && birthdayList.length == 0"
+                            style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                             No upcoming user birthday </p>
                     </div>
                 </div>

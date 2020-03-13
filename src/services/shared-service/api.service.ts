@@ -172,6 +172,17 @@ export class APIService {
         return this.postApi(data, '/api/azure/upload');
     }
 
+    /**
+     * get profile picture 
+     * @param {string} type
+     * @returns {Observable<any>}
+     * @memberof APIService
+     */
+    get_profile_pic(type: string): Observable<any> {
+        this.headerAuthorization();
+        return this.getApi('/api/profile-picture/' + type);
+    }
+
 
 }
 

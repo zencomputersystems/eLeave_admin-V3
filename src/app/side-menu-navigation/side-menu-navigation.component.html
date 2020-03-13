@@ -1,4 +1,4 @@
-<div (window:resize)="onResize()">  
+<div (window:resize)="onResize()">
   <!------------------------------ Full menu ---------------------------------------->
   <ion-split-pane contentId="fullSideMenuContent" when="xs" *ngIf="displayFullMenu">
     <ion-menu class="fullMenu" contentId="fullSideMenuContent" side="start" type="reveal" menuId="first"
@@ -32,8 +32,13 @@
     </ion-menu>
     <ion-router-outlet id="fullSideMenuContent" class="fullRouterOutlet">
       <ion-toolbar class="toolbar1">
-        <ion-avatar style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top: -5px;"
-          [matMenuTriggerFor]="menu">
+        <ion-avatar [matMenuTriggerFor]="menu"
+          style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top:-5px"
+          *ngIf="url && url.details[0].PROFILE_PICTURE !== null">
+          <img src="{{url.link + url.details[0].PROFILE_PICTURE}}">
+        </ion-avatar>
+        <ion-avatar *ngIf="url && url.details[0].PROFILE_PICTURE === null"
+          style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top:-5px" [matMenuTriggerFor]="menu">
           <img src="assets/icon/chris.jpg">
         </ion-avatar>
         <div style="float: right;margin-top: 7px;margin-right: 5px;cursor: pointer;" [matMenuTriggerFor]="menu"><img
@@ -97,8 +102,13 @@
     </ion-menu>
     <ion-router-outlet id="iconSideMenuContent" class="iconRouterOutlet">
       <ion-toolbar class="toolbar1">
-        <ion-avatar style=" width: 32px; height: 32px; float: right; cursor: pointer;margin-top:-5px"
-          [matMenuTriggerFor]="menu">
+        <ion-avatar [matMenuTriggerFor]="menu"
+          style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top:-5px"
+          *ngIf="url && url.details[0].PROFILE_PICTURE !== null">
+          <img src="{{url.link + url.details[0].PROFILE_PICTURE}}">
+        </ion-avatar>
+        <ion-avatar *ngIf="url && url.details[0].PROFILE_PICTURE === null"
+          style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top:-5px" [matMenuTriggerFor]="menu">
           <img src="assets/icon/chris.jpg">
         </ion-avatar>
         <div style="float: right;margin-top: 7px;margin-right: 5px;cursor: pointer;" [matMenuTriggerFor]="menu"><img

@@ -153,6 +153,20 @@ export class DashboardComponent implements OnInit {
   public birthdayList: any;
 
   /**
+   * get profile picture url
+   * @type {*}
+   * @memberof DashboardComponent
+   */
+  public url: any;
+
+  /**
+   * this year value
+   * @type {*}
+   * @memberof DashboardComponent
+   */
+  public year: any;
+
+  /**
    *Creates an instance of DashboardComponent.
    * @param {MenuController} menu
    * @param {DashboardApiService} dashboardAPI
@@ -160,6 +174,9 @@ export class DashboardComponent implements OnInit {
    * @memberof DashboardComponent
    */
   constructor(private menu: MenuController, private dashboardAPI: DashboardApiService, public dialog: MatDialog) {
+    this.dashboardAPI.apiService.get_profile_pic('all').subscribe(data => {
+      this.url = data;
+    })
   }
 
   /**
@@ -239,6 +256,7 @@ export class DashboardComponent implements OnInit {
 
     let birthday = await this.dashboardAPI.upcoming_item('upcoming-birthday').toPromise();
     this.birthdayList = birthday;
+    this.year = (new Date()).getFullYear();
     for (let i = 0; i < this.birthdayList.length; i++) {
       this.birthdayList[i].DOB = (_moment(this.birthdayList[i].DOB).format('DD MMM'))
     }
