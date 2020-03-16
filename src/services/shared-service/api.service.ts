@@ -183,6 +183,16 @@ export class APIService {
         return this.getApi('/api/profile-picture/' + type);
     }
 
+    /**
+     * post profile picture name
+     * @returns {Observable<any>}
+     * @memberof APIService
+     */
+    post_profile_pic(data): Observable<any> {
+        this.headerAuthorization();
+        return this.postApi(data, '/api/profile-picture');
+    }
+
 
 }
 

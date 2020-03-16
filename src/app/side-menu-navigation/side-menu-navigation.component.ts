@@ -177,10 +177,10 @@ export class SideMenuNavigationComponent implements OnInit {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.getRoute(event.urlAfterRedirects);
+        this.apiService.get_profile_pic('personal').subscribe(data => {
+          this.url = data;
+        })
       });
-    this.apiService.get_profile_pic('personal').subscribe(data => {
-      this.url = data;
-    })
 
     sharedService.changeEmitted$.subscribe(
       data => {

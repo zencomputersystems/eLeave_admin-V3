@@ -209,10 +209,11 @@
                                 <ion-button class="people" *ngIf="list" color="primary" [style.pointerEvents]="'none'">
                                     <p style="color: white;font-size: 11px; flex: 1;">{{list.length}} Peoples</p>
                                 </ion-button>
-                                <ion-item-group style="display: flex; flex:2; justify-content: flex-end; min-width: 170px;">
+                                <ion-item-group
+                                    style="display: flex; flex:2; justify-content: flex-end; min-width: 170px;">
                                     <ion-searchbar style="display: contents; height: 40px;
-                                        margin-top: 4px; "
-                                        placeholder="Filter by Name" (ionChange)="changeDetails($event)">
+                                        margin-top: 4px; " placeholder="Filter by Name"
+                                        (ionChange)="changeDetails($event)">
                                     </ion-searchbar>
                                     <!-- <ion-button fill="clear" class="filter-search-button">
                                         <div style="width: 17px;height: 17px;fill: #a5a4bf;opacity: 0.8;cursor: pointer;" 
@@ -220,8 +221,9 @@
                                         </div>
                                     </ion-button> -->
 
-                                    <div style="position: absolute;width: 27px;height: 17px;fill: #a5a4bf;opacity: 0.8;cursor: pointer; margin: 10px 0px; padding-right: 10px;" 
-                                        [inlineSVG]="'assets/icon/option/filter.svg'" (click)="menuOpen = true;inviteAPI.menu.enable(true, 'filterEmployeeDetails');inviteAPI.menu.enable(false, 'addNewEmployeeDetails');inviteAPI.menu.open('filterEmployeeDetails')">
+                                    <div style="position: absolute;width: 27px;height: 17px;fill: #a5a4bf;opacity: 0.8;cursor: pointer; margin: 10px 0px; padding-right: 10px;"
+                                        [inlineSVG]="'assets/icon/option/filter.svg'"
+                                        (click)="menuOpen = true;inviteAPI.menu.enable(true, 'filterEmployeeDetails');inviteAPI.menu.enable(false, 'addNewEmployeeDetails');inviteAPI.menu.open('filterEmployeeDetails')">
                                     </div>
                                 </ion-item-group>
                                 <!-- <ion-searchbar mode="md" class="searchbar" placeholder="Filter by Name"
@@ -246,7 +248,8 @@
                                             </ion-label>
                                         </ion-col>
                                         <ion-col size="7">
-                                            <ion-label style="font-size: 12px;color: #a5a4bf;font-weight: bold;">EMPLOYEE
+                                            <ion-label style="font-size: 12px;color: #a5a4bf;font-weight: bold;">
+                                                EMPLOYEE
                                                 NAME
                                             </ion-label>
                                         </ion-col>
@@ -260,7 +263,8 @@
                                             </ion-icon>
                                         </ion-col>
                                     </ion-row>
-                                    <ion-row class="detailsRow" *ngFor="let item of list | paginate: config; let i=index;">
+                                    <ion-row class="detailsRow"
+                                        *ngFor="let item of list | paginate: config; let i=index;">
                                         <ion-col size="2">
                                             <ion-label style="color:#808495; font-size: 12px;font-weight: normal">
                                                 {{item.staffNumber}}
@@ -272,12 +276,12 @@
                                                 'textColor': clickedIndex === ((config.currentPage-1)*7)+i , 'oriColor': clickedIndex !== ((config.currentPage-1)*7)+i}"
                                                 style="font-weight: bold; font-size: 12px;cursor: pointer;white-space: pre-line;">
                                                 {{item.employeeName}}</p>
-                                            <p
-                                                style="color: #808495;font-size:11px;white-space: pre-line;">
+                                            <p style="color: #808495;font-size:11px;white-space: pre-line;">
                                                 {{item.designation}}</p>
                                         </ion-col>
                                         <ion-col size="2" class="colOfLeave" style="color:#808495; font-size: 12px;">
-                                            <div [style.color]="(item.status === 'Active') ? '#5ee2a0': '#808495'">{{item.status}}</div>
+                                            <div [style.color]="(item.status === 'Active') ? '#5ee2a0': '#808495'">
+                                                {{item.status}}</div>
                                             <!-- {{item.status}} -->
                                         </ion-col>
                                         <ion-col align-self-center>
@@ -294,7 +298,8 @@
                                     *ngIf="list">
                                     <ion-row class="titleRow" style="display: flex;">
                                         <ion-col style="flex: 4;">
-                                            <ion-label style="font-size: 12px;color: #a5a4bf;font-weight: bold;">EMPLOYEES
+                                            <ion-label style="font-size: 12px;color: #a5a4bf;font-weight: bold;">
+                                                EMPLOYEES
                                             </ion-label>
                                         </ion-col>
                                         <ion-col align-self-center style="top: 3px; flex: 1;">
@@ -303,20 +308,21 @@
                                             </ion-icon>
                                         </ion-col>
                                     </ion-row>
-                                    <ion-row class="detailsRow" style="display: flex;" *ngFor="let item of list | paginate: config; let i=index;">
+                                    <ion-row class="detailsRow" style="display: flex;"
+                                        *ngFor="let item of list | paginate: config; let i=index;">
                                         <ion-col class="colOfLeave" style="flex: 4;">
                                             <p class="textHover" (click)="getUserId(item, i, config.currentPage)"
                                                 [ngClass]="{
                                                 'textColor': clickedIndex === ((config.currentPage-1)*7)+i , 'oriColor': clickedIndex !== ((config.currentPage-1)*7)+i}"
                                                 style="font-weight: bold; font-size: 12px;cursor: pointer;white-space: pre-line;">
                                                 {{item.employeeName}}</p>
-                                            <p
-                                                style="color: #808495;font-size:11px;white-space: pre-line;">
+                                            <p style="color: #808495;font-size:11px;white-space: pre-line;">
                                                 {{item.designation}}</p>
                                             <ion-item-group style="color: #808495; font-size: 11px;  display: flex;">
                                                 <div>ID: {{item.staffNumber}} </div>
                                                 <div style="margin: auto 10px;">|</div>
-                                                <div [style.color]="(item.status === 'Active') ? '#5ee2a0': '#808495'">{{item.status}}</div>
+                                                <div [style.color]="(item.status === 'Active') ? '#5ee2a0': '#808495'">
+                                                    {{item.status}}</div>
                                             </ion-item-group>
                                         </ion-col>
                                         <ion-col align-self-center style="flex: 1;">
@@ -359,29 +365,29 @@
                             <div [class]="'hide-lg-up'">
                                 <div [style.display]="showSpinner ? 'none' : 'block'">
                                     <pagination-template #p2="paginationApi" (pageChange)="config.currentPage = $event">
-                                        <div class="custom-pagination" style="float: left; display: flex;min-width: -webkit-fill-available;">
+                                        <div class="custom-pagination"
+                                            style="float: left; display: flex;min-width: -webkit-fill-available;">
                                             <div class="pagination-previous" style="display: inline-block; flex: 1;">
                                                 <ion-button [disabled]="p2.isFirstPage()" fill="outline"
-                                                    (click)="p2.previous()"
-                                                    style="--border-radius: 2px;background: #f0f0f7;font-size:
-                                                    11px;height: 30px;width: -webkit-fill-available;"
-                                                    color="primary">Prev1
+                                                    (click)="p2.previous()" style="--border-radius: 2px;background: #f0f0f7;font-size:
+                                                    11px;height: 30px;width: -webkit-fill-available;" color="primary">
+                                                    Prev1
                                                 </ion-button>
                                             </div>
                                             <div style="padding-left: 5px;display: inline-block;"></div>
                                             <div class="pagination-next" style="display: inline-block; flex: 1;">
-                                                <ion-button (click)="p2.next()" [disabled]="p2.isLastPage()"
-                                                    style="--border-radius: 2px;font-size: 11px;height: 30px;width:
-                                                    -webkit-fill-available"
-                                                    color="primary">Next
+                                                <ion-button (click)="p2.next()" [disabled]="p2.isLastPage()" style="--border-radius: 2px;font-size: 11px;height: 30px;width:
+                                                    -webkit-fill-available" color="primary">Next
                                                 </ion-button>
                                             </div>
                                         </div>
                                     </pagination-template>
 
-                                    <div [class]="'hide-sm-down'" style="font-size: 9px;padding-top: 4px;text-align: right;">
+                                    <div [class]="'hide-sm-down'"
+                                        style="font-size: 9px;padding-top: 4px;text-align: right;">
                                         <pagination-controls (pageChange)="config.currentPage = $event" maxSize="3"
-                                            directionLinks="true" previousLabel="" nextLabel="" class="small-window-pagingation">
+                                            directionLinks="true" previousLabel="" nextLabel=""
+                                            class="small-window-pagingation">
                                         </pagination-controls>
                                     </div>
                                 </div>
@@ -391,10 +397,27 @@
                     <div class="details" style="flex: 5; width: -webkit-fill-available;min-width: 230px;">
                         <ion-card-header style="padding-right: 0; display: flex; flex-wrap: wrap;">
                             <div style="display: flex; ">
-                                <div class="left" style="display: inline-block;margin-top: 2px;">
-                                    <ion-avatar class="avatar">
+                                <div class="left" style="display: inline-block;margin-top: 2px;"
+                                    *ngIf="personalDetails">
+                                    <!-- <ion-avatar class="avatar">
                                         <img src="assets/icon/chris.jpg">
-                                    </ion-avatar>
+                                    </ion-avatar> -->
+                                    <ng-container *ngFor="let list of url.details; let j= index">
+                                        <ng-container *ngIf="url.details[j].USER_GUID == personalDetails.userId">
+                                            <ion-avatar slot="start" class="avatar"
+                                                *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
+                                            </ion-avatar>
+                                            <ion-avatar slot="start" class="avatar"
+                                                *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                <img src="assets/icon/picture.png">
+                                            </ion-avatar>
+                                        </ng-container>
+                                    </ng-container>
+                                    <img src="assets/icon/add_employee/camera@3x.png" style="width: 26px;height:26px;position: absolute;
+                                    top: 60px;left: 55px;cursor:pointer" (click)="file.click();">
+                                    <input style="display:none" #file name="file" type="file"
+                                        (change)="submitProfilePic($event.target.files)">
                                 </div>
                                 <div style="padding-left: 20px;display: inline-block;
                                 margin-top: 8px;" *ngIf="personalDetails">
@@ -408,7 +431,8 @@
                                     </ion-card-subtitle>
                                 </div>
                             </div>
-                            <div style="margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
+                            <div
+                                style="margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
                                 <p style="color: #43425d;opacity:0.8;font-size: 12px;font-weight: bold;">Employee Status
                                 </p>
                                 <div *ngIf="personalDetails" style="margin-top: 5px;margin-left: 10px;">
@@ -432,7 +456,8 @@
                                 style="cursor: pointer;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 PERSONAL DETAILS</div>
                             <div *ngIf="personalDetails && showPersonal">
-                                <ion-row class="detailsRow" style="display: flex; flex-flow: row wrap; max-width: 100%;">
+                                <ion-row class="detailsRow"
+                                    style="display: flex; flex-flow: row wrap; max-width: 100%;">
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
                                         <ion-label class="label">Full Name</ion-label>
                                         <p class="pText"
@@ -466,7 +491,7 @@
                                             <input matInput [(ngModel)]="personalDetails.personalDetail.phoneNumber">
                                         </mat-form-field>
                                     </ion-col>
-                                <!-- </ion-row>
+                                    <!-- </ion-row>
                                 <ion-row class="detailsRow"> -->
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
                                         <ion-label class="label">Personal Email Address</ion-label>
@@ -505,7 +530,7 @@
                                         </mat-form-field>
 
                                     </ion-col>
-                                <!-- </ion-row>
+                                    <!-- </ion-row>
                                 <ion-row class="detailsRow"> -->
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
                                         <ion-label class="label">Birthdate</ion-label>
@@ -541,14 +566,14 @@
                                             {{personalDetails.personalDetail.gender}}</p>
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
-                                            class="matFormField"> 
+                                            class="matFormField">
                                             <mat-select [(value)]="personalDetails.personalDetail.gender">
                                                 <mat-option value="Female">Female</mat-option>
                                                 <mat-option value="Male">Male</mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </ion-col>
-                                <!-- </ion-row>
+                                    <!-- </ion-row>
                                 <ion-row class="detailsRow"> -->
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
                                         <ion-label class="label">Religion</ion-label>
@@ -588,7 +613,7 @@
                                         </mat-form-field>
                                     </ion-col>
 
-                                <!-- </ion-row>
+                                    <!-- </ion-row>
                                 <ion-row class="detailsRow"> -->
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
                                         <ion-label class="label">Nationality</ion-label>
@@ -603,7 +628,7 @@
                                     </ion-col>
                                     <!-- <ion-col></ion-col>
                                     <ion-col></ion-col> -->
-                                <!-- </ion-row>
+                                    <!-- </ion-row>
                                 <ion-row class="detailsRow"
                                     *ngIf="mode === 'OFF' && personalDetails.personalDetail != undefined"> -->
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;"
@@ -806,7 +831,7 @@
                                             <mat-datepicker #dateJoin></mat-datepicker>
                                         </mat-form-field>
                                     </ion-col>
-                                <!-- </ion-row>
+                                    <!-- </ion-row>
                                 <ion-row class="detailsRow"> -->
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
                                         <ion-label class="label">Date of Confirmation</ion-label>
@@ -885,7 +910,7 @@
                                             <input matInput [(ngModel)]="employmentDetails.employmentDetail.epfNumber">
                                         </mat-form-field>
                                     </ion-col>
-                                <!-- </ion-row>
+                                    <!-- </ion-row>
                                 <ion-row class="detailsRow"> -->
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
                                         <ion-label class="label">Income Tax No</ion-label>
@@ -942,7 +967,7 @@
                                         Assign Leave Entitlement</p>
                                     <p style="padding-left: 15px;font-size: 11px;color: #808495;margin-bottom: 10px;">
                                         Select & add respective leave entitlement for this employee here</p>
-                                    <div *ngFor="let entitlement of addEntitlement; let i = index" 
+                                    <div *ngFor="let entitlement of addEntitlement; let i = index"
                                         style="display: flex; flex-flow: row wrap; padding-left: 15px;">
                                         <mat-form-field appearance="outline" class="selectForm"
                                             style="font-size: 12px;flex: 2 1 40%; min-width: 150px;">
@@ -957,8 +982,7 @@
                                             </mat-select>
                                         </mat-form-field>
                                         &nbsp;&nbsp;
-                                        <mat-form-field appearance="outline"
-                                            style="font-size: 12px;font-weight: bold; font-size: 12px; font-weight: bold; flex: 1 1 20%;
+                                        <mat-form-field appearance="outline" style="font-size: 12px;font-weight: bold; font-size: 12px; font-weight: bold; flex: 1 1 20%;
                                             min-width: 150px;">
                                             <mat-label>Days Available</mat-label>
                                             <input matInput [(ngModel)]="addEntitlement[i].balance" disabled>

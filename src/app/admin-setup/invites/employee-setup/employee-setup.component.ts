@@ -338,6 +338,13 @@ export class EmployeeSetupComponent implements OnInit {
     public userLeaveEntitled: string;
 
     /**
+     * get url of profile picture
+     * @type {*}
+     * @memberof EmployeeSetupComponent
+     */
+    public url: any;
+
+    /**
      * selected company guid
      * @private
      * @type {*}
@@ -361,6 +368,9 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     constructor(public inviteAPI: AdminInvitesApiService, public roleAPI: RoleApiService, private _sharedService: SharedService) {
+        this.inviteAPI.apiService.get_profile_pic('all').subscribe(data => {
+            this.url = data;
+        })
     }
 
     /**
@@ -387,6 +397,25 @@ export class EmployeeSetupComponent implements OnInit {
         for (let i = 0; i < this.departmentList.length; i++) {
             this.departmentList[i]['checked'] = false;
         }
+    }
+
+    /**
+     * change profile picture 
+     * @param {*} file
+     * @memberof EmployeeSetupComponent
+     */
+    submitProfilePic(file: any) {
+        const fileToUpload = file.item(0);
+        let formData = new FormData();
+        formData.append('file', fileToUpload, fileToUpload.name);
+        this.inviteAPI.apiService.post_file(formData).subscribe(res => {
+            const data = { "userGuid": this.personalDetails.userId, "profilePictureFile": res.filename };
+            this.inviteAPI.apiService.post_profile_pic(data).subscribe(response => {
+                this.inviteAPI.apiService.get_profile_pic('all').subscribe(data => {
+                    this.url = data;
+                })
+            })
+        });
     }
 
     /**
