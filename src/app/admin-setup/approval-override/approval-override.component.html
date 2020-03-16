@@ -13,11 +13,12 @@
             <div
                 style="font-size: 11px;background: #f5f6fa;padding: 10px;padding-left: 15px;margin: 10px;color: #a3a6b4;font-weight: bold;">
                 <ion-row style=" display: flex; flex-wrap: wrap;">
-                    <ion-col style=" flex: 1; white-space: nowrap;">DATE: <p 
+                    <ion-col style=" flex: 1; white-space: nowrap;">DATE: <p
                             style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">
                             {{item.applicationDate | date: 'dd MMM yyyy' | uppercase}}</p>
                     </ion-col>
-                    <ion-col style=" flex: 1; white-space: nowrap;">DONE BY: <p style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">
+                    <ion-col style=" flex: 1; white-space: nowrap;">DONE BY: <p
+                            style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">
                             {{item.overrideBy | uppercase}}</p>
                     </ion-col>
                 </ion-row>
@@ -57,6 +58,16 @@
                             {{item.status | titlecase}}</p>
                     </ion-col>
                 </ion-row>
+                <ion-row style="display: flex;flex-wrap: wrap;">
+                    <ion-col class="popup-content-employee">
+                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 12px;">
+                            Remarks</ion-label>
+                        <p class="pStyle"></p>
+                        <p
+                            style="margin-bottom: 5px;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: pre-line;margin: 0">
+                            {{item.remarks}}</p>
+                    </ion-col>
+                </ion-row>
             </div>
         </div>
     </ion-content>
@@ -71,7 +82,7 @@
                 <div class="left">
                     <img src="assets/icon/leave_setup/icon_override@3x.png" style="width:24px;height:32px">
                 </div>
-                <div class="right"> 
+                <div class="right">
                     <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Approval
                         Override
                     </ion-card-subtitle>
@@ -91,7 +102,7 @@
     <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;">
         <div class="cardContent">
             <ion-card-content style="max-height: 100%;height: 100%;overflow-y: auto;">
-                <div class="row" >
+                <div class="row">
                     <div class="filter">
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 15px;color: #a5a4bf;">
@@ -171,8 +182,7 @@
                                             (mouseout)="mouseEvent(false, i, item.isChecked)">
                                             <!-- <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                                                 [style.display]="displayCheckbox[i] ? 'none' : 'block'"> -->
-                                            <div class="checkboxOnAvatar"
-                                                style="display: block;">
+                                            <div class="checkboxOnAvatar" style="display: block;">
                                                 <ion-checkbox mode="ios" class="ionCheckbox"
                                                     style="position: absolute;margin-top: 7px;margin-left: -4px;"
                                                     [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
@@ -180,8 +190,7 @@
                                             </div>
                                         </ion-avatar>
                                     </ion-col>
-                                    <ion-col size="8"
-                                        class="applicant-leave-details-content">
+                                    <ion-col size="8" class="applicant-leave-details-content">
                                         <div>
                                             <ion-label
                                                 style="opacity: 0.8;color:#43425d; font-weight: bold;;font-size: 12px;">
@@ -190,33 +199,32 @@
                                         </div>
                                         <div style="display: flex;padding-top: 5px; flex-wrap: wrap;">
                                             <!-- <div style="display: inline-block;padding-right: 20px;"> -->
-                                                <p class="leave-application-details">
-                                                    <span style="font-weight: bold;">ID:</span> {{item.staffNumber}}</p>
-                                                <p class="leave-application-details">
-                                                    <span style="font-weight: bold;">Leave Type:</span>
-                                                    {{item.leaveTypeAbbr}}</p>
+                                            <p class="leave-application-details">
+                                                <span style="font-weight: bold;">ID:</span> {{item.staffNumber}}</p>
+                                            <p class="leave-application-details">
+                                                <span style="font-weight: bold;">Leave Type:</span>
+                                                {{item.leaveTypeAbbr}}</p>
                                             <!-- </div>
                                             <div style="display: inline-block;padding-right: 20px;"> -->
-                                                <p class="leave-application-details">
-                                                    <span style="font-weight: bold;">Status:</span> {{item.status}}</p>
-                                                <p class="leave-application-details">
-                                                    <span style="font-weight: bold;">Date Applied:</span>
-                                                    {{item.dateApplied | date: 'yyyy-MM-dd'}}
-                                                </p>
+                                            <p class="leave-application-details">
+                                                <span style="font-weight: bold;">Status:</span> {{item.status}}</p>
+                                            <p class="leave-application-details">
+                                                <span style="font-weight: bold;">Date Applied:</span>
+                                                {{item.dateApplied | date: 'yyyy-MM-dd'}}
+                                            </p>
                                             <!-- </div>
                                             <div style="display: inline-block;"> -->
-                                                <p class="leave-application-details">
-                                                    <span style="font-weight: bold;">Start Date:</span>
-                                                    {{item.startDate}}
-                                                </p>
-                                                <p class="leave-application-details">
-                                                    <span style="font-weight: bold;">End Date:</span> {{item.endDate}}
-                                                </p>
+                                            <p class="leave-application-details">
+                                                <span style="font-weight: bold;">Start Date:</span>
+                                                {{item.startDate}}
+                                            </p>
+                                            <p class="leave-application-details">
+                                                <span style="font-weight: bold;">End Date:</span> {{item.endDate}}
+                                            </p>
                                             <!-- </div> -->
                                         </div>
                                     </ion-col>
-                                    <ion-col size="1.5" align-self-center [class]="'hide-sm-down'"
-                                        style=" color: #7a8589; font-size: 13px;text-align: center;color: #808495; font-size: 11px;white-space:
+                                    <ion-col size="1.5" align-self-center [class]="'hide-sm-down'" style=" color: #7a8589; font-size: 13px;text-align: center;color: #808495; font-size: 11px;white-space:
                                         nowrap;overflow: hidden;text-overflow: ellipsis;">
                                         {{item.noOfDays}}
                                     </ion-col>
