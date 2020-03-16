@@ -2,8 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { LeaveApiService } from "../leave-api.service";
 import { APIService } from "src/services/shared-service/api.service";
-import { SnackbarNotificationComponent } from "../snackbar-notification/snackbar-notification.component";
-import { MenuController } from "@ionic/angular";
+import { ReportApiService } from "../../report/report-api.service";
 /**
  * leave adjusment page
  * @export
@@ -124,6 +123,13 @@ export class LeaveAdjustmentComponent implements OnInit {
     public url: any;
 
     /**
+     * leave adjustment history
+     * @type {*}
+     * @memberof LeaveAdjustmentComponent
+     */
+    public history: any;
+
+    /**
      * selected company guid
      * @private
      * @type {string}
@@ -159,10 +165,10 @@ export class LeaveAdjustmentComponent implements OnInit {
      *Creates an instance of LeaveAdjustmentComponent.
      * @param {LeaveApiService} leaveSetupAPI
      * @param {APIService} apiService
-     * @param {MenuController} menu access menu controller
+     * @param {ReportApiService} reportApi
      * @memberof LeaveAdjustmentComponent
      */
-    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService, public menu: MenuController) {
+    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService, private reportApi: ReportApiService) {
         this.adjustmentForm = new FormGroup({
             company: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),
@@ -183,6 +189,7 @@ export class LeaveAdjustmentComponent implements OnInit {
     ngOnInit() {
         this.leaveSetupAPI.get_company_list().subscribe(list => this.company = list);
         this.leaveSetupAPI.get_admin_leavetype().subscribe(list => this.leavetypeList = list);
+        this.reportApi.get_bundle_report('leave-adjustment').subscribe(data => this.history = data);
     }
 
     /**

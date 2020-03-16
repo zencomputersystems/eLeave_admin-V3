@@ -9,15 +9,16 @@
     </ion-header>
 
     <ion-content>
-        <div style="display: block;width: 100%;">
+        <div style="display: block;width: 100%;" *ngFor="let item of history">
             <div
                 style="font-size: 11px;background: #f5f6fa;padding: 10px;padding-left: 15px;margin: 10px;color: #a3a6b4;font-weight: bold;">
                 <ion-row>
                     <ion-col size="7">DATE: <p
-                            style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">20 SEPT 2019</p>
+                            style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">
+                            {{item.adjustDate | date: 'dd MMM yyyy' | uppercase}}</p>
                     </ion-col>
                     <ion-col>DONE BY: <p style="font-size: 11px;color: #43425d;font-weight: bold;display: inline;">
-                            JESSIE</p>
+                            {{item.adjustBy | uppercase}}</p>
                     </ion-col>
                 </ion-row>
             </div>
@@ -28,14 +29,14 @@
                             Company</ion-label>
                         <p
                             style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                            Zen Computer Systems Sdn Bhd</p>
+                            {{item.companyName}}</p>
                     </ion-col>
                     <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                         <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
                             Department</ion-label>
                         <p
                             style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                            Research & Development</p>
+                            {{item.departmentName}}</p>
                     </ion-col>
                 </ion-row>
                 <ion-row>
@@ -44,21 +45,21 @@
                             Leave Type</ion-label>
                         <p
                             style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                            ML-Medical Leave</p>
+                            {{item.leavetypeAbbr}}-{{item.leaveTypeName}}</p>
                     </ion-col>
                     <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                         <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
                             No. of Days</ion-label>
                         <p
                             style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                            +2 days</p>
+                            {{item.adjustment}} days</p>
                     </ion-col>
                     <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                         <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
                             Affected Employee</ion-label>
                         <p
                             style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                            8 persons</p>
+                            1 persons</p>
                     </ion-col>
                 </ion-row>
                 <div><img style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
@@ -69,16 +70,7 @@
                 </div>
                 <div *ngIf="showList" style="font-size: 11px;color: #808495;margin-left: 15px;">
                     <ion-row>
-                        <ion-col style="padding-top: 0;">Zulkifli bin Arrifin</ion-col>
-                        <ion-col style="padding-top: 0;">Rajaputra Balasingh</ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col style="padding-top: 0;">Clement Chee Siong Yee</ion-col>
-                        <ion-col style="padding-top: 0;">Mohd Akmar bin Ab.Karim</ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col style="padding-top: 0;">Pratap K.Singh</ion-col>
-                        <ion-col style="padding-top: 0;">Asmidar binti Mohd Fauzi</ion-col>
+                        <ion-col style="padding-top: 0;">{{item.employeeName}}</ion-col>
                     </ion-row>
                 </div>
             </div>
@@ -88,49 +80,44 @@
                         Company</ion-label>
                     <p
                         style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                        Zen Computer Systems Sdn Bhd</p>
+                        {{item.companyName}}</p>
                 </ion-row>
                 <ion-row style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; display: grid;">
                     <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
                         Department</ion-label>
                     <p
                         style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                        Research & Development</p>
+                        {{item.departmentName}}</p>
                 </ion-row>
                 <ion-row style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; display: grid;">
                     <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
                         Leave Type</ion-label>
                     <p
                         style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                        ML-Medical Leave</p>
+                        {{item.leavetypeAbbr}}-{{item.leaveTypeName}}</p>
                 </ion-row>
                 <ion-row style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; display: grid;">
                     <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
                         No. of Days</ion-label>
                     <p
                         style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                        +2 days</p>
+                        {{item.adjustment}} days</p>
                 </ion-row>
                 <ion-row style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; display: grid;">
                     <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;;font-size: 11px;">
                         Affected Employee</ion-label>
                     <p
                         style="color: #808495;font-size:13px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                        8 persons</p>
+                        1 persons</p>
                 </ion-row>
                 <div><img style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
                         src="assets/icon/leave_setup/icon_request@3x.png" (click)="showList = !showList ">
-                    <p style="color: #43425d;opacity: 0.8;font-size: 11px;font-weight: bold;width: 23%;
+                    <p style="color: #43425d;opacity: 0.8;font-size: 11px;font-weight: bold;
                     display: inline;"> List of Employees</p>
                     <div style="border-top: 1px solid rgba(67, 66, 93, 0.2);display: inline-block;width: 72%;"></div>
                 </div>
                 <div *ngIf="showList" style="font-size: 11px;color: #808495;margin-left: 15px;">
-                    <ion-row style="padding-top: 0;">Zulkifli bin Arrifin</ion-row>
-                    <ion-row style="padding-top: 0;">Rajaputra Balasingh</ion-row>
-                    <ion-row style="padding-top: 0;">Clement Chee Siong Yee</ion-row>
-                    <ion-row style="padding-top: 0;">Mohd Akmar bin Ab.Karim</ion-row>
-                    <ion-row style="padding-top: 0;">Pratap K.Singh</ion-row>
-                    <ion-row style="padding-top: 0;">Asmidar binti Mohd Fauzi</ion-row>
+                    <ion-row style="padding-top: 0;">{{item.employeeName}}</ion-row>
                 </div>
             </div>
         </div>
@@ -158,7 +145,7 @@
                 <div style="right: 25px;top: 25px;">
                     <ion-button
                         style="--border-radius: 2px;font-size: 11px;height: 30px;width:193px;cursor: pointer;text-transform: none;"
-                        color="primary" (click)="menu.open('leaveAdjustDetails')">
+                        color="primary" (click)="reportApi.menu.open('leaveAdjustDetails')">
                         View Leave Adjustment History
                     </ion-button>
                 </div>
