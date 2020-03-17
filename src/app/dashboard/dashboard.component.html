@@ -479,7 +479,7 @@
                                         style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                         <ion-item lines="none">
                                             <ng-container *ngFor="let list of url.details; let j= index">
-                                                <ng-container *ngIf="url.details[j].FULLNAME == item.FULLNAME">
+                                                <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID">
                                                     <ion-avatar slot="start" class="avatar"
                                                         *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
                                                         <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
@@ -536,7 +536,7 @@
                                         style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                         <ion-item lines="none">
                                             <ng-container *ngFor="let list of url.details; let j= index">
-                                                <ng-container *ngIf="url.details[j].FULLNAME == item.FULLNAME">
+                                                <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID">
                                                     <ion-avatar slot="start" class="avatar"
                                                         *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
                                                         <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
@@ -595,7 +595,7 @@
                                         style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                         <ion-item lines="none">
                                             <ng-container *ngFor="let list of url.details; let j= index">
-                                                <ng-container *ngIf="url.details[j].FULLNAME == item.FULLNAME">
+                                                <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID">
                                                     <ion-avatar slot="start" class="avatar"
                                                         *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
                                                         <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
