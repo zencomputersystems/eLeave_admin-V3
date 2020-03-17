@@ -581,6 +581,15 @@
                         Assigned Employee No.: <p
                           style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
                           {{item.totalEmployee}}</p>
+                          
+                      </div>
+                      <div style="display: flex; flex-flow: row wrap; ">
+                        <div style="flex: 1 1 50%; display: flex;" *ngFor="let userlist of item.userAttach">
+                          <p style="align-self: baseline;width: 10px;min-width: 10px;">-</p>
+                          <p
+                            style="font-size: 10px;color: #4d4f5c;padding: 0;white-space: pre-line; align-self: baseline;">
+                            {{userlist.employeeName}}</p>
+                        </div>
                       </div>
                     </ion-col>
                     <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 0;">
