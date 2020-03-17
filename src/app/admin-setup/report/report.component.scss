@@ -46,7 +46,9 @@
     }
   }
   .content {
-    overflow: auto; 
+    overflow-y: auto;
+    overflow-x: hidden;
+    // overflow: auto; 
     height: calc(100% - 133px);
   }
   .titleRow {
