@@ -225,14 +225,11 @@ export class LeaveAdjustmentComponent implements OnInit {
         for (let i = 0; i < this._userItems.length; i++) {
             this._userItems[i].isChecked = false;
             let val = await this.apiService.get_user_profile_details(this._userItems[i].userId).toPromise();
-            let abbrList = [];
-            for (let j = 0; j < val.entitlementDetail.length; j++) {
-                abbrList.push(val.entitlementDetail[j].abbr);
-            }
-            this.totalAbbr.push(abbrList.join());
+            this.totalAbbr.push(val.abbr);
         }
         this.showSpinner = false;
         this.filterUserList(this._userItems, name);
+        console.log(this.totalAbbr)
     }
 
     /**
