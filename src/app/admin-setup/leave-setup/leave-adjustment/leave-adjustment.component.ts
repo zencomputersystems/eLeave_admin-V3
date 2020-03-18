@@ -130,6 +130,12 @@ export class LeaveAdjustmentComponent implements OnInit {
     public history: any;
 
     /**
+     * joined all leavetype abbr
+     * @memberof LeaveAdjustmentComponent
+     */
+    public totalAbbr = [];
+
+    /**
      * selected company guid
      * @private
      * @type {string}
@@ -209,15 +215,24 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @param {*} name
      * @memberof LeaveAdjustmentComponent
      */
-    departmentSelected(name) {
+    async departmentSelected(name) {
         this.filteredUserItems = [];
         this.showSelectToView = false;
         this.showSpinner = true;
-        this.apiService.get_user_profile_list().subscribe(list => {
-            this._userItems = list;
-            this.showSpinner = false;
-            this.filterUserList(this._userItems, name);
-        })
+        let list = await this.apiService.get_user_profile_list().toPromise();
+        this._userItems = list;
+        this.showCheckbox.push(false);
+        for (let i = 0; i < this._userItems.length; i++) {
+            this._userItems[i].isChecked = false;
+            let val = await this.apiService.get_user_profile_details(this._userItems[i].userId).toPromise();
+            let abbrList = [];
+            for (let j = 0; j < val.entitlementDetail.length; j++) {
+                abbrList.push(val.entitlementDetail[j].abbr);
+            }
+            this.totalAbbr.push(abbrList.join());
+        }
+        this.showSpinner = false;
+        this.filterUserList(this._userItems, name);
     }
 
     /**
@@ -272,17 +287,19 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @memberof LeaveAdjustmentComponent
      */
     async filterByDepartment(userList: any, name: string, i: number) {
-        if (userList[i].department === name && userList[i].companyId === this._companyGUID) {
-            this.filteredUserItems.push(userList[i]);
-            this.showCheckbox.push(false);
-            this.filteredUserItems[this.filteredUserItems.length - 1].isChecked = false;
-            let list = await this.apiService.get_user_profile_details(userList[i].userId).toPromise();
-            let array = list.entitlementDetail;
-            let abbrList = [];
-            for (let i = 0; i < array.length; i++) {
-                abbrList.push(array[i].abbr);
+        if (userList[i].companyId === this._companyGUID) {
+            if (userList[i].department === name && userList[i].department !== 'All') {
+                for (let j = 0; j < userList.length; j++) {
+                    userList[j]["entitlement"] = this.totalAbbr[j];
+                }
+                this.filteredUserItems.push(userList[i]);
             }
-            this.filteredUserItems[this.filteredUserItems.length - 1]["entitlement"] = abbrList.join();
+            if (name === 'All') {
+                for (let j = 0; j < userList.length; j++) {
+                    userList[j]["entitlement"] = this.totalAbbr[j];
+                }
+                this.filteredUserItems.push(userList[i]);
+            }
         }
     }
 
