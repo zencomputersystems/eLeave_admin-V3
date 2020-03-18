@@ -219,12 +219,7 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
      */
     filterUser(list: any, name: string) {
         for (let i = 0; i < list.length; i++) {
-            if (list[i].department === name && list[i].companyId === this._company_GUID && name !== 'All') {
-                this.filteredUser.push(list[i]);
-                this.hideAvatar.push(false);
-                this.filteredUser[this.filteredUser.length - 1].isChecked = false;
-            }
-            if (list[i].companyId === this._company_GUID && name === 'All') {
+            if (list[i].department === name && list[i].companyId === this._company_GUID && name !== 'All' || name === 'All') {
                 this.filteredUser.push(list[i]);
                 this.hideAvatar.push(false);
                 this.filteredUser[this.filteredUser.length - 1].isChecked = false;

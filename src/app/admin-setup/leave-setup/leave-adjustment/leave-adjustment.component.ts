@@ -288,13 +288,7 @@ export class LeaveAdjustmentComponent implements OnInit {
      */
     async filterByDepartment(userList: any, name: string, i: number) {
         if (userList[i].companyId === this._companyGUID) {
-            if (userList[i].department === name && userList[i].department !== 'All') {
-                for (let j = 0; j < userList.length; j++) {
-                    userList[j]["entitlement"] = this.totalAbbr[j];
-                }
-                this.filteredUserItems.push(userList[i]);
-            }
-            if (name === 'All') {
+            if (userList[i].department === name && userList[i].department !== 'All' || name === 'All') {
                 for (let j = 0; j < userList.length; j++) {
                     userList[j]["entitlement"] = this.totalAbbr[j];
                 }
