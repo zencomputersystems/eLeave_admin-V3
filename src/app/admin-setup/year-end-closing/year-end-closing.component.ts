@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material';
 import { DialogSubmitConfirmationComponent } from './dialog-submit-confirmation/dialog-submit-confirmation.component';
 import { Router } from '@angular/router';
 import { YearEndClosingApiService } from './year-end-closing-api.service';
+import { LeaveApiService } from '../leave-setup/leave-api.service';
 
 /**
  * year end closing page
@@ -53,13 +54,34 @@ export class YearEndClosingComponent implements OnInit {
   public showSpinner: boolean = true;
 
   /**
-   *Creates an instance of YearEndClosingComponent.
-   * @param {Router} router
-   * @param {MatDialog} dialog to open material dialog
-   * @param {YearEndClosingApiService} yearEndApi
+   * show list of company
+   * @type {*}
    * @memberof YearEndClosingComponent
    */
-  constructor(private router: Router, public dialog: MatDialog, private yearEndApi: YearEndClosingApiService) { }
+  public companyName: any;
+
+  /**
+   * get the pending total number
+   * @type {number}
+   * @memberof YearEndClosingComponent
+   */
+  public pendingTotal: number;
+
+  /**
+   * index selected
+   * @type {number}
+   * @memberof YearEndClosingComponent
+   */
+  public clickedIndex: number;
+
+  /**
+   *Creates an instance of YearEndClosingComponent.
+   * @param {MatDialog} dialog to open material dialog
+   * @param {YearEndClosingApiService} yearEndApi
+   * @param {LeaveApiService} leaveApi
+   * @memberof YearEndClosingComponent
+   */
+  constructor(public dialog: MatDialog, private yearEndApi: YearEndClosingApiService, private leaveApi: LeaveApiService) { }
 
   /**
    * initial method to get pending list
@@ -67,10 +89,24 @@ export class YearEndClosingComponent implements OnInit {
    */
   async ngOnInit() {
     this.pendingList = await this.yearEndApi.get_approval_override_list().toPromise();
-    this.showSpinner = false;
     this.currentDate = this.currentDate.getFullYear();
     this.yearList.push(this.currentDate);
     this.yearList.push(this.currentDate - 1);
+    this.companyName = await this.leaveApi.get_company_list().toPromise();
+    this.clickedIndex = 0;
+    this.pendingTotal = await this.yearEndApi.get_approval_override_by_company(this.companyName[this.clickedIndex].TENANT_COMPANY_GUID).toPromise();
+    this.showSpinner = false;
+  }
+
+  /**
+   * clicked company name to show details
+   * @param {*} item
+   * @param {number} index
+   * @memberof YearEndClosingComponent
+   */
+  async clickedCompany(item: any, index: number) {
+    this.clickedIndex = index;
+    this.pendingTotal = await this.yearEndApi.get_approval_override_by_company(item.TENANT_COMPANY_GUID).toPromise();
   }
 
   /**

@@ -229,7 +229,6 @@ export class LeaveAdjustmentComponent implements OnInit {
         }
         this.showSpinner = false;
         this.filterUserList(this._userItems, name);
-        console.log(this.totalAbbr)
     }
 
     /**

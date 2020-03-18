@@ -54,6 +54,17 @@ export class YearEndClosingApiService {
     };
 
     /**
+     * get pending leave from selected company id
+     * @param {string} companyId
+     * @returns {Observable<any>}
+     * @memberof YearEndClosingApiService
+     */
+    get_approval_override_by_company(companyId: string): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.getApi('/api/admin/approval-override/company/' + companyId)
+    };
+
+    /**
      * snackbar message after submit approval
      * @param {string} text
      * @param {boolean} value

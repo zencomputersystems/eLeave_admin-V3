@@ -42,8 +42,33 @@
     height: 100%;
   }
   .action {
-    flex: 100%;
-    max-width: 100%;
+    flex: 70%;
+    max-width: 70%;
     max-height: 100%;
+  }
+  .list {
+    flex: 30%;
+    max-width: 30%;
+    max-height: 100%;
+    margin-right: 10px;
+  }
+  .divider {
+    --min-height: none;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    width: 100%;
+  }
+  .textColor {
+    color: #3b86ff;
+    opacity: 0.8;
+  }
+  .oriColor {
+    color: #4d4f5c;
+    opacity: 0.8;
+    opacity: 0.8;
+  }
+   .textHover:hover {
+    color: #3b86ff;
+    opacity: 0.8;
   }
 }
