@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
 import { MenuController } from '@ionic/angular';
 import { MatDialog } from '@angular/material';
 import { LeaveApiService } from './leave-api.service';
+import { Subject } from 'rxjs';
 
 /**
  * share service for emit data

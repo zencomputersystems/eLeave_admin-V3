@@ -166,11 +166,10 @@ export class LoginComponent implements OnInit {
       .subscribe(data => {
         this.router.navigate(['main'])
         this.spinner.hide();
-      }, error => {
+      }, (error) => {
         this.spinner.hide();
-        alert(error.message);
-      }
-      );
+        alert(error.status + ' ' + error.error.error + ': ' + error.error.message);
+      })
   }
 
   /**

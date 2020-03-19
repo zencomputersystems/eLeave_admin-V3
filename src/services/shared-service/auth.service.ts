@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { LocalStorageService, SessionStorageService, LocalStorage, SessionStorage } from 'angular-web-storage';
 import { HttpClient } from '@angular/common/http';
+// import 'rxjs/add/operator/catch';
+import { Observable, throwError } from 'rxjs';
 
 /**
  * authenticate service
@@ -77,7 +79,8 @@ export class AuthService {
                     }, user.expires_in * 1000);
                 }
                 return user;
-            }));
+            }, catchError(error => { return throwError(error) }))
+            );
     }
 
     /**
