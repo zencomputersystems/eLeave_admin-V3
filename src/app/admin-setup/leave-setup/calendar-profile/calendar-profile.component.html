@@ -203,6 +203,7 @@
                                             Country: {{list.filter_criteria.country}} | Region: {{list.filter_criteria.region}}
                                         </p>
 
+                                        <!-- <p style="font-size: 10px;color: #4d4f5c;padding: 0;white-space: pre-line;text-overflow: ellipsis;">Country: MY | Region: 04</p> -->
                                         <!-- (input)="resize(i)" id="{{ i }}" -->
                                         <!-- <span *ngIf="showAddIcon" #hiddenText
                                         style="visibility: hidden; white-space: pre;">{{i.value}}</span> -->
@@ -245,6 +246,10 @@
                                                     selectProfile(list, i);">
                                             </mat-form-field>
                                             <div
+                                                style="font-size: 10px;color: #4d4f5c;padding: 0;white-space: pre-line;text-overflow: ellipsis;" >
+                                                Country: {{list.filter_criteria.country}} | Region: {{list.filter_criteria.region}}
+                                            </div>
+                                            <div
                                                 style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                                 Assigned Employee No.: <p
                                                     style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
@@ -270,6 +275,30 @@
                                 <ion-col style="font-size: 12px;white-space: nowrap;
                                     text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                                     ASSIGNED EMPLOYEE</ion-col>
+                                <ion-col style="max-width: 28px;align-self: center;">
+                                    <ion-checkbox mode="ios"  style="width: 16px; height: 16px;"
+                                        *ngIf="slideInOut && modeValue == 'ON'" [(ngModel)]="masterCheck"
+                                        [indeterminate]="isIndeterminate"
+                                        (click)="checkAllAssignedEmployees($event)"></ion-checkbox>
+                                </ion-col>
+                                <ion-col style="max-width: 10px;padding-left: 0px;padding-right: 15px; padding-bottom: 0px; padding-top: 3px;"
+                                *ngIf="isIndeterminate || this.masterCheck;" >
+                                    <ion-icon name="more" class="addIcon" style="width: 18px; height: 18px;" *ngIf="slideInOut && modeValue == 'ON'" 
+                                    mat-button [matMenuTriggerFor]="menu"></ion-icon>
+                                    <mat-menu class="reassign-profile" #menu="matMenu" >
+                                        <ion-label
+                                            style=" background: #f5f6fa;white-space: pre-line;text-overflow:
+                                            ellipsis;color: #4d4f5c;font-size:11px; padding: 15px;display: flex;">
+                                            Move selected to: </ion-label>
+                                        <ion-list>
+                                            <div mat-menu-item
+                                                style="white-space: pre-line;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;"
+                                                *ngFor="let list of profileList; let i=index"
+                                                (click)="reassignToOtherProfile(list.calendar_guid)">{{list.code}}
+                                            </div>
+                                        </ion-list>
+                                    </mat-menu>
+                                </ion-col>
                             </ion-row>
                         </div>
                         <div style="overflow-y: auto;height: calc(100% - 62px);"
@@ -289,8 +318,11 @@
                             [@slideInOut]="slideInOut ? 'open': 'close'">
                             <mat-card *ngFor="let draggable of assignedNames" [dndDraggable]="draggable.content"
                                 [dndEffectAllowed]="draggable.effectAllowed" [dndDisableIf]="draggable.disable"
-                                style="margin: 5px;border-radius: 3px;box-shadow: 0 3px 6px 0 rgba(77, 77, 77, 0.16);">
-
+                                style="margin: 5px;border-radius: 3px;box-shadow: 0 3px 6px 0 rgba(77, 77, 77, 0.16); display: flex;
+                                align-items: center; flex-wrap: nowrap;" >
+                                <ion-checkbox mode="ios" style="height: 16px; width: 16px; margin-right: 10px;"
+                                    [(ngModel)]="draggable.isChecked" (ionChange)="checkAssignedEmployeeEvent()">
+                                </ion-checkbox>
                                 <div style="float: left;padding-right: 15px;cursor: move;">
                                     <img src="assets/icon/leave_setup/icon_reorder@3x.png"
                                         style="width: 16px;height: 16px;" *ngIf="draggable.handle" dndHandle></div>

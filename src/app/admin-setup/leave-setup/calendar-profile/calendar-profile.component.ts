@@ -236,6 +236,9 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     private _items: any;
+    public isIndeterminate: boolean;
+    public masterCheck: boolean;
+
 
     /**
      *Creates an instance of CalendarProfileComponent.
@@ -346,6 +349,8 @@ export class CalendarProfileComponent implements OnInit {
         for (let i = 0; i < this.assignedNames.length; i++) {
             if (event.data === this.assignedNames[i].fullname) {
                 this.getDragUserId(i);
+                console.log('before drop, user_guid:' + this._employeeList)
+                console.log('before drop,  list.calendar_guid:' + list.calendar_guid)
                 let res = await this.calendarProfileAPI.patch_assign_calendar_profile({
                     "user_guid": this._employeeList,
                     "calendar_guid": list.calendar_guid
@@ -357,6 +362,7 @@ export class CalendarProfileComponent implements OnInit {
                 this._employeeList = [];
                 this.getAssignedList();
                 this.profileList = await this.calendarProfileAPI.get_calendar_profile_list().toPromise();
+                console.log('this.profileList2: ' + JSON.stringify(this.profileList, null, " "));
             }
         }
     }
@@ -368,7 +374,8 @@ export class CalendarProfileComponent implements OnInit {
     getProfileList() {
         this.calendarProfileAPI.get_calendar_profile_list().subscribe(
             (data: any[]) => {
-                this.profileList = data;
+                this.profileList = Object.assign(data);
+                console.log('this.profileList: ' + JSON.stringify(this.profileList, null, " "));
                 this.selectProfile(this.profileList[0], this.clickedIndex);
                 this.getAssignedList();
                 this.showSpinner = false;
@@ -678,5 +685,66 @@ export class CalendarProfileComponent implements OnInit {
                 this.calendarProfileAPI.notification('Public holiday was deleted.', true);
             }
         });
+    }
+
+    /**
+     * This method is to check all the checkbox of assigned employees
+     * @memberof CalendarProfileComponent
+     */
+    checkAllAssignedEmployees() {
+        setTimeout(()=> {
+            this.assignedNames.forEach(obj => {
+                obj.isChecked = this.masterCheck;
+            }) 
+        });
+    }
+
+
+    /**
+     * This method is to check the select all checkbox status either the all 
+     * assigned employees is checked, some of assigned employees is check
+     * or none of employees is checked. 
+     * @memberof CalendarProfileComponent
+     */
+    checkAssignedEmployeeEvent() {
+        const totalItems = this.assignedNames.length;
+        let checked = 0;
+        this.assignedNames.map(obj => {
+            if (obj.isChecked) checked++;
+        });
+        if (checked > 0 && checked < totalItems) {
+            //If even one item is checked but not all
+            this.isIndeterminate = true;
+            this.masterCheck = false;
+        } else if (checked == totalItems) {
+            //If all are checked
+            this.masterCheck = true;
+            this.isIndeterminate = false;
+        } else {
+            //If none is checked
+            this.isIndeterminate = false;
+            this.masterCheck = false;
+        }
+    }
+
+
+    /**
+     * This method is to assign selected employees from the checkbox into selected calendar profile
+     * @param {*} profile_guid This parameter will pass calendar profile's guid
+     * @memberof CalendarProfileComponent
+     */
+    async reassignToOtherProfile(profile_guid) {
+        this._employeeList = this.assignedNames.filter(list => list.isChecked === true).map(function (o) { return o.user_guid; });
+        let res = await this.calendarProfileAPI.patch_assign_calendar_profile({
+            "user_guid": this._employeeList,
+            "calendar_guid": profile_guid
+        }).toPromise();
+        if (res[0].USER_INFO_GUID == undefined) {
+            this.calendarProfileAPI.notification(res.status, false);
+        }
+        this.assignedNames = this.assignedNames.filter(list => list.isChecked !== true);
+        this._employeeList = [];
+        this.getAssignedList();
+        this.profileList = await this.calendarProfileAPI.get_calendar_profile_list().toPromise();
     }
 }
