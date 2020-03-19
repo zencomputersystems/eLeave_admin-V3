@@ -66,15 +66,15 @@ export class YearEndClosingApiService {
 
     /**
      * snackbar message after submit approval
-     * @param {string} text
-     * @param {boolean} value
+     * @param {string} msg
+     * @param {boolean} response
      * @memberof YearEndClosingApiService
      */
-    snackbar(text: string, value: boolean) {
+    snackbar(msg: string, response: boolean) {
         this.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 3000,
             verticalPosition: "top",
-            data: { message: text, response: value }
+            data: { message: msg, response: response }
         });
     }
 
