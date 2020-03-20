@@ -110,7 +110,7 @@ export class DashboardApiService {
      */
     snackbarMessage(msg: string, value: boolean) {
         this.snackBar.openFromComponent(SnackbarNotificationComponent, {
-            duration: 3000,
+            duration: 5000,
             verticalPosition: "top",
             data: { message: msg, response: value }
         });

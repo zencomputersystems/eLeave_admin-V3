@@ -357,7 +357,7 @@
                                 </ion-title>
                             </ion-item-group>
                         </div>
-                        <ng-container *ngIf="(holidays | json) != '{}'">
+                        <ng-container *ngIf="holidays.length !== 0">
                             <ion-row style="width: 100%;" *ngFor="let item of holidays; let i = index;">
                                 <ng-container style="padding-top: 2%;" *ngIf="i<3">
                                     <ion-col size="2"
@@ -382,7 +382,7 @@
                                 </ng-container>
                             </ion-row>
                         </ng-container>
-                        <p *ngIf="(holidays | json) == '{}'"
+                        <p *ngIf="holidays.length === 0"
                             style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                             No upcoming holiday</p>
                     </div>
@@ -409,15 +409,15 @@
                                 <ion-row *ngFor="let item of longLeave.downline">
                                     <ion-col size="9"
                                         style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                        <ion-item lines="none">
+                                        <ion-item lines="none" *ngIf="url">
                                             <ng-container *ngFor="let list of url.details; let j= index">
                                                 <ng-container *ngIf="url.details[j].USER_GUID == item.userGuid">
                                                     <ion-avatar slot="start" class="avatar"
-                                                        *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                        *ngIf="url.details[j].PROFILE_PICTURE !== null">
                                                         <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
                                                     </ion-avatar>
                                                     <ion-avatar slot="start" class="avatar"
-                                                        *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                        *ngIf="url.details[j].PROFILE_PICTURE === null">
                                                         <img src="assets/icon/picture.png">
                                                     </ion-avatar>
                                                 </ng-container>
@@ -477,15 +477,15 @@
                                 <ion-row>
                                     <ion-col size="8"
                                         style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                        <ion-item lines="none">
+                                        <ion-item lines="none" *ngIf="url">
                                             <ng-container *ngFor="let list of url.details; let j= index">
                                                 <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID">
                                                     <ion-avatar slot="start" class="avatar"
-                                                        *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                        *ngIf="url.details[j].PROFILE_PICTURE !== null">
                                                         <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
                                                     </ion-avatar>
                                                     <ion-avatar slot="start" class="avatar"
-                                                        *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                        *ngIf="url.details[j].PROFILE_PICTURE === null">
                                                         <img src="assets/icon/picture.png">
                                                     </ion-avatar>
                                                 </ng-container>
@@ -534,15 +534,15 @@
                                 <ion-row *ngFor="let item of leaver">
                                     <ion-col size="8.5"
                                         style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                        <ion-item lines="none">
+                                        <ion-item lines="none" *ngIf="url">
                                             <ng-container *ngFor="let list of url.details; let j= index">
                                                 <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID">
                                                     <ion-avatar slot="start" class="avatar"
-                                                        *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                        *ngIf="url.details[j].PROFILE_PICTURE !== null">
                                                         <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
                                                     </ion-avatar>
                                                     <ion-avatar slot="start" class="avatar"
-                                                        *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                        *ngIf="url.details[j].PROFILE_PICTURE === null">
                                                         <img src="assets/icon/picture.png">
                                                     </ion-avatar>
                                                 </ng-container>
@@ -593,15 +593,15 @@
                                 <ion-row *ngFor="let item of birthdayList">
                                     <ion-col size="9"
                                         style="padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                        <ion-item lines="none">
+                                        <ion-item lines="none" *ngIf="url">
                                             <ng-container *ngFor="let list of url.details; let j= index">
                                                 <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID">
                                                     <ion-avatar slot="start" class="avatar"
-                                                        *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                        *ngIf="url.details[j].PROFILE_PICTURE !== null">
                                                         <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
                                                     </ion-avatar>
                                                     <ion-avatar slot="start" class="avatar"
-                                                        *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                        *ngIf="url.details[j].PROFILE_PICTURE === null">
                                                         <img src="assets/icon/picture.png">
                                                     </ion-avatar>
                                                 </ng-container>

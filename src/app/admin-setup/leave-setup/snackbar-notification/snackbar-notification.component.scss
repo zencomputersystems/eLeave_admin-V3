@@ -9,9 +9,10 @@
     box-shadow: 8px 8px 12px 0 rgba(0, 0, 0, 0.15);
     text-align: center;
     min-height: 52.3px;
-    line-height: 50px;
+    // line-height: 50px;
     min-width: 383px;
     opacity: 0.9;
+    padding: 10px;
   }
   .alertFail {
     background: #808495;
@@ -19,8 +20,9 @@
     box-shadow: 8px 8px 12px 0 rgba(0, 0, 0, 0.15);
     text-align: center;
     min-height: 52.3px;
-    line-height: 50px;
+    // line-height: 50px;
     min-width: 383px;
     opacity: 0.9;
+    padding: 10px;
   }
 }
