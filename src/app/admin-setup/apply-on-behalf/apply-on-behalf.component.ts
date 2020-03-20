@@ -572,11 +572,11 @@ export class ApplyOnBehalfComponent implements OnInit {
         this.leaveAPI.post_apply_leave_onBehalf(details).subscribe(
             response => {
                 this.clearArrayList();
-                if (response.status === 201) {
-                    this.leaveAPI.openSnackBar('You have submitted successfully', true);
+                if (JSON.parse(response._body)[0].valid === false) {
+                    this.leaveAPI.openSnackBar(JSON.parse(response._body)[0].message[0], false);
                 }
-                if (response.status === 401) {
-                    this.leaveAPI.openSnackBar(response.message, false);
+                if (JSON.parse(response._body)[0].valid === true) {
+                    this.leaveAPI.openSnackBar('You have submitted successfully', true);
                 }
             });
     }
