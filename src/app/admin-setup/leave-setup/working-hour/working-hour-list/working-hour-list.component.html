@@ -416,8 +416,31 @@
                     <div class="assigned" style="flex: 2 1 auto;">
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
-                            <ion-row>
-                                <ion-col size="8"
+                            <ion-row style="flex-flow: nowrap;">
+                                <ion-col *ngIf="mode==='ON'" style="padding-left: 15px;display: flex;">
+                                    <ion-checkbox mode="ios" style="width: 16px; height: 16px;"
+                                        [(ngModel)]="isCheckAll" [indeterminate]="isIndeterminateState"
+                                        (click)="checkAllWorkingHourAssignedEmployees()"></ion-checkbox>
+                                    <div *ngIf="isIndeterminateState || this.isCheckAll;">
+                                        <ion-icon name="more" style="width: 18px; height: 18px; color: #7069d8; font-size: 16px; cursor: pointer; padding-left: 10px;" mat-button
+                                            [matMenuTriggerFor]="menu"></ion-icon>
+                                        <mat-menu #menu="matMenu">
+                                            <ion-label style=" background: #f5f6fa;white-space: pre-line;text-overflow:
+                                        ellipsis;color: #4d4f5c;font-size:11px; padding: 15px;display: flex;">
+                                                Move selected to: </ion-label>
+                                            <ion-list>
+                                                <div mat-menu-item
+                                                    style="white-space: pre-line;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;"
+                                                    *ngFor="let profileList of list; let i=index"
+                                                    (click)="reassignToOtherWorkingProfile(profileList.working_hours_guid)">
+                                                    {{profileList.code}}
+                                                </div>
+                                            </ion-list>
+                                        </mat-menu>
+
+                                    </div>
+                                </ion-col>
+                                <ion-col size="6.5"
                                     style="font-size: 12px;display: -webkit-box;
                                     -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                                     ASSIGNED EMPLOYEE</ion-col>
@@ -449,7 +472,12 @@
                             <mat-card *ngFor="let draggable of employeeList" [dndDraggable]="draggable.content"
                                 [dndEffectAllowed]="draggable.effectAllowed" [dndDisableIf]="draggable.disable"
                                 style="margin: 5px;border-radius: 3px;box-shadow: 0 3px 6px 0 rgba(77, 77, 77, 0.16);">
-                                <ion-row>
+                                <ion-row style="display: flex; flex-wrap: nowrap;">
+                                    <ion-col style="padding-right: 15px;">
+                                        <ion-checkbox mode="ios" style="width: 16px; height: 16px;"
+                                            [(ngModel)]="draggable.isChecked"
+                                            (ionChange)="checkWorkingHourAssignedEmployees()"></ion-checkbox>
+                                    </ion-col>
                                     <ion-col size="8" align-self-center style="padding:0;">
                                         <div style="float: left;padding-right: 15px;cursor: move;">
                                             <img src="assets/icon/leave_setup/icon_reorder@3x.png"

@@ -91,6 +91,19 @@ export class WorkingHourListComponent implements OnInit {
     private _droppedUser: any[] = [];
 
     /**
+     * Bind value of checkbox status(appear) as indeterminate
+     * @type {boolean}
+     * @memberof WorkingHourListComponent
+     */
+    public isIndeterminateState: boolean;
+
+    /**
+     * Bind value of checkbox status(appear) as all checked
+     * @type {boolean}
+     * @memberof WorkingHourListComponent
+     */
+    public isCheckAll: boolean;
+    /**
      *Creates an instance of WorkingHourListComponent.
      * @param {WorkingHourApiService} workingHrAPI
      * @param {SharedService} sharedService
@@ -237,4 +250,63 @@ export class WorkingHourListComponent implements OnInit {
             }
         });
     }
+
+    /**
+     * This method is to check all the checkbox of assigned employees
+     * @memberof WorkingHourListComponent
+     */
+    checkAllWorkingHourAssignedEmployees() {
+        setTimeout(() => {
+            this.employeeList.forEach(obj => {
+                obj.isChecked = this.isCheckAll;
+            })
+        });
+    }
+
+    /**
+     * This method is to check the select all checkbox status either the all
+     * assigned employees is checked, some of assigned employees is check
+     * or none of employees is checked.
+     * @memberof WorkingHourListComponent
+     */
+    checkWorkingHourAssignedEmployees() {
+        const totalItems = this.employeeList.length;
+        let checked = 0;
+        this.employeeList.map(obj => {
+            if (obj.isChecked) checked++;
+        });
+        if (checked > 0 && checked < totalItems) {
+            //If even one item is checked but not all
+            this.isIndeterminateState = true;
+            this.isCheckAll = false;
+        } else if (checked == totalItems) {
+            //If all are checked
+            this.isCheckAll = true;
+            this.isIndeterminateState = false;
+        } else {
+            //If none is checked
+            this.isIndeterminateState = false;
+            this.isCheckAll = false;
+        }
+    }
+
+    /**
+     * This method is to patch assigned employees into selected working hour profile
+     * @param {*} workingProfileGuid This parameter is to pass the value of working hour profile guid
+     * @memberof WorkingHourListComponent
+     */
+    async reassignToOtherWorkingProfile(workingProfileGuid) {
+        this._droppedUser = this.employeeList.filter(list => list.isChecked === true).map(function (o) { return o.user_guid; });
+        let value = await this.workingHrAPI.patch_user_working_hours({
+            "user_guid": this._droppedUser,
+            "working_hours_guid": workingProfileGuid
+        }).toPromise();
+        if (value[0].USER_INFO_GUID == undefined) {
+            this.workingHrAPI.showPopUp(value.status, false);
+        }
+        this.employeeList = this.employeeList.filter(list => list.isChecked !== true);
+        this._droppedUser = [];
+        this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
+    }
+
 }

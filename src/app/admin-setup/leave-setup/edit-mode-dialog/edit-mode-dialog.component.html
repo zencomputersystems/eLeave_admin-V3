@@ -45,13 +45,17 @@
       Change date in calendar</p>
   </div>
   <div style="display: block;margin-left: 5px;">
-    <div style="float: left;padding-right: 10px;" *ngIf="data === 'calendar'">
+    <div style="float: left;padding-right: 10px;" *ngIf="data === 'calendar' || data === 'working'">
       <ion-icon name="more" style="height: 19px;width: 19px;color: #b6b5cb;"></ion-icon>
       </div>
       <p *ngIf="data === 'calendar'" style="margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;">
         Assign/reassign
         employee to
         calendar profile using checkbox function</p>
+      <p *ngIf="data === 'working'" style="margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;">
+        Assign/reassign
+        employee to
+        working hour profile using checkbox function</p>
   </div>
   <div style="display: block;margin-left: 10px;"
     *ngIf="data === 'working' || data === 'role' || data === 'entitlement' || data === 'policy'">
