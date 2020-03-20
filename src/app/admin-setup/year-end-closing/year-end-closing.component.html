@@ -115,19 +115,29 @@
                 <mat-form-field appearance="outline" style="display: inline-block; min-width: 150px;
                   font-size: 12px;width: 20%;color: #43425d;opacity: 0.8;flex: 1;">
                   <mat-select [(value)]="selected" placeholder="Nothing Selected" required>
-                    <mat-option>Nothing Selected</mat-option>
+                    <mat-option *ngIf="yearList.length === 0">No closing year</mat-option>
                     <mat-option *ngFor="let item of yearList" [value]=item>
                       {{item}}
                     </mat-option>
                   </mat-select>
+                  <ion-spinner name="lines-small" *ngIf="showSmallSpinner" color="primary" style="position: absolute;
+                  margin-left: -50px;margin-top: -10px;"></ion-spinner>
                 </mat-form-field>
                 <ion-button *ngIf="pendingTotal" style="--border-radius: 2px;font-size: 11px;height: 38px;width:165px;cursor: pointer;text-transform: none;
                   margin-left: 15px; flex: 1; min-width: 150px;" color="primary" (click)="showDialog()"
-                  [disabled]="pendingTotal.length !== 0">
+                  [disabled]="pendingTotal.length !== 0 || yearList.length == 0">
                   Submit
                 </ion-button>
                 <div style="flex: 3"></div>
               </div>
+              <ng-container *ngFor="let item of policy; let j=index">
+                <p *ngIf="clickedIndex === j && item.AVAILABLE_DATE_CLOSE !== 'No closed date found'"
+                  style="overflow: hidden;white-space: pre-line;text-overflow: ellipsis;color: #4d4f5c;opacity: 0.8;font-size:12px;">
+                  Next available closing date: {{item.AVAILABLE_DATE_CLOSE | date: 'dd MMM yyyy'}}</p>
+                <p *ngIf="clickedIndex === j && item.AVAILABLE_DATE_CLOSE === 'No closed date found'"
+                  style="overflow: hidden;white-space: pre-line;text-overflow: ellipsis;color: #4d4f5c;opacity: 0.8;font-size:12px;">
+                  Next available closing date: N/A</p>
+              </ng-container>
             </div>
           </div>
 

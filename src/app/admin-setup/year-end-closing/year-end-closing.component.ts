@@ -26,13 +26,6 @@ export class YearEndClosingComponent implements OnInit {
   public pendingList: any;
 
   /**
-   * get current year from today date
-   * @type {*}
-   * @memberof YearEndClosingComponent
-   */
-  public currentDate: any = new Date();
-
-  /**
    * array year list for current year & prev year
    * @type {number[]}
    * @memberof YearEndClosingComponent
@@ -52,6 +45,13 @@ export class YearEndClosingComponent implements OnInit {
    * @memberof YearEndClosingComponent
    */
   public showSpinner: boolean = true;
+
+  /**
+   * show small loading spinner in closing year selection
+   * @type {boolean}
+   * @memberof YearEndClosingComponent
+   */
+  public showSmallSpinner: boolean = false;
 
   /**
    * show list of company
@@ -75,6 +75,13 @@ export class YearEndClosingComponent implements OnInit {
   public clickedIndex: number;
 
   /**
+   * policy details from API
+   * @type {*}
+   * @memberof YearEndClosingComponent
+   */
+  public policy: any;
+
+  /**
    *Creates an instance of YearEndClosingComponent.
    * @param {MatDialog} dialog to open material dialog
    * @param {YearEndClosingApiService} yearEndApi
@@ -89,12 +96,8 @@ export class YearEndClosingComponent implements OnInit {
    */
   async ngOnInit() {
     this.pendingList = await this.yearEndApi.get_approval_override_list().toPromise();
-    this.currentDate = this.currentDate.getFullYear();
-    this.yearList.push(this.currentDate);
-    this.yearList.push(this.currentDate - 1);
     this.companyName = await this.leaveApi.get_company_list().toPromise();
-    this.clickedIndex = 0;
-    this.pendingTotal = await this.yearEndApi.get_approval_override_by_company(this.companyName[this.clickedIndex].TENANT_COMPANY_GUID).toPromise();
+    this.clickedCompany(this.companyName[0], 0);
     this.showSpinner = false;
   }
 
@@ -105,8 +108,16 @@ export class YearEndClosingComponent implements OnInit {
    * @memberof YearEndClosingComponent
    */
   async clickedCompany(item: any, index: number) {
+    this.showSmallSpinner = true;
     this.clickedIndex = index;
     this.pendingTotal = await this.yearEndApi.get_approval_override_by_company(item.TENANT_COMPANY_GUID).toPromise();
+    let list = await this.yearEndApi.get_company_year_end().toPromise();
+    this.policy = list;
+    this.yearList = list[index].YEAR_END_LIST;
+    if (this.yearList.length !== 0) {
+      this.selected = this.yearList[0];
+    }
+    this.showSmallSpinner = false;
   }
 
   /**

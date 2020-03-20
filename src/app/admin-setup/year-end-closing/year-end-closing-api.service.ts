@@ -65,6 +65,16 @@ export class YearEndClosingApiService {
     };
 
     /**
+     * get year-end policy list
+     * @returns {Observable<any>}
+     * @memberof YearEndClosingApiService
+     */
+    get_company_year_end(): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.getApi('/api/company/year-end')
+    };
+
+    /**
      * snackbar message after submit approval
      * @param {string} msg
      * @param {boolean} response
