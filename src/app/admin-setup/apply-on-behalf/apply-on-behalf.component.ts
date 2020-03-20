@@ -8,6 +8,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from '../leave-setup/date.adapter';
 import { LeaveApiService } from '../leave-setup/leave-api.service';
 import { ReportApiService } from '../report/report-api.service';
 import { APIService } from 'src/services/shared-service/api.service';
+import { map } from 'rxjs/operators';
 
 
 /**
@@ -316,15 +317,15 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     private _arrayDateSlot = [];
 
-   /**
-    *Creates an instance of ApplyOnBehalfComponent.
-    * @param {LeaveApiService} leaveAPI
-    * @param {ReportApiService} reportApi
-    * @param {Platform} applyonbehalfPlatformApi 
-    * @param {APIService} apiService
-    * @memberof ApplyOnBehalfComponent
-    */
-   constructor(private leaveAPI: LeaveApiService, private reportApi: ReportApiService, public applyonbehalfPlatformApi: Platform, private apiService: APIService) {
+    /**
+     *Creates an instance of ApplyOnBehalfComponent.
+     * @param {LeaveApiService} leaveAPI
+     * @param {ReportApiService} reportApi
+     * @param {Platform} applyonbehalfPlatformApi 
+     * @param {APIService} apiService
+     * @memberof ApplyOnBehalfComponent
+     */
+    constructor(private leaveAPI: LeaveApiService, private reportApi: ReportApiService, public applyonbehalfPlatformApi: Platform, private apiService: APIService) {
         this.applyLeaveForm = new FormGroup({
             leaveTypes: new FormControl({ value: '', disabled: true }, Validators.required),
             firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
@@ -354,20 +355,24 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     showHistory() {
-        this.reportApi.get_bundle_report('apply-on-behalf').subscribe(report => {
-            this.reportDetails = report;
-            this.reportDetails.forEach(element => {
-                const arr = new Array();
-                const dt = new Date(element.startDate);
-                const de = new Date(element.endDate);
-                while (dt <= de) {
-                    arr.push(new Date(dt));
-                    dt.setDate(dt.getDate() + 1);
-                }
-                this.dateRange = arr;
-                element["date"] = this.dateRange;
+        this.reportApi.get_bundle_report('apply-on-behalf')
+            .pipe(
+                map(data => data.sort((a, b) => new Date(b.applicationDate).getTime() - new Date(a.applicationDate).getTime()))
+            )
+            .subscribe(report => {
+                this.reportDetails = report;
+                this.reportDetails.forEach(element => {
+                    const arr = new Array();
+                    const dt = new Date(element.startDate);
+                    const de = new Date(element.endDate);
+                    while (dt <= de) {
+                        arr.push(new Date(dt));
+                        dt.setDate(dt.getDate() + 1);
+                    }
+                    this.dateRange = arr;
+                    element["date"] = this.dateRange;
+                });
             });
-        });
     }
 
     /**
