@@ -236,7 +236,20 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     private _items: any;
+
+    /**
+     * Bind value of checkbox status(appear) as indeterminate
+     * @type {boolean}
+     * @memberof CalendarProfileComponent
+     */
     public isIndeterminate: boolean;
+
+
+    /**
+     * Bind value of checkbox status(appear) as all checked
+     * @type {boolean}
+     * @memberof CalendarProfileComponent
+     */
     public masterCheck: boolean;
 
 
@@ -349,8 +362,6 @@ export class CalendarProfileComponent implements OnInit {
         for (let i = 0; i < this.assignedNames.length; i++) {
             if (event.data === this.assignedNames[i].fullname) {
                 this.getDragUserId(i);
-                console.log('before drop, user_guid:' + this._employeeList)
-                console.log('before drop,  list.calendar_guid:' + list.calendar_guid)
                 let res = await this.calendarProfileAPI.patch_assign_calendar_profile({
                     "user_guid": this._employeeList,
                     "calendar_guid": list.calendar_guid
@@ -362,7 +373,6 @@ export class CalendarProfileComponent implements OnInit {
                 this._employeeList = [];
                 this.getAssignedList();
                 this.profileList = await this.calendarProfileAPI.get_calendar_profile_list().toPromise();
-                console.log('this.profileList2: ' + JSON.stringify(this.profileList, null, " "));
             }
         }
     }
