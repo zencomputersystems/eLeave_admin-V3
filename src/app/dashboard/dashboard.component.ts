@@ -228,12 +228,6 @@ export class DashboardComponent implements OnInit {
   getAnnouncementList() {
     this.dashboardAPI.get_announcement_list().subscribe(list => {
       this.announcements = list;
-      for (let i = 0; i < this.announcements.length; i++) {
-        this.announcements[i].FROM_DATE = (_moment(this.announcements[i].FROM_DATE).format('DD MMM YYYY'));
-      }
-      const data = this.announcements;
-      const is_pinned = 1;
-      data.sort(function (x, y) { return x.IS_PINNED == is_pinned ? -1 : y == is_pinned ? 1 : 0; });
     })
   }
 
