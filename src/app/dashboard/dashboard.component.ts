@@ -285,12 +285,10 @@ export class DashboardComponent implements OnInit {
         if (val[0].ANNOUNCEMENT_GUID != undefined) {
           this.dashboardAPI.snackbarMessage('New announcement was created successfully', true);
           this.getAnnouncementList();
-        } else {
-          this.dashboardAPI.snackbarMessage(val.status, false);
         }
         this.title = ''; this.message = ''; this.checked = false;
       }, error => {
-        this.dashboardAPI.snackbarMessage(JSON.parse(error._body).status, false);
+        this.dashboardAPI.snackbarMessage(JSON.parse(error._body).message[0].constraints.isNotEmpty, false);
       });
     } else {
       data["announcementId"] = this.announcementId;
@@ -298,11 +296,9 @@ export class DashboardComponent implements OnInit {
         if (res[0].ANNOUNCEMENT_GUID != undefined) {
           this.getAnnouncementList();
           this.dashboardAPI.snackbarMessage('Announcement was updated successfully', true);
-        } else {
-          this.dashboardAPI.snackbarMessage(res.status, false);
         }
       }, error => {
-        this.dashboardAPI.snackbarMessage(JSON.parse(error._body).status, false);
+        this.dashboardAPI.snackbarMessage(JSON.parse(error._body).message[0].constraints.isNotEmpty, false);
       })
     }
     this.menu.close('createAnnouncementDetails');
