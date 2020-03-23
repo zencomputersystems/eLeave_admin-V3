@@ -49,7 +49,8 @@
               <ion-row>
                 <ion-col style="font-size: 12px;white-space: nowrap;
                                   text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                  ACTION NEEDED</ion-col>
+                  ACTION NEEDED - {{labelCompany}}
+                </ion-col>
               </ion-row>
             </div>
             <div *ngIf="pendingTotal" style="margin: 15px;margin-left:10px">
@@ -106,7 +107,7 @@
               <ion-row>
                 <ion-col style="font-size: 12px;white-space: nowrap;
                                 text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                  CLOSING YEAR</ion-col>
+                  CLOSING YEAR - {{labelCompany}}</ion-col>
               </ion-row>
             </div>
             <div style="margin: 15px;margin-left:10px">
