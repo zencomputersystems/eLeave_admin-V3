@@ -258,7 +258,7 @@ export class WorkingHourListComponent implements OnInit {
     checkAllWorkingHourAssignedEmployees() {
         setTimeout(() => {
             this.employeeList.forEach(obj => {
-                obj.isChecked = this.isCheckAll;
+                obj.checked = this.isCheckAll;
             })
         });
     }
@@ -273,7 +273,7 @@ export class WorkingHourListComponent implements OnInit {
         const totalItems = this.employeeList.length;
         let checked = 0;
         this.employeeList.map(obj => {
-            if (obj.isChecked) checked++;
+            if (obj.checked) checked++;
         });
         if (checked > 0 && checked < totalItems) {
             //If even one item is checked but not all
@@ -296,7 +296,7 @@ export class WorkingHourListComponent implements OnInit {
      * @memberof WorkingHourListComponent
      */
     async reassignToOtherWorkingProfile(workingProfileGuid) {
-        this._droppedUser = this.employeeList.filter(list => list.isChecked === true).map(function (o) { return o.user_guid; });
+        this._droppedUser = this.employeeList.filter(list => list.checked === true).map(function (o) { return o.user_guid; });
         let value = await this.workingHrAPI.patch_user_working_hours({
             "user_guid": this._droppedUser,
             "working_hours_guid": workingProfileGuid
@@ -304,7 +304,7 @@ export class WorkingHourListComponent implements OnInit {
         if (value[0].USER_INFO_GUID == undefined) {
             this.workingHrAPI.showPopUp(value.status, false);
         }
-        this.employeeList = this.employeeList.filter(list => list.isChecked !== true);
+        this.employeeList = this.employeeList.filter(list => list.checked !== true);
         this._droppedUser = [];
         this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
     }
