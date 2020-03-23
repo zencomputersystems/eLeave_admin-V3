@@ -133,9 +133,11 @@ export class PolicyListComponent implements OnInit {
     filterUser(list, users, i: number) {
         for (let j = 0; j < list.length; j++) {
             if (this.companyName[i].TENANT_COMPANY_GUID == list[j].companyId) {
-                users.push(list[j].userId);
+                users.push({ 'employeeName': list[j].employeeName }); 
+                // users.push(list[j].employeeName); 
             }
             this.companyName[i]["employee"] = users.length;
+            this.companyName[i]["employeeName"] = users;
         }
     }
 
