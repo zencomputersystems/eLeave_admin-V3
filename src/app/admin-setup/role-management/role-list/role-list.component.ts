@@ -148,6 +148,9 @@ export class RoleListComponent implements OnInit {
      */
     private _property: any;
 
+    public roleListCheckAll: boolean;
+    public roleListIsIndeterminate: boolean;
+
     /**
      *Creates an instance of RoleListComponent.
      * @param {RoleApiService} roleAPi
@@ -355,5 +358,77 @@ export class RoleListComponent implements OnInit {
                 })
             }
         });
+    }
+
+    // checkAllRoleListAssignedEmployees() {
+    //     console.log('assignedNameList: ' + JSON.stringify(this.assignedNameList, null, " "))
+    //     const totalItems = this.assignedNameList.length;
+    //     let checked = 0;
+    //     this.assignedNameList.map(obj => {
+    //         if (obj.isChecked) checked++;
+    //     });
+    //     if (checked > 0 && checked < totalItems) {
+    //         //If even one item is checked but not all
+    //         this.roleListIsIndeterminate = true;
+    //         this.roleListCheckAll = false;
+    //     } else if (checked == totalItems) {
+    //         //If all are checked
+    //         this.roleListCheckAll = true;
+    //         this.roleListIsIndeterminate = false;
+    //     } else {
+    //         //If none is checked
+    //         this.roleListIsIndeterminate = false;
+    //         this.roleListCheckAll = false;
+    //     }
+    // }
+
+    checkAllRoleListAssignedEmployees() {
+        setTimeout(() => {
+            this.assignedNameList.forEach(obj => {
+                obj.isChecked = this.roleListCheckAll;
+            })
+        });
+    }
+
+    
+    checkRoleListAssignedEmployeeEvent() {
+        const totalItems = this.assignedNameList.length;
+        let checked = 0;
+        this.assignedNameList.map(obj => {
+            if (obj.isChecked) checked++;
+        });
+        if (checked > 0 && checked < totalItems) {
+            //If even one item is checked but not all
+            this.roleListIsIndeterminate = true;
+            this.roleListCheckAll = false;
+        } else if (checked == totalItems) {
+            //If all are checked
+            this.roleListCheckAll = true;
+            this.roleListIsIndeterminate = false;
+        } else {
+            //If none is checked
+            this.roleListIsIndeterminate = false;
+            this.roleListCheckAll = false;
+        }
+        // console.log('checkRoleListAssignedEmployeeEvent: ' + JSON.stringify(currRoleGuid, null, " "));
+        // this._filteredList = this.assignedNameList.filter(list => list.isChecked === true).map(function (o) { return o.user_guid; });
+
+        // console.log(this._filteredList);
+        // let response = await this.roleAPi.patch_user_profile({
+        //     "user_guid": this._filteredList,
+        //     "role_guid": currRoleGuid
+        // }).toPromise();
+        // if (response[0].USER_INFO_GUID == undefined) {
+        //     this.roleAPi.snackbarMsg(response.status, false);
+        // }
+
+        // this.assignedNameList = this.assignedNameList.filter(list => list.isChecked !== true);
+        // this._filteredList = [];
+        // let data = await this.roleAPi.get_role_profile_list().toPromise();
+        // this.roleList = data;
+
+    }
+    reassignToOtherRoles(item) {
+        console.log('reassignToOtherRoles: ' + JSON.stringify(item, null, " "))
     }
 }

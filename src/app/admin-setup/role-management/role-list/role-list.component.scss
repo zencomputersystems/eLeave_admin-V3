@@ -230,4 +230,25 @@
   //   display: none;
   //   overflow: hidden;
   // }
+  
+}
+
+::ng-deep .mat-menu-content:not(:empty) {
+  padding: 0px;
+  width: 150px;
+  @media screen and (min-height: 720px) {
+    max-height: 350px;
+    overflow-y: auto;
+  }
+
+  @media screen and (max-height: 721px) {
+    max-height: 250px;
+    overflow-y: auto;
+  }
+}
+
+::ng-deep .mat-menu-item {
+    line-height: initial;
+    display: flex; 
+    align-items: center;
 }

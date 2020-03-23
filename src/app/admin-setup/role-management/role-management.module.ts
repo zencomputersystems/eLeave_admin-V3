@@ -17,6 +17,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 import { RoleRightsComponent } from './role-rights/role-rights.component';
 import { RoleListComponent } from './role-list/role-list.component';
 import { LeaveSetupModule } from '../leave-setup/leave-setup.module';
@@ -47,6 +48,7 @@ const routes: Routes = [
         MatIconModule,
         MatGridListModule,
         MatCardModule,
+        MatMenuModule,
         InlineSVGModule,
         SpinnerModule,
         ReactiveFormsModule,
