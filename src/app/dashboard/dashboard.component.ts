@@ -167,6 +167,22 @@ export class DashboardComponent implements OnInit {
   public year: any;
 
   /**
+   * file attachement name list
+   * @private
+   * @type {*}
+   * @memberof DashboardComponent
+   */
+  private _fileAttachment: any[] = [];
+
+  /**
+   * form data from uploaded file
+   * @private
+   * @type {*}
+   * @memberof DashboardComponent
+   */
+  private _formValue: any;
+
+  /**
    *Creates an instance of DashboardComponent.
    * @param {MenuController} menu
    * @param {DashboardApiService} dashboardAPI
@@ -272,21 +288,24 @@ export class DashboardComponent implements OnInit {
    * create new announcement
    * @memberof DashboardComponent
    */
-  onClickPublish(name: string) {
+  async onClickPublish(name: string) {
     let isChecked: number;
     if (this.checked === true) {
       isChecked = 1;
     } else {
       isChecked = 0;
     }
-    const data = { "title": this.title, "message": this.message, "isPinned": isChecked };
+    this.message = this.message.replace(/<img[^>]*>/g, "");
+    let response = await this.dashboardAPI.apiService.post_file(this._formValue).toPromise();
+    this._fileAttachment.push(response.filename);
+    const data = { "title": this.title, "message": this.message, "isPinned": isChecked, "attachment": this._fileAttachment };
     if (name === 'add') {
       this.dashboardAPI.post_announcement_list(data).subscribe(val => {
         if (val[0].ANNOUNCEMENT_GUID != undefined) {
           this.dashboardAPI.snackbarMessage('New announcement was created successfully', true);
           this.getAnnouncementList();
         }
-        this.title = ''; this.message = ''; this.checked = false;
+        this.title = ''; this.message = ''; this.checked = false; this._fileAttachment = [];
       }, error => {
         this.dashboardAPI.snackbarMessage(JSON.parse(error._body).message[0].constraints.isNotEmpty, false);
       });
@@ -302,6 +321,18 @@ export class DashboardComponent implements OnInit {
       })
     }
     this.menu.close('createAnnouncementDetails');
+  }
+
+  /**
+   * upload image event
+   * @param {*} imgFile
+   * @memberof DashboardComponent
+   */
+  uploadAnnouncementImg(imgFile: any) {
+    const fileDetails = imgFile.item(0);
+    let formData = new FormData();
+    formData.append('file', fileDetails, fileDetails.name);
+    this._formValue = formData;
   }
 
   /**

@@ -25,6 +25,9 @@
                             style="white-space: normal;font-size: 10px;color: #4d4f5c;line-height:1.4;text-align: justify;"
                             [innerHTML]="item.MESSAGE">
                         </p>
+                        <ng-container *ngFor="let list of item.ATTACHMENT; let j=index">
+                            <img *ngIf="list !== ''" src="{{url.link + list}}" style="width: 100px;">
+                        </ng-container>
                     </ion-label>
                 </ion-item>
                 <ion-item *ngIf="showallannouncement">
@@ -76,7 +79,7 @@
         <div style="flex: 2 1 94%;margin: 20px;">
             <p-editor placeholder="Write Something" [style]="{'height':'230px','border-radius': '4px',
       'border': 'solid 1px #e8e9ec', 'font-size': '13px','color':'#43425d','opacity': '0.8'}" [(ngModel)]="message"
-                required>
+                (change)="uploadAnnouncementImg($event.target.files)">
                 <p-header>
                     <span class="ql-formats">
                         <button class="ql-bold" aria-label="Bold"></button>
@@ -258,6 +261,9 @@
                                     </span>
                                     <p class="mainInnerText" [innerHTML]="item.MESSAGE"
                                         style="margin-bottom: 0; white-space: pre-wrap;"></p>
+                                    <ng-container *ngFor="let list of item.ATTACHMENT">
+                                        <img *ngIf="list !== ''" src="{{url.link + list}}" style="width: 50px;">
+                                    </ng-container>
                                 </ion-col>
                                 <ion-col size="2" align-self-center
                                     style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
@@ -319,6 +325,9 @@
                                         {{item.TITLE}}
                                     </ion-label>
                                     <p [innerHTML]="item.MESSAGE" style="margin:0px;"></p>
+                                    <ng-container *ngFor="let list of item.ATTACHMENT; let j=index">
+                                        <img *ngIf="list !== ''" src="{{url.link + list}}" style="width: 50px;">
+                                    </ng-container>
                                     <ion-item-group style="align-self: flex-end; padding: 0px 25px 15px 0px;">
                                         <img src="assets/icon/leave_setup/icon_edit@3x.png"
                                             style="width: 13px;height:13px;cursor: pointer;" (click)="editAnnouncement(item);createNew=false;menuOpen=true;menu.enable(true, 'createAnnouncementDetails');
