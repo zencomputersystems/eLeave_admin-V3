@@ -1,3 +1,4 @@
+import { CalendarProfileApiService } from './../../leave-setup/calendar-profile/calendar-profile-api.service';
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AdminInvitesApiService } from '../admin-invites-api.service';
@@ -10,6 +11,8 @@ import { ChangeStatusConfimationComponent } from './change-status-confimation/ch
 import { DeleteCalendarConfirmationComponent } from '../../leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
 import { personal, employment } from './employee-setup-data';
 import { SharedService } from '../../leave-setup/shared.service';
+import { getDataSet, reduce } from "iso3166-2-db";
+import { EventInput } from '@fullcalendar/core';
 
 /**
  *
@@ -118,6 +121,13 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     public calendarList: any;
+
+    /**
+     * The length of calendar profile list from API
+     * @type {*}
+     * @memberof EmployeeSetupComponent
+     */
+    public lengthCalendarList: any;
 
     /**
      * working hour profile list from API
@@ -361,13 +371,107 @@ export class EmployeeSetupComponent implements OnInit {
     private _selectedDepartment: any = [];
 
     /**
+     * Track calendar input of add calendar form
+     * @type {*}
+     * @memberof EmployeeSetupComponent
+     */
+    public newProfileName: any;
+
+    /**
+     * Track day selection
+     * @type {*}
+     * @memberof EmployeeSetupComponent
+     */
+    public newDayControl: any;
+
+    /**
+     * Track selected country in selection form field
+     * @type {*}
+     * @memberof EmployeeSetupComponent
+     */
+    public calCountry: any;
+
+    /**
+     * track region selection in form field
+     * @type {*}
+     * @memberof EmployeeSetupComponent
+     */
+    public calRegion: any;
+
+    /**
+     * Public holiday list from API
+     * @memberof EmployeeSetupComponent
+     */
+    public calCountryList;
+
+    /**
+     * World public holiday from database npm i
+     * @memberof EmployeeSetupComponent
+     */
+    public countrydata;
+
+    /**
+     * Region list of selected country
+     * @memberof EmployeeSetupComponent
+     */
+    public calCountryRegion;
+
+    /**
+     * Value of selected Country ISO
+     * @memberof EmployeeSetupComponent
+     */
+    public calCountryIso;
+
+    /**
+     * Value of Region ISO from selected region/states
+     * @memberof EmployeeSetupComponent
+     */
+    public calRegionISO;
+
+    /**
+     * Array list of Sunday - Saturday to show on select input
+     * @type {string[]}
+     * @memberof EmployeeSetupComponent
+     */
+    public calWeekdays: string[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    /**
+     * Selected day name array list 
+     * @memberof EmployeeSetupComponent
+     */
+    public calRestDay = [];
+
+    /**
+     * Track year input form control
+     * @memberof EmployeeSetupComponent
+     */
+    public calDefaultYear = new Date().getFullYear();
+
+    /**
+     * Property for alias Event Input of Full Calendar Component
+     * @private
+     * @type {EventInput[]}
+     * @memberof EmployeeSetupComponent
+     */
+    private holidayEvents: EventInput[];
+
+
+    /**
+     * Array list for rest to patch to API
+     * eg: { "fullname": "SATURDAY", "name": "SAT" }
+     * @private
+     * @memberof CalendarProfileComponent
+     */
+    private selectedWeekday = [];
+
+    /**
      *Creates an instance of EmployeeSetupComponent.
      * @param {AdminInvitesApiService} inviteAPI access invite API
      * @param {RoleApiService} roleAPI access role manegement api service
      * @param {SharedService} _sharedService
      * @memberof EmployeeSetupComponent
      */
-    constructor(public inviteAPI: AdminInvitesApiService, public roleAPI: RoleApiService, private _sharedService: SharedService) {
+    constructor(public inviteAPI: AdminInvitesApiService, public roleAPI: RoleApiService, private _sharedService: SharedService, private calendarProfileAPI: CalendarProfileApiService) {
         this.inviteAPI.apiService.get_profile_pic('all').subscribe(data => {
             this.url = data;
         })
@@ -378,11 +482,24 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     async ngOnInit() {
+        this.countrydata = reduce(getDataSet(), "en");
+        this.calCountryList = Object.keys(this.countrydata).map(key => this.countrydata[key]);
+        this.calCountryList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+        this.newDayControl = this.calCountry = this.calRegion = new FormControl('');
+        this.newProfileName = new FormControl('', Validators.required);
+        this.getListPublicHolidays();
+
+
+
         this.endPoint();
         let roleData = await this.roleAPI.get_role_profile_list().toPromise()
         this.roleList = roleData;
         let calendarData = await this.inviteAPI.get_calendar_profile_list().toPromise();
         this.calendarList = calendarData;
+        // this.calendarList = [];
+        this.lengthCalendarList = this.calendarList.length;
+        console.log('this.calendarList : ' + JSON.stringify(this.calendarList, null, " "))
+        console.log('this length : ' + JSON.stringify(this.calendarList.length, null, " "))
         let workingData = await this.inviteAPI.get_working_hour_profile_list().toPromise();
         this.workingList = workingData;
         let entitlement = await this._sharedService.leaveApi.get_leavetype_entitlement().toPromise();
@@ -893,5 +1010,138 @@ export class EmployeeSetupComponent implements OnInit {
                 this._sharedService.leaveApi.openSnackBar(result.status, false);
             }
         }
+    }
+
+    onCreateNewProfile() {
+        console.log('onCreateNewProfile');
+    }
+
+
+    /**
+     * Create a rest day array list
+     * Check or uncheck weekday make changes in rest day array list
+     * @param {string} day
+     * @memberof CalendarProfileComponent 
+     */
+    selectRestDay(day: string) {
+        if (this.isObjectExist(day, this.calRestDay) === false) {
+            this.calRestDay.push(day);
+        } else {
+            const indexes: number = this.calRestDay.indexOf(day);
+            this.calRestDay.splice(indexes, 1);
+        }
+    }
+    /**
+     * To check whether the object is exist in array or not
+     * @param {*} obj
+     * @param {*} array
+     * @returns
+     * @memberof CalendarProfileComponent
+     */
+    isObjectExist(obj: any, array: any) {
+        for (let j = 0; j < array.length; j++) {
+            if (array[j] === obj) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get public holiday list from calendarific
+     * @memberof EmployeeSetupComponent
+     */
+    getListPublicHolidays() {
+        this.calendarProfileAPI.get_public_holiday_list().subscribe(((data: any) => {
+            this.holidayEvents = [];
+            for (let i = 0; i < data.response.holidays.length; i++) {
+                this.createListHoliday(data.response.holidays[i].date.iso, data.response.holidays[i].name, this.holidayEvents);
+            }
+        }))
+    }
+
+    /**
+     * Push objects to array of event holidays
+     * @param {string} dateIso
+     * @param {string} name
+     * @memberof CalendarProfileComponent
+     */
+    createListHoliday(dateIso: string, name: string, list: any) {
+        list.push({
+            "start": _moment(dateIso).format('YYYY-MM-DD'),
+            "end": _moment(dateIso).format('YYYY-MM-DD'),
+            "title": name,
+            "holidayName": name,
+            "day": this.getWeekofDay(new Date(dateIso)),
+        });
+    }
+
+    /**
+     * Method to get day of the week from a given date
+     * @param {*} date
+     * @returns
+     * @memberof CalendarViewPage
+     */
+    getWeekofDay(date) {
+        this.calWeekdays = new Array(
+            "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+        );
+        const day = date.getDay();
+        return this.calWeekdays[day];
+    }
+
+    /**
+     * Arrange object according body required of API 
+     * POST / PATCH calendar profile
+     * @param {*} holiday
+     * @memberof CalendarProfileComponent
+     */
+    holidayObjectReformation(holiday) {
+        for (let i = 0; i < this.holidayEvents.length; i++) {
+            delete holiday[i].day;
+        }
+        for (let j = 0; j < this.calRestDay.length; j++) {
+            let obj = {};
+            obj["fullname"] = (this.calRestDay[j]).toUpperCase();
+            obj["name"] = obj["fullname"].substring(0, 3);
+            this.selectedWeekday.push(obj);
+        }
+    }
+
+    /**
+     * POST/create new calendar to endpoint API
+     * @memberof EmployeeSetupComponent
+     */
+    postCreateCalendarProfile() {
+        this.showSpinner = true;
+        this.getListPublicHolidays();
+        this.holidayObjectReformation(this.holidayEvents);
+        const newCalProfile = {
+            "code": this.newProfileName.value,
+            "filter": {
+                "year": this.calDefaultYear,
+                "country": this.calCountryIso,
+                "region": this.calRegionISO
+            },
+            "holiday": this.holidayEvents,
+            "rest": this.selectedWeekday
+        }
+        this.calendarProfileAPI.post_calendar_profile(newCalProfile).subscribe(data => {
+            if (data[0].CALENDAR_DETAILS_GUID != undefined) {
+                this.calendarProfileAPI.notification('New calendar profile was created successfully.', true);
+                this.showSpinner = false;
+                this.newProfileName.reset();
+                this.calCountry.reset();
+                this.calRegion.reset();
+                this.calCountryIso = this.calRegionISO = '';
+                this.calRestDay = this.selectedWeekday = [];
+                this.newDayControl.reset();
+            } else {
+                this.calendarProfileAPI.notification(data.status, false);
+                this.showSpinner = false;
+            }
+
+        });
+
     }
 }
