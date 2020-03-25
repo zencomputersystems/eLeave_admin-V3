@@ -48,8 +48,8 @@ $mat-myapp-primary: (
     A100: #000000,
     A200: #000000,
     A400: #000000,
-    A700: #000000
-  )
+    A700: #000000,
+  ),
 );
 
 $mat-myapp-accent: (
@@ -81,8 +81,8 @@ $mat-myapp-accent: (
     A100: #000000,
     A200: #ffffff,
     A400: #ffffff,
-    A700: #ffffff
-  )
+    A700: #ffffff,
+  ),
 );
 
 $primary: mat-palette($mat-myapp-primary); //$#057dcd
@@ -306,6 +306,7 @@ app-report
   > div.listEmployee
   > div
   > ion-row
+  > ion-col
   > ion-searchbar.searchbar
   > div.searchbar-input-container
   > input.searchbar-input {
@@ -327,6 +328,7 @@ app-report
   > div.listEmployee
   > div
   > ion-row
+  > ion-col
   > ion-searchbar.searchbar
   > div.searchbar-input-container
   > ion-icon.searchbar-search-icon.sc-ion-searchbar-md {
@@ -343,6 +345,7 @@ app-report
   > div.listEmployee
   > div
   > ion-row
+  > ion-col
   > ion-searchbar.searchbar
   > div.searchbar-input-container
   > button
@@ -352,13 +355,12 @@ app-report
   box-shadow: none;
 }
 
-
 $screen-breakpoints: (
   xs: 0,
   sm: 576px,
   md: 768px,
   lg: 992px,
-  xl: 1200px
+  xl: 1200px,
 ) !default;
 
 @each $keySize, $valueSize in $screen-breakpoints {
@@ -369,9 +371,9 @@ $screen-breakpoints: (
   }
 
   .hide-#{$keySize}-up {
-      @media screen and (min-width: $valueSize + 1) {
-        display: none;
-    } 
+    @media screen and (min-width: $valueSize + 1) {
+      display: none;
+    }
   }
 
   .show-flex-#{$keySize}-down {

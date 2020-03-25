@@ -78,15 +78,15 @@
       </div>
       <div style="margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
         <ion-button [class]="'hide-sm-down'"
-          style="--border-radius: 2px;font-size: 11px;width:180px;cursor: pointer;text-transform: none;"
-          color="primary" [style.visibility]="clickedProduce==true? 'visible': 'collapse'"
-          [style.height]="clickedProduce==true? '30px': '0px'"
-          (click)="clickedProduce=false">
+          style="--border-radius: 2px;font-size: 11px;width:180px;cursor: pointer;text-transform: none;" color="primary"
+          [style.visibility]="clickedProduce==true? 'visible': 'collapse'"
+          [style.height]="clickedProduce==true? '30px': '0px'" (click)="clickedProduce=false">
           Back To Main
         </ion-button>
         <ion-button [class]="'hide-sm-up'"
           style="--border-radius: 2px;font-size: 11px;height: 30px;width:180px;cursor: pointer;text-transform: none;"
-          color="primary" [style.visibility]="clickedProduce==true? 'visible': 'collapse'" (click)="clickedProduce=false">
+          color="primary" [style.visibility]="clickedProduce==true? 'visible': 'collapse'"
+          (click)="clickedProduce=false">
           Back To Main
         </ion-button>
         <!-- <ion-button
@@ -103,25 +103,22 @@
 
       <!-- main page -->
       <ion-card-content style="max-height: 100%; overflow-y: auto;" [style.display]="clickedProduce==true? 'none': ''">
-        <div style="display: flex; flex-wrap: wrap;margin-bottom: 10px;">
-          <div class="buttonGroup">
-            <ion-button
-              style="--border-radius: 4px 0 0 4px;margin-right: 0; margin-bottom: 15px;display:inline-block;font-size:
+        <div style="display: flex; flex-wrap: wrap">
+          <!-- <div class="buttonGroup">
+            <ion-button style="--border-radius: 4px 0 0 4px;margin-right: 0; margin-bottom: 15px;display:inline-block;font-size:
               11px;height: 40px;flex: 0.35; min-width: 120px;
-              cursor: pointer;text-transform: none;"
-              [ngClass]="{
+              cursor: pointer;text-transform: none;" [ngClass]="{
               'individualClicked': individualButton === true , 'individualUnclicked': individualButton === false}"
               (click)="groupButton = false; individualButton = true;companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';">
               Individual Report
             </ion-button>
             <ion-button [ngClass]="{ 'groupClicked' : groupButton === true , 'groupUnclicked' : groupButton === false}"
-              (click)="groupButton = true; individualButton = false; clearCheckbox()"
-              style="--border-radius: 0 4px 4px 0;margin-left: 0; margin-bottom: 15px;display:inline-block;font-size:
+              (click)="groupButton = true; individualButton = false; clearCheckbox()" style="--border-radius: 0 4px 4px 0;margin-left: 0; margin-bottom: 15px;display:inline-block;font-size:
               11px;height: 40px;flex: 0.35; min-width: 120px;
               cursor: pointer;text-transform: none;">
               Group Report
             </ion-button>
-          </div>
+          </div> -->
           <div class="dateForm">
             <mat-form-field class="date" style="padding: 2px; flex:1; min-width: 150px;" appearance="outline">
               <mat-label>Start date</mat-label>
@@ -174,7 +171,7 @@
               </ion-row>
             </div>
             <div style="overflow-y: auto;height: calc(100% - 13em)">
-            <!-- <div style="overflow-y: auto;height: calc(100% - 161px)"> -->
+              <!-- <div style="overflow-y: auto;height: calc(100% - 161px)"> -->
               <ion-item class="ionItem" lines="none">
                 <ion-label class="checkLabel">Select All</ion-label>
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="isMain" [indeterminate]="isInde"
@@ -195,29 +192,18 @@
           <div class="listEmployee">
             <div
               style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 15px;color: #a5a4bf;">
-              <ion-row *ngIf="individualButton === true">
+              <ion-row>
                 <ion-col style="font-weight: bold;white-space: nowrap;
-                  text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                  EMPLOYEE LIST</ion-col>
-              </ion-row>
-              <ion-row *ngIf="individualButton === true">
+                  text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;flex: 1 1 30px;
+    min-width: 200px;">
+                  EMPLOYEE LIST
                   <ion-searchbar mode="md" class="searchbar" placeholder="Search by Employee Name or ID"
                     (ionChange)="keyUpSearchbar($event.srcElement.value)">
                   </ion-searchbar>
-                  <ion-searchbar mode="md" class="searchbar" placeholder="Search by Name or ID"
-                    (ionChange)="keyUpSearchbar($event.srcElement.value)">
-                  </ion-searchbar>
-                <!-- </div>
-                <div [class]="'hide-sm-up'">
-                  <ion-searchbar mode="md" class="searchbar" placeholder="Search by Name or ID"
-                    (ionChange)="keyUpSearchbar($event.srcElement.value)">
-                  </ion-searchbar>
-                </div> -->
-              </ion-row>
-              <ion-row *ngIf="individualButton === false" style="display: flex;  flex-wrap: wrap;">
+                </ion-col>
                 <ion-col style="flex: 1 1 30px; min-width: 200px;">
                   <p style="font-size: 12px;color: #43425d;">
-                    Company</p>
+                    Company:</p>
                   <mat-form-field appearance="outline"
                     style="height: 50px;font-size: 12px;width: 90%;color:#43425d;opacity: 0.8;">
                     <mat-select [(value)]="companyValue">
@@ -230,9 +216,27 @@
                     </mat-select>
                   </mat-form-field>
                 </ion-col>
+                <!-- <ion-col style="flex: 1 1 30px; min-width: 200px;"></ion-col> -->
+                <!-- <ion-col style="flex: 1 1 30px; min-width: 200px;"></ion-col> -->
+              </ion-row>
+              <!-- <ion-row style="display: flex;  flex-wrap: wrap;">
+                <ion-searchbar mode="md" class="searchbar" placeholder="Search by Employee Name or ID"
+                  (ionChange)="keyUpSearchbar($event.srcElement.value)">
+                <!-- </ion-searchbar>
+                <ion-searchbar mode="md" class="searchbar" placeholder="Search by Name or ID"
+                  (ionChange)="keyUpSearchbar($event.srcElement.value)">
+                </ion-searchbar> -->
+              <!-- </div>
+                <div [class]="'hide-sm-up'">
+                  <ion-searchbar mode="md" class="searchbar" placeholder="Search by Name or ID"
+                    (ionChange)="keyUpSearchbar($event.srcElement.value)">
+                  </ion-searchbar>
+                </div> --
+              </ion-row> -->
+              <ion-row style="display: flex;  flex-wrap: wrap;">
                 <ion-col style="flex: 1 1 30px; min-width: 200px;">
                   <p style="font-size: 12px;color: #43425d;">
-                    Department</p>
+                    Department:</p>
                   <mat-form-field appearance="outline"
                     style="height: 50px;font-size: 12px;width: 90%;color:#43425d;opacity: 0.8;">
                     <mat-select [(value)]="departmentValue">
@@ -247,7 +251,7 @@
                 </ion-col>
                 <ion-col style="flex: 1 1 30px; min-width: 200px;">
                   <p style="font-size: 12px;color: #43425d;">
-                    Branch</p>
+                    Branch:</p>
                   <mat-form-field appearance="outline"
                     style="height: 50px;font-size: 12px;width: 90%;color:#43425d;opacity: 0.8;">
                     <mat-select [(value)]="branchValue">
@@ -260,11 +264,11 @@
                     </mat-select>
                   </mat-form-field>
                 </ion-col>
-              <!-- </ion-row>
+                <!-- </ion-row>
               <ion-row *ngIf="individualButton === false" style="margin-bottom: 10px;"> -->
                 <ion-col style="flex: 1 1 30px; min-width: 200px;">
                   <p style="font-size: 12px;color: #43425d;">
-                    Cost Centre</p>
+                    Cost Centre:</p>
                   <mat-form-field appearance="outline"
                     style="height: 50px;font-size: 12px;width: 90%;color:#43425d;opacity: 0.8;">
                     <mat-select [(value)]="costCentreValue">
@@ -281,13 +285,13 @@
                 <ion-col style="flex: 1 1 30px; min-width: 200px;"></ion-col>
               </ion-row>
               <ion-row>
-                <ion-col size="1.5" *ngIf="individualButton === true"
+                <ion-col size="1.5"
                   style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
                   <ion-checkbox mode="ios" class="ionCheckboxList" style="margin-top: 6px;"
                     [indeterminate]="indeterminate" [disabled]=true (click)="headerList()">
                   </ion-checkbox>
                 </ion-col>
-                <ion-col size="1.5" *ngIf="individualButton === false"></ion-col>
+                <!-- <ion-col size="1.5" *ngIf="individualButton === false"></ion-col> -->
                 <ion-col size="1" align-self-center [class]="'hide-md-down'" style="white-space: nowrap;
                   text-overflow: ellipsis;overflow: hidden;min-width: 50px;">
                   ID
@@ -311,14 +315,12 @@
               </ion-row>
             </div>
 
-            <div [style.height]="individualButton === true? 'calc( 100% - 12em)':'calc( 100% - 15.5em)'" 
-              style="overflow: auto;min-height: 250px;" *ngIf="!filterSpinner">
+            <div style="overflow: auto;min-height: 250px;height: calc( 100% - 15.5em);" *ngIf="!filterSpinner">
               <ng-container *ngIf="selection == 'noSelection'">
                 <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of userList; let i=index">
-                  <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;" 
-                  *ngIf="(this.reportPlatform.platforms().includes('desktop'))">
-                    <ion-avatar class="avatar" *ngIf="individualButton === true"
-                      (mouseover)="hoverValue(i, true, item.isChecked)"
+                  <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;"
+                    *ngIf="(this.reportPlatform.platforms().includes('desktop'))">
+                    <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
                       (mouseout)="hoverValue(i, false, item.isChecked)">
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                         [style.display]="hideImg[i] ? 'none' : 'block'">
@@ -329,14 +331,13 @@
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
-                    <ion-avatar class="avatar" *ngIf="individualButton === false">
+                    <!-- <ion-avatar class="avatar" *ngIf="individualButton === false">
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
-                    </ion-avatar>
+                    </ion-avatar> -->
                   </ion-col>
                   <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;"
                     *ngIf="!(this.reportPlatform.platforms().includes('desktop'))">
-                    <ion-avatar class="avatar" *ngIf="individualButton === true"
-                      (mouseover)="hoverValue(i, true, item.isChecked)"
+                    <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
                       (mouseout)="hoverValue(i, false, item.isChecked)">
                       <div class="checkboxOnAvatar" style="display: block;">
                         <ion-checkbox mode="ios" class="ionCheckboxList"
@@ -345,28 +346,25 @@
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
-                    <ion-avatar class="avatar" *ngIf="individualButton === false">
+                    <!-- <ion-avatar class="avatar" *ngIf="individualButton === false">
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
-                    </ion-avatar>
+                    </ion-avatar> -->
                   </ion-col>
-                  <ion-col size="1" align-self-center [class]="'hide-md-down'"
-                    style="color: #808495; font-size: 12px;white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col size="1" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 12px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;min-width: 50px;">
                     {{item.staffNumber}}
                   </ion-col>
-                  <ion-col size="4" align-self-center [class]="'hide-sm-down'"
-                    style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color:
+                  <ion-col size="4" align-self-center [class]="'hide-sm-down'" style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color:
                     #43425d;opacity: 0.8;">
-                      <div >{{item.employeeName}}</div>
-                      <div [class]="'hide-md-up'"
-                        style="color: rgb(128, 132, 149); font-size: 11px; white-space: pre-line;font-weight: normal;">
-                        ID: {{item.staffNumber}}
-                      </div>
+                    <div>{{item.employeeName}}</div>
+                    <div [class]="'hide-md-up'"
+                      style="color: rgb(128, 132, 149); font-size: 11px; white-space: pre-line;font-weight: normal;">
+                      ID: {{item.staffNumber}}
+                    </div>
                   </ion-col>
-                  <ion-col align-self-center [class]="'hide-md-up'"
-                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
-                    ellipsis; padding-left: 15px;"> 
-                    <ion-item-group [class]="'hide-sm-up'" style="margin-bottom: 5px;">  
+                  <ion-col align-self-center [class]="'hide-md-up'" style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
+                    ellipsis; padding-left: 15px;">
+                    <ion-item-group [class]="'hide-sm-up'" style="margin-bottom: 5px;">
                       <div style="font-weight: bold;color:
                     #43425d;opacity: 0.8;font-size: 12px;margin-bottom: 3px;">{{item.employeeName}}</div>
                       <div>
@@ -374,22 +372,20 @@
                         {{item.staffNumber}}
                       </div>
                     </ion-item-group>
-                    <ion-item-group style="margin-bottom: 5px;"> 
+                    <ion-item-group style="margin-bottom: 5px;">
                       <div style="font-weight: bold; line-height: normal;">DESIGNATION</div>
-                       {{item.designation}}
+                      {{item.designation}}
                     </ion-item-group>
                     <ion-item-group>
                       <div style="font-weight: bold; line-height: normal;">DEPARTMENT</div>
                       {{item.department}}
                     </ion-item-group>
                   </ion-col>
-                  <ion-col align-self-center [class]="'hide-md-down'"
-                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;">
                     {{item.designation}}
                   </ion-col>
-                  <ion-col align-self-center [class]="'hide-md-down'"
-                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;">
                     {{item.department}}
                   </ion-col>
@@ -400,8 +396,7 @@
               <ng-container *ngIf="selection == 'company'">
                 <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of filteredCompany; let i=index">
                   <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
-                    <ion-avatar class="avatar" *ngIf="individualButton === true"
-                      (mouseover)="hoverValue(i, true, item.isChecked)"
+                    <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
                       (mouseout)="hoverValue(i, false, item.isChecked)">
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                         [style.display]="hideImg[i] ? 'none' : 'block'">
@@ -412,34 +407,32 @@
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
-                    <ion-avatar class="avatar" *ngIf="individualButton === false">
+                    <!-- <ion-avatar class="avatar" *ngIf="individualButton === false">
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
-                    </ion-avatar>
+                    </ion-avatar> -->
                   </ion-col>
-                  <ion-col size="1" align-self-center [class]="'hide-md-down'"
-                    style="color: #808495; font-size: 12px;white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col size="1" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 12px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;min-width:50px;">
                     {{item.staffNumber}}
                   </ion-col>
-                  <ion-col size="4" align-self-center [class]="'hide-sm-down'"
-                    style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color:
+                  <ion-col size="4" align-self-center [class]="'hide-sm-down'" style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color:
                     #43425d;opacity: 0.8;">
                     {{item.employeeName}}
-                    <div [class]="'hide-md-up'" style="color: #808495; font-size: 12px;font-weight:normal; min-width:50px;">
+                    <div [class]="'hide-md-up'"
+                      style="color: #808495; font-size: 12px;font-weight:normal; min-width:50px;">
                       ID: {{item.staffNumber}}</div>
                   </ion-col>
-                  <ion-col [class]="'hide-md-down'" size="2.3" align-self-center
-                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col [class]="'hide-md-down'" size="2.3" align-self-center style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;">
                     {{item.designation}}
                   </ion-col>
-                  <ion-col [class]="'hide-md-down'" size="2.3" align-self-center
-                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col [class]="'hide-md-down'" size="2.3" align-self-center style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;">
                     {{item.department}}
                   </ion-col>
-                  <ion-col [class]="'hide-md-up'" style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow: ellipsis; padding-left: 15px;">
-                    <ion-item-group [class]="'hide-sm-up'" style="margin-bottom: 5px;">  
+                  <ion-col [class]="'hide-md-up'"
+                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow: ellipsis; padding-left: 15px;">
+                    <ion-item-group [class]="'hide-sm-up'" style="margin-bottom: 5px;">
                       <div style="font-weight: bold;color:
                     #43425d;opacity: 0.8;font-size: 12px;margin-bottom: 3px;">{{item.employeeName}}</div>
                       <div>
@@ -447,9 +440,9 @@
                         {{item.staffNumber}}
                       </div>
                     </ion-item-group>
-                    <ion-item-group style="margin-bottom: 5px;"> 
+                    <ion-item-group style="margin-bottom: 5px;">
                       <div style="font-weight: bold; line-height: normal;">DESIGNATION</div>
-                       {{item.designation}}
+                      {{item.designation}}
                     </ion-item-group>
                     <ion-item-group>
                       <div style="font-weight: bold; line-height: normal;">DEPARTMENT</div>
@@ -463,9 +456,8 @@
               <ng-container *ngIf="selection == 'department'">
                 <ion-row class="detailsRow" style="font-size: 12px;"
                   *ngFor="let item of filteredDepartment; let i=index">
-                  <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;" >
-                    <ion-avatar class="avatar" *ngIf="individualButton === true"
-                      (mouseover)="hoverValue(i, true, item.isChecked)"
+                  <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
+                    <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
                       (mouseout)="hoverValue(i, false, item.isChecked)">
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                         [style.display]="hideImg[i] ? 'none' : 'block'">
@@ -476,33 +468,32 @@
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
-                    <ion-avatar class="avatar" *ngIf="individualButton === false">
+                    <!-- <ion-avatar class="avatar" *ngIf="individualButton === false">
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
-                    </ion-avatar>
+                    </ion-avatar> -->
                   </ion-col>
-                  <ion-col size="1" align-self-center [class]="'hide-md-down'"
-                    style="color: #808495; font-size: 12px;white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col size="1" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 12px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis; min-width: 50px;">
                     {{item.staffNumber}}
                   </ion-col>
-                  <ion-col size="4" align-self-center  [class]="'hide-sm-down'"
-                    style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color:
+                  <ion-col size="4" align-self-center [class]="'hide-sm-down'" style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color:
                     #43425d;opacity: 0.8;">
                     {{item.employeeName}}
-                    <div [class]="'hide-md-up'"  style="color: #808495; font-size: 12px; font-weight: normal; min-width: 50px;">ID: {{item.staffNumber}}</div>
+                    <div [class]="'hide-md-up'"
+                      style="color: #808495; font-size: 12px; font-weight: normal; min-width: 50px;">ID:
+                      {{item.staffNumber}}</div>
                   </ion-col>
-                  <ion-col size="2.3" align-self-center [class]="'hide-md-down'"
-                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col size="2.3" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;">
                     {{item.designation}}
                   </ion-col>
-                  <ion-col size="2.3" align-self-center [class]="'hide-md-down'"
-                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col size="2.3" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;">
                     {{item.department}}
                   </ion-col>
-                  <ion-col [class]="'hide-md-up'" style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow: ellipsis; padding-left: 15px;">
-                    <ion-item-group [class]="'hide-sm-up'" style="margin-bottom: 5px;">  
+                  <ion-col [class]="'hide-md-up'"
+                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow: ellipsis; padding-left: 15px;">
+                    <ion-item-group [class]="'hide-sm-up'" style="margin-bottom: 5px;">
                       <div style="font-weight: bold;color:
                     #43425d;opacity: 0.8;font-size: 12px;margin-bottom: 3px;">{{item.employeeName}}</div>
                       <div>
@@ -526,8 +517,7 @@
               <ng-container *ngIf="selection == 'branch'">
                 <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of filteredBranch; let i=index">
                   <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
-                    <ion-avatar class="avatar" *ngIf="individualButton === true"
-                      (mouseover)="hoverValue(i, true, item.isChecked)"
+                    <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
                       (mouseout)="hoverValue(i, false, item.isChecked)">
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                         [style.display]="hideImg[i] ? 'none' : 'block'">
@@ -538,34 +528,32 @@
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
-                    <ion-avatar class="avatar" *ngIf="individualButton === false">
+                    <!-- <ion-avatar class="avatar" *ngIf="individualButton === false">
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
-                    </ion-avatar>
+                    </ion-avatar> -->
                   </ion-col>
                   <ion-col size="1" align-self-center [class]="'hide-md-down'"
                     style="color: #808495; font-size: 12px;white-space: pre-line;overflow: hidden;text-overflow: ellipsis;min-width: 50px;">
                     {{item.staffNumber}}
                   </ion-col>
-                  <ion-col size="4" align-self-center [class]="'hide-sm-down'"
-                    style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color:
+                  <ion-col size="4" align-self-center [class]="'hide-sm-down'" style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color:
                     #43425d;opacity: 0.8;">
                     {{item.employeeName}}
                     <div [class]="'hide-md-up'"
                       style="color: #808495; font-size: 12px;font-weight: normal;min-width: 50px;">
                       ID: {{item.staffNumber}}</div>
                   </ion-col>
-                  <ion-col size="2.3" align-self-center [class]="'hide-md-down'"
-                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col size="2.3" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;">
                     {{item.designation}}
                   </ion-col>
-                  <ion-col size="2.3" align-self-center [class]="'hide-md-down'"
-                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col size="2.3" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;">
                     {{item.department}}
                   </ion-col>
-                  <ion-col [class]="'hide-md-up'" style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow: ellipsis; padding-left: 15px;">
-                    <ion-item-group [class]="'hide-sm-up'" style="margin-bottom: 5px;">  
+                  <ion-col [class]="'hide-md-up'"
+                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow: ellipsis; padding-left: 15px;">
+                    <ion-item-group [class]="'hide-sm-up'" style="margin-bottom: 5px;">
                       <div style="font-weight: bold;color:
                     #43425d;opacity: 0.8;font-size: 12px;margin-bottom: 3px;">{{item.employeeName}}</div>
                       <div>
@@ -590,8 +578,7 @@
                 <ion-row class="detailsRow" style="font-size: 12px;"
                   *ngFor="let item of filteredCostCentre; let i=index">
                   <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
-                    <ion-avatar class="avatar" *ngIf="individualButton === true"
-                      (mouseover)="hoverValue(i, true, item.isChecked)"
+                    <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
                       (mouseout)="hoverValue(i, false, item.isChecked)">
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
                         [style.display]="hideImg[i] ? 'none' : 'block'">
@@ -602,33 +589,31 @@
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
-                    <ion-avatar class="avatar" *ngIf="individualButton === false">
+                    <!-- <ion-avatar class="avatar" *ngIf="individualButton === false">
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
-                    </ion-avatar>
+                    </ion-avatar> -->
                   </ion-col>
-                  <ion-col size="1" align-self-center  [class]="'hide-md-down'"
-                    style="color: #808495; font-size: 12px;min-width: 50px; white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col size="1" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 12px;min-width: 50px; white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;">
                     {{item.staffNumber}}
                   </ion-col>
-                  <ion-col size="4" align-self-center [class]="'hide-sm-down'"
-                    style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color:
+                  <ion-col size="4" align-self-center [class]="'hide-sm-down'" style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;font-weight: bold;color:
                     #43425d;opacity: 0.8;">
                     {{item.employeeName}}
-                    <div [class]="'hide-md-up'" style="color: #808495; font-size: 12px;min-width: 50px;">ID: {{item.staffNumber}}</div>
+                    <div [class]="'hide-md-up'" style="color: #808495; font-size: 12px;min-width: 50px;">ID:
+                      {{item.staffNumber}}</div>
                   </ion-col>
-                  <ion-col size="2.3" align-self-center [class]="'hide-md-down'"
-                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col size="2.3" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;">
                     {{item.designation}}
                   </ion-col>
-                  <ion-col size="2.3" align-self-center [class]="'hide-md-down'"
-                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
+                  <ion-col size="2.3" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;">
                     {{item.department}}
                   </ion-col>
-                  <ion-col [class]="'hide-md-up'" style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow: ellipsis; padding-left: 15px;">
-                    <ion-item-group [class]="'hide-sm-up'" style="margin-bottom: 5px;">  
+                  <ion-col [class]="'hide-md-up'"
+                    style="color: #808495; font-size: 11px;white-space: pre-line;overflow: hidden;text-overflow: ellipsis; padding-left: 15px;">
+                    <ion-item-group [class]="'hide-sm-up'" style="margin-bottom: 5px;">
                       <div style="font-weight: bold;color:
                     #43425d;opacity: 0.8;font-size: 12px;margin-bottom: 3px;">{{item.employeeName}}</div>
                       <div>
@@ -650,13 +635,12 @@
                 </ion-row>
               </ng-container>
             </div>
-            <div [style.height]="individualButton === true? 'calc( 100% - 12em)':'calc( 100% - 20em)'"
-              style="overflow: auto;min-height: 250px;" *ngIf="filterSpinner">
+            <div style="overflow: auto;min-height: 250px;height: calc( 100% - 20em);" *ngIf="filterSpinner">
               <div style="width: 100%; height:100%; text-align: center; margin-top: -30px">
                 <app-spinner></app-spinner>
               </div>
             </div>
-            <div class="buttons" style="display: flex; flex-wrap: wrap;justify-content: flex-end;"
+            <!-- <div class="buttons" style="display: flex; flex-wrap: wrap;justify-content: flex-end;"
               *ngIf="individualButton === true">
               <div [class]="'hide-sm-down'" style="flex:1.5; min-width: 0px;"></div>
               <ion-button fill="outline"
@@ -670,8 +654,8 @@
                 [disabled]="selects == null || selectedUserId == null">
                 Produce Report
               </ion-button>
-            </div>
-            <div  class="buttons" style="display: flex; flex-wrap: wrap;justify-content: flex-end;" *ngIf="groupButton === true">
+            </div> -->
+            <div class="buttons" style="display: flex; flex-wrap: wrap;justify-content: flex-end;">
               <div [class]="'hide-sm-down'" style="flex:1.5; min-width: 0px;"></div>
               <ion-button fill="outline"
                 (click)="selects= null;clearCheckbox();companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';"
@@ -679,10 +663,9 @@
                 11px;text-transform: none; flex: 1;min-width: 150px;">
                 Clear
               </ion-button>
-              <ion-button
-                style="--border-radius: 2px;font-size: 11px;height: 30px;width:320px;cursor: pointer;text-transform:
-                none;flex:2; min-width: 180px;"
-                color="primary" (click)="produceGroupReport(); clickedProduce=true" [disabled]="selects == null">
+              <ion-button style="--border-radius: 2px;font-size: 11px;height: 30px;width:320px;cursor: pointer;text-transform:
+                none;flex:2; min-width: 180px;" color="primary" (click)="produceGroupReport(); clickedProduce=true"
+                [disabled]="selects == null">
                 Produce Report
               </ion-button>
             </div>
@@ -721,22 +704,28 @@
               </ion-col>
             </ion-row>
             <ion-row style="display: flex; flex-flow: row nowrap;">
-              <ion-col size="0.3" class="titleRow" style="display: -webkit-box;
+              <ion-col size="0.3" class="titleRow"
+                style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 26px;">
                 No</ion-col>
-              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+              <ion-col size="1" class="titleRow"
+                style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 83px;">
                 Employee No</ion-col>
-              <ion-col size="2" class="titleRow" style="text-align: left;display: -webkit-box;
+              <ion-col size="2" class="titleRow"
+                style="text-align: left;display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 175px;">
                 Employee Name</ion-col>
-              <ion-col size="1.2" class="titleRow" style="display: -webkit-box;
+              <ion-col size="1.2" class="titleRow"
+                style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 105px;">
                 Length of Service (Years)</ion-col>
-              <ion-col size="1.5" class="titleRow" style="text-align: left;display: -webkit-box;
+              <ion-col size="1.5" class="titleRow"
+                style="text-align: left;display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 132px;">
                 Leave Type</ion-col>
-              <ion-col size="1" class="titleRow" style="text-align: left;display: -webkit-box;
+              <ion-col size="1" class="titleRow"
+                style="text-align: left;display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 88px;">
                 Entitlement (Days)</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
@@ -747,7 +736,8 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 88px;">
                 Forfeited (Days)</ion-col>
-              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+              <ion-col size="1" class="titleRow"
+                style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 88px;">
                 Taken (Days)</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
@@ -766,8 +756,10 @@
             <div style="padding: 10px;" *ngFor="let item of tableDetails; let i=index; let odd=odd;"
               [ngClass]="{ odd: odd }">
               <ion-row style="display: flex; flex-flow: row nowrap;">
-                <ion-col size="0.3" class="titleRow text" style="min-width: 26px;white-space: pre-line;">{{i + 1}}</ion-col>
-                <ion-col size="1" class="titleRow text" style="min-width: 83px;white-space: pre-line;">{{item.employeeNo}}</ion-col>
+                <ion-col size="0.3" class="titleRow text" style="min-width: 26px;white-space: pre-line;">{{i + 1}}
+                </ion-col>
+                <ion-col size="1" class="titleRow text" style="min-width: 83px;white-space: pre-line;">
+                  {{item.employeeNo}}</ion-col>
                 <ion-col size="2" class="text" style="text-align: left;white-space: pre-line;min-width: 175px;">
                   {{item.employeeName}}
                 </ion-col>
@@ -884,8 +876,7 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 88px">
                 Status</ion-col>
-              <ion-col size="1.5" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 175px">
                 Remarks</ion-col>
@@ -967,8 +958,7 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 175px;">
                 Employee Name</ion-col>
-              <ion-col size="1" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 105px;">
                 Length of Service (Years)</ion-col>
@@ -994,7 +984,7 @@
                 Start Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;"
-            min-width: 88px;>
+                min-width: 88px;>
                 End Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
@@ -1003,8 +993,7 @@
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                 Status</ion-col>
-              <ion-col size="1" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
               min-width: 88px;">
                 Remarks</ion-col>
@@ -1110,13 +1099,11 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 88px;">
                 Status</ion-col>
-              <ion-col size="1.5" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 88px;">
                 Request Remarks</ion-col>
-              <ion-col size="1.5" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
                -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
                5px;min-width: 88px;">
                 Final Approval Remarks</ion-col>
@@ -1221,8 +1208,7 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 175px;">
                 Approved By</ion-col>
-              <ion-col size="1.5" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 175px;">
                 Remarks</ion-col>
@@ -1334,8 +1320,7 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 175px;">
                 Adjustment Date</ion-col>
-              <ion-col size="1.5" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 175px;">
                 Remarks</ion-col>
@@ -1431,13 +1416,11 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 175px;">
                 Cancelled By</ion-col>
-              <ion-col size="1.5" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 175px;">
                 Leave Remarks</ion-col>
-              <ion-col size="1.5" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 175px;">
                 Cancellation Remarks</ion-col>
@@ -1538,13 +1521,11 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 175px;">
                 Rejected By</ion-col>
-              <ion-col size="1.5" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 175px;">
                 Leave Remarks</ion-col>
-              <ion-col size="1.5" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 175px;">
                 Rejection Remarks</ion-col>
@@ -1619,8 +1600,7 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 26px;">
                 No</ion-col>
-              <ion-col size="1.5"
-                style="text-align: left;display: -webkit-box;
+              <ion-col size="1.5" style="text-align: left;display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 175px;">
                 Employee No</ion-col>
@@ -1666,8 +1646,7 @@
       <ion-card-content *ngIf="selects == 'employee-master-list' && clickedProduce==true"
         style="max-height: 100%;height: 100%;padding: 0;">
         <div id="template" style="height: 100%;overflow-x: auto; overflow-y: hidden;">
-          <div
-            style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px
+          <div style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px
             0px; min-width: 1500px;">
             <mat-form-field id="saveas" appearance="outline"
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
@@ -1702,8 +1681,7 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 175px;">
                 Employee Name</ion-col>
-              <ion-col size="1.5"
-                style="text-align: left;display: -webkit-box;
+              <ion-col size="1.5" style="text-align: left;display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 175px;">
                 Company Name</ion-col>
@@ -1727,18 +1705,15 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 88px;">
                 Joining Date</ion-col>
-              <ion-col size="1" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 88px;">
                 Confirmed Date</ion-col>
-              <ion-col size="1" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 88px;">
                 Resigned Date</ion-col>
-              <ion-col size="1" class="titleRow"
-                style="display: -webkit-box;
+              <ion-col size="1" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 88px;">
                 Status</ion-col>
