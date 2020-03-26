@@ -245,6 +245,13 @@ export class ReportComponent implements OnInit {
    */
   public listMain: boolean;
 
+  /** 
+   * profile picture details
+   * @type {*}
+   * @memberof ReportComponent
+   */
+  public url: any;
+
   /**
    * leave types list that have been selected
    * @private
@@ -261,7 +268,11 @@ export class ReportComponent implements OnInit {
    * @param {Platform} reportPlatform
    * @memberof ReportComponent
    */
-  constructor(private leaveAPI: LeaveApiService, private api: APIService, private reportAPI: ReportApiService, public reportPlatform: Platform) { }
+  constructor(private leaveAPI: LeaveApiService, private api: APIService, private reportAPI: ReportApiService, public reportPlatform: Platform) {
+    this.api.get_profile_pic('all').subscribe(data => {
+      this.url = data;
+    })
+  }
 
   /**
    * initial report

@@ -320,17 +320,34 @@
                 <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of userList; let i=index">
                   <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;"
                     *ngIf="(this.reportPlatform.platforms().includes('desktop'))">
-                    <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
-                      (mouseout)="hoverValue(i, false, item.isChecked)">
-                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
-                        [style.display]="hideImg[i] ? 'none' : 'block'">
-                      <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
-                        <ion-checkbox mode="ios" class="ionCheckboxList"
-                          style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
-                          (ionChange)="contentList(item.id)">
-                        </ion-checkbox>
-                      </div>
-                    </ion-avatar>
+                    <ng-container *ngFor="let list of url.details; let j= index">
+                      <ng-container *ngIf="url.details[j].USER_GUID == item.userId">
+                        <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
+                          (mouseout)="hoverValue(i, false, item.isChecked)"
+                          *ngIf="url.details[j].PROFILE_PICTURE !== null">
+                          <img src="{{url.link + url.details[j].PROFILE_PICTURE}}" style="margin-left: 5px;"
+                            [style.display]="hideImg[i] ? 'none' : 'block'">
+                          <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                            <ion-checkbox mode="ios" class="ionCheckboxList"
+                              style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                              (ionChange)="contentList(item.id)">
+                            </ion-checkbox>
+                          </div>
+                        </ion-avatar>
+                        <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
+                          (mouseout)="hoverValue(i, false, item.isChecked)"
+                          *ngIf="url.details[j].PROFILE_PICTURE === null">
+                          <img src="assets/icon/picture.png" style="margin-left: 5px;"
+                            [style.display]="hideImg[i] ? 'none' : 'block'">
+                          <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                            <ion-checkbox mode="ios" class="ionCheckboxList"
+                              style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                              (ionChange)="contentList(item.id)">
+                            </ion-checkbox>
+                          </div>
+                        </ion-avatar>
+                      </ng-container>
+                    </ng-container>
                     <!-- <ion-avatar class="avatar" *ngIf="individualButton === false">
                       <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
                     </ion-avatar> -->
@@ -396,20 +413,34 @@
               <ng-container *ngIf="selection == 'company'">
                 <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of filteredCompany; let i=index">
                   <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
-                    <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
-                      (mouseout)="hoverValue(i, false, item.isChecked)">
-                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
-                        [style.display]="hideImg[i] ? 'none' : 'block'">
-                      <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
-                        <ion-checkbox mode="ios" class="ionCheckboxList"
-                          style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
-                          (ionChange)="contentList(item.id)">
-                        </ion-checkbox>
-                      </div>
-                    </ion-avatar>
-                    <!-- <ion-avatar class="avatar" *ngIf="individualButton === false">
-                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
-                    </ion-avatar> -->
+                    <ng-container *ngFor="let list of url.details; let j= index">
+                      <ng-container *ngIf="url.details[j].USER_GUID == item.userId">
+                        <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
+                          (mouseout)="hoverValue(i, false, item.isChecked)"
+                          *ngIf="url.details[j].PROFILE_PICTURE !== null">
+                          <img src="{{url.link + url.details[j].PROFILE_PICTURE}}" style="margin-left: 5px;"
+                            [style.display]="hideImg[i] ? 'none' : 'block'">
+                          <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                            <ion-checkbox mode="ios" class="ionCheckboxList"
+                              style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                              (ionChange)="contentList(item.id)">
+                            </ion-checkbox>
+                          </div>
+                        </ion-avatar>
+                        <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
+                          (mouseout)="hoverValue(i, false, item.isChecked)"
+                          *ngIf="url.details[j].PROFILE_PICTURE === null">
+                          <img src="assets/icon/picture.png" style="margin-left: 5px;"
+                            [style.display]="hideImg[i] ? 'none' : 'block'">
+                          <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                            <ion-checkbox mode="ios" class="ionCheckboxList"
+                              style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                              (ionChange)="contentList(item.id)">
+                            </ion-checkbox>
+                          </div>
+                        </ion-avatar>
+                      </ng-container>
+                    </ng-container>
                   </ion-col>
                   <ion-col size="1" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 12px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;min-width:50px;">
@@ -457,20 +488,34 @@
                 <ion-row class="detailsRow" style="font-size: 12px;"
                   *ngFor="let item of filteredDepartment; let i=index">
                   <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
-                    <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
-                      (mouseout)="hoverValue(i, false, item.isChecked)">
-                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
-                        [style.display]="hideImg[i] ? 'none' : 'block'">
-                      <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
-                        <ion-checkbox mode="ios" class="ionCheckboxList"
-                          style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
-                          (ionChange)="contentList(item.id)">
-                        </ion-checkbox>
-                      </div>
-                    </ion-avatar>
-                    <!-- <ion-avatar class="avatar" *ngIf="individualButton === false">
-                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
-                    </ion-avatar> -->
+                    <ng-container *ngFor="let list of url.details; let j= index">
+                      <ng-container *ngIf="url.details[j].USER_GUID == item.userId">
+                        <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
+                          (mouseout)="hoverValue(i, false, item.isChecked)"
+                          *ngIf="url.details[j].PROFILE_PICTURE !== null">
+                          <img src="{{url.link + url.details[j].PROFILE_PICTURE}}" style="margin-left: 5px;"
+                            [style.display]="hideImg[i] ? 'none' : 'block'">
+                          <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                            <ion-checkbox mode="ios" class="ionCheckboxList"
+                              style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                              (ionChange)="contentList(item.id)">
+                            </ion-checkbox>
+                          </div>
+                        </ion-avatar>
+                        <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
+                          (mouseout)="hoverValue(i, false, item.isChecked)"
+                          *ngIf="url.details[j].PROFILE_PICTURE === null">
+                          <img src="assets/icon/picture.png" style="margin-left: 5px;"
+                            [style.display]="hideImg[i] ? 'none' : 'block'">
+                          <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                            <ion-checkbox mode="ios" class="ionCheckboxList"
+                              style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                              (ionChange)="contentList(item.id)">
+                            </ion-checkbox>
+                          </div>
+                        </ion-avatar>
+                      </ng-container>
+                    </ng-container>
                   </ion-col>
                   <ion-col size="1" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 12px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis; min-width: 50px;">
@@ -517,20 +562,34 @@
               <ng-container *ngIf="selection == 'branch'">
                 <ion-row class="detailsRow" style="font-size: 12px;" *ngFor="let item of filteredBranch; let i=index">
                   <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
-                    <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
-                      (mouseout)="hoverValue(i, false, item.isChecked)">
-                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
-                        [style.display]="hideImg[i] ? 'none' : 'block'">
-                      <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
-                        <ion-checkbox mode="ios" class="ionCheckboxList"
-                          style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
-                          (ionChange)="contentList(item.id)">
-                        </ion-checkbox>
-                      </div>
-                    </ion-avatar>
-                    <!-- <ion-avatar class="avatar" *ngIf="individualButton === false">
-                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
-                    </ion-avatar> -->
+                    <ng-container *ngFor="let list of url.details; let j= index">
+                      <ng-container *ngIf="url.details[j].USER_GUID == item.userId">
+                        <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
+                          (mouseout)="hoverValue(i, false, item.isChecked)"
+                          *ngIf="url.details[j].PROFILE_PICTURE !== null">
+                          <img src="{{url.link + url.details[j].PROFILE_PICTURE}}" style="margin-left: 5px;"
+                            [style.display]="hideImg[i] ? 'none' : 'block'">
+                          <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                            <ion-checkbox mode="ios" class="ionCheckboxList"
+                              style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                              (ionChange)="contentList(item.id)">
+                            </ion-checkbox>
+                          </div>
+                        </ion-avatar>
+                        <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
+                          (mouseout)="hoverValue(i, false, item.isChecked)"
+                          *ngIf="url.details[j].PROFILE_PICTURE === null">
+                          <img src="assets/icon/picture.png" style="margin-left: 5px;"
+                            [style.display]="hideImg[i] ? 'none' : 'block'">
+                          <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                            <ion-checkbox mode="ios" class="ionCheckboxList"
+                              style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                              (ionChange)="contentList(item.id)">
+                            </ion-checkbox>
+                          </div>
+                        </ion-avatar>
+                      </ng-container>
+                    </ng-container>
                   </ion-col>
                   <ion-col size="1" align-self-center [class]="'hide-md-down'"
                     style="color: #808495; font-size: 12px;white-space: pre-line;overflow: hidden;text-overflow: ellipsis;min-width: 50px;">
@@ -578,20 +637,34 @@
                 <ion-row class="detailsRow" style="font-size: 12px;"
                   *ngFor="let item of filteredCostCentre; let i=index">
                   <ion-col size="1.5" align-self-center style="text-align: center;padding-right: 30px;">
-                    <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
-                      (mouseout)="hoverValue(i, false, item.isChecked)">
-                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
-                        [style.display]="hideImg[i] ? 'none' : 'block'">
-                      <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
-                        <ion-checkbox mode="ios" class="ionCheckboxList"
-                          style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
-                          (ionChange)="contentList(item.id)">
-                        </ion-checkbox>
-                      </div>
-                    </ion-avatar>
-                    <!-- <ion-avatar class="avatar" *ngIf="individualButton === false">
-                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
-                    </ion-avatar> -->
+                    <ng-container *ngFor="let list of url.details; let j= index">
+                      <ng-container *ngIf="url.details[j].USER_GUID == item.userId">
+                        <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
+                          (mouseout)="hoverValue(i, false, item.isChecked)"
+                          *ngIf="url.details[j].PROFILE_PICTURE !== null">
+                          <img src="{{url.link + url.details[j].PROFILE_PICTURE}}" style="margin-left: 5px;"
+                            [style.display]="hideImg[i] ? 'none' : 'block'">
+                          <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                            <ion-checkbox mode="ios" class="ionCheckboxList"
+                              style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                              (ionChange)="contentList(item.id)">
+                            </ion-checkbox>
+                          </div>
+                        </ion-avatar>
+                        <ion-avatar class="avatar" (mouseover)="hoverValue(i, true, item.isChecked)"
+                          (mouseout)="hoverValue(i, false, item.isChecked)"
+                          *ngIf="url.details[j].PROFILE_PICTURE === null">
+                          <img src="assets/icon/picture.png" style="margin-left: 5px;"
+                            [style.display]="hideImg[i] ? 'none' : 'block'">
+                          <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
+                            <ion-checkbox mode="ios" class="ionCheckboxList"
+                              style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
+                              (ionChange)="contentList(item.id)">
+                            </ion-checkbox>
+                          </div>
+                        </ion-avatar>
+                      </ng-container>
+                    </ng-container>
                   </ion-col>
                   <ion-col size="1" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 12px;min-width: 50px; white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;">
@@ -656,7 +729,7 @@
               </ion-button>
             </div> -->
             <div class="buttons" style="display: flex; flex-wrap: wrap;justify-content: flex-end;">
-              <div [class]="'hide-sm-down'" style="flex:1.5; min-width: 0px;"></div>
+              <div [class]="'hide-sm-down'" style="flex:1.5; min-width: 0px;">2 users selected</div>
               <ion-button fill="outline"
                 (click)="selects= null;clearCheckbox();companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';"
                 style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 190px;font-size:
