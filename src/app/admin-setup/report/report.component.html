@@ -287,8 +287,8 @@
               <ion-row>
                 <ion-col size="1.5"
                   style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
-                  <ion-checkbox mode="ios" class="ionCheckboxList" style="margin-top: 6px;"
-                    [indeterminate]="indeterminate" [disabled]=true (click)="headerList()">
+                  <ion-checkbox mode="ios" class="ionCheckboxList" style="margin-top: 6px;" [(ngModel)]="listMain"
+                    [indeterminate]="indeterminate" (click)="headerList()">
                   </ion-checkbox>
                 </ion-col>
                 <!-- <ion-col size="1.5" *ngIf="individualButton === false"></ion-col> -->
@@ -327,7 +327,7 @@
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" class="ionCheckboxList"
                           style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
-                          (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                          (ionChange)="contentList(item.id)">
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
@@ -342,7 +342,7 @@
                       <div class="checkboxOnAvatar" style="display: block;">
                         <ion-checkbox mode="ios" class="ionCheckboxList"
                           style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
-                          (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                          (ionChange)="contentList(item.id)">
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
@@ -403,7 +403,7 @@
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" class="ionCheckboxList"
                           style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
-                          (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                          (ionChange)="contentList(item.id)">
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
@@ -464,7 +464,7 @@
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" class="ionCheckboxList"
                           style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
-                          (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                          (ionChange)="contentList(item.id)">
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
@@ -524,7 +524,7 @@
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" class="ionCheckboxList"
                           style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
-                          (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                          (ionChange)="contentList(item.id)">
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
@@ -585,7 +585,7 @@
                       <div class="checkboxOnAvatar" [style.display]="hideImg[i] ? 'block' : 'none'">
                         <ion-checkbox mode="ios" class="ionCheckboxList"
                           style="position: absolute;margin-top: 7px;margin-left: -4px;" [(ngModel)]="item.isChecked"
-                          (ionChange)="contentList(item.id)" [disabled]=item.disabled>
+                          (ionChange)="contentList(item.id)">
                         </ion-checkbox>
                       </div>
                     </ion-avatar>

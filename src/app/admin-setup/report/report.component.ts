@@ -239,6 +239,13 @@ export class ReportComponent implements OnInit {
   public selectedUserId: string;
 
   /**
+   * main checkbox of employee list
+   * @type {boolean}
+   * @memberof ReportComponent
+   */
+  public listMain: boolean;
+
+  /**
    * leave types list that have been selected
    * @private
    * @type {string[]}
@@ -398,7 +405,7 @@ export class ReportComponent implements OnInit {
       this.userList = list;
       for (let i = 0; i < this.userList.length; i++) {
         this.userList[i]["isChecked"] = false;
-        this.userList[i]["disabled"] = false;
+        // this.userList[i]["disabled"] = false;
       }
       if (guid != null) {
         this.filterCompany(guid);
@@ -591,7 +598,7 @@ export class ReportComponent implements OnInit {
      * @memberof ReportComponent
      */
   hoverValue(index: number, isIn: boolean, isChecked: boolean) {
-    if (this.indeterminate) {
+    if (this.indeterminate || this.listMain) {
       this.hideImg = [];
       this.hideImg.push(...Array(this.userList.length).fill(true));
     } else if (isIn && !isChecked && !this.indeterminate) {
@@ -610,6 +617,7 @@ export class ReportComponent implements OnInit {
     this.hideImg.splice(0, this.hideImg.length);
     setTimeout(() => {
       this.userList.forEach(item => {
+        item.isChecked = this.listMain;
         if (item.isChecked) {
           this.hideImg.push(true);
         } else {
@@ -632,14 +640,19 @@ export class ReportComponent implements OnInit {
         this.selectedUserId = item.userId;
         this.hideImg.push(true);
       }
-      if (item.id !== itemId) {
-        item.disabled = !item.disabled;
-      }
+      // if (item.id !== itemId) {
+      //   item.disabled = !item.disabled;
+      // }
     });
     if (checkedNo > 0 && checkedNo < totalLength) {
       this.indeterminate = true;
+      this.listMain = false;
+    } else if (checkedNo == totalLength) {
+      this.listMain = true;
+      this.indeterminate = false;
     } else {
       this.indeterminate = false;
+      this.listMain = false;
     }
   }
 
@@ -770,7 +783,7 @@ export class ReportComponent implements OnInit {
 
     this.userList.forEach(list => {
       list.isChecked = false;
-      list.disabled = false;
+      // list.disabled = false;
     });
   }
 
