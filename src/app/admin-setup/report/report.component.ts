@@ -253,6 +253,13 @@ export class ReportComponent implements OnInit {
   public url: any;
 
   /**
+   * selected number of users
+   * @type {number}
+   * @memberof ReportComponent
+   */
+  public selectedNum: number = 0;
+
+  /**
    * leave types list that have been selected
    * @private
    * @type {string[]}
@@ -416,7 +423,6 @@ export class ReportComponent implements OnInit {
       this.userList = list;
       for (let i = 0; i < this.userList.length; i++) {
         this.userList[i]["isChecked"] = false;
-        // this.userList[i]["disabled"] = false;
       }
       if (guid != null) {
         this.filterCompany(guid);
@@ -631,6 +637,7 @@ export class ReportComponent implements OnInit {
         item.isChecked = this.listMain;
         if (item.isChecked) {
           this.hideImg.push(true);
+          this.selectedNum++;
         } else {
           this.hideImg.push(false);
         }
@@ -645,15 +652,14 @@ export class ReportComponent implements OnInit {
   contentList(itemId) {
     const totalLength = this.userList.length;
     let checkedNo = 0;
+    this.selectedNum = 0;
     this.userList.map(item => {
       if (item.isChecked) {
         checkedNo++;
+        this.selectedNum++;
         this.selectedUserId = item.userId;
         this.hideImg.push(true);
       }
-      // if (item.id !== itemId) {
-      //   item.disabled = !item.disabled;
-      // }
     });
     if (checkedNo > 0 && checkedNo < totalLength) {
       this.indeterminate = true;
@@ -794,8 +800,8 @@ export class ReportComponent implements OnInit {
 
     this.userList.forEach(list => {
       list.isChecked = false;
-      // list.disabled = false;
     });
+    this.selectedNum = 0;
   }
 
 }

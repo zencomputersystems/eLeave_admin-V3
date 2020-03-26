@@ -729,7 +729,8 @@
               </ion-button>
             </div> -->
             <div class="buttons" style="display: flex; flex-wrap: wrap;justify-content: flex-end;">
-              <div [class]="'hide-sm-down'" style="flex:1.5; min-width: 0px;">2 users selected</div>
+              <div [class]="'hide-sm-down'" style="flex:1.5; min-width: 0px;font-size: 12px;"><strong>Selected User No.:
+                </strong>{{selectedNum}}</div>
               <ion-button fill="outline"
                 (click)="selects= null;clearCheckbox();companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';"
                 style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 190px;font-size:
