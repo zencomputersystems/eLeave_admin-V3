@@ -12,7 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDatepickerModule, MatInputModule } from '@angular/material';
 import { ReportComponent } from './report.component';
 import { InlineSVGModule } from 'ng-inline-svg';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
     {
@@ -36,6 +37,8 @@ const routes: Routes = [
         MatDialogModule,
         MatDatepickerModule,
         InlineSVGModule,
+        MatMenuModule,
+        MatIconModule,
         RouterModule.forChild(routes)
     ],
     providers: [],

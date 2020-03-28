@@ -182,6 +182,16 @@
   .buttons {
     margin: 10px 0px 10px 0px;
   }
+  ::ng-deep .button.mat-menu-item {
+    outline: none;
+  }
+  .search-icon {
+    width: 30px;
+    height: 30px;
+    fill: #a3a6b4;
+    opacity: 0.8;
+    margin: 0 auto;
+  }
   // .table-scroll-style {
   //   -ms-overflow-style: none;
   // }

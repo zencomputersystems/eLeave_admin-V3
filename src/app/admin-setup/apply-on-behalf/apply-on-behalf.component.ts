@@ -109,7 +109,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {boolean}
      * @memberof ApplyOnBehalfComponent
      */
-    public showSpinner: boolean = true;
+    public showSpinner: boolean;
 
     /**
      * filtered user from searchbar keyup
@@ -340,14 +340,17 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     async ngOnInit() {
+        this.showSpinner = true;
         console.log('applyonbehalfPlatformApi:' + this.applyonbehalfPlatformApi);
         console.log('platform:' + this.applyonbehalfPlatformApi.platforms());
         (this.applyonbehalfPlatformApi.platforms().includes('tablet' || 'desktop')) ? console.log('is tab & web') : console.log('mobile app');
         this.leaveAPI.get_admin_leavetype().subscribe(leave => {
             this.leaveTypes = leave;
+        })
+        this.reportApi.get_bundle_report('leave-entitlement').subscribe(data => {
+            this.employeeList = data;
             this.showSpinner = false;
         })
-        this.reportApi.get_bundle_report('leave-entitlement').subscribe(data => this.employeeList = data)
     }
 
     /**

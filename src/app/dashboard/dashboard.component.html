@@ -26,7 +26,7 @@
                             [innerHTML]="item.MESSAGE">
                         </p>
                         <ng-container *ngFor="let list of item.ATTACHMENT; let j=index">
-                            <img *ngIf="list !== ''" src="{{url.link + list}}" style="width: 150px;">
+                            <img *ngIf="list !== '' && url" src="{{url.link + list}}" style="width: 150px;">
                         </ng-container>
                     </ion-label>
                 </ion-item>
@@ -262,7 +262,7 @@
                                     <p class="mainInnerText" [innerHTML]="item.MESSAGE"
                                         style="margin-bottom: 0; white-space: pre-wrap;"></p>
                                     <ng-container *ngFor="let list of item.ATTACHMENT">
-                                        <img *ngIf="list !== ''" src="{{url.link + list}}" style="width: 50px;">
+                                        <img *ngIf="list !== '' && url" src="{{url.link + list}}" style="width: 50px;">
                                     </ng-container>
                                 </ion-col>
                                 <ion-col size="2" align-self-center
@@ -326,7 +326,7 @@
                                     </ion-label>
                                     <p [innerHTML]="item.MESSAGE" style="margin:0px;"></p>
                                     <ng-container *ngFor="let list of item.ATTACHMENT; let j=index">
-                                        <img *ngIf="list !== ''" src="{{url.link + list}}" style="width: 50px;">
+                                        <img *ngIf="list !== '' && url" src="{{url.link + list}}" style="width: 50px;">
                                     </ng-container>
                                     <ion-item-group style="align-self: flex-end; padding: 0px 25px 15px 0px;">
                                         <img src="assets/icon/leave_setup/icon_edit@3x.png"
