@@ -207,7 +207,7 @@
                   <mat-form-field appearance="outline"
                     style="height: 50px;font-size: 12px;width: 90%;color:#43425d;opacity: 0.8;">
                     <mat-select [(value)]="companyValue">
-                      <mat-option value="Nothing Selected" (click)="filteredCompany = userList;selection = 'company';">
+                      <mat-option value="Nothing Selected" (click)="companyId = null;userNameList()">
                         Nothing Selected
                       </mat-option>
                       <mat-option *ngFor="let company of companyList" [value]="company.TENANT_COMPANY_GUID"
@@ -240,11 +240,10 @@
                   <mat-form-field appearance="outline"
                     style="height: 50px;font-size: 12px;width: 90%;color:#43425d;opacity: 0.8;">
                     <mat-select [(value)]="departmentValue">
-                      <mat-option value="Nothing Selected"
-                        (click)="filteredDepartment = filteredCompany;selection = 'department'">Nothing
+                      <mat-option value="Nothing Selected" (click)="departmentName=null;userNameList()">Nothing
                         Selected</mat-option>
                       <mat-option *ngFor=" let department of departmentList" [value]="department.department"
-                        (click)="selectedDepartment(department.department)">
+                        (click)="departmentName = department.department;userNameList();">
                         {{department.department}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -255,11 +254,10 @@
                   <mat-form-field appearance="outline"
                     style="height: 50px;font-size: 12px;width: 90%;color:#43425d;opacity: 0.8;">
                     <mat-select [(value)]="branchValue">
-                      <mat-option value="Nothing Selected"
-                        (click)="filteredBranch = filteredDepartment; selection = 'branch';">Nothing
+                      <mat-option value="Nothing Selected" (click)="branchName=null;userNameList()">Nothing
                         Selected</mat-option>
                       <mat-option *ngFor="let branch of branchList" [value]="branch.BRANCH"
-                        (click)="selectedBranch(branch.BRANCH)">
+                        (click)="branchName = branch.BRANCH;userNameList();">
                         {{branch.BRANCH}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -272,11 +270,11 @@
                   <mat-form-field appearance="outline"
                     style="height: 50px;font-size: 12px;width: 90%;color:#43425d;opacity: 0.8;">
                     <mat-select [(value)]="costCentreValue">
-                      <mat-option value="Nothing Selected"
-                        (click)="filteredCostCentre = filteredDepartment;selection = 'costcentre'">Nothing Selected
+                      <mat-option value="Nothing Selected" (click)="costCentreName=null;userNameList()">Nothing
+                        Selected
                       </mat-option>
                       <mat-option *ngFor="let item of costcentre" [value]="item.COSTCENTRE"
-                        (click)="selectedCostCentre(item.COSTCENTRE)">
+                        (click)="costCentreName = item.COSTCENTRE;userNameList();">
                         {{item.COSTCENTRE}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -721,8 +719,8 @@
                 </ion-row>
               </ng-container> -->
             </div>
-            <div style="overflow: auto;min-height: 250px;height: calc( 100% - 20em);">
-              <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="filterSpinner">
+            <div style="overflow: auto;min-height: 250px;height: calc( 100% - 20em);" *ngIf="filterSpinner">
+              <div style="width: 100%; height:100%; text-align: center; margin-top: -30px">
                 <app-spinner></app-spinner>
               </div>
             </div>
@@ -747,7 +745,7 @@
                 <strong>Selected User No.:
                 </strong>{{selectedNum}}</div>
               <ion-button fill="outline"
-                (click)="selects= null;clearCheckbox();companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';"
+                (click)="selects= null;clearCheckbox();companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';companyId=null;departmentName=null;branchName=null;costCentreName=null;"
                 style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 190px;font-size:
                 11px;text-transform: none; flex: 1;min-width: 150px;">
                 Clear

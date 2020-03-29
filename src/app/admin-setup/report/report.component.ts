@@ -35,20 +35,6 @@ export class ReportComponent implements OnInit {
     */
   @HostBinding('class.menuOverlay') menuOpened: boolean;
 
-  /**
-   * clicked individual button
-   * @type {boolean}
-   * @memberof ReportComponent
-   */
-  public individualButton: boolean = true;
-
-  /**
-   * clicked group button
-   * @type {boolean}
-   * @memberof ReportComponent
-   */
-  public groupButton: boolean = false;
-
   /** 
   * filter start date for report
   * @type {*}
@@ -141,41 +127,6 @@ export class ReportComponent implements OnInit {
   public costcentre: any;
 
   /**
-   * list depends on selections 
-   * @type {string}
-   * @memberof ReportComponent
-   */
-  public selection: string = 'noSelection';
-
-  /**
-   * filtered company list
-   * @type {*}
-   * @memberof ReportComponent
-   */
-  public filteredCompany: any;
-
-  /**
-   * filtered department list
-   * @type {*}
-   * @memberof ReportComponent
-   */
-  public filteredDepartment: any;
-
-  /**
-   * filtered branch list
-   * @type {*}
-   * @memberof ReportComponent
-   */
-  public filteredBranch: any;
-
-  /**
-   * filtered cost centre list
-   * @type {*}
-   * @memberof ReportComponent
-   */
-  public filteredCostCentre: any;
-
-  /**
    * company list ngmodel value
    * @type {string}
    * @memberof ReportComponent
@@ -202,13 +153,6 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   public costCentreValue: string = 'Nothing Selected';
-
-  /**
-   * show/hide table
-   * @type {boolean}
-   * @memberof ReportComponent
-   */
-  public show: boolean = false;
 
   /**
    * selection value of report types
@@ -258,6 +202,42 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   public selectedNum: number = 0;
+
+  /**
+   * selected company id
+   * @type {string}
+   * @memberof ReportComponent
+   */
+  public companyId: string;
+
+  /**
+   * selected department name
+   * @type {string}
+   * @memberof ReportComponent
+   */
+  public departmentName: string;
+
+  /**
+   * selected branch name
+   * @type {string}
+   * @memberof ReportComponent
+   */
+  public branchName: string;
+
+  /**
+   * selected cost centre name
+   * @type {string}
+   * @memberof ReportComponent
+   */
+  public costCentreName: string;
+
+  /**
+   * searchbar key up value
+   * @private
+   * @type {string}
+   * @memberof ReportComponent
+   */
+  private _character: string;
 
   /**
    * leave types list that have been selected
@@ -417,32 +397,50 @@ export class ReportComponent implements OnInit {
    * get all user list
    * @memberof ReportComponent
    */
-  userNameList(guid?: string) {
+  userNameList() {
     this.filterSpinner = true;
     this.api.get_user_profile_list().subscribe(list => {
       this.userList = list;
       for (let i = 0; i < this.userList.length; i++) {
         this.userList[i]["isChecked"] = false;
       }
-      if (guid != null) {
-        this.filterCompany(guid);
+      if (this._character != null) {
+        this.filterSearchbar(this._character);
+      }
+      if (this.companyId != null) {
+        let company = this.userList.filter((item: any) => {
+          if (item.companyId !== null) {
+            return (item.companyId.toLowerCase().indexOf(this.companyId.toLowerCase()) > -1);
+          }
+        })
+        this.userList = company;
+      }
+      if (this.departmentName != null) {
+        let department = this.userList.filter((item: any) => {
+          if (item.department !== null) {
+            return (item.department.toLowerCase().indexOf(this.departmentName.toLowerCase()) > -1);
+          }
+        })
+        this.userList = department;
+      }
+      if (this.branchName != null) {
+        let branch = this.userList.filter((object: any) => {
+          if (object.branch !== null) {
+            return (object.branch.toLowerCase().indexOf(this.branchName.toLowerCase()) > -1);
+          }
+        })
+        this.userList = branch;
+      }
+      if (this.costCentreName != null) {
+        let costCentre = this.userList.filter((costCentreItem: any) => {
+          if (costCentreItem.costcentre !== null) {
+            return (costCentreItem.costcentre.toLowerCase().indexOf(this.costCentreName.toLowerCase()) > -1);
+          }
+        })
+        this.userList = costCentre;
       }
       this.filterSpinner = false;
     });
-  }
-
-  /**
-   * filter user list from selected company
-   * @param {string} guid
-   * @memberof ReportComponent
-   */
-  filterCompany(guid: string) {
-    let company = this.userList.filter((item: any) => {
-      if (item.companyId !== null) {
-        return (item.companyId.toLowerCase().indexOf(guid.toLowerCase()) > -1);
-      }
-    })
-    this.filteredCompany = company;
   }
 
   /**
@@ -451,88 +449,11 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   selectedCompany(guid: string) {
-    this.selection = "company";
+    this.companyId = guid;
     this.leaveAPI.get_company_details(guid).subscribe(list => {
       this.departmentList = list.departmentList;
     })
-    this.userNameList(guid);
-  }
-
-  /**
-   * select department to filter list
-   * @param {string} departmentname
-   * @memberof ReportComponent
-   */
-  selectedDepartment(departmentname: string) {
-    this.selection = "department";
-    let department = this.filteredCompany.filter((item: any) => {
-      if (item.department !== null) {
-        return (item.department.toLowerCase().indexOf(departmentname.toLowerCase()) > -1);
-      }
-    })
-    this.filteredDepartment = department;
-  }
-
-  /**
-   * select branch to filter list
-   * @param {string} branchName
-   * @memberof ReportComponent
-   */
-  selectedBranch(branchName: string) {
-    this.selection = "branch";
-    if (this.departmentValue !== 'Nothing Selected' && this.companyValue !== 'Nothing Selected') {
-      let branch = this.filteredDepartment.filter((item: any) => {
-        if (item.branch !== null) {
-          return (item.branch.toLowerCase().indexOf(branchName.toLowerCase()) > -1);
-        }
-      })
-      this.filteredBranch = branch;
-    } else if (this.departmentValue == 'Nothing Selected') {
-      let branch = this.filteredCompany.filter((list: any) => {
-        if (list.branch !== null) {
-          return (list.branch.toLowerCase().indexOf(branchName.toLowerCase()) > -1);
-        }
-      })
-      this.filteredBranch = branch;
-    } else {
-      let branch = this.userList.filter((object: any) => {
-        if (object.branch !== null) {
-          return (object.branch.toLowerCase().indexOf(branchName.toLowerCase()) > -1);
-        }
-      })
-      this.filteredBranch = branch;
-    }
-  }
-
-  /**
-   * select cost centre to filter list
-   * @param {string} name
-   * @memberof ReportComponent
-   */
-  selectedCostCentre(name: string) {
-    this.selection = "costcentre";
-    if (this.departmentValue !== 'Nothing Selected' && this.companyValue !== 'Nothing Selected') {
-      let costCentre = this.filteredDepartment.filter((val: any) => {
-        if (val.costcentre !== null) {
-          return (val.costcentre.toLowerCase().indexOf(name.toLowerCase()) > -1);
-        }
-      })
-      this.filteredCostCentre = costCentre;
-    } else if (this.departmentValue == 'Nothing Selected') {
-      let costCentreVal = this.filteredCompany.filter((items: any) => {
-        if (items.costcentre !== null) {
-          return (items.costcentre.toLowerCase().indexOf(name.toLowerCase()) > -1);
-        }
-      })
-      this.filteredCostCentre = costCentreVal;
-    } else {
-      let costCentre = this.userList.filter((costCentreItem: any) => {
-        if (costCentreItem.costcentre !== null) {
-          return (costCentreItem.costcentre.toLowerCase().indexOf(name.toLowerCase()) > -1);
-        }
-      })
-      this.filteredCostCentre = costCentre;
-    }
+    this.userNameList();
   }
 
   /**
@@ -560,11 +481,8 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   keyUpSearchbar(character: any) {
-    if (character === '') {
-      this.userNameList();
-    } else {
-      this.filterSearchbar(character);
-    }
+    this._character = character;
+    this.userNameList();
   }
 
   /**
@@ -802,6 +720,10 @@ export class ReportComponent implements OnInit {
       list.isChecked = false;
     });
     this.selectedNum = 0;
+    document.querySelector('ion-searchbar').getInputElement().then((searchInput) => {
+      searchInput.value = '';
+      this.keyUpSearchbar('');
+    });
   }
 
 }
