@@ -180,7 +180,7 @@ export class ReportComponent implements OnInit {
    * @type {string}
    * @memberof ReportComponent
    */
-  public selectedUserId: string;
+  public selectedUserId: string[] = [];
 
   /**
    * main checkbox of employee list
@@ -232,6 +232,13 @@ export class ReportComponent implements OnInit {
   public costCentreName: string;
 
   /**
+   * small spinner
+   * @type {boolean}
+   * @memberof ReportComponent
+   */
+  public showSpinner: boolean;
+
+  /**
    * searchbar key up value
    * @private
    * @type {string}
@@ -266,8 +273,6 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   ngOnInit() {
-    console.log('reportPlatform: ' + this.reportPlatform.platforms());
-    console.log('reportPlatform: ' + this.reportPlatform.platforms().includes('desktop'));
     const f = new Date(new Date().getFullYear(), 0, 1);
     const l = new Date(new Date().getFullYear(), 11, 31);
     this.firstPicker = new FormControl(f);
@@ -571,11 +576,12 @@ export class ReportComponent implements OnInit {
     const totalLength = this.userList.length;
     let checkedNo = 0;
     this.selectedNum = 0;
+    this.selectedUserId = [];
     this.userList.map(item => {
       if (item.isChecked) {
         checkedNo++;
         this.selectedNum++;
-        this.selectedUserId = item.userId;
+        this.selectedUserId.push(item.userId);
         this.hideImg.push(true);
       }
     });
@@ -595,24 +601,25 @@ export class ReportComponent implements OnInit {
    * produce individual report from selected user and table type
    * @memberof ReportComponent
    */
-  produceIndividualReport() {
-    this._selectedLeaveTypesList = [];
-    for (let i = 0; i < this.leaveTypes.length; i++) {
-      if (this.leaveTypes[i].isChecked === true) {
-        this._selectedLeaveTypesList.push(this.leaveTypes[i].LEAVE_TYPE_GUID);
-      }
-    }
-    this.reportAPI.get_individual_report(this.selectedUserId, this.selects).subscribe(data => {
-      this.tableDetails = data;
-      this.filter();
-    });
-  }
+  // produceIndividualReport() {
+  //   this._selectedLeaveTypesList = [];
+  //   for (let i = 0; i < this.leaveTypes.length; i++) {
+  //     if (this.leaveTypes[i].isChecked === true) {
+  //       this._selectedLeaveTypesList.push(this.leaveTypes[i].LEAVE_TYPE_GUID);
+  //     }
+  //   }
+  //   this.reportAPI.get_individual_report(this.selectedUserId, this.selects).subscribe(data => {
+  //     this.tableDetails = data;
+  //     this.filter();
+  //   });
+  // }
 
   /**
    * produce group report table from selected table type
    * @memberof ReportComponent
    */
   produceGroupReport() {
+    this.showSpinner = true;
     this._selectedLeaveTypesList = [];
     for (let i = 0; i < this.leaveTypes.length; i++) {
       if (this.leaveTypes[i].isChecked === true) {
@@ -621,6 +628,8 @@ export class ReportComponent implements OnInit {
     }
     this.reportAPI.get_bundle_report(this.selects).subscribe(value => {
       this.tableDetails = value;
+      this.showSpinner = false;
+      this.clickedProduce = true;
       this.filter();
     });
   }
