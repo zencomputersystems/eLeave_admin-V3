@@ -122,6 +122,15 @@
     // max-width: 30%;
     max-height: 100%;
   }
+  ::ng-deep .group > .mat-form-field-wrapper {
+    padding-bottom: 0px;
+  }
+  ::ng-deep .group > .mat-select-arrow-wrapper {
+    padding-top: 6px;
+  }
+  ::ng-deep .group > .mat-form-field-wrapper >.mat-form-field-flex > .mat-form-field-infix {
+    padding-top: 6px;
+  }
   .avatar {
     width: 30px;
     height: 30px;

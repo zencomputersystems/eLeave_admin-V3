@@ -246,6 +246,34 @@ export class ReportComponent implements OnInit {
   public arrayDetails: any[] = [];
 
   /**
+   * values of group
+   * @type {*}
+   * @memberof ReportComponent
+   */
+  public groupValue: any;
+
+  /**
+   * key values of group
+   * @type {*}
+   * @memberof ReportComponent
+   */
+  public groupKey: any;
+
+  /**
+   * name of group
+   * @type {string}
+   * @memberof ReportComponent
+   */
+  public name: string;
+
+  /**
+   * binding value for option in selected group
+   * @type {string}
+   * @memberof ReportComponent
+   */
+  public selectedName: string;
+
+  /**
    * searchbar key up value
    * @private
    * @type {string}
@@ -608,8 +636,9 @@ export class ReportComponent implements OnInit {
    * produce group report table from selected table type
    * @memberof ReportComponent
    */
-  produceGroupReport(groupName: string) {
+  produceGroupReport(groupName: string, name: string) {
     this.showSpinner = true;
+    this.name = name;
     this._selectedLeaveTypesList = [];
     for (let i = 0; i < this.leaveTypes.length; i++) {
       if (this.leaveTypes[i].isChecked === true) {
@@ -624,13 +653,29 @@ export class ReportComponent implements OnInit {
           this.arrayDetails.push(this.tableDetails[i]);
         }
       }
-      let a = require('lodash').groupBy(this.arrayDetails, groupName);
-      console.log(a);
-
+      let data = require('lodash').groupBy(this.arrayDetails, groupName);
+      this.groupValue = Object.values(data);
+      this.groupKey = Object.keys(data);
+      console.log(this.groupValue);
+      console.log(this.groupKey);
       this.showSpinner = false;
       this.clickedProduce = true;
+      if (groupName !== 'all') {
+        this.showSelectTable(this.groupKey[0], 0);
+      }
       this.filter();
     });
+  }
+
+  /**
+   * show selected table from 
+   * company/department/branch/cost centre
+   * @param {number} index
+   * @memberof ReportComponent
+   */
+  showSelectTable(key: string, index: number) {
+    this.selectedName = key;
+    this.arrayDetails = this.groupValue[index];
   }
 
   /**
