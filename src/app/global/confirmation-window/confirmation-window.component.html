@@ -1,0 +1,26 @@
+<ion-header style="border-radius: 2px; text-align: center; color: #f0f0f7; font-size: 14px; font-weight: bold;
+    background-color: #7069d8; height: 52px; vertical-align: middle; line-height: 50px; margin-bottom: 25px; text-transform: capitalize;">
+  <p>Replace Default {{type}} Profile
+  </p>
+</ion-header>
+<ion-content>
+  <div style="text-align: left; padding-left: 40px; padding-right: 40px; color: #43425d;
+    line-height: 1.35; font-size: 12px; margin-bottom: 16px; display: flex; flex-flow: wrap;">
+      Confirm replace  
+      <div style="font-weight: bold; margin: 0px 4px;">{{currDefaultProfile.code}}</div>
+      with 
+      <div style="font-weight: bold; margin: 0px 4px;">{{newDefaultProfile.code}}</div> ?
+  </div>
+  <ion-item-group style="display: block; text-align: center; font-size: 11px;padding: 8px 0;">
+    <ion-button style="color: white; border-radius: 2px; width: 80px; height: 30px; line-height: 30px; font-size: 11px;"
+      (click)="onCancelReassign()">
+      No
+    </ion-button>
+    <ion-button
+      style="color: white; border-radius: 2px; width: 80px; height: 30px; line-height: 30px; font-size: 11px;"
+      (click)="onConfirmReassign()">
+      Yes
+    </ion-button>
+  </ion-item-group>
+
+</ion-content>

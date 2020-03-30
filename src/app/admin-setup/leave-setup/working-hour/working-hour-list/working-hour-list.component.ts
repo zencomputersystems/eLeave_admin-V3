@@ -1,9 +1,11 @@
+import { ConfirmationWindowComponent } from './../../../../global/confirmation-window/confirmation-window.component';
 import { OnInit, Component } from "@angular/core";
 import { WorkingHourApiService } from "../working-hour-api.service";
 import { DeleteCalendarConfirmationComponent } from "../../delete-calendar-confirmation/delete-calendar-confirmation.component";
 import { EditModeDialogComponent } from "../../edit-mode-dialog/edit-mode-dialog.component";
 import { SharedService } from "../../shared.service";
-import { Platform } from "@ionic/angular";
+import { Platform, PopoverController } from "@ionic/angular";
+
 
 /**
  * working hour profile list page
@@ -103,15 +105,32 @@ export class WorkingHourListComponent implements OnInit {
      * @memberof WorkingHourListComponent
      */
     public isCheckAll: boolean;
+
+    /**
+     * Bind profile list
+     * @private
+     * @type {*}
+     * @memberof WorkingHourListComponent
+     */
+    private defaultProfileList: any;
+
+    /**
+     * Bind data of default working hour profile
+     * @type {*}
+     * @memberof WorkingHourListComponent
+     */
+    public defaultProfileInfo: any;
+
     /**
      *Creates an instance of WorkingHourListComponent.
      * @param {WorkingHourApiService} workingHrAPI
      * @param {SharedService} sharedService
      * @param {Platform} workingHrPlatform
+     * @param {PopoverController} workingHrPopoverController
      * @memberof WorkingHourListComponent
      */
     constructor(private workingHrAPI: WorkingHourApiService, private sharedService: SharedService,
-        public workingHrPlatform: Platform) {
+        public workingHrPlatform: Platform, private workingHrPopoverController: PopoverController) {
     }
 
     /**
@@ -119,7 +138,16 @@ export class WorkingHourListComponent implements OnInit {
      * @memberof WorkingHourListComponent
      */
     async ngOnInit() {
+        // this.refreshList();
+
         this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
+        this.defaultProfileList = await this.workingHrAPI.get_default_profile().toPromise();
+        this.list.forEach(item => {
+            item.isDefault = (item.working_hours_guid === this.defaultProfileList[0].WORKING_HOURS_PROFILE_GUID) ? true : false;
+            if (item.working_hours_guid === this.defaultProfileList[0].WORKING_HOURS_PROFILE_GUID) {
+                this.defaultProfileInfo = item;
+            }
+        });
         this.showSpinner = false;
         this.clickedCalendar(this.list[this.clickedIndex], this.clickedIndex);
         this.workingHrAPI.get_all_users_list().subscribe(
@@ -309,4 +337,48 @@ export class WorkingHourListComponent implements OnInit {
         this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
     }
 
+    /**
+     * Change default working hour profile
+     * @param {*} isDefault
+     * @memberof WorkingHourListComponent
+     */
+    async changeDefaultWHProfile(isDefault, item) {
+        if (this.defaultProfileInfo !== {}) {
+            const confirmChangeDefault = await this.workingHrPopoverController.create({
+                component: ConfirmationWindowComponent,
+                componentProps: { 
+                    type: 'working hour',
+                    currDefaultProfile: this.defaultProfileInfo, 
+                    newDefaultProfile: item
+                },
+                cssClass: 'confirmation-popover'
+            });
+
+            confirmChangeDefault.onDidDismiss().then(ret => {
+                if (ret.data === true) {
+                    this.workingHrAPI.post_profile_default('working-hour', item.working_hours_guid).subscribe(
+                        data => {
+                            this.refreshList();
+                        }
+                    );
+                }
+            })
+            return await confirmChangeDefault.present();
+        }
+    }
+
+    /**
+     * Get working hour profile list & default working hour profile
+     * @memberof WorkingHourListComponent
+     */
+    async refreshList() {
+        this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
+        this.defaultProfileList = await this.workingHrAPI.get_default_profile().toPromise();
+        this.list.forEach(item => {
+            item.isDefault = (item.working_hours_guid === this.defaultProfileList[0].WORKING_HOURS_PROFILE_GUID) ? true : false;
+            if (item.working_hours_guid === this.defaultProfileList[0].WORKING_HOURS_PROFILE_GUID) {
+                this.defaultProfileInfo = item;
+            }
+        });
+    }
 }

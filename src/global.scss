@@ -355,6 +355,21 @@ app-report
   box-shadow: none;
 }
 
+.pop-over-style .popover-content {
+  transition: .5s ease;
+  --min-width: 300px !important;
+  bottom: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  left: unset !important;
+  transform-origin: initial !important;
+  max-height: fit-content !important;
+
+  ion-backdrop {
+    opacity: 0.33 !important;
+  }
+}
+
 $screen-breakpoints: (
   xs: 0,
   sm: 576px,
@@ -386,5 +401,17 @@ $screen-breakpoints: (
     @media screen and (min-width: $valueSize) {
       display: flex;
     }
+  }
+
+}
+.confirmation-popover {
+  .popover-content {
+      top: 245px;
+      left: 473.5px;
+      transform-origin: left top;
+      transform: scale(1);
+      width: 300px;
+      max-height: 600px;
+      overflow-y: auto;
   }
 }

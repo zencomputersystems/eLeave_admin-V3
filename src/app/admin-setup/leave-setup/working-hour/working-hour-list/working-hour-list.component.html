@@ -139,10 +139,15 @@
                                         <ion-col align-self-center size="3" style="color: #4d4f5c;font-size: 11px;">
                                             {{item.time.start_time}} - {{item.time.end_time}}</ion-col>
                                         <ion-col align-self-center size="2.5"
-                                            style="text-align: center;color: #4d4f5c;font-size: 11px;">
-                                            {{item.total_employee_attach}}</ion-col>
+                                            style="text-align: center;color: #4d4f5c;font-size: 11px;display: flex;
+                                            justify-content: cen">
+                                            {{item.total_employee_attach}}.</ion-col>
                                         <ion-col size="1.5" align-self-center
                                             style="text-align: right;padding-right: 10px;">
+                                            <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;" 
+                                            *ngIf="item.isDefault"></ion-icon>
+                                            <!-- <ion-icon name="heart" *ngIf="!item.isDefault"></ion-icon>
+                                            <ion-icon name="heart-outline"></ion-icon> -->
                                         </ion-col>
                                         <ion-item class="divider" lines="full"
                                             style="padding-top: 0;padding-bottom: 0;">
@@ -175,7 +180,19 @@
                                                 style="text-align: center;color: #4d4f5c;font-size: 11px;">
                                                 {{item.total_employee_attach}}</ion-col>
                                             <ion-col size="1.5" align-self-center
-                                                style="text-align: right;padding-right: 10px;">
+                                                style="text-align: right;padding-right: 10px;display: flex;
+                                                align-items: center;">
+                                                <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;
+                                                    color: #babdc7;margin-right: 5px;"
+                                                [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null
+                                                ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
+                                                    *ngIf="item.isDefault" (click)="changeDefaultWHProfile(true, item)"></ion-icon>
+                                                <ion-icon name="star-outline"
+                                                    style="opacity: 0.8; width: 16px; height: 16px; margin-right: 4px;
+                                                    color: #babdc7;"
+                                                    [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
+                                                    *ngIf="!item.isDefault" (click)="changeDefaultWHProfile(false, item)">
+                                                    </ion-icon>
                                                 <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mode==='ON'"
                                                     style="width: 11px;height:11px;display: inline-block;"
                                                     [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
@@ -254,6 +271,9 @@
                                                         </ion-grid>
                                                     </ion-item-group>
                                                 </ion-item-group>
+                                                <ion-item-group>
+                                                    <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;" *ngIf="item.isDefault"></ion-icon>
+                                                </ion-item-group>
 
                                                 <ion-item-group 
                                                     style="text-align: right;padding-right: 10px;">
@@ -276,16 +296,23 @@
                                             border-radius: 3px; margin: 5px auto;" (click)="clickedCalendar(item, i)">
                                             <ion-card-content>
                                                 <ion-item-group
-                                                    style="display: flex; align-items: center; flex-flow: row wrap;">
-                                                    <p class="textHover" style="cursor: pointer;font-size: 12px;font-weight: bold;white-space: pre-line;margin-bottom:
-                                                0;" [ngClass]="{ 'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}">
-                                                        {{item.code}}
-                                                    </p>
-                                                    <p style="margin: auto 5px;color: #4d4f5c;">|</p>
-                                                    <p
-                                                        style="font-size: 11px;color: #4d4f5c;padding: 0;white-space: pre-line;">
-                                                        {{item.description}}
-                                                    </p>
+                                                    style="display: flex; align-items: center;">
+                                                    <div style=" display: flex; align-items: center; width: -webkit-fill-available;">
+                                                        <p class="textHover" style="cursor: pointer;font-size: 12px;font-weight: bold;white-space: pre-line;margin-bottom:
+                                                    0;" [ngClass]="{ 'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}">
+                                                            {{item.code}}
+                                                        </p>
+                                                        <p style="margin: auto 5px;color: #4d4f5c;">|</p>
+                                                        <p
+                                                            style="font-size: 11px;color: #4d4f5c;padding: 0;white-space: pre-line;">
+                                                            {{item.description}}
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <ion-icon name="star"
+                                                            style="opacity: 0.8; width: 16px; height: 16px;"
+                                                            *ngIf="item.isDefault"></ion-icon>
+                                                    </div>
                                                 </ion-item-group>
                                                 <ion-item-group>
                                                     <ion-grid style="padding: unset; font-size: 11px; display: flex; flex-flow:

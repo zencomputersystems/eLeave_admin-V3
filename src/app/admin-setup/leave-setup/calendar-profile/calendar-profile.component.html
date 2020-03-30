@@ -223,6 +223,14 @@
                                         [ngClass]="{
                                         'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
                                     &nbsp;&nbsp; -->
+                                        <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;
+                                                        color: #babdc7;margin-right: 5px;" 
+                                            *ngIf="list.isDefault" (click)="changeDefaultCalendarProfile(true, item)">
+                                            </ion-icon>
+                                        <ion-icon name="star-outline" style="opacity: 0.8; width: 16px; height: 16px; margin-right: 4px;
+                                                        color: #babdc7;"
+                                            *ngIf="!list.isDefault" (click)="changeDefaultCalendarProfile(false, item)">
+                                        </ion-icon>
                                         <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="modeValue == 'ON'"
                                             style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
                                             (click)="deleteCalendarProfile(profileList[i]);selectProfile(list, i)">
@@ -256,7 +264,16 @@
                                                     {{list.total_employee_attach}}</p>
                                             </div>
                                         </ion-col>
-                                        <ion-col align-self-center style="padding-right: 15px;text-align: right;">
+                                        <ion-col align-self-center
+                                            style="padding-right: 15px;text-align: right;text-align-last: center;">
+                                            <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;
+                                                color: #babdc7;margin-right: 5px;" *ngIf="list.isDefault"
+                                                (click)="changeDefaultCalendarProfile(true, list)">
+                                            </ion-icon>
+                                            <ion-icon name="star-outline" style="opacity: 0.8; width: 16px; height: 16px; margin-right: 4px;
+                                                color: #babdc7;" *ngIf="!list.isDefault"
+                                                (click)="changeDefaultCalendarProfile(false, list)">
+                                            </ion-icon>
                                             <img src="assets/icon/leave_setup/icon_trash@3x.png"
                                                 style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
                                                 (click)="deleteCalendarProfile(profileList[i]);selectProfile(list, i)">

@@ -16,10 +16,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SideMenuNavigationModule } from './side-menu-navigation/side-menu-navigation.module';
 import { LoginModule } from './login/login.module';
+import { WorkingHourConfigComponent } from './admin-setup/general-component/working-hour-config/working-hour-config.component';
+import { ConfirmationWindowComponent } from './global/confirmation-window/confirmation-window.component';
 
 @NgModule({
-  declarations: [AppComponent, PageNotFoundComponent],
-  entryComponents: [],
+  declarations: [AppComponent, PageNotFoundComponent, WorkingHourConfigComponent, ConfirmationWindowComponent],
+  entryComponents: [WorkingHourConfigComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

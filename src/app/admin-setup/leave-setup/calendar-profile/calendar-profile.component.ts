@@ -9,9 +9,11 @@ import { APP_DATE_FORMATS, AppDateAdapter } from '../date.adapter';
 import { CalendarProfileApiService } from './calendar-profile-api.service';
 import { DeleteCalendarConfirmationComponent } from '../delete-calendar-confirmation/delete-calendar-confirmation.component';
 import { trigger, transition, animate, style } from '@angular/animations'
-import { MenuController } from '@ionic/angular';
+import { MenuController, PopoverController } from '@ionic/angular';
 import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.component';
 import { SharedService } from '../shared.service';
+import { WorkingHourApiService } from '../working-hour/working-hour-api.service';
+import { ConfirmationWindowComponent } from '../../../global/confirmation-window/confirmation-window.component';
 
 /**
  * Manage holiday and rest day for employee
@@ -254,13 +256,25 @@ export class CalendarProfileComponent implements OnInit {
 
 
     /**
+     * Get list of default profiles
+     * @memberof CalendarProfileComponent
+     */
+    public defaultProfileLists; 
+
+    /**
+     * Bind profile object that is defined as default calendar profile
+     * @memberof CalendarProfileComponent
+     */
+    public defaultProfileItem;
+    /**
      *Creates an instance of CalendarProfileComponent.
      * @param {CalendarProfileApiService} calendarProfileAPI
      * @param {TitleCasePipe} titlecasePipe
      * @param {SharedService} sharedService shared service for toggle value & constructor menu, dialog
      * @memberof CalendarProfileComponent
      */
-    constructor(private calendarProfileAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, public sharedService: SharedService) {
+    constructor(private calendarProfileAPI: CalendarProfileApiService, private titlecasePipe: TitleCasePipe, public sharedService: SharedService,
+        private whApi: WorkingHourApiService, private calPopoverController: PopoverController) {
     }
 
     /**
@@ -385,12 +399,13 @@ export class CalendarProfileComponent implements OnInit {
         this.calendarProfileAPI.get_calendar_profile_list().subscribe(
             (data: any[]) => {
                 this.profileList = Object.assign(data);
-                console.log('this.profileList: ' + JSON.stringify(this.profileList, null, " "));
                 this.selectProfile(this.profileList[0], this.clickedIndex);
                 this.getAssignedList();
+                this.getDefaultProfile();
                 this.showSpinner = false;
                 this.content = true;
             })
+            
     }
 
     /**
@@ -756,5 +771,53 @@ export class CalendarProfileComponent implements OnInit {
         this._employeeList = [];
         this.getAssignedList();
         this.profileList = await this.calendarProfileAPI.get_calendar_profile_list().toPromise();
+    }
+
+    /**
+     * This method is to get default profile frop API then match it with current array objects
+     * @memberof CalendarProfileComponent
+     */
+    async getDefaultProfile() {
+        this.defaultProfileLists = await this.whApi.get_default_profile().toPromise();
+        this.profileList.forEach(item => {
+            if (item.calendar_guid === this.defaultProfileLists[0].CALENDAR_PROFILE_GUID) {
+                item.isDefault = true;
+                this.defaultProfileItem = item;
+            } else {
+                item.isDefault = false;
+            } 
+        });
+    }
+
+    /**
+     * Change default status of calendar profile 
+     * @param {*} willChange
+     * @param {*} item
+     * @memberof CalendarProfileComponent
+     */
+    async changeDefaultCalendarProfile(willChange, item) {
+        if (this.defaultProfileItem !== {}) {
+            const calPopover = await this.calPopoverController.create({
+                component: ConfirmationWindowComponent,
+                componentProps: {
+                    type: 'calendar',
+                    currDefaultProfile: this.defaultProfileItem,
+                    newDefaultProfile: item
+                },
+                cssClass: 'confirmation-popover'
+            });
+
+            calPopover.onDidDismiss().then(ret => {
+                if (ret.data === true) {
+                    this.whApi.post_profile_default('calendar', item.calendar_guid).subscribe(
+                        data => {
+                            this.getProfileList();
+                        }
+                    );
+                }
+            })
+            return await calPopover.present();
+
+        }
     }
 }

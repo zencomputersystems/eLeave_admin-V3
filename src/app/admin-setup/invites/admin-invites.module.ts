@@ -24,7 +24,8 @@ import { ChangeStatusConfimationComponent } from './employee-setup/change-status
 import { BulkImportComponent } from './employee-setup/bulk-import/bulk-import.component';
 import { AddOneEmployeeComponent } from './employee-setup/add-one-employee/add-one-employee.component';
 import { OthesInformationTabComponent } from './employee-setup/othes-information-tab/othes-information-tab.component';
-
+import { NgbModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 const routes: Routes = [
     {
@@ -56,6 +57,9 @@ const routes: Routes = [
         NgxPaginationModule,
         FileDropModule,
         MatAutocompleteModule,
+        NgbModule,
+        NgbTimepickerModule,
+        NgxMaterialTimepickerModule,
         RouterModule.forChild(routes)
     ],
     entryComponents: [DeleteListConfirmationComponent, DateDialogComponent,

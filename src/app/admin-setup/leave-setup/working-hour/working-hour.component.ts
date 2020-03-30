@@ -8,7 +8,7 @@ import * as _moment from 'moment';
  * create or update working hour profile
  * @export
  * @class WorkingHourComponent
- * @implements {OnInit}
+ * @implements {OnInit} 
  * @implements {OnChanges}
  */
 @Component({
@@ -68,6 +68,7 @@ export class WorkingHourComponent implements OnInit, OnChanges {
      */
     private _endTime;
 
+    public defaultProfile: boolean = false;
     /** 
      * get value of clicked working_hour_guid from parent page
      * @type {string}
@@ -116,6 +117,7 @@ export class WorkingHourComponent implements OnInit, OnChanges {
     async ngOnInit() {
         let items = await this.workingHourAPI.get_working_hours_profile_list().toPromise();
         this._data = await this.workingHourAPI.get_working_hours_details(items[0].working_hours_guid).toPromise();
+        // <ion-icon ios = "ios-star" md = "md-star" > </ion-icon>
     }
 
     /**
@@ -300,6 +302,11 @@ export class WorkingHourComponent implements OnInit, OnChanges {
         } else {
             this.workingHourAPI.post_working_hours(body).subscribe(response => {
                 if (response[0].WORKING_HOURS_GUID != undefined) {
+                    this.workingHourAPI.post_profile_default('working-hour', response[0].WORKING_HOURS_GUID).subscribe(
+                        data => {
+                            console.log('post_profile_default data: ' + JSON.stringify(data, null, " "))
+                        }
+                    );
                     this.workingHourAPI.showPopUp('New working hour profile was created successfully', true);
                     this.refreshProfile(response[0].WORKING_HOURS_GUID);
                 } else {
@@ -321,7 +328,13 @@ export class WorkingHourComponent implements OnInit, OnChanges {
         this.valueChange.emit(id);
     }
 
-
-
+    /**
+     * to set value of default working hour profile
+     * @param {*} evt
+     * @memberof WorkingHourComponent
+     */
+    setDefaultProfile(evt) {
+        this.defaultProfile = evt.target.checked;
+    }
 
 }

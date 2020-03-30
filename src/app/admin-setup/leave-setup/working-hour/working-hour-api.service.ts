@@ -118,4 +118,25 @@ export class WorkingHourApiService {
     }
 
 
+    /**
+     * get default profile list
+     * @returns {Observable<any>}
+     * @memberof WorkingHourApiService
+     */
+    get_default_profile(): Observable<any> {
+        return this.apiService.getApi('/api/admin/profile-default');
+    }
+
+    /**
+     * post default profile guid to api
+     * @param {*} profile profile type (calendar/working-hour)
+     * @param {*} id proifle guid
+     * @returns {Observable<any>}
+     * @memberof WorkingHourApiService
+     */
+    post_profile_default(profile: any, id: any): Observable<any> {
+        return this.apiService.postApi({},'/api/admin/profile-default/' + profile + '/' + id);
+    }
+
+
 }

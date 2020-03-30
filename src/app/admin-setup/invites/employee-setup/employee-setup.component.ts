@@ -1,10 +1,12 @@
+import { WorkingHourApiService } from './../../leave-setup/working-hour/working-hour-api.service';
+import { WorkingHourConfigComponent } from './../../general-component/working-hour-config/working-hour-config.component';
 import { CalendarProfileApiService } from './../../leave-setup/calendar-profile/calendar-profile-api.service';
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, Output, EventEmitter  } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AdminInvitesApiService } from '../admin-invites-api.service';
 import * as _moment from 'moment';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
-import { FormControl, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { APP_DATE_FORMATS, AppDateAdapter } from '../../leave-setup/date.adapter';
 import { RoleApiService } from '../../role-management/role-api.service';
 import { ChangeStatusConfimationComponent } from './change-status-confimation/change-status-confimation.component';
@@ -13,6 +15,7 @@ import { personal, employment } from './employee-setup-data';
 import { SharedService } from '../../leave-setup/shared.service';
 import { getDataSet, reduce } from "iso3166-2-db";
 import { EventInput } from '@fullcalendar/core';
+import { PopoverController } from '@ionic/angular';
 
 /**
  *
@@ -135,6 +138,13 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     public workingList: any;
+
+    /**
+     * The length of working hour profile list from API
+     * @type {*}
+     * @memberof EmployeeSetupComponent
+     */
+    public lengthWorkingList: any;
 
     /**
      * leave entitlement list from API
@@ -464,6 +474,79 @@ export class EmployeeSetupComponent implements OnInit {
      */
     private selectedWeekday = [];
 
+    public displayWorkingHour: boolean;
+
+
+    /**
+     * form group use in validate value
+     * @type {*}
+     * @memberof EmployeeSetupComponent
+     */
+    public workingHourForm: any;
+
+    /**
+     * get the full day start time in utc format
+     * @private
+     * @memberof WorkingHourComponent
+     */
+    private _startTime;
+
+    /**
+     * get the full day end time in utc format
+     * @private
+     * @memberof WorkingHourComponent
+     */
+    private _endTime;
+
+    /**
+     * show/hide toggle button in timepicker
+     * @type {boolean}
+     * @memberof WorkingHourComponent
+     */
+    public meridian: boolean = true;
+
+    /**
+     * show/hide arrow up & down in timepicker toggle button
+     * @type {boolean}
+     * @memberof WorkingHourComponent
+     */
+    public spinners: boolean = false;
+
+    /**
+     * show loading small spinner when clicked submit button
+     * @type {boolean}
+     * @memberof WorkingHourComponent
+     */
+    public showSmallSpinner: boolean = false;
+
+    /**
+     * details from requested id
+     * @private
+     * @type {*}
+     * @memberof WorkingHourComponent
+     */
+    private _data: any = {};
+
+    /**
+     * True/false to set default working hour profile
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public defaultWHProfile: boolean = false;
+
+    /**
+     * True/false to set default calendar profile
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public defaultCalendarProfile: boolean = false;
+
+    /**
+     * emit value to hide this page after clicked back button
+     * @memberof WorkingHourComponent
+     */
+    @Output() valueChange = new EventEmitter();
+
     /**
      *Creates an instance of EmployeeSetupComponent.
      * @param {AdminInvitesApiService} inviteAPI access invite API
@@ -471,10 +554,30 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {SharedService} _sharedService
      * @memberof EmployeeSetupComponent
      */
-    constructor(public inviteAPI: AdminInvitesApiService, public roleAPI: RoleApiService, private _sharedService: SharedService, private calendarProfileAPI: CalendarProfileApiService) {
+    constructor(public inviteAPI: AdminInvitesApiService, public roleAPI: RoleApiService, private _sharedService: SharedService, private calendarProfileAPI: CalendarProfileApiService,
+        public employeeSetupPopover: PopoverController, private workingHourAPI: WorkingHourApiService) {
         this.inviteAPI.apiService.get_profile_pic('all').subscribe(data => {
             this.url = data;
-        })
+        });
+
+        this.workingHourForm = new FormGroup({
+            profileName: new FormControl('', Validators.required),
+            description: new FormControl('', Validators.required),
+            startpicker: new FormControl('', Validators.required),
+            endpicker: new FormControl('', Validators.required),
+            starthalfdayAMpicker: new FormControl('', Validators.required),
+            endhalfdayAMpicker: new FormControl('', Validators.required),
+            starthalfdayPMpicker: new FormControl('', Validators.required),
+            endhalfdayPMpicker: new FormControl('', Validators.required),
+            startQ1picker: new FormControl('', Validators.required),
+            endQ1picker: new FormControl('', Validators.required),
+            startQ2picker: new FormControl('', Validators.required),
+            endQ2picker: new FormControl('', Validators.required),
+            startQ3picker: new FormControl('', Validators.required),
+            endQ3picker: new FormControl('', Validators.required),
+            startQ4picker: new FormControl('', Validators.required),
+            endQ4picker: new FormControl('', Validators.required),
+        });
     }
 
     /**
@@ -482,6 +585,9 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     async ngOnInit() {
+        console.log('sdssssss nani comel')
+        console.log('init this.workingHourForm: ' + this.workingHourForm.controls)
+        console.log('dsds:' + JSON.stringify(this._data, null, " "))
         this.countrydata = reduce(getDataSet(), "en");
         this.calCountryList = Object.keys(this.countrydata).map(key => this.countrydata[key]);
         this.calCountryList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
@@ -489,19 +595,23 @@ export class EmployeeSetupComponent implements OnInit {
         this.newProfileName = new FormControl('', Validators.required);
         this.getListPublicHolidays();
 
+        this.displayWorkingHour = true;
 
 
         this.endPoint();
         let roleData = await this.roleAPI.get_role_profile_list().toPromise()
         this.roleList = roleData;
         let calendarData = await this.inviteAPI.get_calendar_profile_list().toPromise();
-        this.calendarList = calendarData;
-        // this.calendarList = [];
+        // this.calendarList = calendarData;
+        this.calendarList = [];
         this.lengthCalendarList = this.calendarList.length;
         console.log('this.calendarList : ' + JSON.stringify(this.calendarList, null, " "))
         console.log('this length : ' + JSON.stringify(this.calendarList.length, null, " "))
         let workingData = await this.inviteAPI.get_working_hour_profile_list().toPromise();
-        this.workingList = workingData;
+        // this.workingList = workingData;
+        this.workingList = []
+        this.lengthWorkingList = this.workingList.length;
+
         let entitlement = await this._sharedService.leaveApi.get_leavetype_entitlement().toPromise();
         this.entitlementList = entitlement;
         let company = await this._sharedService.leaveApi.get_company_list().toPromise();
@@ -1128,6 +1238,9 @@ export class EmployeeSetupComponent implements OnInit {
         }
         this.calendarProfileAPI.post_calendar_profile(newCalProfile).subscribe(data => {
             if (data[0].CALENDAR_DETAILS_GUID != undefined) {
+                if (this.setDefaultProfile) {
+                    this.workingHourAPI.post_profile_default('calendar', data[0].CALENDAR_DETAILS_GUID).subscribe(data => { })
+                }
                 this.calendarProfileAPI.notification('New calendar profile was created successfully.', true);
                 this.showSpinner = false;
                 this.newProfileName.reset();
@@ -1143,5 +1256,193 @@ export class EmployeeSetupComponent implements OnInit {
 
         });
 
+    }
+
+    /**
+      * full day on changed
+      * @param {*} date
+      * @param {string} name
+      * @memberof WorkingHourComponent
+      */
+    onChange(date, name: string) {
+        if (date !== null) {
+            if (name == 'start') {
+                let timeStart = this.timeReformat(date);
+                this._startTime = _moment.utc(timeStart, "HH:mm");
+            } else {
+                let timeEnd = this.timeReformat(date);
+                this._endTime = _moment.utc(timeEnd, "HH:mm");
+            }
+            this.esCalculateTime(this._startTime, this._endTime);
+        }
+    }
+
+    /**
+     * format time to default endpoint format
+     * @param {*} value
+     * @returns
+     * @memberof WorkingHourComponent
+     */
+    timeReformat(value) {
+        return value.hour + ":" + (value.minute < 10 ? '0' : '') + value.minute
+    }
+
+    /**
+     * calculate time to fill up half day & quarter day time
+     * @param {*} str
+     * @param {*} end
+     * @memberof WorkingHourComponent
+     */
+    esCalculateTime(str, end) {
+        if ((str && end) != undefined) {
+            const d = _moment.duration(end.diff(str));
+            const s = _moment.utc(+d).format('H:mm');
+            if (s == "9:00") {
+                this.workingHourForm.patchValue(
+                    {
+                        starthalfdayAMpicker: this.splitTime(_moment(str).format("HH:mm")),
+                        endhalfdayAMpicker: this.splitTime(_moment(str).add(4, 'hours').format("HH:mm")),
+                        starthalfdayPMpicker: this.splitTime(_moment(end).subtract(4, 'hours').format("HH:mm")),
+                        endhalfdayPMpicker: this.splitTime(_moment(end).format("HH:mm")),
+                        startQ1picker: this.splitTime(_moment(str).format("HH:mm")),
+                        endQ1picker: this.splitTime(_moment(str).add(2, 'hours').format("HH:mm")),
+                        startQ2picker: this.splitTime(_moment(str).add(2, 'hours').format("HH:mm")),
+                        endQ2picker: this.splitTime(_moment(str).add(4, 'hours').format("HH:mm")),
+                        startQ3picker: this.splitTime(_moment(end).subtract(4, 'hours').format("HH:mm")),
+                        endQ3picker: this.splitTime(_moment(end).subtract(2, 'hours').format("HH:mm")),
+                        startQ4picker: this.splitTime(_moment(end).subtract(2, 'hours').format("HH:mm")),
+                        endQ4picker: this.splitTime(_moment(end).format("HH:mm"))
+                    });
+            } else {
+                this.workingHourForm.patchValue(
+                    {
+                        starthalfdayAMpicker: null,
+                        endhalfdayAMpicker: null,
+                        starthalfdayPMpicker: null,
+                        endhalfdayPMpicker: null,
+                        startQ1picker: null,
+                        endQ1picker: null,
+                        startQ2picker: null,
+                        endQ2picker: null,
+                        startQ3picker: null,
+                        endQ3picker: null,
+                        startQ4picker: null,
+                        endQ4picker: null
+                    });
+            }
+        }
+    }
+
+    /**
+     * split original time format
+     * @param {*} time
+     * @returns
+     * @memberof WorkingHourComponent
+     */
+    splitTime(time) {
+        return {
+            "hour": Number((time.split(':'))[0]), "minute": Number((time.split(':'))[1])
+        }
+    }
+
+    /**
+     * get data before send to endpoint
+     * @memberof WorkingHourComponent
+     */
+    postWorkingHourSetup(evt) {
+        this.showSmallSpinner = true;
+        this._data.code = this.workingHourForm.controls.profileName.value;
+        this._data.description = this.workingHourForm.controls.description.value;
+        Object.assign(this._data, {
+            property: {
+                fullday: {
+                    start_time: this.timeReformat(this.workingHourForm.controls.startpicker.value),
+                    end_time: this.timeReformat(this.workingHourForm.controls.endpicker.value)
+                },
+                halfday: {
+                    AM: {
+                        start_time: this.timeReformat(this.workingHourForm.controls.starthalfdayAMpicker.value),
+                        end_time: this.timeReformat(this.workingHourForm.controls.endhalfdayAMpicker.value)
+                    },
+                    PM: {
+                        start_time: this.timeReformat(this.workingHourForm.controls.starthalfdayPMpicker.value),
+                        end_time: this.timeReformat(this.workingHourForm.controls.endhalfdayPMpicker.value)
+                    }
+                },
+                quarterday: {
+                    Q1: {
+                        start_time: this.timeReformat(this.workingHourForm.controls.startQ1picker.value),
+                        end_time: this.timeReformat(this.workingHourForm.controls.endQ1picker.value)
+                    },
+                    Q2: {
+                        start_time: this.timeReformat(this.workingHourForm.controls.startQ2picker.value),
+                        end_time: this.timeReformat(this.workingHourForm.controls.endQ2picker.value)
+                    },
+                    Q3: {
+                        start_time: this.timeReformat(this.workingHourForm.controls.startQ3picker.value),
+                        end_time: this.timeReformat(this.workingHourForm.controls.endQ3picker.value)
+                    },
+                    Q4: {
+                        start_time: this.timeReformat(this.workingHourForm.controls.startQ4picker.value),
+                        end_time: this.timeReformat(this.workingHourForm.controls.endQ4picker.value)
+                    }
+                }
+            }
+        });
+        Object.keys(this._data.property.halfday).map(ampm => {
+            Object.keys(this._data.property.halfday[ampm]).map(startend => {
+                this._data.property.halfday[ampm][startend] = this._data.property.halfday[ampm][startend];
+            })
+        });
+        Object.keys(this._data.property.quarterday).map(objKey => {
+            Object.keys(this._data.property.quarterday[objKey]).map(endstart => {
+                this._data.property.quarterday[objKey][endstart] = this._data.property.quarterday[objKey][endstart];
+            })
+        });
+        this.esPatchWorkingHourSetup(this._data);
+    }
+
+    /**
+     * update or create data of working hour profile
+     * @param {*} body
+     * @memberof WorkingHourComponent
+     */
+    esPatchWorkingHourSetup(body: any) {
+            this.workingHourAPI.post_working_hours(body).subscribe(response => {
+                if (response[0].WORKING_HOURS_GUID != undefined) {
+                    if (this.setDefaultProfile) {
+                        this.workingHourAPI.post_profile_default('working-hour', response[0].WORKING_HOURS_GUID).subscribe(data => {})
+                    }
+                    this.workingHourAPI.showPopUp('New working hour profile was created successfully', true);
+                    this.esRefreshProfile(response[0].WORKING_HOURS_GUID);
+                } else {
+                    this.workingHourAPI.showPopUp(response.status, false);
+                }
+                this.showSmallSpinner = false;
+            }, err => {
+                this.workingHourAPI.showPopUp(JSON.parse(err._body).status, false);
+            })
+        // }
+    }
+
+
+    /**
+     * refresh saved data by sending back the editted working hour id 
+     * @param {string} id
+     * @memberof WorkingHourComponent
+     */
+    esRefreshProfile(id: string) {
+        this.valueChange.emit(id);
+    }
+
+    /**
+     * Event for checkbox to set default working hour profile
+     * @param {*} evt
+     * @memberof EmployeeSetupComponent
+     */
+    setDefaultProfile(evt, type) {
+        (type === 'working-hour') ?
+        this.defaultWHProfile = evt.target.checked :
+            this.defaultCalendarProfile = evt.target.checked;
     }
 }
