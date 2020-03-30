@@ -104,21 +104,6 @@
       <!-- main page -->
       <ion-card-content style="max-height: 100%; overflow-y: auto;" [style.display]="clickedProduce==true? 'none': ''">
         <div style="display: flex; flex-wrap: wrap">
-          <!-- <div class="buttonGroup">
-            <ion-button style="--border-radius: 4px 0 0 4px;margin-right: 0; margin-bottom: 15px;display:inline-block;font-size:
-              11px;height: 40px;flex: 0.35; min-width: 120px;
-              cursor: pointer;text-transform: none;" [ngClass]="{
-              'individualClicked': individualButton === true , 'individualUnclicked': individualButton === false}"
-              (click)="groupButton = false; individualButton = true;companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';">
-              Individual Report
-            </ion-button>
-            <ion-button [ngClass]="{ 'groupClicked' : groupButton === true , 'groupUnclicked' : groupButton === false}"
-              (click)="groupButton = true; individualButton = false; clearCheckbox()" style="--border-radius: 0 4px 4px 0;margin-left: 0; margin-bottom: 15px;display:inline-block;font-size:
-              11px;height: 40px;flex: 0.35; min-width: 120px;
-              cursor: pointer;text-transform: none;">
-              Group Report
-            </ion-button>
-          </div> -->
           <div class="dateForm">
             <mat-form-field class="date" style="padding: 2px; flex:1; min-width: 150px;" appearance="outline">
               <mat-label>Start date</mat-label>
@@ -127,7 +112,6 @@
               </div>
               <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
-            <!-- <div style="display: inline-block;width:3%"></div> -->
             <mat-form-field class="date" style="padding: 2px; flex:1; min-width: 150px;" appearance="outline">
               <mat-label>End date</mat-label>
               <input class="dateInput" matInput [matDatepicker]="picker2" [formControl]="secondPicker" required>
@@ -171,7 +155,6 @@
               </ion-row>
             </div>
             <div style="overflow-y: auto;height: calc(100% - 13em)">
-              <!-- <div style="overflow-y: auto;height: calc(100% - 161px)"> -->
               <ion-item class="ionItem" lines="none">
                 <ion-label class="checkLabel">Select All</ion-label>
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="isMain" [indeterminate]="isInde"
@@ -262,8 +245,6 @@
                     </mat-select>
                   </mat-form-field>
                 </ion-col>
-                <!-- </ion-row>
-              <ion-row *ngIf="individualButton === false" style="margin-bottom: 10px;"> -->
                 <ion-col style="flex: 1 1 30px; min-width: 200px;">
                   <p style="font-size: 12px;color: #43425d;">
                     Cost Centre:</p>
@@ -289,7 +270,6 @@
                     [indeterminate]="indeterminate" (click)="headerList()">
                   </ion-checkbox>
                 </ion-col>
-                <!-- <ion-col size="1.5" *ngIf="individualButton === false"></ion-col> -->
                 <ion-col size="1" align-self-center [class]="'hide-md-down'" style="white-space: nowrap;
                   text-overflow: ellipsis;overflow: hidden;min-width: 50px;">
                   ID
@@ -360,9 +340,6 @@
                         </ion-checkbox>
                       </div>
                     </ion-avatar>
-                    <!-- <ion-avatar class="avatar" *ngIf="individualButton === false">
-                      <img src="assets/icon/evans.jpg" style="margin-left: 5px;">
-                    </ion-avatar> -->
                   </ion-col>
                   <ion-col size="1" align-self-center [class]="'hide-md-down'" style="color: #808495; font-size: 12px;white-space: pre-line;overflow: hidden;text-overflow:
                     ellipsis;min-width: 50px;">
@@ -419,21 +396,6 @@
                 <app-spinner></app-spinner>
               </div>
             </div>
-            <!-- <div class="buttons" style="display: flex; flex-wrap: wrap;justify-content: flex-end;"
-              *ngIf="individualButton === true">
-              <div [class]="'hide-sm-down'" style="flex:1.5; min-width: 0px;"></div>
-              <ion-button fill="outline"
-                (click)="selects= null;clearCheckbox();companyValue = 'Nothing Selected'; departmentValue = 'Nothing Selected'; branchValue= 'Nothing Selected';costCentreValue= 'Nothing Selected';selection = 'noSelection';"
-                style="--border-radius: 2px;background: #f5f6fa;height: 30px; width: 190px;font-size: 11px;text-transform: none; flex: 1;min-width: 150px;">
-                Clear
-              </ion-button>
-              <ion-button
-                style="--border-radius: 2px;font-size: 11px;height: 30px;width:320px;cursor: pointer;text-transform: none;flex:2; min-width: 180px;"
-                color="primary" (click)="produceIndividualReport(); clickedProduce=true"
-                [disabled]="selects == null || selectedUserId == null">
-                Produce Report
-              </ion-button>
-            </div> -->
             <div class="buttons" style="display: flex; flex-wrap: wrap;justify-content: flex-end;">
               <div [class]="'hide-sm-down'"
                 style="flex:1.5; min-width: 0px;font-size: 12px;color: #43425d;opacity: 0.8;padding-top: 10px;">
@@ -446,32 +408,28 @@
                 Clear
               </ion-button>
               <ion-button style="--border-radius: 2px;font-size: 11px;height: 30px;width:320px;cursor: pointer;text-transform:
-                none;flex:2; min-width: 180px;" color="primary" [disabled]="selects == null || selectedUserId.length == 0"
-                [matMenuTriggerFor]="menu" (click)="produceGroupReport()">
+                none;flex:2; min-width: 180px;" color="primary"
+                [disabled]="selects == null || selectedUserId.length == 0" [matMenuTriggerFor]="menu">
                 Produce Report
                 <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
                 margin-left: 60px;color: white;"></ion-spinner>
                 <mat-icon style="position: absolute;right: 0;margin-right: 20px;">arrow_drop_down</mat-icon>
               </ion-button>
-              <!-- <ion-button style="--border-radius: 2px;font-size: 11px;height: 30px;width:40px;cursor: pointer;"
-                color="primary" [disabled]="selects == null" >
-                <mat-icon>arrow_drop_down</mat-icon>
-              </ion-button> -->
               <mat-menu #menu="matMenu" yPosition="above" xPosition="after">
                 <button mat-menu-item [matMenuTriggerFor]="group" style="outline: none;font-size: 12px;
                 color: #43425d;">Group By</button>
               </mat-menu>
               <mat-menu #group="matMenu">
                 <button mat-menu-item style="outline: none;font-size: 12px;
-                color: #43425d;">Company</button>
+                color: #43425d;" (click)="produceGroupReport('companyName')">Company</button>
                 <button mat-menu-item style="outline: none;font-size: 12px;
-                color: #43425d;">Department</button>
+                color: #43425d;" (click)="produceGroupReport('department')">Department</button>
                 <button mat-menu-item style="outline: none;font-size: 12px;
-                color: #43425d;">Branch</button>
+                color: #43425d;" (click)="produceGroupReport('branch')">Branch</button>
                 <button mat-menu-item style="outline: none;font-size: 12px;
-                color: #43425d;">Cost Centre</button>
+                color: #43425d;" (click)="produceGroupReport('costcentre')">Cost Centre</button>
                 <button mat-menu-item style="outline: none;font-size: 12px;
-                color: #43425d;">All in a group</button>
+                color: #43425d;" (click)="produceGroupReport('all')">All in a group</button>
               </mat-menu>
             </div>
           </div>
@@ -558,8 +516,8 @@
 
           <div class="content" style="min-width: fit-content;">
             <!-- ngFor under this div -->
-            <ng-container *ngFor="let item of tableDetails; let i=index; let odd=odd;">
-              <div style="padding: 10px;" *ngIf="selectedUserId.includes(item.userGuid)" [ngClass]="{ odd: odd }">
+            <ng-container *ngFor="let item of arrayDetails; let i=index; let odd=odd;">
+              <div style="padding: 10px;" [ngClass]="{ odd: odd }">
                 <ion-row style="display: flex; flex-flow: row nowrap;">
                   <ion-col size="0.3" class="titleRow text" style="min-width: 26px;white-space: pre-line;">{{i + 1}}
                   </ion-col>
@@ -609,7 +567,6 @@
                 </ion-row>
               </div>
             </ng-container>
-
           </div>
         </div>
       </ion-card-content>
@@ -623,10 +580,12 @@
             <mat-form-field id="saveas" appearance="outline"
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
-                <mat-option value="PDF" (click)="savePDF()">
+                <mat-option value="PDF"
+                  (click)="savePDF('Approval Override History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Application Date', dataKey: 'applicationDate' }, { header: 'Overriden By', dataKey: 'overrideBy' }, { header: 'Overriden Date', dataKey: 'overrideDate' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Status', dataKey: 'status' }, { header: 'Remarks', dataKey: 'remarks' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV">
+                <mat-option value="CSV"
+                  (click)="saveCSV('Approval Override History',['employeeNo', 'employeeName', 'leaveTypeName', 'applicationDate', 'overrideBy', 'overrideDate', 'startDate', 'endDate', 'noOfDays', 'status']);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -692,8 +651,8 @@
 
           <div class="content" style="min-width: fit-content;">
             <!-- ngFor under this div -->
-            <ng-container *ngFor="let item of tableDetails; let i=index; let odd=odd;">
-              <div style="padding: 10px;" *ngIf="selectedUserId.includes(item.userGuid)" [ngClass]="{ odd: odd }">
+            <ng-container *ngFor="let item of arrayDetails; let i=index; let odd=odd;">
+              <div style="padding: 10px;" [ngClass]="{ odd: odd }">
                 <ion-row style="display: flex; flex-flow: row nowrap;min-width: 1300px;">
                   <ion-col size="0.4" class="titleRow text" style="min-width: 26px;">
                     {{i+1}}</ion-col>
@@ -737,11 +696,11 @@
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
                 <mat-option value="PDF"
-                  (click)="savePDF('Apply On Behalf History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Length of Service (Years)', dataKey: 'yearService' }, { header: 'Leave Type', dataKey: 'leaveType' }, { header: 'Application Date', dataKey: 'applicationDate' }, { header: 'Date Confirmed', dataKey: 'confirmedDate' }, { header: 'Applied By', dataKey: 'appliedBy' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Status', dataKey: 'status' }, { header: 'Remarks', dataKey: 'remarks' }])">
+                  (click)="savePDF('Apply On Behalf History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Length of Service (Years)', dataKey: 'yearService' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Application Date', dataKey: 'applicationDate' }, { header: 'Date Confirmed', dataKey: 'confirmedDate' }, { header: 'Applied By', dataKey: 'appliedBy' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Status', dataKey: 'status' }, { header: 'Remarks', dataKey: 'remarks' }])">
                   PDF
                 </mat-option>
                 <mat-option value="CSV"
-                  (click)="saveCSV('Apply On Behalf History',['employeeName', 'yearService', 'leaveType', 'applicationDate', 'confirmedDate', 'appliedBy', 'startDate', 'endDate', 'noOfDays', 'status', 'remarks']);">
+                  (click)="saveCSV('Apply On Behalf History',['employeeName', 'yearService', 'leaveTypeName', 'applicationDate', 'confirmedDate', 'appliedBy', 'startDate', 'endDate', 'noOfDays', 'status', 'remarks']);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -791,8 +750,8 @@
             min-width: 88px;">
                 Start Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
-            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;"
-                min-width: 88px;>
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
+                min-width: 88px;">
                 End Date</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
@@ -810,8 +769,8 @@
 
           <div class="content" style="min-width: fit-content;">
             <!-- ngFor under this div -->
-            <ng-container *ngFor="let item of tableDetails; let i=index; let odd=odd;">
-              <div style="padding: 10px;" *ngIf="selectedUserId.includes(item.userGuid)" [ngClass]="{ odd: odd }">
+            <ng-container *ngFor="let item of arrayDetails; let i=index; let odd=odd;">
+              <div style="padding: 10px;" [ngClass]="{ odd: odd }">
                 <ion-row style="display: flex; flex-flow: row nowrap;">
                   <ion-col size="0.4" class="titleRow text">
                     {{i+1}}</ion-col>
@@ -921,8 +880,8 @@
 
           <div class="content" style="min-width: 1300px;">
             <!-- ngFor under this div -->
-            <ng-container *ngFor="let item of tableDetails; let i=index; let odd=odd;">
-              <div style="padding: 10px;" *ngIf="selectedUserId.includes(item.userGuid)" [ngClass]="{ odd: odd }">
+            <ng-container *ngFor="let item of arrayDetails; let i=index; let odd=odd;">
+              <div style="padding: 10px;" [ngClass]="{ odd: odd }">
                 <ion-row style="display: flex; flex-flow: row nowrap; min-width: 1300px;">
                   <ion-col size="0.5" class="titleRow text">
                     {{i+1}}</ion-col>
@@ -1027,8 +986,8 @@
 
           <div class="content" style="min-width: 1300px;">
             <!-- ngFor under this div -->
-            <ng-container *ngFor="let item of tableDetails; let i=index; let odd=odd;">
-              <div style="padding: 10px;" *ngIf="selectedUserId.includes(item.userGuid)" [ngClass]="{ odd: odd }">
+            <ng-container *ngFor="let item of arrayDetails; let i=index; let odd=odd;">
+              <div style="padding: 10px;" [ngClass]="{ odd: odd }">
                 <ion-row style="display: flex; flex-flow: row nowrap;">
                   <ion-col size="0.5" class="titleRow text" style="min-width:26px;">
                     {{i + 1}}</ion-col>
@@ -1083,10 +1042,12 @@
             <mat-form-field id="saveas" appearance="outline"
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
-                <mat-option value="PDF" (click)="savePDF()">
+                <mat-option value="PDF"
+                  (click)="savePDF('Leave Adjustment History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Adjustment', dataKey: 'adjustment' }, { header: 'Adjusted By', dataKey: 'adjustBy' }, { header: 'Adjustment Date', dataKey: 'adjustDate' }, { header: 'Remarks', dataKey: 'remarks' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV">
+                <mat-option value="CSV"
+                  (click)="saveCSV('Leave Adjustment History',['employeeNo', 'employeeName', 'leaveTypeName', 'adjustment', 'adjustBy', 'adjustDate', 'remarks']);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1140,8 +1101,8 @@
 
           <div class="content" style="min-width: 1300px;">
             <!-- ngFor under this div -->
-            <ng-container *ngFor="let item of tableDetails; let i=index; let odd=odd;">
-              <div style="padding: 10px;" *ngIf="selectedUserId.includes(item.userGuid)" [ngClass]="{ odd: odd }">
+            <ng-container *ngFor="let item of arrayDetails;let i=index; let odd=odd;">
+              <div style="padding: 10px;" [ngClass]="{ odd: odd }">
                 <ion-row style="display: flex; flex-flow: row nowrap;">
                   <ion-col size="0.5" class="titleRow text" style="min-width: 26px;">
                     {{i+1}}</ion-col>
@@ -1179,11 +1140,11 @@
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
                 <mat-option value="PDF"
-                  (click)="savePDF('Leave Cancellation History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveType' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Cancelled By', dataKey: 'cancelBy' }, { header: 'Leave Remarks', dataKey: 'leaveRemarks' }, { header: 'Cancellation Remarks', dataKey: 'cancelRemarks' }])">
+                  (click)="savePDF('Leave Cancellation History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Cancelled By', dataKey: 'cancelBy' }, { header: 'Leave Remarks', dataKey: 'leaveRemarks' }, { header: 'Cancellation Remarks', dataKey: 'cancelRemarks' }])">
                   PDF
                 </mat-option>
                 <mat-option value="CSV"
-                  (click)="saveCSV('Leave Cancellation History',['employeeName', 'leaveType', 'startDate', 'endDate', 'noOfDays', 'cancelBy', 'leaveRemarks', 'cancelRemarks']);">
+                  (click)="saveCSV('Leave Cancellation History',['employeeName', 'leaveTypeName', 'startDate', 'endDate', 'noOfDays', 'cancelBy', 'leaveRemarks', 'cancelRemarks']);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1241,8 +1202,8 @@
 
           <div class="content" style="min-width: 1300px;">
             <!-- ngFor under this div -->
-            <ng-container *ngFor="let item of tableDetails; let i=index; let odd=odd;">
-              <div style="padding: 10px;" *ngIf="selectedUserId.includes(item.userGuid)" [ngClass]="{ odd: odd }">
+            <ng-container *ngFor="let item of arrayDetails; let i=index; let odd=odd;">
+              <div style="padding: 10px;" [ngClass]="{ odd: odd }">
                 <ion-row style="display: flex; flex-flow: row nowrap;">
                   <ion-col size="0.5" class="titleRow text" style="min-width: 26px;">
                     {{i+1}}</ion-col>
@@ -1285,11 +1246,11 @@
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
                 <mat-option value="PDF"
-                  (click)="savePDF('Leave Rejected History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveType' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Rejected By', dataKey: 'rejectBy' }, { header: 'Leave Remarks', dataKey: 'remarks' }, { header: 'Rejection Remarks', dataKey: '' }])">
+                  (click)="savePDF('Leave Rejected History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Rejected By', dataKey: 'rejectBy' }, { header: 'Leave Remarks', dataKey: 'remarks' }, { header: 'Rejection Remarks', dataKey: '' }])">
                   PDF
                 </mat-option>
                 <mat-option value="CSV"
-                  (click)="saveCSV('Leave Rejected History',['employeeName', 'leaveType', 'startDate', 'endDate', 'noOfDays', 'rejectBy', 'remarks']);">
+                  (click)="saveCSV('Leave Rejected History',['employeeName', 'leaveTypeName', 'startDate', 'endDate', 'noOfDays', 'rejectBy', 'remarks']);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1347,8 +1308,8 @@
 
           <div class="content" style="min-width: 1300px;">
             <!-- ngFor under this div -->
-            <ng-container *ngFor="let item of tableDetails; let i=index; let odd=odd;">
-              <div style="padding: 10px;" *ngIf="selectedUserId.includes(item.userGuid)" [ngClass]="{ odd: odd }">
+            <ng-container *ngFor="let item of arrayDetails; let i=index; let odd=odd;">
+              <div style="padding: 10px;" [ngClass]="{ odd: odd }">
                 <ion-row style="display: flex; flex-flow: row nowrap;">
                   <ion-col size="0.5" class="titleRow text" style="min-width: 26px;">
                     {{i+1}}</ion-col>
@@ -1390,10 +1351,12 @@
             <mat-form-field id="saveas" appearance="outline"
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
-                <mat-option value="PDF" (click)="savePDF()">
+                <mat-option value="PDF"
+                  (click)="savePDF('Forfeited Leave History', [{ header: 'No', dataKey: 'no' },{ header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'No. Of Days Forfeited', dataKey: 'noOfDays' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV">
+                <mat-option value="CSV"
+                  (click)="saveCSV('Forfeited Leave History',['employeeNo', 'employeeName', 'leaveTypeName', 'noOfDays']);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1435,8 +1398,8 @@
 
           <div class="content" style="min-width: fit-content;">
             <!-- ngFor under this div -->
-            <ng-container *ngFor="let item of tableDetails; let i=index; let odd=odd;">
-              <div style="padding: 10px;" *ngIf="selectedUserId.includes(item.userGuid)" [ngClass]="{ odd: odd }">
+            <ng-container *ngFor="let item of arrayDetails; let i=index; let odd=odd;">
+              <div style="padding: 10px;" [ngClass]="{ odd: odd }">
                 <ion-row style="display: flex; flex-flow: row nowrap;">
                   <ion-col size="0.5" class="titleRow text" style="min-width: 26px;">
                     {{i+1}}</ion-col>
@@ -1537,8 +1500,8 @@
 
           <div class="content" style="min-width: 1500px;">
             <!-- ngFor under this div -->
-            <ng-container *ngFor="let item of tableDetails; let i=index; let odd=odd;">
-              <div style="padding: 10px;" *ngIf="selectedUserId.includes(item.userGuid)" [ngClass]="{ odd: odd }">
+            <ng-container *ngFor="let item of arrayDetails; let i=index; let odd=odd;">
+              <div style="padding: 10px;" [ngClass]="{ odd: odd }">
                 <ion-row style="display: flex; flex-flow: row nowrap;">
                   <ion-col size="0.5" class="titleRow text" style="min-width: 26px;">
                     {{i+1}}</ion-col>

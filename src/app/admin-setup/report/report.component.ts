@@ -239,6 +239,13 @@ export class ReportComponent implements OnInit {
   public showSpinner: boolean;
 
   /**
+   * filtered table details according the selected user
+   * @type {any[]}
+   * @memberof ReportComponent
+   */
+  public arrayDetails: any[] = [];
+
+  /**
    * searchbar key up value
    * @private
    * @type {string}
@@ -306,7 +313,7 @@ export class ReportComponent implements OnInit {
       bodyStyles: { fontSize: 7.5, minCellWidth: 10 },
       margin: { top: 13, left: 5, right: 5, bottom: 5 },
       showHead: 'everyPage',
-      body: this.tableDetails,
+      body: this.arrayDetails,
       columns: headerKey,
       didParseCell: (data) => {
         if (title === 'Leave Entitlement Summary' || title === 'Leave Taken History') {
@@ -388,7 +395,7 @@ export class ReportComponent implements OnInit {
    */
   saveCSV(title: string, fields) {
     const json2csvParser = new Parser({ fields, unwind: ['leaveDetail', 'leaveDetail.leaveDetail'] });
-    const csv = json2csvParser.parse(this.tableDetails);
+    const csv = json2csvParser.parse(this.arrayDetails);
     const blob = new Blob([csv], { type: "text/plain" });
     const csvFile = window.document.createElement("a");
     csvFile.href = window.URL.createObjectURL(blob);
@@ -598,27 +605,10 @@ export class ReportComponent implements OnInit {
   }
 
   /**
-   * produce individual report from selected user and table type
-   * @memberof ReportComponent
-   */
-  // produceIndividualReport() {
-  //   this._selectedLeaveTypesList = [];
-  //   for (let i = 0; i < this.leaveTypes.length; i++) {
-  //     if (this.leaveTypes[i].isChecked === true) {
-  //       this._selectedLeaveTypesList.push(this.leaveTypes[i].LEAVE_TYPE_GUID);
-  //     }
-  //   }
-  //   this.reportAPI.get_individual_report(this.selectedUserId, this.selects).subscribe(data => {
-  //     this.tableDetails = data;
-  //     this.filter();
-  //   });
-  // }
-
-  /**
    * produce group report table from selected table type
    * @memberof ReportComponent
    */
-  produceGroupReport() {
+  produceGroupReport(groupName: string) {
     this.showSpinner = true;
     this._selectedLeaveTypesList = [];
     for (let i = 0; i < this.leaveTypes.length; i++) {
@@ -628,6 +618,15 @@ export class ReportComponent implements OnInit {
     }
     this.reportAPI.get_bundle_report(this.selects).subscribe(value => {
       this.tableDetails = value;
+      this.arrayDetails = [];
+      for (let i = 0; i < this.tableDetails.length; i++) {
+        if (this.selectedUserId.includes(this.tableDetails[i].userGuid)) {
+          this.arrayDetails.push(this.tableDetails[i]);
+        }
+      }
+      let a = require('lodash').groupBy(this.arrayDetails, groupName);
+      console.log(a);
+
       this.showSpinner = false;
       this.clickedProduce = true;
       this.filter();
@@ -640,20 +639,20 @@ export class ReportComponent implements OnInit {
    */
   filter() {
     if (this.selects == 'apply-on-behalf' || this.selects == 'approval-override') {
-      let selectedMembers = this.tableDetails.filter(
+      let selectedMembers = this.arrayDetails.filter(
         m => new Date(m.applicationDate) >= this.firstPicker.value && new Date(m.applicationDate) <= this.secondPicker.value
       );
-      this.tableDetails = selectedMembers;
+      this.arrayDetails = selectedMembers;
     }
     if (this.selects == 'entitlement-claim') {
-      let selectedMembers = this.tableDetails.filter(
+      let selectedMembers = this.arrayDetails.filter(
         claim => new Date(claim.applyDate) >= this.firstPicker.value && new Date(claim.applyDate) <= this.secondPicker.value
       );
-      this.tableDetails = selectedMembers;
+      this.arrayDetails = selectedMembers;
     }
     if (this.selects == 'leave-taken') {
       const newLeaveDetails = [];
-      this.tableDetails.filter(
+      this.arrayDetails.filter(
         m => {
           m.leaveDetail.filter(
             details => {
@@ -666,49 +665,42 @@ export class ReportComponent implements OnInit {
       );
     }
     if (this.selects == 'leave-adjustment') {
-      const newLeaveDetails = [];
-      this.tableDetails.filter(
-        adjust => {
-          adjust.leaveDetail.filter(
-            details => {
-              if (new Date(details.adjustDate) >= this.firstPicker.value && new Date(details.adjustDate) <= this.secondPicker.value) {
-                newLeaveDetails.push(details);
-                adjust.leaveDetail = newLeaveDetails;
-              }
-            })
-        }
-      );
+      let adjustment = this.arrayDetails.filter(
+        adjust =>
+          new Date(adjust.adjustDate) >= this.firstPicker.value && new Date(adjust.adjustDate) <= this.secondPicker.value
+      )
+      this.arrayDetails = adjustment;
     }
     if (this.selects == 'leave-cancellation' || this.selects == 'leave-rejected') {
-      let selectedMembers = this.tableDetails.filter(
+      let selectedMembers = this.arrayDetails.filter(
         value => new Date(value.startDate) >= this.firstPicker.value && new Date(value.endDate) <= this.secondPicker.value
       );
-      this.tableDetails = selectedMembers;
+      this.arrayDetails = selectedMembers;
     }
     if (this.selects == 'employee-master-list') {
-      let filteredEmployee = this.tableDetails.filter(
+      let filteredEmployee = this.arrayDetails.filter(
         items => new Date(items.joinDate) >= this.firstPicker.value && new Date(items.joinDate) <= this.secondPicker.value
       );
-      this.tableDetails = filteredEmployee;
+      this.arrayDetails = filteredEmployee;
     }
-    this.tableDetails.forEach((element, index) => {
+    this.arrayDetails.forEach((element, index) => {
       element["no"] = index + 1;
     });
     if (this.selects != 'leave-entitlement') {
-      for (let i = this.tableDetails.length - 1; i >= 0; --i) {
+      for (let i = this.arrayDetails.length - 1; i >= 0; --i) {
         for (let j = 0; j < this._selectedLeaveTypesList.length; j++) {
-          if (this.tableDetails[i].leaveTypeId !== this._selectedLeaveTypesList[j]) {
-            this.tableDetails.splice(i, 1);
+          if (this.arrayDetails[i].leaveTypeId !== this._selectedLeaveTypesList[j]) {
+            this.arrayDetails.splice(i, 1);
           }
         }
       }
     } else {
-      for (let i = this.tableDetails.length - 1; i >= 0; --i) {
-        for (let k = this.tableDetails[i].leaveDetail.length - 1; k >= 0; --k) {
+      for (let i = this.arrayDetails.length - 1; i >= 0; --i) {
+        for (let k = this.arrayDetails[i].leaveDetail.length - 1; k >= 0; --k) {
           for (let j = 0; j < this._selectedLeaveTypesList.length; j++) {
-            if (this.tableDetails[i].leaveDetail[k].leaveTypeId !== this._selectedLeaveTypesList[j]) {
-              this.tableDetails[i].leaveDetail.splice(k, 1);
-              if (this.tableDetails[i].leaveDetail.length == 0) { this.tableDetails.splice(i, 1); }
+            if (this.arrayDetails[i].leaveDetail[k].leaveTypeId !== this._selectedLeaveTypesList[j]) {
+              this.arrayDetails[i].leaveDetail.splice(k, 1);
+              if (this.arrayDetails[i].leaveDetail.length == 0) { this.arrayDetails.splice(i, 1); }
             }
           }
         }
@@ -728,6 +720,8 @@ export class ReportComponent implements OnInit {
     this.userList.forEach(list => {
       list.isChecked = false;
     });
+    this.listMain = false;
+    this.indeterminate = false;
     this.selectedNum = 0;
     document.querySelector('ion-searchbar').getInputElement().then((searchInput) => {
       searchInput.value = '';
