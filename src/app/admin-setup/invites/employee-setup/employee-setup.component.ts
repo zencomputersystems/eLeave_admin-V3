@@ -1,7 +1,7 @@
 import { WorkingHourApiService } from './../../leave-setup/working-hour/working-hour-api.service';
 import { WorkingHourConfigComponent } from './../../general-component/working-hour-config/working-hour-config.component';
 import { CalendarProfileApiService } from './../../leave-setup/calendar-profile/calendar-profile-api.service';
-import { Component, OnInit, HostBinding, Output, EventEmitter  } from '@angular/core';
+import { Component, OnInit, HostBinding, Output, EventEmitter } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AdminInvitesApiService } from '../admin-invites-api.service';
 import * as _moment from 'moment';
@@ -693,6 +693,7 @@ export class EmployeeSetupComponent implements OnInit {
         }
         this.id = item.id;
         this.userId = item.userId;
+        this.inviteAPI.apiService.get_profile_pic('all').subscribe(data => this.url = data);
         this.inviteAPI.get_admin_user_info('personal-details', this.id).subscribe(data => {
             this.personalDetails = data;
             this.getPersonalDetails();
@@ -1408,20 +1409,20 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof WorkingHourComponent
      */
     esPatchWorkingHourSetup(body: any) {
-            this.workingHourAPI.post_working_hours(body).subscribe(response => {
-                if (response[0].WORKING_HOURS_GUID != undefined) {
-                    if (this.setDefaultProfile) {
-                        this.workingHourAPI.post_profile_default('working-hour', response[0].WORKING_HOURS_GUID).subscribe(data => {})
-                    }
-                    this.workingHourAPI.showPopUp('New working hour profile was created successfully', true);
-                    this.esRefreshProfile(response[0].WORKING_HOURS_GUID);
-                } else {
-                    this.workingHourAPI.showPopUp(response.status, false);
+        this.workingHourAPI.post_working_hours(body).subscribe(response => {
+            if (response[0].WORKING_HOURS_GUID != undefined) {
+                if (this.setDefaultProfile) {
+                    this.workingHourAPI.post_profile_default('working-hour', response[0].WORKING_HOURS_GUID).subscribe(data => { })
                 }
-                this.showSmallSpinner = false;
-            }, err => {
-                this.workingHourAPI.showPopUp(JSON.parse(err._body).status, false);
-            })
+                this.workingHourAPI.showPopUp('New working hour profile was created successfully', true);
+                this.esRefreshProfile(response[0].WORKING_HOURS_GUID);
+            } else {
+                this.workingHourAPI.showPopUp(response.status, false);
+            }
+            this.showSmallSpinner = false;
+        }, err => {
+            this.workingHourAPI.showPopUp(JSON.parse(err._body).status, false);
+        })
         // }
     }
 
@@ -1442,7 +1443,7 @@ export class EmployeeSetupComponent implements OnInit {
      */
     setDefaultProfile(evt, type) {
         (type === 'working-hour') ?
-        this.defaultWHProfile = evt.target.checked :
+            this.defaultWHProfile = evt.target.checked :
             this.defaultCalendarProfile = evt.target.checked;
     }
 }
