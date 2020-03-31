@@ -1,6 +1,6 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, ViewChild } from '@angular/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../leave-setup/date.adapter';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MatOption } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { LeaveApiService } from '../leave-setup/leave-api.service';
 import { APIService } from 'src/services/shared-service/api.service';
@@ -271,7 +271,9 @@ export class ReportComponent implements OnInit {
    * @type {string}
    * @memberof ReportComponent
    */
-  public selectedName: string;
+  public selectedName: string[] = [];
+
+  public selectedIndex: number[] = [];
 
   /**
    * searchbar key up value
@@ -288,6 +290,15 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   private _selectedLeaveTypesList: string[] = [];
+
+  /**
+   * get mat option 
+   * @private
+   * @type {MatOption}
+   * @memberof ReportComponent
+   */
+  @ViewChild('allSelected') private allSelected: MatOption;
+
 
   /**
    *Creates an instance of ReportComponent.
@@ -332,87 +343,90 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   savePDF(title, headerKey) {
-    const doc = new jsPDF('l', 'mm', 'a4');
-    doc.setFontSize(9);
-    doc.text(5, 7, title);
-    doc.text(5, 11, 'From ' + _moment(this.firstPicker.value).format('DD MMM YYYY') + ' to ' + _moment(this.secondPicker.value).format('DD MMM YYYY'));
-    doc.autoTable({
-      headStyles: { fillColor: [67, 66, 93], fontSize: 7.5, minCellWidth: 2 },
-      bodyStyles: { fontSize: 7.5, minCellWidth: 10 },
-      margin: { top: 13, left: 5, right: 5, bottom: 5 },
-      showHead: 'everyPage',
-      body: this.arrayDetails,
-      columns: headerKey,
-      didParseCell: (data) => {
-        if (title === 'Leave Entitlement Summary' || title === 'Leave Taken History') {
-          let type = '', start = '', end = '', days = '', approved = '', remark = '', takenLeaveType = '',
-            entitled = '', carried = '', forfeited = '', taken = '', pending = '', balance = '';
-          for (let i = 0; i < data.table.body.length; i++) {
-            for (let j = 0; j < data.table.body[i].raw.leaveDetail.length; j++) {
-              if (data.row.index === i && data.section === 'body') {
-                if (title === 'Leave Entitlement Summary') {
-                  if (data.column.index === 4) {
-                    type += data.table.body[i].raw.leaveDetail[j].leaveTypeName + '\n';
-                    data.cell.text = type;
+    for (let i = 0; i < this.selectedIndex.length; i++) {
+      const doc = new jsPDF('l', 'mm', 'a4');
+      doc.setFontSize(9);
+      doc.text(5, 7, title + '_' + this.groupKey[this.selectedIndex[i]]);
+      doc.text(5, 11, 'From ' + _moment(this.firstPicker.value).format('DD MMM YYYY') + ' to ' + _moment(this.secondPicker.value).format('DD MMM YYYY'));
+      doc.autoTable({
+        headStyles: { fillColor: [67, 66, 93], fontSize: 7.5, minCellWidth: 2 },
+        bodyStyles: { fontSize: 7.5, minCellWidth: 10 },
+        margin: { top: 13, left: 5, right: 5, bottom: 5 },
+        showHead: 'everyPage',
+        body: this.groupValue[this.selectedIndex[i]],
+        columns: headerKey,
+        didParseCell: (data) => {
+          if (title === 'Leave Entitlement Summary' || title === 'Leave Taken History') {
+            let type = '', start = '', end = '', days = '', approved = '', remark = '', takenLeaveType = '',
+              entitled = '', carried = '', forfeited = '', taken = '', pending = '', balance = '';
+            for (let i = 0; i < data.table.body.length; i++) {
+              for (let j = 0; j < data.table.body[i].raw.leaveDetail.length; j++) {
+                if (data.row.index === i && data.section === 'body') {
+                  if (title === 'Leave Entitlement Summary') {
+                    if (data.column.index === 4) {
+                      type += data.table.body[i].raw.leaveDetail[j].leaveTypeName + '\n';
+                      data.cell.text = type;
+                    }
+                    if (data.column.index === 5) {
+                      entitled += data.table.body[i].raw.leaveDetail[j].entitledDays + '\n';
+                      data.cell.text = entitled;
+                    }
+                    if (data.column.index === 6) {
+                      carried += data.table.body[i].raw.leaveDetail[j].carriedForward + '\n';
+                      data.cell.text = carried;
+                    }
+                    if (data.column.index === 7) {
+                      forfeited += data.table.body[i].raw.leaveDetail[j].forfeited + '\n';
+                      data.cell.text = forfeited;
+                    }
+                    if (data.column.index === 8) {
+                      taken += data.table.body[i].raw.leaveDetail[j].taken + '\n';
+                      data.cell.text = taken;
+                    }
+                    if (data.column.index === 9) {
+                      pending += data.table.body[i].raw.leaveDetail[j].pending + '\n';
+                      data.cell.text = pending;
+                    }
+                    if (data.column.index === 10) {
+                      balance += data.table.body[i].raw.leaveDetail[j].balance + '\n';
+                      data.cell.text = balance;
+                    }
                   }
-                  if (data.column.index === 5) {
-                    entitled += data.table.body[i].raw.leaveDetail[j].entitledDays + '\n';
-                    data.cell.text = entitled;
-                  }
-                  if (data.column.index === 6) {
-                    carried += data.table.body[i].raw.leaveDetail[j].carriedForward + '\n';
-                    data.cell.text = carried;
-                  }
-                  if (data.column.index === 7) {
-                    forfeited += data.table.body[i].raw.leaveDetail[j].forfeited + '\n';
-                    data.cell.text = forfeited;
-                  }
-                  if (data.column.index === 8) {
-                    taken += data.table.body[i].raw.leaveDetail[j].taken + '\n';
-                    data.cell.text = taken;
-                  }
-                  if (data.column.index === 9) {
-                    pending += data.table.body[i].raw.leaveDetail[j].pending + '\n';
-                    data.cell.text = pending;
-                  }
-                  if (data.column.index === 10) {
-                    balance += data.table.body[i].raw.leaveDetail[j].balance + '\n';
-                    data.cell.text = balance;
-                  }
-                }
-                if (title === 'Leave Taken History') {
-                  if (data.column.index === 3) {
-                    takenLeaveType += data.table.body[i].raw.leaveDetail[j].leaveTypeName + '\n';
-                    data.cell.text = takenLeaveType;
-                  }
-                  if (data.column.index === 4) {
-                    start += data.table.body[i].raw.leaveDetail[j].startDate + '\n';
-                    data.cell.text = start;
-                  }
-                  if (data.column.index === 5) {
-                    end += data.table.body[i].raw.leaveDetail[j].endDate + '\n';
-                    data.cell.text = end;
-                  }
-                  if (data.column.index === 6) {
-                    days += (data.table.body[i].raw.leaveDetail[j].noOfDays) + '\n';
-                    data.cell.text = days
-                  }
-                  if (data.column.index === 7) {
-                    approved += data.table.body[i].raw.leaveDetail[j].approveBy + '\n';
-                    data.cell.text = approved;
-                  }
-                  if (data.column.index === 8) {
-                    remark += data.table.body[i].raw.leaveDetail[j].remarks + '\n';
-                    data.cell.text = remark;
+                  if (title === 'Leave Taken History') {
+                    if (data.column.index === 3) {
+                      takenLeaveType += data.table.body[i].raw.leaveDetail[j].leaveTypeName + '\n';
+                      data.cell.text = takenLeaveType;
+                    }
+                    if (data.column.index === 4) {
+                      start += data.table.body[i].raw.leaveDetail[j].startDate + '\n';
+                      data.cell.text = start;
+                    }
+                    if (data.column.index === 5) {
+                      end += data.table.body[i].raw.leaveDetail[j].endDate + '\n';
+                      data.cell.text = end;
+                    }
+                    if (data.column.index === 6) {
+                      days += (data.table.body[i].raw.leaveDetail[j].noOfDays) + '\n';
+                      data.cell.text = days
+                    }
+                    if (data.column.index === 7) {
+                      approved += data.table.body[i].raw.leaveDetail[j].approveBy + '\n';
+                      data.cell.text = approved;
+                    }
+                    if (data.column.index === 8) {
+                      remark += data.table.body[i].raw.leaveDetail[j].remarks + '\n';
+                      data.cell.text = remark;
+                    }
                   }
                 }
               }
             }
           }
         }
-      }
-    })
-    doc.save(title + '.pdf')
+      })
+      doc.save(title + '_' + this.groupKey[this.selectedIndex[i]] + '.pdf')
+    }
+
   }
 
   /**
@@ -422,15 +436,17 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   saveCSV(title: string, fields) {
-    const json2csvParser = new Parser({ fields, unwind: ['leaveDetail', 'leaveDetail.leaveDetail'] });
-    const csv = json2csvParser.parse(this.arrayDetails);
-    const blob = new Blob([csv], { type: "text/plain" });
-    const csvFile = window.document.createElement("a");
-    csvFile.href = window.URL.createObjectURL(blob);
-    csvFile.download = title + ".csv";
-    document.body.appendChild(csvFile);
-    csvFile.click();
-    document.body.removeChild(csvFile);
+    for (let i = 0; i < this.selectedIndex.length; i++) {
+      const json2csvParser = new Parser({ fields, unifwind: ['leaveDetail', 'leaveDetail.leaveDetail'] });
+      const csv = json2csvParser.parse(this.groupValue[this.selectedIndex[i]]);
+      const blob = new Blob([csv], { type: "text/plain" });
+      const csvFile = window.document.createElement("a");
+      csvFile.href = window.URL.createObjectURL(blob);
+      csvFile.download = title + '_' + this.groupKey[this.selectedIndex[i]] + ".csv";
+      document.body.appendChild(csvFile);
+      csvFile.click();
+      document.body.removeChild(csvFile);
+    }
   }
 
   /**
@@ -656,8 +672,8 @@ export class ReportComponent implements OnInit {
       let data = require('lodash').groupBy(this.arrayDetails, groupName);
       this.groupValue = Object.values(data);
       this.groupKey = Object.keys(data);
-      console.log(this.groupValue);
       console.log(this.groupKey);
+      console.log(this.groupValue);
       this.showSpinner = false;
       this.clickedProduce = true;
       if (groupName !== 'all') {
@@ -674,8 +690,49 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   showSelectTable(key: string, index: number) {
-    this.selectedName = key;
+    if (this.selectedName.indexOf(key) > -1) {
+      this.selectedName.splice(this.selectedName.indexOf(key), 1);
+      this.selectedIndex.splice(this.selectedIndex.indexOf(index), 1);
+      console.log(this.selectedName, this.selectedIndex);
+    } else {
+      this.selectedName.push(key);
+      this.selectedIndex.push(index);
+      console.log(this.selectedName, this.selectedIndex);
+    }
     this.arrayDetails = this.groupValue[index];
+  }
+
+  /**
+   * toggle all selection
+   * @memberof ReportComponent
+   */
+  toggleAllSelection() {
+    if (this.allSelected.selected) {
+      this.selectedName = [];
+      this.selectedIndex = [];
+      this.selectedName.push('0');
+      this.selectedName = this.selectedName.concat(this.groupKey);
+      for (let i = 0; i < this.groupKey.length; i++) {
+        this.selectedIndex.push(i);
+      }
+    } else {
+      this.selectedName = [];
+    }
+  }
+
+  /**
+   * tick one selection
+   * @returns
+   * @memberof ReportComponent
+   */
+  tosslePerOne() {
+    if (this.allSelected.selected) {
+      this.allSelected.deselect();
+      return false;
+    }
+    if (this.selectedName.length == this.groupKey.length) {
+      this.allSelected.select();
+    }
   }
 
   /**
