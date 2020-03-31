@@ -1,3 +1,6 @@
+import { PopoverController } from '@ionic/angular';
+import { ConfirmationWindowComponent } from './../../../global/confirmation-window/confirmation-window.component';
+import { WorkingHourApiService } from './../../leave-setup/working-hour/working-hour-api.service';
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { RoleApiService } from '../role-api.service';
 import { DialogDeleteConfirmationComponent } from '../dialog-delete-confirmation/dialog-delete-confirmation.component';
@@ -148,8 +151,26 @@ export class RoleListComponent implements OnInit {
      */
     private _property: any;
 
+    /**
+     * This property is to bind value of check all sign in check all status in checkbox
+     * @type {boolean}
+     * @memberof RoleListComponent
+     */
     public roleListCheckAll: boolean;
+
+    /**
+     * This property is to bind value of indetimate sign in check all status's checkbox
+     * @type {boolean}
+     * @memberof RoleListComponent
+     */
     public roleListIsIndeterminate: boolean;
+
+    /**
+     * This property is to bind data of defult role
+     * @type {*}
+     * @memberof RoleListComponent
+     */
+    public defaultRoleData: any;
 
     /**
      *Creates an instance of RoleListComponent.
@@ -157,7 +178,8 @@ export class RoleListComponent implements OnInit {
      * @param {SharedService} _sharedService
      * @memberof RoleListComponent
      */
-    constructor(private roleAPi: RoleApiService, private _sharedService: SharedService) {
+    constructor(private roleAPi: RoleApiService, private _sharedService: SharedService,
+        private workingHourWorkingHourApiService: WorkingHourApiService, private rolePopoverController: PopoverController) {
         this.newRoleName = new FormControl('', Validators.required);
         this.newRoleDescription = new FormControl('', Validators.required);
     }
@@ -169,13 +191,7 @@ export class RoleListComponent implements OnInit {
     ngOnInit() {
         this.editRoleName = new FormControl('', Validators.required);
         this.editRoleDescription = new FormControl('', Validators.required);
-        this.roleAPi.get_role_profile_list().subscribe(data => {
-            this.roleList = data;
-            this.showSpinner = false;
-            this.clickedIndex = 0;
-            this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);
-        });
-        this.roleAPi.get_user_list().subscribe(list => this._userList = list);
+        this.refreshRoleList();
     }
 
     /**
@@ -410,25 +426,75 @@ export class RoleListComponent implements OnInit {
             this.roleListIsIndeterminate = false;
             this.roleListCheckAll = false;
         }
-        // console.log('checkRoleListAssignedEmployeeEvent: ' + JSON.stringify(currRoleGuid, null, " "));
-        // this._filteredList = this.assignedNameList.filter(list => list.isChecked === true).map(function (o) { return o.user_guid; });
-
-        // console.log(this._filteredList);
-        // let response = await this.roleAPi.patch_user_profile({
-        //     "user_guid": this._filteredList,
-        //     "role_guid": currRoleGuid
-        // }).toPromise();
-        // if (response[0].USER_INFO_GUID == undefined) {
-        //     this.roleAPi.snackbarMsg(response.status, false);
-        // }
-
-        // this.assignedNameList = this.assignedNameList.filter(list => list.isChecked !== true);
-        // this._filteredList = [];
-        // let data = await this.roleAPi.get_role_profile_list().toPromise();
-        // this.roleList = data;
-
     }
     reassignToOtherRoles(item) {
         console.log('reassignToOtherRoles: ' + JSON.stringify(item, null, " "))
+    }
+
+    /**
+     * Get default role guid then assign it to role list
+     * @memberof RoleListComponent
+     */
+    async getDefaultRole() {
+        const defaultList = await this.workingHourWorkingHourApiService.get_default_profile().toPromise();
+        this.roleList.forEach(item => {
+            if (item.role_guid === defaultList[0].ROLE_PROFILE_GUID) {
+                item.isDefault = true;
+                this.defaultRoleData = item;
+            } else {
+                item.isDefault = false;
+            }
+        });
+    }
+
+    /**
+     * Executed when user confirm to update default role. It will patch new role's guid to api
+     * @param {*} status
+     * @param {*} newProfile
+     * @returns
+     * @memberof RoleListComponent
+     */
+    async changeDefaultRoleProfile(status, newProfile) {
+        if (status === false) {
+            const rolePopup = await this.rolePopoverController.create({
+                component: ConfirmationWindowComponent,
+                componentProps: {
+                    type: 'role',
+                    currDefaultProfile: this.defaultRoleData,
+                    newDefaultProfile: newProfile
+                },
+                cssClass: 'confirmation-popover'
+            });
+
+            rolePopup.onDidDismiss().then(ret => {
+                if (ret.data === true) {
+                    this.workingHourWorkingHourApiService.post_profile_default('role', newProfile.role_guid).subscribe(
+                        data => {
+                            // this.getProfileList();
+                            this.refreshRoleList();
+                            this.roleAPi.snackbarMsg('Default role was updated', true);
+
+                        }
+                    );
+                }
+            })
+            return await rolePopup.present();
+        }
+    }
+
+    /**
+     * Get list of role profle, selected profile and user list based on profile
+     * @memberof RoleListComponent
+     */
+    refreshRoleList() {
+        this.roleAPi.get_role_profile_list().subscribe(data => {
+            this.roleList = data;
+            this.showSpinner = false;
+            this.clickedIndex = 0;
+            this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);
+            this.getDefaultRole();
+        });
+        this.roleAPi.get_user_list().subscribe(list => this._userList = list);
+        
     }
 }
