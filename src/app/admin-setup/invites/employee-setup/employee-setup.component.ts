@@ -602,14 +602,14 @@ export class EmployeeSetupComponent implements OnInit {
         let roleData = await this.roleAPI.get_role_profile_list().toPromise()
         this.roleList = roleData;
         let calendarData = await this.inviteAPI.get_calendar_profile_list().toPromise();
-        // this.calendarList = calendarData;
-        this.calendarList = [];
+        this.calendarList = calendarData;
+        // this.calendarList = [];
         this.lengthCalendarList = this.calendarList.length;
         console.log('this.calendarList : ' + JSON.stringify(this.calendarList, null, " "))
         console.log('this length : ' + JSON.stringify(this.calendarList.length, null, " "))
         let workingData = await this.inviteAPI.get_working_hour_profile_list().toPromise();
-        // this.workingList = workingData;
-        this.workingList = []
+        this.workingList = workingData;
+        // this.workingList = []
         this.lengthWorkingList = this.workingList.length;
 
         let entitlement = await this._sharedService.leaveApi.get_leavetype_entitlement().toPromise();
