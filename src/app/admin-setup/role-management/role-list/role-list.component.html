@@ -81,6 +81,19 @@
                             style="height: 100px;resize: none;"></textarea>
                     </mat-form-field>
                 </div>
+                <!-- <div style="width: 100%">
+                    <ion-item lines="none" style=" font-size: 12px; opacity: 0.8; color: #43425d; display: flex;">
+                        <ion-checkbox mode="ios" style="width: 16px; height: 16px;" value="defaultProfileRole"
+                            (ionChange)="setDefaultRoleProfile($event)">
+                        </ion-checkbox>
+                        <ion-label>Set as default profile</ion-label>
+                    </ion-item>
+                    <div *ngIf="showWarning === true" style="font-size: 11px; opacity: 0.8; color: #43425d; background: #f5f6fa;
+                    padding:15px;">Warning:
+                        Current default profile already existed. This procees will
+                        replace previous default profile</div>
+                </div> -->
+                
                 <div style="margin: 20px;text-align: center;">
                     <ion-button
                         style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
@@ -99,6 +112,18 @@
                         {{role.code}}
                     </mat-radio-button>
                 </mat-radio-group>
+                <!-- <div style="width: 100%">
+                    <ion-item lines="none" style=" font-size: 12px; opacity: 0.8; color: #43425d; display: flex;left: -13px;">
+                        <ion-checkbox mode="ios" style="width: 16px; height: 16px;" value="defaultProfileRole"
+                            (ionChange)="setDefaultRoleProfile($event)">
+                        </ion-checkbox>
+                        <ion-label>Set as default profile</ion-label>
+                    </ion-item>
+                    <div *ngIf="showWarning === true" style="font-size: 11px; opacity: 0.8; color: #43425d; background: #f5f6fa;
+                                    padding:15px;">Warning:
+                        Current default profile already existed. This procees will
+                        replace previous default profile</div>
+                </div> -->
                 <div style="margin: 20px;text-align: center;">
                     <ion-button
                         style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"

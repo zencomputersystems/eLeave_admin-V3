@@ -1,3 +1,4 @@
+import { roleDetails } from './../../role-management/role-details-data';
 import { WorkingHourApiService } from './../../leave-setup/working-hour/working-hour-api.service';
 import { WorkingHourConfigComponent } from './../../general-component/working-hour-config/working-hour-config.component';
 import { CalendarProfileApiService } from './../../leave-setup/calendar-profile/calendar-profile-api.service';
@@ -542,11 +543,27 @@ export class EmployeeSetupComponent implements OnInit {
     public defaultCalendarProfile: boolean = false;
 
     /**
+     * True/false to set default rolw profile
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public defaultRoleProfile: boolean = false;
+
+    /**
      * emit value to hide this page after clicked back button
      * @memberof WorkingHourComponent
      */
     @Output() valueChange = new EventEmitter();
 
+    /**
+     * Bind length of roleList
+     * @type {*}
+     * @memberof EmployeeSetupComponent
+     */
+    public roleListLength: any;
+
+    
+    public newRoleForm: any;
     /**
      *Creates an instance of EmployeeSetupComponent.
      * @param {AdminInvitesApiService} inviteAPI access invite API
@@ -578,6 +595,11 @@ export class EmployeeSetupComponent implements OnInit {
             startQ4picker: new FormControl('', Validators.required),
             endQ4picker: new FormControl('', Validators.required),
         });
+
+        this.newRoleForm = new FormGroup({
+            roleName: new FormControl('', Validators.required),
+            roleDescription: new FormControl('', Validators.required),
+        });
     }
 
     /**
@@ -585,9 +607,6 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     async ngOnInit() {
-        console.log('sdssssss nani comel')
-        console.log('init this.workingHourForm: ' + this.workingHourForm.controls)
-        console.log('dsds:' + JSON.stringify(this._data, null, " "))
         this.countrydata = reduce(getDataSet(), "en");
         this.calCountryList = Object.keys(this.countrydata).map(key => this.countrydata[key]);
         this.calCountryList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
@@ -599,18 +618,36 @@ export class EmployeeSetupComponent implements OnInit {
 
 
         this.endPoint();
-        let roleData = await this.roleAPI.get_role_profile_list().toPromise()
+        let defaultProfileList = await this.workingHourAPI.get_default_profile().toPromise();
+        let roleData = await this.roleAPI.get_role_profile_list().toPromise();
+        console.log('defaultProfileList: ' + JSON.stringify(defaultProfileList, null, " "));
         this.roleList = roleData;
+        console.log('this.roleList : ' + JSON.stringify(this.roleList, null, " "))
+
+        this.roleList.forEach(roleItem => {
+            roleItem.isDefault = (roleItem.role_guid === defaultProfileList[0].ROLE_PROFILE_GUID) ? true : false;
+            
+        });
+        // this.roleList = [];
+        this.roleListLength = this.roleList.length;
         let calendarData = await this.inviteAPI.get_calendar_profile_list().toPromise();
+        
         this.calendarList = calendarData;
         // this.calendarList = [];
+        this.calendarList.forEach(calItem => {
+            calItem.isDefault = (calItem.calendar_guid === defaultProfileList[0].CALENDAR_PROFILE_GUID) ? true : false;
+        });
         this.lengthCalendarList = this.calendarList.length;
         console.log('this.calendarList : ' + JSON.stringify(this.calendarList, null, " "))
         console.log('this length : ' + JSON.stringify(this.calendarList.length, null, " "))
         let workingData = await this.inviteAPI.get_working_hour_profile_list().toPromise();
         this.workingList = workingData;
         // this.workingList = []
+        this.workingList.forEach(whItem => {
+            whItem.isDefault = (whItem.working_hours_guid === defaultProfileList[0].WORKING_HOURS_PROFILE_GUID) ? true : false;
+        });
         this.lengthWorkingList = this.workingList.length;
+        console.log('this.workingList : ' + JSON.stringify(this.workingList, null, " "))
 
         let entitlement = await this._sharedService.leaveApi.get_leavetype_entitlement().toPromise();
         this.entitlementList = entitlement;
@@ -1444,6 +1481,30 @@ export class EmployeeSetupComponent implements OnInit {
     setDefaultProfile(evt, type) {
         (type === 'working-hour') ?
             this.defaultWHProfile = evt.target.checked :
-            this.defaultCalendarProfile = evt.target.checked;
+            (type === 'role') ? 
+             this.defaultRoleProfile = evt.target.checked :
+                this.defaultCalendarProfile = evt.target.checked;
+    }
+
+    /**
+     * Create new role profile
+     * @memberof EmployeeSetupComponent
+     */
+    createNewRole() {
+        let newRoleDetails;
+        newRoleDetails = roleDetails;
+        newRoleDetails.code = this.newRoleForm.controls.roleName.value;
+        newRoleDetails.description = this.newRoleForm.controls.roleDescription.value;
+        // console.log('newRoleDetails: ' + JSON.stringify(newRoleDetails, null, " "))
+        this.roleAPI.post_role_profile(newRoleDetails).subscribe(ret => {
+            if (ret[0].ROLE_GUID != undefined) {
+                this.roleAPI.snackbarMsg('New role profile was created successfully', true);
+        //         if (this.defaultRoleProfile === true) {
+        //             this.workingHourAPI.post_profile_default('role', ret[0].ROLE_GUID).subscribe(data => { })
+        //         }
+            } else {
+                this.roleAPI.snackbarMsg(ret.status, false);
+            }
+        });
     }
 }

@@ -173,6 +173,20 @@ export class RoleListComponent implements OnInit {
     public defaultRoleData: any;
 
     /**
+     * This property is to bind data of default role in checkbox during creation
+     * @type {boolean}
+     * @memberof RoleListComponent
+     */
+    public defaultProfileRole: boolean = false;
+
+    /**
+     * To check current role is existed or not during role profile creation
+     * @type {boolean}
+     * @memberof RoleListComponent
+     */
+    public showWarning: boolean = false;
+
+    /**
      *Creates an instance of RoleListComponent.
      * @param {RoleApiService} roleAPi
      * @param {SharedService} _sharedService
@@ -307,6 +321,9 @@ export class RoleListComponent implements OnInit {
         }
         this.roleAPi.post_role_profile(details).subscribe(res => {
             if (res[0].ROLE_GUID != undefined) {
+                if (this.defaultProfileRole === true) {
+                    this.workingHourWorkingHourApiService.post_profile_default('role', res[0].ROLE_GUID).subscribe(data => {});
+                }
                 this.ngOnInit();
                 this.roleAPi.snackbarMsg('New role profile was created successfully', true);
             } else {
@@ -316,6 +333,7 @@ export class RoleListComponent implements OnInit {
             this.newRoleName.reset();
             this.newRoleDescription.reset();
             this.showSmallSpinner = false;
+            this.showWarning = false;
         }, error => {
             this.roleAPi.snackbarMsg(JSON.parse(error._body).status, false);
         })
@@ -496,5 +514,22 @@ export class RoleListComponent implements OnInit {
         });
         this.roleAPi.get_user_list().subscribe(list => this._userList = list);
         
+    }
+
+    /**
+     * Check if current profile list have default and set new profile to be as default profile
+     * @memberof RoleListComponent
+     */
+    setDefaultRoleProfile(event) {
+        this.defaultProfileRole = event.target.checked;
+        if (this.defaultProfileRole == true) {
+            this.workingHourWorkingHourApiService.get_default_profile().subscribe(
+                ret => {
+                    if (ret[0].ROLE_PROFILE_GUID !== undefined || ret[0].ROLE_PROFILE_GUID !== null || ret[0].ROLE_PROFILE_GUID !== "") {
+                        this.showWarning = true;
+                    }
+                }
+            );
+        }
     }
 }

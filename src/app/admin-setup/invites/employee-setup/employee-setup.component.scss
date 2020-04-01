@@ -533,3 +533,9 @@
   }
 }
 }
+
+::ng-deep .profile-dropdown .mat-option-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+}
