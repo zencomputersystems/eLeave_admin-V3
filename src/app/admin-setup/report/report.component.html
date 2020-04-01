@@ -82,10 +82,10 @@
           [style.visibility]="clickedProduce==true? 'visible': 'collapse'"
           style="font-size: 12px;width: 200px;color: #43425d;margin-right: 20px;">
           <mat-label>{{name}}</mat-label>
-          <mat-select [(value)]="selectedName" multiple>
+          <mat-select [formControl]="selectedName" multiple>
             <mat-option [value]="'0'" #allSelected (click)="toggleAllSelection()">All</mat-option>
             <mat-option *ngFor=" let key of groupKey;let i = index" [value]="key"
-              (click)="showSelectTable(key, i);tosslePerOne()">
+              (click)="showSelectTable(i);tosslePerOne()">
               {{key}}
             </mat-option>
           </mat-select>
@@ -93,14 +93,13 @@
         <ion-button [class]="'hide-sm-down'"
           style="margin-top: -5px;--border-radius: 2px;font-size: 11px;width:180px;cursor: pointer;text-transform: none;"
           color="primary" [style.visibility]="clickedProduce==true? 'visible': 'collapse'"
-          [style.height]="clickedProduce==true? '35px': '0px'"
-          (click)="clickedProduce=false;selectedName=[];selectedIndex=[]">
+          [style.height]="clickedProduce==true? '35px': '0px'" (click)="clickedProduce=false;selectedIndex=[]">
           Back To Main
         </ion-button>
         <ion-button [class]="'hide-sm-up'"
           style="margin-top: -5px;--border-radius: 2px;font-size: 11px;height: 35px;width:180px;cursor: pointer;text-transform: none;"
           color="primary" [style.visibility]="clickedProduce==true? 'visible': 'collapse'"
-          (click)="clickedProduce=false;selectedName=[];selectedIndex=[]">
+          (click)="clickedProduce=false;selectedIndex=[]">
           Back To Main
         </ion-button>
         <!-- <ion-button

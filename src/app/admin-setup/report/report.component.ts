@@ -7,6 +7,8 @@ import { APIService } from 'src/services/shared-service/api.service';
 import { ReportApiService } from './report-api.service';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import * as JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 import * as _moment from 'moment';
 import { Platform } from '@ionic/angular';
 
@@ -267,12 +269,17 @@ export class ReportComponent implements OnInit {
   public name: string;
 
   /**
-   * binding value for option in selected group
+   * form control array value of selected group
    * @type {string}
    * @memberof ReportComponent
    */
-  public selectedName: string[] = [];
+  public selectedName = new FormControl();
 
+  /**
+   * list of selected group index
+   * @type {number[]}
+   * @memberof ReportComponent
+   */
   public selectedIndex: number[] = [];
 
   /**
@@ -343,6 +350,7 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   savePDF(title, headerKey) {
+    const zip = new JSZip();
     for (let i = 0; i < this.selectedIndex.length; i++) {
       const doc = new jsPDF('l', 'mm', 'a4');
       doc.setFontSize(9);
@@ -424,9 +432,16 @@ export class ReportComponent implements OnInit {
           }
         }
       })
-      doc.save(title + '_' + this.groupKey[this.selectedIndex[i]] + '.pdf')
+      let convertFileType = doc.output('blob');
+      if (this.groupKey[this.selectedIndex[i]] === 'undefined') {
+        zip.file(title + '.pdf', convertFileType, { base64: true });
+      } else {
+        zip.file(title + '_' + this.groupKey[this.selectedIndex[i]] + '.pdf', convertFileType, { base64: true });
+      }
     }
-
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+      saveAs(content, title + '_PDF' + ".zip");
+    });
   }
 
   /**
@@ -436,17 +451,20 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   saveCSV(title: string, fields) {
+    const zip = new JSZip();
     for (let i = 0; i < this.selectedIndex.length; i++) {
-      const json2csvParser = new Parser({ fields, unifwind: ['leaveDetail', 'leaveDetail.leaveDetail'] });
+      const json2csvParser = new Parser({ fields, unwind: ['leaveDetail', 'leaveDetail.leaveDetail'] });
       const csv = json2csvParser.parse(this.groupValue[this.selectedIndex[i]]);
       const blob = new Blob([csv], { type: "text/plain" });
-      const csvFile = window.document.createElement("a");
-      csvFile.href = window.URL.createObjectURL(blob);
-      csvFile.download = title + '_' + this.groupKey[this.selectedIndex[i]] + ".csv";
-      document.body.appendChild(csvFile);
-      csvFile.click();
-      document.body.removeChild(csvFile);
+      if (this.groupKey[this.selectedIndex[i]] === 'undefined') {
+        zip.file(title + '.csv', blob, { base64: true });
+      } else {
+        zip.file(title + '_' + this.groupKey[this.selectedIndex[i]] + '.csv', blob, { base64: true });
+      }
     }
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+      saveAs(content, title + '_CSV' + ".zip");
+    });
   }
 
   /**
@@ -669,17 +687,14 @@ export class ReportComponent implements OnInit {
           this.arrayDetails.push(this.tableDetails[i]);
         }
       }
+      this.filter();
       let data = require('lodash').groupBy(this.arrayDetails, groupName);
       this.groupValue = Object.values(data);
       this.groupKey = Object.keys(data);
-      console.log(this.groupKey);
-      console.log(this.groupValue);
       this.showSpinner = false;
       this.clickedProduce = true;
-      if (groupName !== 'all') {
-        this.showSelectTable(this.groupKey[0], 0);
-      }
-      this.filter();
+      this.selectedName.patchValue([this.groupKey[0]]);
+      this.showSelectTable(0);
     });
   }
 
@@ -689,17 +704,13 @@ export class ReportComponent implements OnInit {
    * @param {number} index
    * @memberof ReportComponent
    */
-  showSelectTable(key: string, index: number) {
-    if (this.selectedName.indexOf(key) > -1) {
-      this.selectedName.splice(this.selectedName.indexOf(key), 1);
-      this.selectedIndex.splice(this.selectedIndex.indexOf(index), 1);
-      console.log(this.selectedName, this.selectedIndex);
-    } else {
-      this.selectedName.push(key);
-      this.selectedIndex.push(index);
-      console.log(this.selectedName, this.selectedIndex);
-    }
+  showSelectTable(index: number) {
     this.arrayDetails = this.groupValue[index];
+    if (this.selectedIndex.indexOf(index) > -1) {
+      this.selectedIndex.splice(this.selectedIndex.indexOf(index), 1);
+    } else {
+      this.selectedIndex.push(index);
+    }
   }
 
   /**
@@ -708,15 +719,13 @@ export class ReportComponent implements OnInit {
    */
   toggleAllSelection() {
     if (this.allSelected.selected) {
-      this.selectedName = [];
       this.selectedIndex = [];
-      this.selectedName.push('0');
-      this.selectedName = this.selectedName.concat(this.groupKey);
+      this.selectedName.patchValue([...this.groupKey.map(item => item), '0']);
       for (let i = 0; i < this.groupKey.length; i++) {
         this.selectedIndex.push(i);
       }
     } else {
-      this.selectedName = [];
+      this.selectedName.patchValue([]);
     }
   }
 
@@ -730,7 +739,7 @@ export class ReportComponent implements OnInit {
       this.allSelected.deselect();
       return false;
     }
-    if (this.selectedName.length == this.groupKey.length) {
+    if (this.selectedName.value.length == this.groupKey.length) {
       this.allSelected.select();
     }
   }
@@ -788,21 +797,19 @@ export class ReportComponent implements OnInit {
     this.arrayDetails.forEach((element, index) => {
       element["no"] = index + 1;
     });
-    if (this.selects != 'leave-entitlement') {
+    if (this.selects != 'leave-entitlement' && this.selects != 'leave-taken') {
       for (let i = this.arrayDetails.length - 1; i >= 0; --i) {
-        for (let j = 0; j < this._selectedLeaveTypesList.length; j++) {
-          if (this.arrayDetails[i].leaveTypeId !== this._selectedLeaveTypesList[j]) {
-            this.arrayDetails.splice(i, 1);
-          }
+        if (!this._selectedLeaveTypesList.includes(this.arrayDetails[i].leaveTypeId)) {
+          this.arrayDetails.splice(i, 1);
         }
       }
     } else {
       for (let i = this.arrayDetails.length - 1; i >= 0; --i) {
         for (let k = this.arrayDetails[i].leaveDetail.length - 1; k >= 0; --k) {
-          for (let j = 0; j < this._selectedLeaveTypesList.length; j++) {
-            if (this.arrayDetails[i].leaveDetail[k].leaveTypeId !== this._selectedLeaveTypesList[j]) {
-              this.arrayDetails[i].leaveDetail.splice(k, 1);
-              if (this.arrayDetails[i].leaveDetail.length == 0) { this.arrayDetails.splice(i, 1); }
+          if (!this._selectedLeaveTypesList.includes(this.arrayDetails[i].leaveDetail[k].leaveTypeId)) {
+            this.arrayDetails[i].leaveDetail.splice(k, 1);
+            if (this.arrayDetails[i].leaveDetail.length == 0) {
+              this.arrayDetails.splice(i, 1);
             }
           }
         }
