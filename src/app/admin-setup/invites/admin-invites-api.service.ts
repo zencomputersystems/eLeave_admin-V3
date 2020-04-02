@@ -80,6 +80,17 @@ export class AdminInvitesApiService {
         return this.apiService.getApi('/api/admin/user-info-details/' + item + '/' + id);
     }
 
+    /**
+     * patch all user info details
+     * @param {*} data
+     * @param {*} id
+     * @returns {Observable<any>}
+     * @memberof AdminInvitesApiService
+     */
+    patch_admin_all_user_info(data, id: string): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.patchApi(data, '/api/admin/user-info-details/all/' + id);
+    }
 
     /**
      * patch personal user info details
@@ -93,7 +104,7 @@ export class AdminInvitesApiService {
         return this.apiService.patchApi(data, '/api/admin/user-info-details/personal/' + id);
     }
 
-    /**
+    /** 
      * patch employment user info details 
      * @param {*} details
      * @param {*} id

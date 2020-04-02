@@ -1,0 +1,72 @@
+{
+    "root": {
+        "employmentDetail": {
+            "employeeId": "",
+            "companyId": "",
+            "department": "",
+            "designation": "",
+            "section": "",
+            "branch": "",
+            "costcentre": "",
+            "employmentStatus": "",
+            "employmentType": "",
+            "reportingTo": "",
+            "dateOfJoin": "",
+            "dateOfConfirmation": "",
+            "dateOfResignation": "",
+            "epfNumber": "",
+            "incomeTaxNumber": "",
+            "bankAccountName": "",
+            "bankAccountNumber": ""
+        },
+        "notificationRule": [],
+        "personalDetails": {
+            "fullname": "",
+            "nickname": "",
+            "nric": "",
+            "dob": "",
+            "gender": "",
+            "maritalStatus": "",
+            "race": "",
+            "religion": "",
+            "nationality": "",
+            "phoneNumber": "",
+            "workPhoneNumber": "",
+            "emailAddress": "",
+            "workEmailAddress": "",
+            "address1": "",
+            "address2": "",
+            "postcode": "",
+            "city": "",
+            "state": "",
+            "country": "",
+            "emergencyContact": [{
+                "contactName": "",
+                "contactNumber": "",
+                "contactRelationship": ""
+            }],
+            "education": [{
+                "qualificationLevel": "",
+                "major": "",
+                "university": "",
+                "year": ""
+            }],
+            "certification": [{
+                "certificationName": "",
+                "certificationEnrollYear": "",
+                "certificationGraduateYear": "",
+                "certificationAttachment": ""
+            }],
+            "family": {
+                "spouse": [{
+                    "spouseName": "",
+                    "spouseIdentificationNumber": ""
+                }],
+                "child": [{
+                    "childName": "",
+                    "childIdentificationNumber": ""
+                }]
+            }
+        }
+    }
+}

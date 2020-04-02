@@ -6,8 +6,10 @@ import * as _moment from 'moment';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/admin-setup/leave-setup/date.adapter';
 import { LeaveApiService } from 'src/app/admin-setup/leave-setup/leave-api.service';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+const configPatch = require("./parseDataFormat.json");
 
 /**
  * Add One Employee Page
@@ -198,7 +200,8 @@ export class AddOneEmployeeComponent implements OnInit {
      * @param {AdminInvitesApiService} adminInvite
      * @memberof AddOneEmployeeComponent
      */
-    constructor(private apiService: APIService, private adminInvite: AdminInvitesApiService, private leaveSetupService: LeaveApiService) {
+    constructor(private apiService: APIService, private adminInvite: AdminInvitesApiService, 
+        private leaveSetupService: LeaveApiService) {
         this.invitationForm = new FormGroup({
             company: new FormControl('', Validators.required),
             name: new FormControl('', Validators.required),
@@ -369,6 +372,7 @@ export class AddOneEmployeeComponent implements OnInit {
             "STAFF_ID": this.invitationForm.controls.id.value,
             "FULLNAME": this.invitationForm.controls.name.value,
             "BRANCH": this.branchCtrl.value,
+            "SECTION": this.sectionCtrl.value,
             // "DIVISION": this.divisionCtrl.value,
             "DEPARTMENT": this.departmentCtrl.value,
             "COST_CENTRE": this.costCentreCtrl.value,
@@ -382,12 +386,13 @@ export class AddOneEmployeeComponent implements OnInit {
      * @param {*} data
      * @memberof AddOneEmployeeComponent
      */
-    create_user(data) {
+    async create_user(data) {
         this.adminInvite.post_userimport(data).subscribe(result => {
             this.showSmallSpinner = false;
             this.closeMenu.emit(true);
             for (let i = 0; i < result.length; i++) {
                 if (result[i].data.length != 0 && result[i].category == 'Success') {
+                    this.checkInfo(data);
                     this.leaveSetupService.openSnackBar('New employee profile was created successfully', true)
                     this.invitationForm.reset();
                     this.branchCtrl.reset();
@@ -401,4 +406,41 @@ export class AddOneEmployeeComponent implements OnInit {
         })
     }
 
+    /**
+     * To update newly created employee with standard form format
+     * @param {*} newEmp New employee data
+     * @memberof AddOneEmployeeComponent
+     */
+    async checkInfo(newEmp) {
+        let empData;
+        const empList = await this.adminInvite.apiService.get_user_profile_list().toPromise();
+        newEmp.forEach(newEmpElement => {
+            empData = empList.filter(empListItem => {
+                if (empListItem.email === newEmpElement.STAFF_EMAIL) {
+                    let compInfo = this.companyList.filter(compData => {
+                        if (compData.NAME === newEmpElement.COMPANY) {
+                            return compData;
+                        }
+                    })
+                    empListItem.companyId = compInfo[0].TENANT_COMPANY_GUID;
+                    empListItem.companyName = compInfo[0].NAME;
+                    empListItem.joinDate = newEmpElement.JOIN_DATE;
+                    empListItem.section = newEmpElement.SECTION;
+                    configPatch.root.employmentDetail.employeeId = empListItem.staffNumber;
+                    configPatch.root.employmentDetail.companyId = empListItem.companyId;
+                    configPatch.root.employmentDetail.department = empListItem.department;
+                    configPatch.root.employmentDetail.section = empListItem.section;
+                    configPatch.root.employmentDetail.branch = empListItem.branch;
+                    configPatch.root.employmentDetail.costcentre = empListItem.costcentre;
+                    configPatch.root.employmentDetail.dateOfJoin = empListItem.joinDate;
+                    configPatch.root.employmentDetail.section = empListItem.section;
+                    configPatch.root.personalDetails.fullname = empListItem.employeeName;
+                    configPatch.root.personalDetails.workEmailAddress = empListItem.email;
+                    this.adminInvite.patch_admin_all_user_info(configPatch, empListItem.id).subscribe(ret => {});
+                }
+            })
+        });
+    }
+
 }
+
