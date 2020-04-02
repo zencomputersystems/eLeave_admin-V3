@@ -39,6 +39,7 @@
     "@ionic-native/status-bar": "5.0.0-beta.21",
     "@ionic/angular": "^4.1.0",
     "@ng-bootstrap/ng-bootstrap": "^4.2.2",
+    "@types/file-saver": "^2.0.1",
     "angular-web-storage": "^7.0.0-beta.1",
     "angular2-uuid": "^1.1.1",
     "bootstrap": "^4.3.1",
