@@ -1338,9 +1338,11 @@
                                             <mat-option *ngFor="let item of calendarList; let j=index"
                                                 [value]="item.calendar_guid" class="profile-dropdown">
                                                 <div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">{{item.code}}</div>
-                                                <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;
+                                                <div  style="opacity: 0.8; color: #babdc7;margin-right: 5px;" 
+                                                *ngIf="item.isDefault">(Default)</div>
+                                                <!-- <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;
                                                 color: #babdc7;margin-right: 5px;" *ngIf="item.isDefault">
-                                                </ion-icon>
+                                                </ion-icon> -->
                                             </mat-option>
                                         </mat-select>
                                         <mat-select required [disabled]="mode === 'OFF'"
@@ -1372,8 +1374,10 @@
                                                 <div
                                                     style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">
                                                     {{item.code}}</div>
-                                                <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;
-                                                color: #babdc7;margin-right: 5px;" *ngIf="item.isDefault"></ion-icon>
+                                                <div  style="opacity: 0.8; color: #babdc7;margin-right: 5px;" 
+                                                *ngIf="item.isDefault">(Default)</div>
+                                                <!-- <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;
+                                                color: #babdc7;margin-right: 5px;" *ngIf="item.isDefault"></ion-icon> -->
                                             </mat-option>
                                         </mat-select>
                                         <mat-select required [disabled]="mode === 'OFF'" *ngIf="lengthWorkingList === 0"
@@ -1450,9 +1454,11 @@
                                             class="profile-dropdown">
                                             <div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">
                                                 {{item.code}}</div>
-                                            <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;
+                                            <div style="opacity: 0.8; color: #babdc7;
+                                            margin-right: 5px;" *ngIf="item.isDefault">(Default)</div>
+                                            <!-- <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;
                                                 color: #babdc7;margin-right: 5px;" *ngIf="item.isDefault">
-                                            </ion-icon>
+                                            </ion-icon> -->
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
