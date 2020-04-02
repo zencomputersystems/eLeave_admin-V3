@@ -628,7 +628,7 @@ export class EmployeeSetupComponent implements OnInit {
             roleItem.isDefault = (roleItem.role_guid === defaultProfileList[0].ROLE_PROFILE_GUID) ? true : false;
             
         });
-        // this.roleList = [];
+        this.roleList = [];
         this.roleListLength = this.roleList.length;
         let calendarData = await this.inviteAPI.get_calendar_profile_list().toPromise();
         
