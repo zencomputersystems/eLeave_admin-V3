@@ -621,13 +621,14 @@ export class EmployeeSetupComponent implements OnInit {
         let defaultProfileList = await this.workingHourAPI.get_default_profile().toPromise();
         let roleData = await this.roleAPI.get_role_profile_list().toPromise();
         console.log('defaultProfileList: ' + JSON.stringify(defaultProfileList, null, " "));
-        this.roleList = roleData;
-        console.log('this.roleList : ' + JSON.stringify(this.roleList, null, " "))
+        // this.roleList = roleData;
+        
+        // console.log('this.roleList : ' + JSON.stringify(this.roleList, null, " "))
 
-        this.roleList.forEach(roleItem => {
-            roleItem.isDefault = (roleItem.role_guid === defaultProfileList[0].ROLE_PROFILE_GUID) ? true : false;
+        // this.roleList.forEach(roleItem => {
+        //     roleItem.isDefault = (roleItem.role_guid === defaultProfileList[0].ROLE_PROFILE_GUID) ? true : false;
             
-        });
+        // });
         this.roleList = [];
         this.roleListLength = this.roleList.length;
         let calendarData = await this.inviteAPI.get_calendar_profile_list().toPromise();
@@ -641,8 +642,8 @@ export class EmployeeSetupComponent implements OnInit {
         console.log('this.calendarList : ' + JSON.stringify(this.calendarList, null, " "))
         console.log('this length : ' + JSON.stringify(this.calendarList.length, null, " "))
         let workingData = await this.inviteAPI.get_working_hour_profile_list().toPromise();
-        this.workingList = workingData;
-        // this.workingList = []
+        // this.workingList = workingData;
+        this.workingList = []
         this.workingList.forEach(whItem => {
             whItem.isDefault = (whItem.working_hours_guid === defaultProfileList[0].WORKING_HOURS_PROFILE_GUID) ? true : false;
         });
