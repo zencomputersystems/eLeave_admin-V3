@@ -298,6 +298,7 @@ export class ReportComponent implements OnInit {
    */
   private _selectedLeaveTypesList: string[] = [];
 
+
   /**
    * get mat option 
    * @private
@@ -354,7 +355,7 @@ export class ReportComponent implements OnInit {
     for (let i = 0; i < this.selectedIndex.length; i++) {
       const doc = new jsPDF('l', 'mm', 'a4');
       doc.setFontSize(9);
-      doc.text(5, 7, title + '_' + this.groupKey[this.selectedIndex[i]]);
+      doc.text(5, 7, title + ' - ' + this.groupKey[this.selectedIndex[i]]);
       doc.text(5, 11, 'From ' + _moment(this.firstPicker.value).format('DD MMM YYYY') + ' to ' + _moment(this.secondPicker.value).format('DD MMM YYYY'));
       doc.autoTable({
         headStyles: { fillColor: [67, 66, 93], fontSize: 7.5, minCellWidth: 2 },
@@ -436,7 +437,7 @@ export class ReportComponent implements OnInit {
       if (this.groupKey[this.selectedIndex[i]] === 'undefined') {
         zip.file(title + '.pdf', convertFileType, { base64: true });
       } else {
-        zip.file(title + '_' + this.groupKey[this.selectedIndex[i]] + '.pdf', convertFileType, { base64: true });
+        zip.file(title + ' - ' + this.groupKey[this.selectedIndex[i]] + '.pdf', convertFileType, { base64: true });
       }
     }
     zip.generateAsync({ type: "blob" }).then(function (content) {
@@ -459,7 +460,7 @@ export class ReportComponent implements OnInit {
       if (this.groupKey[this.selectedIndex[i]] === 'undefined') {
         zip.file(title + '.csv', blob, { base64: true });
       } else {
-        zip.file(title + '_' + this.groupKey[this.selectedIndex[i]] + '.csv', blob, { base64: true });
+        zip.file(title + ' - ' + this.groupKey[this.selectedIndex[i]] + '.csv', blob, { base64: true });
       }
     }
     zip.generateAsync({ type: "blob" }).then(function (content) {
@@ -706,6 +707,9 @@ export class ReportComponent implements OnInit {
    */
   showSelectTable(index: number) {
     this.arrayDetails = this.groupValue[index];
+    for (let i = 0; i < this.arrayDetails.length; i++) {
+      this.arrayDetails[i]["no"] = i + 1;
+    }
     if (this.selectedIndex.indexOf(index) > -1) {
       this.selectedIndex.splice(this.selectedIndex.indexOf(index), 1);
     } else {
@@ -725,6 +729,7 @@ export class ReportComponent implements OnInit {
         this.selectedIndex.push(i);
       }
     } else {
+      this.selectedIndex = [];
       this.selectedName.patchValue([]);
     }
   }
@@ -794,9 +799,6 @@ export class ReportComponent implements OnInit {
       );
       this.arrayDetails = filteredEmployee;
     }
-    this.arrayDetails.forEach((element, index) => {
-      element["no"] = index + 1;
-    });
     if (this.selects != 'leave-entitlement' && this.selects != 'leave-taken') {
       for (let i = this.arrayDetails.length - 1; i >= 0; --i) {
         if (!this._selectedLeaveTypesList.includes(this.arrayDetails[i].leaveTypeId)) {
