@@ -680,15 +680,13 @@ export class ReportComponent implements OnInit {
       this.filter();
       let data = require('lodash').groupBy(this.arrayDetails, groupName);
       this.groupValue = Object.values(data);
-      this.groupValue.splice(0, 0, this.arrayDetails);
       this.groupKey = Object.keys(data);
+      this.groupValue.splice(0, 0, this.arrayDetails);
       this.groupKey.splice(0, 0, 'All');
       if (groupName === 'all') {
         this.groupValue.splice(1, 1);
         this.groupKey.splice(1, 1);
       }
-      console.log('afterValue', this.groupValue);
-      console.log('afterkey', this.groupKey);
       this.showSpinner = false;
       this.clickedProduce = true;
       this.selectedName = this.groupKey[0];
@@ -697,22 +695,8 @@ export class ReportComponent implements OnInit {
           this.groupValue[j][i]["no"] = i + 1;
         }
       }
-      console.log(this.groupValue);
-      this.showSelectTable(0);
+      this.arrayDetails = this.groupValue[0];
     });
-  }
-
-  /**
-   * show selected table from 
-   * company/department/branch/cost centre
-   * @param {number} index
-   * @memberof ReportComponent
-   */
-  showSelectTable(index: number) {
-    this.arrayDetails = this.groupValue[index];
-    // for (let i = 0; i < this.arrayDetails.length; i++) {
-    //   this.arrayDetails[i]["no"] = i + 1;
-    // }
   }
 
   /**

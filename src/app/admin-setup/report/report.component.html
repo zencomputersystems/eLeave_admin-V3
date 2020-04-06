@@ -83,7 +83,8 @@
           style="font-size: 12px;width: 200px;color: #43425d;margin-right: 20px;">
           <mat-label>{{name}}</mat-label>
           <mat-select [(value)]="selectedName">
-            <mat-option *ngFor=" let key of groupKey;let i = index" [value]="key" (click)="showSelectTable(i)">
+            <mat-option *ngFor=" let key of groupKey;let i = index" [value]="key"
+              (click)="arrayDetails = groupValue[i];">
               {{key}}
             </mat-option>
           </mat-select>

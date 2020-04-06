@@ -44,6 +44,9 @@
             line-height: 1.4;
             text-align: justify;">
                         </p>
+                        <ng-container *ngFor="let list of item.ATTACHMENT; let j=index">
+                            <img *ngIf="list !== '' && url" src="{{url.link + list}}" style="width: 150px;">
+                        </ng-container>
                     </ion-label>
                 </ion-item>
             </ng-container>
