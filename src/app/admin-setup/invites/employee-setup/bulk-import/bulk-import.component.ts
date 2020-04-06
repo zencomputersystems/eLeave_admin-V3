@@ -102,10 +102,10 @@ export class BulkImportComponent implements OnInit {
     * @memberof BulkImportComponent
     */
     downloadFile() {
-        const blob = new Blob([`STAFF_EMAIL,STAFF_ID,FULLNAME,NICKNAME,NRIC,DOB,GENDER,PHONE_NUMBER,COMPANY_NUMBER,MARITAL_STATUS,ADDRESS,POSTCODE,CITY,STATE,COUNTRY,DESIGNATION,DEPARTMENT,COST_CENTRE,BRANCH,DIVISION,COMPANY,JOIN_DATE,CONFIRMATION_DATE,RESIGNATION_DATE
-        leavetest@zen.com.my,ZEN-00001,Test 1 ZEN,Test 1,990101-10-5656,2018-09-07,Male,012-3338272,13222222,Single,"This is address,",44333,Shah Alam,Selangor,Malaysia,Software Tester,Tester,,Cyberjaya,,Zen Company Sdn Bhd,2018-07-09,2018-12-09,2021-12-31
-        leavetest2@zen.com.my,ZEN-00002,Test 2 ZEN,Test 2,870101-10-5680,2018-07-09,Female,,1344433,Married,,,,,Malaysia,Software Engineer,Tester,,Cyberjaya,,Zen Company Sdn Bhd,2018-07-09,2018-10-09,2020-07-09
-        leavetest2@zen.com.my,ZEN-00002,Test 2 ZEN,Test 3,000101-07-5682,2018-07-09,Female,,1344433,Married,,,,,Malaysia,Solution Consultant,Tester,,Cyberjaya,,Zen Company Sdn Bhd,2018-12-09,2018-10-09,2020-07-09`], { type: "text/plain" });
+        const blob = new Blob([`STAFF_EMAIL,STAFF_ID,FULLNAME,NICKNAME,NRIC,DOB,GENDER,MOBILE_NUMBER,WORK_NUMBER,MARITAL_STATUS,ADDRESS,POSTCODE,CITY,STATE,COUNTRY,DESIGNATION,DEPARTMENT,COST_CENTRE,BRANCH,DIVISION,SECTION,COMPANY,JOIN_DATE,CONFIRMATION_DATE,RESIGNATION_DATE
+        leavetest@zen.com.my,ZEN-00001,Test 1 ZEN,Test 1,990101-10-5656,2018-09-07,Male,+60123338272,+60123338275,Single,"This is address,",44333,Shah Alam,Selangor,Malaysia,Software Tester,Tester,,Cyberjaya,,,Zen Company Sdn Bhd,2018-07-09,2018-12-09,2021-12-31
+        leavetest2@zen.com.my,ZEN-00002,Test 2 ZEN,Test 2,870101-10-5680,2018-07-09,Female,+60123338273,+60123338276,Married,,,,,Malaysia,Software Engineer,Tester,,Cyberjaya,,,Zen Company Sdn Bhd,2018-07-09,2018-10-09,2020-07-09
+        leavetest3@zen.com.my,ZEN-00003,Test 3 ZEN,Test 3,000101-07-5682,2018-07-09,Female,+60123338274,+60123338277,Married,,,,,Malaysia,Solution Consultant,Tester,,Cyberjaya,,,Zen Company Sdn Bhd,2018-12-09,2018-10-09,2020-07-09`], { type: "text/plain" });
         if (window.navigator.msSaveOrOpenBlob)  // IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
             window.navigator.msSaveBlob(blob, "csv-template.csv");
         else {

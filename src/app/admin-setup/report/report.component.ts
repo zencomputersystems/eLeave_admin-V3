@@ -1,6 +1,6 @@
-import { Component, OnInit, HostBinding, ViewChild } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../leave-setup/date.adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MatOption } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { LeaveApiService } from '../leave-setup/leave-api.service';
 import { APIService } from 'src/services/shared-service/api.service';
@@ -273,14 +273,21 @@ export class ReportComponent implements OnInit {
    * @type {string}
    * @memberof ReportComponent
    */
-  public selectedName = new FormControl();
+  public selectedName: string;
 
   /**
    * list of selected group index
    * @type {number[]}
    * @memberof ReportComponent
    */
-  public selectedIndex: number[] = [];
+  // public selectedIndex: number[] = [];
+
+  /**
+   * show/hide group selection
+   * @type {boolean}
+   * @memberof ReportComponent
+   */
+  public showGroupSelection: boolean = true;
 
   /**
    * searchbar key up value
@@ -297,16 +304,6 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   private _selectedLeaveTypesList: string[] = [];
-
-
-  /**
-   * get mat option 
-   * @private
-   * @type {MatOption}
-   * @memberof ReportComponent
-   */
-  @ViewChild('allSelected') private allSelected: MatOption;
-
 
   /**
    *Creates an instance of ReportComponent.
@@ -352,17 +349,17 @@ export class ReportComponent implements OnInit {
    */
   savePDF(title, headerKey) {
     const zip = new JSZip();
-    for (let i = 0; i < this.selectedIndex.length; i++) {
+    for (let i = 0; i < this.groupValue.length; i++) {
       const doc = new jsPDF('l', 'mm', 'a4');
       doc.setFontSize(9);
-      doc.text(5, 7, title + ' - ' + this.groupKey[this.selectedIndex[i]]);
+      doc.text(5, 7, title + ' - ' + this.groupKey[i]);
       doc.text(5, 11, 'From ' + _moment(this.firstPicker.value).format('DD MMM YYYY') + ' to ' + _moment(this.secondPicker.value).format('DD MMM YYYY'));
       doc.autoTable({
         headStyles: { fillColor: [67, 66, 93], fontSize: 7.5, minCellWidth: 2 },
         bodyStyles: { fontSize: 7.5, minCellWidth: 10 },
         margin: { top: 13, left: 5, right: 5, bottom: 5 },
         showHead: 'everyPage',
-        body: this.groupValue[this.selectedIndex[i]],
+        body: this.groupValue[i],
         columns: headerKey,
         didParseCell: (data) => {
           if (title === 'Leave Entitlement Summary' || title === 'Leave Taken History') {
@@ -434,11 +431,7 @@ export class ReportComponent implements OnInit {
         }
       })
       let convertFileType = doc.output('blob');
-      if (this.groupKey[this.selectedIndex[i]] === 'undefined') {
-        zip.file(title + '.pdf', convertFileType, { base64: true });
-      } else {
-        zip.file(title + ' - ' + this.groupKey[this.selectedIndex[i]] + '.pdf', convertFileType, { base64: true });
-      }
+      zip.file(title + ' - ' + this.groupKey[i] + '.pdf', convertFileType, { base64: true });
     }
     zip.generateAsync({ type: "blob" }).then(function (content) {
       saveAs(content, title + '_PDF' + ".zip");
@@ -453,15 +446,11 @@ export class ReportComponent implements OnInit {
    */
   saveCSV(title: string, fields) {
     const zip = new JSZip();
-    for (let i = 0; i < this.selectedIndex.length; i++) {
+    for (let i = 0; i < this.groupValue.length; i++) {
       const json2csvParser = new Parser({ fields, unwind: ['leaveDetail', 'leaveDetail.leaveDetail'] });
-      const csv = json2csvParser.parse(this.groupValue[this.selectedIndex[i]]);
+      const csv = json2csvParser.parse(this.groupValue[i]);
       const blob = new Blob([csv], { type: "text/plain" });
-      if (this.groupKey[this.selectedIndex[i]] === 'undefined') {
-        zip.file(title + '.csv', blob, { base64: true });
-      } else {
-        zip.file(title + ' - ' + this.groupKey[this.selectedIndex[i]] + '.csv', blob, { base64: true });
-      }
+      zip.file(title + ' - ' + this.groupKey[i] + '.csv', blob, { base64: true });
     }
     zip.generateAsync({ type: "blob" }).then(function (content) {
       saveAs(content, title + '_CSV' + ".zip");
@@ -691,10 +680,24 @@ export class ReportComponent implements OnInit {
       this.filter();
       let data = require('lodash').groupBy(this.arrayDetails, groupName);
       this.groupValue = Object.values(data);
+      this.groupValue.splice(0, 0, this.arrayDetails);
       this.groupKey = Object.keys(data);
+      this.groupKey.splice(0, 0, 'All');
+      if (groupName === 'all') {
+        this.groupValue.splice(1, 1);
+        this.groupKey.splice(1, 1);
+      }
+      console.log('afterValue', this.groupValue);
+      console.log('afterkey', this.groupKey);
       this.showSpinner = false;
       this.clickedProduce = true;
-      this.selectedName.patchValue([this.groupKey[0]]);
+      this.selectedName = this.groupKey[0];
+      for (let j = 0; j < this.groupValue.length; j++) {
+        for (let i = 0; i < this.groupValue[j].length; i++) {
+          this.groupValue[j][i]["no"] = i + 1;
+        }
+      }
+      console.log(this.groupValue);
       this.showSelectTable(0);
     });
   }
@@ -707,46 +710,9 @@ export class ReportComponent implements OnInit {
    */
   showSelectTable(index: number) {
     this.arrayDetails = this.groupValue[index];
-    for (let i = 0; i < this.arrayDetails.length; i++) {
-      this.arrayDetails[i]["no"] = i + 1;
-    }
-    if (this.selectedIndex.indexOf(index) > -1) {
-      this.selectedIndex.splice(this.selectedIndex.indexOf(index), 1);
-    } else {
-      this.selectedIndex.push(index);
-    }
-  }
-
-  /**
-   * toggle all selection
-   * @memberof ReportComponent
-   */
-  toggleAllSelection() {
-    if (this.allSelected.selected) {
-      this.selectedIndex = [];
-      this.selectedName.patchValue([...this.groupKey.map(item => item), '0']);
-      for (let i = 0; i < this.groupKey.length; i++) {
-        this.selectedIndex.push(i);
-      }
-    } else {
-      this.selectedIndex = [];
-      this.selectedName.patchValue([]);
-    }
-  }
-
-  /**
-   * tick one selection
-   * @returns
-   * @memberof ReportComponent
-   */
-  tosslePerOne() {
-    if (this.allSelected.selected) {
-      this.allSelected.deselect();
-      return false;
-    }
-    if (this.selectedName.value.length == this.groupKey.length) {
-      this.allSelected.select();
-    }
+    // for (let i = 0; i < this.arrayDetails.length; i++) {
+    //   this.arrayDetails[i]["no"] = i + 1;
+    // }
   }
 
   /**
