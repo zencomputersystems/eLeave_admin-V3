@@ -1093,7 +1093,7 @@
                             </div>
                             <div (click)="showEmploy = true;showCalendar = false;showRole = false;showPersonal = false;showOthers=false "
                                 style="cursor: pointer;margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
-                                EMPLOYEMENT DETAILS</div>
+                                EMPLOYMENT DETAILS</div>
                             <div *ngIf="employmentDetails && showEmploy">
                                 <app-add-one-employee [disabledEditMode]="mode === 'OFF'"
                                     [getDetails]="employmentDetails" (sendFormdata)="receiveData($event)">
