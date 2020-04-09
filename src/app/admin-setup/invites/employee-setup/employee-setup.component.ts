@@ -872,6 +872,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.mode = 'ON';
             this.modeValue = true;
             this.inviteAPI.popUp.open(EditModeDialogComponent, {
+                disableClose: true,
                 data: 'employee',
                 height: "333.3px",
                 width: "383px"
@@ -898,6 +899,7 @@ export class EmployeeSetupComponent implements OnInit {
     async toggleStatus(event, name: string, userId: string) {
         if (event.currentTarget.checked == false) {
             const dialog = this.inviteAPI.popUp.open(ChangeStatusConfimationComponent, {
+                disableClose: true,
                 data: { name: name, status: 'Activate' },
                 height: "285px",
                 width: "360px"
@@ -920,6 +922,7 @@ export class EmployeeSetupComponent implements OnInit {
             }
         } else {
             const dialog = this.inviteAPI.popUp.open(ChangeStatusConfimationComponent, {
+                disableClose: true,
                 data: { name: name, status: 'Deactivate', userId: userId },
                 height: "395px",
                 width: "395px"
@@ -1145,6 +1148,7 @@ export class EmployeeSetupComponent implements OnInit {
      */
     async deleteEmployee(name: string, userId: string) {
         const dialogRef = this.inviteAPI.popUp.open(DeleteCalendarConfirmationComponent, {
+            disableClose: true,
             data: { name: name, value: userId, desc: "'s employee profile" },
             height: "195px",
             width: "270px"

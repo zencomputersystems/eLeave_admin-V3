@@ -228,6 +228,7 @@ export class SideMenuNavigationComponent implements OnInit {
       this.activeRoute = currentRoute;
     } else {
       this.sharedService.dialog.open(RouteDialogComponent, {
+        disableClose: true,
         width: "283px",
         height: "194px"
       });

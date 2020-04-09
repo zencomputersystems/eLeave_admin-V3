@@ -608,8 +608,9 @@ export class CalendarProfileComponent implements OnInit {
         if (event.detail.checked === true) {
             this.modeValue = 'ON';
             this.calendarProfileAPI.displayDialog.open(EditModeDialogComponent, {
+                disableClose: true,
                 data: 'calendar',
-                height: "343.3px",
+                height: "363px",
                 width: "383px"
             });
         } else {
@@ -668,6 +669,7 @@ export class CalendarProfileComponent implements OnInit {
      */
     async deleteCalendarProfile(item) {
         const dialog = this.calendarProfileAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
+            disableClose: true,
             data: { name: item.code, value: item.calendar_guid, desc: ' calendar profile' },
             height: "195px",
             width: "270px"
@@ -700,6 +702,7 @@ export class CalendarProfileComponent implements OnInit {
      */
     deletePH(index: number, event: any, title: string) {
         const popup = this.calendarProfileAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
+            disableClose: true,
             data: { name: title, value: index, desc: ' from holiday list' },
             height: "195px",
             width: "270px"

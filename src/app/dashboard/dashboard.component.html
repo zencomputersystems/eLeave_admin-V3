@@ -362,7 +362,7 @@
                                     style="white-space: nowrap;text-overflow: ellipsis;font-size: 12px;font-weight: bold; padding: 0px 5px;">
                                     UPCOMING HOLIDAYS
                                 </ion-title>
-                                <ion-title style="white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;
+                                <ion-title *ngIf="holidays.length !== 0" style="white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;
                                 opacity: 0.8;font-weight: bold; font-size: 12px;"
                                     (click)="menuOpen=true;menu.enable(true, 'viewHolidayDetails');
                                 menu.enable(false, 'createAnnouncementDetails');;menu.enable(false,'viewAnnouncementDetails');menu.open('viewHolidayDetails');">

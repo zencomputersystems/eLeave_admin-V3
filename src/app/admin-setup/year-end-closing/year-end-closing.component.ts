@@ -135,6 +135,7 @@ export class YearEndClosingComponent implements OnInit {
    */
   showDialog() {
     const dialogRef = this.dialog.open(DialogSubmitConfirmationComponent, {
+      disableClose: true,
       data: { value: this.selected },
       height: "285px",
       width: "383px"

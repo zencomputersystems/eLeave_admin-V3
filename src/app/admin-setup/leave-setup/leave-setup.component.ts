@@ -121,6 +121,7 @@ export class LeaveSetupComponent implements OnInit {
             this.router.navigate(this.leaveSetupPage[index].url);
         } else {
             this._sharedService.dialog.open(RouteDialogComponent, {
+                disableClose: true,
                 width: "283px",
                 height: "194px"
             });

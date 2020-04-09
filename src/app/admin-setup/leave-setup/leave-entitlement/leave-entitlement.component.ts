@@ -351,6 +351,7 @@ export class LeaveEntitlementComponent implements OnInit {
     if (evt.detail.checked === true) {
       this.mainToggle = 'ON';
       this.entitlementApi.dialog.open(EditModeDialogComponent, {
+        disableClose: true,
         data: 'entitlement',
         height: "372.3px",
         width: "383px"
@@ -465,6 +466,7 @@ export class LeaveEntitlementComponent implements OnInit {
    */
   async deleteLeaveEntitlement(leaveEntitlementId: string, leavetype: string, code: string) {
     const dialogRef = this.entitlementApi.dialog.open(DeleteCalendarConfirmationComponent, {
+      disableClose: true,
       data: { name: leavetype + ' - ' + code, value: leaveEntitlementId, desc: ' entitlement profile' },
       height: "195px",
       width: "270px"

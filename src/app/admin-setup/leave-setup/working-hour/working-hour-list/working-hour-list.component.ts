@@ -184,8 +184,9 @@ export class WorkingHourListComponent implements OnInit {
         if (evt.detail.checked === true) {
             this.mode = 'ON';
             this.sharedService.dialog.open(EditModeDialogComponent, {
+                disableClose: true,
                 data: 'working',
-                height: "360.3px",
+                height: "387px",
                 width: "383px"
             });
 
@@ -258,6 +259,7 @@ export class WorkingHourListComponent implements OnInit {
      */
     deleteWorkingHrProfile(working_hour_guid: string, name: string) {
         const dialogRef = this.sharedService.dialog.open(DeleteCalendarConfirmationComponent, {
+            disableClose: true,
             data: { name: name, value: working_hour_guid, desc: ' profile name' },
             height: "195px",
             width: "270px"

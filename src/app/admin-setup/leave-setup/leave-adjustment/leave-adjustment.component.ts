@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { LeaveApiService } from "../leave-api.service";
 import { APIService } from "src/services/shared-service/api.service";
 import { ReportApiService } from "../../report/report-api.service";
+import { map } from "rxjs/operators";
 /**
  * leave adjusment page
  * @export
@@ -195,7 +196,9 @@ export class LeaveAdjustmentComponent implements OnInit {
     ngOnInit() {
         this.leaveSetupAPI.get_company_list().subscribe(list => this.company = list);
         this.leaveSetupAPI.get_admin_leavetype().subscribe(list => this.leavetypeList = list);
-        this.reportApi.get_bundle_report('leave-adjustment').subscribe(data => this.history = data);
+        this.reportApi.get_bundle_report('leave-adjustment').pipe(
+            map(data => data.sort((a, b) => new Date(b.adjustDate).getTime() - new Date(a.adjustDate).getTime()))
+        ).subscribe(data => this.history = data);
     }
 
     /**

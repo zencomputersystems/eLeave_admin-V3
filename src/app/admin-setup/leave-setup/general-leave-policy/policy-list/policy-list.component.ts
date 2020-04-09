@@ -150,6 +150,7 @@ export class PolicyListComponent implements OnInit {
         if (evt.detail.checked === true) {
             this.modeValue = 'ON';
             this.policyApi.dialog.open(EditModeDialogComponent, {
+                disableClose: true,
                 data: 'policy',
                 height: "355.3px",
                 width: "383px"
@@ -201,6 +202,7 @@ export class PolicyListComponent implements OnInit {
      */
     deleteCompany(item: any) {
         const dialog = this.policyApi.dialog.open(DeleteCalendarConfirmationComponent, {
+            disableClose: true,
             data: { name: item.NAME, value: item.TENANT_COMPANY_GUID, desc: ' company' },
             height: "195px",
             width: "270px"

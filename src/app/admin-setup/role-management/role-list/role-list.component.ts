@@ -293,6 +293,7 @@ export class RoleListComponent implements OnInit {
         if (event.detail.checked === true) {
             this.mode = 'ON';
             this._sharedService.dialog.open(EditModeDialogComponent, {
+                disableClose: true,
                 data: 'role',
                 height: "360.3px",
                 width: "383px"
@@ -374,6 +375,7 @@ export class RoleListComponent implements OnInit {
      */
     delete(role_guid: string, role_name: string) {
         const dialogRef = this._sharedService.dialog.open(DialogDeleteConfirmationComponent, {
+            disableClose: true,
             data: { value: role_guid, name: role_name },
             height: "195px",
             width: "270px"

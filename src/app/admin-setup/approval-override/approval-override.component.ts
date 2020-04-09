@@ -4,6 +4,7 @@ import { ApprovalOverrideApiService } from './approval-override-api.service';
 import { MenuController } from '@ionic/angular';
 import { ReportApiService } from '../report/report-api.service';
 import { Platform } from '@ionic/angular';
+import { map } from 'rxjs/operators';
 
 /**
  * override approval for pending leave applciation 
@@ -202,7 +203,9 @@ export class ApprovalOverrideComponent implements OnInit {
         this.menu.open('approvalOverrideDetails');
         this.menu.enable(true, 'approvalOverrideDetails');
         this.overlay = true;
-        this.reportApi.get_bundle_report('approval-override').subscribe(data => this.history = data);
+        this.reportApi.get_bundle_report('approval-override').pipe(
+            map(data => data.sort((x, y) => new Date(y.applicationDate).getTime() - new Date(x.applicationDate).getTime()))
+        ).subscribe(data => this.history = data);
     }
 
     /**
