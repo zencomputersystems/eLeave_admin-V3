@@ -131,12 +131,6 @@ export class LeaveAdjustmentComponent implements OnInit {
     public history: any;
 
     /**
-     * joined all leavetype abbr
-     * @memberof LeaveAdjustmentComponent
-     */
-    public totalAbbr = [];
-
-    /**
      * selected company guid
      * @private
      * @type {string}
@@ -227,10 +221,7 @@ export class LeaveAdjustmentComponent implements OnInit {
         this.showCheckbox.push(false);
         for (let i = 0; i < this._userItems.length; i++) {
             this._userItems[i].isChecked = false;
-            let val = await this.apiService.get_user_profile_details(this._userItems[i].userId).toPromise();
-            this.totalAbbr.push(val.abbr);
         }
-        this.showSpinner = false;
         this.filterUserList(this._userItems, name);
     }
 
@@ -268,7 +259,7 @@ export class LeaveAdjustmentComponent implements OnInit {
      */
     async filterUserList(userList: any, name: string) {
         for (let i = 0; i < userList.length; i++) {
-            this.filterByDepartment(userList, name, i);
+            await this.filterByDepartment(userList, name, i);
         }
         if (this.filteredUserItems.length > 0) {
             this.showNoResult = false;
@@ -288,11 +279,11 @@ export class LeaveAdjustmentComponent implements OnInit {
     async filterByDepartment(userList: any, name: string, i: number) {
         if (userList[i].companyId === this._companyGUID) {
             if (userList[i].department === name && userList[i].department !== 'All' || name === 'All') {
-                for (let j = 0; j < userList.length; j++) {
-                    userList[j]["entitlement"] = this.totalAbbr[j];
-                }
+                let val = await this.apiService.get_user_profile_details(userList[i].userId).toPromise();
+                userList[i]["entitlement"] = val.abbr;
                 this.filteredUserItems.push(userList[i]);
             }
+            this.showSpinner = false;
         }
     }
 

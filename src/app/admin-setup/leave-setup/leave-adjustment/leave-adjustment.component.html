@@ -198,7 +198,6 @@
                                         style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
                                         <mat-label>Please select department</mat-label>
                                         <mat-select formControlName="department" required>
-                                            <mat-option>None</mat-option>
                                             <mat-option value="All"
                                                 (click)="departmentSelected('All');enableDisableSubmitButton()">
                                                 All</mat-option>
@@ -396,7 +395,8 @@
                             <div *ngIf="showNoResult && !showSpinner"
                                 style="width: 100%; text-align:center;padding: 10px">
                                 <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
-                                <p style="font-size: 20px;color:#a3a6b4;opacity: 0.8;padding-top:10px ">No Results Found
+                                <p style="font-size: 20px;color:#a3a6b4;opacity: 0.8;padding-top:10px ">No Results
+                                    Found
                                 </p>
                             </div>
                         </div>
@@ -492,7 +492,8 @@
                             <div *ngIf="showNoResult && !showSpinner"
                                 style="width: 100%; text-align:center;padding: 10px">
                                 <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
-                                <p style="font-size: 20px;color:#a3a6b4;opacity: 0.8;padding-top:10px ">No Results Found
+                                <p style="font-size: 20px;color:#a3a6b4;opacity: 0.8;padding-top:10px ">No Results
+                                    Found
                                 </p>
                             </div>
                         </div>
