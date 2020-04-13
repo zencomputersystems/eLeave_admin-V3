@@ -295,9 +295,9 @@ export class DashboardComponent implements OnInit {
     } else {
       isChecked = 0;
     }
-    this.message = this.message.replace(/<img[^>]*>/g, "");
-    let response = await this.dashboardAPI.apiService.post_file(this._formValue).toPromise();
-    this._fileAttachment.push(response.filename);
+    // this.message = this.message.replace(/<img[^>]*>/g, "");
+    // let response = await this.dashboardAPI.apiService.post_file(this._formValue).toPromise();
+    // this._fileAttachment.push(response.filename);
     const data = { "title": this.title, "message": this.message, "isPinned": isChecked, "attachment": this._fileAttachment };
     if (name === 'add') {
       this.dashboardAPI.post_announcement_list(data).subscribe(val => {

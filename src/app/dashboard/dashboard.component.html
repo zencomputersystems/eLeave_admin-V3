@@ -21,13 +21,10 @@
                         <p style="opacity: 0.8;font-size: 9px;line-height: 2.22;color: #4d4f5c;">
                             {{item.CREATION_TS | date:'d MMM yyyy'}}
                         </p>
-                        <p class="innerText"
-                            style="white-space: normal;font-size: 10px;color: #4d4f5c;line-height:1.4;text-align: justify;"
-                            [innerHTML]="item.MESSAGE">
-                        </p>
-                        <ng-container *ngFor="let list of item.ATTACHMENT; let j=index">
+                        <p class="innerText" [innerHTML]="item.MESSAGE"></p>
+                        <!-- <ng-container *ngFor="let list of item.ATTACHMENT; let j=index">
                             <img *ngIf="list !== '' && url" src="{{url.link + list}}" style="width: 150px;">
-                        </ng-container>
+                        </ng-container> -->
                     </ion-label>
                 </ion-item>
                 <ion-item *ngIf="showallannouncement">
@@ -38,15 +35,10 @@
                         <p style="opacity: 0.8;font-size: 9px;line-height: 2.22;color: #4d4f5c;">
                             {{item.CREATION_TS | date:'d MMM yyyy'}}
                         </p>
-                        <p [innerHTML]="item.MESSAGE" class="listInnerText" style="white-space: normal;
-            font-size: 10px;
-            color: #4d4f5c;
-            line-height: 1.4;
-            text-align: justify;">
-                        </p>
-                        <ng-container *ngFor="let list of item.ATTACHMENT; let j=index">
+                        <p [innerHTML]="item.MESSAGE" class="listInnerText"></p>
+                        <!-- <ng-container *ngFor="let list of item.ATTACHMENT; let j=index">
                             <img *ngIf="list !== '' && url" src="{{url.link + list}}" style="width: 150px;">
-                        </ng-container>
+                        </ng-container> -->
                     </ion-label>
                 </ion-item>
             </ng-container>
@@ -198,19 +190,6 @@
     <div class="row" *ngIf="row" style="margin-top: 20px;">
         <div class="annoucement">
             <div style="background-color: #ffffff;padding: 10px;">
-                <!-- <div style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
-                    <ion-row>
-                        <ion-col align-self-center size="10" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                            LATEST ANNOUNCEMENT
-                            <ion-button style="position: absolute;margin-top: -4px;--border-radius:2px;margin-left: 15px;font-size: 11px;height: 26px;width:92px;cursor: pointer;text-transform: none;font-weight: bold;" color="primary" (click)="createNew=true;title='';message='';checked=false;menuOpen=true;menu.enable(true, 'createAnnouncementDetails');menu.enable(false, 'viewHolidayDetails');
-                                menu.enable(false, 'viewAnnouncementDetails');menu.open('createAnnouncementDetails');">
-                                Create New
-                            </ion-button>
-                        </ion-col>
-                        <ion-col align-self-center size="2" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;opacity: 0.8;" (click)="menuOpen=true;menu.enable(true, 'viewAnnouncementDetails');menu.enable(false, 'viewReplacementDetails');menu.enable(false, 'viewAnnualDetails');menu.enable(false, 'viewHolidayDetails');menu.open('viewAnnouncementDetails');">
-                            VIEW DETAILS</ion-col>
-                    </ion-row>
-                </div> -->
                 <div [class]="'hide-md-down'">
                     <div
                         style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
@@ -237,15 +216,6 @@
                                     VIEW DETAILS
                                 </ion-title>
                             </ion-item-group>
-                            <!-- <ion-col align-self-center size="10" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                LATEST ANNOUNCEMENT
-                                <ion-button style="position: absolute;margin-top: -4px;--border-radius:2px;margin-left: 15px;font-size: 11px;height: 26px;width:92px;cursor: pointer;text-transform: none;font-weight: bold;" color="primary" (click)="createNew=true;title='';message='';checked=false;menuOpen=true;menu.enable(true, 'createAnnouncementDetails');menu.enable(false, 'viewHolidayDetails');
-                                    menu.enable(false, 'viewAnnouncementDetails');menu.open('createAnnouncementDetails');">
-                                    Create New
-                                </ion-button>
-                            </ion-col> -->
-                            <!-- <ion-col align-self-center size="2" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;opacity: 0.8;" (click)="menuOpen=true;menu.enable(true, 'viewAnnouncementDetails');menu.enable(false, 'viewReplacementDetails');menu.enable(false, 'viewAnnualDetails');menu.enable(false, 'viewHolidayDetails');menu.open('viewAnnouncementDetails');">
-                                VIEW DETAILS</ion-col> -->
                         </ion-row>
                     </div>
                     <ng-container *ngFor="let item of announcements; let i = index;">
@@ -262,11 +232,10 @@
                                         {{item.TITLE}}
                                         <br>
                                     </span>
-                                    <p class="mainInnerText" [innerHTML]="item.MESSAGE"
-                                        style="margin-bottom: 0; white-space: pre-wrap;"></p>
-                                    <ng-container *ngFor="let list of item.ATTACHMENT">
+                                    <p class="mainInnerText" [innerHTML]="item.MESSAGE"></p>
+                                    <!-- <ng-container *ngFor="let list of item.ATTACHMENT">
                                         <img *ngIf="list !== '' && url" src="{{url.link + list}}" style="width: 50px;">
-                                    </ng-container>
+                                    </ng-container> -->
                                 </ion-col>
                                 <ion-col size="2" align-self-center
                                     style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
@@ -281,7 +250,7 @@
                                             (click)="deleteAnnouncement(item)">
                                     </div>
                                 </ion-col>
-                                <ion-item *ngIf="i<2" class="divider" style="padding-bottom: 0;" lines="full">
+                                <ion-item *ngIf="i<2" class="divider" style="padding-bottom: 0;padding-top: 0;" lines="full">
                                 </ion-item>
                             </ng-container>
                         </ion-row>
@@ -328,9 +297,9 @@
                                         {{item.TITLE}}
                                     </ion-label>
                                     <p [innerHTML]="item.MESSAGE" style="margin:0px;"></p>
-                                    <ng-container *ngFor="let list of item.ATTACHMENT; let j=index">
+                                    <!-- <ng-container *ngFor="let list of item.ATTACHMENT; let j=index">
                                         <img *ngIf="list !== '' && url" src="{{url.link + list}}" style="width: 50px;">
-                                    </ng-container>
+                                    </ng-container> -->
                                     <ion-item-group style="align-self: flex-end; padding: 0px 25px 15px 0px;">
                                         <img src="assets/icon/leave_setup/icon_edit@3x.png"
                                             style="width: 13px;height:13px;cursor: pointer;" (click)="editAnnouncement(item);createNew=false;menuOpen=true;menu.enable(true, 'createAnnouncementDetails');

@@ -21,6 +21,9 @@
         line-height: 1.4;
         text-align: justify;
     }
+    p.innerText::ng-deep img {
+        height: 150px;
+    }
     p.listInnerText::ng-deep p {
         white-space: normal;
         font-size: 10px;
@@ -28,8 +31,15 @@
         line-height: 1.4;
         text-align: justify;
     }
+    p.listInnerText::ng-deep img {
+        height: 150px;
+    }
     p.mainInnerText::ng-deep p {
         margin-bottom: 0;
+        white-space: pre-wrap;
+    }
+    p.mainInnerText::ng-deep img {
+        height: 50px;
     }
     .main {
         top: 48px;
@@ -103,7 +113,7 @@
     .mat-chip.mat-standard-chip {
         background-color: #46cdcf;
     }
-     ::ng-deep .item-inner {
+    ::ng-deep .item-inner {
         border-color: rgb(0, 0, 0);
     }
     .labelText {
@@ -118,8 +128,8 @@
         margin: 20px;
         margin-top: 30px;
         margin-bottom: 0;
-        font-size: 13px; 
-        color:#43425d;
+        font-size: 13px;
+        color: #43425d;
         opacity: 0.8;
 
         ::ng-deep .mat-form-field-wrapper {
@@ -129,9 +139,9 @@
     .create-annucement-checkbox {
         opacity: 0.8;
         color: #4d4f5c;
-        font-size: 13px; 
+        font-size: 13px;
         max-width: -webkit-fill-available;
-        
+
         ::ng-deep .mat-checkbox-label {
             white-space: pre-wrap;
         }
@@ -144,6 +154,6 @@
 
         @media screen and (max-width: 932px) {
             --width: 304px;
-        } 
+        }
     }
 }
