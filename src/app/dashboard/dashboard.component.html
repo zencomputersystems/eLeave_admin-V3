@@ -228,7 +228,7 @@
                                 <ion-col align-self-center style="padding: 0;color:#4d4f5c;font-size:11px;line-height: 1.82;overflow: hidden;
                                                     white-space: nowrap;text-overflow: ellipsis;">
                                     <span *ngIf="item.IS_PINNED === 1"
-                                        style="font-weight: bold;color:#43425d;font-size:11px;white-space: pre-wrap;">
+                                        style="font-weight: bold;color:#43425d;font-size:11px;">
                                         {{item.TITLE}}
                                         <br>
                                     </span>
@@ -250,7 +250,8 @@
                                             (click)="deleteAnnouncement(item)">
                                     </div>
                                 </ion-col>
-                                <ion-item *ngIf="i<2" class="divider" style="padding-bottom: 0;padding-top: 0;" lines="full">
+                                <ion-item *ngIf="i<2" class="divider" style="padding-bottom: 0;padding-top: 0;"
+                                    lines="full">
                                 </ion-item>
                             </ng-container>
                         </ion-row>
