@@ -562,7 +562,7 @@ export class EmployeeSetupComponent implements OnInit {
      */
     public roleListLength: any;
 
-    
+
     public newRoleForm: any;
     /**
      *Creates an instance of EmployeeSetupComponent.
@@ -613,43 +613,27 @@ export class EmployeeSetupComponent implements OnInit {
         this.newDayControl = this.calCountry = this.calRegion = new FormControl('');
         this.newProfileName = new FormControl('', Validators.required);
         this.getListPublicHolidays();
-
         this.displayWorkingHour = true;
-
-
         this.endPoint();
         let defaultProfileList = await this.workingHourAPI.get_default_profile().toPromise();
         let roleData = await this.roleAPI.get_role_profile_list().toPromise();
-        // console.log('defaultProfileList: ' + JSON.stringify(defaultProfileList, null, " "));
         this.roleList = roleData;
-        
-        // console.log('this.roleList : ' + JSON.stringify(this.roleList, null, " "))
-
         this.roleList.forEach(roleItem => {
             roleItem.isDefault = (roleItem.role_guid === defaultProfileList[0].ROLE_PROFILE_GUID) ? true : false;
-            
         });
-        // this.roleList = [];
         this.roleListLength = this.roleList.length;
         let calendarData = await this.inviteAPI.get_calendar_profile_list().toPromise();
-        
         this.calendarList = calendarData;
-        // this.calendarList = [];
         this.calendarList.forEach(calItem => {
             calItem.isDefault = (calItem.calendar_guid === defaultProfileList[0].CALENDAR_PROFILE_GUID) ? true : false;
         });
         this.lengthCalendarList = this.calendarList.length;
-        // console.log('this.calendarList : ' + JSON.stringify(this.calendarList, null, " "))
-        // console.log('this length : ' + JSON.stringify(this.calendarList.length, null, " "))
         let workingData = await this.inviteAPI.get_working_hour_profile_list().toPromise();
         this.workingList = workingData;
-        // this.workingList = []
         this.workingList.forEach(whItem => {
             whItem.isDefault = (whItem.working_hours_guid === defaultProfileList[0].WORKING_HOURS_PROFILE_GUID) ? true : false;
         });
         this.lengthWorkingList = this.workingList.length;
-        // console.log('this.workingList : ' + JSON.stringify(this.workingList, null, " "))
-
         let entitlement = await this._sharedService.leaveApi.get_leavetype_entitlement().toPromise();
         this.entitlementList = entitlement;
         let company = await this._sharedService.leaveApi.get_company_list().toPromise();
@@ -710,7 +694,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails.employmentDetail.section = event[1];
             this.employmentDetails.employmentDetail.department = event[2];
             this.employmentDetails.employmentDetail.costcentre = event[3];
-            this.patchEmploymentDetails();
+            // this.patchEmploymentDetails();
         }
     }
 
@@ -762,8 +746,10 @@ export class EmployeeSetupComponent implements OnInit {
      */
     getPersonalDetails() {
         if (this.personalDetails.personalDetail != undefined) {
-            this.birthOfDate = new FormControl((this.personalDetails.personalDetail.dob), Validators.required);
-            this.personalDetails.personalDetail.dob = _moment(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
+            if (this.personalDetails.personalDetail.dob !== '') {
+                this.birthOfDate = new FormControl((this.personalDetails.personalDetail.dob), Validators.required);
+                this.personalDetails.personalDetail.dob = _moment(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
+            }
         } else {
             this.personalDetails.personalDetail = personal;
         }
@@ -867,7 +853,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {*} evt
      * @memberof EmployeeSetupComponent
      */
-    toggleMode(evt) {
+    async toggleMode(evt) {
         if (evt.detail.checked === true) {
             this.mode = 'ON';
             this.modeValue = true;
@@ -881,10 +867,11 @@ export class EmployeeSetupComponent implements OnInit {
             this.mode = 'OFF';
             this.modeValue = false;
             if (this.showOthers == false) {
-                this.patchPersonalDetails();
+                await this.patchPersonalDetails();
             }
-            // this.patchEmploymentDetails();
+            this.patchEmploymentDetails();
             this.assignProfile();
+            this.endPoint();
             this._sharedService.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
         }
         this._sharedService.emitChange(this.mode);
@@ -1486,8 +1473,8 @@ export class EmployeeSetupComponent implements OnInit {
     setDefaultProfile(evt, type) {
         (type === 'working-hour') ?
             this.defaultWHProfile = evt.target.checked :
-            (type === 'role') ? 
-             this.defaultRoleProfile = evt.target.checked :
+            (type === 'role') ?
+                this.defaultRoleProfile = evt.target.checked :
                 this.defaultCalendarProfile = evt.target.checked;
     }
 
@@ -1504,9 +1491,9 @@ export class EmployeeSetupComponent implements OnInit {
         this.roleAPI.post_role_profile(newRoleDetails).subscribe(ret => {
             if (ret[0].ROLE_GUID != undefined) {
                 this.roleAPI.snackbarMsg('New role profile was created successfully', true);
-        //         if (this.defaultRoleProfile === true) {
-        //             this.workingHourAPI.post_profile_default('role', ret[0].ROLE_GUID).subscribe(data => { })
-        //         }
+                //         if (this.defaultRoleProfile === true) {
+                //             this.workingHourAPI.post_profile_default('role', ret[0].ROLE_GUID).subscribe(data => { })
+                //         }
             } else {
                 this.roleAPI.snackbarMsg(ret.status, false);
             }

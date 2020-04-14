@@ -200,7 +200,7 @@ export class AddOneEmployeeComponent implements OnInit {
      * @param {AdminInvitesApiService} adminInvite
      * @memberof AddOneEmployeeComponent
      */
-    constructor(private apiService: APIService, private adminInvite: AdminInvitesApiService, 
+    constructor(private apiService: APIService, private adminInvite: AdminInvitesApiService,
         private leaveSetupService: LeaveApiService) {
         this.invitationForm = new FormGroup({
             company: new FormControl('', Validators.required),
@@ -345,6 +345,7 @@ export class AddOneEmployeeComponent implements OnInit {
             list.push({ [key]: newState });
             control.setValue(newState);
         }
+        this.sendFormdata.emit([this.branchCtrl.value, this.sectionCtrl.value, this.departmentCtrl.value, this.costCentreCtrl.value]);
     }
 
     /**
@@ -358,6 +359,7 @@ export class AddOneEmployeeComponent implements OnInit {
             list.push({ [key]: value });
         }
         setTimeout(() => control.setValue(value));
+        this.sendFormdata.emit([this.branchCtrl.value, this.sectionCtrl.value, this.departmentCtrl.value, this.costCentreCtrl.value]);
     }
 
     /**
@@ -436,7 +438,7 @@ export class AddOneEmployeeComponent implements OnInit {
                     configPatch.root.employmentDetail.section = empListItem.section;
                     configPatch.root.personalDetails.fullname = empListItem.employeeName;
                     configPatch.root.personalDetails.workEmailAddress = empListItem.email;
-                    this.adminInvite.patch_admin_all_user_info(configPatch, empListItem.id).subscribe(ret => {});
+                    this.adminInvite.patch_admin_all_user_info(configPatch, empListItem.id).subscribe(ret => { });
                 }
             })
         });
