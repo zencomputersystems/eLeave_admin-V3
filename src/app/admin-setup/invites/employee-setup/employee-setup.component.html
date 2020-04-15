@@ -856,7 +856,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [(ngModel)]="personalDetails.personalDetail.fullname">
+                                            <input matInput placeholder="Full Name"
+                                                [(ngModel)]="personalDetails.personalDetail.fullname" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
@@ -867,7 +868,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [(ngModel)]="personalDetails.personalDetail.nickname">
+                                            <input matInput placeholder="Nickname"
+                                                [(ngModel)]="personalDetails.personalDetail.nickname" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
@@ -878,7 +880,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [(ngModel)]="personalDetails.personalDetail.phoneNumber">
+                                            <input matInput placeholder="Personal Phone Number"
+                                                [(ngModel)]="personalDetails.personalDetail.phoneNumber" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <!-- </ion-row>
@@ -891,7 +894,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [(ngModel)]="personalDetails.personalDetail.emailAddress">
+                                            <input matInput placeholder="Personal Email Address"
+                                                [(ngModel)]="personalDetails.personalDetail.emailAddress" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
@@ -902,8 +906,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
-                                            <input matInput
-                                                [(ngModel)]="personalDetails.personalDetail.workPhoneNumber">
+                                            <input matInput placeholder="Work Phone Number"
+                                                [(ngModel)]="personalDetails.personalDetail.workPhoneNumber" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
@@ -915,8 +919,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
-                                            <input matInput
-                                                [(ngModel)]="personalDetails.personalDetail.workEmailAddress">
+                                            <input matInput placeholder="Work Email Address"
+                                                [(ngModel)]="personalDetails.personalDetail.workEmailAddress" required>
                                         </mat-form-field>
 
                                     </ion-col>
@@ -931,8 +935,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [matDatepicker]="birthdate" [formControl]="birthOfDate"
-                                                required>
+                                            <input matInput placeholder="Birthdate" [matDatepicker]="birthdate"
+                                                [formControl]="birthOfDate" required>
                                             <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
                                             <mat-datepicker #birthdate></mat-datepicker>
                                         </mat-form-field>
@@ -946,7 +950,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [(ngModel)]="personalDetails.personalDetail.nric">
+                                            <input matInput placeholder="NRIC"
+                                                [(ngModel)]="personalDetails.personalDetail.nric" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
@@ -957,7 +962,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
-                                            <mat-select [(value)]="personalDetails.personalDetail.gender">
+                                            <mat-select placeholder="Gender"
+                                                [(value)]="personalDetails.personalDetail.gender" required>
                                                 <mat-option value="Female">Female</mat-option>
                                                 <mat-option value="Male">Male</mat-option>
                                             </mat-select>
@@ -973,7 +979,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [(ngModel)]="personalDetails.personalDetail.religion">
+                                            <input matInput placeholder="Religion"
+                                                [(ngModel)]="personalDetails.personalDetail.religion" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
@@ -985,7 +992,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [(ngModel)]="personalDetails.personalDetail.race">
+                                            <input matInput placeholder="Race"
+                                                [(ngModel)]="personalDetails.personalDetail.race" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
@@ -996,7 +1004,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
-                                            <mat-select [(value)]="personalDetails.personalDetail.maritalStatus">
+                                            <mat-select placeholder="Marital Status"
+                                                [(value)]="personalDetails.personalDetail.maritalStatus" required>
                                                 <mat-option value="Single">Single</mat-option>
                                                 <mat-option value="Married">Married</mat-option>
                                             </mat-select>
@@ -1013,7 +1022,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [(ngModel)]="personalDetails.personalDetail.nationality">
+                                            <input matInput placeholder="Nationality"
+                                                [(ngModel)]="personalDetails.personalDetail.nationality" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <!-- <ion-col></ion-col>
@@ -1057,19 +1067,19 @@
                                     <ion-col style="overflow: initial;">
                                         <mat-form-field class="matFormField">
                                             <input matInput placeholder="Address line 1"
-                                                [(ngModel)]="personalDetails.personalDetail.address1">
+                                                [(ngModel)]="personalDetails.personalDetail.address1" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="overflow: initial;">
                                         <mat-form-field class="matFormField">
                                             <input matInput placeholder="Address line 2"
-                                                [(ngModel)]="personalDetails.personalDetail.address2">
+                                                [(ngModel)]="personalDetails.personalDetail.address2" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="overflow: initial;">
                                         <mat-form-field class="matFormField">
                                             <input matInput placeholder="Postcode"
-                                                [(ngModel)]="personalDetails.personalDetail.postcode">
+                                                [(ngModel)]="personalDetails.personalDetail.postcode" required>
                                         </mat-form-field>
                                     </ion-col>
                                 </ion-row>
@@ -1078,19 +1088,19 @@
                                     <ion-col style="overflow: initial;">
                                         <mat-form-field class="matFormField">
                                             <input matInput placeholder="City"
-                                                [(ngModel)]="personalDetails.personalDetail.city">
+                                                [(ngModel)]="personalDetails.personalDetail.city" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="overflow: initial;">
                                         <mat-form-field class="matFormField">
                                             <input matInput placeholder="State"
-                                                [(ngModel)]="personalDetails.personalDetail.state">
+                                                [(ngModel)]="personalDetails.personalDetail.state" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="overflow: initial;">
                                         <mat-form-field class="matFormField">
                                             <input matInput placeholder="Country"
-                                                [(ngModel)]="personalDetails.personalDetail.country">
+                                                [(ngModel)]="personalDetails.personalDetail.country" required>
                                         </mat-form-field>
                                     </ion-col>
                                 </ion-row>
@@ -1115,7 +1125,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [(ngModel)]="employmentDetails.employmentDetail.employeeId">
+                                            <input matInput placeholder="Staff ID"
+                                                [(ngModel)]="employmentDetails.employmentDetail.employeeId">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
@@ -1126,7 +1137,7 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
-                                            <input matInput
+                                            <input matInput placeholder="Designation"
                                                 [(ngModel)]="employmentDetails.employmentDetail.designation">
                                         </mat-form-field>
                                     </ion-col>
@@ -1138,7 +1149,7 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
-                                            <input matInput
+                                            <input matInput placeholder="Reporting To"
                                                 [(ngModel)]="employmentDetails.employmentDetail.reportingTo">
                                         </mat-form-field>
                                     </ion-col>
@@ -1187,7 +1198,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
-                                            <mat-select [(value)]="employmentDetails.employmentDetail.employmentType">
+                                            <mat-select placeholder="Employment Type"
+                                                [(value)]="employmentDetails.employmentDetail.employmentType">
                                                 <mat-option value="Permanent">Permanent</mat-option>
                                                 <mat-option value="Contract">Contract</mat-option>
                                                 <mat-option value="Temporary">Temporary</mat-option>
@@ -1206,7 +1218,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
-                                            <mat-select [(value)]="employmentDetails.employmentDetail.employmentStatus">
+                                            <mat-select placeholder="Employment Status"
+                                                [(value)]="employmentDetails.employmentDetail.employmentStatus">
                                                 <mat-option value="Probation">Probation</mat-option>
                                                 <mat-option value="Confirmed">Confirmed</mat-option>
                                                 <mat-option value="Terminated">Terminated</mat-option>
@@ -1221,8 +1234,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [matDatepicker]="dateJoin" [formControl]="dateOfJoin"
-                                                required>
+                                            <input matInput placeholder="Date of Hired" [matDatepicker]="dateJoin"
+                                                [formControl]="dateOfJoin" required>
                                             <mat-datepicker-toggle matSuffix [for]="dateJoin"></mat-datepicker-toggle>
                                             <mat-datepicker #dateJoin></mat-datepicker>
                                         </mat-form-field>
@@ -1237,8 +1250,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [matDatepicker]="dateConfirm" [formControl]="dateOfConfirm"
-                                                required>
+                                            <input matInput placeholder="Date of Confirmation"
+                                                [matDatepicker]="dateConfirm" [formControl]="dateOfConfirm" required>
                                             <mat-datepicker-toggle matSuffix [for]="dateConfirm">
                                             </mat-datepicker-toggle>
                                             <mat-datepicker #dateConfirm></mat-datepicker>
@@ -1254,7 +1267,8 @@
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
                                             <input matInput [matDatepicker]="dateResign"
-                                                [formControl]="dateOfResignation" required>
+                                                placeholder="Date of Resignation" [formControl]="dateOfResignation"
+                                                required>
                                             <mat-datepicker-toggle matSuffix [for]="dateResign">
                                             </mat-datepicker-toggle>
                                             <mat-datepicker #dateResign></mat-datepicker>
@@ -1279,7 +1293,7 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
-                                            <input matInput
+                                            <input matInput placeholder="Bank Account Name"
                                                 [(ngModel)]="employmentDetails.employmentDetail.bankAccountName">
                                         </mat-form-field>
                                     </ion-col>
@@ -1291,7 +1305,7 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
-                                            <input matInput
+                                            <input matInput placeholder="Bank Account No"
                                                 [(ngModel)]="employmentDetails.employmentDetail.bankAccountNumber">
                                         </mat-form-field>
                                     </ion-col>
@@ -1303,7 +1317,8 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
-                                            <input matInput [(ngModel)]="employmentDetails.employmentDetail.epfNumber">
+                                            <input matInput placeholder="EPF No"
+                                                [(ngModel)]="employmentDetails.employmentDetail.epfNumber">
                                         </mat-form-field>
                                     </ion-col>
                                     <!-- </ion-row>
@@ -1316,7 +1331,7 @@
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
-                                            <input matInput
+                                            <input matInput placeholder="Income Tax No"
                                                 [(ngModel)]="employmentDetails.employmentDetail.incomeTaxNumber">
                                         </mat-form-field>
                                     </ion-col>
