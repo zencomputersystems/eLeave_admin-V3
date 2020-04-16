@@ -866,9 +866,9 @@ export class EmployeeSetupComponent implements OnInit {
             if (this.showOthers == false) {
                 await this.patchPersonalDetails();
             }
-            this.patchEmploymentDetails();
-            this.assignProfile();
-            this.endPoint();
+            await this.patchEmploymentDetails();
+            await this.assignProfile();
+            await this.endPoint();
             this._sharedService.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
         }
         this._sharedService.emitChange(this.mode);
