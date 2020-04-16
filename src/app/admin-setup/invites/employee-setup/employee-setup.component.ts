@@ -564,6 +564,28 @@ export class EmployeeSetupComponent implements OnInit {
 
 
     public newRoleForm: any;
+
+    /**
+     * input is blur or is clicked of personal details
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public isBlur: boolean = false;
+
+    /**
+     * input is clicked of assign calendar, working, role profile
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public isBlurAssign: boolean = false;
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public isBlurEmployment: boolean = false;
+
     /**
      *Creates an instance of EmployeeSetupComponent.
      * @param {AdminInvitesApiService} inviteAPI access invite API
@@ -689,6 +711,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     receiveData(event) {
+        this.isBlurEmployment = true;
         this.employmentDetails.employmentDetail.branch = event[0];
         this.employmentDetails.employmentDetail.section = event[1];
         this.employmentDetails.employmentDetail.department = event[2];
@@ -863,11 +886,15 @@ export class EmployeeSetupComponent implements OnInit {
         } else {
             this.mode = 'OFF';
             this.modeValue = false;
-            if (this.showOthers == false) {
+            if (this.showOthers == false && this.isBlur == true) {
                 await this.patchPersonalDetails();
             }
-            await this.patchEmploymentDetails();
-            await this.assignProfile();
+            if (this.isBlurEmployment == true) {
+                await this.patchEmploymentDetails();
+            }
+            if (this.isBlurAssign == true) {
+                await this.assignProfile();
+            }
             await this.endPoint();
             this._sharedService.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
         }
@@ -944,6 +971,7 @@ export class EmployeeSetupComponent implements OnInit {
             let res = await this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.id).toPromise();
             this.personalDetails.personalDetail = res;
             this.getPersonalDetails();
+            this.isBlur = false;
         }
     }
 
@@ -964,6 +992,7 @@ export class EmployeeSetupComponent implements OnInit {
             let resp = await this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.id).toPromise();
             this.employmentDetails.employmentDetail = resp;
             this.getEmploymentDetails();
+            this.isBlurEmployment = false;
         }
     }
 
@@ -1004,6 +1033,7 @@ export class EmployeeSetupComponent implements OnInit {
         if (roleData[0].USER_INFO_GUID == undefined) {
             this._sharedService.leaveApi.openSnackBar(data.status, false);
         }
+        this.isBlurAssign = false;
     }
 
     /**
