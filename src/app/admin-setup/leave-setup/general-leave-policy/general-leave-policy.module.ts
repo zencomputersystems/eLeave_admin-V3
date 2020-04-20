@@ -11,7 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
-import { InlineSVGModule } from 'ng-inline-svg';
 import { SpinnerModule } from 'src/library/spinner/spinner.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -41,7 +40,6 @@ const routes: Routes = [
         MatIconModule,
         MatGridListModule,
         MatCardModule,
-        InlineSVGModule,
         SpinnerModule,
         ReactiveFormsModule,
         MatSnackBarModule,
