@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { InlineSVGModule } from 'ng-inline-svg';
 
 import { IonicModule } from '@ionic/angular';
 import { SideMenuNavigationComponent } from './side-menu-navigation.component';
@@ -23,6 +24,7 @@ import { ReportModule } from '../admin-setup/report/report.module';
         CommonModule,
         FormsModule,
         IonicModule,
+        InlineSVGModule.forRoot(),
         HttpClientModule,
         AdminInvitesModule,
         MatMenuModule,

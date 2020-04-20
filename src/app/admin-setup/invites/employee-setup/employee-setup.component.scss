@@ -22,7 +22,7 @@
   }
   .detailsRow {
     // height: 55px;
-      padding-left: 10px;
+    padding-left: 10px;
   }
   .padding-content {
     @media screen and (max-width: 768px) {
@@ -39,18 +39,6 @@
     width: 65px;
     height: 65px;
     // margin-top: -7px;
-  }
-  .topPaginator {
-    display: inline-block;
-    right: 0;
-    position: absolute;
-    padding-top: 12px;
-    background-color: #f9fafc;
-  }
-  .bottomPaginator {
-    right: 0;
-    position: absolute;
-    background-color: #f9fafc;
   }
   .button-outline {
     --border-width: 1px;
@@ -69,16 +57,6 @@
     padding-bottom: 15px;
     // margin-left: 2%;
     white-space: nowrap;
-  }
-  .paginator {
-    color: #7a8589;
-    font-size: 12px;
-    margin-top: 11px;
-    margin-right: 25px;
-    text-align: right;
-    width: 95%;
-    white-space: nowrap;
-    margin: auto;
   }
   .searchbar {
     width: 260px;
@@ -301,13 +279,13 @@
   }
   ::ng-deep .ngx-pagination a {
     color: #4d4f5c;
-    width: 31.3px;
-    height: 31.3px;
+    width: 25.3px;
+    height: 29.3px;
     border-radius: 2px;
     line-height: 22px;
   }
   ::ng-deep .ngx-pagination li {
-    width: 31.3px;
+    width: 25.3px;
     height: 31.3px;
     text-align: center;
     vertical-align: middle;
@@ -315,6 +293,15 @@
     border-radius: 2px;
     margin-right: 8px;
     line-height: 22px;
+  }
+  ::ng-deep .pagination-next {
+    margin-right: 0 !important;
+  }
+  ::ng-deep .ngx-pagination .pagination-next.disabled::after {
+    margin-left: 0;
+  }
+  ::ng-deep .ngx-pagination .pagination-next a::after {
+    margin-left: 0;
   }
   .small-window-pagingation {
     ::ng-deep .ngx-pagination {
@@ -433,7 +420,7 @@
     opacity: 0.8;
     padding-bottom: 5px;
   }
-  ::ng-deep .searchbar-search-icon  {
+  ::ng-deep .searchbar-search-icon {
     fill: #a5a4bf;
     color: #a5a4bf;
     opacity: 0.8;
@@ -446,92 +433,91 @@
     //   padding: 0px;
     // }
   }
-::ng-deep ngx-material-timepicker-toggle {
-  width: 30px;
-  height: 0px;
-  margin-top: -22px;
-  float: right;
-}
-
-::ng-deep ngx-material-timepicker-toggle>button>svg {
-  fill: #7a8589;
-}
-
-::ng-deep .timepicker {
-  .timepicker__header {
-    background-color: #057dcd !important;
+  ::ng-deep ngx-material-timepicker-toggle {
+    width: 30px;
+    height: 0px;
+    margin-top: -22px;
+    float: right;
   }
 
-  .clock-face__clock-hand {
-    background-color: #057dcd !important;
-    // &::after {
-    //   background-color: #cd0526 !important;
-    // }
-
-    // &::before {
-    //   border-color: #afcd05 !important;
-    // }
+  ::ng-deep ngx-material-timepicker-toggle > button > svg {
+    fill: #7a8589;
   }
 
-  .clock-face__number {
-    >span.active {
+  ::ng-deep .timepicker {
+    .timepicker__header {
       background-color: #057dcd !important;
+    }
+
+    .clock-face__clock-hand {
+      background-color: #057dcd !important;
+      // &::after {
+      //   background-color: #cd0526 !important;
+      // }
+
+      // &::before {
+      //   border-color: #afcd05 !important;
+      // }
+    }
+
+    .clock-face__number {
+      > span.active {
+        background-color: #057dcd !important;
+      }
+    }
+
+    .timepicker-button {
+      color: #057dcd !important;
     }
   }
 
-  .timepicker-button {
-    color: #057dcd !important;
-  }
-}
-
-// ngb-timepicker
-.ngbTime {
-  font-size: 10px;
-}
-
-::ng-deep {
-
-  .ngb-tp-input-container.ngb-tp-hour>.ngb-tp-input,
-  .ngb-tp-input-container.ngb-tp-minute>.ngb-tp-input,
-  .ngb-tp-meridian>button {
-    font-size: 12px;
+  // ngb-timepicker
+  .ngbTime {
+    font-size: 10px;
   }
 
-  .ngb-tp-input:focus {
-    box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;
-    border-color: #7069d8;
-  }
+  ::ng-deep {
+    .ngb-tp-input-container.ngb-tp-hour > .ngb-tp-input,
+    .ngb-tp-input-container.ngb-tp-minute > .ngb-tp-input,
+    .ngb-tp-meridian > button {
+      font-size: 12px;
+    }
 
-  .ngb-tp-input:active {
-    box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;
-  }
+    .ngb-tp-input:focus {
+      box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;
+      border-color: #7069d8;
+    }
 
-  .btn-outline-primary {
-    color: #7069d8;
-    border-color: #7069d8;
-  }
+    .ngb-tp-input:active {
+      box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;
+    }
 
-  .btn-outline-primary:hover {
-    background-color: #7069d8;
-    border-color: #7069d8;
-    color: white;
-  }
+    .btn-outline-primary {
+      color: #7069d8;
+      border-color: #7069d8;
+    }
 
-  .btn-outline-primary:focus {
-    box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;
-  }
+    .btn-outline-primary:hover {
+      background-color: #7069d8;
+      border-color: #7069d8;
+      color: white;
+    }
 
-  .btn-outline-primary:active:focus {
-    background-color: #7069d8;
-    border-color: #7069d8;
-    color: white;
-    box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;
-  }
+    .btn-outline-primary:focus {
+      box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;
+    }
 
-  .ngb-tp-spacer {
-    width: 0.7em;
+    .btn-outline-primary:active:focus {
+      background-color: #7069d8;
+      border-color: #7069d8;
+      color: white;
+      box-shadow: 0 0 0 0.1rem rgba(112, 105, 216, 0.5) !important;
+    }
+
+    .ngb-tp-spacer {
+      width: 0.7em;
+    }
   }
-}
 }
 
 ::ng-deep .profile-dropdown .mat-option-text {
