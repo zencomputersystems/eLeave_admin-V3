@@ -972,10 +972,15 @@ export class EmployeeSetupComponent implements OnInit {
             } else {
                 this.personalDetails.personalDetail.postcode = null;
             }
-            let res = await this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.id).toPromise();
-            this.personalDetails.personalDetail = res;
-            this.getPersonalDetails();
-            this.isBlur = false;
+            this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.id).subscribe(res => {
+                this.getPersonalDetails();
+                this.isBlur = false;
+            }, error => {
+                if (error.status === 400) {
+                    this._sharedService.leaveApi.openSnackBar(error.statusText, false);
+                    error.afterDismissed();
+                }
+            })
         }
     }
 
@@ -995,6 +1000,10 @@ export class EmployeeSetupComponent implements OnInit {
             delete this.employmentDetails.employmentDetail["yearOfService"];
             let resp = await this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.id).toPromise();
             this.employmentDetails.employmentDetail = resp;
+            if (resp.message.statusCode === 400) {
+                this._sharedService.leaveApi.openSnackBar(resp.message.message, false);
+                resp.afterDismissed();
+            }
             this.getEmploymentDetails();
             this.isBlurEmployment = false;
         }
