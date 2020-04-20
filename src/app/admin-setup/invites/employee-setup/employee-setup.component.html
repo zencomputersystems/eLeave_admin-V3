@@ -895,7 +895,7 @@
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
                                             <input matInput placeholder="Personal Email Address" (blur)="isBlur = true"
-                                                [(ngModel)]="personalDetails.personalDetail.emailAddress">
+                                                [(ngModel)]="personalDetails.personalDetail.emailAddress" required>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
