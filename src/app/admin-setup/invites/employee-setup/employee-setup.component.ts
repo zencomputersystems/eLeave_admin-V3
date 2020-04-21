@@ -1,6 +1,5 @@
 import { roleDetails } from './../../role-management/role-details-data';
 import { WorkingHourApiService } from './../../leave-setup/working-hour/working-hour-api.service';
-import { WorkingHourConfigComponent } from './../../general-component/working-hour-config/working-hour-config.component';
 import { CalendarProfileApiService } from './../../leave-setup/calendar-profile/calendar-profile-api.service';
 import { Component, OnInit, HostBinding, Output, EventEmitter } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
@@ -17,6 +16,7 @@ import { SharedService } from '../../leave-setup/shared.service';
 import { getDataSet, reduce } from "iso3166-2-db";
 import { EventInput } from '@fullcalendar/core';
 import { PopoverController } from '@ionic/angular';
+import { SnackbarNotificationComponent } from '../../leave-setup/snackbar-notification/snackbar-notification.component';
 
 /**
  *
@@ -981,15 +981,17 @@ export class EmployeeSetupComponent implements OnInit {
             } else {
                 this.personalDetails.personalDetail.postcode = null;
             }
-            this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.id).subscribe(res => {
+            try {
+                let res = await this.inviteAPI.patch_admin_personal_user_info(this.personalDetails.personalDetail, this.id).toPromise();
                 this.getPersonalDetails();
                 this.isBlur = false;
-            }, error => {
-                if (error.status === 400) {
-                    this._sharedService.leaveApi.openSnackBar(error.statusText, false);
-                    error.afterDismissed();
-                }
-            })
+            }
+            catch (error) {
+                this._sharedService.leaveApi.openSnackBar(error.statusText, false);
+                setTimeout(() => {
+                    
+                }, 5000);
+            }
         }
     }
 
