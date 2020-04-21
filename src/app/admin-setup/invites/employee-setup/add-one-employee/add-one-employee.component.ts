@@ -188,6 +188,13 @@ export class AddOneEmployeeComponent implements OnInit {
     public filteredCostCentre: Observable<any[]>;
 
     /**
+     * latest employee id from selected company
+     * @type {string}
+     * @memberof AddOneEmployeeComponent
+     */
+    public latestId: string;
+
+    /**
      * create new option
      * @private
      * @memberof AddOneEmployeeComponent
@@ -257,6 +264,17 @@ export class AddOneEmployeeComponent implements OnInit {
             }
         }
         this.detailsChanges(changes);
+    }
+
+    /**
+     * get selected compnay's latest employee id
+     * @param {string} companyId
+     * @memberof AddOneEmployeeComponent
+     */
+    getRecentId(companyId: string) {
+        this.adminInvite.get_recent_employee_id(companyId).subscribe(item => {
+            this.latestId = item;
+        })
     }
 
     /**

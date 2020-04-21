@@ -12,7 +12,8 @@
                 <mat-label>Please select company</mat-label>
                 <mat-select formControlName="company" required>
                     <mat-option>None</mat-option>
-                    <mat-option *ngFor="let company of companyList" [value]=company.NAME>
+                    <mat-option *ngFor="let company of companyList" [value]=company.NAME
+                        (click)="getRecentId(company.TENANT_COMPANY_GUID)">
                         {{company.NAME}}
                     </mat-option>
                 </mat-select>
@@ -173,6 +174,8 @@
                 <mat-form-field appearance="outline" style="width: 100%;font-size: 12px;">
                     <mat-label>Employee ID Number</mat-label>
                     <input matInput formControlName="id" required>
+                    <mat-hint *ngIf="latestId" style="font-size: 10px;color: #7069d8;">Recent ID:
+                        {{latestId.recentStaffId}}</mat-hint>
                     <mat-error *ngIf="!invitationForm.id">
                         ID is <strong>required</strong></mat-error>
                 </mat-form-field>
