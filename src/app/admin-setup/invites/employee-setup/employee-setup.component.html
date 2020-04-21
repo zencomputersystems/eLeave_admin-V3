@@ -1127,6 +1127,9 @@
                                             class="matFormField">
                                             <input matInput placeholder="Staff ID" (blur)="isBlurEmployment = true"
                                                 [(ngModel)]="employmentDetails.employmentDetail.employeeId">
+                                            <mat-hint *ngIf="recentId"
+                                                style="font-size: 10px;color: #7069d8;">Recent ID:
+                                                {{recentId.recentStaffId}}</mat-hint>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">

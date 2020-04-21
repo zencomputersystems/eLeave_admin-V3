@@ -587,6 +587,13 @@ export class EmployeeSetupComponent implements OnInit {
     public isBlurEmployment: boolean = false;
 
     /**
+     * recent id from selected user according user company
+     * @type {string}
+     * @memberof EmployeeSetupComponent
+     */
+    public recentId: any;
+
+    /**
      *Creates an instance of EmployeeSetupComponent.
      * @param {AdminInvitesApiService} inviteAPI access invite API
      * @param {RoleApiService} roleAPI access role manegement api service
@@ -735,11 +742,13 @@ export class EmployeeSetupComponent implements OnInit {
         }
         this.id = item.id;
         this.userId = item.userId;
+        this.inviteAPI.get_recent_employee_id(item.companyId).subscribe(list => {
+            this.recentId = list;
+        })
         this.inviteAPI.apiService.get_profile_pic('all').subscribe(data => this.url = data);
         this.inviteAPI.get_admin_user_info('personal-details', this.id).subscribe(data => {
             this.personalDetails = data;
             this.getPersonalDetails();
-
         })
         this.inviteAPI.get_admin_user_info('employment-detail', this.id).subscribe(data => {
             this.employmentDetails = data;

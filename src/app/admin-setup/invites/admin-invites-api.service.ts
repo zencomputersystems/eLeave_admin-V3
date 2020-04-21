@@ -168,4 +168,15 @@ export class AdminInvitesApiService {
         return this.apiService.deleteApi(id, '/api/leave-entitlement/');
     }
 
+    /**
+     * get latest employee ID
+     * @param {*} tenantId
+     * @returns {Observable<any>}
+     * @memberof AdminInvitesApiService
+     */
+    get_recent_employee_id(tenantId: string): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.getApi("/api/admin/user-info-details/recent-staff-id/" + tenantId);
+    }
+
 }
