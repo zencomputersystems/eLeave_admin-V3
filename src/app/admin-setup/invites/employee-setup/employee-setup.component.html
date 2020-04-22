@@ -633,35 +633,39 @@
                                 <ion-content class="listContent" [style.display]="showSpinner ? 'none' : 'block'"
                                     *ngIf="list">
                                     <ion-row class="titleRow">
-                                        <ion-col size="2">
+                                        <ion-col size="1.6">
                                             <ion-label style="font-size: 12px;color: #a5a4bf;font-weight: bold;">ID
                                             </ion-label>
                                         </ion-col>
-                                        <ion-col size="7">
+                                        <ion-col>
                                             <ion-label style="font-size: 12px;color: #a5a4bf;font-weight: bold;">
                                                 EMPLOYEE
                                                 NAME
                                             </ion-label>
                                         </ion-col>
-                                        <ion-col size="2">
+                                        <ion-col size="2.5">
                                             <ion-label style="font-size: 12px;color: #a5a4bf;font-weight: bold;">STATUS
                                             </ion-label>
                                         </ion-col>
-                                        <ion-col align-self-center style="top: 3px;">
+                                        <ion-col size="2" align-self-center style="top: 3px;"
+                                            [style.display]="mode === 'OFF'? 'none':'' ">
                                             <ion-icon class="addIcon" name="add-circle-outline" *ngIf="mode === 'ON'"
                                                 (click)="menuOpen = true;inviteAPI.menu.enable(true, 'addNewEmployeeDetails');inviteAPI.menu.enable(false, 'filterEmployeeDetails');inviteAPI.menu.open('addNewEmployeeDetails')">
                                             </ion-icon>
+                                            <ion-label *ngIf="mode === 'ON'" style="font-size: 12px;color: #7069d8;font-weight: bold;position: absolute;
+                                                padding-left: 3px;">ADD
+                                            </ion-label>
                                         </ion-col>
                                     </ion-row>
                                     <ion-row class="detailsRow"
                                         *ngFor="let item of list | paginate: config; let i=index;">
-                                        <ion-col size="2">
+                                        <ion-col size="1.6">
                                             <ion-label
                                                 style="color:#808495; font-size: 12px;font-weight: normal; white-space: pre-line;">
                                                 {{item.staffNumber}}
                                             </ion-label>
                                         </ion-col>
-                                        <ion-col class="colOfLeave" size="7">
+                                        <ion-col class="colOfLeave">
                                             <p class="textHover" (click)="getUserId(item, i, config.currentPage)"
                                                 [ngClass]="{
                                                 'textColor': clickedIndex === ((config.currentPage-1)*7)+i , 'oriColor': clickedIndex !== ((config.currentPage-1)*7)+i}"
@@ -670,11 +674,12 @@
                                             <p style="color: #808495;font-size:11px;white-space: pre-line;">
                                                 {{item.designation}}</p>
                                         </ion-col>
-                                        <ion-col size="2" class="colOfLeave" style="color:#808495; font-size: 12px;">
+                                        <ion-col size="2.5" class="colOfLeave" style="color:#808495; font-size: 12px;">
                                             <div [style.color]="(item.status === 'Active') ? '#5ee2a0': '#808495'">
                                                 {{item.status}}</div>
                                         </ion-col>
-                                        <ion-col align-self-center>
+                                        <ion-col size="2" align-self-center
+                                            [style.display]="mode === 'OFF'? 'none':'' ">
                                             <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mode === 'ON'"
                                                 style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
                                                 (click)="deleteEmployee(item.employeeName, item.userId)">
@@ -1127,8 +1132,8 @@
                                             class="matFormField">
                                             <input matInput placeholder="Staff ID" (blur)="isBlurEmployment = true"
                                                 [(ngModel)]="employmentDetails.employmentDetail.employeeId">
-                                            <mat-hint *ngIf="recentId"
-                                                style="font-size: 10px;color: #7069d8;">Recent ID:
+                                            <mat-hint *ngIf="recentId" style="font-size: 10px;color: #7069d8;">Recent
+                                                ID:
                                                 {{recentId.recentStaffId}}</mat-hint>
                                         </mat-form-field>
                                     </ion-col>
