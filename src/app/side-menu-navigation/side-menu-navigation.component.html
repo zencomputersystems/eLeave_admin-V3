@@ -31,42 +31,6 @@
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="fullSideMenuContent" class="fullRouterOutlet">
-      <ion-toolbar class="toolbar1">
-        <ion-avatar [matMenuTriggerFor]="menu"
-          style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top:-5px"
-          *ngIf="url && url.details[0].PROFILE_PICTURE !== null">
-          <img src="{{url.link + url.details[0].PROFILE_PICTURE}}">
-        </ion-avatar>
-        <ion-avatar *ngIf="url && url.details[0].PROFILE_PICTURE === null"
-          style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top:-5px" [matMenuTriggerFor]="menu">
-          <img src="assets/icon/chris.jpg">
-        </ion-avatar>
-        <div style="float: right;margin-top: 7px;margin-right: 5px;cursor: pointer;" [matMenuTriggerFor]="menu"><img
-            src="assets/icon/top_header/Path 26@3x.png" style="width: 8px;height: 5px;float: right;"></div>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>My Profile</button>
-          <!-- (click)="router.navigate(['/main/employee-setup']);" -->
-          <button mat-menu-item (click)="logout($event)">Logout</button>
-        </mat-menu>
-        <ion-label class="labelName" *ngIf="personalList">
-          {{personalList.employeeName}}
-        </ion-label>
-        <div class="verticalLine"></div>
-        <div style="padding-right: 20px;float: right;" *ngIf="personalList">
-          <mat-chip>
-            <p
-              style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
-              Human Resource</p>
-          </mat-chip>
-        </div>
-
-        <!-- <div style="width:15px; float: right; height: 20px"></div>
-        <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
-        <div style="width: 12px; float:right; height: 20px"></div>
-        <div class="edit-icon" [inlineSVG]="'assets/icon/top_header/action.svg'"></div>
-        <div style="width:15px; float: left; height: 20px"></div>
-        <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div> -->
-      </ion-toolbar>
     </ion-router-outlet>
   </ion-split-pane>
 
@@ -101,41 +65,35 @@
 
     </ion-menu>
     <ion-router-outlet id="iconSideMenuContent" class="iconRouterOutlet">
-      <ion-toolbar class="toolbar1">
-        <ion-avatar [matMenuTriggerFor]="menu"
-          style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top:-5px"
-          *ngIf="url && url.details[0].PROFILE_PICTURE !== null">
-          <img src="{{url.link + url.details[0].PROFILE_PICTURE}}">
-        </ion-avatar>
-        <ion-avatar *ngIf="url && url.details[0].PROFILE_PICTURE === null"
-          style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top:-5px" [matMenuTriggerFor]="menu">
-          <img src="assets/icon/chris.jpg">
-        </ion-avatar>
-        <div style="float: right;margin-top: 7px;margin-right: 5px;cursor: pointer;" [matMenuTriggerFor]="menu"><img
-            src="assets/icon/top_header/Path 26@3x.png" style="width: 8px;height: 5px;float: right;"></div>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>My Profile</button>
-          <!-- (click)="router.navigate(['/main/employee-setup']);" -->
-          <button mat-menu-item (click)="logout($event)">Logout</button>
-        </mat-menu>
-        <ion-label class="labelName" *ngIf="personalList" [matMenuTriggerFor]="menu">
-          {{personalList.employeeName}}
-        </ion-label>
-        <div class="verticalLine"></div>
-        <div style="padding-right: 20px;float: right;" *ngIf="personalList">
-          <mat-chip>
-            <p
-              style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
-              Human Resource</p>
-          </mat-chip>
-        </div>
-        <!-- <div style="width:15px; float: right; height: 20px"></div>
-        <div class="bell-icon" [inlineSVG]="'assets/icon/top_header/notifications.svg'"></div>
-        <div style="width: 12px; float:right; height: 20px"></div>
-        <div class="edit-icon" [inlineSVG]="'assets/icon/top_header/action.svg'"></div>
-        <div style="width:15px; float: left; height: 20px"></div>
-        <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div> -->
-      </ion-toolbar>
     </ion-router-outlet>
   </ion-split-pane>
 </div>
+<ion-toolbar class="toolbar1">
+  <ion-avatar [matMenuTriggerFor]="menu"
+    style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top:-5px"
+    *ngIf="url && url.details[0].PROFILE_PICTURE !== null">
+    <img src="{{url.link + url.details[0].PROFILE_PICTURE}}">
+  </ion-avatar>
+  <ion-avatar *ngIf="url && url.details[0].PROFILE_PICTURE === null"
+    style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top:-5px" [matMenuTriggerFor]="menu">
+    <img src="assets/icon/chris.jpg">
+  </ion-avatar>
+  <div style="float: right;margin-top: 7px;margin-right: 5px;cursor: pointer;" [matMenuTriggerFor]="menu"><img
+      src="assets/icon/top_header/Path 26@3x.png" style="width: 8px;height: 5px;float: right;"></div>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>My Profile</button>
+    <!-- (click)="router.navigate(['/main/employee-setup']);" -->
+    <button mat-menu-item (click)="logout($event)">Logout</button>
+  </mat-menu>
+  <ion-label class="labelName" *ngIf="personalList">
+    {{personalList.employeeName}}
+  </ion-label>
+  <div class="verticalLine"></div>
+  <div style="padding-right: 20px;float: right;" *ngIf="personalList">
+    <mat-chip>
+      <p
+        style="margin: 0;white-space: nowrap;width: 100%;text-align: center;color: #ffffff;font-size: 9px;line-height: 2.22;">
+        Human Resource</p>
+    </mat-chip>
+  </div>
+</ion-toolbar>

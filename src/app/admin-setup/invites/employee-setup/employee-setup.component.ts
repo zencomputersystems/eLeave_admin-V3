@@ -17,6 +17,7 @@ import { getDataSet, reduce } from "iso3166-2-db";
 import { EventInput } from '@fullcalendar/core';
 import { PopoverController } from '@ionic/angular';
 import { SnackbarNotificationComponent } from '../../leave-setup/snackbar-notification/snackbar-notification.component';
+import { SideMenuNavigationComponent } from 'src/app/side-menu-navigation/side-menu-navigation.component';
 
 /**
  *
@@ -601,7 +602,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     constructor(public inviteAPI: AdminInvitesApiService, public roleAPI: RoleApiService, private _sharedService: SharedService, private calendarProfileAPI: CalendarProfileApiService,
-        public employeeSetupPopover: PopoverController, private workingHourAPI: WorkingHourApiService) {
+        public employeeSetupPopover: PopoverController, private workingHourAPI: WorkingHourApiService, private sideMenuComponent: SideMenuNavigationComponent) {
         this.inviteAPI.apiService.get_profile_pic('all').subscribe(data => {
             this.url = data;
         });
@@ -892,6 +893,7 @@ export class EmployeeSetupComponent implements OnInit {
                 height: "333.3px",
                 width: "383px"
             });
+            this.sideMenuComponent.collapseMenu();
         } else {
             this.mode = 'OFF';
             this.modeValue = false;
@@ -989,7 +991,7 @@ export class EmployeeSetupComponent implements OnInit {
             catch (error) {
                 this._sharedService.leaveApi.openSnackBar(error.statusText, false);
                 setTimeout(() => {
-                    
+
                 }, 5000);
             }
         }

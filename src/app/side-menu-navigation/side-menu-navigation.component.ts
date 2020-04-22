@@ -171,7 +171,7 @@ export class SideMenuNavigationComponent implements OnInit {
    * @param {SharedService} sharedService
    * @memberof SideMenuNavigationComponent
    */
-  constructor(private router: Router, private apiService: APIService, private sharedService: SharedService
+  constructor(private router: Router, private apiService: APIService, public sharedService: SharedService
   ) {
     router.events
       .pipe(filter(event => event instanceof NavigationEnd))
