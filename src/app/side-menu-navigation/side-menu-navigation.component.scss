@@ -12,9 +12,11 @@ button.mat-menu-item {
     --width: none;
   }
   .iconMenu {
-    max-width: 0%;
+    max-width: 3%;
     min-width: 35px;
-    --width: none;
+    // max-width: 0%;
+    // min-width: 35px;
+    // --width: none;
   }
   ion-icon {
     color: #abacaf;

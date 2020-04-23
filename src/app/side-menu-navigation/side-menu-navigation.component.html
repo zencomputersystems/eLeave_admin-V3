@@ -1,8 +1,9 @@
 <div (window:resize)="onResize()">
-  <!------------------------------ Full menu ---------------------------------------->
-  <ion-split-pane contentId="fullSideMenuContent" when="xs" *ngIf="displayFullMenu">
-    <ion-menu class="fullMenu" contentId="fullSideMenuContent" side="start" type="reveal" menuId="first"
-      (ionDidClose)="fullMenuClosedHandler()">
+  <ion-split-pane contentId="fullSideMenuContent" when="xs">
+
+    <!------------------------------ Full menu ---------------------------------------->
+    <ion-menu class="fullMenu" [style.display]="displayFullMenu? '' : 'hidden'" contentId="fullSideMenuContent"
+      side="start" type="reveal" menuId="first">
       <ion-header style="background-color:#2d3037; color: #f9fafc;">
         <ion-icon slot="start" color="medium" name="arrow-dropleft"
           style="cursor: pointer;position: absolute; margin: 56px; margin-left: 17px; font-size: 24px"
@@ -30,15 +31,10 @@
         </ion-list>
       </ion-content>
     </ion-menu>
-    <ion-router-outlet id="fullSideMenuContent" class="fullRouterOutlet">
-    </ion-router-outlet>
-  </ion-split-pane>
 
-
-  <!---------------------------------------- Icon Menu ---------------------------------->
-  <ion-split-pane contentId="iconSideMenuContent" when="xs" *ngIf="displayIconMenu">
-    <ion-menu side="start" contentId="iconSideMenuContent" menuId="custom" type="reveal" class="iconMenu"
-      (ionDidClose)="iconMenuClosedHandler()" style="max-width: 3%; min-width: 35px;">
+    <!------------------------------ Full menu ---------------------------------------->
+    <ion-menu side="start" [style.display]="displayIconMenu? '' : 'hidden'" contentId="fullSideMenuContent"
+      menuId="custom" type="reveal" class="iconMenu" style="max-width: 3%; min-width: 35px;">
       <ion-header style="background-color:#2d3037; color: #f9fafc;">
         <ion-icon slot="start" name="menu" style="margin-top: 6px;font-size: 24px;cursor: pointer;width: 100%;"
           (click)="expandMenu()">
@@ -64,7 +60,8 @@
       </ion-content>
 
     </ion-menu>
-    <ion-router-outlet id="iconSideMenuContent" class="iconRouterOutlet">
+
+    <ion-router-outlet id="fullSideMenuContent" class="fullRouterOutlet">
     </ion-router-outlet>
   </ion-split-pane>
 </div>

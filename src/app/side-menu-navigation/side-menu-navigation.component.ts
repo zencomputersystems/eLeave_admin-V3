@@ -241,6 +241,8 @@ export class SideMenuNavigationComponent implements OnInit {
    */
   openAtBeginning() {
     if (this.displayFullMenu === true) {
+      this.sharedService.menu.enable(true, 'first');
+      this.sharedService.menu.enable(false, 'custom');
       this.sharedService.menu.open('first');
       this.onResize();
     }
@@ -274,22 +276,6 @@ export class SideMenuNavigationComponent implements OnInit {
     setTimeout(() => {
       this.sharedService.menu.open('first');
     }, 10);
-  }
-
-  /**
-   * This method is used to open full menu
-   * @memberof SideMenuNavigationComponent
-   */
-  fullMenuClosedHandler() {
-    this.sharedService.menu.open('first');
-  }
-
-  /**
-   * This method is used to open icon menu
-   * @memberof SideMenuNavigationComponent
-   */
-  iconMenuClosedHandler() {
-    this.sharedService.menu.open('custom');
   }
 
   /**
