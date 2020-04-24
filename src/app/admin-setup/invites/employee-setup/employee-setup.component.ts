@@ -595,6 +595,20 @@ export class EmployeeSetupComponent implements OnInit {
     public recentId: any;
 
     /**
+     * To show arrow up or down icon for Name column
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public arrowDownName: boolean = true;
+
+    /**
+     * To show arrow up or down icon for Id column
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public arrowDownId: boolean = true;
+
+    /**
      *Creates an instance of EmployeeSetupComponent.
      * @param {AdminInvitesApiService} inviteAPI access invite API
      * @param {RoleApiService} roleAPI access role manegement api service
@@ -1080,6 +1094,40 @@ export class EmployeeSetupComponent implements OnInit {
             })
             this.list = require('lodash').uniqBy(name.concat(id), 'userId');
         }
+    }
+
+    /**
+     * Sort Name column after clicked arrow up or down icon
+     * @param {boolean} booleanValue
+     * @param {number} ascValue
+     * @param {number} desValue
+     * @memberof EmployeeSetupComponent
+     */
+    sortName(booleanValue: boolean, ascValue: number, desValue: number) {
+        this.arrowDownName = booleanValue;
+        this.list = this.list.slice(0);
+        this.list.sort(function (a, b) {
+            var x = a.employeeName.toLowerCase();
+            var y = b.employeeName.toLowerCase();
+            return x < y ? ascValue : x > y ? desValue : 0;
+        });
+    }
+
+    /**
+     * Sort Id column after clicked arrow up or down icon
+     * @param {boolean} value
+     * @param {number} asc
+     * @param {number} des
+     * @memberof EmployeeSetupComponent
+     */
+    sortId(value: boolean, asc: number, des: number) {
+        this.arrowDownId = value;
+        this.list = this.list.slice(0);
+        this.list.sort(function (a, b) {
+            var x = a.staffNumber;
+            var y = b.staffNumber;
+            return x < y ? asc : x > y ? des : 0;
+        });
     }
 
     /**
