@@ -389,8 +389,7 @@
                             </ion-row>
                         </div>
                         <!-- <div style="max-height: 192px;overflow: auto;width: 100%;"> -->
-                        <div style="max-height: 192px;overflow: auto;width: 100%;"
-                            *ngIf="longLeave && longLeave.status == undefined">
+                        <div style="max-height: 192px;overflow: auto;width: 100%;" *ngIf="longLeave !== undefined">
                             <ion-list class="list" style="width: 100%;">
                                 <ion-row *ngFor="let item of longLeave.downline">
                                     <ion-col size="9"
@@ -436,7 +435,7 @@
                                 </ion-row>
                             </ion-list>
                         </div>
-                        <p *ngIf="longLeave && longLeave.status != undefined"
+                        <p *ngIf="longLeave == undefined"
                             style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                             No long leave reminder</p>
                     </div>
@@ -457,8 +456,7 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div *ngIf="joiners && joiners.length > 0"
-                            style="max-height: 192px;overflow: auto;width: 100%;">
+                        <div *ngIf="joiners !== undefined" style="max-height: 192px;overflow: auto;width: 100%;">
                             <ion-list style="width: 100%;" *ngFor="let item of joiners">
                                 <ion-row>
                                     <ion-col size="8"
@@ -495,7 +493,7 @@
                                 </ion-row>
                             </ion-list>
                         </div>
-                        <p *ngIf="joiners && joiners.length == 0"
+                        <p *ngIf="joiners == undefined"
                             style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                             No upcoming new joiner</p>
                     </div>
@@ -515,7 +513,7 @@
                                     Last Day</ion-col>
                             </ion-row>
                         </div>
-                        <div *ngIf="leaver && leaver.length > 0" style="max-height: 192px;overflow: auto;width: 100%;">
+                        <div *ngIf="leaver !== undefined" style="max-height: 192px;overflow: auto;width: 100%;">
                             <ion-list class="list" style="width: 100%;">
                                 <ion-row *ngFor="let item of leaver">
                                     <ion-col size="8.5"
@@ -552,7 +550,7 @@
                                 </ion-row>
                             </ion-list>
                         </div>
-                        <p *ngIf="leaver && leaver.length == 0"
+                        <p *ngIf="leaver == undefined"
                             style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                             No upcoming leaver</p>
                     </div>
@@ -573,7 +571,7 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div *ngIf="birthdayList && birthdayList.length > 0"
+                        <div *ngIf="birthdayList !== undefined"
                             style="max-height: 192px;overflow: auto;width: 100%;">
                             <ion-list class="list" style="width: 100%;">
                                 <ion-row *ngFor="let item of birthdayList">
@@ -612,7 +610,7 @@
                                 </ion-row>
                             </ion-list>
                         </div>
-                        <p *ngIf="birthdayList && birthdayList.length == 0"
+                        <p *ngIf="birthdayList == undefined"
                             style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                             No upcoming user birthday </p>
                     </div>
