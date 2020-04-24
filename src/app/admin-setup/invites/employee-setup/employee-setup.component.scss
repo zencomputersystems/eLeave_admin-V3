@@ -120,7 +120,8 @@
     text-transform: none;
     --border-radius: 2px;
     flex: 1;
-    margin-top: 2px;
+    margin: 0;
+    margin-right: 2px;
   }
   mat-card-subtitle {
     margin-bottom: 12px;
@@ -421,6 +422,7 @@
     color: #a5a4bf;
     opacity: 0.8;
     padding-bottom: 5px;
+    padding-top: 5px;
   }
   ::ng-deep .searchbar-search-icon {
     fill: #a5a4bf;

@@ -1070,9 +1070,15 @@ export class EmployeeSetupComponent implements OnInit {
      */
     filter(text: any) {
         if (text && text.trim() != '') {
-            this.list = this.list.filter((item: any) => {
+            let name = this.list.filter((item: any) => {
                 return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
+            let id = this.list.filter((item: any) => {
+                if (item.staffNumber != undefined) { 
+                    return (item.staffNumber.indexOf(text) > -1);
+                }
+            })
+            this.list = require('lodash').uniqBy(name.concat(id), 'userId');
         }
     }
 

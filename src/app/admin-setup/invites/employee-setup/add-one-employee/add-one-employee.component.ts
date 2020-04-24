@@ -403,6 +403,9 @@ export class AddOneEmployeeComponent implements OnInit {
                     this.leaveSetupService.openSnackBar(result.status, false);
                 }
             }
+        }, error => {
+            this.showSmallSpinner = false;
+            this.leaveSetupService.openSnackBar(error.statusText, false);
         })
     }
 

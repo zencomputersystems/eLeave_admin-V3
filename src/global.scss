@@ -104,7 +104,8 @@ app-employee-setup
   > div.table
   > div.connectionsContainer
   > div.topHeader
-  > ion-searchbar.searchbar
+  > ion-item-group
+  > ion-searchbar
   > div.searchbar-input-container
   > input.searchbar-input {
   background: transparent;
@@ -114,7 +115,6 @@ app-employee-setup
   font-size: 12px;
   box-shadow: none !important;
   height: 40px;
-  width: 260px;
   padding-left: 40px;
 }
 app-employee-setup
@@ -126,7 +126,8 @@ app-employee-setup
   > div.table
   > div.connectionsContainer
   > div.topHeader
-  > ion-searchbar.searchbar
+  > ion-item-group
+  > ion-searchbar
   > div.searchbar-input-container
   > ion-icon.searchbar-search-icon.sc-ion-searchbar-md {
   color: #bcbccb;
@@ -142,7 +143,8 @@ app-employee-setup
   > div.table
   > div.connectionsContainer
   > div.topHeader
-  > ion-searchbar.searchbar
+  > ion-item-group
+  > ion-searchbar
   > div.searchbar-input-container
   > button
   > ion-icon.searchbar-clear-icon.sc-ion-searchbar-md {
