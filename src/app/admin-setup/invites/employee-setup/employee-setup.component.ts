@@ -609,6 +609,13 @@ export class EmployeeSetupComponent implements OnInit {
     public arrowDownId: boolean = true;
 
     /**
+     * selection of items per page 
+     * @type {number}
+     * @memberof EmployeeSetupComponent
+     */
+    public itemsPerPage = '10';
+
+    /**
      *Creates an instance of EmployeeSetupComponent.
      * @param {AdminInvitesApiService} inviteAPI access invite API
      * @param {RoleApiService} roleAPI access role manegement api service
@@ -720,7 +727,7 @@ export class EmployeeSetupComponent implements OnInit {
         this.showSpinner = false;
         this.list = data;
         this.config = {
-            itemsPerPage: 7,
+            itemsPerPage: Number(this.itemsPerPage),
             currentPage: 1,
             totalItems: this.list.length
         }
@@ -748,7 +755,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     getUserId(item: any, index: number, p: number) {
-        this.clickedIndex = ((p - 1) * 7) + index;
+        this.clickedIndex = ((p - 1) * Number(this.itemsPerPage)) + index;
         this.employeeStatus = this.list[this.clickedIndex].status;
         if (this.employeeStatus == 'Active') {
             this.status = true;
@@ -1088,7 +1095,7 @@ export class EmployeeSetupComponent implements OnInit {
                 return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
             let id = this.list.filter((item: any) => {
-                if (item.staffNumber != undefined) { 
+                if (item.staffNumber != undefined) {
                     return (item.staffNumber.indexOf(text) > -1);
                 }
             })

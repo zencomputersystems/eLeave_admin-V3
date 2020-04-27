@@ -633,7 +633,7 @@
                                 <ion-content class="listContent" [style.display]="showSpinner ? 'none' : 'block'"
                                     *ngIf="list">
                                     <ion-row class="titleRow">
-                                        <ion-col size="1.6">
+                                        <ion-col size="2">
                                             <ion-label style="font-size: 12px;color: #a5a4bf;font-weight: bold;">ID
                                             </ion-label>
                                             <ion-icon class="arrow" name="arrow-dropdown" (click)="sortId(false, 1, -1)"
@@ -671,7 +671,7 @@
                                     </ion-row>
                                     <ion-row class="detailsRow"
                                         *ngFor="let item of list | paginate: config; let i=index;">
-                                        <ion-col size="1.6">
+                                        <ion-col size="2">
                                             <ion-label
                                                 style="color:#808495; font-size: 12px;font-weight: normal; white-space: pre-line;">
                                                 {{item.staffNumber}}
@@ -680,7 +680,7 @@
                                         <ion-col class="colOfLeave">
                                             <p class="textHover" (click)="getUserId(item, i, config.currentPage)"
                                                 [ngClass]="{
-                                                'textColor': clickedIndex === ((config.currentPage-1)*7)+i , 'oriColor': clickedIndex !== ((config.currentPage-1)*7)+i}"
+                                                'textColor': clickedIndex === ((config.currentPage-1)*itemsPerPage)+i , 'oriColor': clickedIndex !== ((config.currentPage-1)*itemsPerPage)+i}"
                                                 style="font-weight: bold; font-size: 12px;cursor: pointer;white-space: pre-line;">
                                                 {{item.employeeName}}</p>
                                             <p style="color: #808495;font-size:11px;white-space: pre-line;">
@@ -720,7 +720,7 @@
                                         <ion-col class="colOfLeave" style="flex: 4;">
                                             <p class="textHover" (click)="getUserId(item, i, config.currentPage)"
                                                 [ngClass]="{
-                                                'textColor': clickedIndex === ((config.currentPage-1)*7)+i , 'oriColor': clickedIndex !== ((config.currentPage-1)*7)+i}"
+                                                'textColor': clickedIndex === ((config.currentPage-1)*itemsPerPage)+i , 'oriColor': clickedIndex !== ((config.currentPage-1)*itemsPerPage)+i}"
                                                 style="font-weight: bold; font-size: 12px;cursor: pointer;white-space: pre-line;">
                                                 {{item.employeeName}}</p>
                                             <p style="color: #808495;font-size:11px;white-space: pre-line;">
@@ -745,7 +745,7 @@
                                 <div [style.display]="showSpinner ? 'none' : 'block'">
                                     <pagination-template #p2="paginationApi" (pageChange)="config.currentPage = $event">
                                         <div class="custom-pagination" style="float: left;">
-                                            <div class="pagination-previous" style="display: inline-block">
+                                            <!-- <div class="pagination-previous" style="display: inline-block">
                                                 <ion-button [disabled]="p2.isFirstPage()" fill="outline"
                                                     (click)="p2.previous()"
                                                     style="--border-radius: 2px;background: #f0f0f7;font-size: 11px;height: 30px;width: 80px;"
@@ -758,7 +758,19 @@
                                                     style="--border-radius: 2px;font-size: 11px;height: 30px;width: 80px"
                                                     color="primary">Next
                                                 </ion-button>
-                                            </div>
+                                            </div> -->
+                                            <div style="color: #808495;font-size:12px;display: inline-block;">Items per
+                                                page: </div>
+                                            <mat-form-field style="width: 50px;text-align: center;font-size: 8px;">
+                                                <mat-select [(ngModel)]="itemsPerPage" (selectionChange)="config = {
+                                                    itemsPerPage: this.itemsPerPage,
+                                                    currentPage: 1
+                                                }" style="font-size: 12px;">
+                                                    <mat-option value="10">10</mat-option>
+                                                    <mat-option value="20">20</mat-option>
+                                                    <mat-option value="30">30</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
                                         </div>
                                     </pagination-template>
 
@@ -773,8 +785,8 @@
                                 <div [style.display]="showSpinner ? 'none' : 'block'">
                                     <pagination-template #p2="paginationApi" (pageChange)="config.currentPage = $event">
                                         <div class="custom-pagination"
-                                            style="float: left; display: flex;min-width: -webkit-fill-available;">
-                                            <div class="pagination-previous" style="display: inline-block; flex: 1;">
+                                            style="float: left; min-width: -webkit-fill-available;">
+                                            <!-- <div class="pagination-previous" style="display: inline-block; flex: 1;">
                                                 <ion-button [disabled]="p2.isFirstPage()" fill="outline"
                                                     (click)="p2.previous()" style="--border-radius: 2px;background: #f0f0f7;font-size:
                                                     11px;height: 30px;width: -webkit-fill-available;" color="primary">
@@ -786,7 +798,19 @@
                                                 <ion-button (click)="p2.next()" [disabled]="p2.isLastPage()" style="--border-radius: 2px;font-size: 11px;height: 30px;width:
                                                     -webkit-fill-available" color="primary">Next
                                                 </ion-button>
-                                            </div>
+                                            </div> -->
+                                            <div style="color: #808495;font-size:12px;display: inline-block;">Items per
+                                                page: </div>
+                                            <mat-form-field style="width: 50px;text-align: center;font-size: 8px;">
+                                                <mat-select [(ngModel)]="itemsPerPage" (selectionChange)="config = {
+                                                    itemsPerPage: this.itemsPerPage,
+                                                    currentPage: 1
+                                                }" style="font-size: 12px;">
+                                                    <mat-option value="10">10</mat-option>
+                                                    <mat-option value="20">20</mat-option>
+                                                    <mat-option value="30">30</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
                                         </div>
                                     </pagination-template>
 
