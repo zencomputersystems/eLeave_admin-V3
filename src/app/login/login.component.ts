@@ -162,7 +162,8 @@ export class LoginComponent implements OnInit {
    */
   signIn(email: string, pass: string) {
     this.spinner.show();
-    this._auth.login(email, pass)
+    let password = window.btoa(pass);
+    this._auth.login(email, password)
       .subscribe(data => {
         this.router.navigate(['main'])
         this.spinner.hide();
