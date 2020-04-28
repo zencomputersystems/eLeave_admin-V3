@@ -259,7 +259,7 @@ export class CalendarProfileComponent implements OnInit {
      * Get list of default profiles
      * @memberof CalendarProfileComponent
      */
-    public defaultProfileLists; 
+    public defaultProfileLists;
 
     /**
      * Bind profile object that is defined as default calendar profile
@@ -376,14 +376,16 @@ export class CalendarProfileComponent implements OnInit {
         for (let i = 0; i < this.assignedNames.length; i++) {
             if (event.data === this.assignedNames[i].fullname) {
                 this.getDragUserId(i);
-                let res = await this.calendarProfileAPI.patch_assign_calendar_profile({
-                    "user_guid": this._employeeList,
-                    "calendar_guid": list.calendar_guid
-                }).toPromise();
-                if (res[0].USER_INFO_GUID == undefined) {
-                    this.calendarProfileAPI.notification(res.status, false);
+                try {
+                    await this.calendarProfileAPI.patch_assign_calendar_profile({
+                        "user_guid": this._employeeList,
+                        "calendar_guid": list.calendar_guid
+                    }).toPromise();
+                    this.assignedNames.splice(i, 1);
                 }
-                this.assignedNames.splice(i, 1);
+                catch (res) {
+                    this.calendarProfileAPI.notification(res.statusText, false);
+                }
                 this._employeeList = [];
                 this.getAssignedList();
                 this.profileList = await this.calendarProfileAPI.get_calendar_profile_list().toPromise();
@@ -405,7 +407,7 @@ export class CalendarProfileComponent implements OnInit {
                 this.showSpinner = false;
                 this.content = true;
             })
-            
+
     }
 
     /**
@@ -432,11 +434,9 @@ export class CalendarProfileComponent implements OnInit {
                     this.dayControl.reset();
                     this.getProfileList();
                     this.calendarProfileAPI.notification('Edit mode disabled. Good job!', true);
-                } else {
-                    this.calendarProfileAPI.notification(data.status, false);
                 }
             }, err => {
-                this.calendarProfileAPI.notification(JSON.parse(err._body).status, false);
+                this.calendarProfileAPI.notification(JSON.parse(err._body).error, false);
             })
     }
 
@@ -452,27 +452,31 @@ export class CalendarProfileComponent implements OnInit {
         this._selectedCalendarProfile = list;
         this.clickedIndex = index;
         this.restDay = [];
-        let data = await this.calendarProfileAPI.get_personal_holiday_calendar(this._selectedCalendarProfile.calendar_guid, (new Date()).getFullYear()).toPromise();
-        this._personalProfile = data;
-        this.slideInOut = true;
-        this.events = [];
-        if (this._personalProfile.holiday != undefined) {
-            for (let i = 0; i < this._personalProfile.holiday.length; i++) {
-                this.createHolidayList(this._personalProfile.holiday[i].start, this._personalProfile.holiday[i].title, this.events);
+        try {
+            let data = await this.calendarProfileAPI.get_personal_holiday_calendar(this._selectedCalendarProfile.calendar_guid, new Date().getFullYear()).toPromise();
+            this._personalProfile = data;
+            this.slideInOut = true;
+            this.events = [];
+            if (this._personalProfile.holiday != undefined) {
+                for (let i = 0; i < this._personalProfile.holiday.length; i++) {
+                    this.createHolidayList(this._personalProfile.holiday[i].start, this._personalProfile.holiday[i].title, this.events);
+                }
+                if (this._personalProfile.holiday instanceof Array == false) {
+                    this.createHolidayList(this._personalProfile.holiday.start, this._personalProfile.holiday.title, this.events);
+                }
             }
-            if (this._personalProfile.holiday instanceof Array == false) {
-                this.createHolidayList(this._personalProfile.holiday.start, this._personalProfile.holiday.title, this.events);
+            if (this._personalProfile["rest"] != undefined && Array.isArray(this._personalProfile.rest) == false) {
+                this.restDay.push(this.titlecasePipe.transform(this._personalProfile.rest.fullname));
             }
-        }
-        if (this._personalProfile["rest"] != undefined && Array.isArray(this._personalProfile.rest) == false) {
-            this.restDay.push(this.titlecasePipe.transform(this._personalProfile.rest.fullname));
-        }
-        if (this._personalProfile["rest"] != undefined && Array.isArray(this._personalProfile.rest) == true) {
-            for (let i = 0; i < this._personalProfile.rest.length; i++) {
-                this.restDay.push(this.titlecasePipe.transform(this._personalProfile.rest[i].fullname));
+            if (this._personalProfile["rest"] != undefined && Array.isArray(this._personalProfile.rest) == true) {
+                for (let i = 0; i < this._personalProfile.rest.length; i++) {
+                    this.restDay.push(this.titlecasePipe.transform(this._personalProfile.rest[i].fullname));
+                }
             }
+            this.dayControl.setValue(this.restDay);
+        } catch (err) {
+            this.calendarProfileAPI.notification(err.statusText, false);
         }
-        this.dayControl.setValue(this.restDay);
         let namelist = await this.calendarProfileAPI.get_assigned_employee_list(this.profileList[index].calendar_guid).toPromise();
         this.assignedNames = namelist;
         for (let i = 0; i < this.assignedNames.length; i++) {
@@ -641,26 +645,21 @@ export class CalendarProfileComponent implements OnInit {
             "rest": this._selectedWeekday
         }
         this.calendarProfileAPI.post_calendar_profile(newProfile).subscribe(response => {
-            if (response[0].CALENDAR_DETAILS_GUID != undefined) {
-                this.calendarProfileAPI.notification('New calendar profile was created successfully.', true);
-                this.showSpinner = false;
-                this.content = true;
-                this.profileName.reset();
-                this.country.reset();
-                this.region.reset();
-                this.countryIso = this.regionISO = '';
-                this.restDay = this._selectedWeekday = [];
-                this.dayControl.reset();
-                this.getProfileList();
-            } else {
-                this.calendarProfileAPI.notification(response.status, false);
-                this.showSpinner = false;
-                this.content = true;
-            }
+            this.calendarProfileAPI.notification('New calendar profile was created successfully.', true);
+            this.showSpinner = false;
+            this.content = true;
+            this.profileName.reset();
+            this.country.reset();
+            this.region.reset();
+            this.countryIso = this.regionISO = '';
+            this.restDay = this._selectedWeekday = [];
+            this.dayControl.reset();
+            this.getProfileList();
         }, catchErr => {
-            this.calendarProfileAPI.notification(JSON.parse(catchErr._body).status, false);
+            this.calendarProfileAPI.notification(JSON.parse(catchErr._body).error, false);
+            this.showSpinner = false;
+            this.content = true;
         });
-        // this.getProfileList();
     }
 
     /**
@@ -677,7 +676,7 @@ export class CalendarProfileComponent implements OnInit {
         let result = await dialog.afterClosed().toPromise();
         if (result === item.calendar_guid) {
             this.calendarProfileAPI.delete_calendar_profile(item.calendar_guid).subscribe(response => {
-                if (response[0].CALENDAR_GUID != undefined) {
+                if (response[0] != undefined) {
                     this.getProfileList();
                     this.slideInOut = false;
                     this.clickedIndex = 0;
@@ -685,10 +684,8 @@ export class CalendarProfileComponent implements OnInit {
                     this.restDay = [];
                     this.calendarProfileAPI.notification('Calendar profile was deleted.', true);
                 } else {
-                    this.calendarProfileAPI.notification(response.status, false);
+                    this.calendarProfileAPI.notification('Calendar profile was failed to delete', false);
                 }
-            }, error => {
-                this.calendarProfileAPI.notification(JSON.parse(error._body).status, false);
             })
         }
     }
@@ -720,10 +717,10 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     checkAllAssignedEmployees() {
-        setTimeout(()=> {
+        setTimeout(() => {
             this.assignedNames.forEach(obj => {
                 obj.isChecked = this.masterCheck;
-            }) 
+            })
         });
     }
 
@@ -763,12 +760,14 @@ export class CalendarProfileComponent implements OnInit {
      */
     async reassignToOtherProfile(profile_guid) {
         this._employeeList = this.assignedNames.filter(list => list.isChecked === true).map(function (o) { return o.user_guid; });
-        let res = await this.calendarProfileAPI.patch_assign_calendar_profile({
-            "user_guid": this._employeeList,
-            "calendar_guid": profile_guid
-        }).toPromise();
-        if (res[0].USER_INFO_GUID == undefined) {
-            this.calendarProfileAPI.notification(res.status, false);
+        try {
+            let res = await this.calendarProfileAPI.patch_assign_calendar_profile({
+                "user_guid": this._employeeList,
+                "calendar_guid": profile_guid
+            }).toPromise();
+        }
+        catch (res) {
+            this.calendarProfileAPI.notification(res.statusText, false);
         }
         this.assignedNames = this.assignedNames.filter(list => list.isChecked !== true);
         this._employeeList = [];
@@ -788,7 +787,7 @@ export class CalendarProfileComponent implements OnInit {
                 this.defaultProfileItem = item;
             } else {
                 item.isDefault = false;
-            } 
+            }
         });
     }
 
