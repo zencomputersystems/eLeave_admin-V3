@@ -155,11 +155,12 @@
     <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
         <app-spinner></app-spinner>
     </div>
-    <div *ngIf="content" style="background: #f0f0f7; position: absolute;width: 100%; height: 100%; padding-bottom: 110px;">
+    <div *ngIf="content"
+        style="background: #f0f0f7; position: absolute;width: 100%; height: 100%; padding-bottom: 110px;">
         <div class="cardContent"
             style="flex-flow: column wrap; flex: 1; display: block;height: fit-content; overflow: auto;">
             <ion-card-content style="max-height: 100%;min-height: 100%; display: inherit; flex-flow: row wrap;">
-            <!-- <ion-card-content style="max-height: 100%;min-height: 100%; display: flex; flex-flow: row wrap;"> -->
+                <!-- <ion-card-content style="max-height: 100%;min-height: 100%; display: flex; flex-flow: row wrap;"> -->
                 <div class="row" style=" flex-flow: row wrap; flex: 1; height: -webkit-fill-available;">
 
                     <!-- calendar profile -->
@@ -169,7 +170,7 @@
                             <ion-row>
                                 <ion-col size="10" style="font-size: 12px;white-space: nowrap;
                                     text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                                <!-- <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                                    <!-- <ion-col size="10" style="font-size: 12px;white-space: nowrap;
                                     text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;"> -->
                                     CALENDAR PROFILE</ion-col>
                                 <!-- <ion-col align-self-center size="9" class="column"> CALENDAR
@@ -199,8 +200,9 @@
                                             selectProfile(list, i);"> {{list.code}}
                                         </p>
                                         <p
-                                            style="font-size: 10px;color: #4d4f5c;padding: 0;white-space: pre-line;text-overflow: ellipsis;" >
-                                            Country: {{list.filter_criteria.country}} | Region: {{list.filter_criteria.region}}
+                                            style="font-size: 10px;color: #4d4f5c;padding: 0;white-space: pre-line;text-overflow: ellipsis;">
+                                            Country: {{list.filter_criteria.country}} | Region:
+                                            {{list.filter_criteria.region}}
                                         </p>
 
                                         <!-- <p style="font-size: 10px;color: #4d4f5c;padding: 0;white-space: pre-line;text-overflow: ellipsis;">Country: MY | Region: 04</p> -->
@@ -224,9 +226,9 @@
                                         'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
                                     &nbsp;&nbsp; -->
                                         <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;
-                                                        color: #babdc7;margin-right: 5px;" 
-                                            *ngIf="list.isDefault" (click)="changeDefaultCalendarProfile(true, item)">
-                                            </ion-icon>
+                                                        color: #a5a4bf;margin-right: 5px;" *ngIf="list.isDefault"
+                                            (click)="changeDefaultCalendarProfile(true, item)">
+                                        </ion-icon>
                                         <!-- <ion-icon name="star-outline" style="opacity: 0.8; width: 16px; height: 16px; margin-right: 4px;
                                                         color: #babdc7;"
                                             *ngIf="!list.isDefault" (click)="changeDefaultCalendarProfile(false, item)">
@@ -254,8 +256,9 @@
                                                     selectProfile(list, i);">
                                             </mat-form-field>
                                             <div
-                                                style="font-size: 10px;color: #4d4f5c;padding: 0;white-space: pre-line;text-overflow: ellipsis;" >
-                                                Country: {{list.filter_criteria.country}} | Region: {{list.filter_criteria.region}}
+                                                style="font-size: 10px;color: #4d4f5c;padding: 0;white-space: pre-line;text-overflow: ellipsis;">
+                                                Country: {{list.filter_criteria.country}} | Region:
+                                                {{list.filter_criteria.region}}
                                             </div>
                                             <div
                                                 style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
@@ -264,14 +267,15 @@
                                                     {{list.total_employee_attach}}</p>
                                             </div>
                                         </ion-col>
-                                        <ion-col align-self-center size="2"
-                                            style="padding-right: 15px;text-align: right;text-align-last: center;">
+                                        <ion-col align-self-center size="2" style="text-align: right;
+                                            padding-right: 10px;display: flex;align-items: center;">
                                             <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;
-                                                color: #babdc7;margin-right: 5px;" *ngIf="list.isDefault"
+                                                color: #a5a4bf;margin-right: 5px;cursor: pointer;"
+                                                *ngIf="list.isDefault"
                                                 (click)="changeDefaultCalendarProfile(true, list)">
                                             </ion-icon>
                                             <ion-icon name="star-outline" style="opacity: 0.8; width: 16px; height: 16px; margin-right: 4px;
-                                                color: #babdc7;" *ngIf="!list.isDefault"
+                                                color: #a5a4bf;cursor: pointer;" *ngIf="!list.isDefault"
                                                 (click)="changeDefaultCalendarProfile(false, list)">
                                             </ion-icon>
                                             <img src="assets/icon/leave_setup/icon_trash@3x.png"
@@ -282,7 +286,7 @@
                                 </section>
                             </ng-container>
                         </div>
-                </div>
+                    </div>
 
                     <!-- assigned employee -->
                     <div class="assigned" style="flex: 1 1 25%;">
@@ -293,18 +297,19 @@
                                     text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                                     ASSIGNED EMPLOYEE</ion-col>
                                 <ion-col style="max-width: 28px;align-self: center;">
-                                    <ion-checkbox mode="ios"  style="width: 16px; height: 16px;"
+                                    <ion-checkbox mode="ios" style="width: 16px; height: 16px;"
                                         *ngIf="slideInOut && modeValue == 'ON'" [(ngModel)]="masterCheck"
-                                        [indeterminate]="isIndeterminate"
-                                        (click)="checkAllAssignedEmployees($event)"></ion-checkbox>
+                                        [indeterminate]="isIndeterminate" (click)="checkAllAssignedEmployees($event)">
+                                    </ion-checkbox>
                                 </ion-col>
-                                <ion-col style="max-width: 10px;padding-left: 0px;padding-right: 15px; padding-bottom: 0px; padding-top: 3px;"
-                                *ngIf="isIndeterminate || this.masterCheck;" >
-                                    <ion-icon name="more" class="addIcon" style="width: 18px; height: 18px;" *ngIf="slideInOut && modeValue == 'ON'" 
-                                    mat-button [matMenuTriggerFor]="menu"></ion-icon>
-                                    <mat-menu class="reassign-profile" #menu="matMenu" >
-                                        <ion-label
-                                            style=" background: #f5f6fa;white-space: pre-line;text-overflow:
+                                <ion-col
+                                    style="max-width: 10px;padding-left: 0px;padding-right: 15px; padding-bottom: 0px; padding-top: 3px;"
+                                    *ngIf="isIndeterminate || this.masterCheck;">
+                                    <ion-icon name="more" class="addIcon" style="width: 18px; height: 18px;"
+                                        *ngIf="slideInOut && modeValue == 'ON'" mat-button [matMenuTriggerFor]="menu">
+                                    </ion-icon>
+                                    <mat-menu class="reassign-profile" #menu="matMenu">
+                                        <ion-label style=" background: #f5f6fa;white-space: pre-line;text-overflow:
                                             ellipsis;color: #4d4f5c;font-size:11px; padding: 15px;display: flex;">
                                             Move selected to: </ion-label>
                                         <ion-list>
@@ -334,9 +339,8 @@
                         <div style="overflow-y: auto;height: calc(100% - 62px);" *ngIf="slideInOut && modeValue == 'ON'"
                             [@slideInOut]="slideInOut ? 'open': 'close'">
                             <mat-card *ngFor="let draggable of assignedNames" [dndDraggable]="draggable.content"
-                                [dndEffectAllowed]="draggable.effectAllowed" [dndDisableIf]="draggable.disable"
-                                style="margin: 5px;border-radius: 3px;box-shadow: 0 3px 6px 0 rgba(77, 77, 77, 0.16); display: flex;
-                                align-items: center; flex-wrap: nowrap;" >
+                                [dndEffectAllowed]="draggable.effectAllowed" [dndDisableIf]="draggable.disable" style="margin: 5px;border-radius: 3px;box-shadow: 0 3px 6px 0 rgba(77, 77, 77, 0.16); display: flex;
+                                align-items: center; flex-wrap: nowrap;">
                                 <ion-checkbox mode="ios" style="height: 16px; width: 16px; margin-right: 10px;"
                                     [(ngModel)]="draggable.isChecked" (ionChange)="checkAssignedEmployeeEvent()">
                                 </ion-checkbox>
@@ -388,7 +392,8 @@
                             [@slideInOut]="slideInOut ? 'open': 'close'">
                             <ion-row *ngFor="let holiday of events; let i=index"
                                 style="width: 100%; flex-flow: row nowrap; border-bottom: 1px solid #f0f0f7;">
-                                <ion-col size="3.5" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                <ion-col size="3.5"
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                     <ion-label *ngIf="modeValue == 'OFF'"
                                         style="padding-left: 5px;color:#4d4f5c; font-size:11px">
                                         {{holiday.start}}
@@ -402,8 +407,7 @@
                                         <mat-datepicker #datePicker></mat-datepicker>
                                     </mat-form-field>
                                 </ion-col>
-                                <ion-col size="3.5" *ngIf="modeValue == 'OFF'"
-                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; min-width:
+                                <ion-col size="3.5" *ngIf="modeValue == 'OFF'" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; min-width:
                                     fit-content;">
                                     <mat-chip-list [style.display]="modeValue == 'ON' ? 'none' : '' ">
                                         <mat-chip>

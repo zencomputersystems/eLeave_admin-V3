@@ -1,6 +1,5 @@
 <!-- ---------------------------------------- edit working hour menu ------------------- -->
-<ion-menu class="working-hour-popup" contentId="editWorkingHourContent" side="end"
-    type="overlay"
+<ion-menu class="working-hour-popup" contentId="editWorkingHourContent" side="end" type="overlay"
     menuId="editWorkingHourDetails">
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
         <img style="margin: 17px;width: 22px;height: 17px;float:left"
@@ -53,7 +52,7 @@
                             Create office working hour for employee</ion-card-subtitle>
                     </div>
                     <div [class]="'hide-sm-up'">
-                        <ion-card-subtitle class="subtitle" style="font-size: 12px;"> 
+                        <ion-card-subtitle class="subtitle" style="font-size: 12px;">
                             View office working hour for employee</ion-card-subtitle>
                     </div>
                 </div>
@@ -94,7 +93,7 @@
             <ion-card-content style="max-height:100%;height: 100%;">
                 <div class="row" style="flex-flow: row wrap;">
                     <div class="working" style="flex: 2 1 auto;">
-                        <div [class]="'hide-sm-down'"> 
+                        <div [class]="'hide-sm-down'">
                             <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
                                     padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                                 <ion-row>
@@ -138,14 +137,14 @@
                                         </ion-col>
                                         <ion-col align-self-center size="3" style="color: #4d4f5c;font-size: 11px;">
                                             {{item.time.start_time}} - {{item.time.end_time}}</ion-col>
-                                        <ion-col align-self-center size="2.5"
-                                            style="text-align: center;color: #4d4f5c;font-size: 11px;display: flex;
+                                        <ion-col align-self-center size="2.5" style="text-align: center;color: #4d4f5c;font-size: 11px;display: flex;
                                             justify-content: cen">
                                             {{item.total_employee_attach}}</ion-col>
                                         <ion-col size="1.5" align-self-center
                                             style="text-align: right;padding-right: 10px;">
-                                            <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;" 
-                                            *ngIf="item.isDefault"></ion-icon>
+                                            <ion-icon name="star"
+                                                style="opacity: 0.8; width: 16px; height: 16px;color: #a5a4bf"
+                                                *ngIf="item.isDefault"></ion-icon>
                                             <!-- <ion-icon name="heart" *ngIf="!item.isDefault"></ion-icon>
                                             <ion-icon name="heart-outline"></ion-icon> -->
                                         </ion-col>
@@ -179,20 +178,19 @@
                                             <ion-col align-self-center size="2.5"
                                                 style="text-align: center;color: #4d4f5c;font-size: 11px;">
                                                 {{item.total_employee_attach}}</ion-col>
-                                            <ion-col size="1.5" align-self-center
-                                                style="text-align: right;padding-right: 10px;display: flex;
+                                            <ion-col size="1.5" align-self-center style="text-align: right;padding-right: 10px;display: flex;
                                                 align-items: center;">
                                                 <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;
-                                                    color: #babdc7;margin-right: 5px;"
-                                                [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null
+                                                    color: #a5a4bf;margin-right: 5px;" [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null
                                                 ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
-                                                    *ngIf="item.isDefault" (click)="changeDefaultWHProfile(true, item)"></ion-icon>
-                                                <ion-icon name="star-outline"
-                                                    style="opacity: 0.8; width: 16px; height: 16px; margin-right: 4px;
-                                                    color: #babdc7;"
+                                                    *ngIf="item.isDefault" (click)="changeDefaultWHProfile(true, item)">
+                                                </ion-icon>
+                                                <ion-icon name="star-outline" style="opacity: 0.8; width: 16px; height: 16px; margin-right: 4px;
+                                                    color: #a5a4bf;"
                                                     [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
-                                                    *ngIf="!item.isDefault" (click)="changeDefaultWHProfile(false, item)">
-                                                    </ion-icon>
+                                                    *ngIf="!item.isDefault"
+                                                    (click)="changeDefaultWHProfile(false, item)">
+                                                </ion-icon>
                                                 <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mode==='ON'"
                                                     style="width: 11px;height:11px;display: inline-block;"
                                                     [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
@@ -210,7 +208,8 @@
                         </div>
                         <div [class]="'hide-sm-up'" style="margin-bottom: 5px;">
 
-                            <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
+                            <div
+                                style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
                                                                 padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                                 <ion-row>
                                     <ion-col align-self-center
@@ -272,17 +271,20 @@
                                                     </ion-item-group>
                                                 </ion-item-group>
                                                 <ion-item-group>
-                                                    <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;" *ngIf="item.isDefault"></ion-icon>
+                                                    <ion-icon name="star"
+                                                        style="opacity: 0.8;width: 16px; height: 16px;"
+                                                        *ngIf="item.isDefault"></ion-icon>
                                                 </ion-item-group>
 
-                                                <ion-item-group 
-                                                    style="text-align: right;padding-right: 10px;">
-                                                    <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mode==='ON'"
+                                                <ion-item-group style="text-align: right;padding-right: 10px;">
+                                                    <img src="assets/icon/leave_setup/icon_edit@3x.png"
+                                                        *ngIf="mode==='ON'"
                                                         style="width: 11px;height:11px;display: inline-block;"
                                                         [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
                                                         (click)="id=item.working_hours_guid;sharedService.menu.enable(true, 'editWorkingHourDetails');sharedService.menu.enable(false, 'createWorkingHourDetails');sharedService.menu.open('editWorkingHourDetails'); ">
                                                     &nbsp;&nbsp;
-                                                    <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="mode==='ON'"
+                                                    <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                                                        *ngIf="mode==='ON'"
                                                         style="width: 11px;height:11px;display: inline-block;"
                                                         [ngClass]="{'imgFilter': clickedIndex !== i && clickedIndex !== null ,'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null}"
                                                         (click)="deleteWorkingHrProfile(item.working_hours_guid, item.code)">
@@ -291,13 +293,12 @@
                                         </section>
                                     </ng-container>
                                     <ng-container *ngIf="mode==='OFF'">
-                                        <ion-card *ngFor="let item of list; let i=index" class="textHover"
-                                            style="cursor: pointer; box-shadow: rgba(77, 77, 77, 0.16) 0px 3px 6px 0px;
+                                        <ion-card *ngFor="let item of list; let i=index" class="textHover" style="cursor: pointer; box-shadow: rgba(77, 77, 77, 0.16) 0px 3px 6px 0px;
                                             border-radius: 3px; margin: 5px auto;" (click)="clickedCalendar(item, i)">
                                             <ion-card-content>
-                                                <ion-item-group
-                                                    style="display: flex; align-items: center;">
-                                                    <div style=" display: flex; align-items: center; width: -webkit-fill-available;">
+                                                <ion-item-group style="display: flex; align-items: center;">
+                                                    <div
+                                                        style=" display: flex; align-items: center; width: -webkit-fill-available;">
                                                         <p class="textHover" style="cursor: pointer;font-size: 12px;font-weight: bold;white-space: pre-line;margin-bottom:
                                                     0;" [ngClass]="{ 'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}">
                                                             {{item.code}}
@@ -445,12 +446,13 @@
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row style="flex-flow: nowrap;">
                                 <ion-col *ngIf="mode==='ON'" style="padding-left: 15px;display: flex;">
-                                    <ion-checkbox mode="ios" style="width: 16px; height: 16px;"
-                                        [(ngModel)]="isCheckAll" [indeterminate]="isIndeterminateState"
+                                    <ion-checkbox mode="ios" style="width: 16px; height: 16px;" [(ngModel)]="isCheckAll"
+                                        [indeterminate]="isIndeterminateState"
                                         (click)="checkAllWorkingHourAssignedEmployees()"></ion-checkbox>
                                     <div *ngIf="isIndeterminateState || this.isCheckAll;">
-                                        <ion-icon name="more" style="width: 18px; height: 18px; color: #7069d8; font-size: 16px; cursor: pointer; padding-left: 10px;" mat-button
-                                            [matMenuTriggerFor]="menu"></ion-icon>
+                                        <ion-icon name="more"
+                                            style="width: 18px; height: 18px; color: #7069d8; font-size: 16px; cursor: pointer; padding-left: 10px;"
+                                            mat-button [matMenuTriggerFor]="menu"></ion-icon>
                                         <mat-menu #menu="matMenu">
                                             <ion-label style=" background: #f5f6fa;white-space: pre-line;text-overflow:
                                         ellipsis;color: #4d4f5c;font-size:11px; padding: 15px;display: flex;">

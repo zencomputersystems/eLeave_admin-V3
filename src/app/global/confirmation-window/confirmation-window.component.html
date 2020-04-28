@@ -1,23 +1,23 @@
-<ion-header style="border-radius: 2px; text-align: center; color: #f0f0f7; font-size: 14px; font-weight: bold;
+<ion-header
+  style="border-radius: 2px; text-align: center; color: #f0f0f7; font-size: 14px; font-weight: bold;
     background-color: #7069d8; height: 52px; vertical-align: middle; line-height: 50px; margin-bottom: 25px; text-transform: capitalize;">
-  <p>Replace Default {{type}} Profile
+  <p>Confirmation
   </p>
 </ion-header>
 <ion-content>
-  <div style="text-align: left; padding-left: 40px; padding-right: 40px; color: #43425d;
-    line-height: 1.35; font-size: 12px; margin-bottom: 16px; display: flex; flex-flow: wrap;">
-      Confirm replace  
-      <div style="font-weight: bold; margin: 0px 4px;">{{currDefaultProfile.code}}</div>
-      with 
-      <div style="font-weight: bold; margin: 0px 4px;">{{newDefaultProfile.code}}</div> ?
-  </div>
+  <p style="text-align: center; padding-left: 40px; padding-right: 40px; color: #43425d;
+    font-size: 12px;">
+    Are you sure you want to replace <strong>{{currDefaultProfile.code}}</strong> with
+    <strong>{{newDefaultProfile.code}}</strong> {{type}} profile?
+  </p>
   <ion-item-group style="display: block; text-align: center; font-size: 11px;padding: 8px 0;">
-    <ion-button style="color: white; border-radius: 2px; width: 80px; height: 30px; line-height: 30px; font-size: 11px;"
+    <ion-button fill="outline" color="primary"
+      style="border-color: #7069d8;text-transform: capitalize; border-radius: 2px; width: 80px; height: 30px; line-height: 30px; font-size: 11px;"
       (click)="onCancelReassign()">
       No
     </ion-button>
     <ion-button
-      style="color: white; border-radius: 2px; width: 80px; height: 30px; line-height: 30px; font-size: 11px;"
+      style="text-transform: capitalize;color: white; border-radius: 2px; width: 80px; height: 30px; line-height: 30px; font-size: 11px;"
       (click)="onConfirmReassign()">
       Yes
     </ion-button>

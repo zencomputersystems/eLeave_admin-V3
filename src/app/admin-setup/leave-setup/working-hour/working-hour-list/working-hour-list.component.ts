@@ -186,7 +186,7 @@ export class WorkingHourListComponent implements OnInit {
             this.sharedService.dialog.open(EditModeDialogComponent, {
                 disableClose: true,
                 data: 'working',
-                height: "387px",
+                height: "413px",
                 width: "383px"
             });
 
@@ -348,9 +348,9 @@ export class WorkingHourListComponent implements OnInit {
         if (this.defaultProfileInfo !== {}) {
             const confirmChangeDefault = await this.workingHrPopoverController.create({
                 component: ConfirmationWindowComponent,
-                componentProps: { 
+                componentProps: {
                     type: 'working hour',
-                    currDefaultProfile: this.defaultProfileInfo, 
+                    currDefaultProfile: this.defaultProfileInfo,
                     newDefaultProfile: item
                 },
                 cssClass: 'confirmation-popover'

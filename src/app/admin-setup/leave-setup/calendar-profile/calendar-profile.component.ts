@@ -610,7 +610,7 @@ export class CalendarProfileComponent implements OnInit {
             this.calendarProfileAPI.displayDialog.open(EditModeDialogComponent, {
                 disableClose: true,
                 data: 'calendar',
-                height: "363px",
+                height: "389px",
                 width: "383px"
             });
         } else {

@@ -37,7 +37,7 @@
       Assign/reassign employee to
       working hour profile using drag & drop function</p>
     <p *ngIf="data === 'role'" style="margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;">
-      Assign/reassign employee to 
+      Assign/reassign employee to
       role profile using drag & drop function</p>
     <div style="float: left;padding-right: 10px;" *ngIf="data === 'employee'"><img
         src="assets/icon/leave_setup/icon_calendar_sm@3x.png" style="height: 14px;width: 14px;"></div>
@@ -47,15 +47,27 @@
   <div style="display: block;margin-left: 5px;">
     <div style="float: left;padding-right: 10px;" *ngIf="data === 'calendar' || data === 'working'">
       <ion-icon name="more" style="height: 19px;width: 19px;color: #b6b5cb;"></ion-icon>
-      </div>
-      <p *ngIf="data === 'calendar'" style="margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;">
-        Assign/reassign
-        employee to
-        calendar profile using checkbox function</p>
-      <p *ngIf="data === 'working'" style="margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;">
-        Assign/reassign
-        employee to
-        working hour profile using checkbox function</p>
+    </div>
+    <p *ngIf="data === 'calendar'" style="margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;">
+      Assign/reassign
+      employee to
+      calendar profile using checkbox function</p>
+    <p *ngIf="data === 'working'" style="margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;">
+      Assign/reassign
+      employee to
+      working hour profile using checkbox function</p>
+  </div>
+  <div style="display: block;margin-left: 10px;" *ngIf="data === 'calendar' || data === 'working'">
+    <ion-icon name="star" style="width: 12px;height: 12px;color: #b6b5cb;">
+    </ion-icon>
+    <p *ngIf="data === 'calendar'"
+      style="margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;padding-left: 10px;">
+      Default calendar profile
+    </p>
+    <p *ngIf="data === 'working'"
+      style="margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;display: inline-block;padding-left: 10px;">
+      Default working profile
+    </p>
   </div>
   <div style="display: block;margin-left: 10px;"
     *ngIf="data === 'working' || data === 'role' || data === 'entitlement' || data === 'policy'">
