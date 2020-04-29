@@ -292,42 +292,42 @@
                     <div class="assigned" style="flex: 1 1 25%;">
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
-                            <ion-row>
-                                <ion-col style="font-size: 12px;white-space: nowrap;
-                                    text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                                    ASSIGNED EMPLOYEE</ion-col>
-                                <ion-col style="max-width: 28px;align-self: center;">
+                            <ion-row style="flex-flow: nowrap;">
+                                <ion-col *ngIf="modeValue==='ON'" style="padding-left: 15px;display: flex;">
                                     <ion-checkbox mode="ios" style="width: 16px; height: 16px;"
                                         *ngIf="slideInOut && modeValue == 'ON'" [(ngModel)]="masterCheck"
                                         [indeterminate]="isIndeterminate" (click)="checkAllAssignedEmployees($event)">
                                     </ion-checkbox>
-                                </ion-col>
-                                <ion-col
-                                    style="max-width: 10px;padding-left: 0px;padding-right: 15px; padding-bottom: 0px; padding-top: 3px;"
-                                    *ngIf="isIndeterminate || this.masterCheck;">
-                                    <ion-icon name="more" class="addIcon" style="width: 18px; height: 18px;"
-                                        *ngIf="slideInOut && modeValue == 'ON'" mat-button [matMenuTriggerFor]="menu">
-                                    </ion-icon>
-                                    <mat-menu class="reassign-profile" #menu="matMenu">
-                                        <ion-label style=" background: #f5f6fa;white-space: pre-line;text-overflow:
+                                    <div *ngIf="isIndeterminate || this.masterCheck;">
+                                        <ion-icon name="more" class="addIcon"
+                                            style="width: 18px; height: 18px; color: #7069d8; font-size: 16px; cursor: pointer; padding-left: 10px;"
+                                            *ngIf="slideInOut && modeValue == 'ON'" mat-button
+                                            [matMenuTriggerFor]="menu">
+                                        </ion-icon>
+                                        <mat-menu class="reassign-profile" #menu="matMenu">
+                                            <ion-label style=" background: #f5f6fa;white-space: pre-line;text-overflow:
                                             ellipsis;color: #4d4f5c;font-size:11px; padding: 15px;display: flex;">
-                                            Move selected to: </ion-label>
-                                        <ion-list>
-                                            <div mat-menu-item
-                                                style="white-space: pre-line;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;"
-                                                *ngFor="let list of profileList; let i=index"
-                                                (click)="reassignToOtherProfile(list.calendar_guid)">{{list.code}}
-                                            </div>
-                                        </ion-list>
-                                    </mat-menu>
+                                                Move selected to: </ion-label>
+                                            <ion-list>
+                                                <div mat-menu-item
+                                                    style="white-space: pre-line;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;"
+                                                    *ngFor="let list of profileList; let i=index"
+                                                    (click)="reassignToOtherProfile(list.calendar_guid)">{{list.code}}
+                                                </div>
+                                            </ion-list>
+                                        </mat-menu>
+                                    </div>
                                 </ion-col>
+                                <ion-col size="11" style="font-size: 12px;white-space: nowrap;
+                                    text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    ASSIGNED EMPLOYEE</ion-col>
                             </ion-row>
                         </div>
                         <div style="overflow-y: auto;height: calc(100% - 62px);"
                             *ngIf="slideInOut && modeValue == 'OFF'" [@slideInOut]="slideInOut ? 'open': 'close'">
                             <ion-row *ngFor="let item of assignedNames; let i =index"
                                 style="width: 100%;padding-left: 10px;">
-                                <ion-col align-self-center size="9" style="padding-top: 0;padding-bottom: 0;">
+                                <ion-col align-self-center size="11" style="padding-top: 0;padding-bottom: 0;">
                                     <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                         padding-bottom: 13px;">
                                         {{item.fullname}}</p>

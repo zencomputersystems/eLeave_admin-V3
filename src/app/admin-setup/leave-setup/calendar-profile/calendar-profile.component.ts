@@ -770,6 +770,8 @@ export class CalendarProfileComponent implements OnInit {
             this.calendarProfileAPI.notification(res.statusText, false);
         }
         this.assignedNames = this.assignedNames.filter(list => list.isChecked !== true);
+        this.masterCheck = false;
+        this.isIndeterminate = false;
         this._employeeList = [];
         this.getAssignedList();
         this.profileList = await this.calendarProfileAPI.get_calendar_profile_list().toPromise();

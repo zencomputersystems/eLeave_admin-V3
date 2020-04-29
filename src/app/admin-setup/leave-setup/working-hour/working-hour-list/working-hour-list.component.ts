@@ -189,7 +189,6 @@ export class WorkingHourListComponent implements OnInit {
                 height: "413px",
                 width: "383px"
             });
-
         } else {
             this.mode = 'OFF';
             this.workingHrAPI.showPopUp('Edit mode disabled. Good job!', true);
@@ -207,14 +206,15 @@ export class WorkingHourListComponent implements OnInit {
         for (let i = 0; i < this.employeeList.length; i++) {
             if (event.data === this.employeeList[i].fullname) {
                 this.draggedUser(i);
-                let value = await this.workingHrAPI.patch_user_working_hours({
-                    "user_guid": this._droppedUser,
-                    "working_hours_guid": item.working_hours_guid
-                }).toPromise();
-                if (value[0].USER_INFO_GUID == undefined) {
-                    this.workingHrAPI.showPopUp(value.status, false);
+                try {
+                    let value = await this.workingHrAPI.patch_user_working_hours({
+                        "user_guid": this._droppedUser,
+                        "working_hours_guid": item.working_hours_guid
+                    }).toPromise();
+                    this.employeeList.splice(i, 1);
+                } catch (error) {
+                    this.workingHrAPI.showPopUp(JSON.parse(error._body).status, false);
                 }
-                this.employeeList.splice(i, 1);
                 this._droppedUser = [];
                 this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
             }
@@ -267,15 +267,13 @@ export class WorkingHourListComponent implements OnInit {
         dialogRef.afterClosed().subscribe(val => {
             if (val === working_hour_guid) {
                 this.workingHrAPI.delete_working_hours_profile(working_hour_guid).subscribe(response => {
-                    if (response[0].WORKING_HOURS_GUID != undefined) {
+                    if (response[0] != undefined) {
                         this.clickedIndex = 0;
                         this.ngOnInit();
                         this.workingHrAPI.showPopUp('Working hour profile was deleted', true);
                     } else {
-                        this.workingHrAPI.showPopUp(response.status, false);
+                        this.workingHrAPI.showPopUp('Failed to delete working hour profile', false);
                     }
-                }, error => {
-                    this.workingHrAPI.showPopUp(JSON.parse(error._body).status, false);
                 })
             }
         });
@@ -327,14 +325,18 @@ export class WorkingHourListComponent implements OnInit {
      */
     async reassignToOtherWorkingProfile(workingProfileGuid) {
         this._droppedUser = this.employeeList.filter(list => list.checked === true).map(function (o) { return o.user_guid; });
-        let value = await this.workingHrAPI.patch_user_working_hours({
-            "user_guid": this._droppedUser,
-            "working_hours_guid": workingProfileGuid
-        }).toPromise();
-        if (value[0].USER_INFO_GUID == undefined) {
-            this.workingHrAPI.showPopUp(value.status, false);
+        try {
+            let value = await this.workingHrAPI.patch_user_working_hours({
+                "user_guid": this._droppedUser,
+                "working_hours_guid": workingProfileGuid
+            }).toPromise();
+        }
+        catch (error) {
+            this.workingHrAPI.showPopUp(JSON.parse(error._body).status, false);
         }
         this.employeeList = this.employeeList.filter(list => list.checked !== true);
+        this.isCheckAll = false;
+        this.isIndeterminateState = false;
         this._droppedUser = [];
         this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
     }

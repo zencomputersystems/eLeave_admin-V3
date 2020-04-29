@@ -290,32 +290,27 @@ export class WorkingHourComponent implements OnInit, OnChanges {
                 "working_hours_guid": this.id,
                 "data": body
             }).subscribe(res => {
-                if (res[0].WORKING_HOURS_GUID != undefined) {
+                if (res[0] != undefined) {
                     this.workingHourAPI.showPopUp('Working hour profile was updated successfully', true);
-                } else {
-                    this.workingHourAPI.showPopUp(res.status, false);
                 }
-                this.showSmallSpinner = false;
             }, error => {
-                this.workingHourAPI.showPopUp(JSON.parse(error._body).status, false);
+                this.workingHourAPI.showPopUp(JSON.parse(error._body).error, false);
             })
+            this.showSmallSpinner = false;
         } else {
             this.workingHourAPI.post_working_hours(body).subscribe(response => {
-                if (response[0].WORKING_HOURS_GUID != undefined) {
+                if (response[0] != undefined) {
                     this.workingHourAPI.post_profile_default('working-hour', response[0].WORKING_HOURS_GUID).subscribe(
                         data => {
-                            console.log('post_profile_default data: ' + JSON.stringify(data, null, " "))
+                            this.workingHourAPI.showPopUp('New working hour profile was created successfully', true);
                         }
                     );
-                    this.workingHourAPI.showPopUp('New working hour profile was created successfully', true);
                     this.refreshProfile(response[0].WORKING_HOURS_GUID);
-                } else {
-                    this.workingHourAPI.showPopUp(response.status, false);
                 }
-                this.showSmallSpinner = false;
             }, err => {
-                this.workingHourAPI.showPopUp(JSON.parse(err._body).status, false);
+                this.workingHourAPI.showPopUp(err.statusText, false);
             })
+            this.showSmallSpinner = false;
         }
     }
 
