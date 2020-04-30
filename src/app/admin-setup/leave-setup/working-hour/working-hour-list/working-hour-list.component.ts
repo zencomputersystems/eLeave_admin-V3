@@ -56,6 +56,13 @@ export class WorkingHourListComponent implements OnInit {
     public id: string;
 
     /**
+     * set isDefaultProfile as default profile value (true/false)
+     * @type {boolean}
+     * @memberof WorkingHourListComponent
+     */
+    public isDefaultProfile: boolean = false;
+
+    /**
      * clicked index of working profile
      * @type {number}
      * @memberof WorkingHourListComponent
@@ -164,6 +171,7 @@ export class WorkingHourListComponent implements OnInit {
      */
     clickedCalendar(list, index) {
         this.clickedIndex = index;
+        this.isDefaultProfile = list.isDefault;
         this.workingHrAPI.get_assigned_working_profile_user(list.working_hours_guid).subscribe(response => {
             this.employeeList = response;
             for (let j = 0; j < this.employeeList.length; j++) {
@@ -173,6 +181,10 @@ export class WorkingHourListComponent implements OnInit {
                 this.employeeList[j]["disable"] = false;
             }
         })
+    }
+
+    profileValueEmitted(even) {
+        console.log(even)
     }
 
     /**

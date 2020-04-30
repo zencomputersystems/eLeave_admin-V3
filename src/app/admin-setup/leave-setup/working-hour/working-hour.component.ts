@@ -68,7 +68,6 @@ export class WorkingHourComponent implements OnInit, OnChanges {
      */
     private _endTime;
 
-    public defaultProfile: boolean = false;
     /** 
      * get value of clicked working_hour_guid from parent page
      * @type {string}
@@ -77,10 +76,23 @@ export class WorkingHourComponent implements OnInit, OnChanges {
     @Input() id: string;
 
     /**
+     * get value of selecte profile is default value or not
+     * @type {boolean}
+     * @memberof WorkingHourComponent
+     */
+    @Input() isDefaultProfile: boolean;
+
+    /**
      * emit value to hide this page after clicked back button
      * @memberof WorkingHourComponent
      */
     @Output() valueChange = new EventEmitter();
+
+    /**
+     * emit value of checkbox default working hour
+     * @memberof WorkingHourComponent
+     */
+    @Output() defaultProfileValue?= new EventEmitter();
 
 
     /**
@@ -126,27 +138,37 @@ export class WorkingHourComponent implements OnInit, OnChanges {
      * @memberof WorkingHourComponent
      */
     async ngOnChanges(changes: SimpleChanges) {
-        if (changes.id.currentValue !== "" && changes.id.currentValue !== undefined) {
-            let detail = await this.workingHourAPI.get_working_hours_details(this.id).toPromise();
-            this.workingHourForm.patchValue({
-                profileName: detail.code,
-                description: detail.description,
-                startpicker: this.splitTime(detail.property.fullday.start_time),
-                endpicker: this.splitTime(detail.property.fullday.end_time),
-                starthalfdayAMpicker: this.splitTime(detail.property.halfday.AM.start_time),
-                endhalfdayAMpicker: this.splitTime(detail.property.halfday.AM.end_time),
-                starthalfdayPMpicker: this.splitTime(detail.property.halfday.PM.start_time),
-                endhalfdayPMpicker: this.splitTime(detail.property.halfday.PM.end_time),
-                startQ1picker: this.splitTime(detail.property.quarterday.Q1.start_time),
-                endQ1picker: this.splitTime(detail.property.quarterday.Q1.end_time),
-                startQ2picker: this.splitTime(detail.property.quarterday.Q2.start_time),
-                endQ2picker: this.splitTime(detail.property.quarterday.Q2.end_time),
-                startQ3picker: this.splitTime(detail.property.quarterday.Q3.start_time),
-                endQ3picker: this.splitTime(detail.property.quarterday.Q3.end_time),
-                startQ4picker: this.splitTime(detail.property.quarterday.Q4.start_time),
-                endQ4picker: this.splitTime(detail.property.quarterday.Q4.end_time)
-            });
-        } else { this.workingHourForm.reset() }
+        if (changes.id !== undefined) {
+            if (changes.id.currentValue !== "" && changes.id.currentValue !== undefined) {
+                let detail = await this.workingHourAPI.get_working_hours_details(this.id).toPromise();
+                this.workingHourForm.patchValue({
+                    profileName: detail.code,
+                    description: detail.description,
+                    startpicker: this.splitTime(detail.property.fullday.start_time),
+                    endpicker: this.splitTime(detail.property.fullday.end_time),
+                    starthalfdayAMpicker: this.splitTime(detail.property.halfday.AM.start_time),
+                    endhalfdayAMpicker: this.splitTime(detail.property.halfday.AM.end_time),
+                    starthalfdayPMpicker: this.splitTime(detail.property.halfday.PM.start_time),
+                    endhalfdayPMpicker: this.splitTime(detail.property.halfday.PM.end_time),
+                    startQ1picker: this.splitTime(detail.property.quarterday.Q1.start_time),
+                    endQ1picker: this.splitTime(detail.property.quarterday.Q1.end_time),
+                    startQ2picker: this.splitTime(detail.property.quarterday.Q2.start_time),
+                    endQ2picker: this.splitTime(detail.property.quarterday.Q2.end_time),
+                    startQ3picker: this.splitTime(detail.property.quarterday.Q3.start_time),
+                    endQ3picker: this.splitTime(detail.property.quarterday.Q3.end_time),
+                    startQ4picker: this.splitTime(detail.property.quarterday.Q4.start_time),
+                    endQ4picker: this.splitTime(detail.property.quarterday.Q4.end_time)
+                });
+            }
+            if (changes.id.currentValue == '') {
+                this.workingHourForm.reset()
+            }
+        } if (changes.isDefaultProfile !== undefined) {
+            if (changes.isDefaultProfile.currentValue !== "" && changes.isDefaultProfile.currentValue !== undefined) {
+                this.isDefaultProfile = changes.isDefaultProfile.currentValue;
+            }
+        }
+        // else { this.workingHourForm.reset() }
     }
 
     /**
@@ -286,6 +308,7 @@ export class WorkingHourComponent implements OnInit, OnChanges {
      */
     patchWorkingHourSetup(body: any) {
         if (this.id != '') {
+            // this.defaultProfileValue.emit(this.isDefaultProfile);
             this.workingHourAPI.patch_working_hours({
                 "working_hours_guid": this.id,
                 "data": body
@@ -329,7 +352,7 @@ export class WorkingHourComponent implements OnInit, OnChanges {
      * @memberof WorkingHourComponent
      */
     setDefaultProfile(evt) {
-        this.defaultProfile = evt.target.checked;
+        this.isDefaultProfile = evt.target.checked;
     }
 
 }
