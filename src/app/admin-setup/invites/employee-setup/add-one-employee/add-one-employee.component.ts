@@ -400,7 +400,7 @@ export class AddOneEmployeeComponent implements OnInit {
                     this.departmentCtrl.reset();
                     this.costCentreCtrl.reset();
                 } if (result[i].data.length != 0 && result[i].category != 'Success') {
-                    this.leaveSetupService.openSnackBar(result.status, false);
+                    this.leaveSetupService.openSnackBar(result[i].category, false);
                 }
             }
         }, error => {
