@@ -183,10 +183,6 @@ export class WorkingHourListComponent implements OnInit {
         })
     }
 
-    profileValueEmitted(even) {
-        console.log(even)
-    }
-
     /**
      * toggle edit mode
      * @param {*} evt
@@ -279,12 +275,18 @@ export class WorkingHourListComponent implements OnInit {
         dialogRef.afterClosed().subscribe(val => {
             if (val === working_hour_guid) {
                 this.workingHrAPI.delete_working_hours_profile(working_hour_guid).subscribe(response => {
-                    if (response[0] != undefined) {
-                        this.clickedIndex = 0;
-                        this.ngOnInit();
-                        this.workingHrAPI.showPopUp('Working hour profile was deleted', true);
-                    } else {
-                        this.workingHrAPI.showPopUp('Failed to delete working hour profile', false);
+                    if (response[0] !== undefined) {
+                        if (response[0].WORKING_HOURS_GUID != undefined) {
+                            this.clickedIndex = 0;
+                            this.ngOnInit();
+                            this.workingHrAPI.showPopUp('Working hour profile was deleted', true);
+                        }
+                        if (response[0].FULLNAME != undefined) {
+                            this.workingHrAPI.showPopUp('Please re-assign user to delete this profile', false);
+                        }
+                    }
+                    else {
+                        this.workingHrAPI.showPopUp('Working hour profile was failed to delete', false);
                     }
                 })
             }

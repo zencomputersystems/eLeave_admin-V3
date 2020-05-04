@@ -700,13 +700,18 @@ export class CalendarProfileComponent implements OnInit {
         let result = await dialog.afterClosed().toPromise();
         if (result === item.calendar_guid) {
             this.calendarProfileAPI.delete_calendar_profile(item.calendar_guid).subscribe(response => {
-                if (response[0] != undefined) {
-                    this.getProfileList();
-                    this.slideInOut = false;
-                    this.clickedIndex = 0;
-                    this.dayControl.reset();
-                    this.restDay = [];
-                    this.calendarProfileAPI.notification('Calendar profile was deleted.', true);
+                if (response[0] !== undefined) {
+                    if (response[0].CALENDAR_GUID != undefined) {
+                        this.getProfileList();
+                        this.slideInOut = false;
+                        this.clickedIndex = 0;
+                        this.dayControl.reset();
+                        this.restDay = [];
+                        this.calendarProfileAPI.notification('Calendar profile was deleted.', true);
+                    }
+                    if (response[0].FULLNAME != undefined) {
+                        this.calendarProfileAPI.notification('Please re-assign user to delete this profile', false);
+                    }
                 } else {
                     this.calendarProfileAPI.notification('Calendar profile was failed to delete', false);
                 }
