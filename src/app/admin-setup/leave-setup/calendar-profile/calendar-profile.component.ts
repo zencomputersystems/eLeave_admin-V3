@@ -266,6 +266,14 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     public defaultProfileItem;
+
+    /**
+     * default checkbox value
+     * @type {boolean}
+     * @memberof CalendarProfileComponent
+     */
+    public isDefaultProfile: boolean = false;
+
     /**
      *Creates an instance of CalendarProfileComponent.
      * @param {CalendarProfileApiService} calendarProfileAPI
@@ -407,7 +415,6 @@ export class CalendarProfileComponent implements OnInit {
                 this.showSpinner = false;
                 this.content = true;
             })
-
     }
 
     /**
@@ -448,6 +455,7 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     async selectProfile(list, index) {
+        this.isDefaultProfile = list.isDefault;
         this.slideInOut = false;
         this._selectedCalendarProfile = list;
         this.clickedIndex = index;
@@ -625,6 +633,15 @@ export class CalendarProfileComponent implements OnInit {
     }
 
     /**
+     * event detection when checkbox is changed
+     * @param {*} evt
+     * @memberof CalendarProfileComponent
+     */
+    setAsDefaultProfile(evt) {
+        this.isDefaultProfile = evt.target.checked;
+    }
+
+    /**
      * POST/create new calendar to endpoint API
      * @memberof CalendarProfileComponent
      */
@@ -645,6 +662,13 @@ export class CalendarProfileComponent implements OnInit {
             "rest": this._selectedWeekday
         }
         this.calendarProfileAPI.post_calendar_profile(newProfile).subscribe(response => {
+            if (this.isDefaultProfile) {
+                this.whApi.post_profile_default('calendar', response[0].CALENDAR_GUID).subscribe(
+                    res => {
+                        this.getProfileList();
+                    }
+                );
+            }
             this.calendarProfileAPI.notification('New calendar profile was created successfully.', true);
             this.showSpinner = false;
             this.content = true;
