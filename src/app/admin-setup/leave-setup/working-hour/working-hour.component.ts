@@ -323,11 +323,13 @@ export class WorkingHourComponent implements OnInit, OnChanges {
         } else {
             this.workingHourAPI.post_working_hours(body).subscribe(response => {
                 if (response[0] != undefined) {
-                    this.workingHourAPI.post_profile_default('working-hour', response[0].WORKING_HOURS_GUID).subscribe(
-                        data => {
-                            this.workingHourAPI.showPopUp('New working hour profile was created successfully', true);
-                        }
-                    );
+                    if (this.isDefaultProfile) {
+                        this.workingHourAPI.post_profile_default('working-hour', response[0].WORKING_HOURS_GUID).subscribe(
+                            data => {
+                                this.workingHourAPI.showPopUp('New working hour profile was created successfully', true);
+                            }
+                        );
+                    }
                     this.refreshProfile(response[0].WORKING_HOURS_GUID);
                 }
             }, err => {
