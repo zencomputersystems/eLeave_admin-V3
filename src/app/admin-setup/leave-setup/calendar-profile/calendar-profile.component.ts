@@ -691,12 +691,24 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     async deleteCalendarProfile(item) {
-        const dialog = this.calendarProfileAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
-            disableClose: true,
-            data: { name: item.code, value: item.calendar_guid, desc: ' calendar profile' },
-            height: "195px",
-            width: "270px"
-        });
+        this.isDefaultProfile = item.isDefault;
+        let dialog;
+        if (this.isDefaultProfile === false) {
+            dialog = this.calendarProfileAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
+                disableClose: true,
+                data: { name: item.code, value: item.calendar_guid, desc: ' calendar profile' },
+                height: "195px",
+                width: "270px"
+            });
+        } else {
+            dialog = this.calendarProfileAPI.displayDialog.open(DeleteCalendarConfirmationComponent, {
+                disableClose: true,
+                data: { name: item.code, value: item.calendar_guid, desc: ' calendar profile', isDefault: 'default profile' },
+                height: "240px",
+                width: "270px"
+            });
+        }
+
         let result = await dialog.afterClosed().toPromise();
         if (result === item.calendar_guid) {
             this.calendarProfileAPI.delete_calendar_profile(item.calendar_guid).subscribe(response => {

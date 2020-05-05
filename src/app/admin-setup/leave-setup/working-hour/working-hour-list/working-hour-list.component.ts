@@ -261,20 +261,31 @@ export class WorkingHourListComponent implements OnInit {
 
     /**
      * delete working hour profile
-     * @param {string} working_hour_guid
+     * @param {string} item
      * @param {string} name
      * @memberof WorkingHourListComponent
      */
-    deleteWorkingHrProfile(working_hour_guid: string, name: string) {
-        const dialogRef = this.sharedService.dialog.open(DeleteCalendarConfirmationComponent, {
-            disableClose: true,
-            data: { name: name, value: working_hour_guid, desc: ' profile name' },
-            height: "195px",
-            width: "270px"
-        });
+    deleteWorkingHrProfile(item: any, name: string) {
+        this.isDefaultProfile = item.isDefault;
+        let dialogRef;
+        if (this.isDefaultProfile === false) {
+            dialogRef = this.sharedService.dialog.open(DeleteCalendarConfirmationComponent, {
+                disableClose: true,
+                data: { name: name, value: item.working_hours_guid, desc: ' working hour profile' },
+                height: "195px",
+                width: "270px"
+            });
+        } else {
+            dialogRef = this.sharedService.dialog.open(DeleteCalendarConfirmationComponent, {
+                disableClose: true,
+                data: { name: name, value: item.working_hours_guid, desc: ' working hour profile', isDefault: 'default profile' },
+                height: "240px",
+                width: "270px"
+            });
+        }
         dialogRef.afterClosed().subscribe(val => {
-            if (val === working_hour_guid) {
-                this.workingHrAPI.delete_working_hours_profile(working_hour_guid).subscribe(response => {
+            if (val === item.working_hours_guid) {
+                this.workingHrAPI.delete_working_hours_profile(item.working_hours_guid).subscribe(response => {
                     if (response[0] !== undefined) {
                         if (response[0].WORKING_HOURS_GUID != undefined) {
                             this.clickedIndex = 0;

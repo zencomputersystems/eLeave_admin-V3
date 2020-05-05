@@ -3,8 +3,11 @@
     <p style="color: #43425d;line-height: 1.25;font-size: 12px;">Are you sure you want
         to delete
         <strong>{{data.name}}</strong> {{data.desc}}?</p>
-    <p *ngIf="data.desc == ' leave type'" style="color: #43425d;line-height: 1.25;font-size: 12px;">Please note that the attached entitlement profile will
+    <p *ngIf="data.desc == ' leave type'" style="color: #43425d;line-height: 1.25;font-size: 12px;">Please note that the
+        attached entitlement profile will
         be deleted as well</p>
+    <p *ngIf="data.isDefault !== undefined" style="color: #43425d;line-height: 1.25;font-size: 12px;">Please note that
+        you are advised to change another default profile before delete <strong>{{data.name}}</strong> {{data.desc}}</p>
 </div>
 <div mat-dialog-actions style="display: block; text-align: center;color:#7a8589;font-size: 13px;">
     <button mat-stroked-button (click)="cancel()" color="primary" style="border-radius: 2px;
