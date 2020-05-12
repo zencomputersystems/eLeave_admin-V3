@@ -310,11 +310,15 @@ export class LeaveEntitlementComponent implements OnInit {
         "description": this.getEntitlementbyType[j].leaveEntitlementDescription,
         "property": XMLDetails.PROPERTIES_XML
       };
-      await this.entitlementApi.patch_leavetype_entitlement(data).toPromise();
-      this.showSmallSpinner = false;
-      this.sharedService.menu.close('editLeaveTypeDetails');
+      try {
+        await this.entitlementApi.patch_leavetype_entitlement(data).toPromise();
+        this.showSmallSpinner = false;
+        this.sharedService.menu.close('editLeaveTypeDetails');
+        this.sharedService.leaveApi.openSnackBar('Leave type & entitlement was saved', true);
+      } catch (err) {
+        this.sharedService.leaveApi.openSnackBar(err.statusText, false);
+      }
     }
-    this.sharedService.leaveApi.openSnackBar('Leave type & entitlement was saved', true);
     this.ngOnInit();
   }
 
@@ -329,7 +333,11 @@ export class LeaveEntitlementComponent implements OnInit {
       value.leavetype_id = this.entitlementTypeNew;
       value.code = this.newEditProfileList[i].name;
       value.description = this.newEditProfileList[i].description;
-      await this.entitlementApi.post_leavetype_entitlement(value).toPromise();
+      try {
+        await this.entitlementApi.post_leavetype_entitlement(value).toPromise();
+      } catch (error) {
+        this.sharedService.leaveApi.openSnackBar(error.statusText, false);
+      }
     }
     this.newEditProfileList = [];
     const data = {
@@ -338,7 +346,10 @@ export class LeaveEntitlementComponent implements OnInit {
       "description": this.name,
       "id": this.entitlementTypeNew
     }
-    await this.entitlementApi.patch_leavetype(data).toPromise();
+    try { await this.entitlementApi.patch_leavetype(data).toPromise(); }
+    catch (res) {
+      this.sharedService.leaveApi.openSnackBar(res.statusText, false);
+    }
     this.patchProfile();
   }
 
@@ -368,7 +379,7 @@ export class LeaveEntitlementComponent implements OnInit {
       this.entitlementApi.patch_leavetype_entitlement(data).subscribe(data => {
         this.ngOnInit();
         this.sharedService.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
-      })
+      }, err => this.sharedService.leaveApi.openSnackBar(err.statusText, false))
     }
     this.sharedService.emitChange(this.mainToggle);
   }
@@ -386,7 +397,7 @@ export class LeaveEntitlementComponent implements OnInit {
     this.entitlementApi.post_leavetype(content).subscribe(res => {
       this.newLeaveTypeId = res.resource[0].LEAVE_TYPE_GUID;
       this.showSmallSpinner = false;
-    })
+    }, errorRes => this.sharedService.leaveApi.openSnackBar(errorRes.statusText, false))
   }
 
   /**
@@ -412,6 +423,9 @@ export class LeaveEntitlementComponent implements OnInit {
         this.sharedService.leaveApi.openSnackBar('New leave entitlement profile was added', true);
         this.showSmallSpinner = false;
         this.sharedService.menu.close('editLeaveTypeDetails');
+      }, response => {
+        this.sharedService.leaveApi.openSnackBar(response.statusText, false);
+        this.showSmallSpinner = false;
       })
     }
   }
@@ -426,14 +440,18 @@ export class LeaveEntitlementComponent implements OnInit {
     data.leavetype_id = this.newLeaveTypeId;
     data.code = this.newProfileList.name;
     data.description = this.newProfileList.description;
-    await this.entitlementApi.post_leavetype_entitlement(data).toPromise();
+    try {
+      await this.entitlementApi.post_leavetype_entitlement(data).toPromise();
+      this.sharedService.leaveApi.openSnackBar('New leave entitlement profile was added', true);
+    } catch (err) {
+      this.sharedService.leaveApi.openSnackBar(err.statusText, false);
+    }
     this.showSmallSpinnerAdd = false;
     this.ngOnInit();
     this.newLeaveTypeId = '';
     this.abbreviation.reset();
     this.leaveTypeName.reset();
     this.newProfileList = { 'name': 'Default', 'description': 'Default Leave Entitlement' };
-    this.sharedService.leaveApi.openSnackBar('New leave entitlement profile was added', true);
     this.sharedService.menu.close('createNewTypeDetails');
   }
 

@@ -127,17 +127,14 @@
         will be import to their respective sections details EXCEPT Assigned Employee details.</p>
       <div style="margin-left:17px;margin-right:17px;height: calc(100% - 73px);">
         <div style="display: block;white-space: nowrap;text-align: left;">
-          <ion-button
-            style="--border-radius: 4px 0 0 4px;margin-right: 0;display:inline-block;font-size: 11px;height:
-            30px;width:150px;cursor: pointer;text-transform: none;max-width: 50%;"
-            [ngClass]="{
+          <ion-button style="--border-radius: 4px 0 0 4px;margin-right: 0;display:inline-block;font-size: 11px;height:
+            30px;width:150px;cursor: pointer;text-transform: none;max-width: 50%;" [ngClass]="{
                     'newClicked': newButton === true , 'newUnclicked': newButton === false}"
             (click)="cloneButton = false; newButton = true;">
             Edit Data
           </ion-button>
           <ion-button [ngClass]="{ 'cloneClicked' : cloneButton === true , 'cloneUnclicked' : cloneButton === false}"
-            (click)="cloneButton = true; newButton = false;"
-            style="--border-radius: 0 4px 4px 0;margin-left: 0;display:inline-block;font-size: 11px;height:
+            (click)="cloneButton = true; newButton = false;" style="--border-radius: 0 4px 4px 0;margin-left: 0;display:inline-block;font-size: 11px;height:
             30px;width:150px;cursor: pointer;text-transform: none;max-width: 50%;">
             Clone Existing Data
           </ion-button>
@@ -146,7 +143,7 @@
         <div *ngIf="newButton" style="display: block;height: calc(100% - 247px);">
           <div [class]="'hide-sm-down'"
             style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 10px;margin-top: 15px;color: #a3a6b4;font-weight: bold;">
-          <!-- <div *ngIf="leaveEntitlementPlatform.is('desktop' || 'electron')"
+            <!-- <div *ngIf="leaveEntitlementPlatform.is('desktop' || 'electron')"
             style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 10px;margin-top: 15px;color: #a3a6b4;font-weight: bold;"> -->
             <ion-row>
               <ion-col align-self-center
@@ -157,7 +154,8 @@
             <ion-row style="margin-top: 5px;">
               <ion-col size="11" style="padding-right: 0;">
                 <div style="display: inline-block;width: 30%;">
-                  <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8; overflow-wrap: initial; text-overflow: ellipsis; overflow: auto;">
+                  <p
+                    style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8; overflow-wrap: initial; text-overflow: ellipsis; overflow: auto;">
                     Abbreviation</p>
                   <mat-form-field appearance="outline" style="height: 55px;
               font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
@@ -174,15 +172,15 @@
                   </mat-form-field>
                 </div>
               </ion-col>
-              <!-- <ion-col align-self-center style="text-align: right;padding-right: 10px;margin-top: 15px;"> -->
-                <!-- <img src="assets/icon/leave_setup/icon_trash@3x.png" (click)="deleteLeaveType(abbr, name)"
-                  style="width: 11px;height:11px;display: inline-block;cursor: pointer;"> -->
-              <!-- </ion-col> -->
+              <!-- <ion-col align-self-center style="text-align: right;padding-right: 10px;margin-top: 15px;">
+                <img src="assets/icon/leave_setup/icon_trash@3x.png" (click)="deleteLeaveType(abbr, name)"
+                  style="width: 11px;height:11px;display: inline-block;cursor: pointer;">
+              </ion-col> -->
             </ion-row>
           </div>
-          <div [class]="'hide-sm-up'" 
-            style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 10px;margin-top: 15px;color: #a3a6b4;font-weight: bold;"> 
-        <!-- <div *ngIf="!leaveEntitlementPlatform.is('desktop' || 'electron')"
+          <div [class]="'hide-sm-up'"
+            style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 10px;margin-top: 15px;color: #a3a6b4;font-weight: bold;">
+            <!-- <div *ngIf="!leaveEntitlementPlatform.is('desktop' || 'electron')"
           style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 10px;margin-top: 15px;color: #a3a6b4;font-weight: bold;"> -->
             <ion-row>
               <ion-col align-self-center
@@ -232,7 +230,7 @@
                 class="edit-leave-entitlement-profile-items" style="overflow: auto;"> -->
               <ng-container *ngFor="let type of leaveTypes; let j=index;">
                 <ng-container *ngIf="leaveContent[j] == true">
-                  <ion-row  *ngFor="let item of leaveEntitlement[j]; let i=index" style="display: flex;">
+                  <ion-row *ngFor="let item of leaveEntitlement[j]; let i=index" style="display: flex;">
                     <ion-col style="flex: 21;">
                       <div style="width: 40%;display: inline-block;">
                         <mat-form-field appearance="outline"
@@ -299,7 +297,7 @@
           </div>
           <div [class]="'hide-sm-up'">
             <div class="edit-leave-entitlement-profile-items" style="overflow: auto;">
-            <!-- <div *ngIf="!leaveEntitlementPlatform.is('desktop' || 'electron')" class="edit-leave-entitlement-profile-items"
+              <!-- <div *ngIf="!leaveEntitlementPlatform.is('desktop' || 'electron')" class="edit-leave-entitlement-profile-items"
               style="overflow: auto;"> -->
               <ng-container *ngFor="let type of leaveTypes; let j=index;">
                 <ng-container *ngIf="leaveContent[j] == true">
@@ -308,7 +306,7 @@
                       <div style="display: inline-block;">
                         <mat-form-field appearance="outline"
                           style="margin-bottom: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
-                          <mat-label>11Profile name</mat-label>
+                          <mat-label>Profile name</mat-label>
                           <input matInput [(ngModel)]="item.leaveEntitlementCode" required>
                         </mat-form-field>
                       </div>
@@ -335,8 +333,7 @@
                 <ion-row *ngFor="let item of newEditProfileList; let i=index">
                   <ion-col style="flex: 21;">
                     <div style="display: inline-block;">
-                      <mat-form-field appearance="outline"
-                        style="height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8; margin: 0 0 10px
+                      <mat-form-field appearance="outline" style="height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8; margin: 0 0 10px
                         0;">
                         <mat-label>Profile name</mat-label>
                         <input matInput [(ngModel)]="newEditProfileList[i].name" required>
@@ -387,9 +384,10 @@
           </ion-row>
           <ion-row style="margin-top: 5px;">
             <ion-col [class]="'hide-sm-down'" size="11" style="padding-right: 0;">
-            <!-- <ion-col *ngIf="leaveEntitlementPlatform.is('desktop' || 'electron')" size="11" style="padding-right: 0;"> -->
+              <!-- <ion-col *ngIf="leaveEntitlementPlatform.is('desktop' || 'electron')" size="11" style="padding-right: 0;"> -->
               <div style="display: inline-block;width: 30%;">
-                <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;overflow-wrap: initial;text-overflow: ellipsis;overflow: auto;">
+                <p
+                  style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;overflow-wrap: initial;text-overflow: ellipsis;overflow: auto;">
                   Abbreviation</p>
                 <mat-form-field appearance="outline" style="height: 55px;
             font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
@@ -406,9 +404,9 @@
                 </mat-form-field>
               </div>
             </ion-col>
-            <ion-col [class]="'hide-sm-up'" style="padding-right: 0;display: flex; flex-flow: column;">
-            <!-- <ion-col *ngIf="!leaveEntitlementPlatform.is('desktop' || 'electron')" style="padding-right: 0;display: flex; flex-flow: column;"> -->
-              <div style="display: inline-block;">
+            <ion-col [class]="'hide-sm-up'" style="padding-right: 0; flex-flow: column;">
+              <!-- <ion-col *ngIf="!leaveEntitlementPlatform.is('desktop' || 'electron')" style="padding-right: 0;display: flex; flex-flow: column;"> -->
+              <div>
                 <p
                   style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;overflow-wrap: initial;text-overflow: ellipsis;overflow: auto;">
                   Abbreviation</p>
@@ -417,7 +415,7 @@
                   <input matInput [(ngModel)]="abbr" readonly>
                 </mat-form-field>
               </div>
-              <div style="display: inline-block;">
+              <div>
                 <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
                   Leave Type</p>
                 <mat-form-field appearance="outline" style="height: 55px;
@@ -437,17 +435,15 @@
             </ion-col>
           </ion-row>
         </div>
-        <div *ngIf="cloneButton;"
-          style="margin-left: 15px;height: calc(100% - 255px)">
+        <div *ngIf="cloneButton;" style="margin-left: 15px;height: calc(100% - 255px)">
           <div [class]="'hide-sm-down'" style="height: calc(100% - 45px);overflow: auto;">
-          <!-- <div *ngIf=" leaveEntitlementPlatform.is('desktop' || 'electron')" style="height: calc(100% - 45px);overflow: auto;"> -->
+            <!-- <div *ngIf=" leaveEntitlementPlatform.is('desktop' || 'electron')" style="height: calc(100% - 45px);overflow: auto;"> -->
             <ng-container *ngFor="let type of leaveTypes; let j=index;">
               <mat-radio-group [(ngModel)]="cloneProfileId">
                 <ng-container *ngFor="let item of leaveEntitlement[j]; let i=index">
                   <mat-radio-button disableRipple="true" color="primary" *ngIf="item.leaveTypeId == entitlementTypeNew"
                     style="margin-bottom: 3px;display: block;color: #4d4f5c;font-size: 12px;font-weight:
-                    600;white-space: pre-line;"
-                    [value]="item.leaveEntitlementId">
+                    600;white-space: pre-line;" [value]="item.leaveEntitlementId">
                     {{item.leaveType}} - {{item.leaveEntitlementCode}}
                   </mat-radio-button>
                 </ng-container>
@@ -501,8 +497,7 @@
             Create & define master list for all type of leave</ion-card-subtitle>
         </div>
       </ion-item-group>
-      <ion-item-group
-        style="margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
+      <ion-item-group style="margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
         <div style=" right: 75px;top: 25px; ">
           <p
             style="margin-top: 16px;opacity: 0.8;font-size: 12px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
@@ -528,13 +523,12 @@
         <!-- -------------------- web/desktop view -------------------- -->
         <div [class]="'hide-sm-down'" style="height: 100%;">
           <div class="row">
-          <!-- <div class="row" *ngIf="leaveEntitlementPlatform.is('desktop' || 'electron')"> -->
+            <!-- <div class="row" *ngIf="leaveEntitlementPlatform.is('desktop' || 'electron')"> -->
             <div class="entitlement">
               <div *ngIf="mainToggle === 'ON'"
                 style="text-align: right;padding: 5px;padding-left:10px;padding-right:10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                 <ion-row style="display: flex; flex-flow: row wrap;">
-                  <ion-col align-self-center
-                    style="text-align: left;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient:
+                  <ion-col align-self-center style="text-align: left;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient:
                     vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px; flex: 2 1 20px;
                     min-width: fit-content;">
                     CREATE NEW LEAVE TYPE HERE</ion-col>
@@ -564,8 +558,7 @@
                 <div style="margin-bottom: 10px;" *ngIf="leaveContent[j] == true">
                   <ion-row *ngFor="let item of leaveEntitlement[j]; let i=index" style="padding-left: 10px;">
                     <ion-col style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                      <p class="textHover"
-                        style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space:
+                      <p class="textHover" style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space:
                         pre-line;margin-bottom: 0;"
                         [ngClass]="{'textColor': clickedIndex === i && clickedHeaderIndex === j, 'oriColor': clickedIndex !== i || clickedHeaderIndex !== j}"
                         (click)="clickedIndex = i;clickedHeaderIndex = j;getProfileDetails(item.leaveEntitlementId);">
@@ -575,13 +568,12 @@
                         style="font-style: italic;font-weight: 600;font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space:pre-line;">
                         {{item.leaveEntitlementDescription}}
                       </p>
-                      <div
-                        style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space:
+                      <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space:
                         pre-line;">
                         Assigned Employee No.: <p
                           style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
                           {{item.totalEmployee}}</p>
-                          
+
                       </div>
                       <div style="display: flex; flex-flow: row wrap; ">
                         <div style="flex: 1 1 50%; display: flex;" *ngFor="let userlist of item.userAttach">
@@ -981,7 +973,8 @@
                         Convert to :</p>
                       <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                     font-size: 12px;width: 40%;color: #43425d;display: inline-block;">
-                        <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.textValue">
+                        <mat-select
+                          [(value)]="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.textValue">
                           <mat-option>Nothing Selected</mat-option>
                           <mat-option value="UNPAID LEAVE">Unpaid Leave</mat-option>
                         </mat-select>
@@ -1113,11 +1106,13 @@
                         <mat-option value="Entitled in full">Entitled in full</mat-option>
                         <mat-option value="Prorated from date-of-join to current month">Prorated from date-of-join to
                           current month</mat-option>
-                        <mat-option value="Prorated from date-of-join to end of year">Prorated from date-of-join to end of
+                        <mat-option value="Prorated from date-of-join to end of year">Prorated from date-of-join to end
+                          of
                           year</mat-option>
                         <mat-option value="Prorated from date-of-confirm to current month">Prorated from date-of-confirm
                           to current month </mat-option>
-                        <mat-option value="Prorated from date-of-confirm to end of year">Prorated from date-of-confirm to
+                        <mat-option value="Prorated from date-of-confirm to end of year">Prorated from date-of-confirm
+                          to
                           end of year </mat-option>
                         <mat-option value="Leave entitled after 12 months">Leave entitled after 12 months </mat-option>
                       </mat-select>
@@ -1205,7 +1200,8 @@
                       </ion-item-group>
 
                       <ion-item-group style="display: flex;flex-wrap: wrap;">
-                        <div style="width: -webkit-fill-available;min-width: 130px; margin-right: 5px; flex: 2 1 130px;">
+                        <div
+                          style="width: -webkit-fill-available;min-width: 130px; margin-right: 5px; flex: 2 1 130px;">
                           <p style="font-size: 12px;font-weight: bold;color: #808495;">
                             ENTITLED DAY</p>
                           <mat-form-field appearance="outline" style="font-size: 12px; width: -webkit-fill-available;">
@@ -1223,10 +1219,12 @@
                         </div>
                       </ion-item-group>
                     </ion-col>
-                    <ion-col style="width: fit-content; min-width: fit-content; text-align: end; max-width: fit-content; margin-left: auto;">
+                    <ion-col
+                      style="width: fit-content; min-width: fit-content; text-align: end; max-width: fit-content; margin-left: auto;">
                       <img src="assets/icon/leave_setup/icon_trash@3x.png"
                         *ngIf="mainToggle === 'ON' && entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.length > 1 "
-                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;" (click)="addDeleteLevel('delete', i)">
+                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
+                        (click)="addDeleteLevel('delete', i)">
                     </ion-col>
                   </ion-grid>
                   <ion-item class="divider" lines="full" style="padding-bottom: 2%;">
@@ -1246,13 +1244,12 @@
         <!-- -------------------- mobile view -------------------- -->
         <div [class]="'hide-sm-up'" style="height: 100%;">
           <div class="row" style="flex-wrap: wrap; overflow-y: auto;">
-          <!-- <div class="row" style="flex-wrap: wrap; overflow-y: auto;" *ngIf="!leaveEntitlementPlatform.is('desktop' || 'electron')"> -->
+            <!-- <div class="row" style="flex-wrap: wrap; overflow-y: auto;" *ngIf="!leaveEntitlementPlatform.is('desktop' || 'electron')"> -->
             <div style="flex: 2 1 auto; max-height: 50%; height: 100%; overflow: auto;">
               <div *ngIf="mainToggle === 'ON'"
                 style="text-align: right;padding: 5px;padding-left:10px;padding-right:10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                 <ion-row style="display: flex; flex-flow: row wrap;">
-                  <ion-col align-self-center
-                    style="text-align: left;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient:
+                  <ion-col align-self-center style="text-align: left;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient:
                     vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px; flex: 2 1 20px;
                     min-width: fit-content;">
                     CREATE NEW LEAVE TYPE HERE</ion-col>
@@ -1282,8 +1279,7 @@
                 <div style="margin-bottom: 10px;" *ngIf="leaveContent[j] == true">
                   <ion-row *ngFor="let item of leaveEntitlement[j]; let i=index" style="padding-left: 10px;">
                     <ion-col style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                      <p class="textHover"
-                        style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space:
+                      <p class="textHover" style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space:
                         pre-line;margin-bottom: 0;"
                         [ngClass]="{'textColor': clickedIndex === i && clickedHeaderIndex === j, 'oriColor': clickedIndex !== i || clickedHeaderIndex !== j}"
                         (click)="clickedIndex = i;clickedHeaderIndex = j;getProfileDetails(item.leaveEntitlementId);">
@@ -1293,8 +1289,7 @@
                         style="font-style: italic;font-weight: 600;font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space:pre-line;">
                         {{item.leaveEntitlementDescription}}
                       </p>
-                      <div
-                        style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;">
+                      <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: nowrap;">
                         Assigned Employee No.: <p
                           style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
                           {{item.totalEmployee}}</p>
@@ -1690,7 +1685,8 @@
                         Convert to :</p>
                       <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                     font-size: 12px;width: 70%;color: #43425d;display: inline-block;">
-                        <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.textValue">
+                        <mat-select
+                          [(value)]="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.textValue">
                           <mat-option>Nothing Selected</mat-option>
                           <mat-option value="UNPAID LEAVE">Unpaid Leave</mat-option>
                         </mat-select>
@@ -1734,7 +1730,8 @@
                   </ion-col>
                   <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                     padding-bottom: 13px;">
-                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
+                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'"
+                      style="height: 55px;
                                     font-size: 12px;width: -webkit-fill-available; min-width: 100px;color: #43425d;float:right">
                       <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.isAllowAfterJoinDate.textValue">
                         <mat-option>Nothing Selected</mat-option>
@@ -1822,11 +1819,13 @@
                         <mat-option value="Entitled in full">Entitled in full</mat-option>
                         <mat-option value="Prorated from date-of-join to current month">Prorated from date-of-join to
                           current month</mat-option>
-                        <mat-option value="Prorated from date-of-join to end of year">Prorated from date-of-join to end of
+                        <mat-option value="Prorated from date-of-join to end of year">Prorated from date-of-join to end
+                          of
                           year</mat-option>
                         <mat-option value="Prorated from date-of-confirm to current month">Prorated from date-of-confirm
                           to current month </mat-option>
-                        <mat-option value="Prorated from date-of-confirm to end of year">Prorated from date-of-confirm to
+                        <mat-option value="Prorated from date-of-confirm to end of year">Prorated from date-of-confirm
+                          to
                           end of year </mat-option>
                         <mat-option value="Leave entitled after 12 months">Leave entitled after 12 months </mat-option>
                       </mat-select>
@@ -1844,7 +1843,8 @@
                   </ion-col>
                   <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
                                     padding-bottom: 13px;">
-                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
+                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'"
+                      style="height: 55px;
                                     font-size: 12px;width: -webkit-fill-available; min-width: 100px;color: #43425d;float:right">
                       <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.leaveEntitlementRounding">
                         <mat-option>Nothing Selected</mat-option>
@@ -1867,8 +1867,7 @@
                   </ion-item>
                 </ion-row>
               </div>
-              <div (click)="showLeaveType =false"
-                style="cursor: pointer;font-size: 12px;width:100%;background: #43425d;padding: 10px;margin-bottom:
+              <div (click)="showLeaveType =false" style="cursor: pointer;font-size: 12px;width:100%;background: #43425d;padding: 10px;margin-bottom:
                 5px;color: #fff;font-weight: bold;">
                 <ion-row>
                   <ion-col
@@ -1895,7 +1894,8 @@
                     </ion-col>
                     <ion-col style="flex: 4 1 auto; width: 250px;">
                       <ion-item-group style="display: flex;flex-wrap: wrap;">
-                        <div style="width: -webkit-fill-available;min-width: 130px; margin-right: 5px; flex: 2 1 130px;">
+                        <div
+                          style="width: -webkit-fill-available;min-width: 130px; margin-right: 5px; flex: 2 1 130px;">
                           <p style="font-size: 12px;font-weight: bold;color: #808495;">
                             SERVICE YEAR FROM</p>
                           <mat-form-field appearance="outline" style="font-size: 12px; width: -webkit-fill-available;">
@@ -1914,7 +1914,8 @@
                       </ion-item-group>
 
                       <ion-item-group style="display: flex;flex-wrap: wrap;">
-                        <div style="width: -webkit-fill-available;min-width: 130px; margin-right: 5px; flex: 2 1 130px;">
+                        <div
+                          style="width: -webkit-fill-available;min-width: 130px; margin-right: 5px; flex: 2 1 130px;">
                           <p style="font-size: 12px;font-weight: bold;color: #808495;">
                             ENTITLED DAY</p>
                           <mat-form-field appearance="outline" style="font-size: 12px; width: -webkit-fill-available;">

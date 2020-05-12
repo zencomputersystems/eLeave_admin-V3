@@ -36,7 +36,9 @@
     }
     p.mainInnerText::ng-deep p {
         margin-bottom: 0;
-        white-space: pre-wrap;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
     p.mainInnerText::ng-deep img {
         height: 50px;
