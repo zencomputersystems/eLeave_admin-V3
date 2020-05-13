@@ -92,7 +92,7 @@
     <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;">
         <div class="cardContent">
             <ion-card-content class="policy-overflow-style" style="max-height:100%;height: 100%;overflow: auto;">
-                <div [class]="'hide-md-down'">
+                <div [class]="'hide-md-down'" style="height: 100%;">
                     <div class="row">
                         <div class="list">
                             <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
@@ -111,8 +111,7 @@
                             <div style="height: calc(100% - 62px);overflow-y: auto;">
                                 <ion-row class="detailsRow" *ngFor="let item of companyName; let i=index"
                                     style="padding-left: 10px;">
-                                    <ion-col
-                                        style="overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
+                                    <ion-col style="overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
                                         <p class="textHover" style="cursor: pointer;font-size: 12px;font-weight: bold;overflow:
                                     hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;" [ngClass]="{
                                         'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
@@ -120,28 +119,51 @@
                                             {{item.NAME}}
                                         </p>
                                         <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space:
-                                    pre-line;text-overflow: ellipsis; margin: 5px 0px;">
+                                    pre-line;text-overflow: ellipsis;">
                                             Assigned Employee No.: <p
                                                 style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
                                                 {{item.employee}}</p>
                                         </div>
-                                        <div style="display: flex; flex-flow: row wrap;">
+                                        <!-- <div style="display: flex; flex-flow: row wrap;">
                                             <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis; 
                                             flex: 1 1 50%;; display: flex; flex-flow: nowrap; margin-bottom: 3px;"
-                                            *ngFor="let emplist of item.employeeName" >
+                                                *ngFor="let emplist of item.employeeName">
                                                 <div>-</div>
                                                 <div>{{emplist.employeeName}}</div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </ion-col>
-                                    <ion-col size="3" align-self-center style="text-align: right;padding-right: 10px;"  *ngIf="modeValue==='ON'">
+                                    <ion-col size="3" align-self-center style="text-align: right;padding-right: 10px;"
+                                        *ngIf="modeValue==='ON'">
                                         <img src="assets/icon/leave_setup/icon_edit@3x.png"
                                             style="width: 11px;height:11px;display: inline-block;cursor:pointer"
                                             (click)="clickedPolicy(item, i);companyId = item.TENANT_COMPANY_GUID ; editName.patchValue(item.NAME); sharedService.menu.open('editCompanyDetails'); sharedService.menu.enable(true,'editCompanyDetails');sharedService.menu.enable(false, 'createCompanyDetails');">
                                         &nbsp;&nbsp;
-                                        <img src="assets/icon/leave_setup/icon_trash@3x.png" 
+                                        <img src="assets/icon/leave_setup/icon_trash@3x.png"
                                             style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
                                             (click)="deleteCompany(item)">
+                                    </ion-col>
+                                    <ion-item class="divider" lines="full">
+                                    </ion-item>
+                                </ion-row>
+                            </div>
+                        </div>
+                        <div class="assigned">
+                            <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
+                            padding-top: 1px;margin-bottom: 10px;color: #a3a6b4;font-weight: bold;">
+                                <ion-row>
+                                    <ion-col size="9" align-self-center style="padding: 10px;">
+                                        ASSIGNED EMPLOYEE
+                                    </ion-col>
+                                </ion-row>
+                            </div>
+                            <div style="overflow-y: auto;height: calc(100% - 62px);" *ngIf="companyName && clickedIndex != undefined">
+                                <ion-row *ngFor="let user of companyName[clickedIndex].employeeName"
+                                    style="width: 100%;padding-left: 10px;">
+                                    <ion-col align-self-center size="11" style="padding-top: 0;padding-bottom: 0;">
+                                        <p *ngIf="user.length !== 0" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
+                                        padding-bottom: 13px;">
+                                            {{user.employeeName}}</p>
                                     </ion-col>
                                     <ion-item class="divider" lines="full">
                                     </ion-item>
@@ -181,16 +203,15 @@
                                 </ion-row>
                             </div>
                             <div style="display: flex;height: fit-content;">
-                                <div  style="display: flex; width: 100%; max-width: 100%; overflow-x: auto; margin: auto
+                                <div style="display: flex; width: 100%; max-width: 100%; overflow-x: auto; margin: auto
                                     auto 10px;user-select: none;">
-                                    <ion-row class="detailsRow" *ngFor="let item of companyName; let i=index"
-                                        style="padding-left: 10px;min-width: fit-content;border-right: 1px solid
+                                    <ion-row class="detailsRow" *ngFor="let item of companyName; let i=index" style="padding-left: 10px;min-width: fit-content;border-right: 1px solid
                                         #e1e1e2; margin-bottom: 10px; display: flex;">
-                                        <ion-col 
-                                            style="overflow: hidden;white-space: pre-line;text-overflow: ellipsis;flex:
+                                        <ion-col style="overflow: hidden;white-space: pre-line;text-overflow: ellipsis;flex:
                                             5;">
                                             <p class="textHover" style="cursor: pointer;font-size: 12px;font-weight: bold;overflow:
-                                        hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;" [ngClass]="{
+                                        hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;"
+                                                [ngClass]="{
                                             'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
                                                 (click)="clickedPolicy(item, i)">
                                                 {{item.NAME}}
@@ -201,17 +222,20 @@
                                                     style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
                                                     {{item.employee}}</p>
                                             </div>
-                                            <div  style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
+                                            <!-- <div *ngFor="let emplist of item.employeeName"
+                                                style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
                                                 <div>-</div>
-                                                <div>{{item.employeeName}}</div>
-                                            </div>
+                                                <div>{{emplist.employeeName}}</div>
+                                            </div> -->
                                         </ion-col>
-                                        <ion-col align-self-center style="text-align: right;padding-right: 10px; flex: 1; display: flex; flex-flow: column;">
+                                        <ion-col align-self-center
+                                            style="text-align: right;padding-right: 10px; flex: 1; display: flex; flex-flow: column;">
                                             <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="modeValue==='ON'"
                                                 style="width: 11px;height:11px;display: inline-block;cursor:pointer"
                                                 (click)="clickedPolicy(item, i);companyId = item.TENANT_COMPANY_GUID ; editName.patchValue(item.NAME); sharedService.menu.open('editCompanyDetails'); sharedService.menu.enable(true,'editCompanyDetails');sharedService.menu.enable(false, 'createCompanyDetails');">
                                             &nbsp;&nbsp;
-                                            <img src="assets/icon/leave_setup/icon_trash@3x.png" *ngIf="modeValue==='ON'"
+                                            <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                                                *ngIf="modeValue==='ON'"
                                                 style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
                                                 (click)="deleteCompany(item)">
                                         </ion-col>

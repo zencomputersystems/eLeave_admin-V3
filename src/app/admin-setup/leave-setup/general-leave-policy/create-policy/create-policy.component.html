@@ -46,14 +46,13 @@
                     </mat-form-field>
                     <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Level</p>
                 </div>
-                <div style="display: block; flex: 2; margin-right: 30px;"
+                <div style="display: block; margin-right: 30px;"
                     *ngIf="policyList.PROPERTIES_XML.approvalConfirmation.requirement === 'Everyone'">
                     <p style="padding-left: 53px;color: #4d4f5c;font-size:11px;display: inline-block;">Escalate
                         after &nbsp;</p>
                     <mat-form-field appearance="outline"
                         style="width:56px;font-size: 12px;color:#43425d;display:inline-block">
-                        <input matInput
-                            [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays"
+                        <input matInput [(ngModel)]="policyList.PROPERTIES_XML.approvalConfirmation.escalateAfterDays"
                             [disabled]="modeInput === 'OFF'" required>
                     </mat-form-field>
                     <p style="color: #4d4f5c;font-size:11px;display: inline-block;">&nbsp; Days</p>
@@ -74,7 +73,8 @@
         <!-- CF leaves -->
         <ion-list lines="none">
             <ion-item class="ionItem">
-                <ion-label class="cf-leave-label" [style.opacity]="policyList.PROPERTIES_XML.forfeitCFLeave.value ? '0.8': '' ">Forfeit
+                <ion-label class="cf-leave-label"
+                    [style.opacity]="policyList.PROPERTIES_XML.forfeitCFLeave.value ? '0.8': '' ">Forfeit
                     carried
                     forward leaves on
                     <div [class]="'hide-sm-up'" style="margin: auto 3px; max-width: 45.23px"> next year
@@ -108,8 +108,7 @@
                     <mat-option value="December">December</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="outline"
-                style="font-size: 13px;color:#7a8589;width: 166px; padding-left: 6px;
+            <mat-form-field appearance="outline" style="font-size: 13px;color:#7a8589;width: 166px; padding-left: 6px;
                 padding-right: 6px;">
                 <mat-label>Day</mat-label>
                 <mat-select [(value)]="policyList.PROPERTIES_XML.forfeitCFLeave.day" [disabled]="modeInput === 'OFF'">
@@ -156,7 +155,8 @@
                     <mat-option value="December">December</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="outline" style="font-size: 13px;width: 166px;color:#7a8589;padding-left: 6px; padding-right: 6px;">
+            <mat-form-field appearance="outline"
+                style="font-size: 13px;width: 166px;color:#7a8589;padding-left: 6px; padding-right: 6px;">
                 <mat-label>Day</mat-label>
                 <mat-select [(value)]="policyList.PROPERTIES_XML.allowYearEndClosing.day"
                     [disabled]="modeInput === 'OFF'">
@@ -164,7 +164,8 @@
                     <mat-option *ngFor="let day of daysOfYE" [value]=day>{{day}}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="outline" style="font-size: 13px;width: 166px;color:#7a8589;padding-left: 6px; padding-right: 6px;">
+            <mat-form-field appearance="outline"
+                style="font-size: 13px;width: 166px;color:#7a8589;padding-left: 6px; padding-right: 6px;">
                 <mat-label>Year</mat-label>
                 <mat-select [(value)]="policyList.PROPERTIES_XML.allowYearEndClosing.relativeYear"
                     (selectionChange)="yearChanged($event.value)" [disabled]="modeInput === 'OFF'">

@@ -248,12 +248,20 @@ export class CreatePolicyComponent {
                     'generalPolicyId': this._policyGUID,
                     'data': this.policyList.PROPERTIES_XML
                 }
-                await this.policyApi.patch_general_leave_policy(data).toPromise();
-                this.policyApi.message('Edit mode disabled. Good job!', true);
+                try {
+                    await this.policyApi.patch_general_leave_policy(data).toPromise();
+                    this.policyApi.message('Edit mode disabled. Good job!', true);
+                }
+                catch (err) {
+                    this.policyApi.message(err.statusText, false);
+                }
                 this._policyGUID = '';
             } else {
                 this.policyList.PROPERTIES_XML["tenantCompanyId"] = this.tenantId;
-                await this.policyApi.post_general_leave_policy(this.policyList.PROPERTIES_XML).toPromise();
+                try { await this.policyApi.post_general_leave_policy(this.policyList.PROPERTIES_XML).toPromise(); }
+                catch (error) {
+                    this.policyApi.message(error.statusText, false);
+                }
                 this.tenantId = '';
                 this.policyApi.message('Edit mode disabled. Good job!', true);
             }

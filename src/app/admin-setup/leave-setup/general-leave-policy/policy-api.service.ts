@@ -84,7 +84,7 @@ export class PolicyApiService {
      * @returns {Observable<any>}
      * @memberof PolicyApiService
      */
-    post_company_name(name: string): Observable<any> {
+    post_company_name(name): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.postApi(name, '/api/company/' + name);
     }
