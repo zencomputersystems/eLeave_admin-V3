@@ -405,6 +405,15 @@ export class LeaveAdjustmentComponent implements OnInit {
             } else {
                 this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
             }
+        }, error => {
+            this.showSmallSpinner = false;
+            this.filteredUserItems = [];
+            this._selectedUser = [];
+            this.filteredUserItems.forEach(el => {
+                el.isChecked = false;
+            });
+            this.enableDisableSubmitButton();
+            this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
         });
     }
 

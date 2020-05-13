@@ -363,6 +363,16 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
                 element.isChecked = false;
             });
             this.checkEnableDisableButton();
+        }, err => {
+            this.leaveAPI.openSnackBar('Failed to submit request', false);
+            this.showSmallSpinner = false;
+            this.checkMain = false;
+            this.indeterminate = false;
+            this._selected_User = [];
+            this.filteredUser.forEach(element => {
+                element.isChecked = false;
+            });
+            this.checkEnableDisableButton();
         });
     }
 
