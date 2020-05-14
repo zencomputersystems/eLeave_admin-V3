@@ -898,11 +898,13 @@ export class EmployeeSetupComponent implements OnInit {
      */
     async deleteEntitlement(index: number) {
         let response = await this.inviteAPI.delete_user_leave_entitlement(this.addEntitlement[index].userLeaveEntitlement).toPromise();
-        if (response[0].USER_GUID != undefined) {
-            this._sharedService.leaveApi.openSnackBar('Selected leave entitlement was deleted', true);
-            this.addEntitlement.splice(index, 1);
+        if (response[0] != undefined) {
+            if (response[0].USER_GUID != undefined) {
+                this._sharedService.leaveApi.openSnackBar('Selected leave entitlement was deleted', true);
+                this.addEntitlement.splice(index, 1);
+            }
         } else {
-            this._sharedService.leaveApi.openSnackBar(response.status, false);
+            this._sharedService.leaveApi.openSnackBar('Leave entitlement was failed to delete', false);
         }
     }
 
@@ -965,17 +967,22 @@ export class EmployeeSetupComponent implements OnInit {
             if (result === 'Activate') {
                 this.employeeStatus = 'Active';
                 this.status = true;
-                let res = await this.inviteAPI.post_activate_user_info(this.userId, {
-                    "roleProfileId": this.roleValue,
-                    "workingHoursId": this.workingValue,
-                    "calendarId": this.calendarValue
-                }).toPromise();
-                let list = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
-                this.list = list;
-                this.getUserId(this.list[this.clickedIndex], this.clickedIndex, this.config.currentPage);
-                this.mode = 'ON';
-                this.modeValue = true;
-                this._sharedService.leaveApi.openSnackBar(name + ' become Active', true);
+                try {
+                    let res = await this.inviteAPI.post_activate_user_info(this.userId, {
+                        "roleProfileId": this.roleValue,
+                        "workingHoursId": this.workingValue,
+                        "calendarId": this.calendarValue
+                    }).toPromise();
+                    let list = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
+                    this.list = list;
+                    this.getUserId(this.list[this.clickedIndex], this.clickedIndex, this.config.currentPage);
+                    this.mode = 'ON';
+                    this.modeValue = true;
+                    this._sharedService.leaveApi.openSnackBar(name + ' become Active', true);
+                }
+                catch (err) {
+                    this._sharedService.leaveApi.openSnackBar(JSON.parse(err._body).message[0].constraints.isNotEmpty, false);
+                }
             }
         } else {
             const dialog = this.inviteAPI.popUp.open(ChangeStatusConfimationComponent, {
@@ -990,14 +997,17 @@ export class EmployeeSetupComponent implements OnInit {
                     "user_guid": this.userId,
                     "resign_date": _moment(new Date()).format('YYYY-MM-DD'),
                 }).toPromise();
-                if (value[0].USER_GUID != undefined) {
-                    this.employeeStatus = 'Inactive';
-                    this.status = false;
-                    let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
-                    this.list = data;
-                    this._sharedService.leaveApi.openSnackBar(name + ' become Inactive', true);
-                } else {
-                    this._sharedService.leaveApi.openSnackBar(value.status, false);
+                if (value[0] != undefined) {
+                    if (value[0].USER_GUID != undefined) {
+                        this.employeeStatus = 'Inactive';
+                        this.status = false;
+                        let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
+                        this.list = data;
+                        this._sharedService.leaveApi.openSnackBar(name + ' become Inactive', true);
+                    }
+                }
+                else {
+                    this._sharedService.leaveApi.openSnackBar(name + ' was failed to deactivate', false);
                 }
             }
         }
