@@ -24,6 +24,14 @@ export class LeaveApiService {
     public baseUrl: string = "http://zencore.zen.com.my:3000";
 
     /**
+     * snackbar reference
+     * @type {*}
+     * @memberof LeaveApiService
+     */
+    public snackBarRef: any;
+
+
+    /**
      *Creates an instance of LeaveApiService.
      * @param {Http} http perform http request
      * @param {APIService} apiService
@@ -172,7 +180,7 @@ export class LeaveApiService {
     * @memberof LeaveApiService
     */
     openSnackBar(message: string, val: boolean) {
-        this.snackBar.openFromComponent(SnackbarNotificationComponent, {
+        this.snackBarRef = this.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 5000,
             verticalPosition: "top",
             data: { message: message, response: val }

@@ -616,6 +616,13 @@ export class EmployeeSetupComponent implements OnInit {
     public itemsPerPage = '10';
 
     /**
+     * check snackbar open or not
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public open: boolean;
+
+    /**
      *Creates an instance of EmployeeSetupComponent.
      * @param {AdminInvitesApiService} inviteAPI access invite API
      * @param {RoleApiService} roleAPI access role manegement api service
@@ -756,7 +763,7 @@ export class EmployeeSetupComponent implements OnInit {
      */
     getUserId(item: any, index: number, p: number) {
         this.clickedIndex = ((p - 1) * Number(this.itemsPerPage)) + index;
-        this.employeeStatus = this.list[this.clickedIndex].status;
+        this.employeeStatus = item.status;
         if (this.employeeStatus == 'Active') {
             this.status = true;
         } else {
@@ -928,7 +935,14 @@ export class EmployeeSetupComponent implements OnInit {
                 await this.assignProfile();
             }
             await this.endPoint();
-            this._sharedService.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
+            if (this.open === true) {
+                this._sharedService.leaveApi.snackBarRef.afterDismissed().subscribe(info => {
+                    this._sharedService.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
+                    this.open = null;
+                });
+            } else {
+                this._sharedService.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
+            }
         }
         this._sharedService.emitChange(this.mode);
     }
@@ -1010,10 +1024,8 @@ export class EmployeeSetupComponent implements OnInit {
                 this.isBlur = false;
             }
             catch (error) {
-                this._sharedService.leaveApi.openSnackBar(error.statusText, false);
-                setTimeout(() => {
-
-                }, 5000);
+                this.open = true;
+                this._sharedService.leaveApi.openSnackBar(JSON.parse(error._body).message[0].constraints.isNotEmpty, false);
             }
         }
     }
