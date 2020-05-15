@@ -191,8 +191,9 @@ export class BulkImportComponent implements OnInit {
         response.forEach(item => {
             if (item.category == 'Success' && item.data.length != 0) {
                 this.leaveApi.openSnackBar('New employee profiles was created successfully', true);
-            } else {
-                this.leaveApi.openSnackBar('Error occurred - ' + item.category, false);
+            }
+            if (item.data.length != 0 && item.category != 'Success') {
+                this.leaveApi.openSnackBar(item.message, false);
             }
         });
         this.closeMenu.emit('true');

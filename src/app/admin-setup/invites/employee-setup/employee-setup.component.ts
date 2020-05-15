@@ -534,27 +534,27 @@ export class EmployeeSetupComponent implements OnInit {
      * @type {boolean}
      * @memberof EmployeeSetupComponent
      */
-    public defaultWHProfile: boolean = false;
+    public defaultWHProfile: boolean = true;
 
     /**
      * True/false to set default calendar profile
      * @type {boolean}
      * @memberof EmployeeSetupComponent
      */
-    public defaultCalendarProfile: boolean = false;
+    public defaultCalendarProfile: boolean = true;
 
     /**
      * True/false to set default rolw profile
      * @type {boolean}
      * @memberof EmployeeSetupComponent
      */
-    public defaultRoleProfile: boolean = false;
+    public defaultRoleProfile: boolean = true;
 
     /**
      * emit value to hide this page after clicked back button
      * @memberof WorkingHourComponent
      */
-    @Output() valueChange = new EventEmitter();
+    // @Output() valueChange = new EventEmitter();
 
     /**
      * Bind length of roleList
@@ -574,11 +574,18 @@ export class EmployeeSetupComponent implements OnInit {
     public isBlur: boolean = false;
 
     /**
-     * input is clicked of assign calendar, working, role profile
+     * input is clicked of assign calendar, working
      * @type {boolean}
      * @memberof EmployeeSetupComponent
      */
     public isBlurAssign: boolean = false;
+
+    /**
+     * input is clicked of role profile
+     * @type {boolean}
+     * @memberof EmployeeSetupComponent
+     */
+    public isBlurRole: boolean = false;
 
     /**
      * 
@@ -930,11 +937,14 @@ export class EmployeeSetupComponent implements OnInit {
             if (this.showOthers == false && this.isBlur == true) {
                 await this.patchPersonalDetails();
             }
-            if (this.isBlurEmployment == true) {
+            if (this.isBlurEmployment === true) {
                 await this.patchEmploymentDetails();
             }
-            if (this.isBlurAssign == true) {
+            if (this.isBlurAssign === true) {
                 await this.assignProfile();
+            }
+            if (this.isBlurRole === true) {
+                await this.assignRole();
             }
             await this.endPoint();
             if (this.open === true) {
@@ -1081,29 +1091,58 @@ export class EmployeeSetupComponent implements OnInit {
     }
 
     /**
-     * save assigned profile of calendar profile, working hour & user role
+     * save assigned profile of calendar profile, working hour
      * @memberof EmployeeSetupComponent
      */
     async assignProfile() {
-        let data = await this._sharedService.leaveApi.patch_assign_calendar_profile({
-            "user_guid": [this.userId], "calendar_guid": this.calendarValue
-        }).toPromise();
-        if (data[0].USER_INFO_GUID == undefined) {
-            this._sharedService.leaveApi.openSnackBar(data.status, false);
+        try {
+            let data = await this._sharedService.leaveApi.patch_assign_calendar_profile({
+                "user_guid": [this.userId],
+                "calendar_guid": this.calendarValue
+            }).toPromise();
+            if (data[0] == undefined) {
+                this.open = true;
+                this._sharedService.leaveApi.openSnackBar("Failed to assign calendar profile", false);
+            }
+        } catch (errResponse) {
+            this.open = true;
+            this._sharedService.leaveApi.openSnackBar("Failed to assign calendar profile", false);
         }
-        let workingData = await this._sharedService.leaveApi.patch_user_working_hours({
-            "user_guid": [this.userId], "working_hours_guid": this.workingValue
-        }).toPromise();
-        if (workingData[0].USER_INFO_GUID == undefined) {
-            this._sharedService.leaveApi.openSnackBar(workingData.status, false);
-        }
-        let roleData = await this.roleAPI.patch_user_profile({
-            "user_guid": [this.userId], "role_guid": this.roleValue
-        }).toPromise();
-        if (roleData[0].USER_INFO_GUID == undefined) {
-            this._sharedService.leaveApi.openSnackBar(data.status, false);
+        try {
+            let workingData = await this._sharedService.leaveApi.patch_user_working_hours({
+                "user_guid": [this.userId],
+                "working_hours_guid": this.workingValue
+            }).toPromise();
+            if (workingData[0] == undefined) {
+                this.open = true;
+                this._sharedService.leaveApi.openSnackBar("Failed to assign working hour profile", false);
+            }
+        } catch (err) {
+            this.open = true;
+            this._sharedService.leaveApi.openSnackBar("Failed to assign working hour profile", false);
         }
         this.isBlurAssign = false;
+    }
+
+    /**
+     * save assigned profile of user role
+     * @memberof EmployeeSetupComponent
+     */
+    async assignRole() {
+        try {
+            let roleData = await this.roleAPI.patch_user_profile({
+                "user_guid": [this.userId],
+                "role_guid": this.roleValue
+            }).toPromise();
+            if (roleData[0] == undefined) {
+                this.open = true;
+                this._sharedService.leaveApi.openSnackBar('Failed to assign employee role', false);
+            }
+        } catch (err) {
+            this.open = true;
+            this._sharedService.leaveApi.openSnackBar("Failed to assign employee role", false);
+        }
+        this.isBlurRole = false;
     }
 
     /**
@@ -1280,19 +1319,16 @@ export class EmployeeSetupComponent implements OnInit {
         let val = await dialogRef.afterClosed().toPromise();
         if (val === userId) {
             let result = await this.inviteAPI.delete_user(userId).toPromise();
-            if (result[0].USER_GUID != undefined) {
-                this._sharedService.leaveApi.openSnackBar('Selected employee profile was deleted', true);
-                this.endPoint();
+            if (result[0] != undefined) {
+                if (result[0].USER_GUID != undefined) {
+                    this._sharedService.leaveApi.openSnackBar('Selected employee profile was deleted', true);
+                    this.endPoint();
+                }
             } else {
-                this._sharedService.leaveApi.openSnackBar(result.status, false);
+                this._sharedService.leaveApi.openSnackBar('Failed to delete employee profile', false);
             }
         }
     }
-
-    onCreateNewProfile() {
-        console.log('onCreateNewProfile');
-    }
-
 
     /**
      * Create a rest day array list
@@ -1405,9 +1441,7 @@ export class EmployeeSetupComponent implements OnInit {
         }
         this.calendarProfileAPI.post_calendar_profile(newCalProfile).subscribe(data => {
             if (data[0].CALENDAR_DETAILS_GUID != undefined) {
-                if (this.setDefaultProfile) {
-                    this.workingHourAPI.post_profile_default('calendar', data[0].CALENDAR_DETAILS_GUID).subscribe(data => { })
-                }
+                this.workingHourAPI.post_profile_default('calendar', data[0].CALENDAR_GUID).subscribe(data => { })
                 this.calendarProfileAPI.notification('New calendar profile was created successfully.', true);
                 this.showSpinner = false;
                 this.newProfileName.reset();
@@ -1417,10 +1451,12 @@ export class EmployeeSetupComponent implements OnInit {
                 this.calRestDay = this.selectedWeekday = [];
                 this.newDayControl.reset();
             } else {
-                this.calendarProfileAPI.notification(data.status, false);
+                this.calendarProfileAPI.notification("Failed to create new calendar profile", false);
                 this.showSpinner = false;
             }
-
+        }, catchErr => {
+            this.calendarProfileAPI.notification(JSON.parse(catchErr._body).error, false);
+            this.showSpinner = false;
         });
 
     }
@@ -1576,20 +1612,17 @@ export class EmployeeSetupComponent implements OnInit {
      */
     esPatchWorkingHourSetup(body: any) {
         this.workingHourAPI.post_working_hours(body).subscribe(response => {
-            if (response[0].WORKING_HOURS_GUID != undefined) {
-                if (this.setDefaultProfile) {
-                    this.workingHourAPI.post_profile_default('working-hour', response[0].WORKING_HOURS_GUID).subscribe(data => { })
-                }
+            if (response[0] != undefined) {
+                this.workingHourAPI.post_profile_default('working-hour', response[0].WORKING_HOURS_GUID).subscribe(data => { })
                 this.workingHourAPI.showPopUp('New working hour profile was created successfully', true);
-                this.esRefreshProfile(response[0].WORKING_HOURS_GUID);
+                // this.esRefreshProfile(response[0].WORKING_HOURS_GUID);
             } else {
-                this.workingHourAPI.showPopUp(response.status, false);
+                this.workingHourAPI.showPopUp('Failed to create new working hour profile', false);
             }
             this.showSmallSpinner = false;
         }, err => {
-            this.workingHourAPI.showPopUp(JSON.parse(err._body).status, false);
+            this.workingHourAPI.showPopUp(JSON.parse(err._body).statusText, false);
         })
-        // }
     }
 
 
@@ -1598,22 +1631,22 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {string} id
      * @memberof WorkingHourComponent
      */
-    esRefreshProfile(id: string) {
-        this.valueChange.emit(id);
-    }
+    // esRefreshProfile(id: string) {
+    //     this.valueChange.emit(id);
+    // }
 
     /**
      * Event for checkbox to set default working hour profile
      * @param {*} evt
      * @memberof EmployeeSetupComponent
      */
-    setDefaultProfile(evt, type) {
-        (type === 'working-hour') ?
-            this.defaultWHProfile = evt.target.checked :
-            (type === 'role') ?
-                this.defaultRoleProfile = evt.target.checked :
-                this.defaultCalendarProfile = evt.target.checked;
-    }
+    // setDefaultProfile(evt, type) {
+    //     (type === 'working-hour') ?
+    //         this.defaultWHProfile = evt.target.checked :
+    //         (type === 'role') ?
+    //             this.defaultRoleProfile = evt.target.checked :
+    //             this.defaultCalendarProfile = evt.target.checked;
+    // }
 
     /**
      * Create new role profile
@@ -1624,16 +1657,15 @@ export class EmployeeSetupComponent implements OnInit {
         newRoleDetails = roleDetails;
         newRoleDetails.code = this.newRoleForm.controls.roleName.value;
         newRoleDetails.description = this.newRoleForm.controls.roleDescription.value;
-        // console.log('newRoleDetails: ' + JSON.stringify(newRoleDetails, null, " "))
         this.roleAPI.post_role_profile(newRoleDetails).subscribe(ret => {
             if (ret[0].ROLE_GUID != undefined) {
                 this.roleAPI.snackbarMsg('New role profile was created successfully', true);
-                //         if (this.defaultRoleProfile === true) {
-                //             this.workingHourAPI.post_profile_default('role', ret[0].ROLE_GUID).subscribe(data => { })
-                //         }
+                this.workingHourAPI.post_profile_default('role', ret[0].ROLE_GUID).subscribe(data => { })
             } else {
                 this.roleAPI.snackbarMsg(ret.status, false);
             }
+            this.showSmallSpinner = false;
+            this.roleAPI.get_role_profile_list().subscribe(data => this.roleList = data);
         });
     }
 }

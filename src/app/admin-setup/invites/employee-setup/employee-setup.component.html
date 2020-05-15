@@ -92,9 +92,10 @@
             <input matInput [value]="calDefaultYear" readonly>
         </mat-form-field>
         <ion-item lines="none" style=" font-size: 12px; opacity: 0.8; color: #43425d; display: flex;">
-            <ion-checkbox mode="ios" style="width: 16px; height: 16px;" value="defaultCalendarProfile"
-                (ionChange)="setDefaultProfile($event, 'calendar')"></ion-checkbox>
-            <ion-label>Set as default Calendar
+            <ion-checkbox mode="ios" style="width: 16px; height: 16px;opacity: 0.8;" [checked]="defaultCalendarProfile"
+                [disabled]=true>
+            </ion-checkbox>
+            <ion-label style="opacity: 0.8;">Set as default Calendar
                 Profile</ion-label>
 
         </ion-item>
@@ -109,7 +110,6 @@
                 Create
             </ion-button>
         </div>
-
     </ion-content>
 </ion-menu>
 <ion-router-outlet id="addNewCalendar">
@@ -152,7 +152,7 @@
                             <mat-error>Description is <strong>required</strong></mat-error>
                         </mat-form-field>
                     </div>
-                    <div style="display: block;padding-bottom: 15px; flex: 1 1 40%;">
+                    <div style="display: block; width:100%">
                         <span style="font-size: 12px;color:#808495;padding-left: 18px;display: block">
                             WORKING HOUR</span>
                         <div style="display: inline-block;padding-bottom: 10px;">
@@ -180,12 +180,12 @@
                             </div>
                         </div>
                     </div>
-                    <div style=" flex: 1 1 40%;">
+                    <div style="display: flex;padding-bottom: 15px;">
                         <ion-item lines="none" style=" font-size: 12px; opacity: 0.8; color: #43425d; display: flex;">
-                            <ion-checkbox mode="ios" style="width: 16px; height: 16px;" value="defaultWHProfile"
-                                (ionChange)="setDefaultProfile($event, 'working-hour')">
+                            <ion-checkbox mode="ios" style="width: 16px; height: 16px;opacity: 0.8;"
+                                [checked]="defaultWHProfile" [disabled]=true>
                             </ion-checkbox>
-                            <ion-label>Set as default Working Hour
+                            <ion-label style="opacity: 0.8;">Set as default Working Hour
                                 Profile</ion-label>
                         </ion-item>
 
@@ -397,27 +397,31 @@
                 </mat-form-field>
             </div>
             <div style="width: 100%;">
-                <mat-form-field appearance="outline" style="margin: 15px;display: block;font-size: 12px;color:#43425d;">
+                <mat-form-field appearance="outline"
+                    style="margin: 15px;display: block;font-size: 12px;color:#43425d;margin-bottom: 0;">
                     <mat-label>Description</mat-label>
                     <textarea matInput formControlName="roleDescription" required
                         style="height: 100px;resize: none;"></textarea>
                 </mat-form-field>
             </div>
-            <div style="width: 100%; font-size: 11px; opacity: 0.8; color: #43425d; background: #f5f6fa;
-                                    padding:15px; margin: 0px 15px;">
-                <!-- <ion-item lines="none" style=" font-size: 12px; opacity: 0.8; color: #43425d; display: flex;">
-                    <ion-checkbox mode="ios" style="width: 16px; height: 16px;" value="defaultRoleProfile"
-                    (ionChange)="setDefaultProfile($event, 'role')">
+            <div style="display: block;padding-bottom: 15px;">
+                <ion-item lines="none" style=" font-size: 12px; opacity: 0.8; color: #43425d; display: flex;">
+                    <ion-checkbox mode="ios" style="width: 16px; height: 16px;opacity: 0.8;"
+                        [checked]="defaultRoleProfile" [disabled]=true>
                     </ion-checkbox>
-                    <ion-label>Set as default profile</ion-label>
-
-                </ion-item> -->
+                    <ion-label style="opacity: 0.8;">Set as default role profile</ion-label>
+                </ion-item>
+            </div>
+            <div style="font-size: 11px; opacity: 0.8; color: #43425d; background: #f5f6fa;
+                                    padding:15px; margin: 0px 15px;">
                 You need to configure role profile details based on thier access level in Role Mangement page
             </div>
             <div style="margin: 20px;text-align: center;">
                 <ion-button
                     style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
-                    color="primary" (click)="createNewRole();showSmallSpinner=true" [disabled]="!newRoleForm.valid">
+                    color="primary"
+                    (click)="createNewRole();showSmallSpinner=true;inviteAPI.menu.close('createNewRolePopup');"
+                    [disabled]="!newRoleForm.valid">
                     Create <ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
                     </ion-spinner>
                 </ion-button>
@@ -1281,7 +1285,8 @@
                                             <input matInput placeholder="Date of Hired" (blur)="isBlurEmployment = true"
                                                 [matDatepicker]="dateJoin" [formControl]="dateOfJoin" required>
                                             <mat-datepicker-toggle matSuffix [for]="dateJoin"></mat-datepicker-toggle>
-                                            <mat-datepicker #dateJoin></mat-datepicker>
+                                            <mat-datepicker #dateJoin (closed)="isBlurEmployment = true">
+                                            </mat-datepicker>
                                         </mat-form-field>
                                     </ion-col>
                                     <!-- </ion-row>
@@ -1399,7 +1404,7 @@
                                     <mat-form-field appearance="outline"
                                         style="font-size: 12px;width: 100%;padding-left: 15px;">
                                         <mat-label>Select calendar profile</mat-label>
-                                        <mat-select (blur)="isBlur = true" required [disabled]="mode === 'OFF'"
+                                        <mat-select (blur)="isBlurAssign = true" required [disabled]="mode === 'OFF'"
                                             *ngIf="lengthCalendarList > 0" [(value)]="calendarValue">
                                             <mat-option *ngFor="let item of calendarList; let j=index"
                                                 [value]="item.calendar_guid" class="profile-dropdown">
@@ -1413,7 +1418,7 @@
                                                 </ion-icon> -->
                                             </mat-option>
                                         </mat-select>
-                                        <mat-select (blur)="isBlur = true" required [disabled]="mode === 'OFF'"
+                                        <mat-select (blur)="isBlurAssign = true" required [disabled]="mode === 'OFF'"
                                             *ngIf="lengthCalendarList === 0" [(value)]="selected">
                                             <mat-option
                                                 (click)="menuOpen = true;inviteAPI.menu.enable(true,
@@ -1516,7 +1521,7 @@
                                 <mat-form-field appearance="outline" *ngIf="roleListLength > 0"
                                     style="width: 40%;padding-left: 15px;font-size: 12px;">
                                     <mat-label> Types of role</mat-label>
-                                    <mat-select (blur)="isBlurAssign = true" required [disabled]="mode === 'OFF'"
+                                    <mat-select (blur)="isBlurRole = true" required [disabled]="mode === 'OFF'"
                                         [(value)]="roleValue">
                                         <mat-option *ngFor="let item of roleList; let j=index" [value]="item.role_guid"
                                             class="profile-dropdown">
@@ -1533,7 +1538,7 @@
                                 <mat-form-field appearance="outline" *ngIf="roleListLength === 0"
                                     style="width: 40%;padding-left: 15px;font-size: 12px;">
                                     <mat-label *ngIf="roleListLength === 0">Not Available</mat-label>
-                                    <mat-select (blur)="isBlurAssign = true" required [disabled]="mode === 'OFF'"
+                                    <mat-select (blur)="isBlurRole = true" required [disabled]="mode === 'OFF'"
                                         *ngIf="roleListLength === 0">
                                         <mat-option (click)="menuOpen = true;inviteAPI.menu.enable(true,
                                                 'createNewRolePopup');inviteAPI.menu.open('createNewRolePopup')">
