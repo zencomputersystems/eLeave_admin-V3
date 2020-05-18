@@ -170,7 +170,7 @@ leavetest6@zen.com.my,ZEN-00003,Test 3 ZEN,Test 3,000101-07-5682,9/7/2018,Female
         queryHeaders.append('Authorization', 'JWT ' + JSON.parse(this.local.get('access_token')));
         const options = new RequestOptions({ headers: queryHeaders });
         return new Promise((resolve) => {
-            this.leaveApi.http.post('http://zencore.zen.com.my:3000/api/userimport/csv', this.formData, options)
+            this.leaveApi.http.post('https://zencore.zen.com.my:3000/api/userimport/csv', this.formData, options)
                 .pipe(map((response) => {
                     return response;
                 })).subscribe(

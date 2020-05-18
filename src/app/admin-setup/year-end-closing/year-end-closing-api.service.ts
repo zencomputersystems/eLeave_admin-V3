@@ -20,7 +20,7 @@ export class YearEndClosingApiService {
      * @type {string}
      * @memberof YearEndClosingApiService
      */
-    public baseUrl: string = "http://zencore.zen.com.my:3000";
+    public baseUrl: string = "https://zencore.zen.com.my:3000";
 
     /**
      *Creates an instance of YearEndClosingApiService.

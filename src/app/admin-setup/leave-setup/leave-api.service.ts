@@ -21,7 +21,7 @@ export class LeaveApiService {
      * @type {string}
      * @memberof LeaveApiService
      */
-    public baseUrl: string = "http://zencore.zen.com.my:3000";
+    public baseUrl: string = "https://zencore.zen.com.my:3000";
 
     /**
      * snackbar reference
