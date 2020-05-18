@@ -93,7 +93,7 @@
                         Current default profile already existed. This procees will
                         replace previous default profile</div>
                 </div> -->
-                
+
                 <div style="margin: 20px;text-align: center;">
                     <ion-button
                         style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
@@ -214,15 +214,13 @@
                                                 {{role.total_employee_attach}}</p>
                                         </div>
                                     </ion-col>
-                                    <ion-col *ngIf="mode == 'OFF'"
-                                        style="text-align: right;padding-right: 15px; display: flex;align-items: center;
+                                    <ion-col *ngIf="mode == 'OFF'" style="text-align: right;padding-right: 15px; display: flex;align-items: center;
                                         justify-content: center; ">
                                         <ion-icon name="star" style="opacity: 0.8; width: 16px; height: 16px;
                                                 color: #babdc7;margin-right: 5px;" *ngIf="role.isDefault">
                                         </ion-icon>
                                     </ion-col>
-                                    <ion-col align-self-center *ngIf="mode == 'ON'"
-                                        style="text-align: right;padding-right: 15px; display: flex; flex-flow: row
+                                    <ion-col align-self-center *ngIf="mode == 'ON'" style="text-align: right;padding-right: 15px; display: flex; flex-flow: row
                                         wrap; align-items: center;">
                                         <ion-icon name="star"
                                             [ngClass]="{ 
@@ -270,8 +268,7 @@
                                                 style="font-style: italic;font-weight: 600;padding-bottom: 5px;font-size: 11px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
                                                 {{role.description}}
                                             </p>
-                                            <div
-                                                style="font-size: 10px;color: #4d4f5c;padding: 0;overflow:
+                                            <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow:
                                                 hidden;white-space: pre-line;text-overflow: ellipsis;">
                                                 Assigned Employee No.: <p
                                                     style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
@@ -313,15 +310,17 @@
                         <div
                             style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
                             <ion-row style="flex-flow: nowrap">
-                                <ion-col style="font-size: 12px;white-space: nowrap;
-                                    text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                                    ASSIGNED EMPLOYEE</ion-col>
-                                <ion-col style="max-width: 28px;align-self: center; min-width: fit-content; display: flex;">
-                                    <ion-checkbox mode="ios" style="width: 16px; height: 16px; margin-top: 1px;  margin-right: 5px;" *ngIf="mode == 'ON'"
-                                        [(ngModel)]="roleListCheckAll" [indeterminate]="roleListIsIndeterminate" (click)="checkAllRoleListAssignedEmployees()">
+                                <ion-col *ngIf="mode == 'ON'"
+                                    style="max-width: 28px;align-self: center; min-width: fit-content; display: flex;">
+                                    <ion-checkbox mode="ios"
+                                        style="width: 16px; height: 16px; margin-top: 1px;  margin-right: 5px;"
+                                        *ngIf="mode == 'ON'" [(ngModel)]="roleListCheckAll"
+                                        [indeterminate]="roleListIsIndeterminate"
+                                        (click)="checkAllRoleListAssignedEmployees()">
                                     </ion-checkbox>
                                     <div *ngIf="roleListIsIndeterminate || roleListCheckAll">
-                                        <ion-icon name="more" style="width: 18px; height: 18px; color: #7069d8; font-size: 16px; cursor: pointer;"
+                                        <ion-icon name="more"
+                                            style="width: 18px; height: 18px; color: #7069d8; font-size: 16px; cursor: pointer;"
                                             mat-button [matMenuTriggerFor]="menu">
                                         </ion-icon>
                                         <mat-menu #menu="matMenu">
@@ -338,6 +337,9 @@
                                         </mat-menu>
                                     </div>
                                 </ion-col>
+                                <ion-col style="font-size: 12px;white-space: nowrap;
+                                    text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    ASSIGNED EMPLOYEE</ion-col>
                                 <!-- <ion-col
                                     style="max-width: 10px;padding-left: 0px;padding-right: 15px; padding-bottom: 0px; padding-top: 3px;"
                                     *ngIf="roleListIsIndeterminate || roleListCheckAll">
@@ -381,13 +383,15 @@
                                         (ionChange)="checkRoleListAssignedEmployeeEvent()">
                                     </ion-checkbox>
                                     <img src="assets/icon/leave_setup/icon_reorder@3x.png"
-                                        style="width: 16px;height: 16px;" *ngIf="draggable.handle" dndHandle></div>
+                                        style="width: 16px;height: 16px;" *ngIf="draggable.handle" dndHandle>
+                                </div>
                                 <p [hidden]="!draggable.handle" style="color: #4d4f5c;font-size:11px;display: flex;">
                                     {{draggable.content}}</p>
                             </mat-card>
                         </div>
                     </div>
-                    <app-role-rights style="flex: 2 1 450px; flex-wrap: wrap;" [leaveSetup]=true [roleID]="roleIdOutput" [editMode]="mode">
+                    <app-role-rights style="flex: 2 1 450px; flex-wrap: wrap;" [leaveSetup]=true [roleID]="roleIdOutput"
+                        [editMode]="mode">
                     </app-role-rights>
                 </div>
             </ion-card-content>

@@ -218,17 +218,20 @@ export class RoleListComponent implements OnInit {
         for (let i = 0; i < this.assignedNameList.length; i++) {
             if (evt.data === this.assignedNameList[i].fullname) {
                 this.draggedUserId(i);
-                let response = await this.roleAPi.patch_user_profile({
-                    "user_guid": this._filteredList,
-                    "role_guid": roleItem.role_guid
-                }).toPromise();
-                if (response[0].USER_INFO_GUID == undefined) {
-                    this.roleAPi.snackbarMsg(response.status, false);
+                try {
+                    let response = await this.roleAPi.patch_user_profile({
+                        "user_guid": this._filteredList,
+                        "role_guid": roleItem.role_guid
+                    }).toPromise();
+                    this.assignedNameList.splice(i, 1);
+                } catch (err) {
+                    this.roleAPi.snackbarMsg(err.statusText, false);
                 }
-                this.assignedNameList.splice(i, 1);
                 this._filteredList = [];
                 let data = await this.roleAPi.get_role_profile_list().toPromise();
                 this.roleList = data;
+                this.roleListCheckAll = false;
+                this.roleListIsIndeterminate = false;
             }
         }
     }
@@ -323,7 +326,7 @@ export class RoleListComponent implements OnInit {
         this.roleAPi.post_role_profile(details).subscribe(res => {
             if (res[0].ROLE_GUID != undefined) {
                 if (this.defaultProfileRole === true) {
-                    this.workingHourWorkingHourApiService.post_profile_default('role', res[0].ROLE_GUID).subscribe(data => {});
+                    this.workingHourWorkingHourApiService.post_profile_default('role', res[0].ROLE_GUID).subscribe(data => { });
                 }
                 this.ngOnInit();
                 this.roleAPi.snackbarMsg('New role profile was created successfully', true);
@@ -426,7 +429,7 @@ export class RoleListComponent implements OnInit {
         });
     }
 
-    
+
     checkRoleListAssignedEmployeeEvent() {
         const totalItems = this.assignedNameList.length;
         let checked = 0;
@@ -447,8 +450,29 @@ export class RoleListComponent implements OnInit {
             this.roleListCheckAll = false;
         }
     }
-    reassignToOtherRoles(item) {
-        console.log('reassignToOtherRoles: ' + JSON.stringify(item, null, " "))
+
+    /**
+     * assign role profile by bulk
+     * @param {*} item
+     * @memberof RoleListComponent
+     */
+    async reassignToOtherRoles(item) {
+        this._filteredList = this.assignedNameList.filter(list => list.isChecked === true).map(function (o) { return o.user_guid; });
+        try {
+            let value = await this.roleAPi.patch_user_profile({
+                "user_guid": this._filteredList,
+                "role_guid": item.role_guid
+            }).toPromise();
+        }
+        catch (error) {
+            this.roleAPi.snackbarMsg(error.statusText, false);
+        }
+        this.assignedNameList = this.assignedNameList.filter(item => item.isChecked !== true);
+        this._filteredList = [];
+        let list = await this.roleAPi.get_role_profile_list().toPromise();
+        this.roleList = list;
+        this.roleListCheckAll = false;
+        this.roleListIsIndeterminate = false;
     }
 
     /**
@@ -515,7 +539,7 @@ export class RoleListComponent implements OnInit {
             this.getDefaultRole();
         });
         this.roleAPi.get_user_list().subscribe(list => this._userList = list);
-        
+
     }
 
     /**

@@ -305,7 +305,7 @@
                                         *ngIf="slideInOut && modeValue == 'ON'" [(ngModel)]="masterCheck"
                                         [indeterminate]="isIndeterminate" (click)="checkAllAssignedEmployees($event)">
                                     </ion-checkbox>
-                                    <div *ngIf="isIndeterminate || this.masterCheck;">
+                                    <div *ngIf="isIndeterminate || masterCheck;">
                                         <ion-icon name="more" class="addIcon"
                                             style="width: 18px; height: 18px; color: #7069d8; font-size: 16px; cursor: pointer; padding-left: 10px;"
                                             *ngIf="slideInOut && modeValue == 'ON'" mat-button

@@ -224,6 +224,8 @@ export class WorkingHourListComponent implements OnInit {
                     this.workingHrAPI.showPopUp(JSON.parse(error._body).status, false);
                 }
                 this._droppedUser = [];
+                this.isCheckAll = false;
+                this.isIndeterminateState = false;
                 this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
             }
         }

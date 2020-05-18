@@ -394,6 +394,8 @@ export class CalendarProfileComponent implements OnInit {
                 catch (res) {
                     this.calendarProfileAPI.notification(res.statusText, false);
                 }
+                this.masterCheck = false;
+                this.isIndeterminate = false;
                 this._employeeList = [];
                 this.getAssignedList();
                 this.profileList = await this.calendarProfileAPI.get_calendar_profile_list().toPromise();
