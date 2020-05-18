@@ -103,9 +103,9 @@ export class BulkImportComponent implements OnInit {
     */
     downloadFile() {
         const blob = new Blob([`STAFF_EMAIL,STAFF_ID,FULLNAME,NICKNAME,NRIC,DOB,GENDER,MOBILE_NUMBER,WORK_NUMBER,MARITAL_STATUS,ADDRESS,POSTCODE,CITY,STATE,COUNTRY,MANAGER_EMAIL,DESIGNATION,DEPARTMENT,COST_CENTRE,BRANCH,DIVISION,SECTION,COMPANY,JOIN_DATE,CONFIRMATION_DATE,RESIGNATION_DATE
-        leavetest4@zen.com.my,ZEN-00001,Test 1 ZEN,Test 1,990101-10-5656,7/9/2018,Male,60123338272,60123338275,Single,"This is address,",44333,Shah Alam,Selangor,Malaysia,emily@kool.my,Software Tester,Tester,Tester,Cyberjaya,Tester,Tester,Zen Company Sdn Bhd,9/7/2018,9/12/2018,31/12/2021
-        leavetest5@zen.com.my,ZEN-00002,Test 2 ZEN,Test 2,870101-10-5680,9/7/2018,Female,60123338273,60123338276,Married,"This is address,",44333,Shah Alam,Selangor,Malaysia,emily@kool.my,Software Engineer,Tester,Tester,Cyberjaya,Tester,Tester,Zen Company Sdn Bhd,9/7/2018,9/10/2018,9/7/2020
-        leavetest6@zen.com.my,ZEN-00003,Test 3 ZEN,Test 3,000101-07-5682,9/7/2018,Female,60123338274,60123338277,Married,"This is address,",44333,Shah Alam,Selangor,Malaysia,emily@kool.my,Solution Consultant,Tester,Tester,Cyberjaya,Tester,Tester,Zen Company Sdn Bhd,9/12/2018,9/10/2018,9/7/2020`], { type: "text/plain" });
+leavetest4@zen.com.my,ZEN-00001,Test 1 ZEN,Test 1,990101-10-5656,7/9/2018,Male,60123338272,60123338275,Single,"This is address,",44333,Shah Alam,Selangor,Malaysia,emily@kool.my,Software Tester,Tester,Tester,Cyberjaya,Tester,Tester,Zen Company Sdn Bhd,9/7/2018,9/12/2018,31/12/2021
+leavetest5@zen.com.my,ZEN-00002,Test 2 ZEN,Test 2,870101-10-5680,9/7/2018,Female,60123338273,60123338276,Married,"This is address,",44333,Shah Alam,Selangor,Malaysia,emily@kool.my,Software Engineer,Tester,Tester,Cyberjaya,Tester,Tester,Zen Company Sdn Bhd,9/7/2018,9/10/2018,9/7/2020
+leavetest6@zen.com.my,ZEN-00003,Test 3 ZEN,Test 3,000101-07-5682,9/7/2018,Female,60123338274,60123338277,Married,"This is address,",44333,Shah Alam,Selangor,Malaysia,emily@kool.my,Solution Consultant,Tester,Tester,Cyberjaya,Tester,Tester,Zen Company Sdn Bhd,9/12/2018,9/10/2018,9/7/2020`], { type: "text/plain" });
         if (window.navigator.msSaveOrOpenBlob)  // IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
             window.navigator.msSaveBlob(blob, "csv-template.csv");
         else {
