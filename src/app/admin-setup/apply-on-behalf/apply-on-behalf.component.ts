@@ -348,8 +348,6 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     async ngOnInit() {
         this.showSpinner = true;
-        console.log('applyonbehalfPlatformApi:' + this.applyonbehalfPlatformApi);
-        console.log('platform:' + this.applyonbehalfPlatformApi.platforms());
         (this.applyonbehalfPlatformApi.platforms().includes('tablet' || 'desktop')) ? console.log('is tab & web') : console.log('mobile app');
         this.leaveAPI.get_admin_leavetype().subscribe(leave => {
             this.leaveTypes = leave;
@@ -602,7 +600,7 @@ export class ApplyOnBehalfComponent implements OnInit {
                 if (JSON.parse(response._body)[0].valid === true) {
                     this.leaveAPI.openSnackBar('You have submitted successfully', true);
                 }
-            });
+            }, err=> this.leaveAPI.openSnackBar('Failed to submit leave application', false));
     }
 
     /**
