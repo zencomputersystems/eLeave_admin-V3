@@ -331,15 +331,17 @@ export class RoleListComponent implements OnInit {
                 this.ngOnInit();
                 this.roleAPi.snackbarMsg('New role profile was created successfully', true);
             } else {
-                this.roleAPi.snackbarMsg(res.status, false);
+                this.roleAPi.snackbarMsg('Failed to create new role profile', false);
             }
             this._sharedService.menu.close('createNewRoleDetails');
             this.newRoleName.reset();
             this.newRoleDescription.reset();
             this.showSmallSpinner = false;
             this.showWarning = false;
+            this.defaultProfileRole = false;
         }, error => {
-            this.roleAPi.snackbarMsg(JSON.parse(error._body).status, false);
+            this.roleAPi.snackbarMsg(error.statusText, false);
+            this.showSmallSpinner = false;
         })
     }
 
@@ -361,12 +363,13 @@ export class RoleListComponent implements OnInit {
                 this.roleAPi.snackbarMsg('Role profile was updated successfully', true);
                 this.ngOnInit();
             } else {
-                this.roleAPi.snackbarMsg(results.status, false);
+                this.roleAPi.snackbarMsg('Failed to update role profile', false);
             }
             this._sharedService.menu.close('editRoleDetails');
             this.showSmallSpinner = false;
         }, error => {
-            this.roleAPi.snackbarMsg(JSON.parse(error._body).status, false);
+            this.roleAPi.snackbarMsg(error.statusText, false);
+            this.showSmallSpinner = false;
         })
     }
 
@@ -386,41 +389,26 @@ export class RoleListComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             if (result === role_guid) {
                 this.roleAPi.delete_role_profile(role_guid).subscribe(response => {
-                    if (response[0].ROLE_GUID != undefined) {
-                        this.ngOnInit();
-                        this.roleAPi.snackbarMsg('Selected role profile was deleted', true);
-                    } else {
-                        this.roleAPi.snackbarMsg(response.status, false);
+                    if (response[0] !== undefined) {
+                        if (response[0].ROLE_GUID != undefined) {
+                            this.ngOnInit();
+                            this.roleAPi.snackbarMsg('Selected role profile was deleted', true);
+                        } else {
+                            this.roleAPi.snackbarMsg('Please re-assign user to delete this profile', false);
+                        }
                     }
-                }, err => {
-                    this.roleAPi.snackbarMsg(JSON.parse(err._body).status, false);
+                    else {
+                        this.roleAPi.snackbarMsg('Role profile was failed to delete', false);
+                    }
                 })
             }
         });
     }
 
-    // checkAllRoleListAssignedEmployees() {
-    //     console.log('assignedNameList: ' + JSON.stringify(this.assignedNameList, null, " "))
-    //     const totalItems = this.assignedNameList.length;
-    //     let checked = 0;
-    //     this.assignedNameList.map(obj => {
-    //         if (obj.isChecked) checked++;
-    //     });
-    //     if (checked > 0 && checked < totalItems) {
-    //         //If even one item is checked but not all
-    //         this.roleListIsIndeterminate = true;
-    //         this.roleListCheckAll = false;
-    //     } else if (checked == totalItems) {
-    //         //If all are checked
-    //         this.roleListCheckAll = true;
-    //         this.roleListIsIndeterminate = false;
-    //     } else {
-    //         //If none is checked
-    //         this.roleListIsIndeterminate = false;
-    //         this.roleListCheckAll = false;
-    //     }
-    // }
-
+    /**
+     * tick to check all or uncheck all user
+     * @memberof RoleListComponent
+     */
     checkAllRoleListAssignedEmployees() {
         setTimeout(() => {
             this.assignedNameList.forEach(obj => {
@@ -429,7 +417,10 @@ export class RoleListComponent implements OnInit {
         });
     }
 
-
+    /**
+     * get onchanged checked value
+     * @memberof RoleListComponent
+     */
     checkRoleListAssignedEmployeeEvent() {
         const totalItems = this.assignedNameList.length;
         let checked = 0;
@@ -556,6 +547,8 @@ export class RoleListComponent implements OnInit {
                     }
                 }
             );
+        } else {
+            this.showWarning = false;
         }
     }
 }
