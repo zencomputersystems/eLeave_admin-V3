@@ -39,7 +39,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @type {boolean}
      * @memberof ApplyOnBehalfComponent
      */
-    public showList: boolean = false;
+    public showList: boolean[] = [];
 
     /**
      * Local property for leave entitlement details
@@ -257,6 +257,13 @@ export class ApplyOnBehalfComponent implements OnInit {
     public uploadedFile: any;
 
     /**
+     * expand or collapse 
+     * @type {boolean}
+     * @memberof ApplyOnBehalfComponent
+     */
+    public expand: boolean;
+
+    /**
      * Local private property to get number of day from a week
      * eg: sunday-saturday is 0-6
      * @private
@@ -375,7 +382,21 @@ export class ApplyOnBehalfComponent implements OnInit {
                     this.dateRange = arr;
                     element["date"] = this.dateRange;
                 });
+                this.showList.push(...Array(this.reportDetails.length).fill(false));
             });
+    }
+
+    /**
+     * expand or collapse user list in history slide-in menu 
+     * @param {number} index
+     * @memberof ApplyOnBehalfComponent
+     */
+    expandCollapse(index: number) {
+        if (this.showList[index]) {
+            this.showList.splice(index, 1, false);
+        } else {
+            this.showList.splice(index, 1, true);
+        }
     }
 
     /**
