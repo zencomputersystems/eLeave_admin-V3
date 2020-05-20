@@ -335,7 +335,7 @@ export class ApprovalOverrideComponent implements OnInit {
                 this.changeDetails('');
             });
         }, error => {
-            this.approvalOverrideAPI.notification(JSON.parse(error._body).status, false);
+            this.approvalOverrideAPI.notification(error.statusText, false);
         });
     }
 
