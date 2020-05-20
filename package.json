@@ -57,7 +57,7 @@
     "mobile-drag-drop": "^2.3.0-rc.2",
     "moment": "^2.24.0",
     "ng-click-outside": "^4.0.0",
-    "ng-inline-svg": "^8.3.0",
+    "ng-inline-svg": "~8.3.0",
     "ngx-drag-drop": "^2.0.0",
     "ngx-file-drop": "^6.0.0",
     "ngx-material-timepicker": "^3.3.1",
