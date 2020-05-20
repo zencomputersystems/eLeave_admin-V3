@@ -89,6 +89,13 @@ export class YearEndClosingComponent implements OnInit {
   public labelCompany: string;
 
   /**
+   * selected company id
+   * @type {string}
+   * @memberof YearEndClosingComponent
+   */
+  public companyId: string;
+
+  /**
    *Creates an instance of YearEndClosingComponent.
    * @param {MatDialog} dialog to open material dialog
    * @param {YearEndClosingApiService} yearEndApi
@@ -116,6 +123,7 @@ export class YearEndClosingComponent implements OnInit {
    * @memberof YearEndClosingComponent
    */
   async clickedCompany(item: any, index: number) {
+    this.companyId = item.TENANT_COMPANY_GUID;
     this.showSmallSpinner = true;
     this.clickedIndex = index;
     this.pendingTotal = await this.yearEndApi.get_approval_override_by_company(item.TENANT_COMPANY_GUID).toPromise();
@@ -142,10 +150,12 @@ export class YearEndClosingComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === this.selected) {
-        this.yearEndApi.post_year_end_closing(this.selected).subscribe(res => {
+        this.yearEndApi.post_year_end_closing(this.selected, this.companyId).subscribe(res => {
           this.selected = null;
-        });
-        this.yearEndApi.snackbar('Year End Closing submitted successfully', true);
+          this.companyId = null;
+          this.yearEndApi.snackbar('Year End Closing submitted successfully', true);
+        }, fail => this.yearEndApi.snackbar('Failed to submit year end closing', false)
+        );
       }
     });
   }
