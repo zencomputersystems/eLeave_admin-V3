@@ -144,7 +144,7 @@
               </ion-row>
               <mat-form-field appearance="outline"
                 style="height: 55px;font-size: 12px;width: 100%;color: #43425d;opacity: 0.8;">
-                <mat-select [(value)]="selects">
+                <mat-select [(value)]="selects" placeholder="Nothing Selected">
                   <mat-option value="leave-entitlement">Leave Entitlement Summary</mat-option>
                   <mat-option value="approval-override">Approval Override History</mat-option>
                   <mat-option value="apply-on-behalf">Apply On Behalf History</mat-option>
@@ -1032,7 +1032,8 @@
                   </ion-col>
                   <ion-col size="1.5" class="titleRow" style="min-width:175px; white-space:pre-line;">
                     <ng-container *ngFor="let leaveItems of item.leaveDetail">
-                      <p class="text">{{leaveItems.approveBy}}</p>
+                      <p class="text" *ngIf="leaveItems.approveBy !== ''">{{leaveItems.approveBy}}</p>
+                      <p class="text" *ngIf="leaveItems.approveBy === ''"><br> </p>
                     </ng-container>
                   </ion-col>
                   <ion-col size="1.5" class="titleRow" style="min-width:175px; white-space:pre-line;">
