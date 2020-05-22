@@ -959,7 +959,7 @@
               </ion-col>
             </ion-row>
             <ion-row style="display: flex; flex-flow: row nowrap; min-width: 1300px;">
-              <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
+              <ion-col size="0.3" class="titleRow" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 26px;">
                 No</ion-col>
@@ -987,7 +987,7 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 88px;">
                 No of Days</ion-col>
-              <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
+              <ion-col size="2" class="titleRow" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 175px;">
                 Approved By</ion-col>
@@ -1003,7 +1003,7 @@
             <ng-container *ngFor="let item of arrayDetails; let i=index; let odd=odd;">
               <div style="padding: 10px;" [ngClass]="{ odd: odd }">
                 <ion-row style="display: flex; flex-flow: row nowrap;">
-                  <ion-col size="0.5" class="titleRow text" style="min-width:26px;">
+                  <ion-col size="0.3" class="titleRow text" style="min-width:26px;">
                     {{i + 1}}</ion-col>
                   <ion-col size="1.5" class="titleRow text" style="min-width:175px; white-space:pre-line;">
                     {{item.employeeNo}}</ion-col>
@@ -1030,7 +1030,7 @@
                       <p class="text">{{leaveItems.noOfDays}}</p>
                     </ng-container>
                   </ion-col>
-                  <ion-col size="1.5" class="titleRow" style="min-width:175px; white-space:pre-line;">
+                  <ion-col size="2" class="titleRow" style="min-width:175px; white-space:pre-line;">
                     <ng-container *ngFor="let leaveItems of item.leaveDetail">
                       <p class="text" *ngIf="leaveItems.approveBy !== ''">{{leaveItems.approveBy}}</p>
                       <p class="text" *ngIf="leaveItems.approveBy === ''"><br> </p>
