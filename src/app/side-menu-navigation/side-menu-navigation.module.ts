@@ -6,7 +6,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { IonicModule } from '@ionic/angular';
 import { SideMenuNavigationComponent } from './side-menu-navigation.component';
-import { AuthGuard } from 'src/services/shared-service/guards/auth-guard.service';
+import { AuthGuard } from '$admin-root/src/services/shared-service/guards/auth-guard.service';
 import { sideMenuNavigationRoutes } from './side-menu-navigation.routes';
 import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';

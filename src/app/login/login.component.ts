@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/services/shared-service/auth.service';
+import { AuthService } from '$admin-root/src/services/shared-service/auth.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Headers, Http } from '@angular/http';
 

@@ -4,7 +4,7 @@ import { RequestOptions, Headers } from '@angular/http';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { LocalStorageService } from 'angular-web-storage';
-import { LeaveApiService } from 'src/app/admin-setup/leave-setup/leave-api.service';
+import { LeaveApiService } from '$admin-root/src/app/admin-setup/leave-setup/leave-api.service';
 
 /**
  * Bulk Import Page

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { SpinnerComponent } from 'src/library/spinner/spinner.component';
+import { SpinnerComponent } from '$admin-root/src/library/spinner/spinner.component';
 
 
 const routes: Routes = [

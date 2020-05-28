@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { APIService } from 'src/services/shared-service/api.service';
+import { APIService } from '$admin-root/src/services/shared-service/api.service';
 import { AdminInvitesApiService } from '../../admin-invites-api.service';
 import * as _moment from 'moment';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/admin-setup/leave-setup/date.adapter';
-import { LeaveApiService } from 'src/app/admin-setup/leave-setup/leave-api.service';
+import { AppDateAdapter, APP_DATE_FORMATS } from '$admin-root/src/app/admin-setup/leave-setup/date.adapter';
+import { LeaveApiService } from '$admin-root/src/app/admin-setup/leave-setup/leave-api.service';
 import { startWith, map, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 

@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from 'src/services/shared-service/guards/auth-guard.service';
+import { AuthGuard } from '$admin-root/src/services/shared-service/guards/auth-guard.service';
 import { SideMenuNavigationComponent } from './side-menu-navigation.component';
 import { PageNotFoundComponent } from '../page-not-found.component';
 import { LeaveSetupComponent } from '../admin-setup/leave-setup/leave-setup.component';
