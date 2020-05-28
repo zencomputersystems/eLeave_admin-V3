@@ -35,12 +35,13 @@ export class YearEndClosingApiService {
     /**
      * post year end closing year
      * @param {number} year
+     * @param {string} companyId
      * @returns {Observable<any>}
      * @memberof YearEndClosingApiService
      */
-    post_year_end_closing(year: number): Observable<any> {
+    post_year_end_closing(year: number, companyId: string): Observable<any> {
         this.apiService.headerAuthorization();
-        return this.apiService.postApi(year, '/api/admin/year-end-closing/' + year);
+        return this.apiService.postApi(year, '/api/admin/year-end-closing/' + year + '/' + companyId);
     }
 
     /**

@@ -587,9 +587,13 @@ export class ApplyOnBehalfComponent implements OnInit {
             "reason": this.applyLeaveForm.value.inputReason,
             "data": this._arrayDateSlot
         }
+        if (this.uploadedFile != undefined) {
+            applyLeaveData['attachment'] = this.uploadedFile.filename
+        } else { applyLeaveData['attachment'] = '' }
         const details = {};
         details['userId'] = this._employeeId;
         details['leaveDetails'] = applyLeaveData;
+        console.log(details);
 
         this.leaveAPI.post_apply_leave_onBehalf(details).subscribe(
             response => {
@@ -600,7 +604,7 @@ export class ApplyOnBehalfComponent implements OnInit {
                 if (JSON.parse(response._body)[0].valid === true) {
                     this.leaveAPI.openSnackBar('You have submitted successfully', true);
                 }
-            }, err=> this.leaveAPI.openSnackBar('Failed to submit leave application', false));
+            }, err => this.leaveAPI.openSnackBar('Failed to submit leave application', false));
     }
 
     /**

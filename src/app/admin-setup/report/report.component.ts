@@ -290,6 +290,13 @@ export class ReportComponent implements OnInit {
   public showGroupSelection: boolean = true;
 
   /**
+   * leave taken details
+   * @private
+   * @memberof ReportComponent
+   */
+  private _newLeaveDetails = [];
+
+  /**
    * searchbar key up value
    * @private
    * @type {string}
@@ -717,16 +724,16 @@ export class ReportComponent implements OnInit {
       this.arrayDetails = selectedMembers;
     }
     if (this.selects == 'leave-taken') {
-      const newLeaveDetails = [];
       this.arrayDetails.filter(
         m => {
           m.leaveDetail.filter(
             details => {
               if (new Date(details.startDate) >= this.firstPicker.value && new Date(details.endDate) <= this.secondPicker.value) {
-                newLeaveDetails.push(details);
-                m.leaveDetail = newLeaveDetails;
+                this._newLeaveDetails.push(details);
               }
             })
+          m.leaveDetail = this._newLeaveDetails;
+          this._newLeaveDetails = [];
         }
       );
     }
@@ -764,6 +771,9 @@ export class ReportComponent implements OnInit {
               this.arrayDetails.splice(i, 1);
             }
           }
+        }
+        if (this.arrayDetails[i].leaveDetail.length == 0) {
+          this.arrayDetails.splice(i, 1);
         }
       }
     }
