@@ -593,7 +593,6 @@ export class ApplyOnBehalfComponent implements OnInit {
         const details = {};
         details['userId'] = this._employeeId;
         details['leaveDetails'] = applyLeaveData;
-        console.log(details);
 
         this.leaveAPI.post_apply_leave_onBehalf(details).subscribe(
             response => {

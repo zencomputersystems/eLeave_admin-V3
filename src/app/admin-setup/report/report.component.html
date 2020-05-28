@@ -767,17 +767,21 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
                 min-width: 88px;">
                 End Date</ion-col>
-              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+              <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
             min-width: 88px;">
                 No of Days</ion-col>
-              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+              <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                 Status</ion-col>
-              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+              <ion-col size="0.5" class="titleRow" style="display: -webkit-box;
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
               min-width: 88px;">
                 Remarks</ion-col>
+              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+              -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;
+              min-width: 88px;">
+                Attachment</ion-col>
             </ion-row>
           </div>
 
@@ -806,12 +810,17 @@
                     {{item.startDate}}</ion-col>
                   <ion-col size="1" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
                     {{item.endDate}}</ion-col>
-                  <ion-col size="1" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
+                  <ion-col size="0.5" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
                     {{item.noOfDays}}</ion-col>
-                  <ion-col size="1" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
+                  <ion-col size="0.5" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
                     {{item.status | titlecase}}</ion-col>
-                  <ion-col size="1" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
+                  <ion-col size="0.5" class="titleRow text" style="min-width: 88px;white-space: pre-line;">
                     {{item.remarks}}
+                  </ion-col>
+                  <ion-col size="1" class="titleRow text" style="min-width: 88px;white-space: pre-line;"
+                    *ngIf="item.attachment != null">
+                    <a style="color: #7069d8;display: block;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
+                      [href]="item.link+item.attachment" download>{{item.attachment}}</a>
                   </ion-col>
                 </ion-row>
               </div>
