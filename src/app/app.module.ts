@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { XmlJson } from 'src/services/shared-service/xml-json.service';
+import { XmlJson } from '$admin-root/src/services/shared-service/xml-json.service';
 import { HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SideMenuNavigationModule } from './side-menu-navigation/side-menu-navigation.module';

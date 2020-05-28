@@ -14,7 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar
 import { CalendarProfileComponent } from './calendar-profile/calendar-profile.component';
-import { SpinnerModule } from 'src/library/spinner/spinner.module';
+import { SpinnerModule } from '$admin-root/src/library/spinner/spinner.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';

@@ -9,7 +9,7 @@ import { DashboardComponent } from './dashboard.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { SpinnerModule } from 'src/library/spinner/spinner.module';
+import { SpinnerModule } from '$admin-root/src/library/spinner/spinner.module';
 import { MatTooltipModule, MatDialogModule, MatRadioModule } from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
 import { BrowserModule } from '@angular/platform-browser';

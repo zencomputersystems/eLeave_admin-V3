@@ -3,7 +3,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from '../leave-setup/date.adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { LeaveApiService } from '../leave-setup/leave-api.service';
-import { APIService } from 'src/services/shared-service/api.service';
+import { APIService } from '$admin-root/src/services/shared-service/api.service';
 import { ReportApiService } from './report-api.service';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';

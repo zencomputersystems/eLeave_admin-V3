@@ -11,7 +11,12 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "doc:build": "npx compodoc -p tsconfig.json",
-    "doc:serve": "npx compodoc -p tsconfig.json -s"
+    "doc:serve": "npx compodoc -p tsconfig.json -s",
+    "postinstall": "link-module-alias",
+    "preinstall": "command -v link-module-alias && link-module-alias clean || true"
+  },
+  "_moduleAliases": {
+    "$admin-root": "./"
   },
   "private": true,
   "dependencies": {
@@ -53,8 +58,10 @@
     "jspdf-autotable": "^3.2.13",
     "jszip": "^3.2.2",
     "jwt-decode": "^2.2.0",
+    "link-module-alias": "^1.2.0",
     "lodash": "^4.17.15",
     "mobile-drag-drop": "^2.3.0-rc.2",
+    "module-alias": "^2.2.2",
     "moment": "^2.24.0",
     "ng-click-outside": "^4.0.0",
     "ng-inline-svg": "~8.3.0",

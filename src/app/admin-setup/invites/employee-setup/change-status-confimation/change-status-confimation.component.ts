@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AdminInvitesApiService } from '../../admin-invites-api.service';
-import { RoleApiService } from 'src/app/admin-setup/role-management/role-api.service';
+import { RoleApiService } from '$admin-root/src/app/admin-setup/role-management/role-api.service';
 
 /**
  * pop up dialog for status changed confirmation

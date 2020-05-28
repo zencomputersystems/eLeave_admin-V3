@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { APIService } from 'src/services/shared-service/api.service';
+import { APIService } from '$admin-root/src/services/shared-service/api.service';
 
 /**
  * others information in add contact, family info, education & certification
