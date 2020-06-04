@@ -12,8 +12,7 @@
     "e2e": "ng e2e",
     "doc:build": "npx compodoc -p tsconfig.json",
     "doc:serve": "npx compodoc -p tsconfig.json -s",
-    "postinstall": "link-module-alias",
-    "preinstall": "command -v link-module-alias && link-module-alias clean || true"
+    "postinstall": "link-module-alias"
   },
   "_moduleAliases": {
     "$admin-root/*": "./*"
