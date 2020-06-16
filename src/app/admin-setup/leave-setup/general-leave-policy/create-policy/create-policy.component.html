@@ -217,5 +217,33 @@
             </div>
         </ion-list>
         <ion-item class="divider" lines="full"></ion-item>
+
+        <!-- Anniversary -->
+        <ion-list lines="none">
+            <ion-item class="ionItem">
+                <ion-label
+                    [style.opacity]="policyList.PROPERTIES_XML.anniversaryBonus.allowAutoApplyLeave === true ? '0.8': '' ">
+                    Anniversary leave
+                </ion-label>
+                <ion-checkbox class="ionCheckbox" slot="start" mode="ios"
+                    [(ngModel)]="policyList.PROPERTIES_XML.anniversaryBonus.allowAutoApplyLeave"
+                    [checked]="policyList.PROPERTIES_XML.anniversaryBonus.allowAutoApplyLeave"
+                    [disabled]="modeInput === 'OFF'">
+                </ion-checkbox>
+            </ion-item>
+        </ion-list>
+        <ion-item-group style="padding-left:44px;">
+            <mat-form-field appearance="outline"
+                style="font-size: 13px;width: 166px;color:#7a8589;padding-left: 6px; padding-right: 6px;">
+                <mat-label>Leave type</mat-label>
+                <mat-select [(ngModel)]="policyList.PROPERTIES_XML.anniversaryBonus.applyLeaveOnDate"
+                    [disabled]="modeInput === 'OFF'" multiple>
+                    <mat-option>None</mat-option>
+                    <mat-option value="birthday">Birthday</mat-option>
+                    <mat-option value="join-date">Join date</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ion-item-group>
+        <ion-item class="divider" lines="full"></ion-item>
     </div>
 </div>

@@ -186,6 +186,34 @@ export class PolicyListComponent implements OnInit {
                 this.showSmallSpinner = false;
                 this.sharedService.menu.close('createCompanyDetails');
                 this.newName.reset();
+                const data = {
+                    "approvalConfirmation": {
+                        "requirement": "Anyone",
+                        "approvalLevel": null,
+                        "escalateAfterDays": null
+                    },
+                    "forfeitCFLeave": {
+                        "value": false,
+                        "day": null,
+                        "month": ""
+                    },
+                    "allowYearEndClosing": {
+                        "value": false,
+                        "day": null,
+                        "month": "",
+                        "relativeYear": "This year"
+                    },
+                    "applyOnBehalfConfirmation": false,
+                    "emailReminder": false,
+                    "anniversaryBonus": {
+                        "allowAutoApplyLeave": false,
+                        "applyLeaveOnDate": [
+                            ""
+                        ]
+                    },
+                    "tenantCompanyId": result[0].TENANT_COMPANY_GUID
+                }
+                this.policyApi.post_general_leave_policy(data).subscribe(a => {});
                 this.ngOnInit();
             }
         }, error => {
