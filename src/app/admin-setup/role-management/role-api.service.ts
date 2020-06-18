@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { MatSnackBar } from "@angular/material";
 import { SnackbarNotificationComponent } from "../leave-setup/snackbar-notification/snackbar-notification.component";
 import { APIService } from "$admin-root/src/services/shared-service/api.service";
+import { environment } from "$admin-root/src/environments/environment";
 
 /**
  * Role API
@@ -19,7 +20,7 @@ export class RoleApiService {
      * @type {string}
      * @memberof RoleApiService
      */
-    public baseUrl: string = "https://zencore.zen.com.my:3000";
+    public baseUrl: string = environment.URL + ":3000";
 
     /**
      *Creates an instance of RoleApiService.

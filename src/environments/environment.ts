@@ -8,7 +8,8 @@
  * @constant environment
  */
 export const environment = {
-  production: false
+  production: false,
+  URL: 'https://zencore.zen.com.my'
 };
 
 /*

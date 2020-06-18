@@ -169,7 +169,7 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @param {ReportApiService} reportApi
      * @memberof LeaveAdjustmentComponent
      */
-    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService, private reportApi: ReportApiService) {
+    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService, public reportApi: ReportApiService) {
         this.adjustmentForm = new FormGroup({
             company: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),

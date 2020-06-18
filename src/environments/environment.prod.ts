@@ -4,5 +4,6 @@
  * @constant environment
  */
 export const environment = {
-  production: true
+  production: true,
+  URL: 'https://zencore.zen.com.my'
 };

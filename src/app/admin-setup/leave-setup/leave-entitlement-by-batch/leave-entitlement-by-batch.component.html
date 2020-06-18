@@ -44,7 +44,7 @@
                                             <mat-option>None</mat-option>
                                             <mat-option *ngFor="let company of companyItems"
                                                 [value]=company.TENANT_COMPANY_GUID
-                                                (click)="companyClicked(company.TENANT_COMPANY_GUID);checkEnableDisableButton(true)">
+                                                (click)="companyClicked(company.TENANT_COMPANY_GUID);checkEnableDisableButton()">
                                                 {{company.NAME}}
                                             </mat-option>
                                         </mat-select>
@@ -59,11 +59,11 @@
                                         <mat-label>Please select department</mat-label>
                                         <mat-select formControlName="department" required>
                                             <mat-option value="All"
-                                                (click)="departmentClicked('All');checkEnableDisableButton(true)">
+                                                (click)="departmentClicked('All');checkEnableDisableButton()">
                                                 All</mat-option>
                                             <mat-option *ngFor="let department of departmentItems"
                                                 [value]=department.department
-                                                (click)="departmentClicked(department.department);checkEnableDisableButton(true)">
+                                                (click)="departmentClicked(department.department);checkEnableDisableButton()">
                                                 {{department.department}}
                                             </mat-option>
                                         </mat-select>
@@ -82,7 +82,7 @@
                                             <mat-option>None</mat-option>
                                             <mat-option *ngFor="let leavetype of leavetypeItems"
                                                 [value]=leavetype.LEAVE_TYPE_GUID
-                                                (click)="checkEnableDisableButton(true); getLeaveType(leavetype.LEAVE_TYPE_GUID)">
+                                                (click)="checkEnableDisableButton(); getLeaveType(leavetype.LEAVE_TYPE_GUID)">
                                                 {{leavetype.CODE}}
                                             </mat-option>
                                         </mat-select>
@@ -100,7 +100,7 @@
                                             <mat-option>None</mat-option>
                                             <mat-option *ngFor="let item of filteredEntitlement"
                                                 [value]=item.leaveEntitlementId
-                                                (click)="checkEnableDisableButton(true)">
+                                                (click)="checkEnableDisableButton()">
                                                 {{item.leaveType}}
                                             </mat-option>
                                         </mat-select>

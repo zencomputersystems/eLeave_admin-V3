@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { APIService } from "$admin-root/src/services/shared-service/api.service";
 import { MatDialog } from "@angular/material";
+import { environment } from "$admin-root/src/environments/environment";
 
 /**
  * Leave API endpoint
@@ -18,7 +19,7 @@ export class LeaveEntitlementApiService {
      * @type {string}
      * @memberof LeaveEntitlementApiService
      */
-    public baseUrl: string = "https://zencore.zen.com.my:3000";
+    public baseUrl: string = environment.URL + ":3000";
 
     /**
      *Creates an instance of LeaveEntitlementApiService.

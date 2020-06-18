@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { LocalStorageService } from 'angular-web-storage';
+import { environment } from '$admin-root/src/environments/environment';
 
 /**
  * API used in this admin folder 
@@ -25,7 +26,7 @@ export class APIService {
      * @type {string}
      * @memberof APIService
      */
-    public baseUrl: string = "https://zencore.zen.com.my:3000";
+    public baseUrl: string = environment.URL + ":3000";
 
     /**
      *Creates an instance of APIService.

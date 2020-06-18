@@ -332,7 +332,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @param {APIService} apiService
      * @memberof ApplyOnBehalfComponent
      */
-    constructor(private leaveAPI: LeaveApiService, private reportApi: ReportApiService, public applyonbehalfPlatformApi: Platform, private apiService: APIService) {
+    constructor(private leaveAPI: LeaveApiService, public reportApi: ReportApiService, public applyonbehalfPlatformApi: Platform, private apiService: APIService) {
         this.applyLeaveForm = new FormGroup({
             leaveTypes: new FormControl({ value: '', disabled: true }, Validators.required),
             firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),

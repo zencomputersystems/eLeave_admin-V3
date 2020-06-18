@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '$admin-root/src/services/shared-service/auth.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Headers, Http } from '@angular/http';
+import { environment } from '$admin-root/src/environments/environment';
 
 /**
  * Login component
@@ -221,7 +222,7 @@ export class LoginComponent implements OnInit {
    * @memberof LoginComponent
    */
   toForgotPasswordPage() {
-    return window.location.href = 'http://zencore.zen.com.my:8104/#/forgot-password/user';
+    return window.location.href = environment.URL + ':8104/#/forgot-password/user';
   }
 
 }

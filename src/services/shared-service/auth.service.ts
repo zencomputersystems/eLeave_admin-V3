@@ -4,6 +4,7 @@ import { LocalStorageService, SessionStorageService, LocalStorage, SessionStorag
 import { HttpClient } from '@angular/common/http';
 // import 'rxjs/add/operator/catch';
 import { Observable, throwError } from 'rxjs';
+import { environment } from '$admin-root/src/environments/environment';
 
 /**
  * authenticate service
@@ -20,7 +21,7 @@ export class AuthService {
      * @type {string}
      * @memberof AuthService
      */
-    public baseUrl: string = "https://zencore.zen.com.my:3000";
+    public baseUrl: string = environment.URL + ":3000";
 
     /**
      *Creates an instance of AuthService.

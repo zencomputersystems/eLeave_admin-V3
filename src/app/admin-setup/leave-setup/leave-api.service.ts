@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { APIService } from "$admin-root/src/services/shared-service/api.service";
 import { MatSnackBar } from "@angular/material";
 import { SnackbarNotificationComponent } from "./snackbar-notification/snackbar-notification.component";
+import { environment } from "$admin-root/src/environments/environment";
 
 /**
  * Leave API endpoint
@@ -21,7 +22,7 @@ export class LeaveApiService {
      * @type {string}
      * @memberof LeaveApiService
      */
-    public baseUrl: string = "https://zencore.zen.com.my:3000";
+    public baseUrl: string = environment.URL + ":3000";
 
     /**
      * snackbar reference
