@@ -1064,14 +1064,24 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails.employmentDetail.bankAccountNumber = (this.employmentDetails.employmentDetail.bankAccountNumber).toString();
             this.employmentDetails.employmentDetail.epfNumber = (this.employmentDetails.employmentDetail.epfNumber).toString();
             delete this.employmentDetails.employmentDetail["yearOfService"];
-            let resp = await this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.id).toPromise();
-            this.employmentDetails.employmentDetail = resp;
-            this.getEmploymentDetails();
-            this.isBlurEmployment = false;
-            if (resp.message != undefined) {
-                if (resp.message.statusCode === 400) {
-                    this._sharedService.leaveApi.openSnackBar(resp.message.message, false);
-                }
+            // let resp = await this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.id).toPromise();
+            // this.employmentDetails.employmentDetail = resp;
+            // this.getEmploymentDetails();
+            // this.isBlurEmployment = false;
+            // if (resp.message != undefined) {
+            //     if (resp.message.statusCode === 400) {
+            //         this._sharedService.leaveApi.openSnackBar(resp.message.message, false);
+            //     }
+            // }
+            try {
+                let resp = await this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.id).toPromise();
+                this.employmentDetails.employmentDetail = resp;
+                this.getEmploymentDetails();
+                this.isBlurEmployment = false;
+            }
+            catch (error) {
+                this.open = true;
+                this._sharedService.leaveApi.openSnackBar(JSON.parse(error._body).message[0].constraints.isNotEmpty, false);
             }
         }
     }
