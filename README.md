@@ -48,4 +48,14 @@ System:
    NodeJS : v12.15.0 (/usr/bin/node)
    npm    : 6.13.4
    OS     : Linux 5.4
+
+# Environment variable
+
+Port = 8102
+URL =  https://zencore.zen.com.my
+
+Example:
+environment.URL + ':3000'
 ```
+
+
