@@ -26,7 +26,7 @@ export class APIService {
      * @type {string}
      * @memberof APIService
      */
-    public baseUrl: string = environment.URL + ":3000";
+    public baseUrl: string = environment.API_URL;
 
     /**
      *Creates an instance of APIService.

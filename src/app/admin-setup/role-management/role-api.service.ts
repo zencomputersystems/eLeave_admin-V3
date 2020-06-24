@@ -20,7 +20,7 @@ export class RoleApiService {
      * @type {string}
      * @memberof RoleApiService
      */
-    public baseUrl: string = environment.URL + ":3000";
+    public baseUrl: string = environment.API_URL;
 
     /**
      *Creates an instance of RoleApiService.

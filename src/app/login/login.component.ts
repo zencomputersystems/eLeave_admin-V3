@@ -222,7 +222,7 @@ export class LoginComponent implements OnInit {
    * @memberof LoginComponent
    */
   toForgotPasswordPage() {
-    return window.location.href = environment.URL + ':8104/#/forgot-password/user';
+    return window.location.href = environment.FORGET_PASS_URL + '/#/forgot-password/user';
   }
 
 }

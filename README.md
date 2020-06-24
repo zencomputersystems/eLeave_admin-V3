@@ -48,4 +48,13 @@ System:
    NodeJS : v12.15.0 (/usr/bin/node)
    npm    : 6.13.4
    OS     : Linux 5.4
+
+# Environment variable
+
+PORT = 8102
+API_URL =  https://zencore.zen.com.my:3000
+FORGET_PASS_URL = https://zencore.zen.com.my:8104
+
 ```
+
+

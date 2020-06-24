@@ -21,7 +21,7 @@ export class YearEndClosingApiService {
      * @type {string}
      * @memberof YearEndClosingApiService
      */
-    public baseUrl: string = environment.URL + ":3000";
+    public baseUrl: string = environment.API_URL;
 
     /**
      *Creates an instance of YearEndClosingApiService.

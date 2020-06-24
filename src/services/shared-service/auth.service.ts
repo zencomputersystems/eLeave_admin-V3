@@ -21,7 +21,7 @@ export class AuthService {
      * @type {string}
      * @memberof AuthService
      */
-    public baseUrl: string = environment.URL + ":3000";
+    public baseUrl: string = environment.API_URL;
 
     /**
      *Creates an instance of AuthService.

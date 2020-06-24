@@ -19,7 +19,7 @@ export class LeaveEntitlementApiService {
      * @type {string}
      * @memberof LeaveEntitlementApiService
      */
-    public baseUrl: string = environment.URL + ":3000";
+    public baseUrl: string = environment.API_URL;
 
     /**
      *Creates an instance of LeaveEntitlementApiService.
