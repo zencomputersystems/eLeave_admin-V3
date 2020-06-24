@@ -51,11 +51,10 @@ System:
 
 # Environment variable
 
-Port = 8102
-URL =  https://zencore.zen.com.my
+PORT = 8102
+API_URL =  https://zencore.zen.com.my:3000
+FORGET_PASS_URL = https://zencore.zen.com.my:8104
 
-Example:
-environment.URL + ':3000'
 ```
 
 

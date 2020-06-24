@@ -22,7 +22,7 @@ export class LeaveApiService {
      * @type {string}
      * @memberof LeaveApiService
      */
-    public baseUrl: string = environment.URL + ":3000";
+    public baseUrl: string = environment.API_URL;
 
     /**
      * snackbar reference
