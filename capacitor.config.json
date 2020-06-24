@@ -1,5 +1,5 @@
 {
-  "appId": "com.leave.app",
+  "appId": "io.ionic.eleave",
   "appName": "leave",
   "bundledWebRuntime": false,
   "webDir": "www"
