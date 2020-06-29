@@ -1,8 +1,10 @@
 {
-  "name": "eleave-admin",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "@hanani/eleave-admin",
+  "version": "0.0.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zencomputersystems/eLeave_admin-V3.git"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
