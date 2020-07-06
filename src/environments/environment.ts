@@ -9,8 +9,8 @@
  */
 export const environment = {
   production: false,
-  API_URL: 'https://zencore.zen.com.my:3000',
-  FORGET_PASS_URL: 'https://zencore.zen.com.my:8104'
+  API_URL: 'https://appcore.beesuite.app',
+  FORGET_PASS_URL: 'https://resetpassword.beesuite.app '
 };
 
 /*
