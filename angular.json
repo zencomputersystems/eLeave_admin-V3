@@ -1,10 +1,10 @@
 {
   "$schema": "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
   "version": 1,
-  "defaultProject": "eLeave_admin-V3",
+  "defaultProject": "app",
   "newProjectRoot": "projects",
   "projects": {
-    "eLeave_admin-V3": {
+    "app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -78,11 +78,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "eLeave_admin-V3:build"
+            "browserTarget": "app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "eLeave_admin-V3:build:production"
+              "browserTarget": "app:build:production"
             },
             "ci": {
               "progress": false
@@ -92,7 +92,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "eLeave_admin-V3:build"
+            "browserTarget": "app:build"
           }
         },
         "test": {
@@ -139,24 +139,24 @@
         "ionic-cordova-build": {
           "builder": "@ionic/angular-toolkit:cordova-build",
           "options": {
-            "browserTarget": "eLeave_admin-V3:build"
+            "browserTarget": "app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "eLeave_admin-V3:build:production"
+              "browserTarget": "app:build:production"
             }
           }
         },
         "ionic-cordova-serve": {
           "builder": "@ionic/angular-toolkit:cordova-serve",
           "options": {
-            "cordovaBuildTarget": "eLeave_admin-V3:ionic-cordova-build",
-            "devServerTarget": "eLeave_admin-V3:serve"
+            "cordovaBuildTarget": "app:ionic-cordova-build",
+            "devServerTarget": "app:serve"
           },
           "configurations": {
             "production": {
-              "cordovaBuildTarget": "eLeave_admin-V3:ionic-cordova-build:production",
-              "devServerTarget": "eLeave_admin-V3:serve:production"
+              "cordovaBuildTarget": "app:ionic-cordova-build:production",
+              "devServerTarget": "app:serve:production"
             }
           }
         }

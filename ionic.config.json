@@ -1,5 +1,7 @@
 {
-  "name": "eLeave_admin-V3",
-  "integrations": {},
+  "name": "leave",
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
