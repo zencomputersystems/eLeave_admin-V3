@@ -17,7 +17,7 @@ import { getDataSet, reduce } from "iso3166-2-db";
 import { EventInput } from '@fullcalendar/core';
 import { PopoverController } from '@ionic/angular';
 import { SnackbarNotificationComponent } from '../../leave-setup/snackbar-notification/snackbar-notification.component';
-import { SideMenuNavigationComponent } from '$admin-root/src/app/side-menu-navigation/side-menu-navigation.component';
+import { SideMenuNavigationComponent } from '../../../../../src/app/side-menu-navigation/side-menu-navigation.component';
 
 /**
  *

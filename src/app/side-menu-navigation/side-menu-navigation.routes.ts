@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from '$admin-root/src/services/shared-service/guards/auth-guard.service';
+import { AuthGuard } from '../../../src/services/shared-service/guards/auth-guard.service';
 import { SideMenuNavigationComponent } from './side-menu-navigation.component';
 import { PageNotFoundComponent } from '../page-not-found.component';
 import { LeaveSetupComponent } from '../admin-setup/leave-setup/leave-setup.component';
@@ -19,7 +19,7 @@ import { PolicyListComponent } from '../admin-setup/leave-setup/general-leave-po
 
 export const sideMenuNavigationRoutes: Routes = [
     {
-        path: 'main',
+        path: 'administration/sub',
         component: SideMenuNavigationComponent,
         // canActivate: [AuthGuard],
         children: [
@@ -45,6 +45,6 @@ export const sideMenuNavigationRoutes: Routes = [
             { path: 'report', component: ReportComponent },
         ]
     },
-    { path: '**', component: PageNotFoundComponent },
+    // { path: '**', component: PageNotFoundComponent },
 ];
 

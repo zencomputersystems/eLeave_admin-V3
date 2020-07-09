@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { InlineSVGModule } from 'ng-inline-svg';
-import { SpinnerModule } from '$admin-root/src/library/spinner/spinner.module';
+import { SpinnerModule } from '../../../../src/library/spinner/spinner.module';
 import { DeleteListConfirmationComponent } from './delete-list-confirmation/delete-list-confirmation.component';
 import { MatDialogModule, MatButtonModule, MatMenuModule, MatDatepickerModule } from '@angular/material';
 import { DateDialogComponent } from './date-dialog/date-dialog.component';

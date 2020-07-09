@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { SpinnerModule } from '$admin-root/src/library/spinner/spinner.module';
+import { SpinnerModule } from '../../../../src/library/spinner/spinner.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDatepickerModule, MatInputModule } from '@angular/material';

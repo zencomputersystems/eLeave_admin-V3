@@ -4,7 +4,8 @@ import { RequestOptions, Headers } from '@angular/http';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { LocalStorageService } from 'angular-web-storage';
-import { LeaveApiService } from '$admin-root/src/app/admin-setup/leave-setup/leave-api.service';
+import { LeaveApiService } from '../../../../../../src/app/admin-setup/leave-setup/leave-api.service';
+import { environment } from 'src/environments/environment';
 
 /**
  * Bulk Import Page
@@ -170,7 +171,7 @@ leavetest6@zen.com.my,ZEN-00003,Test 3 ZEN,Test 3,000101-07-5682,9/7/2018,Female
         queryHeaders.append('Authorization', 'JWT ' + JSON.parse(this.local.get('access_token')));
         const options = new RequestOptions({ headers: queryHeaders });
         return new Promise((resolve) => {
-            this.leaveApi.http.post('https://zencore.zen.com.my:3000/api/userimport/csv', this.formData, options)
+            this.leaveApi.http.post(environment.API_URL + '/api/userimport/csv', this.formData, options)
                 .pipe(map((response) => {
                     return response;
                 })).subscribe(

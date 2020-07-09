@@ -4,7 +4,7 @@ import { LocalStorageService, SessionStorageService, LocalStorage, SessionStorag
 import { HttpClient } from '@angular/common/http';
 // import 'rxjs/add/operator/catch';
 import { Observable, throwError } from 'rxjs';
-import { environment } from '$admin-root/src/environments/environment';
+import { environment } from '../../../../../src/environments/environment';
 
 /**
  * authenticate service

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { APIService } from "$admin-root/src/services/shared-service/api.service";
+import { APIService } from "../../../../../src/services/shared-service/api.service";
 import { LeaveApiService } from "../leave-api.service";
 import { MatDialog } from "@angular/material";
 import { SnackbarNotificationComponent } from "../snackbar-notification/snackbar-notification.component";

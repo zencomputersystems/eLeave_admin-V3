@@ -28,7 +28,7 @@ export interface ISideMenu {
 
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { APIService } from '$admin-root/src/services/shared-service/api.service';
+import { APIService } from '../../../src/services/shared-service/api.service';
 import { filter } from 'rxjs/operators';
 import { SharedService } from '../admin-setup/leave-setup/shared.service';
 import { RouteDialogComponent } from '../admin-setup/leave-setup/route-dialog/route-dialog.component';
@@ -94,42 +94,42 @@ export class SideMenuNavigationComponent implements OnInit {
   public appPages: ISideMenu[] = [
     {
       title: 'Dashboard',
-      url: '/main/dashboard',
+      url: 'administration/sub/dashboard',
       icon: 'icon_dashboard@3x.png'
     },
     {
       title: 'Leave Setup',
-      url: '/main/leave-setup',
+      url: 'administration/sub/leave-setup',
       icon: 'icon_calendar@3x.png'
     },
     {
       title: 'Employee Setup',
-      url: '/main/employee-setup',
+      url: 'administration/sub/employee-setup',
       icon: 'icon_persons@3x.png'
     },
     {
       title: 'Role Management',
-      url: '/main/role-management',
+      url: 'administration/sub/role-management',
       icon: 'icon_setting@3x.png'
     },
     {
       title: 'Apply on Behalf',
-      url: '/main/apply-on-behalf',
+      url: 'administration/sub/apply-on-behalf',
       icon: 'icon_customers@3x.png'
     },
     {
       title: 'Approval Override',
-      url: '/main/approval-override',
+      url: 'administration/sub/approval-override',
       icon: 'icon_persons@3x.png'
     },
     {
       title: 'Year End Closing',
-      url: '/main/year-end-closing',
+      url: 'administration/sub/year-end-closing',
       icon: 'icon_calendar@3x.png'
     },
     {
       title: 'Reports',
-      url: '/main/report',
+      url: 'administration/sub/report',
       icon: 'icon_reports@3x.png'
     }
   ];

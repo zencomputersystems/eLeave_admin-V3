@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { MatSnackBar } from "@angular/material";
 import { SnackbarNotificationComponent } from "../leave-setup/snackbar-notification/snackbar-notification.component";
-import { APIService } from "$admin-root/src/services/shared-service/api.service";
-import { environment } from "$admin-root/src/environments/environment";
+import { APIService } from "../../../../src/services/shared-service/api.service";
+import { environment } from "../../../../src/environments/environment";
 
 /**
  * Role API

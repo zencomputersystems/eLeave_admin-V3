@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, Route } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '$admin-root/src/services/shared-service/auth.service';
+import { AuthService } from '../../../../src/services/shared-service/auth.service';
 
 /**
  * determine active route or vice versa

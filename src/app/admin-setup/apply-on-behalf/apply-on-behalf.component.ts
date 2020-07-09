@@ -7,7 +7,7 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../leave-setup/date.adapter';
 import { LeaveApiService } from '../leave-setup/leave-api.service';
 import { ReportApiService } from '../report/report-api.service';
-import { APIService } from '$admin-root/src/services/shared-service/api.service';
+import { APIService } from '../../../../src/services/shared-service/api.service';
 import { map } from 'rxjs/operators';
 
 

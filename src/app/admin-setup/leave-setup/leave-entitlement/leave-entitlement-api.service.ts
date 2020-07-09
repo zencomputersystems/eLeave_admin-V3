@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { APIService } from "$admin-root/src/services/shared-service/api.service";
+import { APIService } from "../../../../../src/services/shared-service/api.service";
 import { MatDialog } from "@angular/material";
-import { environment } from "$admin-root/src/environments/environment";
+import { environment } from "../../../../../src/environments/environment";
 
 /**
  * Leave API endpoint
