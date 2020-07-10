@@ -45,27 +45,27 @@ export class LeaveSetupComponent implements OnInit {
     public leaveSetupPage = [
         {
             title: 'Calendar Profile Setup',
-            url: ['/main/leave-setup/calendar-profile-setup'],
+            url: ['/administration/leave-setup/calendar-profile-setup'],
         },
         {
             title: 'Working Hour Setup',
-            url: ['/main/leave-setup/working-hour-setup'],
+            url: ['/administration/leave-setup/working-hour-setup'],
         },
         {
             title: 'Leave Entitlement Setup',
-            url: ['/main/leave-setup/leave-entitlement-setup'],
+            url: ['/administration/leave-setup/leave-entitlement-setup'],
         },
         {
             title: 'Leave Adjustment',
-            url: ['/main/leave-setup/leave-adjustment'],
+            url: ['/administration/leave-setup/leave-adjustment'],
         },
         {
             title: 'Leave Entitlement by Batch',
-            url: ['/main/leave-setup/leave-entitlement-by-batch'],
+            url: ['/administration/leave-setup/leave-entitlement-by-batch'],
         },
         {
             title: 'General Leave Policy',
-            url: ['/main/leave-setup/general-leave-policy'],
+            url: ['/administration/leave-setup/general-leave-policy'],
         }
     ];
 

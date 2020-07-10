@@ -166,7 +166,7 @@ export class LoginComponent implements OnInit {
     let password = window.btoa(pass);
     this._auth.login(email, password)
       .subscribe(data => {
-        this.router.navigate(['administration/sub']);
+        this.router.navigate(['administration']);
         this.spinner.hide();
       }, (error) => {
         this.spinner.hide();

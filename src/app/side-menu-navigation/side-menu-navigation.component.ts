@@ -94,42 +94,42 @@ export class SideMenuNavigationComponent implements OnInit {
   public appPages: ISideMenu[] = [
     {
       title: 'Dashboard',
-      url: 'administration/sub/dashboard',
+      url: '/administration/dashboard',
       icon: 'icon_dashboard@3x.png'
     },
     {
       title: 'Leave Setup',
-      url: 'administration/sub/leave-setup',
+      url: '/administration/leave-setup',
       icon: 'icon_calendar@3x.png'
     },
     {
       title: 'Employee Setup',
-      url: 'administration/sub/employee-setup',
+      url: '/administration/employee-setup',
       icon: 'icon_persons@3x.png'
     },
     {
       title: 'Role Management',
-      url: 'administration/sub/role-management',
+      url: '/administration/role-management',
       icon: 'icon_setting@3x.png'
     },
     {
       title: 'Apply on Behalf',
-      url: 'administration/sub/apply-on-behalf',
+      url: '/administration/apply-on-behalf',
       icon: 'icon_customers@3x.png'
     },
     {
       title: 'Approval Override',
-      url: 'administration/sub/approval-override',
+      url: '/administration/approval-override',
       icon: 'icon_persons@3x.png'
     },
     {
       title: 'Year End Closing',
-      url: 'administration/sub/year-end-closing',
+      url: '/administration/year-end-closing',
       icon: 'icon_calendar@3x.png'
     },
     {
       title: 'Reports',
-      url: 'administration/sub/report',
+      url: '/administration/report',
       icon: 'icon_reports@3x.png'
     }
   ];

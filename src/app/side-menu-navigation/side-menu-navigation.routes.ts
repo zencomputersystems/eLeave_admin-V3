@@ -19,9 +19,9 @@ import { PolicyListComponent } from '../admin-setup/leave-setup/general-leave-po
 
 export const sideMenuNavigationRoutes: Routes = [
     {
-        path: 'administration/sub',
+        path: 'administration',
         component: SideMenuNavigationComponent,
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashboardComponent },
