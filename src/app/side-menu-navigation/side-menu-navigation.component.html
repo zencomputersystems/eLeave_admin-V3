@@ -32,7 +32,7 @@
       </ion-content>
     </ion-menu>
 
-    <!------------------------------ Full menu ---------------------------------------->
+    <!------------------------------ Side menu ---------------------------------------->
     <ion-menu side="start" [style.display]="displayIconMenu? '' : 'hidden'" contentId="fullSideMenuContent"
       menuId="custom" type="reveal" class="iconMenu" style="max-width: 3%; min-width: 35px;">
       <ion-header style="background-color:#2d3037; color: #f9fafc;">
@@ -75,8 +75,7 @@
         <div style="float: right;margin-top: 7px;margin-right: 5px;cursor: pointer;" [matMenuTriggerFor]="menu"><img
             src="assets/icon/top_header/Path 26@3x.png" style="width: 8px;height: 5px;float: right;"></div>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>My Profile</button>
-          <!-- (click)="router.navigate(['/main/employee-setup']);" -->
+          <button mat-menu-item (click)="router.navigate(['/main/dashboard']);">My Profile</button>
           <button mat-menu-item (click)="logout($event)">Logout</button>
         </mat-menu>
         <ion-label class="labelName" *ngIf="personalList">
