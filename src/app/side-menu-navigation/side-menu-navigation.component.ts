@@ -241,9 +241,7 @@ export class SideMenuNavigationComponent implements OnInit {
    */
   openAtBeginning() {
     if (this.displayFullMenu === true) {
-      this.sharedService.menu.enable(true, 'first');
-      this.sharedService.menu.enable(false, 'custom');
-      this.sharedService.menu.open('first');
+      this.expandMenu();
       this.onResize();
     }
   }

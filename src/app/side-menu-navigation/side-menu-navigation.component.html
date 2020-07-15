@@ -1,9 +1,9 @@
 <div (window:resize)="onResize()">
-  <ion-split-pane contentId="fullSideMenuContent" when="xs">
+  <ion-split-pane contentId="fullMenuContent" when="xs">
 
     <!------------------------------ Full menu ---------------------------------------->
-    <ion-menu class="fullMenu" [style.display]="displayFullMenu? '' : 'hidden'" contentId="fullSideMenuContent"
-      side="start" type="reveal" menuId="first">
+    <ion-menu class="fullMenu" contentId="fullMenuContent" side="start" type="reveal" menuId="first" [ngClass]="{
+        'showFull': showFullMenu === true, 'hideFull': showFullMenu === false }">
       <ion-header style="background-color:#2d3037; color: #f9fafc;">
         <ion-icon slot="start" color="medium" name="arrow-dropleft"
           style="cursor: pointer;position: absolute; margin: 56px; margin-left: 17px; font-size: 24px"
@@ -33,8 +33,9 @@
     </ion-menu>
 
     <!------------------------------ Side menu ---------------------------------------->
-    <ion-menu side="start" [style.display]="displayIconMenu? '' : 'hidden'" contentId="fullSideMenuContent"
-      menuId="custom" type="reveal" class="iconMenu" style="max-width: 3%; min-width: 35px;">
+    <ion-menu side="start" contentId="fullMenuContent" menuId="custom" type="reveal" class="iconMenu"
+      style="max-width: 3%; min-width: 35px;" [ngClass]="{
+        'showIcon': showIconMenu === true, 'hideIcon': showIconMenu === false }">
       <ion-header style="background-color:#2d3037; color: #f9fafc;">
         <ion-icon slot="start" name="menu" style="margin-top: 6px;font-size: 24px;cursor: pointer;width: 100%;"
           (click)="expandMenu()">
@@ -61,7 +62,7 @@
 
     </ion-menu>
 
-    <ion-router-outlet id="fullSideMenuContent" class="fullRouterOutlet">
+    <ion-router-outlet id="fullMenuContent" class="fullRouterOutlet">
       <ion-toolbar class="toolbar1">
         <ion-avatar [matMenuTriggerFor]="menu"
           style=" width: 32px; height: 32px; float: right; cursor:pointer;margin-top:-5px"

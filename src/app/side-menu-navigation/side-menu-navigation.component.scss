@@ -79,11 +79,14 @@ button.mat-menu-item {
     --ion-background-color: #43425d;
     --width: 35px;
   }
-  .fullSideMenuContent {
+  .fullMenuContent {
     transform: translateX(0) !important;
   }
-  .iconSideMenuContent {
-    transform: translateX(0) !important;
+  .showFull, .showIcon{
+    display: block;
+  }
+  .hideFull, .hideIcon{
+    display: none;
   }
   ::ng-deep .split-pane-md.split-pane-visible > .split-pane-side {
     border-right: 0;
