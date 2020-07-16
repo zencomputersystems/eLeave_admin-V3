@@ -58,7 +58,7 @@
     "jszip": "^3.2.2",
     "jwt-decode": "^2.2.0",
     "link-module-alias": "^1.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mobile-drag-drop": "^2.3.0-rc.2",
     "module-alias": "^2.2.2",
     "moment": "^2.24.0",
