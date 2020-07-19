@@ -297,4 +297,11 @@ export class SideMenuNavigationComponent implements OnInit {
     }
   }
 
+  routeTo(){
+    this.router.navigate(['/main'])
+  .then(() => {
+    location.reload();
+  });
+  }
+
 }
