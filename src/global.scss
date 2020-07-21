@@ -357,8 +357,67 @@ app-report
   box-shadow: none;
 }
 
+// client
+app-client
+  > ion-card
+  > div
+  > div.cardContent
+  > ion-card-content
+  > div.row
+  > div.role
+  > div
+  > ion-row
+  > ion-col
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > input.searchbar-input {
+  background: white;
+  color: #43425d;
+  opacity: 0.8;
+  border: solid 1px #a5a4bf;
+  font-size: 12px;
+  box-shadow: none !important;
+  height: 40px;
+  padding-left: 40px;
+}
+app-client
+  > ion-card
+  > div
+  > div.cardContent
+  > ion-card-content
+  > div.row
+  > div.role
+  > div
+  > ion-row
+  > ion-col
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > ion-icon.searchbar-search-icon.sc-ion-searchbar-md {
+  color: #bcbccb;
+  width: 16px;
+  box-shadow: none;
+}
+app-client
+  > ion-card
+  > div
+  > div.cardContent
+  > ion-card-content
+  > div.row
+  > div.role
+  > div
+  > ion-row
+  > ion-col
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > button
+  > ion-icon.searchbar-clear-icon.sc-ion-searchbar-md {
+  color: #bcbccb;
+  width: 16px;
+  box-shadow: none;
+}
+
 .pop-over-style .popover-content {
-  transition: .5s ease;
+  transition: 0.5s ease;
   --min-width: 300px !important;
   bottom: 0 !important;
   top: 0 !important;
@@ -404,16 +463,15 @@ $screen-breakpoints: (
       display: flex;
     }
   }
-
 }
 .confirmation-popover {
   .popover-content {
-      top: 245px;
-      left: 473.5px;
-      transform-origin: left top;
-      transform: scale(1);
-      width: 300px;
-      max-height: 600px;
-      overflow-y: auto;
+    top: 245px;
+    left: 473.5px;
+    transform-origin: left top;
+    transform: scale(1);
+    width: 300px;
+    max-height: 600px;
+    overflow-y: auto;
   }
 }

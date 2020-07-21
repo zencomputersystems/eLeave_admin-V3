@@ -134,17 +134,17 @@ export class SideMenuNavigationComponent implements OnInit {
     },
     {
       title: 'Attendance Setup',
-      url: '/main/attendance',
+      url: '/administration/attendance',
       icon: 'icon_calendar@3x.png'
     },
     {
       title: 'Client Profile',
-      url: '/main/client',
+      url: '/administration/client',
       icon: 'icon_persons@3x.png'
     },
     {
       title: 'Support Center',
-      url: '/main/support',
+      url: '/administration/support',
       icon: 'icon_calendar@3x.png'
     }
   ];

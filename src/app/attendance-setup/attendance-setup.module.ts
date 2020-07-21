@@ -16,15 +16,9 @@ import { EditorModule } from 'primeng/editor';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { AttendanceComponent } from './attendance.component';
+import { AttendanceComponent } from './attendance/attendance.component';
 import { DndModule } from 'ngx-drag-drop';
-
-const routes: Routes = [
-    {
-        path: '',
-        component: AttendanceComponent
-    }
-];
+import { ClientComponent } from './client/client.component';
 
 @NgModule({
     imports: [
@@ -48,10 +42,10 @@ const routes: Routes = [
         DndModule,
         MatMenuModule,
         MatSelectModule,
-        RouterModule.forChild(routes)
+        // RouterModule.forChild(routes)
     ],
-    declarations: [AttendanceComponent],
+    declarations: [AttendanceComponent, ClientComponent],
     entryComponents: []
 })
-export class AttendanceModule { }
+export class AttendanceSetupModule { }
 
