@@ -18,11 +18,12 @@ import { SideMenuNavigationModule } from './side-menu-navigation/side-menu-navig
 import { LoginModule } from './login/login.module';
 import { WorkingHourConfigComponent } from './admin-setup/general-component/working-hour-config/working-hour-config.component';
 import { ConfirmationWindowComponent } from './global/confirmation-window/confirmation-window.component';
+import { ClientComponent } from './attendance-setup/client/client.component';
 import { CommonModule } from '@angular/common';
 
 
 @NgModule({
-  declarations: [AppComponent, PageNotFoundComponent, WorkingHourConfigComponent, ConfirmationWindowComponent],
+  declarations: [AppComponent, PageNotFoundComponent, WorkingHourConfigComponent, ConfirmationWindowComponent, ClientComponent],
   entryComponents: [WorkingHourConfigComponent],
   imports: [
     // BrowserModule,

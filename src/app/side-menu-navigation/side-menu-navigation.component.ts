@@ -131,6 +131,21 @@ export class SideMenuNavigationComponent implements OnInit {
       title: 'Reports',
       url: '/administration/report',
       icon: 'icon_reports@3x.png'
+    },
+    {
+      title: 'Attendance Setup',
+      url: '/main/attendance',
+      icon: 'icon_calendar@3x.png'
+    },
+    {
+      title: 'Client Profile',
+      url: '/main/client',
+      icon: 'icon_persons@3x.png'
+    },
+    {
+      title: 'Support Center',
+      url: '/main/support',
+      icon: 'icon_calendar@3x.png'
     }
   ];
 
