@@ -149,6 +149,10 @@ export class SideMenuNavigationComponent implements OnInit {
     }
   ];
 
+  public image: string = "assets/icon/beesuite.png";
+
+  public imageName:string;
+
   /** 
    * This method used to get return value from property list
    * @readonly
@@ -188,6 +192,7 @@ export class SideMenuNavigationComponent implements OnInit {
    */
   constructor(private router: Router, private apiService: APIService, public sharedService: SharedService
   ) {
+    this.imageName = this.image.substring(this.image.lastIndexOf('/') + 1).split('.')[0];
     router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
@@ -297,7 +302,8 @@ export class SideMenuNavigationComponent implements OnInit {
    * @memberof SideMenuNavigationComponent
    */
   logout(event) {
-    window.location.href = '/login';
+    // window.location.href = '/';
+    this.router.navigate(['/']);
     localStorage.clear();
   }
 

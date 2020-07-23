@@ -13,9 +13,9 @@
 
       <ion-content class="fullMenuContent">
         <ion-avatar style="width: 70px; height: 70px; margin: 74px; margin-bottom: 0; margin-top: 31px;">
-          <img src="assets/icon/logo.PNG">
+          <img src={{image}} alt="beesuite" style="color:white">
         </ion-avatar>
-        <p style="display:flex; justify-content: center; color: #f9fafc;font-size: 15px;">ZEN Computer Systems</p>
+        <p style="display:flex; justify-content: center; color: #f9fafc;font-size: 15px;">{{imageName}}</p>
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
             <ion-item class="items" lines="none" (click)="activeUrl(appPages[i].url)"
@@ -44,7 +44,7 @@
 
       <ion-content class="iconMenuContent">
         <ion-avatar style="width: 28px;height: 28px;margin-top: 10px;margin-left: auto;margin-right: auto;">
-          <img src="assets/icon/logo.PNG">
+          <img src="assets/icon/beesuite.png">
         </ion-avatar>
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">

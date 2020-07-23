@@ -81,6 +81,8 @@ export class LoginComponent implements OnInit {
    */
   public showSmallSpinner: boolean = false;
 
+  public image: string = "assets/icon/beesuite.png";
+
   /**
    * This method is used to show error message when the form control of email is invalid
    * @returns
