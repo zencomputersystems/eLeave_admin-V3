@@ -18,7 +18,7 @@ import { DashboardModule } from '../dashboard/dashboard.module';
 import { MatChipsModule } from '@angular/material/chips';
 import { YearEndClosingModule } from '../admin-setup/year-end-closing/year-end-closing.module';
 import { ReportModule } from '../admin-setup/report/report.module';
-import { AttendanceSetupModule } from '../attendance-setup/attendance-setup.module';
+import { AttendanceModule } from '../attendance-setup/attendance/attendance.module';
 
 @NgModule({
     imports: [
@@ -36,7 +36,7 @@ import { AttendanceSetupModule } from '../attendance-setup/attendance-setup.modu
         MatChipsModule,
         YearEndClosingModule,
         ReportModule,
-        AttendanceSetupModule,
+        AttendanceModule,
         RouterModule.forChild(sideMenuNavigationRoutes)
     ],
     providers: [AuthGuard],
