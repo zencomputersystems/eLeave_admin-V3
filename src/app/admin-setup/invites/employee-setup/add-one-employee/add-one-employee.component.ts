@@ -445,5 +445,16 @@ export class AddOneEmployeeComponent implements OnInit {
         });
     }
 
+    /**
+     * emit company id to patch employment details
+     * @param {*} companyId
+     * @memberof AddOneEmployeeComponent
+     */
+    async emitCompanyId(companyId) {
+        this.getDetails.employmentDetail.companyId = companyId;
+        this.sendFormdata.emit([this.branchCtrl.value, this.sectionCtrl.value, this.departmentCtrl.value, this.costCentreCtrl.value, this.getDetails.employmentDetail.companyId]);
+    }
+
+
 }
 

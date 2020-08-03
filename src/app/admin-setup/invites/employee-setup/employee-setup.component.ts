@@ -759,6 +759,7 @@ export class EmployeeSetupComponent implements OnInit {
         this.employmentDetails.employmentDetail.section = event[1];
         this.employmentDetails.employmentDetail.department = event[2];
         this.employmentDetails.employmentDetail.costcentre = event[3];
+        this.employmentDetails.employmentDetail.companyId = event[4];
     }
 
     /**

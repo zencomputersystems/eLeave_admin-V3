@@ -283,7 +283,7 @@
                 <mat-select required [disabled]="disabledEditMode" [(ngModel)]="getDetails.employmentDetail.companyId">
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let company of companyList" [value]=company.TENANT_COMPANY_GUID
-                        (click)="getDetails.employmentDetail.companyId = (company.TENANT_COMPANY_GUID);">
+                        (click)="emitCompanyId(company.TENANT_COMPANY_GUID)">
                         {{company.NAME}}
                     </mat-option>
                 </mat-select>
