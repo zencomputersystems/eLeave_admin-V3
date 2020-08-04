@@ -9,7 +9,7 @@
     </ion-header>
 
     <ion-content>
-        <div style="display: block;width: 100%;" *ngFor="let item of history">
+        <div style="display: block;width: 100%;" *ngFor="let item of history; let i= index">
             <div
                 style="font-size: 11px;background: #f5f6fa;padding: 10px;padding-left: 15px;margin: 10px;color: #a3a6b4;font-weight: bold;">
                 <ion-row>
@@ -63,12 +63,12 @@
                     </ion-col>
                 </ion-row>
                 <div><img style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
-                        src="assets/icon/leave_setup/icon_request@3x.png" (click)="showList = !showList ">
+                        src="assets/icon/leave_setup/icon_request@3x.png" (click)="expandCollapseHistory(i)">
                     <p style="color: #43425d;opacity: 0.8;font-size: 11px;font-weight: bold;width: 23%;
                     display: inline-block;"> List of Employees</p>
                     <div style="border-top: 1px solid rgba(67, 66, 93, 0.2);display: inline-block;width: 72%;"></div>
                 </div>
-                <div *ngIf="showList" style="font-size: 11px;color: #808495;margin-left: 15px;">
+                <div *ngIf="showList[i] === true" style="font-size: 11px;color: #808495;margin-left: 15px;">
                     <ion-row>
                         <ion-col style="padding-top: 0;">{{item.employeeName}}</ion-col>
                     </ion-row>
@@ -111,12 +111,12 @@
                         1 persons</p>
                 </ion-row>
                 <div><img style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
-                        src="assets/icon/leave_setup/icon_request@3x.png" (click)="showList = !showList ">
+                        src="assets/icon/leave_setup/icon_request@3x.png" (click)="expandCollapseHistory(i)">
                     <p style="color: #43425d;opacity: 0.8;font-size: 11px;font-weight: bold;
                     display: inline;"> List of Employees</p>
                     <div style="border-top: 1px solid rgba(67, 66, 93, 0.2);display: inline-block;width: 72%;"></div>
                 </div>
-                <div *ngIf="showList" style="font-size: 11px;color: #808495;margin-left: 15px;">
+                <div *ngIf="showList[i] === true" style="font-size: 11px;color: #808495;margin-left: 15px;">
                     <ion-row style="padding-top: 0;">{{item.employeeName}}</ion-row>
                 </div>
             </div>
@@ -220,10 +220,10 @@
                                         style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
                                         <mat-label>Please select leave type</mat-label>
                                         <mat-select formControlName="leavetype" required>
-                                            <mat-option>None</mat-option>
+                                            <mat-option >None</mat-option>
                                             <mat-option *ngFor="let leavetype of leavetypeList"
                                                 [value]=leavetype.LEAVE_TYPE_GUID
-                                                (click)="enableDisableSubmitButton(); getLeaveEntitlement(leavetype.LEAVE_TYPE_GUID)">
+                                                (click)="enableDisableSubmitButton(); getLeaveEntitlement(leavetype.LEAVE_TYPE_GUID);">
                                                 {{leavetype.CODE}}
                                             </mat-option>
                                         </mat-select>
@@ -385,9 +385,9 @@
                                             style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                                             {{item.designation}}</p>
                                     </ion-col>
-                                    <ion-col size="4" class="colOfLeave"
+                                    <ion-col size="4" class="colOfLeave" 
                                         style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                        {{item.entitlement}}
+                                        {{item.leaveAbbr}}
                                     </ion-col>
                                     <ion-item class="divider" lines="full"></ion-item>
                                 </ion-row>
@@ -482,7 +482,7 @@
                                             <ion-item-group
                                                 style="border-top: 1px solid #e2e2e2; margin-top: 5px; padding-top: 5px;">
                                                 <ion-row>ID : {{item.staffNumber}}</ion-row>
-                                                <ion-row>Entitlement: {{item.entitlement}}</ion-row>
+                                                <ion-row >Entitlement: {{item.leaveAbbr}}</ion-row>
                                             </ion-item-group>
                                         </ion-grid>
                                     </ion-col>

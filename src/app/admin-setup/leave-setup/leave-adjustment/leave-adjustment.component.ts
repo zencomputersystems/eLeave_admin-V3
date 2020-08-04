@@ -114,7 +114,7 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @type {boolean}
      * @memberof LeaveAdjustmentComponent
      */
-    public showList: boolean = false;
+    public showList: boolean[] = [];
 
     /**
      * get url of profile picture
@@ -193,6 +193,7 @@ export class LeaveAdjustmentComponent implements OnInit {
         this.reportApi.get_bundle_report('leave-adjustment').pipe(
             map(data => data.sort((a, b) => new Date(b.adjustDate).getTime() - new Date(a.adjustDate).getTime()))
         ).subscribe(data => this.history = data);
+        this.apiService.get_user_profile_list().subscribe(list => this._userItems = list);
     }
 
     /**
@@ -216,8 +217,8 @@ export class LeaveAdjustmentComponent implements OnInit {
         this.filteredUserItems = [];
         this.showSelectToView = false;
         this.showSpinner = true;
-        let list = await this.apiService.get_user_profile_list().toPromise();
-        this._userItems = list;
+        // let list = await this.apiService.get_user_profile_list().toPromise();
+        // this._userItems = list;
         this.showCheckbox.push(false);
         for (let i = 0; i < this._userItems.length; i++) {
             this._userItems[i].isChecked = false;
@@ -232,7 +233,7 @@ export class LeaveAdjustmentComponent implements OnInit {
      */
     getLeaveEntitlement(leavetypeGUID: string) {
         for (let i = 0; i < this.filteredUserItems.length; i++) {
-            this.filteredUserItems[i].entitlement = '';
+            this.filteredUserItems[i].leaveAbbr = '';
             this.getEntitlementDetails(leavetypeGUID, i)
         }
     }
@@ -246,7 +247,7 @@ export class LeaveAdjustmentComponent implements OnInit {
         let data = await this.leaveSetupAPI.get_entilement_details(this.filteredUserItems[i].userId).toPromise();
         for (let j = 0; j < data.length; j++) {
             if (data[j].LEAVE_TYPE_GUID === leavetypeGUID) {
-                this.filteredUserItems[i].entitlement = data[j].ENTITLED_DAYS;
+                this.filteredUserItems[i].leaveAbbr = data[j].ENTITLED_DAYS;
             }
         }
     }
@@ -259,7 +260,7 @@ export class LeaveAdjustmentComponent implements OnInit {
      */
     async filterUserList(userList: any, name: string) {
         for (let i = 0; i < userList.length; i++) {
-            await this.filterByDepartment(userList, name, i);
+            this.filterByDepartment(userList, name, i);
         }
         if (this.filteredUserItems.length > 0) {
             this.showNoResult = false;
@@ -276,14 +277,21 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @param {number} i
      * @memberof LeaveAdjustmentComponent
      */
-    async filterByDepartment(userList: any, name: string, i: number) {
+    filterByDepartment(userList: any, name: string, i: number) {
         if (userList[i].companyId === this._companyGUID) {
-            if (userList[i].department === name && userList[i].department !== 'All' || name === 'All') {
-                let val = await this.apiService.get_user_profile_details(userList[i].userId).toPromise();
-                userList[i]["entitlement"] = val.abbr;
+            if (name !== 'All') {
+                this.filteredUserItems = userList.filter((item: any) => {
+                    if (item.department != null) {
+                        return (item.department.toLowerCase().indexOf(name.toLowerCase()) > -1);
+                    }
+                })
+                this.showSpinner = false;
+            } else {
                 this.filteredUserItems.push(userList[i]);
+                this.showSpinner = false;
             }
-            this.showSpinner = false;
+            // if (userList[i].department === name && userList[i].department !== 'All' || name === 'All') {
+            //     this.filteredUserItems.push(userList[i]);
         }
     }
 
@@ -378,6 +386,19 @@ export class LeaveAdjustmentComponent implements OnInit {
                 this._selectedUser.push(this.filteredUserItems[i].userId);
             }
         });
+    }
+
+     /**
+     * expand or collapse user list in history slide-in menu 
+     * @param {number} index
+     * @memberof LeaveAdjustmentComponent
+     */
+    expandCollapseHistory(index: number) {
+        if (this.showList[index]) {
+            this.showList.splice(index, 1, false);
+        } else {
+            this.showList.splice(index, 1, true);
+        }
     }
 
     /**
