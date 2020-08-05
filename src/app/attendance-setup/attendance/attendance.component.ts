@@ -5,6 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { SharedService } from '../../admin-setup/leave-setup/shared.service';
 import { RoleApiService } from '../../admin-setup/role-management/role-api.service';
 import { AttendanceSetupApiService } from '../attendance-setup-api.service';
+import { propertyFormat } from '../attendance-setup-data';
 
 @Component({
     selector: 'app-attendance',
@@ -49,39 +50,39 @@ export class AttendanceComponent implements OnInit {
     public mode: string = 'OFF';
 
     /** 
-     * role id value
+     * attendance id value
      * @type {string}
      * @memberof AttendanceComponent
      */
-    public roleIdOutput: string;
+    public attendanceIdOutput: string;
 
     /**
      * role name form control
      * @type {*}
      * @memberof AttendanceComponent
      */
-    public editRoleName: any;
+    public editAttendanceName: any;
 
     /**
      * role description form control
      * @type {*}
      * @memberof AttendanceComponent
      */
-    public editRoleDescription: any;
+    public editAttendanceDescription: any;
 
     /**
      * new role profile name form control
      * @type {*}
      * @memberof AttendanceComponent
      */
-    public newRoleName: any;
+    public newAttendanceName: any;
 
     /**
      * new role profile description form control
      * @type {*}
      * @memberof AttendanceComponent
      */
-    public newRoleDescription: any;
+    public newAttendanceDescription: any;
 
     /**
      * selected new button or not
@@ -184,8 +185,8 @@ export class AttendanceComponent implements OnInit {
      * @memberof AttendanceComponent
      */
     constructor(private attendanceApi: AttendanceSetupApiService, private roleAPi: RoleApiService, public _sharedService: SharedService) {
-        this.newRoleName = new FormControl('', Validators.required);
-        this.newRoleDescription = new FormControl('', Validators.required);
+        this.newAttendanceName = new FormControl('', Validators.required);
+        this.newAttendanceDescription = new FormControl('', Validators.required);
     }
 
     /**
@@ -193,9 +194,9 @@ export class AttendanceComponent implements OnInit {
      * @memberof AttendanceComponent
      */
     ngOnInit() {
-        this.editRoleName = new FormControl('', Validators.required);
-        this.editRoleDescription = new FormControl('', Validators.required);
-        this.refreshRoleList();
+        this.editAttendanceName = new FormControl('', Validators.required);
+        this.editAttendanceDescription = new FormControl('', Validators.required);
+        this.refreshRoleList(0);
     }
 
     /**
@@ -207,18 +208,22 @@ export class AttendanceComponent implements OnInit {
     async onDropped(evt, roleItem) {
         for (let i = 0; i < this.assignedNameList.length; i++) {
             if (evt.data === this.assignedNameList[i].fullname) {
-                this.draggedUserId(i);
+                await this.draggedUserId(i);
                 try {
-                    let response = await this.roleAPi.patch_user_profile({
+                    let response = await this.attendanceApi.patch_user_attendance({
                         "user_guid": this._filteredList,
-                        "role_guid": roleItem.attendance_guid
+                        "attendance_guid": roleItem.attendance_guid
                     }).toPromise();
                     this.assignedNameList.splice(i, 1);
                 } catch (err) {
                     this.roleAPi.snackbarMsg(err.statusText, false);
                 }
                 this._filteredList = [];
-                let data = await this.roleAPi.get_role_profile_list().toPromise();
+                //     let data = await this.roleAPi.get_role_profile_list().toPromise();
+                //     this.roleList = data;
+                //     this.roleListCheckAll = false;
+                //     this.roleListIsIndeterminate = false;
+                let data = await this.attendanceApi.get_attendance_list().toPromise();
                 this.roleList = data;
                 this.roleListCheckAll = false;
                 this.roleListIsIndeterminate = false;
@@ -232,8 +237,8 @@ export class AttendanceComponent implements OnInit {
      * @memberof AttendanceComponent
      */
     async draggedUserId(i: number) {
-        if (this.checkDuplicateName(this._userList, this.assignedNameList[i].fullname) != 0) {
-            const indexes: number = this.checkDuplicateName(this._userList, this.assignedNameList[i].fullname);
+        if (this.checkDuplicateName(this._userList, this.assignedNameList[i].user_guid) > -1) {
+            const indexes: number = this.checkDuplicateName(this._userList, this.assignedNameList[i].user_guid);
             if (!this._filteredList.includes(this._userList[indexes].userId)) {
                 await this._filteredList.push(this._userList[indexes].userId);
             }
@@ -249,7 +254,7 @@ export class AttendanceComponent implements OnInit {
      */
     checkDuplicateName(list: any, obj: any) {
         for (let j = 0; j < list.length; j++) {
-            if (list[j].employeeName === obj) {
+            if (list[j].userId === obj) {
                 return j;
             }
         }
@@ -264,11 +269,9 @@ export class AttendanceComponent implements OnInit {
      */
     async selectedProfile(item, index) {
         this.clickedIndex = index;
-        this.roleIdOutput = item.attendance_guid;
+        this.attendanceIdOutput = item.attendance_guid;
         let data = await this.attendanceApi.get_attendance_details(item.attendance_guid).toPromise();
         this._property = data.property;
-        console.log(this._property);
-
         let list = await this.attendanceApi.get_attendance_user_list(item.attendance_guid).toPromise();
         this.assignedNameList = list;
         for (let j = 0; j < this.assignedNameList.length; j++) {
@@ -295,9 +298,30 @@ export class AttendanceComponent implements OnInit {
             });
         } else {
             this.mode = 'OFF'
+            this.updateRole();
             this.roleAPi.snackbarMsg('Edit mode disabled. Good job!', true);
         }
         this._sharedService.emitChange(this.mode);
+    }
+
+    createNew() {
+        let newData = {};
+        newData["code"] = this.newAttendanceName.value;
+        newData["description"] = this.newAttendanceDescription.value;
+        newData["property"] = propertyFormat;
+        this.attendanceApi.post_attendance_profile(newData).subscribe(results => {
+            if (results[0].ATTENDANCE_GUID != undefined) {
+                this.roleAPi.snackbarMsg('Attendance profile was created successfully', true);
+                this.ngOnInit();
+            } else {
+                this.roleAPi.snackbarMsg('Failed to create attendance profile', false);
+            }
+            this._sharedService.menu.close('createNewAttendanceDetails');
+            this.showSmallSpinner = false;
+        }, error => {
+            this.roleAPi.snackbarMsg(error.statusText, false);
+            this.showSmallSpinner = false;
+        })
     }
 
     /**
@@ -306,21 +330,21 @@ export class AttendanceComponent implements OnInit {
      */
     updateRole() {
         let data = {};
-        data["code"] = this.editRoleName.value;
-        data["description"] = this.editRoleDescription.value;
+        data["code"] = this.editAttendanceName.value;
+        data["description"] = this.editAttendanceDescription.value;
         data["property"] = this._property;
         const body = {
-            "role_guid": this.roleIdOutput,
+            "attendance_profile_guid": this.attendanceIdOutput,
             "data": data
         };
-        this.roleAPi.patch_role_profile(body).subscribe(results => {
-            if (results[0].ROLE_GUID != undefined) {
-                this.roleAPi.snackbarMsg('Role profile was updated successfully', true);
-                this.ngOnInit();
+        this.attendanceApi.patch_attendance_details(body).subscribe(results => {
+            if (results.attendance_profile_guid != undefined) {
+                this.roleAPi.snackbarMsg('Attendance profile was updated successfully', true);
+                this.refreshRoleList(this.clickedIndex);
             } else {
-                this.roleAPi.snackbarMsg('Failed to update role profile', false);
+                this.roleAPi.snackbarMsg('Failed to update attendance profile', false);
             }
-            this._sharedService.menu.close('editRoleDetails');
+            this._sharedService.menu.close('editAttendanceDetails');
             this.showSmallSpinner = false;
         }, error => {
             this.roleAPi.snackbarMsg(error.statusText, false);
@@ -330,30 +354,30 @@ export class AttendanceComponent implements OnInit {
 
     /**
      * delete confirmation pop up dialog message
-     * @param {string} role_guid
-     * @param {string} role_name
+     * @param {string} attendance_guid
+     * @param {string} attendance_name
      * @memberof AttendanceComponent
      */
-    delete(role_guid: string, role_name: string) {
+    delete(attendance_guid: string, attendance_name: string) {
         const dialogRef = this._sharedService.dialog.open(DialogDeleteConfirmationComponent, {
             disableClose: true,
-            data: { value: role_guid, name: role_name },
+            data: { value: attendance_guid, name: attendance_name },
             height: "195px",
             width: "270px"
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result === role_guid) {
-                this.roleAPi.delete_role_profile(role_guid).subscribe(response => {
+            if (result === attendance_guid) {
+                this.attendanceApi.delete_attendance_profile(attendance_guid).subscribe(response => {
                     if (response[0] !== undefined) {
-                        if (response[0].ROLE_GUID != undefined) {
+                        if (response[0].ATTENDANCE_GUID != undefined) {
                             this.ngOnInit();
-                            this.roleAPi.snackbarMsg('Selected role profile was deleted', true);
+                            this.roleAPi.snackbarMsg('Selected attendance profile was deleted', true);
                         } else {
                             this.roleAPi.snackbarMsg('Please re-assign user to delete this profile', false);
                         }
                     }
                     else {
-                        this.roleAPi.snackbarMsg('Role profile was failed to delete', false);
+                        this.roleAPi.snackbarMsg('Attendance profile was failed to delete', false);
                     }
                 })
             }
@@ -405,9 +429,9 @@ export class AttendanceComponent implements OnInit {
     async reassignToOtherRoles(item) {
         this._filteredList = this.assignedNameList.filter(list => list.isChecked === true).map(function (o) { return o.user_guid; });
         try {
-            let value = await this.roleAPi.patch_user_profile({
+            let value = await this.attendanceApi.patch_user_attendance({
                 "user_guid": this._filteredList,
-                "role_guid": item.attendance_guid
+                "attendance_guid": item.attendance_guid
             }).toPromise();
         }
         catch (error) {
@@ -415,7 +439,8 @@ export class AttendanceComponent implements OnInit {
         }
         this.assignedNameList = this.assignedNameList.filter(item => item.isChecked !== true);
         this._filteredList = [];
-        let list = await this.roleAPi.get_role_profile_list().toPromise();
+        // let list = await this.roleAPi.get_role_profile_list().toPromise();
+        let list = await this.attendanceApi.get_attendance_list().toPromise();
         this.roleList = list;
         this.roleListCheckAll = false;
         this.roleListIsIndeterminate = false;
@@ -425,21 +450,18 @@ export class AttendanceComponent implements OnInit {
      * Get list of role profle, selected profile and user list based on profile
      * @memberof AttendanceComponent
      */
-    refreshRoleList() {
-        // this.roleAPi.get_role_profile_list().subscribe(data => {
-        //     this.roleList = data;
-        //     this.showSpinner = false;
-        //     this.clickedIndex = 0;
-        //     this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);
-        // });
+    refreshRoleList(index: number) {
         this.attendanceApi.get_attendance_list().subscribe(data => {
             this.roleList = data;
             this.showSpinner = false;
-            this.clickedIndex = 0;
+            this.clickedIndex = index;
             this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);
+            this.editAttendanceName.patchValue(this.roleList[this.clickedIndex].code);
+            this.editAttendanceDescription.patchValue(this.roleList[this.clickedIndex].description);
         });
-        this.roleAPi.get_user_list().subscribe(list => this._userList = list);
-
+        this.roleAPi.get_user_list().subscribe(list => {
+            this._userList = list;
+        });
     }
 
     /**

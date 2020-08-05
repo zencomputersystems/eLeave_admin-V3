@@ -333,6 +333,61 @@ app-report
   width: 16px;
   box-shadow: none;
 }
+// attendance
+app-attendance
+  > ion-menu
+  > ion-content
+  > div
+  > div
+  > div
+  > div
+  > ion-row
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > input.searchbar-input {
+  background: white;
+  color: #43425d;
+  opacity: 0.8;
+  border: solid 1px #a5a4bf;
+  font-size: 12px;
+  box-shadow: none !important;
+  height: 40px;
+  padding-left: 40px;
+}
+
+app-attendance
+  > ion-menu
+  > ion-content
+  > div
+  > div
+  > div
+  > div
+  > ion-row
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > ion-icon.searchbar-search-icon.sc-ion-searchbar-md {
+  color: #bcbccb;
+  width: 16px;
+  box-shadow: none;
+}
+
+app-attendance
+  > ion-menu
+  > ion-content
+  > div
+  > div
+  > div
+  > div
+  > ion-row
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > button
+  > ion-icon.searchbar-clear-icon.sc-ion-searchbar-md {
+  color: #bcbccb;
+  width: 16px;
+  box-shadow: none;
+}
+
 // client
 app-client
   > ion-card

@@ -242,8 +242,8 @@ export class RoleListComponent implements OnInit {
      * @memberof RoleListComponent
      */
     async draggedUserId(i: number) {
-        if (this.checkDuplicateName(this._userList, this.assignedNameList[i].fullname) != 0) {
-            const indexes: number = this.checkDuplicateName(this._userList, this.assignedNameList[i].fullname);
+        if (this.checkDuplicateName(this._userList, this.assignedNameList[i].user_guid) > -1) {
+            const indexes: number = this.checkDuplicateName(this._userList, this.assignedNameList[i].user_guid);
             if (!this._filteredList.includes(this._userList[indexes].userId)) {
                 await this._filteredList.push(this._userList[indexes].userId);
             }
@@ -259,7 +259,7 @@ export class RoleListComponent implements OnInit {
      */
     checkDuplicateName(list: any, obj: any) {
         for (let j = 0; j < list.length; j++) {
-            if (list[j].employeeName === obj) {
+            if (list[j].userId === obj) {
                 return j;
             }
         }

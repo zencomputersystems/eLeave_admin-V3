@@ -142,15 +142,49 @@ export class AttendanceSetupApiService {
     }
 
     /**
-     * upload file to azure
+     * update attendance profile details
      * @param {*} data
      * @returns {Observable<any>}
      * @memberof AttendanceSetupApiService
      */
-    post_file(data): Observable<any> {
+    patch_attendance_details(data): Observable<any> {
         this.headerAuthorization();
-        return this.postApi(data, '/api/azure/upload');
+        return this.patchApi(data, '/api/admin/attendance/attendance-profile');
     }
+
+    /**
+     * assign user to attendance profile
+     * @param {*} patchData
+     * @returns {Observable<any>}
+     * @memberof AttendanceSetupApiService
+     */
+    patch_user_attendance(patchData): Observable<any> {
+        this.headerAuthorization();
+        return this.patchApi(patchData, '/api/admin/attendance/user-attendance');
+    }
+
+    /**
+     * create new attendance profile
+     * @param {*} newData
+     * @returns {Observable<any>}
+     * @memberof AttendanceSetupApiService
+     */
+    post_attendance_profile(newData): Observable<any> {
+        this.headerAuthorization();
+        return this.postApi(newData, '/api/admin/attendance/attendance-profile');
+    }
+
+    /**
+     * delete attendance profile
+     * @param {*} id
+     * @returns {Observable<any>}
+     * @memberof AttendanceSetupApiService
+     */
+    delete_attendance_profile(id): Observable<any> {
+        this.headerAuthorization();
+        return this.deleteApi(id, '/api/admin/attendance/attendance-profile/');
+    }
+
 
 }
 
