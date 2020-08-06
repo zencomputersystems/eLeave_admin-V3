@@ -1,11 +1,12 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { DialogDeleteConfirmationComponent } from '../../admin-setup/role-management/dialog-delete-confirmation/dialog-delete-confirmation.component';
 import { EditModeDialogComponent } from '../../admin-setup/leave-setup/edit-mode-dialog/edit-mode-dialog.component';
 import { WorkingHourApiService } from '../../admin-setup/leave-setup/working-hour/working-hour-api.service';
 import { RoleApiService } from '../../admin-setup/role-management/role-api.service';
 import { FormControl, Validators } from '@angular/forms';
 import { SharedService } from '../../admin-setup/leave-setup/shared.service';
-import { PopoverController } from '@ionic/angular';
+import { MapsAPILoader, MouseEvent } from '@agm/core';
+import { ClientApiService } from './client-api.service';
 
 @Component({
     selector: 'app-client',
@@ -181,6 +182,18 @@ export class ClientComponent implements OnInit {
     public showLocation: boolean = false;
     public showContrat: boolean = false;
     public showProject: boolean = true;
+    public title: string = 'AGM project';
+    public latitude: number;
+    public longitude: number;
+    public zoom: number;
+    public address: string;
+    private geoCoder;
+    @ViewChild('search')
+    public searchElementRef: ElementRef;
+
+    public project;
+    public contract;
+    public location;
 
     /**
      *Creates an instance of ClientComponent.
@@ -189,7 +202,8 @@ export class ClientComponent implements OnInit {
      * @memberof ClientComponent
      */
     constructor(private roleAPi: RoleApiService, private _sharedService: SharedService,
-        private workingHourWorkingHourApiService: WorkingHourApiService, private rolePopoverController: PopoverController) {
+        private workingHourWorkingHourApiService: WorkingHourApiService, private mapsAPILoader: MapsAPILoader,
+        private ngZone: NgZone, private clientApi: ClientApiService) {
         this.newRoleName = new FormControl('', Validators.required);
         this.newRoleDescription = new FormControl('', Validators.required);
     }
@@ -202,65 +216,63 @@ export class ClientComponent implements OnInit {
         this.editRoleName = new FormControl('', Validators.required);
         this.editRoleDescription = new FormControl('', Validators.required);
         this.refreshRoleList();
+        this.mapsAPILoader.load().then(() => {
+            this.setCurrentLocation();
+            this.geoCoder = new google.maps.Geocoder;
+            let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
+            autocomplete.addListener("place_changed", () => {
+                this.ngZone.run(() => {
+                    //get the place result
+                    let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+                    //verify result
+                    if (place.geometry === undefined || place.geometry === null) {
+                        return;
+                    }
+
+                    //set latitude, longitude and zoom
+                    this.latitude = place.geometry.location.lat();
+                    this.longitude = place.geometry.location.lng();
+                    this.zoom = 12;
+                });
+            });
+        });
     }
 
-    /**
-     * dropped user to patch to the assigned role profile
-     * @param {*} evt
-     * @param {*} roleItem
-     * @memberof ClientComponent
-     */
-    async onDropped(evt, roleItem) {
-        for (let i = 0; i < this.assignedNameList.length; i++) {
-            if (evt.data === this.assignedNameList[i].fullname) {
-                this.draggedUserId(i);
-                try {
-                    let response = await this.roleAPi.patch_user_profile({
-                        "user_guid": this._filteredList,
-                        "role_guid": roleItem.role_guid
-                    }).toPromise();
-                    this.assignedNameList.splice(i, 1);
-                } catch (err) {
-                    this.roleAPi.snackbarMsg(err.statusText, false);
+    private setCurrentLocation() {
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                this.latitude = position.coords.latitude;
+                this.longitude = position.coords.longitude;
+                this.zoom = 15;
+            });
+        }
+    }
+
+    markerDragEnd($event: MouseEvent) {
+        console.log($event);
+        this.latitude = $event.coords.lat;
+        this.longitude = $event.coords.lng;
+        this.getAddress(this.latitude, this.longitude);
+    }
+
+    getAddress(latitude, longitude) {
+        this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
+            console.log(results);
+            console.log(status);
+            if (status === 'OK') {
+                if (results[0]) {
+                    this.zoom = 12;
+                    this.address = results[0].formatted_address;
+                } else {
+                    window.alert('No results found');
                 }
-                this._filteredList = [];
-                let data = await this.roleAPi.get_role_profile_list().toPromise();
-                this.roleList = data;
-                this.roleListCheckAll = false;
-                this.roleListIsIndeterminate = false;
+            } else {
+                window.alert('Geocoder failed due to: ' + status);
             }
-        }
+        });
     }
 
-    /**
-     * get dragged item 
-     * @param {number} i
-     * @memberof ClientComponent
-     */
-    async draggedUserId(i: number) {
-        if (this.checkDuplicateName(this._userList, this.assignedNameList[i].fullname) != 0) {
-            const indexes: number = this.checkDuplicateName(this._userList, this.assignedNameList[i].fullname);
-            if (!this._filteredList.includes(this._userList[indexes].userId)) {
-                await this._filteredList.push(this._userList[indexes].userId);
-            }
-        }
-    }
-
-    /**
-     * check duplicate employee name in the user list
-     * @param {*} list
-     * @param {*} obj
-     * @returns
-     * @memberof ClientComponent
-     */
-    checkDuplicateName(list: any, obj: any) {
-        for (let j = 0; j < list.length; j++) {
-            if (list[j].employeeName === obj) {
-                return j;
-            }
-        }
-        return 0;
-    }
 
     /**
      * selected role profile
@@ -270,17 +282,20 @@ export class ClientComponent implements OnInit {
      */
     async selectedProfile(item, index) {
         this.clickedIndex = index;
-        this.roleIdOutput = item.role_guid;
-        let data = await this.roleAPi.get_role_details_profile(item.role_guid).toPromise();
-        this._property = data.property;
-        let list = await this.roleAPi.get_assigned_user_profile(item.role_guid).toPromise();
-        this.assignedNameList = list;
-        for (let j = 0; j < this.assignedNameList.length; j++) {
-            this.assignedNameList[j]["content"] = this.assignedNameList[j].fullname;
-            this.assignedNameList[j]["effectAllowed"] = "move";
-            this.assignedNameList[j]["handle"] = true;
-            this.assignedNameList[j]["disable"] = false;
-        }
+        this.roleIdOutput = item.CLIENT_GUID;
+        this.project = item.PROJECT_DATA;
+        this.contract = item.CONTRACT_DATA;
+        this.location = item.LOCATION_DATA;
+        // let data = await this.roleAPi.get_role_details_profile(item.CLIENT_GUID).toPromise();
+        // this._property = data.property;
+        // let list = await this.roleAPi.get_assigned_user_profile(item.CLIENT_GUID).toPromise();
+        // this.assignedNameList = list;
+        // for (let j = 0; j < this.assignedNameList.length; j++) {
+        //     this.assignedNameList[j]["content"] = this.assignedNameList[j].fullname;
+        //     this.assignedNameList[j]["effectAllowed"] = "move";
+        //     this.assignedNameList[j]["handle"] = true;
+        //     this.assignedNameList[j]["disable"] = false;
+        // }
     }
 
     /**
@@ -334,20 +349,20 @@ export class ClientComponent implements OnInit {
 
     /**
      * delete confirmation pop up dialog message
-     * @param {string} role_guid
-     * @param {string} role_name
+     * @param {string} client_guid
+     * @param {string} name
      * @memberof ClientComponent
      */
-    delete(role_guid: string, role_name: string) {
+    delete(client_guid: string, name: string) {
         const dialogRef = this._sharedService.dialog.open(DialogDeleteConfirmationComponent, {
             disableClose: true,
-            data: { value: role_guid, name: role_name },
+            data: { value: client_guid, name: name },
             height: "195px",
             width: "270px"
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result === role_guid) {
-                this.roleAPi.delete_role_profile(role_guid).subscribe(response => {
+            if (result === client_guid) {
+                this.roleAPi.delete_role_profile(client_guid).subscribe(response => {
                     if (response[0] !== undefined) {
                         if (response[0].ROLE_GUID != undefined) {
                             this.ngOnInit();
@@ -365,93 +380,15 @@ export class ClientComponent implements OnInit {
     }
 
     /**
-     * tick to check all or uncheck all user
-     * @memberof ClientComponent
-     */
-    checkAllRoleListAssignedEmployees() {
-        setTimeout(() => {
-            this.assignedNameList.forEach(obj => {
-                obj.isChecked = this.roleListCheckAll;
-            })
-        });
-    }
-
-    /**
-     * get onchanged checked value
-     * @memberof ClientComponent
-     */
-    checkRoleListAssignedEmployeeEvent() {
-        const totalItems = this.assignedNameList.length;
-        let checked = 0;
-        this.assignedNameList.map(obj => {
-            if (obj.isChecked) checked++;
-        });
-        if (checked > 0 && checked < totalItems) {
-            //If even one item is checked but not all
-            this.roleListIsIndeterminate = true;
-            this.roleListCheckAll = false;
-        } else if (checked == totalItems) {
-            //If all are checked
-            this.roleListCheckAll = true;
-            this.roleListIsIndeterminate = false;
-        } else {
-            //If none is checked
-            this.roleListIsIndeterminate = false;
-            this.roleListCheckAll = false;
-        }
-    }
-
-    /**
-     * assign role profile by bulk
-     * @param {*} item
-     * @memberof ClientComponent
-     */
-    async reassignToOtherRoles(item) {
-        this._filteredList = this.assignedNameList.filter(list => list.isChecked === true).map(function (o) { return o.user_guid; });
-        try {
-            let value = await this.roleAPi.patch_user_profile({
-                "user_guid": this._filteredList,
-                "role_guid": item.role_guid
-            }).toPromise();
-        }
-        catch (error) {
-            this.roleAPi.snackbarMsg(error.statusText, false);
-        }
-        this.assignedNameList = this.assignedNameList.filter(item => item.isChecked !== true);
-        this._filteredList = [];
-        let list = await this.roleAPi.get_role_profile_list().toPromise();
-        this.roleList = list;
-        this.roleListCheckAll = false;
-        this.roleListIsIndeterminate = false;
-    }
-
-    /**
-     * Get default role guid then assign it to role list
-     * @memberof ClientComponent
-     */
-    async getDefaultRole() {
-        const defaultList = await this.workingHourWorkingHourApiService.get_default_profile().toPromise();
-        this.roleList.forEach(item => {
-            if (item.role_guid === defaultList[0].ROLE_PROFILE_GUID) {
-                item.isDefault = true;
-                this.defaultRoleData = item;
-            } else {
-                item.isDefault = false;
-            }
-        });
-    }
-
-    /**
      * Get list of role profle, selected profile and user list based on profile
      * @memberof ClientComponent
      */
     refreshRoleList() {
-        this.roleAPi.get_role_profile_list().subscribe(data => {
+        this.clientApi.get_client_profile_list().subscribe(data => {
             this.roleList = data;
             this.showSpinner = false;
             this.clickedIndex = 0;
             this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);
-            this.getDefaultRole();
         });
         this.roleAPi.get_user_list().subscribe(list => this._userList = list);
 
@@ -460,8 +397,8 @@ export class ClientComponent implements OnInit {
     async filter(text: any) {
         if (text && text.trim() != '') {
             this.roleList = this.roleList.filter((items: any) => {
-                if (items.companyName != undefined) {
-                    return (items.companyName.toLowerCase().indexOf(text.toLowerCase()) > -1)
+                if (items.NAME != undefined) {
+                    return (items.NAME.toLowerCase().indexOf(text.toLowerCase()) > -1)
                 }
             })
         }

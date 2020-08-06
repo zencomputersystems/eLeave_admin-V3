@@ -20,6 +20,7 @@ import { AttendanceComponent } from './attendance/attendance.component';
 import { DndModule } from 'ngx-drag-drop';
 import { ClientComponent } from './client/client.component';
 import { InlineSVGModule } from 'ng-inline-svg';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
     imports: [
@@ -44,7 +45,11 @@ import { InlineSVGModule } from 'ng-inline-svg';
         MatMenuModule,
         MatSelectModule,
         ReactiveFormsModule,
-        InlineSVGModule
+        InlineSVGModule,
+        AgmCoreModule.forRoot({
+          apiKey: 'AIzaSyD_FJ2Jto7l_8FmZBlK7fW6EVyaGGsCXds', 
+          libraries: ['places']
+        })
     ],
     declarations: [AttendanceComponent, ClientComponent],
     entryComponents: []

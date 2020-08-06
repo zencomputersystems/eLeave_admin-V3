@@ -12,7 +12,7 @@
   <ion-content>
     <div>
       <div>
-        <p style="margin-bottom: 0;margin: 15px;margin-top: 20px;font-size: 12px; color: #808495;font-weight: bold;">
+        <p style="margin: 15px;margin-top: 20px;margin-bottom: 0;font-size: 12px; color: #808495;font-weight: bold;">
           CLIENT NAME</p>
         <ion-row style="display: flex;">
           <ion-col style="flex: 21;">
@@ -38,16 +38,15 @@
               style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;"
               (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
           </ion-col>
-          <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;padding-left: 15px;
-padding-right: 43px;">
+          <ion-item class="divider" lines="full" style="padding-top: 1%;padding-bottom: 3%;padding-left: 15px;
+padding-right: 15px;">
           </ion-item>
         </ion-row>
 
         <div>
           <div class="edit-leave-entitlement-profile-items" style="overflow: auto;">
-            <!-- projects -->
-            <p
-              style="margin-bottom: 0;margin: 15px;margin-top: 20px;font-size: 12px; color: #808495;font-weight: bold;">
+            <!---------------------------------- Projects (menu) -------------------------------------->
+            <p style="margin: 15px;margin-bottom: 0;margin-top: 0;font-size: 12px; color: #808495;font-weight: bold;">
               PROJECT NAME</p>
             <ng-container>
               <ng-container>
@@ -77,6 +76,23 @@ padding-right: 43px;">
                       (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
                   </ion-col>
                 </ion-row>
+                <ion-row style="display: flex;">
+                  <!-- *ngFor="let item of leaveEntitlement[j]; let i=index" -->
+                  <ion-col style="flex: 21;padding-left: 0;">
+                    <div style="width: 40%;display: inline-block;">
+                    </div>
+                    <div style="width: 1%;display: inline-block;"></div>
+                    <div style="width: 58%;display: inline-block;">
+                      <mat-form-field appearance="outline"
+                        style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                        <input matInput placeholder="Description here" required>
+                        <!-- [(ngModel)]="item.leaveEntitlementDescription" -->
+                      </mat-form-field>
+                    </div>
+                  </ion-col>
+                  <ion-col align-self-center style="text-align: right;">
+                  </ion-col>
+                </ion-row>
               </ng-container>
             </ng-container>
             <div style="margin: 15px;margin-top: 0;"><img (click)="AddDeleteProfile('add')"
@@ -84,13 +100,11 @@ padding-right: 43px;">
                 src="assets/icon/leave_setup/icon_request@3x.png">
               <p style="color: #808495;font-size: 11px;font-weight: bold;
 display: inline-block;"> Add New Project</p>
-              <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;padding-left: 15px;
-padding-right: 43px;">
+              <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;">
               </ion-item>
 
-              <!-- contract -->
-              <p
-                style="margin-bottom: 0;margin: 15px;margin-top: 20px;font-size: 12px; color: #808495;font-weight: bold;">
+              <!----------------------------- Contract (menu) ------------------------------------>
+              <p style="margin-bottom: 0;font-size: 12px; color: #808495;font-weight: bold;">
                 CONTRACT NAME</p>
               <ng-container>
                 <!-- *ngFor="let type of leaveTypes; let j=index;" -->
@@ -98,10 +112,10 @@ padding-right: 43px;">
                   <!-- *ngIf="leaveContent[j] == true" -->
                   <ion-row style="display: flex;">
                     <!-- *ngFor="let item of leaveEntitlement[j]; let i=index" -->
-                    <ion-col style="flex: 21;">
+                    <ion-col style="flex: 21;padding-left: 0;">
                       <div style="width: 40%;display: inline-block;">
                         <mat-form-field appearance="outline"
-                          style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
+                          style="height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
                           <mat-label>Contract No.</mat-label>
                           <input matInput required>
                           <!-- [(ngModel)]="item.leaveEntitlementCode" -->
@@ -117,33 +131,71 @@ padding-right: 43px;">
                         </mat-form-field>
                       </div>
                     </ion-col>
-                    <ion-col align-self-center style="text-align: right;padding-right: 20px;">
+                    <ion-col align-self-center style="text-align: right;">
                       <img src="assets/icon/leave_setup/icon_trash@3x.png"
                         style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;"
                         (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
                     </ion-col>
                   </ion-row>
+                  <ion-row style="display: flex;">
+                    <!-- *ngFor="let item of leaveEntitlement[j]; let i=index" -->
+                    <ion-col style="flex: 21;padding-left: 0;">
+                      <div style="width: 40%;display: inline-block;">
+                      </div>
+                      <div style="width: 1%;display: inline-block;"></div>
+                      <div style="width: 58%;display: inline-block;">
+                        <mat-form-field appearance="outline"
+                          style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                          <input matInput placeholder="Description here" required>
+                          <!-- [(ngModel)]="item.leaveEntitlementDescription" -->
+                        </mat-form-field>
+                      </div>
+                    </ion-col>
+                    <ion-col align-self-center style="text-align: right;">
+                    </ion-col>
+                  </ion-row>
                 </ng-container>
               </ng-container>
-              <div style="margin: 15px;margin-top: 0;"><img (click)="AddDeleteProfile('add')"
+              <div><img (click)="AddDeleteProfile('add')"
                   style="display: inline-block;cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
                   src="assets/icon/leave_setup/icon_request@3x.png">
                 <p style="color: #808495;font-size: 11px;font-weight: bold;
   display: inline-block;"> Add New Contract</p>
-                <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;padding-left: 15px;
-  padding-right: 43px;">
+                <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;">
                 </ion-item>
               </div>
-              <p
-                style="margin-bottom: 0;margin: 15px;margin-top: 20px;font-size: 12px; color: #808495;font-weight: bold;">
+              <p style="margin-bottom: 0;font-size: 12px; color: #808495;font-weight: bold;">
                 LOCATION</p>
+              <ion-row style="display: flex;">
+                <ion-col style="flex: 21;padding-left: 0;">
+                  <mat-form-field appearance="outline"
+                    style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                    <mat-label>Location</mat-label>
+                    <input matInput (keydown.enter)="$event.preventDefault()" autocorrect="off" autocapitalize="off"
+                      spellcheck="off" #search>
+                  </mat-form-field>
+                </ion-col>
+                <ion-col align-self-center style="text-align: right;">
+                  <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                    style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;"
+                    (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
+                </ion-col>
+              </ion-row>
+
+              <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+                <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
+                  (dragEnd)="markerDragEnd($event)"></agm-marker>
+              </agm-map>
+              <div>Address: {{address}}</div>
+              <div>Latitude: {{latitude}}</div>
+              <div>Longitude: {{longitude}}</div>
             </div>
           </div>
           <div style="text-align: center;margin-top: 20px;">
             <ion-button
               style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
               color="primary" (click)="saveCreateProfile(); showSmallSpinner=true">
-              Create New<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
+              Update<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
               </ion-spinner>
             </ion-button>
           </div>
@@ -227,28 +279,30 @@ padding-right: 43px;">
                       [ngClass]="{
                                             'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
                       (click)="selectedProfile(role, i)">
-                      {{role.code}}
+                      {{role.NAME}}
                     </p>
                     <p
                       style="padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
                       <img src="assets/icon/attendance/path_563@2x.png" style="width:12px;height:12px;display: inline-block;
-                        margin-right: 5px;">{{role.description}}
+                        margin-right: 5px;">
+                      <!-- {{role.LOCATION_DATA[0].ADDRESS}} -->
                     </p>
                     <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;
                         margin-right: 10px;">
                       No. Of Projects: <p
                         style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
-                        {{role.total_employee_attach}}</p>
+                        {{role.PROJECT_DATA.length}}</p>
                     </div>
                     <div
                       style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;">
                       No. Of Contracts: <p
                         style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
-                        {{role.total_employee_attach}}</p>
+                        {{role.CONTRACT_DATA.length}}</p>
                     </div>
                   </ion-col>
                   <ion-col align-self-center style="text-align: right;padding-right: 15px;">
-                    <ion-button disabled=true style="--opacity:1;font-size: 10px;width: 50px;height: 20px;">SWT
+                    <ion-button disabled=true style="--opacity:1;font-size: 10px;width: 50px;height: 20px;">
+                      {{role.ABBR}}
                     </ion-button>
                   </ion-col>
                   <ion-item class="divider" lines="full"></ion-item>
@@ -262,40 +316,42 @@ padding-right: 43px;">
                       [ngClass]="{
                                             'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
                       (click)="selectedProfile(role, i)">
-                      {{role.code}}
+                      {{role.NAME}}
                     </p>
                     <p
                       style="padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
                       <img src="assets/icon/attendance/path_563@2x.png" style="width:12px;height:12px;display: inline-block;
-                        margin-right: 5px;">{{role.description}}
+                        margin-right: 5px;">
+                      <!-- {{role.LOCATION_DATA[0].ADDRESS}} -->
                     </p>
                     <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;
                         margin-right: 10px;">
                       No. Of Projects: <p
                         style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
-                        {{role.total_employee_attach}}</p>
+                        {{role.PROJECT_DATA.length}}</p>
                     </div>
                     <div
                       style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;">
                       No. Of Contracts: <p
                         style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
-                        {{role.total_employee_attach}}</p>
+                        {{role.CONTRACT_DATA.length}}</p>
                     </div>
                   </ion-col>
                   <ion-col align-self-center *ngIf="mode == 'ON'" style="padding-right: 15px;
                     display: flex;flex-flow: column nowrap;align-items: flex-end;">
-                    <ion-button disabled=true style="--opacity: 1;font-size: 10px;width: 60px;height: 18px;">SWT
+                    <ion-button disabled=true style="--opacity: 1;font-size: 10px;width: 60px;height: 18px;">
+                      {{role.ABBR}}
                     </ion-button>
                     <div>
                       <img src="assets/icon/leave_setup/icon_edit@3x.png"
                         style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
-                        (click)="menuOpen = true;selectedProfile(role, i);editRoleName.patchValue(role.code);editRoleDescription.patchValue(role.description);_sharedService.menu.enable(true, 'editLeaveTypeDetails'); _sharedService.menu.open('editLeaveTypeDetails'); _sharedService.menu.enable(false, 'createNewRoleDetails');"
+                        (click)="menuOpen = true;selectedProfile(role, i);editRoleName.patchValue(role.NAME);editRoleDescription.patchValue(role.description);_sharedService.menu.enable(true, 'editLeaveTypeDetails'); _sharedService.menu.open('editLeaveTypeDetails'); _sharedService.menu.enable(false, 'createNewRoleDetails');"
                         [ngClass]="{ 
                                             'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
                       &nbsp;&nbsp;
                       <img src="assets/icon/leave_setup/icon_trash@3x.png"
                         style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
-                        (click)="delete(role.role_guid, role.code)">
+                        (click)="delete(role.CLIENT_GUID, role.NAME)">
                     </div>
                   </ion-col>
                   <ion-item class="divider" lines="full"></ion-item>
@@ -303,6 +359,8 @@ padding-right: 43px;">
               </ng-container>
             </div>
           </div>
+
+          <!--------------------------------- Project list ------------------------------------->
           <div class="leave">
             <div (click)="showLocation=false;showContrat=false;showProject=true"
               style="cursor: pointer;font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
@@ -314,28 +372,29 @@ padding-right: 43px;">
             </div>
             <div>
               <div class="leaveSetup" *ngIf="showProject">
-                <ion-row *ngFor="let role of roleList; let i=index" style="padding-left: 5px;">
+                <ion-row *ngFor="let item of project; let i=index" style="padding-left: 5px;">
                   <ion-col size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                     <p class="oriColor"
-                      style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;"
-                      (click)="selectedProfile(role, i)">
-                      {{role.code}}
+                      style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;">
+                      {{item.NAME}}
                     </p>
                     <p
                       style="padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
-                      {{role.description}}
+                      {{item.DESCRIPTION}}
                     </p>
                   </ion-col>
                   <ion-col align-self-center style="text-align: right;padding-right: 15px;">
                     <ion-button disabled=true
                       style="--opacity: 1;--background: var(--ion-color-project);font-size: 10px;width: 50px;height: 20px;">
-                      SER09
+                      {{item.SOC_NO}}
                     </ion-button>
                   </ion-col>
                   <ion-item class="divider" lines="full"></ion-item>
                 </ion-row>
               </div>
             </div>
+
+            <!------------------------------ Contract list ------------------------------------->
             <div (click)="showLocation=false;showContrat=true;showProject=false"
               style="cursor: pointer;font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;margin-top: 10px;">
               <ion-row>
@@ -345,25 +404,24 @@ padding-right: 43px;">
               </ion-row>
             </div>
             <div class="leaveManagement" *ngIf="showContrat">
-              <ion-row *ngFor="let role of roleList; let i=index" style="padding-left: 5px;">
-                <ion-col size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                  <p class="oriColor"
-                    style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;"
-                    (click)="selectedProfile(role, i)">
-                    {{role.code}}
-                  </p>
-                  <p
-                    style="padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
-                    {{role.description}}
-                  </p>
-                </ion-col>
-                <ion-col align-self-center style="text-align: right;padding-right: 15px;">
-                  <ion-button disabled=true
-                    style="--opacity: 1;--background: var(--ion-color-contract);font-size: 10px;width: 50px;height: 20px;">
-                    CS004
-                  </ion-button>
-                </ion-col>
-                <ion-item class="divider" lines="full"></ion-item>
+              <ion-row *ngFor="let item of contract; let i=index" style="padding-left: 5px;">
+                  <ion-col size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                    <p class="oriColor"
+                      style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;">
+                      {{item.NAME}}
+                    </p>
+                    <p
+                      style="padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
+                      {{item.DESCRIPTION}}
+                    </p>
+                  </ion-col>
+                  <ion-col align-self-center style="text-align: right;padding-right: 15px;">
+                    <ion-button disabled=true
+                      style="--opacity: 1;--background: var(--ion-color-contract);font-size: 10px;width: 50px;height: 20px;">
+                      {{item.CONTRACT_NO}}
+                    </ion-button>
+                  </ion-col>
+                  <ion-item class="divider" lines="full"></ion-item>
               </ion-row>
             </div>
             <div (click)="showLocation=true;showContrat=false;showProject=false"
@@ -375,12 +433,11 @@ padding-right: 43px;">
               </ion-row>
             </div>
             <div class="leaveManagement" *ngIf="showLocation">
-              <ion-row *ngFor="let role of roleList; let i=index" style="padding-left: 5px;">
+              <ion-row *ngFor="let item of location; let i=index" style="padding-left: 5px;">
                 <ion-col size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                   <p class="oriColor"
-                    style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;"
-                    (click)="selectedProfile(role, i)">
-                    {{role.code}}
+                    style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;">
+                    {{item.ADDRESS}}
                   </p>
                 </ion-col>
                 <ion-item class="divider" lines="full"></ion-item>
