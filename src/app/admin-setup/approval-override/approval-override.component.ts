@@ -115,13 +115,19 @@ export class ApprovalOverrideComponent implements OnInit {
      * @memberof ApprovalOverrideComponent
      */
     async ngOnInit() {
-        let pending = await this.approvalOverrideAPI.get_approval_override_list().toPromise();
-        this.pendingList = pending;
-        this.innerSpinner = false;
-        for (let i = 0; i < this.pendingList.length; i++) {
-            this.pendingList[i]["isChecked"] = false;
-            this.displayCheckbox.push(false);
+        try {
+            let pending = await this.approvalOverrideAPI.get_approval_override_list().toPromise();
+            this.pendingList = pending;
+            this.innerSpinner = false;
+            for (let i = 0; i < this.pendingList.length; i++) {
+                this.pendingList[i]["isChecked"] = false;
+                this.displayCheckbox.push(false);
+            }
+        } catch (error) {
+            this.innerSpinner = false;
         }
+
+
     }
 
     /**

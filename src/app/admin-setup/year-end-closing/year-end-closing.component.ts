@@ -109,11 +109,15 @@ export class YearEndClosingComponent implements OnInit {
    * @memberof YearEndClosingComponent
    */
   async ngOnInit() {
-    this.pendingList = await this.yearEndApi.get_approval_override_list().toPromise();
-    this.companyName = await this.leaveApi.get_company_list().toPromise();
-    this.clickedCompany(this.companyName[0], 0);
-    this.labelCompany = this.companyName[0].NAME;
-    this.showSpinner = false;
+    try {
+      this.pendingList = await this.yearEndApi.get_approval_override_list().toPromise();
+      this.companyName = await this.leaveApi.get_company_list().toPromise();
+      this.clickedCompany(this.companyName[0], 0);
+      this.labelCompany = this.companyName[0].NAME;
+      this.showSpinner = false;
+    } catch (error) {
+      this.showSpinner = false;
+    }
   }
 
   /**

@@ -236,7 +236,7 @@
                                 *ngIf="innerSpinner">
                                 <app-spinner></app-spinner>
                             </div>
-                            <div *ngIf="pendingList.length === 0 && !innerSpinner"
+                            <div *ngIf="pendingList.length === 0 || pendingList == undefined && !innerSpinner"
                                 style="width: 100%; text-align:center;padding: 10px">
                                 <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
                                 <p style="font-size: 20px;color:#a3a6b4;opacity: 0.8;padding-top:10px ">No Results Found

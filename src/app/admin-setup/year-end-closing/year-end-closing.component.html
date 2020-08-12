@@ -29,7 +29,7 @@
                   COMPANY LIST</ion-col>
               </ion-row>
             </div>
-            <div style="height: calc(100% - 62px);overflow-y: auto;margin-top: 15px;">
+            <div style="height: calc(100% - 62px);overflow-y: auto;margin-top: 15px;" *ngIf="companyName && companyName.length !== 0 || companyName !== undefined">
               <ion-row class="detailsRow" *ngFor="let item of companyName; let i=index" style="padding-left: 10px;">
                 <ion-col style="overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
                   <p class="textHover" style="cursor: pointer;font-size: 12px;font-weight: bold;overflow:
@@ -40,6 +40,12 @@
                 </ion-col>
                 <ion-item class="divider" lines="full">
                 </ion-item>
+              </ion-row>
+            </div>
+            <div style="height: calc(100% - 62px);overflow-y: auto;margin-top: 15px;" *ngIf="companyName && companyName.length == 0 || companyName == undefined">
+              <ion-row class="detailsRow" style="padding-left: 10px;">
+                <ion-col style="overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
+                  No company list </ion-col>
               </ion-row>
             </div>
           </div>
