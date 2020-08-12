@@ -54,7 +54,7 @@ export class CreatePolicyComponent {
      * @type {boolean}
      * @memberof CreatePolicyComponent
      */
-    public showSpinner: boolean = true;
+    // public showSpinner: boolean = true;
 
     /**
      * array list of days in a selected month in carried forward field
@@ -142,7 +142,7 @@ export class CreatePolicyComponent {
         if (changes.companyId != undefined) {
             if (changes.companyId.currentValue != undefined) {
                 this.companyDetailsChanges(changes);
-                this.showSpinner = false;
+                // this.showSpinner = false;
             }
         }
     }

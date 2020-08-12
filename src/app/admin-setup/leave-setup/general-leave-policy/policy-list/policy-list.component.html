@@ -157,7 +157,8 @@
                                     </ion-col>
                                 </ion-row>
                             </div>
-                            <div style="overflow-y: auto;height: calc(100% - 62px);" *ngIf="companyName && clickedIndex != undefined">
+                            <div style="overflow-y: auto;height: calc(100% - 62px);"
+                                *ngIf="companyName && companyName.length !== 0 && clickedIndex != undefined">
                                 <ion-row *ngFor="let user of companyName[clickedIndex].employeeName"
                                     style="width: 100%;padding-left: 10px;">
                                     <ion-col align-self-center size="11" style="padding-top: 0;padding-bottom: 0;">
@@ -167,6 +168,15 @@
                                     </ion-col>
                                     <ion-item class="divider" lines="full">
                                     </ion-item>
+                                </ion-row>
+                            </div>
+                            <div style="overflow-y: auto;height: calc(100% - 62px);" *ngIf="companyName && companyName.length === 0">
+                                <ion-row style="width: 100%;padding-left: 10px;">
+                                    <ion-col align-self-center size="11" style="padding-top: 0;padding-bottom: 0;">
+                                        <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
+                                        padding-bottom: 13px;">
+                                            No assigned employee</p>
+                                    </ion-col>
                                 </ion-row>
                             </div>
                         </div>
