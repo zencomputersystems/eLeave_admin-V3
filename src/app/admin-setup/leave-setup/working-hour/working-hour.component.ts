@@ -315,6 +315,7 @@ export class WorkingHourComponent implements OnInit, OnChanges {
             }).subscribe(res => {
                 if (res[0] != undefined) {
                     this.workingHourAPI.showPopUp('Working hour profile was updated successfully', true);
+                    this.refreshProfile(res[0].WORKING_HOURS_GUID);
                 }
             }, error => {
                 this.workingHourAPI.showPopUp(JSON.parse(error._body).error, false);
