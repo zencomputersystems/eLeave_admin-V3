@@ -26,13 +26,6 @@ export class PolicyListComponent implements OnInit {
     public companyName: any;
 
     /**
-     * Show loading spinner
-     * @type {boolean}
-     * @memberof PolicyListComponent
-     */
-    public showSpinner: boolean = true;
-
-    /**
      * edit mode value
      * @type {string}
      * @memberof PolicyListComponent
@@ -104,9 +97,11 @@ export class PolicyListComponent implements OnInit {
         this.newName = new FormControl('', Validators.required);
         this.editName = new FormControl('', Validators.required);
         this.sharedService.leaveApi.get_company_list().subscribe(data => {
-            this.companyName = data;
-            this.clickedPolicy(this.companyName[0], 0);
-            this.showSpinner = false;
+            // this.companyName = data;
+            this.companyName = [];
+            if (this.companyName.length !== 0) {
+                this.clickedPolicy(this.companyName[0], 0);
+            }
         })
         this.getAssignedEmployee();
     }
@@ -213,11 +208,12 @@ export class PolicyListComponent implements OnInit {
                     },
                     "tenantCompanyId": result[0].TENANT_COMPANY_GUID
                 }
-                this.policyApi.post_general_leave_policy(data).subscribe(a => {});
+                this.policyApi.post_general_leave_policy(data).subscribe(a => { });
                 this.ngOnInit();
             }
         }, error => {
-            this.policyApi.message(JSON.parse(error._body).error, false);
+            this.policyApi.message(JSON.parse(error._body).status, false);
+            this.showSmallSpinner = false;
         });
     }
 
