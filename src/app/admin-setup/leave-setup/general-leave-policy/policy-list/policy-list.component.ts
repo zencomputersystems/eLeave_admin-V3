@@ -97,8 +97,7 @@ export class PolicyListComponent implements OnInit {
         this.newName = new FormControl('', Validators.required);
         this.editName = new FormControl('', Validators.required);
         this.sharedService.leaveApi.get_company_list().subscribe(data => {
-            // this.companyName = data;
-            this.companyName = [];
+            this.companyName = data;
             if (this.companyName.length !== 0) {
                 this.clickedPolicy(this.companyName[0], 0);
             }
