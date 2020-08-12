@@ -212,7 +212,7 @@
                                 </ion-button>
                             </ion-item-group>
                             <ion-item-group style="display: flex;">
-                                <ion-title style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;
+                                <ion-title *ngIf="annoucement && annoucement.length !== 0" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;
                                 opacity: 0.8;font-size: 12px;font-weight: bold;"
                                     (click)="menuOpen=true;menu.enable(true, 'viewAnnouncementDetails');menu.enable(false, 
                                 'viewReplacementDetails');menu.enable(false, 'viewAnnualDetails');menu.enable(false, 'viewHolidayDetails');menu.open('viewAnnouncementDetails');">
@@ -259,6 +259,9 @@
                             </ng-container>
                         </ion-row>
                     </ng-container>
+                    <p *ngIf="announcements.length === 0"
+                        style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
+                        No latest annoucement</p>
                 </div>
                 <div [class]="'hide-md-up'">
                     <div
@@ -279,7 +282,7 @@
                                                                     menu.enable(false, 'viewAnnouncementDetails');menu.open('createAnnouncementDetails');">
                                     Create New
                                 </ion-button>
-                                <ion-title style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;
+                                <ion-title *ngIf="annoucement && annoucement.length !== 0" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;
                                     opacity: 0.8;font-size: 12px;font-weight: bold;"
                                     (click)="menuOpen=true;menu.enable(true, 'viewAnnouncementDetails');menu.enable(false, 
                                     'viewReplacementDetails');menu.enable(false, 'viewAnnualDetails');menu.enable(false, 'viewHolidayDetails');menu.open('viewAnnouncementDetails');">
@@ -317,6 +320,9 @@
                             </ng-container>
                         </ion-row>
                     </ng-container>
+                    <p *ngIf="announcements.length === 0"
+                        style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
+                        No latest annoucement</p>
                 </div>
             </div>
         </div>
@@ -493,7 +499,7 @@
                                 </ion-row>
                             </ion-list>
                         </div>
-                        <p *ngIf="joiners == undefined"
+                        <p *ngIf="joiners == undefined || joiners.length == 0"
                             style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                             No upcoming new joiner</p>
                     </div>
@@ -550,7 +556,7 @@
                                 </ion-row>
                             </ion-list>
                         </div>
-                        <p *ngIf="leaver == undefined"
+                        <p *ngIf="leaver == undefined || leaver.length == 0"
                             style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                             No upcoming leaver</p>
                     </div>
@@ -571,8 +577,7 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div *ngIf="birthdayList !== undefined"
-                            style="max-height: 192px;overflow: auto;width: 100%;">
+                        <div *ngIf="birthdayList !== undefined" style="max-height: 192px;overflow: auto;width: 100%;">
                             <ion-list class="list" style="width: 100%;">
                                 <ion-row *ngFor="let item of birthdayList">
                                     <ion-col size="9"
@@ -610,7 +615,7 @@
                                 </ion-row>
                             </ion-list>
                         </div>
-                        <p *ngIf="birthdayList == undefined"
+                        <p *ngIf="birthdayList == undefined || birthdayList.length == 0"
                             style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                             No upcoming user birthday </p>
                     </div>
