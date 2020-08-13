@@ -212,7 +212,7 @@
                                 </ion-button>
                             </ion-item-group>
                             <ion-item-group style="display: flex;">
-                                <ion-title *ngIf="annoucement && annoucement.length !== 0" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;
+                                <ion-title *ngIf="announcements.length > 0" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;
                                 opacity: 0.8;font-size: 12px;font-weight: bold;"
                                     (click)="menuOpen=true;menu.enable(true, 'viewAnnouncementDetails');menu.enable(false, 
                                 'viewReplacementDetails');menu.enable(false, 'viewAnnualDetails');menu.enable(false, 'viewHolidayDetails');menu.open('viewAnnouncementDetails');">
@@ -282,7 +282,7 @@
                                                                     menu.enable(false, 'viewAnnouncementDetails');menu.open('createAnnouncementDetails');">
                                     Create New
                                 </ion-button>
-                                <ion-title *ngIf="annoucement && annoucement.length !== 0" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;
+                                <ion-title *ngIf="announcements.length > 0" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-align: right;cursor: pointer;color:#3b86ff;
                                     opacity: 0.8;font-size: 12px;font-weight: bold;"
                                     (click)="menuOpen=true;menu.enable(true, 'viewAnnouncementDetails');menu.enable(false, 
                                     'viewReplacementDetails');menu.enable(false, 'viewAnnualDetails');menu.enable(false, 'viewHolidayDetails');menu.open('viewAnnouncementDetails');">
