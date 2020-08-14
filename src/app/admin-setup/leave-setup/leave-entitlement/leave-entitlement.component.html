@@ -69,14 +69,14 @@
                 <mat-form-field appearance="outline"
                   style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
                   <mat-label>Profile name</mat-label>
-                  <input matInput [(ngModel)]="newProfileList.name" [disabled]="newLeaveTypeId == undefined" required>
+                  <input matInput [(ngModel)]="newProfileList.name" [disabled]="newLeaveTypeId == undefined || newLeaveTypeId == ''" required>
                 </mat-form-field>
               </div>
               <div style="width: 1%;display: inline-block;"></div>
               <div style="width: 58%;display: inline-block;">
                 <mat-form-field appearance="outline" style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
                   <mat-label>Entitlement description</mat-label>
-                  <input matInput [(ngModel)]="newProfileList.description" [disabled]="newLeaveTypeId == undefined"
+                  <input matInput [(ngModel)]="newProfileList.description" [disabled]="newLeaveTypeId == undefined || newLeaveTypeId == ''"
                     required>
                 </mat-form-field>
               </div>
@@ -97,7 +97,7 @@
             style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
             color="primary"
             (click)="createProfile('new'); clickedIndex=0;clickedHeaderIndex=0; showSmallSpinnerAdd=true"
-            [disabled]="newLeaveTypeId == undefined">
+            [disabled]="newLeaveTypeId == undefined || newLeaveTypeId == ''">
             Add<ion-spinner *ngIf="showSmallSpinnerAdd" name="lines-small" style="color: white;">
             </ion-spinner>
           </ion-button>
