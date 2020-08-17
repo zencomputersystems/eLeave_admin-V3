@@ -2,49 +2,45 @@
 
 <ion-menu class="leave-entitlement-popup" contentId="createNewTypeContent" side="end" type="overlay"
   menuId="createNewTypeDetails">
-  <ion-header style="background-color:#43425d; color: #fcfcfc;">
-    <img style="margin: 18px;width: 22px;height: 17px;float:left" src="assets/icon/dashboard/icon All Holidays@3x.png">
-    <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">ADD NEW LEAVE
+  <ion-header class="menuHeader">
+    <img class="headerImg" src="assets/icon/dashboard/icon All Holidays@3x.png">
+    <p class="headerText">ADD NEW LEAVE
       TYPE
     </p>
   </ion-header>
 
   <ion-content>
-    <div style="height: calc(100% - 17px)">
-      <p style="font-size: 12px;color: #808495;margin: 17px;">Create new leave type and leave entitlement here. After
+    <div class="menuContent">
+      <p class="contentText">Create new leave type and leave entitlement here. After
         you
         created new leave, simply hit ‘create’ and continue add new leave entitlement below.</p>
       <div style="margin-left: 17px;margin-right: 17px;height: calc(100% - 70px);">
         <div
           style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 10px;margin-top: 15px;color: #a3a6b4;font-weight: bold;">
           <ion-row>
-            <ion-col align-self-center
-              style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+            <ion-col align-self-center class="colText">
               LEAVE TYPE TITLE
             </ion-col>
           </ion-row>
           <ion-row style="margin-top: 5px; display: flex;">
             <ion-col style="padding-right: 0;flex: 3 1;">
-              <div style="display: inline-block;width: 30%;">
-                <p
-                  style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8; overflow-wrap: initial; text-overflow: ellipsis; overflow: auto;">
+              <div class="abbrDiv">
+                <p class="abbrText">
                   Abbreviation</p>
-                <mat-form-field appearance="outline" style="height: 55px;
-            font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
+                <mat-form-field class="inputForm" appearance="outline">
                   <input matInput [formControl]="abbreviation" placeholder="E.g: AL, ML">
                 </mat-form-field>
               </div>
-              <div style="width: 1%;display: inline-block;"></div>
-              <div style="display: inline-block;width: 69%;">
-                <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
+              <div class="divSpace"></div>
+              <div class="leaveTypeDiv">
+                <p class="leaveTypeText">
                   Leave Type</p>
-                <mat-form-field appearance="outline" style="height: 55px;
-      font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
+                <mat-form-field class="inputForm" appearance="outline">
                   <input matInput [formControl]="leaveTypeName" placeholder="E.g: Annual Leave">
                 </mat-form-field>
               </div>
             </ion-col>
-            <ion-col align-self-center style="padding-right: 0;text-align: right;;margin-top: 15px;">
+            <ion-col align-self-center style="padding-right: 0;text-align: right;margin-top: 15px;">
               <ion-button style="--border-radius: 2px;font-size: 11px;height: 40px;width:87px;text-transform: none;"
                 color="primary" (click)="newLeaveType(); showSmallSpinner =true">
                 Create<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
@@ -56,8 +52,7 @@
         <div
           style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 15px;color: #a3a6b4;font-weight: bold;">
           <ion-row>
-            <ion-col align-self-center
-              style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+            <ion-col align-self-center class="colText">
               LEAVE ENTITLEMENT PROFILE
             </ion-col>
           </ion-row>
@@ -65,23 +60,24 @@
         <div class="edit-leave-entitlement-profile ">
           <ion-row>
             <ion-col size="10.5">
-              <div style="width: 40%;display: inline-block;">
+              <div class="profileDiv">
                 <mat-form-field appearance="outline"
                   style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
                   <mat-label>Profile name</mat-label>
-                  <input matInput [(ngModel)]="newProfileList.name" [disabled]="newLeaveTypeId == undefined || newLeaveTypeId == ''" required>
+                  <input matInput [(ngModel)]="newProfileList.name"
+                    [disabled]="newLeaveTypeId == undefined || newLeaveTypeId == ''" required>
                 </mat-form-field>
               </div>
-              <div style="width: 1%;display: inline-block;"></div>
-              <div style="width: 58%;display: inline-block;">
-                <mat-form-field appearance="outline" style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+              <div class="divSpace"></div>
+              <div class="entitlementFormDiv">
+                <mat-form-field appearance="outline" class="entitlementForm">
                   <mat-label>Entitlement description</mat-label>
-                  <input matInput [(ngModel)]="newProfileList.description" [disabled]="newLeaveTypeId == undefined || newLeaveTypeId == ''"
-                    required>
+                  <input matInput [(ngModel)]="newProfileList.description"
+                    [disabled]="newLeaveTypeId == undefined || newLeaveTypeId == ''" required>
                 </mat-form-field>
               </div>
             </ion-col>
-            <ion-col align-self-center style="text-align: right;padding-right: 10px;">
+            <ion-col class="colEditIcon" align-self-center>
               <!-- <img src="assets/icon/leave_setup/icon_request@3x.png" *ngIf="newLeaveTypeId != undefined"
                 (click)="addNewProfileItem('new')"
                 style="width: 14px;height:14px;display: inline-block;cursor: pointer;margin-top: -15px;">
@@ -93,9 +89,7 @@
           </ion-row>
         </div>
         <div style="text-align: center;">
-          <ion-button
-            style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
-            color="primary"
+          <ion-button class="buttonStyle" color="primary"
             (click)="createProfile('new'); clickedIndex=0;clickedHeaderIndex=0; showSmallSpinnerAdd=true"
             [disabled]="newLeaveTypeId == undefined || newLeaveTypeId == ''">
             Add<ion-spinner *ngIf="showSmallSpinnerAdd" name="lines-small" style="color: white;">
@@ -114,16 +108,16 @@
 
 <ion-menu class="leave-entitlement-popup" contentId="editLeaveTypeContent" side="end" type="overlay"
   menuId="editLeaveTypeDetails">
-  <ion-header style="background-color:#43425d; color: #fcfcfc;">
-    <img style="margin: 18px;width: 22px;height: 17px;float:left" src="assets/icon/dashboard/icon All Holidays@3x.png">
-    <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">
+  <ion-header class="menuHeader">
+    <img class="headerImg" src="assets/icon/dashboard/icon All Holidays@3x.png">
+    <p class="headerText">
       ADD EDIT/DELETE LEAVE TYPE & ENTITLEMENT
     </p>
   </ion-header>
 
   <ion-content>
-    <div style="height: calc(100% - 17px)">
-      <p style="font-size: 12px;color: #808495;margin: 17px;">You can create new or copy existing profile data. All data
+    <div class="menuContent">
+      <p class="contentText">You can create new or copy existing profile data. All data
         will be import to their respective sections details EXCEPT Assigned Employee details.</p>
       <div style="margin-left:17px;margin-right:17px;height: calc(100% - 73px);">
         <div style="display: block;white-space: nowrap;text-align: left;">
@@ -146,36 +140,28 @@
             <!-- <div *ngIf="leaveEntitlementPlatform.is('desktop' || 'electron')"
             style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 10px;margin-top: 15px;color: #a3a6b4;font-weight: bold;"> -->
             <ion-row>
-              <ion-col align-self-center
-                style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+              <ion-col align-self-center class="colText">
                 LEAVE TYPE TITLE
               </ion-col>
             </ion-row>
             <ion-row style="margin-top: 5px;">
               <ion-col size="11" style="padding-right: 0;">
-                <div style="display: inline-block;width: 30%;">
-                  <p
-                    style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8; overflow-wrap: initial; text-overflow: ellipsis; overflow: auto;">
+                <div class="abbrDiv">
+                  <p class="abbrText">
                     Abbreviation</p>
-                  <mat-form-field appearance="outline" style="height: 55px;
-              font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
+                  <mat-form-field class="inputForm" appearance="outline">
                     <input matInput [(ngModel)]="abbr">
                   </mat-form-field>
                 </div>
-                <div style="width: 1%;display: inline-block;"></div>
-                <div style="display: inline-block;width: 69%;">
-                  <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
+                <div class="divSpace"></div>
+                <div class="leaveTypeDiv">
+                  <p class="leaveTypeText">
                     Leave Type</p>
-                  <mat-form-field appearance="outline" style="height: 55px;
-        font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
+                  <mat-form-field class="inputForm" appearance="outline">
                     <input matInput [(ngModel)]="name">
                   </mat-form-field>
                 </div>
               </ion-col>
-              <!-- <ion-col align-self-center style="text-align: right;padding-right: 10px;margin-top: 15px;">
-                <img src="assets/icon/leave_setup/icon_trash@3x.png" (click)="deleteLeaveType(abbr, name)"
-                  style="width: 11px;height:11px;display: inline-block;cursor: pointer;">
-              </ion-col> -->
             </ion-row>
           </div>
           <div [class]="'hide-sm-up'"
@@ -183,43 +169,34 @@
             <!-- <div *ngIf="!leaveEntitlementPlatform.is('desktop' || 'electron')"
           style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 10px;margin-top: 15px;color: #a3a6b4;font-weight: bold;"> -->
             <ion-row>
-              <ion-col align-self-center
-                style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+              <ion-col align-self-center class="colText">
                 LEAVE TYPE TITLE
               </ion-col>
             </ion-row>
             <ion-row style="margin-top: 5px;">
               <ion-col style="padding-right: 0;display: flex; flex-flow: column;">
                 <div style="display: inline-block;">
-                  <p
-                    style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8; overflow-wrap: initial; text-overflow: ellipsis; overflow: auto;">
+                  <p class="abbrText">
                     Abbreviation</p>
-                  <mat-form-field appearance="outline" style="height: 55px;
-              font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
+                  <mat-form-field class="inputForm" appearance="outline">
                     <input matInput [(ngModel)]="abbr">
                   </mat-form-field>
                 </div>
-                <div style="width: 1%;display: inline-block;"></div>
+                <div class="divSpace"></div>
                 <div style="display: inline-block;">
-                  <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
+                  <p class="leaveTypeText">
                     Leave Type</p>
-                  <mat-form-field appearance="outline" style="height: 55px;
-        font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
+                  <mat-form-field class="inputForm" appearance="outline">
                     <input matInput [(ngModel)]="name">
                   </mat-form-field>
                 </div>
               </ion-col>
-              <!-- <ion-col align-self-center style="text-align: right;padding-right: 10px;margin-top: 15px;">
-                <img src="assets/icon/leave_setup/icon_trash@3x.png" (click)="deleteLeaveType(abbr, name)"
-                  style="width: 11px;height:11px;display: inline-block;cursor: pointer;">
-              </ion-col> -->
             </ion-row>
           </div>
           <div
             style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 15px;color: #a3a6b4;font-weight: bold;">
             <ion-row>
-              <ion-col align-self-center
-                style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+              <ion-col align-self-center class="colText">
                 LEAVE ENTITLEMENT PROFILE
               </ion-col>
             </ion-row>
@@ -232,29 +209,26 @@
                 <ng-container *ngIf="leaveContent[j] == true">
                   <ion-row *ngFor="let item of leaveEntitlement[j]; let i=index" style="display: flex;">
                     <ion-col style="flex: 21;">
-                      <div style="width: 40%;display: inline-block;">
+                      <div class="profileDiv">
                         <mat-form-field appearance="outline"
                           style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
                           <mat-label>Profile name</mat-label>
                           <input matInput [(ngModel)]="item.leaveEntitlementCode" required>
                         </mat-form-field>
                       </div>
-                      <div style="width: 1%;display: inline-block;"></div>
-                      <div style="width: 58%;display: inline-block;">
-                        <mat-form-field appearance="outline"
-                          style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                      <div class="divSpace"></div>
+                      <div class="entitlementFormDiv">
+                        <mat-form-field appearance="outline" class="entitlementForm">
                           <mat-label>Entitlement description</mat-label>
                           <input matInput [(ngModel)]="item.leaveEntitlementDescription" required>
                         </mat-form-field>
                       </div>
                     </ion-col>
-                    <ion-col align-self-center style="text-align: right;padding-right: 20px;">
-                      <img src="assets/icon/leave_setup/icon_trash@3x.png"
-                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;"
+                    <ion-col align-self-center class="colTrash">
+                      <img class="trashImg" src="assets/icon/leave_setup/icon_trash@3x.png"
                         (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
                     </ion-col>
-                    <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;padding-left: 15px;
-            padding-right: 43px;">
+                    <ion-item class="divider trashDivider" lines="full">
                     </ion-item>
                   </ion-row>
                 </ng-container>
@@ -262,28 +236,26 @@
               <ng-container *ngIf="newEditProfileList.length > 0">
                 <ion-row *ngFor="let item of newEditProfileList; let i=index">
                   <ion-col size="11">
-                    <div style="width: 40%;display: inline-block;">
+                    <div class="profileDiv">
                       <mat-form-field appearance="outline"
                         style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
                         <mat-label>Profile name</mat-label>
                         <input matInput [(ngModel)]="newEditProfileList[i].name" required>
                       </mat-form-field>
                     </div>
-                    <div style="width: 1%;display: inline-block;"></div>
-                    <div style="width: 58%;display: inline-block;">
-                      <mat-form-field appearance="outline"
-                        style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                    <div class="divSpace"></div>
+                    <div class="entitlementFormDiv">
+                      <mat-form-field appearance="outline" class="entitlementForm">
                         <mat-label>Entitlement description</mat-label>
                         <input matInput [(ngModel)]="newEditProfileList[i].description" required>
                       </mat-form-field>
                     </div>
                   </ion-col>
-                  <ion-col align-self-center style="text-align: right;padding-right: 20px;">
-                    <img src="assets/icon/leave_setup/icon_trash@3x.png" (click)="AddDeleteProfile('delete',i)"
-                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;">
+                  <ion-col align-self-center class="colTrash">
+                    <img class="trashImg" src="assets/icon/leave_setup/icon_trash@3x.png"
+                      (click)="AddDeleteProfile('delete',i)">
                   </ion-col>
-                  <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;padding-left: 15px;
-          padding-right: 43px;">
+                  <ion-item class="divider trashDivider" lines="full">
                   </ion-item>
                 </ion-row>
               </ng-container>
@@ -311,20 +283,17 @@
                         </mat-form-field>
                       </div>
                       <div style="display: inline-block;">
-                        <mat-form-field appearance="outline"
-                          style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                        <mat-form-field appearance="outline" class="entitlementForm">
                           <mat-label>Entitlement description</mat-label>
                           <input matInput [(ngModel)]="item.leaveEntitlementDescription" required>
                         </mat-form-field>
                       </div>
                     </ion-col>
-                    <ion-col align-self-center style="text-align: right;padding-right: 20px;">
-                      <img src="assets/icon/leave_setup/icon_trash@3x.png"
-                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;"
+                    <ion-col align-self-center class="colTrash">
+                      <img class="trashImg" src="assets/icon/leave_setup/icon_trash@3x.png"
                         (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
                     </ion-col>
-                    <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;padding-left: 15px;
-            padding-right: 43px;">
+                    <ion-item class="divider trashDivider" lines="full">
                     </ion-item>
                   </ion-row>
                 </ng-container>
@@ -340,19 +309,17 @@
                       </mat-form-field>
                     </div>
                     <div style="display: inline-block;">
-                      <mat-form-field appearance="outline"
-                        style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                      <mat-form-field appearance="outline" class="entitlementForm">
                         <mat-label>Entitlement description</mat-label>
                         <input matInput [(ngModel)]="newEditProfileList[i].description" required>
                       </mat-form-field>
                     </div>
                   </ion-col>
-                  <ion-col align-self-center style="text-align: right;padding-right: 20px;">
-                    <img src="assets/icon/leave_setup/icon_trash@3x.png" (click)="AddDeleteProfile('delete',i)"
-                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;">
+                  <ion-col align-self-center class="colTrash">
+                    <img class="trashImg" src="assets/icon/leave_setup/icon_trash@3x.png"
+                      (click)="AddDeleteProfile('delete',i)">
                   </ion-col>
-                  <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;padding-left: 15px;
-          padding-right: 43px;">
+                  <ion-item class="divider trashDivider" lines="full">
                   </ion-item>
                 </ion-row>
               </ng-container>
@@ -365,9 +332,7 @@
             </div>
           </div>
           <div style="text-align: center;margin-top: 20px;">
-            <ion-button
-              style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
-              color="primary" (click)="saveCreateProfile(); showSmallSpinner=true">
+            <ion-button class="buttonStyle" color="primary" (click)="saveCreateProfile(); showSmallSpinner=true">
               Save<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
               </ion-spinner>
             </ion-button>
@@ -377,29 +342,25 @@
         <div *ngIf="cloneButton"
           style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 10px;margin-top: 15px;color: #a3a6b4;font-weight: bold;">
           <ion-row>
-            <ion-col align-self-center
-              style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+            <ion-col align-self-center class="colText">
               LEAVE TYPE TITLE
             </ion-col>
           </ion-row>
           <ion-row style="margin-top: 5px;">
             <ion-col [class]="'hide-sm-down'" size="11" style="padding-right: 0;">
               <!-- <ion-col *ngIf="leaveEntitlementPlatform.is('desktop' || 'electron')" size="11" style="padding-right: 0;"> -->
-              <div style="display: inline-block;width: 30%;">
-                <p
-                  style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;overflow-wrap: initial;text-overflow: ellipsis;overflow: auto;">
+              <div class="abbrDiv">
+                <p class="abbrText">
                   Abbreviation</p>
-                <mat-form-field appearance="outline" style="height: 55px;
-            font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
+                <mat-form-field class="inputForm" appearance="outline">
                   <input matInput [(ngModel)]="abbr" readonly>
                 </mat-form-field>
               </div>
-              <div style="width: 1%;display: inline-block;"></div>
-              <div style="display: inline-block;width: 69%;">
-                <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
+              <div class="divSpace"></div>
+              <div class="leaveTypeDiv">
+                <p class="leaveTypeText">
                   Leave Type</p>
-                <mat-form-field appearance="outline" style="height: 55px;
-      font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
+                <mat-form-field class="inputForm" appearance="outline">
                   <input matInput [(ngModel)]="name" readonly>
                 </mat-form-field>
               </div>
@@ -407,19 +368,16 @@
             <ion-col [class]="'hide-sm-up'" style="padding-right: 0; flex-flow: column;">
               <!-- <ion-col *ngIf="!leaveEntitlementPlatform.is('desktop' || 'electron')" style="padding-right: 0;display: flex; flex-flow: column;"> -->
               <div>
-                <p
-                  style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;overflow-wrap: initial;text-overflow: ellipsis;overflow: auto;">
+                <p class="abbrText">
                   Abbreviation</p>
-                <mat-form-field appearance="outline" style="height: 55px;
-            font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
+                <mat-form-field class="inputForm" appearance="outline">
                   <input matInput [(ngModel)]="abbr" readonly>
                 </mat-form-field>
               </div>
               <div>
-                <p style="margin-bottom:5px;font-size: 11px;font-weight: bold;color: #808495;opacity: 0.8;">
+                <p class="leaveTypeText">
                   Leave Type</p>
-                <mat-form-field appearance="outline" style="height: 55px;
-      font-size: 12px;color: #43425d;opacity: 0.8;display: inline-block;width: 100%;">
+                <mat-form-field class="inputForm" appearance="outline">
                   <input matInput [(ngModel)]="name" readonly>
                 </mat-form-field>
               </div>
@@ -429,8 +387,7 @@
         <div *ngIf="cloneButton"
           style="padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 15px;color: #a3a6b4;font-weight: bold;">
           <ion-row>
-            <ion-col align-self-center
-              style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+            <ion-col align-self-center class="colText">
               LEAVE ENTITLEMENT PROFILE
             </ion-col>
           </ion-row>
@@ -441,9 +398,8 @@
             <ng-container *ngFor="let type of leaveTypes; let j=index;">
               <mat-radio-group [(ngModel)]="cloneProfileId">
                 <ng-container *ngFor="let item of leaveEntitlement[j]; let i=index">
-                  <mat-radio-button disableRipple="true" color="primary" *ngIf="item.leaveTypeId == entitlementTypeNew"
-                    style="margin-bottom: 3px;display: block;color: #4d4f5c;font-size: 12px;font-weight:
-                    600;white-space: pre-line;" [value]="item.leaveEntitlementId">
+                  <mat-radio-button disableRipple="true" color="primary" class="radioButton"
+                    *ngIf="item.leaveTypeId == entitlementTypeNew" [value]="item.leaveEntitlementId">
                     {{item.leaveType}} - {{item.leaveEntitlementCode}}
                   </mat-radio-button>
                 </ng-container>
@@ -455,9 +411,8 @@
             <ng-container *ngFor="let type of leaveTypes; let j=index;">
               <mat-radio-group [(ngModel)]="cloneProfileId">
                 <ng-container *ngFor="let item of leaveEntitlement[j]; let i=index">
-                  <mat-radio-button disableRipple="true" color="primary" *ngIf="item.leaveTypeId == entitlementTypeNew"
-                    style="margin-bottom: 3px;display: block;color: #4d4f5c;font-size: 12px;font-weight: 600;white-space: pre-line;"
-                    [value]="item.leaveEntitlementId">
+                  <mat-radio-button disableRipple="true" color="primary" class="radioButton"
+                    *ngIf="item.leaveTypeId == entitlementTypeNew" [value]="item.leaveEntitlementId">
                     {{item.leaveType}} - {{item.leaveEntitlementCode}}
                   </mat-radio-button>
                 </ng-container>
@@ -465,9 +420,7 @@
             </ng-container>
           </div>
           <div style="text-align: center;">
-            <ion-button
-              style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
-              color="primary" (click)="createProfile('clone');showSmallSpinner=true"
+            <ion-button class="buttonStyle" color="primary" (click)="createProfile('clone');showSmallSpinner=true"
               [disabled]="cloneProfileId == null">
               Add<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
               </ion-spinner>
@@ -525,32 +478,24 @@
           <div class="row">
             <!-- <div class="row" *ngIf="leaveEntitlementPlatform.is('desktop' || 'electron')"> -->
             <div class="entitlement">
-              <div *ngIf="mainToggle === 'ON'"
-                style="text-align: right;padding: 5px;padding-left:10px;padding-right:10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+              <div *ngIf="mainToggle === 'ON'" class="createNewLeaveTypeDiv">
                 <ion-row style="display: flex; flex-flow: row wrap;">
-                  <ion-col align-self-center style="text-align: left;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient:
-                    vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px; flex: 2 1 20px;
-                    min-width: fit-content;">
+                  <ion-col class="colCreateNewLeaveType" align-self-center>
                     CREATE NEW LEAVE TYPE HERE</ion-col>
-                  <ion-button
-                    style="--border-radius: 2px;text-transform: none;height: 29px; width: 29%;font-size: 11px; flex: 1 1 10px;"
-                    color="primary"
+                  <ion-button class="createNewButton" color="primary"
                     (click)="sharedService.menu.open('createNewTypeDetails');sharedService.menu.enable(true, 'createNewTypeDetails'); sharedService.menu.enable(false, 'editLeaveTypeDetails')">
                     Create New
                   </ion-button>
                 </ion-row>
               </div>
               <ng-container *ngFor="let type of leaveTypes; let j=index;">
-                <div (click)="showClickedContent(j)"
-                  style="cursor: pointer;padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                <div (click)="showClickedContent(j)" class="tabHeader">
                   <ion-row>
-                    <ion-col size="9" align-self-center
-                      style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+                    <ion-col size="9" align-self-center class="colText">
                       {{type.title}}
                     </ion-col>
-                    <ion-col align-self-center style="text-align: right;padding-right: 10px;">
-                      <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mainToggle === 'ON'"
-                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
+                    <ion-col class="colEditIcon" align-self-center>
+                      <img class="iconImg" src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mainToggle === 'ON'"
                         (click)="clickedHeaderIndex=j;entitlementTypeNew = type.leaveTypeId;abbr = type.ABBR;name= type.name;sharedService.menu.open('editLeaveTypeDetails'); sharedService.menu.enable(false, 'createNewTypeDetails');sharedService.menu.enable(true,'editLeaveTypeDetails')">
                     </ion-col>
                   </ion-row>
@@ -607,8 +552,7 @@
                   <ion-col align-self-center class="text">
                     Allow applicant to Apply Leave in Advance
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div>
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -616,11 +560,9 @@
                           (ionChange)="$event.detail.checked === true? entitlementDetails.PROPERTIES_XML.applyInAdvance = true : entitlementDetails.PROPERTIES_XML.applyInAdvance = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyInAdvance === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.applyInAdvance === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyInAdvance === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.applyInAdvance === false">
                         Not Allowed</p>
                     </div>
                   </ion-col>
@@ -631,8 +573,7 @@
                   <ion-col align-self-center class="text">
                     Allow applicant to Apply Leave of the following year
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div>
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -640,11 +581,9 @@
                           (ionChange)="$event.detail.checked === true? entitlementDetails.PROPERTIES_XML.applyNextYear=true: entitlementDetails.PROPERTIES_XML.applyNextYear=false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyNextYear === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.applyNextYear === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyNextYear === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.applyNextYear === false">
                         Not Allowed</p>
                     </div>
                   </ion-col>
@@ -655,8 +594,7 @@
                   <ion-col align-self-center class="text">
                     Allow applicant to claim entitlement (E.g: Work OT, claims AL, RL)
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div>
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -664,11 +602,9 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.claimEntitlement=true:entitlementDetails.PROPERTIES_XML.claimEntitlement=false ">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.claimEntitlement === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.claimEntitlement === true">
                         Yes</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.claimEntitlement === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.claimEntitlement === false">
                         No</p>
                     </div>
                   </ion-col>
@@ -679,8 +615,7 @@
                   <ion-col align-self-center class="text">
                     Allow applicant to Apply Half Day (0.5) Leave
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div>
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -688,11 +623,9 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyFractionUnit = true:entitlementDetails.PROPERTIES_XML.applyFractionUnit = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyFractionUnit === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.applyFractionUnit === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyFractionUnit === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.applyFractionUnit === false">
                         Not Allowed</p>
                     </div>
                   </ion-col>
@@ -703,8 +636,7 @@
                   <ion-col align-self-center class="text">
                     Attach Certificate / Supporting Documents (E.g: Medical Certificate)
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div>
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -712,11 +644,9 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.attachmentRequired = true: entitlementDetails.PROPERTIES_XML.attachmentRequired = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.attachmentRequired === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.attachmentRequired === true">
                         Yes</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.attachmentRequired === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.attachmentRequired === false">
                         No</p>
                     </div>
                   </ion-col>
@@ -727,9 +657,8 @@
                   <ion-col align-self-center class="text" style="flex: 1 1 50%; min-width: 200px;">
                     Exclude Day Type for Leave day(s) calculation
                   </ion-col>
-                  <ion-col align-self-center style="text-align: right;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1; min-width: 200px;">
-                    <div style="display: inline-block;padding-right: 20px;" *ngIf="mainToggle === 'ON'">
+                  <ion-col align-self-center class="alignConfiguration configurationTextGroup">
+                    <div class="checkboxDiv" *ngIf="mainToggle === 'ON'">
                       <mat-checkbox [disableRipple]=true
                         (change)="entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday = $event.checked"
                         [checked]="entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday">Holiday
@@ -741,14 +670,14 @@
                         [checked]="entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay">Rest day
                       </mat-checkbox>
                     </div>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === false"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === false">
                       Holiday</p>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === false"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === false">
                       Rest Day</p>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === true"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === true">
                       Holiday, Rest Day</p>
                   </ion-col>
                   <ion-item class="divider" lines="full">
@@ -758,8 +687,7 @@
                   <ion-col align-self-center class="text" style="min-width: 100px; flex: 1;">
                     Apply Before
                   </ion-col>
-                  <ion-col align-self-center style="white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;flex: 1; min-width: 200px;;">
+                  <ion-col align-self-center class="configurationTextGroup">
                     <div style="float: right;">
                       <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                       font-size: 12px;width: 60px;color: #43425d;opacity: 0.8;">
@@ -779,12 +707,11 @@
                   </ion-col>
                 </ion-row>
                 <ion-row class="rowDetails">
-                  <ion-col align-self-center class="text" style="flex: 1 1 50%; min-width: 100px;">
+                  <ion-col align-self-center class="text configurationText">
                     Exclude Day Type
                   </ion-col>
-                  <ion-col align-self-center style="text-align: right;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1 ; min-width: 200px;">
-                    <div style="display: inline-block;padding-right: 20px;" *ngIf="mainToggle === 'ON'">
+                  <ion-col align-self-center class="alignConfiguration configurationTextGroup">
+                    <div class="checkboxDiv" *ngIf="mainToggle === 'ON'">
                       <mat-checkbox [disableRipple]=true
                         (change)="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday = $event.checked"
                         [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday">
@@ -796,25 +723,24 @@
                         [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay">
                         Rest day</mat-checkbox>
                     </div>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === false"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === false">
                       Holiday</p>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === false"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === false">
                       Rest Day</p>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === true"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === true">
                       Holiday, Rest Day</p>
                   </ion-col>
                   <ion-item class="divider" lines="full">
                   </ion-item>
                 </ion-row>
                 <ion-row class="rowDetails">
-                  <ion-col align-self-center class="text" style="flex: 1 1 50%; min-width: 100px;">
+                  <ion-col align-self-center class="text configurationText">
                     Allow applicant to apply leave less than number of day(s) stated above
                   </ion-col>
-                  <ion-col align-self-center style="white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1; min-width: 200px;">
+                  <ion-col align-self-center class="configurationTextGroup">
                     <div style="height: 30px;">
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -822,11 +748,11 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=true:entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === false">
                         Not Allowed</p>
                     </div>
                     <mat-form-field appearance="outline" style="height: 55px;
@@ -843,8 +769,7 @@
                   <ion-col align-self-center class="text">
                     Make short notice application as Emergency
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div>
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -852,11 +777,11 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency = true:entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency === true">
                         Yes</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency === false">
                         No</p>
                     </div>
                   </ion-col>
@@ -867,8 +792,7 @@
                   <ion-col align-self-center class="text">
                     Apply within
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div style="float: right;">
                       <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px; 
                                       font-size: 12px;width: 60px;color: #43425d;opacity: 0.8;">
@@ -891,9 +815,8 @@
                   <ion-col align-self-center class="text" style="flex: 1; min-width: 100px;">
                     Exclude Day Type
                   </ion-col>
-                  <ion-col align-self-center style="text-align: right;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;flex: 1; min-width: 200px;">
-                    <div style="display: inline-block;padding-right: 20px;" *ngIf="mainToggle === 'ON'">
+                  <ion-col align-self-center class="alignConfiguration configurationTextGroup">
+                    <div class="checkboxDiv" *ngIf="mainToggle === 'ON'">
                       <mat-checkbox [disableRipple]=true
                         (change)="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday = $event.checked"
                         [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday">
@@ -905,25 +828,24 @@
                         [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay">
                         Rest day</mat-checkbox>
                     </div>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === false"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === false">
                       Holiday</p>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === false"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === false">
                       Rest Day</p>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === true"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === true">
                       Holiday, Rest Day</p>
                   </ion-col>
                   <ion-item class="divider" lines="full">
                   </ion-item>
                 </ion-row>
                 <ion-row class="rowDetails">
-                  <ion-col align-self-center class="text" style="flex: 1 1 50%; min-width: 100px;">
+                  <ion-col align-self-center class="text configurationText">
                     Allow applicant to submit backdated leave after number of day(s) stated above
                   </ion-col>
-                  <ion-col align-self-center style="white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1; min-width: 200px">
+                  <ion-col align-self-center class="configurationTextGroup">
                     <div style="height: 30px;">
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -931,11 +853,11 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = true: entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === false">
                         Not Allowed</p>
                     </div>
                     <mat-form-field appearance="outline" style="height: 55px;
@@ -952,8 +874,7 @@
                   <ion-col align-self-center class="text">
                     Allow applicant to apply more than Leave Balance
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div style="height: 30px;">
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -961,11 +882,11 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck = true: entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck === false">
                         Not Allowed</p>
                     </div>
                     <div style="text-align: right;">
@@ -979,8 +900,7 @@
                           <mat-option value="UNPAID LEAVE">Unpaid Leave</mat-option>
                         </mat-select>
                       </mat-form-field>
-                      <p *ngIf="mainToggle === 'OFF'"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="mainToggle === 'OFF'">
                         {{entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.textValue}}</p>
                     </div>
                   </ion-col>
@@ -991,8 +911,7 @@
                   <ion-col align-self-center class="text">
                     Maximum day per leave application
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div style="float: right;">
                       <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                                       font-size: 12px;width: 60px;color: #43425d;opacity: 0.8;">
@@ -1016,8 +935,7 @@
                   <ion-col align-self-center class="text">
                     Allow to apply leave after
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                                     font-size: 12px; min-width: 100px;color: #43425d;float:right">
                       <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.isAllowAfterJoinDate.textValue">
@@ -1026,19 +944,17 @@
                         <mat-option value="PROBATION">Probation</mat-option>
                       </mat-select>
                     </mat-form-field>
-                    <p *ngIf="mainToggle === 'OFF'"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText" *ngIf="mainToggle === 'OFF'">
                       {{entitlementDetails.PROPERTIES_XML.isAllowAfterJoinDate.textValue}}</p>
                   </ion-col>
                   <ion-item class="divider" lines="full">
                   </ion-item>
                 </ion-row>
                 <ion-row class="rowDetails">
-                  <ion-col align-self-center class="text" style="flex: 1 1 50%; min-width: 100px;">
+                  <ion-col align-self-center class="text configurationText">
                     Allow applicant to cancel leave after start/expired date
                   </ion-col>
-                  <ion-col align-self-center style="white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1; min-width: 200px;">
+                  <ion-col align-self-center class="configurationTextGroup">
                     <div style="height: 30px;">
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -1046,11 +962,11 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck = true: entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck === false">
                         Not Allowed</p>
                     </div>
                     <mat-form-field appearance="outline" style="height: 55px;
@@ -1064,11 +980,10 @@
                   </ion-item>
                 </ion-row>
                 <ion-row class="rowDetails">
-                  <ion-col align-self-center class="text" style="flex: 1 1 50%; min-width: 100px;">
+                  <ion-col align-self-center class="text configurationText">
                     Allow applicant to use previous year bring forward leave only
                   </ion-col>
-                  <ion-col align-self-center style="white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1; min-width: 200px;">
+                  <ion-col align-self-center class="configurationTextGroup">
                     <div style="height: 30px;">
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -1076,15 +991,14 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck = true: entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <mat-form-field appearance="outline" style="height: 55px;
-                    font-size: 12px;width: -webkit-fill-available;color: #43425d;float:right">
+                    <mat-form-field appearance="outline" class="configurationForm">
                       <input matInput
                         [(ngModel)]="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.textValue"
                         [disabled]="mainToggle === 'OFF'">
@@ -1097,8 +1011,7 @@
                   <ion-col align-self-center class="text">
                     Leave entitlement type
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                     font-size: 12px;color: #43425d;float:right">
                       <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.leaveEntitlementType">
@@ -1117,8 +1030,7 @@
                         <mat-option value="Leave entitled after 12 months">Leave entitled after 12 months </mat-option>
                       </mat-select>
                     </mat-form-field>
-                    <p *ngIf="mainToggle === 'OFF'"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText" *ngIf="mainToggle === 'OFF'">
                       {{entitlementDetails.PROPERTIES_XML.leaveEntitlementType}}</p>
                   </ion-col>
                   <ion-item class="divider" lines="full">
@@ -1128,8 +1040,7 @@
                   <ion-col align-self-center class="text">
                     Leave entitlement rounding
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                                     font-size: 12px; min-width: 100px;color: #43425d;float:right">
                       <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.leaveEntitlementRounding">
@@ -1145,8 +1056,7 @@
                         <mat-option value="ROUND UP 0.25">Round Up 0.25</mat-option>
                       </mat-select>
                     </mat-form-field>
-                    <p *ngIf="mainToggle === 'OFF'"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText" *ngIf="mainToggle === 'OFF'">
                       {{entitlementDetails.PROPERTIES_XML.leaveEntitlementRounding | titlecase}}</p>
                   </ion-col>
                   <ion-item class="divider" lines="full">
@@ -1221,9 +1131,8 @@
                     </ion-col>
                     <ion-col
                       style="width: fit-content; min-width: fit-content; text-align: end; max-width: fit-content; margin-left: auto;">
-                      <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                      <img src="assets/icon/leave_setup/icon_trash@3x.png" class="iconImg"
                         *ngIf="mainToggle === 'ON' && entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.length > 1 "
-                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
                         (click)="addDeleteLevel('delete', i)">
                     </ion-col>
                   </ion-grid>
@@ -1246,32 +1155,24 @@
           <div class="row" style="flex-wrap: wrap; overflow-y: auto;">
             <!-- <div class="row" style="flex-wrap: wrap; overflow-y: auto;" *ngIf="!leaveEntitlementPlatform.is('desktop' || 'electron')"> -->
             <div style="flex: 2 1 auto; max-height: 50%; height: 100%; overflow: auto;">
-              <div *ngIf="mainToggle === 'ON'"
-                style="text-align: right;padding: 5px;padding-left:10px;padding-right:10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+              <div *ngIf="mainToggle === 'ON'" class="createNewLeaveTypeDiv">
                 <ion-row style="display: flex; flex-flow: row wrap;">
-                  <ion-col align-self-center style="text-align: left;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient:
-                    vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px; flex: 2 1 20px;
-                    min-width: fit-content;">
+                  <ion-col align-self-center class="colCreateNewLeaveType">
                     CREATE NEW LEAVE TYPE HERE</ion-col>
-                  <ion-button
-                    style="--border-radius: 2px;text-transform: none;height: 29px; width: 29%;font-size: 11px; flex: 1 1 10px;"
-                    color="primary"
+                  <ion-button class="createNewButton" color="primary"
                     (click)="sharedService.menu.open('createNewTypeDetails');sharedService.menu.enable(true, 'createNewTypeDetails'); sharedService.menu.enable(false, 'editLeaveTypeDetails')">
                     Create New
                   </ion-button>
                 </ion-row>
               </div>
               <ng-container *ngFor="let type of leaveTypes; let j=index;">
-                <div (click)="showClickedContent(j)"
-                  style="cursor: pointer;padding: 10px;font-size: 12px;width:100%;background: #f5f6fa;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                <div (click)="showClickedContent(j)" class="tabHeader">
                   <ion-row>
-                    <ion-col size="9" align-self-center
-                      style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;font-size: 12px;">
+                    <ion-col size="9" align-self-center class="colText">
                       {{type.title}}
                     </ion-col>
-                    <ion-col align-self-center style="text-align: right;padding-right: 10px;">
-                      <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mainToggle === 'ON'"
-                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
+                    <ion-col class="colEditIcon" align-self-center>
+                      <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mainToggle === 'ON'" class="iconImg"
                         (click)="clickedHeaderIndex=j;entitlementTypeNew = type.leaveTypeId;abbr = type.ABBR;name= type.name;sharedService.menu.open('editLeaveTypeDetails'); sharedService.menu.enable(false, 'createNewTypeDetails');sharedService.menu.enable(true,'editLeaveTypeDetails')">
                     </ion-col>
                   </ion-row>
@@ -1319,8 +1220,7 @@
                   <ion-col align-self-center class="text">
                     Allow applicant to Apply Leave in Advance
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div>
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -1328,11 +1228,9 @@
                           (ionChange)="$event.detail.checked === true? entitlementDetails.PROPERTIES_XML.applyInAdvance = true : entitlementDetails.PROPERTIES_XML.applyInAdvance = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyInAdvance === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.applyInAdvance === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyInAdvance === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.applyInAdvance === false">
                         Not Allowed</p>
                     </div>
                   </ion-col>
@@ -1343,8 +1241,7 @@
                   <ion-col align-self-center class="text">
                     Allow applicant to Apply Leave of the following year
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div>
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -1352,11 +1249,9 @@
                           (ionChange)="$event.detail.checked === true? entitlementDetails.PROPERTIES_XML.applyNextYear=true: entitlementDetails.PROPERTIES_XML.applyNextYear=false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyNextYear === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.applyNextYear === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyNextYear === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.applyNextYear === false">
                         Not Allowed</p>
                     </div>
                   </ion-col>
@@ -1367,8 +1262,7 @@
                   <ion-col align-self-center class="text">
                     Allow applicant to claim entitlement (E.g: Work OT, claims AL, RL)
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div>
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -1376,11 +1270,9 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.claimEntitlement=true:entitlementDetails.PROPERTIES_XML.claimEntitlement=false ">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.claimEntitlement === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.claimEntitlement === true">
                         Yes</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.claimEntitlement === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.claimEntitlement === false">
                         No</p>
                     </div>
                   </ion-col>
@@ -1391,8 +1283,7 @@
                   <ion-col align-self-center class="text">
                     Allow applicant to Apply Half Day (0.5) Leave
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div>
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -1400,11 +1291,9 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyFractionUnit = true:entitlementDetails.PROPERTIES_XML.applyFractionUnit = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyFractionUnit === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.applyFractionUnit === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyFractionUnit === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.applyFractionUnit === false">
                         Not Allowed</p>
                     </div>
                   </ion-col>
@@ -1415,8 +1304,7 @@
                   <ion-col align-self-center class="text">
                     Attach Certificate / Supporting Documents (E.g: Medical Certificate)
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div>
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -1424,11 +1312,9 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.attachmentRequired = true: entitlementDetails.PROPERTIES_XML.attachmentRequired = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.attachmentRequired === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.attachmentRequired === true">
                         Yes</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.attachmentRequired === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="entitlementDetails.PROPERTIES_XML.attachmentRequired === false">
                         No</p>
                     </div>
                   </ion-col>
@@ -1439,9 +1325,8 @@
                   <ion-col align-self-center class="text" style="flex: 1  1 50%; min-width: 100px">
                     Exclude Day Type for Leave day(s) calculation
                   </ion-col>
-                  <ion-col align-self-center style="text-align: right;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1; min-width: 200px;">
-                    <div style="display: inline-block;padding-right: 20px;" *ngIf="mainToggle === 'ON'">
+                  <ion-col align-self-center class="alignConfiguration configurationTextGroup">
+                    <div class="checkboxDiv" *ngIf="mainToggle === 'ON'">
                       <mat-checkbox [disableRipple]=true
                         (change)="entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday = $event.checked"
                         [checked]="entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday">Holiday
@@ -1453,14 +1338,14 @@
                         [checked]="entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay">Rest day
                       </mat-checkbox>
                     </div>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === false"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === false">
                       Holiday</p>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === false"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === false">
                       Rest Day</p>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === true"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.excludeDayType.isExcludeRestDay === true">
                       Holiday, Rest Day</p>
                   </ion-col>
                   <ion-item class="divider" lines="full">
@@ -1470,8 +1355,7 @@
                   <ion-col align-self-center class="text" style="flex:1 1 50%; min-width: 30px;">
                     Apply Before
                   </ion-col>
-                  <ion-col align-self-center style="white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1; ">
+                  <ion-col align-self-center class="configurationTextGroup">
                     <div style="float: right;">
                       <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                       font-size: 12px;width: 60px;color: #43425d;opacity: 0.8;">
@@ -1491,12 +1375,11 @@
                   </ion-col>
                 </ion-row>
                 <ion-row class="rowDetails rowMobileDetails">
-                  <ion-col align-self-center class="text" style="flex: 1 1 50%; min-width: 100px;">
+                  <ion-col align-self-center class="text configurationText">
                     Exclude Day Type
                   </ion-col>
-                  <ion-col align-self-center style="text-align: right;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1; min-width: 200px;">
-                    <div style="display: inline-block;padding-right: 20px;" *ngIf="mainToggle === 'ON'">
+                  <ion-col align-self-center class="alignConfiguration configurationTextGroup">
+                    <div class="checkboxDiv" *ngIf="mainToggle === 'ON'">
                       <mat-checkbox [disableRipple]=true
                         (change)="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday = $event.checked"
                         [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday">
@@ -1508,25 +1391,24 @@
                         [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay">
                         Rest day</mat-checkbox>
                     </div>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === false"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === false">
                       Holiday</p>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === false"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === false">
                       Rest Day</p>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === true"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeRestDay === true">
                       Holiday, Rest Day</p>
                   </ion-col>
                   <ion-item class="divider" lines="full">
                   </ion-item>
                 </ion-row>
                 <ion-row class="rowDetails rowMobileDetails">
-                  <ion-col align-self-center class="text" style="flex: 1 1 50%; min-width: 100px;">
+                  <ion-col align-self-center class="text configurationText">
                     Allow applicant to apply leave less than number of day(s) stated above
                   </ion-col>
-                  <ion-col align-self-center style="white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1; min-width: 200;">
+                  <ion-col align-self-center class="configurationTextGroup">
                     <div style="height: 30px;">
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -1534,15 +1416,14 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=true:entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <mat-form-field appearance="outline" style="height: 55px;
-                    font-size: 12px;width: -webkit-fill-available; min-width: 100px;color: #43425d;float:right">
+                    <mat-form-field appearance="outline" class="formField">
                       <input matInput
                         [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.textValue"
                         [disabled]="mainToggle === 'OFF'">
@@ -1555,8 +1436,7 @@
                   <ion-col align-self-center class="text">
                     Make short notice application as Emergency
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div>
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -1564,11 +1444,11 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency = true:entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency === true">
                         Yes</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency === false">
                         No</p>
                     </div>
                   </ion-col>
@@ -1579,8 +1459,7 @@
                   <ion-col align-self-center class="text">
                     Apply within
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div style="float: right;">
                       <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px; 
                                       font-size: 12px;width: 60px;color: #43425d;opacity: 0.8;">
@@ -1600,12 +1479,11 @@
                   </ion-col>
                 </ion-row>
                 <ion-row class="rowDetails rowMobileDetails">
-                  <ion-col align-self-center class="text" style="flex: 1 1 50%; min-width: 100px;">
+                  <ion-col align-self-center class="text configurationText">
                     Exclude Day Type
                   </ion-col>
-                  <ion-col align-self-center style="text-align: right;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1; min-width: 200px;">
-                    <div style="display: inline-block;padding-right: 20px;" *ngIf="mainToggle === 'ON'">
+                  <ion-col align-self-center class="alignConfiguration configurationTextGroup">
+                    <div class="checkboxDiv" *ngIf="mainToggle === 'ON'">
                       <mat-checkbox [disableRipple]=true
                         (change)="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday = $event.checked"
                         [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday">
@@ -1617,25 +1495,24 @@
                         [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay">
                         Rest day</mat-checkbox>
                     </div>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === false"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === false">
                       Holiday</p>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === false"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === false">
                       Rest Day</p>
-                    <p *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === true"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText"
+                      *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === true">
                       Holiday, Rest Day</p>
                   </ion-col>
                   <ion-item class="divider" lines="full">
                   </ion-item>
                 </ion-row>
                 <ion-row class="rowDetails rowMobileDetails">
-                  <ion-col align-self-center class="text" style="flex: 1 1 50%; min-width: 100px;">
+                  <ion-col align-self-center class="text configurationText">
                     Allow applicant to submit backdated leave after number of day(s) stated above
                   </ion-col>
-                  <ion-col align-self-center style="white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;flex: 1; min-width: 200px">
+                  <ion-col align-self-center class="configurationTextGroup">
                     <div style="height: 30px;">
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -1643,15 +1520,14 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = true: entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <mat-form-field appearance="outline" style="height: 55px;
-                    font-size: 12px;width: -webkit-fill-available;color: #43425d;float:right">
+                    <mat-form-field appearance="outline" class="configurationForm">
                       <input matInput
                         [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.textValue"
                         [disabled]="mainToggle === 'OFF'">
@@ -1661,11 +1537,10 @@
                   </ion-item>
                 </ion-row>
                 <ion-row class="rowDetails rowMobileDetails" style="flex-flow: row wrap">
-                  <ion-col align-self-center class="text" style="flex: 1 1 50%; min-width: 100px;">
+                  <ion-col align-self-center class="text configurationText">
                     Allow applicant to apply more than Leave Balance
                   </ion-col>
-                  <ion-col align-self-center style="white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1; min-width: 200px;">
+                  <ion-col align-self-center class="configurationTextGroup">
                     <div style="height: 30px;">
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -1673,11 +1548,11 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck = true: entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck === false">
                         Not Allowed</p>
                     </div>
                     <div style="text-align: right;">
@@ -1691,8 +1566,7 @@
                           <mat-option value="UNPAID LEAVE">Unpaid Leave</mat-option>
                         </mat-select>
                       </mat-form-field>
-                      <p *ngIf="mainToggle === 'OFF'"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText" *ngIf="mainToggle === 'OFF'">
                         {{entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.textValue}}</p>
                     </div>
                   </ion-col>
@@ -1703,8 +1577,7 @@
                   <ion-col align-self-center class="text">
                     Maximum day per leave application
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
+                  <ion-col align-self-center class="configurationCol">
                     <div style="float: right;">
                       <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
                                       font-size: 12px;width: 60px;color: #43425d;opacity: 0.8;">
@@ -1728,30 +1601,25 @@
                   <ion-col align-self-center class="text">
                     Allow to apply leave after
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
-                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'"
-                      style="height: 55px;
-                                    font-size: 12px;width: -webkit-fill-available; min-width: 100px;color: #43425d;float:right">
+                  <ion-col align-self-center class="configurationCol">
+                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" class="formField">
                       <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.isAllowAfterJoinDate.textValue">
                         <mat-option>Nothing Selected</mat-option>
                         <mat-option value="CONFIRMATION">Confirmation</mat-option>
                         <mat-option value="PROBATION">Probation</mat-option>
                       </mat-select>
                     </mat-form-field>
-                    <p *ngIf="mainToggle === 'OFF'"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText" *ngIf="mainToggle === 'OFF'">
                       {{entitlementDetails.PROPERTIES_XML.isAllowAfterJoinDate.textValue}}</p>
                   </ion-col>
                   <ion-item class="divider" lines="full">
                   </ion-item>
                 </ion-row>
                 <ion-row class="rowDetails rowMobileDetails">
-                  <ion-col align-self-center class="text" style="flex: 1 1 50%; min-width: 100px;">
+                  <ion-col align-self-center class="text configurationText">
                     Allow applicant to cancel leave after start/expired date
                   </ion-col>
-                  <ion-col align-self-center style="white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1; min-width: 200px;;">
+                  <ion-col align-self-center class="configurationTextGroup">
                     <div style="height: 30px;">
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -1759,15 +1627,14 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck = true: entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <mat-form-field appearance="outline" style="height: 55px;
-                    font-size: 12px;width: -webkit-fill-available; min-width: 100px;color: #43425d;float:right">
+                    <mat-form-field appearance="outline" class="formField">
                       <input matInput
                         [(ngModel)]="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.textValue"
                         [disabled]="mainToggle === 'OFF'">
@@ -1777,11 +1644,10 @@
                   </ion-item>
                 </ion-row>
                 <ion-row class="rowDetails rowMobileDetails">
-                  <ion-col align-self-center class="text" style="flex: 1 1 50%; min-width: 100px;">
+                  <ion-col align-self-center class="text configurationText">
                     Allow applicant to use previous year bring forward leave only
                   </ion-col>
-                  <ion-col align-self-center style="white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px; flex: 1; min-width: 200px;">
+                  <ion-col align-self-center class="configurationTextGroup">
                     <div style="height: 30px;">
                       <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
                         <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
@@ -1789,15 +1655,14 @@
                           (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck = true: entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck = false">
                         </ion-toggle>
                       </div>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck === true"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck === true">
                         Allow</p>
-                      <p *ngIf="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck === false"
-                        style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <mat-form-field appearance="outline" style="height: 55px;
-                    font-size: 12px;width: -webkit-fill-available; min-width: 100px;color: #43425d;float:right">
+                    <mat-form-field appearance="outline" class="formField">
                       <input matInput
                         [(ngModel)]="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.textValue"
                         [disabled]="mainToggle === 'OFF'">
@@ -1810,10 +1675,8 @@
                   <ion-col align-self-center class="text">
                     Leave entitlement type
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
-                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
-                    font-size: 12px;width: -webkit-fill-available;color: #43425d;float:right">
+                  <ion-col align-self-center class="configurationCol">
+                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" class="configurationForm">
                       <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.leaveEntitlementType">
                         <mat-option>Nothing Selected</mat-option>
                         <mat-option value="Entitled in full">Entitled in full</mat-option>
@@ -1830,8 +1693,7 @@
                         <mat-option value="Leave entitled after 12 months">Leave entitled after 12 months </mat-option>
                       </mat-select>
                     </mat-form-field>
-                    <p *ngIf="mainToggle === 'OFF'"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText" *ngIf="mainToggle === 'OFF'">
                       {{entitlementDetails.PROPERTIES_XML.leaveEntitlementType}}</p>
                   </ion-col>
                   <ion-item class="divider" lines="full">
@@ -1841,11 +1703,9 @@
                   <ion-col align-self-center class="text">
                     Leave entitlement rounding
                   </ion-col>
-                  <ion-col align-self-center style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #4d4f5c;font-size:11px;padding-top: 13px;
-                                    padding-bottom: 13px;">
-                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'"
-                      style="height: 55px;
-                                    font-size: 12px;width: -webkit-fill-available; min-width: 100px;color: #43425d;float:right">
+                  <ion-col align-self-center class="configurationCol">
+                    <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" class="formField"
+                      class="formField">
                       <mat-select [(value)]="entitlementDetails.PROPERTIES_XML.leaveEntitlementRounding">
                         <mat-option>Nothing Selected</mat-option>
                         <mat-option value="ROUND DOWN 1.00">Round Down 1.00</mat-option>
@@ -1859,8 +1719,7 @@
                         <mat-option value="ROUND UP 0.25">Round Up 0.25</mat-option>
                       </mat-select>
                     </mat-form-field>
-                    <p *ngIf="mainToggle === 'OFF'"
-                      style="margin-top: 0px;opacity: 0.8;font-size: 11px;font-weight: bold;color: #43425d;padding-right: 10px;float: right;">
+                    <p class="settingText" *ngIf="mainToggle === 'OFF'">
                       {{entitlementDetails.PROPERTIES_XML.leaveEntitlementRounding | titlecase}}</p>
                   </ion-col>
                   <ion-item class="divider" lines="full">
@@ -1935,9 +1794,8 @@
                     </ion-col>
                     <ion-col
                       style="width: fit-content; min-width: fit-content; text-align: end; max-width: fit-content; margin-left: auto;">
-                      <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                      <img src="assets/icon/leave_setup/icon_trash@3x.png" class="iconImg"
                         *ngIf="mainToggle === 'ON' && entitlementDetails.PROPERTIES_XML.levels.leaveEntitlement.length > 1 "
-                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
                         (click)="addDeleteLevel('delete', i)">
                     </ion-col>
                   </ion-grid>
