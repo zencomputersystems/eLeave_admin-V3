@@ -812,8 +812,8 @@ export class EmployeeSetupComponent implements OnInit {
      */
     getPersonalDetails() {
         if (this.personalDetails.personalDetail != undefined) {
+            this.birthOfDate = new FormControl((this.personalDetails.personalDetail.dob), Validators.required);
             if (this.personalDetails.personalDetail.dob !== '') {
-                this.birthOfDate = new FormControl((this.personalDetails.personalDetail.dob), Validators.required);
                 this.personalDetails.personalDetail.dob = _moment(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
             }
         } else {
@@ -1031,7 +1031,9 @@ export class EmployeeSetupComponent implements OnInit {
     async patchPersonalDetails() {
         if (this.personalDetails.personalDetail != undefined) {
             this.personalDetails.personalDetail.nric = (this.personalDetails.personalDetail.nric).toString();
-            this.personalDetails.personalDetail.dob = _moment(this.birthOfDate.value).format('YYYY-MM-DD');
+            if (this.birthOfDate.value !== '') {
+                this.personalDetails.personalDetail.dob = _moment(this.birthOfDate.value).format('YYYY-MM-DD');
+            }
             this.personalDetails.personalDetail.gender = this.personalDetails.personalDetail.gender;
             this.personalDetails.personalDetail.maritalStatus = this.personalDetails.personalDetail.maritalStatus;
             if (this.personalDetails.personalDetail.postcode !== '') {

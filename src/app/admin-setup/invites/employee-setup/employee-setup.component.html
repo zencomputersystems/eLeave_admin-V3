@@ -983,7 +983,7 @@
                                             <input matInput placeholder="Birthdate" (blur)="isBlur = true"
                                                 [matDatepicker]="birthdate" [formControl]="birthOfDate">
                                             <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
-                                            <mat-datepicker #birthdate></mat-datepicker>
+                                            <mat-datepicker #birthdate (closed)="isBlur = true"></mat-datepicker>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
@@ -1304,7 +1304,7 @@
                                                 [formControl]="dateOfConfirm">
                                             <mat-datepicker-toggle matSuffix [for]="dateConfirm">
                                             </mat-datepicker-toggle>
-                                            <mat-datepicker #dateConfirm></mat-datepicker>
+                                            <mat-datepicker #dateConfirm (closed)="isBlurEmployment = true"></mat-datepicker>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
@@ -1321,7 +1321,7 @@
                                                 [formControl]="dateOfResignation">
                                             <mat-datepicker-toggle matSuffix [for]="dateResign">
                                             </mat-datepicker-toggle>
-                                            <mat-datepicker #dateResign></mat-datepicker>
+                                            <mat-datepicker #dateResign (closed)="isBlurEmployment = true"></mat-datepicker>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
