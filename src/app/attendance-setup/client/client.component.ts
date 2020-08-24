@@ -22,7 +22,7 @@ export class ClientComponent implements OnInit {
         * @type {*}
         * @memberof ClientComponent
         */
-    public roleList: any;
+    public clientList: any;
 
     /**
      * Show loading spinner
@@ -30,13 +30,6 @@ export class ClientComponent implements OnInit {
      * @memberof ClientComponent
      */
     public showSpinner: boolean = true;
-
-    /**
-     * get assigned employee name list 
-     * @type {*}
-     * @memberof ClientComponent
-     */
-    public assignedNameList: any;
 
     /**
      * selected index
@@ -53,11 +46,11 @@ export class ClientComponent implements OnInit {
     public mode: string = 'OFF';
 
     /** 
-     * role id value
+     * client id value
      * @type {string}
      * @memberof ClientComponent
      */
-    public roleIdOutput: string;
+    public clientId: string;
 
     /**
      * role name form control
@@ -73,46 +66,6 @@ export class ClientComponent implements OnInit {
      */
     public editClientAbbr: any;
 
-    public editProject: any;
-    public editProjectAbbr: any
-    public editProjectName: any
-    public editProjectDescription: any
-
-    /**
-     * new role profile name form control
-     * @type {*}
-     * @memberof ClientComponent
-     */
-    public newRoleName: any;
-
-    /**
-     * new role profile description form control
-     * @type {*}
-     * @memberof ClientComponent
-     */
-    public newRoleDescription: any;
-
-    /**
-     * selected new button or not
-     * @type {boolean}
-     * @memberof ClientComponent
-     */
-    public newButton: boolean = true;
-
-    /**
-     * selected clone button or not
-     * @type {boolean}
-     * @memberof ClientComponent
-     */
-    public cloneButton: boolean = false;
-
-    /**
-     * selected radio button (role profile id)
-     * @type {string}
-     * @memberof ClientComponent
-     */
-    public cloneRoleId: string;
-
     /**
      * show loading spinner
      * @type {boolean}
@@ -127,65 +80,6 @@ export class ClientComponent implements OnInit {
      */
     @HostBinding('class.menuOverlay') menuOpen: boolean = false;
 
-    /**
-     * user list
-     * @private
-     * @type {*}
-     * @memberof ClientComponent
-     */
-    private _userList: any;
-
-    /**
-     * filtered userId list of dragged user
-     * @private
-     * @type {*}
-     * @memberof ClientComponent
-     */
-    private _filteredList: any = [];
-
-    /**
-     * get property details from requested role id
-     * @private
-     * @type {*}
-     * @memberof ClientComponent
-     */
-    private _property: any;
-
-    /**
-     * This property is to bind value of check all sign in check all status in checkbox
-     * @type {boolean}
-     * @memberof ClientComponent
-     */
-    public roleListCheckAll: boolean;
-
-    /**
-     * This property is to bind value of indetimate sign in check all status's checkbox
-     * @type {boolean}
-     * @memberof ClientComponent
-     */
-    public roleListIsIndeterminate: boolean;
-
-    /**
-     * This property is to bind data of defult role
-     * @type {*}
-     * @memberof ClientComponent
-     */
-    public defaultRoleData: any;
-
-    /**
-     * This property is to bind data of default role in checkbox during creation
-     * @type {boolean}
-     * @memberof ClientComponent
-     */
-    public defaultProfileRole: boolean = false;
-
-    /**
-     * To check current role is existed or not during role profile creation
-     * @type {boolean}
-     * @memberof ClientComponent
-     */
-    public showWarning: boolean = false;
-
     public showLocation: boolean = false;
     public showContrat: boolean = false;
     public showProject: boolean = true;
@@ -197,11 +91,6 @@ export class ClientComponent implements OnInit {
     public currentAddress: any;
     public createNew: boolean;
     private geoCoder;
-    @ViewChild('search')
-    public searchElementRef: ElementRef;
-
-    @ViewChild('editSearch')
-    public editSearchElement: ElementRef;
 
     public project;
     public contract;
@@ -216,15 +105,9 @@ export class ClientComponent implements OnInit {
     public newContractName: string;
     public newContractDescription: string;
 
-    public searchControl: FormControl;
-
     public filteredLocation: string[];
 
-    public selectedProjectList: any;
-
-    public selectedContractList: any;
-
-    public selectedLocationList: any;
+    public newFilteredLocation: string[];
 
     public patchProject: any = [];
     public patchContract: any = [];
@@ -236,14 +119,13 @@ export class ClientComponent implements OnInit {
 
     /**
      *Creates an instance of ClientComponent.
-     * @param {RoleApiService} roleAPi
      * @param {SharedService} _sharedService
+     * @param {MapsAPILoader} mapsAPILoader
+     * @param {ClientApiService} clientApi
      * @memberof ClientComponent
      */
-    constructor(private roleAPi: RoleApiService, private _sharedService: SharedService,
-        private mapsAPILoader: MapsAPILoader, private ngZone: NgZone, private clientApi: ClientApiService) {
-        this.newRoleName = new FormControl('', Validators.required);
-        this.newRoleDescription = new FormControl('', Validators.required);
+    constructor(private _sharedService: SharedService,
+        private mapsAPILoader: MapsAPILoader, private clientApi: ClientApiService) {
     }
 
     /**
@@ -255,52 +137,25 @@ export class ClientComponent implements OnInit {
         this.editClientAbbr = new FormControl('', Validators.required);
         this.refreshRoleList();
 
-        //create search FormControl
-        this.searchControl = new FormControl();
-
-        //set current position
-        // this.setCurrentLocation();
-
         //load Places Autocomplete
         this.mapsAPILoader.load().then(() => {
             this.geoCoder = new google.maps.Geocoder;
-            let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-                types: ["address"]
-            });
-            autocomplete.addListener("place_changed", () => {
-                this.ngZone.run(() => {
-                    //get the place result
-                    let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-                    //verify result
-                    if (place.geometry === undefined || place.geometry === null) {
-                        return;
-                    }
-
-                    //set latitude, longitude and zoom
-                    this.latitude = place.geometry.location.lat();
-                    this.longitude = place.geometry.location.lng();
-                    this.zoom = 12;
-                });
-            });
         });
     }
 
-    setCurrentLocation() {
-        if ('geolocation' in navigator) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                this.latitude = position.coords.latitude;
-                this.longitude = position.coords.longitude;
-                this.zoom = 12;
-                const coordinate = this.latitude + ',' + this.longitude;
-                this.clientApi.get_search_type_location(coordinate, 'coordinate').subscribe(data => {
-                    console.log(data);
-                    this.searchControl.patchValue(data.results[0].formatted_address)
-                })
-                // this.getAddress(this.latitude, this.longitude);
-            });
-        }
-    }
+    // setCurrentLocation() {
+    //     if ('geolocation' in navigator) {
+    //         navigator.geolocation.getCurrentPosition((position) => {
+    //             this.latitude = position.coords.latitude;
+    //             this.longitude = position.coords.longitude;
+    //             this.zoom = 12;
+    //             const coordinate = this.latitude + ',' + this.longitude;
+    //             this.clientApi.get_search_type_location(coordinate, 'coordinate').subscribe(data => {
+    //                 console.log(data);
+    //             })
+    //         });
+    //     }
+    // }
 
     /**
      * drag location from existing location
@@ -334,9 +189,10 @@ export class ClientComponent implements OnInit {
                     } else {
                         if (index !== undefined) {
                             this.location[index].ADDRESS = results[0].formatted_address;
-                        } else {
-                            this.setCurrentLocation();
-                        }
+                        } 
+                        // else {
+                        //     this.setCurrentLocation();
+                        // }
                     }
                 } else {
                     window.alert('No results found');
@@ -356,21 +212,23 @@ export class ClientComponent implements OnInit {
      */
     async selectedProfile(item, index) {
         this.clickedIndex = index;
-        this.roleIdOutput = item.CLIENT_GUID;
+        this.clientId = item.CLIENT_GUID;
         this.project = item.PROJECT_DATA;
         this.contract = item.CONTRACT_DATA;
         this.location = item.LOCATION_DATA;
-        this.clientApi.get_project_list_id(this.roleIdOutput).subscribe(data => this.selectedProjectList = data)
-        this.clientApi.get_contract_list_id(this.roleIdOutput).subscribe(list => this.selectedContractList = list)
-        this.clientApi.get_location_list_id(this.roleIdOutput).subscribe(list => this.selectedLocationList = list)
-        if (this.location[0] != undefined) {
-            this.latitude = this.location[0].LATITUDE;
-            this.longitude = this.location[0].LONGITUDE;
-            this.address = this.location[0].ADDRESS;
-            this.zoom = 15;
-        } else {
-            this.setCurrentLocation();
-        }
+        this.zoom = 15;
+        // this.clientApi.get_project_list_id(this.roleIdOutput).subscribe(data => this.selectedProjectList = data)
+        // this.clientApi.get_contract_list_id(this.roleIdOutput).subscribe(list => this.selectedContractList = list)
+        // this.clientApi.get_location_list_id(this.roleIdOutput).subscribe(list => this.selectedLocationList = list)
+        // if (this.location[0] != undefined) {
+        //     this.latitude = this.location[0].LATITUDE;
+        //     this.longitude = this.location[0].LONGITUDE;
+        //     this.address = this.location[0].ADDRESS;
+        //     this.zoom = 15;
+        // } 
+        // else {
+        //     this.setCurrentLocation();
+        // }
     }
 
     /**
@@ -389,7 +247,7 @@ export class ClientComponent implements OnInit {
             });
         } else {
             this.mode = 'OFF'
-            this.roleAPi.snackbarMsg('Edit mode disabled. Good job!', true);
+            this.clientApi.snackbarMsg('Edit mode disabled. Good job!', true);
         }
         this._sharedService.emitChange(this.mode);
     }
@@ -417,7 +275,7 @@ export class ClientComponent implements OnInit {
                         }
                     }
                     else {
-                        this.roleAPi.snackbarMsg('Client profile was failed to delete', false);
+                        this.clientApi.snackbarMsg('Client profile was failed to delete', false);
                     }
                 })
             }
@@ -436,7 +294,7 @@ export class ClientComponent implements OnInit {
                 {
                     "lat": this.latitude,
                     "long": this.longitude,
-                    "address": "abc"
+                    "address": this.currentAddress
                 }
             ],
             "project": [
@@ -454,7 +312,23 @@ export class ClientComponent implements OnInit {
                 }
             ]
         }
-        this.clientApi.post_client_profile(postBody).subscribe(response => console.log(response))
+        this.clientApi.post_client_profile(postBody).subscribe(response => {
+            this._sharedService.menu.close('createNewClientDetails');
+            this.showSmallSpinner = false;
+            this.clientApi.snackbarMsg('Client details was created successfully', true);
+            this.refreshRoleList();
+            this.newClientName = null;
+            this.newClientAbbr = null;
+            this.latitude = null;
+            this.longitude = null;
+            this.currentAddress = '';
+            this.newProjectName = null;
+            this.newSOC = null;
+            this.newProjectDescription = null;
+            this.newContractName = null;
+            this.newContractNo = null;
+            this.newContractDescription = '';
+        })
     }
 
     /**
@@ -463,16 +337,16 @@ export class ClientComponent implements OnInit {
      */
     refreshRoleList() {
         this.clientApi.get_client_profile_list().subscribe(data => {
-            this.roleList = data;
+            this.clientList = data;
             this.showSpinner = false;
             this.clickedIndex = 0;
-            this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);
+            this.selectedProfile(this.clientList[this.clickedIndex], this.clickedIndex);
         });
     }
 
     async filter(text: any) {
         if (text && text.trim() != '') {
-            this.roleList = this.roleList.filter((items: any) => {
+            this.clientList = this.clientList.filter((items: any) => {
                 if (items.NAME != undefined) {
                     return (items.NAME.toLowerCase().indexOf(text.toLowerCase()) > -1)
                 }
@@ -499,17 +373,41 @@ export class ClientComponent implements OnInit {
      * @memberof ClientComponent
      */
     getSearchLocation(location) {
-        console.log(location);
         this.clientApi.get_search_location(location).subscribe(data => {
-            console.log('input location', data)
             this.filteredLocation = data.predictions;
         })
     }
 
-    getLocationCoordinate(address: string) {
+    getLocationCoordinate(address: string, index: number) {
         this.clientApi.get_search_type_location(address, 'address').subscribe(
             detail => {
                 console.log(detail.results[0].geometry.location);
+                this.location[index].LATITUDE = detail.results[0].geometry.location.lat;
+                this.location[index].LONGITUDE = detail.results[0].geometry.location.lng;
+            }
+        )
+    }
+
+    /**
+     * search location from keyup text for create new menu
+     * @param {*} location
+     * @memberof ClientComponent
+     */
+    getNewSearchLocation(location) {
+        this.clientApi.get_search_location(location).subscribe(data => {
+            this.newFilteredLocation = data.predictions;
+        })
+    }
+
+    /**
+     * seleted autocomplete address in create new menu
+     * @param {string} address
+     * @param {number} index
+     * @memberof ClientComponent
+     */
+    getNewLocationCoordinate(address: string, index: number) {
+        this.clientApi.get_search_type_location(address, 'address').subscribe(
+            detail => {
                 this.latitude = detail.results[0].geometry.location.lat;
                 this.longitude = detail.results[0].geometry.location.lng;
             }
@@ -547,7 +445,7 @@ export class ClientComponent implements OnInit {
             if (this.project[i].PROJECT_GUID !== '') {
                 const project = {
                     "projectId": this.project[i].PROJECT_GUID,
-                    "clientId": this.roleIdOutput,
+                    "clientId": this.clientId,
                     "name": this.project[i].NAME,
                     "socNo": this.project[i].SOC_NO,
                     "description": this.project[i].DESCRIPTION
@@ -555,7 +453,7 @@ export class ClientComponent implements OnInit {
                 this.patchProject.push(project);
             } else {
                 const newproject = {
-                    "clientId": this.roleIdOutput,
+                    "clientId": this.clientId,
                     "name": this.project[i].NAME,
                     "socNo": this.project[i].SOC_NO,
                     "description": this.project[i].DESCRIPTION
@@ -569,7 +467,7 @@ export class ClientComponent implements OnInit {
             if (this.contract[i].CONTRACT_GUID !== '') {
                 const contract = {
                     "contractId": this.contract[i].CONTRACT_GUID,
-                    "clientId": this.roleIdOutput,
+                    "clientId": this.clientId,
                     "name": this.contract[i].NAME,
                     "contractNo": this.contract[i].CONTRACT_NO,
                     "description": this.contract[i].DESCRIPTION
@@ -577,7 +475,7 @@ export class ClientComponent implements OnInit {
                 this.patchContract.push(contract);
             } else {
                 const newcontract = {
-                    "clientId": this.roleIdOutput,
+                    "clientId": this.clientId,
                     "name": this.contract[i].NAME,
                     "contractNo": this.contract[i].CONTRACT_NO,
                     "description": this.contract[i].DESCRIPTION
@@ -592,7 +490,7 @@ export class ClientComponent implements OnInit {
                 const location =
                 {
                     "locationId": this.location[i].LOCATION_GUID,
-                    "clientId": this.roleIdOutput,
+                    "clientId": this.clientId,
                     "latitude": (this.location[i].LATITUDE).toString(),
                     "longitude": (this.location[i].LONGITUDE).toString(),
                     "address": this.location[i].ADDRESS
@@ -600,10 +498,10 @@ export class ClientComponent implements OnInit {
                 this.patchLocation.push(location);
             } else {
                 const newLocation = {
-                    "clientId": this.roleIdOutput,
-                    "latitude": this.latitude.toString(),
-                    "longitude": this.longitude.toString(),
-                    "address": this.searchControl.value
+                    "clientId": this.clientId,
+                    "latitude": (this.location[i].LATITUDE).toString(),
+                    "longitude": (this.location[i].LONGITUDE).toString(),
+                    "address": this.location[i].ADDRESS
                 }
                 this.postLocation.push(newLocation);
             }
@@ -613,7 +511,7 @@ export class ClientComponent implements OnInit {
             "patch": {
                 "client": [
                     {
-                        "id": this.roleIdOutput,
+                        "id": this.clientId,
                         "name": this.editClientName.value,
                         "abbr": this.editClientAbbr.value
                     }
@@ -637,8 +535,8 @@ export class ClientComponent implements OnInit {
             this.postContract = [];
             this.postLocation = [];
             this.showSmallSpinner = false;
-            this.roleAPi.snackbarMsg('Client details was saved successfully', true);
-            this._sharedService.menu.close('editLeaveTypeDetails');
+            this.clientApi.snackbarMsg('Client details was saved successfully', true);
+            this._sharedService.menu.close('editClientDetails');
             this.refreshRoleList();
         })
     }

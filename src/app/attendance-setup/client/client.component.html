@@ -1,6 +1,6 @@
 <!--------------create client, projects, contract -------------------------------------->
 <ion-menu style="--width:465px" class="leave-entitlement-popup" contentId="createClientContent" side="end"
-  type="overlay" menuId="createNewRoleDetails">
+  type="overlay" menuId="createNewClientDetails">
   <ion-header style="background-color:#43425d; color: #fcfcfc;">
     <img style="margin: 15px;width: 22px;height: 22px;float:left" src="assets/icon/leave_setup/icon_roles@3x.png">
     <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">CREATE NEW CLIENTS,
@@ -159,12 +159,25 @@ display: inline-block;"> Add New Project</p>
                 LOCATION</p>
               <ion-row style="display: flex;">
                 <ion-col style="flex: 21;padding-left: 0;">
-                  <mat-form-field appearance="outline"
+                  <!-- <mat-form-field appearance="outline"
                     style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
                     <mat-label>Location</mat-label>
                     <input matInput [(ngModel)]="currentAddress" type="text" (keydown.enter)="$event.preventDefault()"
                       autocorrect="off" autocapitalize="off" spellcheck="off" #search>
-                  </mat-form-field>
+                  </mat-form-field> -->
+                  <mat-form-field appearance="outline" class="locationFormField"
+                      style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                      <mat-label>Location</mat-label>
+                      <input matInput type="text" [matAutocomplete]="auto" [(ngModel)]="currentAddress"
+                        (keyup)="getNewSearchLocation($event.srcElement.value)">
+                      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of newFilteredLocation" [value]="option.description"
+                          style="font-size: 12px;color:#43425d;opacity: 0.8;"
+                          (click)="getNewLocationCoordinate(option.description, i)">
+                          {{option.description}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
                 </ion-col>
                 <ion-col align-self-center style="text-align: right;">
                   <img src="assets/icon/leave_setup/icon_trash@3x.png"
@@ -173,16 +186,16 @@ display: inline-block;"> Add New Project</p>
                 </ion-col>
               </ion-row>
 
-              <!-- <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+              <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="zoom">
                 <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
                   (dragEnd)="markerDragEnd($event)"></agm-marker>
-              </agm-map> -->
+              </agm-map>
             </div>
           </div>
           <div style="text-align: center;margin-top: 20px;">
             <ion-button
               style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
-              color="primary" (click)="createClientProfile(); showSmallSpinner=true">
+              color="primary" (click)="createClientProfile(); showSmallSpinner=true" [disabled]="newClientName == undefined || newClientAbbr == undefined ">
               Create New<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
               </ion-spinner>
             </ion-button>
@@ -200,7 +213,7 @@ display: inline-block;"> Add New Project</p>
 <!------------- update client, projects, supports & locations -------------------------->
 
 <ion-menu style="--width:465px" class="leave-entitlement-popup" contentId="editLeaveTypeContent" side="end"
-  type="overlay" menuId="editLeaveTypeDetails">
+  type="overlay" menuId="editClientDetails">
   <ion-header style="background-color:#43425d; color: #fcfcfc;">
     <img style="margin: 15px;width: 22px;height: 22px;float:left" src="assets/icon/leave_setup/icon_roles@3x.png">
     <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">UPDATE CLIENTS,
@@ -361,7 +374,7 @@ display: inline-block;"> Add New Project</p>
                       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                         <mat-option *ngFor="let option of filteredLocation" [value]="option.description"
                           style="font-size: 12px;color:#43425d;opacity: 0.8;"
-                          (click)="getLocationCoordinate(option.description)">
+                          (click)="getLocationCoordinate(option.description, i)">
                           {{option.description}}
                         </mat-option>
                       </mat-autocomplete>
@@ -376,34 +389,6 @@ display: inline-block;"> Add New Project</p>
                 <agm-map [latitude]="item.LATITUDE" [longitude]="item.LONGITUDE" [scrollwheel]="true" [zoom]="zoom">
                   <agm-marker [latitude]="item.LATITUDE" [longitude]="item.LONGITUDE" [markerDraggable]="true"
                     (dragEnd)="markerDragEndEdit($event, i)"></agm-marker>
-                </agm-map>
-              </ng-container>
-              <ng-container *ngIf="location && location.length === 0">
-                <ion-row style="display: flex;">
-                  <ion-col style="flex: 21;padding-left: 0;">
-                    <mat-form-field appearance="outline" class="locationFormField"
-                      style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
-                      <mat-label>Location</mat-label>
-                      <input matInput type="text" [matAutocomplete]="auto" [formControl]="searchControl"
-                        (keyup)="getSearchLocation($event.srcElement.value)">
-                      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredLocation" [value]="option.description"
-                          style="font-size: 12px;color:#43425d;opacity: 0.8;"
-                          (click)="getLocationCoordinate(option.description)">
-                          {{option.description}}
-                        </mat-option>
-                      </mat-autocomplete>
-                    </mat-form-field>
-                  </ion-col>
-                  <!-- <ion-col align-self-center style="text-align: right;">
-                    <img src="assets/icon/leave_setup/icon_trash@3x.png"
-                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;"
-                      (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
-                  </ion-col> -->
-                </ion-row>
-                <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="zoom">
-                  <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
-                    (dragEnd)="markerDragEnd($event)"></agm-marker>
                 </agm-map>
               </ng-container>
             </div>
@@ -482,93 +467,91 @@ display: inline-block;"> Add New Project</p>
                 </ion-col>
                 <ion-col align-self-center style="text-align: right;">
                   <ion-icon class="addIcon" name="add-circle-outline" *ngIf="mode == 'ON'"
-                    (click)="menuOpen = true;_sharedService.menu.open('createNewRoleDetails'); _sharedService.menu.enable(true, 'createNewRoleDetails');createNew=true">
+                    (click)="menuOpen = true;_sharedService.menu.open('createNewClientDetails'); _sharedService.menu.enable(true, 'createNewClientDetails');createNew=true">
                   </ion-icon>
                 </ion-col>
               </ion-row>
             </div>
             <div style="overflow-y: auto;height: calc(100% - 114px);">
               <ng-container *ngIf="mode == 'OFF'">
-                <ion-row *ngFor="let role of roleList; let i=index" style="padding-left: 5px;">
+                <ion-row *ngFor="let client of clientList; let i=index" style="padding-left: 5px;">
                   <ion-col size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                     <p class="textHover"
                       style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;"
                       [ngClass]="{
                                             'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
-                      (click)="selectedProfile(role, i)">
-                      {{role.NAME}}
+                      (click)="selectedProfile(client, i)">
+                      {{client.NAME}}
                     </p>
                     <p
                       style="padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
                       <img src="assets/icon/attendance/path_563@2x.png" style="width:12px;height:12px;display: inline-block;
                         margin-right: 5px;">
-                      <!-- {{role.LOCATION_DATA[0].ADDRESS}} -->
                     </p>
                     <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;
                         margin-right: 10px;">
                       No. Of Projects: <p
                         style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
-                        {{role.PROJECT_DATA.length}}</p>
+                        {{client.PROJECT_DATA.length}}</p>
                     </div>
                     <div
                       style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;">
                       No. Of Contracts: <p
                         style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
-                        {{role.CONTRACT_DATA.length}}</p>
+                        {{client.CONTRACT_DATA.length}}</p>
                     </div>
                   </ion-col>
                   <ion-col align-self-center style="text-align: right;padding-right: 15px;">
                     <ion-button disabled=true style="--opacity:1;font-size: 10px;width: 50px;height: 20px;">
-                      {{role.ABBR}}
+                      {{client.ABBR}}
                     </ion-button>
                   </ion-col>
                   <ion-item class="divider" lines="full"></ion-item>
                 </ion-row>
               </ng-container>
               <ng-container *ngIf="mode == 'ON'">
-                <ion-row *ngFor="let role of roleList; let i=index" style="padding-left: 5px;">
+                <ion-row *ngFor="let client of clientList; let i=index" style="padding-left: 5px;">
                   <ion-col size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                     <p class="textHover"
                       style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;"
                       [ngClass]="{
                                             'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
-                      (click)="selectedProfile(role, i)">
-                      {{role.NAME}}
+                      (click)="selectedProfile(client, i)">
+                      {{client.NAME}}
                     </p>
                     <p
                       style="padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
                       <img src="assets/icon/attendance/path_563@2x.png" style="width:12px;height:12px;display: inline-block;
                         margin-right: 5px;">
-                      <!-- {{role.LOCATION_DATA[0].ADDRESS}} -->
                     </p>
                     <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;
                         margin-right: 10px;">
                       No. Of Projects: <p
                         style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
-                        {{role.PROJECT_DATA.length}}</p>
+                        {{client.PROJECT_DATA.length}}</p>
                     </div>
                     <div
                       style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;">
                       No. Of Contracts: <p
                         style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
-                        {{role.CONTRACT_DATA.length}}</p>
+                        {{client.CONTRACT_DATA.length}}</p>
                     </div>
                   </ion-col>
                   <ion-col align-self-center *ngIf="mode == 'ON'" style="padding-right: 15px;
                     display: flex;flex-flow: column nowrap;align-items: flex-end;">
                     <ion-button disabled=true style="--opacity: 1;font-size: 10px;width: 60px;height: 18px;">
-                      {{role.ABBR}}
+                      {{client.ABBR}}
                     </ion-button>
                     <div>
                       <img src="assets/icon/leave_setup/icon_edit@3x.png"
                         style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
-                        (click)="menuOpen = true;selectedProfile(role, i);editClientName.patchValue(role.NAME);editClientAbbr.patchValue(role.ABBR);_sharedService.menu.enable(true, 'editLeaveTypeDetails'); _sharedService.menu.open('editLeaveTypeDetails'); _sharedService.menu.enable(false, 'createNewRoleDetails');createNew=false"
+                        (click)="menuOpen = true;selectedProfile(client, i);editClientName.patchValue(client.NAME);editClientAbbr.patchValue(client.ABBR);_sharedService.menu.enable(true, 'editClientDetails'); _sharedService.menu.open('editClientDetails'); _sharedService.menu.enable(false, 'createNewClientDetails');createNew=false"
                         [ngClass]="{ 
                                             'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
                       &nbsp;&nbsp;
                       <img src="assets/icon/leave_setup/icon_trash@3x.png"
                         style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
-                        (click)="delete(role.CLIENT_GUID, role.NAME)">
+                        (click)="delete(client.CLIENT_GUID, client.NAME)">
                     </div>
                   </ion-col>
                   <ion-item class="divider" lines="full"></ion-item>

@@ -89,17 +89,6 @@ export class ClientApiService {
         return this.attendanceApiService.postApi(data, '/api/project');
     }
 
-    /**
-     * save updated project list
-     * @param {*} edittedData
-     * @returns {Observable<any>}
-     * @memberof ClientApiService
-     */
-    patch_project(edittedData): Observable<any> {
-        this.attendanceApiService.headerAuthorization();
-        return this.attendanceApiService.patchApi(edittedData, '/api/project');
-    }
-
     get_contract_list_id(id): Observable<any> {
         this.attendanceApiService.headerAuthorization();
         return this.attendanceApiService.getApiWithId('/api/contract/', id);
@@ -110,11 +99,6 @@ export class ClientApiService {
         return this.attendanceApiService.postApi(data, '/api/contract');
     }
 
-    patch_contract(data): Observable<any> {
-        this.attendanceApiService.headerAuthorization();
-        return this.attendanceApiService.patchApi(data, '/api/contract');
-    }
-
     get_location_list_id(id: string): Observable<any> {
         this.attendanceApiService.headerAuthorization();
         return this.attendanceApiService.getApiWithId('/api/location/', id);
@@ -123,11 +107,6 @@ export class ClientApiService {
     post_location(data): Observable<any> {
         this.attendanceApiService.headerAuthorization();
         return this.attendanceApiService.postApi(data, '/api/location');
-    }
-
-    patch_location(data): Observable<any> {
-        this.attendanceApiService.headerAuthorization();
-        return this.attendanceApiService.patchApi(data, '/api/location');
     }
 
     /**
