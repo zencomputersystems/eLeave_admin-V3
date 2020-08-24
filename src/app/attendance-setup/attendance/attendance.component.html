@@ -126,7 +126,7 @@
             style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
             color="primary" (click)="createNew();showSmallSpinner=true"
             [disabled]="!newAttendanceName.valid || !newAttendanceDescription.valid">
-            Create <ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
+            Create New Profile<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
             </ion-spinner>
           </ion-button>
         </div>

@@ -21,38 +21,40 @@ import { DndModule } from 'ngx-drag-drop';
 import { ClientComponent } from './client/client.component';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { AgmCoreModule } from '@agm/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        MatIconModule,
-        MatCardModule,
-        MatListModule,
-        MatGridListModule,
-        SpinnerModule,
-        MatTooltipModule,
-        MatChipsModule,
-        BrowserModule,
-        EditorModule,
-        MatInputModule,
-        MatFormFieldModule,
-        MatCheckboxModule,
-        MatDialogModule,
-        MatRadioModule,
-        DndModule,
-        MatMenuModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        InlineSVGModule,
-        AgmCoreModule.forRoot({
-          apiKey: 'AIzaSyD_FJ2Jto7l_8FmZBlK7fW6EVyaGGsCXds', 
-          libraries: ['places']
-        })
-    ],
-    declarations: [AttendanceComponent, ClientComponent],
-    entryComponents: []
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    MatIconModule,
+    MatCardModule,
+    MatListModule,
+    MatGridListModule,
+    SpinnerModule,
+    MatTooltipModule,
+    MatChipsModule,
+    BrowserModule,
+    EditorModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatRadioModule,
+    DndModule,
+    MatMenuModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    InlineSVGModule,
+    MatAutocompleteModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyC8vs7sealRJ2NkmPHBeR_ig1gjV7cznOo',
+      libraries: ['places']
+    })
+  ],
+  declarations: [AttendanceComponent, ClientComponent],
+  entryComponents: []
 })
 export class AttendanceSetupModule { }
 

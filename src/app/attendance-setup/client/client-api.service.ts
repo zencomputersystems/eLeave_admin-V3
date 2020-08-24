@@ -36,13 +36,130 @@ export class ClientApiService {
     }
 
     /**
+     * create new client profile
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof ClientApiService
+     */
+    post_client_profile(data): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.postApi(data, '/api/client');
+    }
+
+    /**
+     * update client name & abbr
+     * @param {*} value
+     * @returns {Observable<any>}
+     * @memberof ClientApiService
+     */
+    patch_client_profile(value): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.patchApi(value, '/api/client');
+    }
+
+    /**
+     * delete client profile
+     * @param {string} clientId
+     * @returns {Observable<any>}
+     * @memberof ClientApiService
+     */
+    delete_client_profile(clientId: string): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.deleteApi(clientId, '/api/client/');
+    }
+
+    /**
      * Project list
      * @returns {Observable<any>}
      * @memberof ClientApiService
      */
-    get_project_list(): Observable<any> {
+    get_project_list_id(clientId: string): Observable<any> {
         this.attendanceApiService.headerAuthorization();
-        return this.attendanceApiService.getApi('/api/project');
+        return this.attendanceApiService.getApiWithId('/api/project/', clientId);
+    }
+
+    /**
+     * create new project list
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof ClientApiService
+     */
+    post_project(data): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.postApi(data, '/api/project');
+    }
+
+    /**
+     * save updated project list
+     * @param {*} edittedData
+     * @returns {Observable<any>}
+     * @memberof ClientApiService
+     */
+    patch_project(edittedData): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.patchApi(edittedData, '/api/project');
+    }
+
+    get_contract_list_id(id): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.getApiWithId('/api/contract/', id);
+    }
+
+    post_contract(data): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.postApi(data, '/api/contract');
+    }
+
+    patch_contract(data): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.patchApi(data, '/api/contract');
+    }
+
+    get_location_list_id(id: string): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.getApiWithId('/api/location/', id);
+    }
+
+    post_location(data): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.postApi(data, '/api/location');
+    }
+
+    patch_location(data): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.patchApi(data, '/api/location');
+    }
+
+    /**
+     * autocomplete search places
+     * @param {string} location
+     * @returns {Observable<any>}
+     * @memberof ClientApiService
+     */
+    get_search_location(location: string): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.getApiWithId('/api/location/search/', location);
+    }
+
+    /**
+     * search by address to get latitude & longitude
+     * @param {string} location
+     * @returns {Observable<any>}
+     * @memberof ClientApiService
+     */
+    get_search_type_location(location: string, type): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.getApiWithId('/api/location/search/' + type + '/', location);
+    }
+
+    /**
+     * update or create new project, contract & location 
+     * @returns {Observable<any>}
+     * @memberof ClientApiService
+     */
+    patch_client_bundle(bundleData): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.patchApi(bundleData, '/api/client/bundle');
     }
 
     /**

@@ -361,7 +361,7 @@ export class AttendanceComponent implements OnInit {
     delete(attendance_guid: string, attendance_name: string) {
         const dialogRef = this._sharedService.dialog.open(DialogDeleteConfirmationComponent, {
             disableClose: true,
-            data: { value: attendance_guid, name: attendance_name },
+            data: { value: attendance_guid, name: attendance_name, data: 'attendance' },
             height: "195px",
             width: "270px"
         });

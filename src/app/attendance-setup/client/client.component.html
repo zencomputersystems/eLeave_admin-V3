@@ -1,10 +1,9 @@
-<!------------- update client, projects, supports & locations -------------------------->
-
-<ion-menu style="--width:465px" class="leave-entitlement-popup" contentId="editLeaveTypeContent" side="end"
-  type="overlay" menuId="editLeaveTypeDetails">
+<!--------------create client, projects, contract -------------------------------------->
+<ion-menu style="--width:465px" class="leave-entitlement-popup" contentId="createClientContent" side="end"
+  type="overlay" menuId="createNewRoleDetails">
   <ion-header style="background-color:#43425d; color: #fcfcfc;">
     <img style="margin: 15px;width: 22px;height: 22px;float:left" src="assets/icon/leave_setup/icon_roles@3x.png">
-    <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">UPDATE CLIENTS,
+    <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">CREATE NEW CLIENTS,
       PROJECTS, SUPPORTS & LOCATIONS
     </p>
   </ion-header>
@@ -20,16 +19,14 @@
               <mat-form-field appearance="outline"
                 style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
                 <mat-label>Abbreviation</mat-label>
-                <input matInput required>
-                <!-- [(ngModel)]="item.leaveEntitlementCode" -->
+                <input matInput [(ngModel)]="newClientAbbr" required>
               </mat-form-field>
             </div>
             <div style="width: 1%;display: inline-block;"></div>
             <div style="width: 58%;display: inline-block;">
               <mat-form-field appearance="outline" style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
                 <mat-label>Client Name</mat-label>
-                <input matInput required>
-                <!-- [(ngModel)]="item.leaveEntitlementDescription"  -->
+                <input matInput [(ngModel)]="newClientName" required>
               </mat-form-field>
             </div>
           </ion-col>
@@ -56,8 +53,7 @@ padding-right: 15px;">
                       <mat-form-field appearance="outline"
                         style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
                         <mat-label>SOC No.</mat-label>
-                        <input matInput required>
-                        <!-- [(ngModel)]="item.leaveEntitlementCode" -->
+                        <input matInput [(ngModel)]="newSOC" required>
                       </mat-form-field>
                     </div>
                     <div style="width: 1%;display: inline-block;"></div>
@@ -65,8 +61,7 @@ padding-right: 15px;">
                       <mat-form-field appearance="outline"
                         style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
                         <mat-label>Project Name</mat-label>
-                        <input matInput required>
-                        <!-- [(ngModel)]="item.leaveEntitlementDescription" -->
+                        <input matInput [(ngModel)]="newProjectName" required>
                       </mat-form-field>
                     </div>
                   </ion-col>
@@ -85,8 +80,7 @@ padding-right: 15px;">
                     <div style="width: 58%;display: inline-block;">
                       <mat-form-field appearance="outline"
                         style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
-                        <input matInput placeholder="Description here" required>
-                        <!-- [(ngModel)]="item.leaveEntitlementDescription" -->
+                        <input matInput placeholder="Description here" [(ngModel)]="newProjectDescription" required>
                       </mat-form-field>
                     </div>
                   </ion-col>
@@ -117,8 +111,7 @@ display: inline-block;"> Add New Project</p>
                         <mat-form-field appearance="outline"
                           style="height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
                           <mat-label>Contract No.</mat-label>
-                          <input matInput required>
-                          <!-- [(ngModel)]="item.leaveEntitlementCode" -->
+                          <input matInput [(ngModel)]="newContractNo" required>
                         </mat-form-field>
                       </div>
                       <div style="width: 1%;display: inline-block;"></div>
@@ -126,8 +119,7 @@ display: inline-block;"> Add New Project</p>
                         <mat-form-field appearance="outline"
                           style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
                           <mat-label>Contract Name</mat-label>
-                          <input matInput required>
-                          <!-- [(ngModel)]="item.leaveEntitlementDescription" -->
+                          <input matInput [(ngModel)]="newContractName" required>
                         </mat-form-field>
                       </div>
                     </ion-col>
@@ -146,8 +138,7 @@ display: inline-block;"> Add New Project</p>
                       <div style="width: 58%;display: inline-block;">
                         <mat-form-field appearance="outline"
                           style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
-                          <input matInput placeholder="Description here" required>
-                          <!-- [(ngModel)]="item.leaveEntitlementDescription" -->
+                          <input matInput placeholder="Description here" [(ngModel)]="newContractDescription" required>
                         </mat-form-field>
                       </div>
                     </ion-col>
@@ -171,8 +162,8 @@ display: inline-block;"> Add New Project</p>
                   <mat-form-field appearance="outline"
                     style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
                     <mat-label>Location</mat-label>
-                    <input matInput (keydown.enter)="$event.preventDefault()" autocorrect="off" autocapitalize="off"
-                      spellcheck="off" #search>
+                    <input matInput [(ngModel)]="currentAddress" type="text" (keydown.enter)="$event.preventDefault()"
+                      autocorrect="off" autocapitalize="off" spellcheck="off" #search>
                   </mat-form-field>
                 </ion-col>
                 <ion-col align-self-center style="text-align: right;">
@@ -182,19 +173,245 @@ display: inline-block;"> Add New Project</p>
                 </ion-col>
               </ion-row>
 
-              <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+              <!-- <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
                 <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
                   (dragEnd)="markerDragEnd($event)"></agm-marker>
-              </agm-map>
-              <div>Address: {{address}}</div>
-              <div>Latitude: {{latitude}}</div>
-              <div>Longitude: {{longitude}}</div>
+              </agm-map> -->
             </div>
           </div>
           <div style="text-align: center;margin-top: 20px;">
             <ion-button
               style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
-              color="primary" (click)="saveCreateProfile(); showSmallSpinner=true">
+              color="primary" (click)="createClientProfile(); showSmallSpinner=true">
+              Create New<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
+              </ion-spinner>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+
+
+</ion-menu>
+<ion-router-outlet id="createClientContent">
+</ion-router-outlet>
+
+<!------------- update client, projects, supports & locations -------------------------->
+
+<ion-menu style="--width:465px" class="leave-entitlement-popup" contentId="editLeaveTypeContent" side="end"
+  type="overlay" menuId="editLeaveTypeDetails">
+  <ion-header style="background-color:#43425d; color: #fcfcfc;">
+    <img style="margin: 15px;width: 22px;height: 22px;float:left" src="assets/icon/leave_setup/icon_roles@3x.png">
+    <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">UPDATE CLIENTS,
+      PROJECTS, SUPPORTS & LOCATIONS
+    </p>
+  </ion-header>
+
+  <ion-content>
+    <div>
+      <div>
+        <p style="margin: 15px;margin-top: 20px;margin-bottom: 0;font-size: 12px; color: #808495;font-weight: bold;">
+          CLIENT NAME</p>
+        <ion-row style="display: flex;">
+          <ion-col style="flex: 21;">
+            <div style="width: 40%;display: inline-block;">
+              <mat-form-field appearance="outline"
+                style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
+                <mat-label>Abbreviation</mat-label>
+                <input matInput [formControl]="editClientAbbr" required>
+              </mat-form-field>
+            </div>
+            <div style="width: 1%;display: inline-block;"></div>
+            <div style="width: 58%;display: inline-block;">
+              <mat-form-field appearance="outline" style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                <mat-label>Client Name</mat-label>
+                <input matInput [formControl]="editClientName" required>
+              </mat-form-field>
+            </div>
+          </ion-col>
+          <ion-col align-self-center style="text-align: right;padding-right: 20px;">
+            <img src="assets/icon/leave_setup/icon_trash@3x.png"
+              style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;"
+              (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
+          </ion-col>
+          <ion-item class="divider" lines="full" style="padding-top: 1%;padding-bottom: 3%;padding-left: 15px;
+padding-right: 15px;">
+          </ion-item>
+        </ion-row>
+
+        <div>
+          <div class="edit-leave-entitlement-profile-items" style="overflow: auto;">
+            <!---------------------------------- Projects (menu) -------------------------------------->
+            <p style="margin: 15px;margin-bottom: 0;margin-top: 0;font-size: 12px; color: #808495;font-weight: bold;">
+              PROJECT NAME</p>
+            <ng-container *ngFor="let item of project;let i=index">
+              <ion-row style="display: flex;">
+                <ion-col style="flex: 21;">
+                  <div style="width: 40%;display: inline-block;">
+                    <mat-form-field appearance="outline"
+                      style="margin: 10px;height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;margin-top: 0;margin-right: 0;">
+                      <mat-label>SOC No.</mat-label>
+                      <input matInput [(ngModel)]="item.SOC_NO" required>
+                    </mat-form-field>
+                  </div>
+                  <div style="width: 1%;display: inline-block;"></div>
+                  <div style="width: 58%;display: inline-block;">
+                    <mat-form-field appearance="outline"
+                      style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                      <mat-label>Project Name</mat-label>
+                      <input matInput [(ngModel)]="item.NAME" required>
+                      <!-- [(ngModel)]="item.leaveEntitlementDescription" -->
+                    </mat-form-field>
+                  </div>
+                </ion-col>
+                <ion-col align-self-center style="text-align: right;padding-right: 20px;">
+                  <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                    style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;"
+                    (click)="deleteProjet(i)">
+                </ion-col>
+              </ion-row>
+              <ion-row style="display: flex;">
+                <!-- *ngFor="let item of leaveEntitlement[j]; let i=index" -->
+                <ion-col style="flex: 21;padding-left: 0;">
+                  <div style="width: 40%;display: inline-block;">
+                  </div>
+                  <div style="width: 1%;display: inline-block;"></div>
+                  <div style="width: 58%;display: inline-block;">
+                    <mat-form-field appearance="outline"
+                      style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                      <input matInput [(ngModel)]="item.DESCRIPTION" placeholder="Description here" required>
+                    </mat-form-field>
+                  </div>
+                </ion-col>
+                <ion-col align-self-center style="text-align: right;padding-right: 20px;">
+                </ion-col>
+              </ion-row>
+            </ng-container>
+            <div style="margin: 15px;margin-top: 0;"><img (click)="addNewProject()"
+                style="display: inline-block;cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
+                src="assets/icon/leave_setup/icon_request@3x.png">
+              <p style="color: #808495;font-size: 11px;font-weight: bold;
+display: inline-block;"> Add New Project</p>
+              <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;">
+              </ion-item>
+
+              <!----------------------------- Contract (menu) ------------------------------------>
+              <p style="margin-bottom: 0;font-size: 12px; color: #808495;font-weight: bold;">
+                CONTRACT NAME</p>
+              <ng-container *ngFor="let item of contract; let i =index">
+                <ion-row style="display: flex;">
+                  <ion-col style="flex: 21;padding-left: 0;">
+                    <div style="width: 40%;display: inline-block;">
+                      <mat-form-field appearance="outline"
+                        style="height: 45px;display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                        <mat-label>Contract No.</mat-label>
+                        <input matInput [(ngModel)]="item.CONTRACT_NO" required>
+                      </mat-form-field>
+                    </div>
+                    <div style="width: 1%;display: inline-block;"></div>
+                    <div style="width: 58%;display: inline-block;">
+                      <mat-form-field appearance="outline"
+                        style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                        <mat-label>Contract Name</mat-label>
+                        <input matInput [(ngModel)]="item.NAME" required>
+                      </mat-form-field>
+                    </div>
+                  </ion-col>
+                  <ion-col align-self-center style="text-align: right;">
+                    <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;"
+                      (click)="deleteContract(i)">
+                  </ion-col>
+                </ion-row>
+                <ion-row style="display: flex;">
+                  <ion-col style="flex: 21;padding-left: 0;">
+                    <div style="width: 40%;display: inline-block;">
+                    </div>
+                    <div style="width: 1%;display: inline-block;"></div>
+                    <div style="width: 58%;display: inline-block;">
+                      <mat-form-field appearance="outline"
+                        style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                        <input matInput [(ngModel)]="item.DESCRIPTION" placeholder="Description here" required>
+                      </mat-form-field>
+                    </div>
+                  </ion-col>
+                  <ion-col align-self-center style="text-align: right;">
+                  </ion-col>
+                </ion-row>
+              </ng-container>
+              <div><img (click)="addNewContract()"
+                  style="display: inline-block;cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
+                  src="assets/icon/leave_setup/icon_request@3x.png">
+                <p style="color: #808495;font-size: 11px;font-weight: bold;
+  display: inline-block;"> Add New Contract</p>
+                <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;">
+                </ion-item>
+              </div>
+              <p style="margin-bottom: 0;font-size: 12px; color: #808495;font-weight: bold;">
+                LOCATION</p>
+              <ng-container *ngFor="let item of location; let i=index">
+                <ion-row style="display: flex;">
+                  <ion-col style="flex: 21;padding-left: 0;">
+                    <mat-form-field appearance="outline" class="locationFormField"
+                      style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                      <mat-label>Location</mat-label>
+                      <input matInput type="text" [matAutocomplete]="auto" [(ngModel)]="item.ADDRESS"
+                        (keyup)="getSearchLocation($event.srcElement.value)">
+                      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredLocation" [value]="option.description"
+                          style="font-size: 12px;color:#43425d;opacity: 0.8;"
+                          (click)="getLocationCoordinate(option.description)">
+                          {{option.description}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </ion-col>
+                  <!-- <ion-col align-self-center style="text-align: right;">
+                    <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;"
+                      (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
+                  </ion-col> -->
+                </ion-row>
+                <agm-map [latitude]="item.LATITUDE" [longitude]="item.LONGITUDE" [scrollwheel]="true" [zoom]="zoom">
+                  <agm-marker [latitude]="item.LATITUDE" [longitude]="item.LONGITUDE" [markerDraggable]="true"
+                    (dragEnd)="markerDragEndEdit($event, i)"></agm-marker>
+                </agm-map>
+              </ng-container>
+              <ng-container *ngIf="location && location.length === 0">
+                <ion-row style="display: flex;">
+                  <ion-col style="flex: 21;padding-left: 0;">
+                    <mat-form-field appearance="outline" class="locationFormField"
+                      style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                      <mat-label>Location</mat-label>
+                      <input matInput type="text" [matAutocomplete]="auto" [formControl]="searchControl"
+                        (keyup)="getSearchLocation($event.srcElement.value)">
+                      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredLocation" [value]="option.description"
+                          style="font-size: 12px;color:#43425d;opacity: 0.8;"
+                          (click)="getLocationCoordinate(option.description)">
+                          {{option.description}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </ion-col>
+                  <!-- <ion-col align-self-center style="text-align: right;">
+                    <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;margin-top: -15px;"
+                      (click)="deleteLeaveEntitlement(item.leaveEntitlementId, item.leaveType, item.leaveEntitlementCode)">
+                  </ion-col> -->
+                </ion-row>
+                <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="zoom">
+                  <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
+                    (dragEnd)="markerDragEnd($event)"></agm-marker>
+                </agm-map>
+              </ng-container>
+            </div>
+          </div>
+          <div style="text-align: center;margin-top: 20px;">
+            <ion-button
+              style="--border-radius: 2px;font-size: 11px;height: 30px;width:204px;cursor: pointer;text-transform: none;"
+              color="primary" (click)="saveEditClient(); showSmallSpinner=true">
               Update<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
               </ion-spinner>
             </ion-button>
@@ -265,7 +482,7 @@ display: inline-block;"> Add New Project</p>
                 </ion-col>
                 <ion-col align-self-center style="text-align: right;">
                   <ion-icon class="addIcon" name="add-circle-outline" *ngIf="mode == 'ON'"
-                    (click)="menuOpen = true;_sharedService.menu.open('createNewRoleDetails'); _sharedService.menu.enable(true, 'createNewRoleDetails'); _sharedService.menu.enable(false, 'editRoleDetails');">
+                    (click)="menuOpen = true;_sharedService.menu.open('createNewRoleDetails'); _sharedService.menu.enable(true, 'createNewRoleDetails');createNew=true">
                   </ion-icon>
                 </ion-col>
               </ion-row>
@@ -345,7 +562,7 @@ display: inline-block;"> Add New Project</p>
                     <div>
                       <img src="assets/icon/leave_setup/icon_edit@3x.png"
                         style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
-                        (click)="menuOpen = true;selectedProfile(role, i);editRoleName.patchValue(role.NAME);editRoleDescription.patchValue(role.description);_sharedService.menu.enable(true, 'editLeaveTypeDetails'); _sharedService.menu.open('editLeaveTypeDetails'); _sharedService.menu.enable(false, 'createNewRoleDetails');"
+                        (click)="menuOpen = true;selectedProfile(role, i);editClientName.patchValue(role.NAME);editClientAbbr.patchValue(role.ABBR);_sharedService.menu.enable(true, 'editLeaveTypeDetails'); _sharedService.menu.open('editLeaveTypeDetails'); _sharedService.menu.enable(false, 'createNewRoleDetails');createNew=false"
                         [ngClass]="{ 
                                             'imgFilter': clickedIndex !== i && clickedIndex !== null, 'imgColor': clickedIndex === i, 'showCursor':clickedIndex === null }">
                       &nbsp;&nbsp;
@@ -405,23 +622,23 @@ display: inline-block;"> Add New Project</p>
             </div>
             <div class="leaveManagement" *ngIf="showContrat">
               <ion-row *ngFor="let item of contract; let i=index" style="padding-left: 5px;">
-                  <ion-col size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                    <p class="oriColor"
-                      style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;">
-                      {{item.NAME}}
-                    </p>
-                    <p
-                      style="padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
-                      {{item.DESCRIPTION}}
-                    </p>
-                  </ion-col>
-                  <ion-col align-self-center style="text-align: right;padding-right: 15px;">
-                    <ion-button disabled=true
-                      style="--opacity: 1;--background: var(--ion-color-contract);font-size: 10px;width: 50px;height: 20px;">
-                      {{item.CONTRACT_NO}}
-                    </ion-button>
-                  </ion-col>
-                  <ion-item class="divider" lines="full"></ion-item>
+                <ion-col size="8" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                  <p class="oriColor"
+                    style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;">
+                    {{item.NAME}}
+                  </p>
+                  <p
+                    style="padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
+                    {{item.DESCRIPTION}}
+                  </p>
+                </ion-col>
+                <ion-col align-self-center style="text-align: right;padding-right: 15px;">
+                  <ion-button disabled=true
+                    style="--opacity: 1;--background: var(--ion-color-contract);font-size: 10px;width: 50px;height: 20px;">
+                    {{item.CONTRACT_NO}}
+                  </ion-button>
+                </ion-col>
+                <ion-item class="divider" lines="full"></ion-item>
               </ion-row>
             </div>
             <div (click)="showLocation=true;showContrat=false;showProject=false"
@@ -449,3 +666,5 @@ display: inline-block;"> Add New Project</p>
     </div>
   </div>
 </ion-card>
+
+<script src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>

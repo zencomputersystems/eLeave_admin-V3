@@ -382,7 +382,7 @@ export class RoleListComponent implements OnInit {
     delete(role_guid: string, role_name: string) {
         const dialogRef = this._sharedService.dialog.open(DialogDeleteConfirmationComponent, {
             disableClose: true,
-            data: { value: role_guid, name: role_name },
+            data: { value: role_guid, name: role_name, data: 'role' },
             height: "195px",
             width: "270px"
         });
