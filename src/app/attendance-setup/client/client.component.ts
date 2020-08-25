@@ -98,12 +98,17 @@ export class ClientComponent implements OnInit {
 
     public newClientName: string;
     public newClientAbbr: string;
-    public newSOC: string;
-    public newProjectName: string;
-    public newProjectDescription: string;
-    public newContractNo: string;
-    public newContractName: string;
-    public newContractDescription: string;
+    public newProject = [{
+        "name": "",
+        "code": "",
+        "description": ""
+    }];
+
+    public newContract = [{
+        "name": "",
+        "code": "",
+        "description": ""
+    }]
 
     public filteredLocation: string[];
 
@@ -116,6 +121,10 @@ export class ClientComponent implements OnInit {
     public postProject: any = [];
     public postContract: any = [];
     public postLocation: any = [];
+
+    private projectDeleted: any = [];
+    private contractDeleted: any = [];
+    private locationDeleted: any = [];
 
     /**
      *Creates an instance of ClientComponent.
@@ -189,7 +198,7 @@ export class ClientComponent implements OnInit {
                     } else {
                         if (index !== undefined) {
                             this.location[index].ADDRESS = results[0].formatted_address;
-                        } 
+                        }
                         // else {
                         //     this.setCurrentLocation();
                         // }
@@ -217,9 +226,6 @@ export class ClientComponent implements OnInit {
         this.contract = item.CONTRACT_DATA;
         this.location = item.LOCATION_DATA;
         this.zoom = 15;
-        // this.clientApi.get_project_list_id(this.roleIdOutput).subscribe(data => this.selectedProjectList = data)
-        // this.clientApi.get_contract_list_id(this.roleIdOutput).subscribe(list => this.selectedContractList = list)
-        // this.clientApi.get_location_list_id(this.roleIdOutput).subscribe(list => this.selectedLocationList = list)
         // if (this.location[0] != undefined) {
         //     this.latitude = this.location[0].LATITUDE;
         //     this.longitude = this.location[0].LONGITUDE;
@@ -297,20 +303,8 @@ export class ClientComponent implements OnInit {
                     "address": this.currentAddress
                 }
             ],
-            "project": [
-                {
-                    "name": this.newProjectName,
-                    "code": this.newSOC,
-                    "description": this.newProjectDescription
-                }
-            ],
-            "contract": [
-                {
-                    "name": this.newContractName,
-                    "code": this.newContractNo,
-                    "description": this.newContractDescription
-                }
-            ]
+            "project": this.newProject,
+            "contract": this.newContract
         }
         this.clientApi.post_client_profile(postBody).subscribe(response => {
             this._sharedService.menu.close('createNewClientDetails');
@@ -322,12 +316,18 @@ export class ClientComponent implements OnInit {
             this.latitude = null;
             this.longitude = null;
             this.currentAddress = '';
-            this.newProjectName = null;
-            this.newSOC = null;
-            this.newProjectDescription = null;
-            this.newContractName = null;
-            this.newContractNo = null;
-            this.newContractDescription = '';
+            this.newProject = [{
+                "name": "",
+                "code": "",
+                "description": ""
+            }];
+            this.newContract = [{ 
+                "name": "",
+                "code": "",
+                "description": ""
+            }]
+        }, error => {
+            this.clientApi.snackbarMsg('Failed to create new client profile', false);
         })
     }
 
@@ -414,30 +414,60 @@ export class ClientComponent implements OnInit {
         )
     }
 
-    addNewProject() {
-        this.project.push({
-            "PROJECT_GUID": "",
-            "NAME": '',
-            "SOC_NO": "",
-            "DESCRIPTION": ""
-        });
+    addNewProject(type: string) {
+        if (type === 'edit') {
+            this.project.push({
+                "PROJECT_GUID": "",
+                "NAME": '',
+                "SOC_NO": "",
+                "DESCRIPTION": ""
+            });
+        } else {
+            this.newProject.push({
+                "name": '',
+                "code": '',
+                "description": ''
+            })
+        }
     }
 
-    deleteProjet(index) {
-        this.project.splice(index, 1);
+    deleteProjet(index, type: string) {
+        if (type === 'edit') {
+            if (this.project[index].PROJECT_GUID != '') {
+                this.projectDeleted.push({ "id": this.project[index].PROJECT_GUID });
+            }
+            this.project.splice(index, 1);
+        } else {
+            this.newProject.splice(index, 1);
+        }
     }
 
-    addNewContract() {
-        this.contract.push({
-            "CONTRACT_GUID": "",
-            "NAME": "",
-            "CONTRACT_NO": "",
-            "DESCRIPTION": ""
-        })
+    addNewContract(type: string) {
+        if (type === 'edit') {
+            this.contract.push({
+                "CONTRACT_GUID": "",
+                "NAME": "",
+                "CONTRACT_NO": "",
+                "DESCRIPTION": ""
+            })
+        } else {
+            this.newContract.push({
+                "name": "",
+                "code": "",
+                "description": ""
+            })
+        }
     }
 
-    deleteContract(index) {
-        this.contract.splice(index, 1);
+    deleteContract(index, type: string) {
+        if (type === 'edit') {
+            if (this.contract[index].CONTRACT_GUID != '') {
+                this.contractDeleted.push({ "id": this.contract[index].CONTRACT_GUID });
+            }
+            this.contract.splice(index, 1);
+        } else {
+            this.newContract.splice(index, 1);
+        }
     }
     saveEditClient() {
         // project
@@ -524,6 +554,11 @@ export class ClientComponent implements OnInit {
                 "project": this.postProject,
                 "contract": this.postContract,
                 "location": this.postLocation
+            },
+            "delete": {
+                "project": this.projectDeleted,
+                "contract": this.contractDeleted,
+                "location": this.locationDeleted
             }
         }
 
@@ -534,10 +569,14 @@ export class ClientComponent implements OnInit {
             this.postProject = [];
             this.postContract = [];
             this.postLocation = [];
+            this.projectDeleted = [];
+            this.contractDeleted = [];
             this.showSmallSpinner = false;
             this.clientApi.snackbarMsg('Client details was saved successfully', true);
             this._sharedService.menu.close('editClientDetails');
             this.refreshRoleList();
+        }, error => {
+            this.clientApi.snackbarMsg('Failed to edit client detail', false);
         })
     }
 
