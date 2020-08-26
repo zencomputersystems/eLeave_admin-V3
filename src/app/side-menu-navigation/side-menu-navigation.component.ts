@@ -141,6 +141,11 @@ export class SideMenuNavigationComponent implements OnInit {
       title: 'Client Profile',
       url: '/administration/client',
       icon: 'icon_persons@3x.png'
+    },
+    {
+      title: 'Support Center',
+      url: '/administration/support',
+      icon: 'icon_chat-room@2x.png'
     }
   ];
 

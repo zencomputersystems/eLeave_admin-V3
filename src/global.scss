@@ -449,6 +449,67 @@ app-client
   box-shadow: none;
 }
 
+// support
+app-support
+  > ion-card
+  > div
+  > div.cardContent
+  > ion-card-content
+  > div.row
+  > div.leave
+  > div
+  > ion-row
+  > ion-col
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > input.searchbar-input {
+  background: white;
+  color: #43425d;
+  opacity: 0.8;
+  border: solid 1px #a5a4bf;
+  font-size: 12px;
+  box-shadow: none !important;
+  height: 40px;
+  padding-left: 40px;
+}
+
+app-support
+  > ion-card
+  > div
+  > div.cardContent
+  > ion-card-content
+  > div.row
+  > div.leave
+  > div
+  > ion-row
+  > ion-col
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > ion-icon.searchbar-search-icon.sc-ion-searchbar-md {
+  color: #bcbccb;
+  width: 16px;
+  box-shadow: none;
+}
+
+app-support
+  > ion-card
+  > div
+  > div.cardContent
+  > ion-card-content
+  > div.row
+  > div.leave
+  > div
+  > ion-row
+  > ion-col
+  > ion-searchbar.searchbar
+  > div.searchbar-input-container
+  > button
+  > ion-icon.searchbar-clear-icon.sc-ion-searchbar-md {
+  color: #bcbccb;
+  width: 16px;
+  box-shadow: none;
+}
+
 .pop-over-style .popover-content {
   transition: 0.5s ease;
   --min-width: 300px !important;

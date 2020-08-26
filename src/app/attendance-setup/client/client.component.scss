@@ -110,16 +110,19 @@
         -ms-overflow-style: none;
     }
     .role {
-        flex: 30%;
-        max-width: 30%;
         max-height: 100%;
+        flex: 1 30%;
+        min-width: 200px;
     }
-    // .leave {
-    //     margin-left: 10px;
-    //     flex: 70%;
-    //     max-width: 70;
-    //     max-height: 100%;
-    // }
+    .leave {
+        flex: 1 69%;
+        max-height: 100%;
+        margin-left: 10px;
+        min-width: 200px;
+        max-height: 100%;
+        overflow-y: auto;
+        height: calc(100% - 7px);
+    }
     .textColor {
         color: #3b86ff;
     }
@@ -169,17 +172,6 @@
     // button
     .button-outline {
         --border-width: 1px;
-    }
-
-    .leave {
-        // flex: 49%;
-        // max-width: 50%;
-        margin-left: 10px;
-        flex: 1;
-        min-width: 200px;
-        max-height: 100%;
-        overflow-y: auto;
-        height: calc(100% - 7px);
     }
     .searchbar {
         @media screen and (min-width: 576px) {

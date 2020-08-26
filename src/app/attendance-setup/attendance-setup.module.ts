@@ -22,6 +22,7 @@ import { ClientComponent } from './client/client.component';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { AgmCoreModule } from '@agm/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { SupportComponent } from './support/support.component';
 
 @NgModule({
   imports: [
@@ -53,7 +54,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
       libraries: ['places']
     })
   ],
-  declarations: [AttendanceComponent, ClientComponent],
+  declarations: [AttendanceComponent, ClientComponent, SupportComponent],
   entryComponents: []
 })
 export class AttendanceSetupModule { }
