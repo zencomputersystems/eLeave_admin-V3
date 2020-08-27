@@ -3,6 +3,12 @@ import { SupportApiService } from './support-api.service';
 import { map } from 'rxjs/operators';
 import { APIService } from '$admin-root/src/services/shared-service/api.service';
 
+/**
+ * support page
+ * @export
+ * @class SupportComponent
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'app-support',
     templateUrl: './support.component.html',
@@ -21,9 +27,19 @@ export class SupportComponent implements OnInit {
     public url: any;
     public selectedDetails: any;
 
+    /**
+     *Creates an instance of SupportComponent.
+     * @param {SupportApiService} supportApi
+     * @param {APIService} apiService
+     * @memberof SupportComponent
+     */
     constructor(private supportApi: SupportApiService, private apiService: APIService) {
     }
 
+    /**
+     * initial method
+     * @memberof SupportComponent
+     */
     ngOnInit() {
         this.supportApi.get_support_list().pipe(
             map(data => {
@@ -55,9 +71,50 @@ export class SupportComponent implements OnInit {
         // });
     }
 
+    /**
+     * select message to view details info
+     * @param {number} i
+     * @param {*} data
+     * @memberof SupportComponent
+     */
     selectedMessage(i: number, data) {
         this.clickedIndex = i;
         console.log(data)
         this.selectedDetails = data;
+    }
+
+    /**
+     * filter the keyup text from searchbar
+     * @param {*} text
+     * @memberof SupportComponent
+     */
+    async filter(text: any) {
+        if (text && text.trim() != '') {
+            let description = this.supportList.filter((items: any) => {
+                if (items.DESCRIPTION != undefined) {
+                    return (items.DESCRIPTION.toLowerCase().indexOf(text.toLowerCase()) > -1)
+                }
+            })
+
+            let name = this.supportList.filter((items: any) => {
+                if (items.FULLNAME != undefined) {
+                    return (items.FULLNAME.toLowerCase().indexOf(text.toLowerCase()) > -1)
+                }
+            })
+            this.supportList = require('lodash').uniqBy(name.concat(description), 'SUPPORT_GUID');
+        }
+    }
+
+    /**
+     * To filter entered text
+     * @param {*} text
+     * @memberof SupportComponent
+     */
+    changeDetails(value: any) {
+        if (value === '') {
+            this.ngOnInit();
+        } else {
+            this.filter(value);
+        }
     }
 }

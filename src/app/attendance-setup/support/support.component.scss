@@ -40,6 +40,7 @@
         max-height: 100%;
         flex: 1 20%;
         min-width: 200px;
+        overflow: auto;
     }
     .leave {
         flex: 1 30%;
@@ -56,7 +57,7 @@
         margin-left: 10px;
         min-width: 300px;
         max-height: 100%;
-        // overflow-y: auto;
+        overflow-y: auto;
         // height: calc(100% - 7px);
     }
     .divider {
@@ -89,12 +90,12 @@
         padding: 40% 0;
     }
     .textColor {
-        --background: rgba(0, 0, 0, 0.05);
+        --background: #f5f6fa;
     }
     .oriColor {
         --background: white;
     }
     .textHover:hover {
-        --background: rgba(0, 0, 0, 0.05);
+        --background: #f5f6fa;
     }
 }

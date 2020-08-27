@@ -138,7 +138,7 @@ export class AttendanceSetupApiService {
      */
     get_attendance_details(id): Observable<any> {
         this.headerAuthorization();
-        return this.getApiWithId('/api/admin/attendance/', id);
+        return this.getApiWithId('/api/admin/attendance/attendance-profile/', id);
     }
 
     /**
