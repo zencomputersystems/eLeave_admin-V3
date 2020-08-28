@@ -480,6 +480,8 @@ display: inline-block;"> Add New Project</p>
                   </ion-col>
                   <ion-item class="divider" lines="full"></ion-item>
                 </ion-row>
+                <p *ngIf="clientList && clientList.length === 0" class="messageText">
+                  No client has created yet</p>
               </ng-container>
               <ng-container *ngIf="mode == 'ON'">
                 <ion-row *ngFor="let client of clientList; let i=index" style="padding-left: 5px;">

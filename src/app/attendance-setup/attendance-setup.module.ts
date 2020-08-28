@@ -23,6 +23,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { AgmCoreModule } from '@agm/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SupportComponent } from './support/support.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import { SupportComponent } from './support/support.component';
     ReactiveFormsModule,
     InlineSVGModule,
     MatAutocompleteModule,
+    PdfViewerModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC8vs7sealRJ2NkmPHBeR_ig1gjV7cznOo',
       libraries: ['places']

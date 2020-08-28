@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SupportApiService } from './support-api.service';
 import { map } from 'rxjs/operators';
 import { APIService } from '$admin-root/src/services/shared-service/api.service';
+import { ClientApiService } from '../client/client-api.service';
 
 /**
  * support page
@@ -26,6 +27,8 @@ export class SupportComponent implements OnInit {
     public clickedIndex: number;
     public url: any;
     public selectedDetails: any;
+    public conversationList: any;
+    public message: any;
 
     /**
      *Creates an instance of SupportComponent.
@@ -33,7 +36,7 @@ export class SupportComponent implements OnInit {
      * @param {APIService} apiService
      * @memberof SupportComponent
      */
-    constructor(private supportApi: SupportApiService, private apiService: APIService) {
+    constructor(private supportApi: SupportApiService, private apiService: APIService, private clientApi: ClientApiService) {
     }
 
     /**
@@ -66,9 +69,9 @@ export class SupportComponent implements OnInit {
                 this.showSpinner = false;
             })
         ).subscribe(list => { })
-        // this.apiService.get_profile_pic('all').subscribe(data => {
-        //     this.url = data;
-        // });
+        this.apiService.get_profile_pic('all').subscribe(data => {
+            this.url = data;
+        });
     }
 
     /**
@@ -81,6 +84,10 @@ export class SupportComponent implements OnInit {
         this.clickedIndex = i;
         console.log(data)
         this.selectedDetails = data;
+        this.supportApi.get_support_conversation_id(data.SUPPORT_GUID).subscribe(data => {
+            console.log(data);
+            this.conversationList = data;
+        })
     }
 
     /**
@@ -116,5 +123,36 @@ export class SupportComponent implements OnInit {
         } else {
             this.filter(value);
         }
+    }
+
+    /**
+   * upload image/pdf event
+   * @param {*} imgFile
+   * @memberof SupportComponent
+   */
+    uploadFile(imgFile: any) {
+        const fileDetails = imgFile.item(0);
+        let formData = new FormData();
+        formData.append('file', fileDetails, fileDetails.name);
+        console.log(formData);
+        this.apiService.post_file(formData).subscribe(res => {
+            console.log(res);
+        });
+    }
+
+    replyMessage(status) {
+        const data = {
+            "supportId": this.selectedDetails.SUPPORT_GUID,
+            "userId": this.selectedDetails.USER_GUID,
+            "doc": [],
+            "message": this.message,
+            "status": status
+        }
+        console.log(data);
+        this.supportApi.post_support_clarification(data).subscribe(res => {
+            console.log(res);
+            this.clientApi.snackbarMsg('Your message has been submitted successfully', true);
+            this.message = '';
+        })
     }
 }

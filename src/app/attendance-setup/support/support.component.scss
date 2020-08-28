@@ -1,3 +1,6 @@
+::ng-deep div.ql-tooltip.ql-editing {
+    left: 0 !important;
+}
 :host {
     margin: auto;
     width: 100%;
@@ -38,7 +41,7 @@
     }
     .role {
         max-height: 100%;
-        flex: 1 20%;
+        flex: 1 15%;
         min-width: 200px;
         overflow: auto;
     }
@@ -88,6 +91,18 @@
         opacity: 0.3;
         text-align: center;
         padding: 40% 0;
+    }
+    p.listInnerText::ng-deep p {
+        // white-space: normal;
+        // font-size: 10px;
+        // color: #4d4f5c;
+        // line-height: 1.4;
+        // text-align: justify;
+
+        opacity: 0.8;
+        padding-bottom: 5px;
+        font-size: 12px;
+        padding: 0;
     }
     .textColor {
         --background: #f5f6fa;

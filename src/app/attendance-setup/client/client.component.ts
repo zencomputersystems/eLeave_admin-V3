@@ -221,10 +221,12 @@ export class ClientComponent implements OnInit {
      */
     async selectedProfile(item, index) {
         this.clickedIndex = index;
-        this.clientId = item.CLIENT_GUID;
-        this.project = item.PROJECT_DATA;
-        this.contract = item.CONTRACT_DATA;
-        this.location = item.LOCATION_DATA;
+        if(item !== undefined){
+            this.clientId = item.CLIENT_GUID;
+            this.project = item.PROJECT_DATA;
+            this.contract = item.CONTRACT_DATA;
+            this.location = item.LOCATION_DATA;
+        }
         this.zoom = 15;
         // if (this.location[0] != undefined) {
         //     this.latitude = this.location[0].LATITUDE;

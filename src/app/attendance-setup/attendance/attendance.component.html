@@ -263,6 +263,8 @@
                   </ion-col> -->
                   <ion-item class="divider" lines="full"></ion-item>
                 </ion-row>
+                  <p *ngIf="roleList && roleList.length === 0" class="messageText">
+                  No profile has created yet</p>
               </ng-container>
 
               <ng-container *ngIf="mode == 'ON'">

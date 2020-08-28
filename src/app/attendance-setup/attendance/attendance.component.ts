@@ -269,16 +269,18 @@ export class AttendanceComponent implements OnInit {
      */
     async selectedProfile(item, index) {
         this.clickedIndex = index;
-        this.attendanceIdOutput = item.attendance_guid;
-        let data = await this.attendanceApi.get_attendance_details(item.attendance_guid).toPromise();
-        this._property = data.property;
-        let list = await this.attendanceApi.get_attendance_user_list(item.attendance_guid).toPromise();
-        this.assignedNameList = list;
-        for (let j = 0; j < this.assignedNameList.length; j++) {
-            this.assignedNameList[j]["content"] = this.assignedNameList[j].fullname;
-            this.assignedNameList[j]["effectAllowed"] = "move";
-            this.assignedNameList[j]["handle"] = true;
-            this.assignedNameList[j]["disable"] = false;
+        if (item !== undefined) {
+            this.attendanceIdOutput = item.attendance_guid;
+            let data = await this.attendanceApi.get_attendance_details(item.attendance_guid).toPromise();
+            this._property = data.property;
+            let list = await this.attendanceApi.get_attendance_user_list(item.attendance_guid).toPromise();
+            this.assignedNameList = list;
+            for (let j = 0; j < this.assignedNameList.length; j++) {
+                this.assignedNameList[j]["content"] = this.assignedNameList[j].fullname;
+                this.assignedNameList[j]["effectAllowed"] = "move";
+                this.assignedNameList[j]["handle"] = true;
+                this.assignedNameList[j]["disable"] = false;
+            }
         }
     }
 
@@ -456,8 +458,10 @@ export class AttendanceComponent implements OnInit {
             this.showSpinner = false;
             this.clickedIndex = index;
             this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);
-            this.editAttendanceName.patchValue(this.roleList[this.clickedIndex].code);
-            this.editAttendanceDescription.patchValue(this.roleList[this.clickedIndex].description);
+            if (this.roleList.length > 0) {
+                this.editAttendanceName.patchValue(this.roleList[this.clickedIndex].code);
+                this.editAttendanceDescription.patchValue(this.roleList[this.clickedIndex].description);
+            }
         });
         this.roleAPi.get_user_list().subscribe(list => {
             this._userList = list;

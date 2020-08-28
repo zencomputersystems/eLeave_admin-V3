@@ -20,4 +20,14 @@ export class SupportApiService {
         this.attendanceApiService.headerAuthorization();
         return this.attendanceApiService.getApi('/support');
     }
+
+    get_support_conversation_id(supportId: string): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.getApi('/support/' + supportId);
+    }
+
+    post_support_clarification(data): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.postApi(data, '/support/admin/clarification');
+    }
 }
