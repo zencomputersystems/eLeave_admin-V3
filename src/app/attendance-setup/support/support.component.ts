@@ -29,6 +29,8 @@ export class SupportComponent implements OnInit {
     public selectedDetails: any;
     public conversationList: any;
     public message: any;
+    public fileTypeOutput: string;
+    private _fileName: string;
 
     /**
      *Creates an instance of SupportComponent.
@@ -84,9 +86,15 @@ export class SupportComponent implements OnInit {
         this.clickedIndex = i;
         console.log(data)
         this.selectedDetails = data;
+        let fileType = this.selectedDetails.ATTACHMENT.split('.');
+        this.fileTypeOutput = fileType.pop();
         this.supportApi.get_support_conversation_id(data.SUPPORT_GUID).subscribe(data => {
             console.log(data);
             this.conversationList = data;
+            for (let i = 0; i < this.conversationList.length; i++) {
+                let type = this.conversationList[i].ATTACHMENT.split('.');
+                this.conversationList[i]["type"] = type.pop();
+            }
         })
     }
 
@@ -137,14 +145,20 @@ export class SupportComponent implements OnInit {
         console.log(formData);
         this.apiService.post_file(formData).subscribe(res => {
             console.log(res);
+            this._fileName = res.filename;
         });
     }
 
-    replyMessage(status) {
+    /**
+     * reply to the user support conversation
+     * @param {string} status
+     * @memberof SupportComponent
+     */
+    replyMessage(status: string) {
         const data = {
             "supportId": this.selectedDetails.SUPPORT_GUID,
             "userId": this.selectedDetails.USER_GUID,
-            "doc": [],
+            "doc": [this._fileName],
             "message": this.message,
             "status": status
         }
@@ -153,6 +167,7 @@ export class SupportComponent implements OnInit {
             console.log(res);
             this.clientApi.snackbarMsg('Your message has been submitted successfully', true);
             this.message = '';
+            this._fileName = '';
         })
     }
 }

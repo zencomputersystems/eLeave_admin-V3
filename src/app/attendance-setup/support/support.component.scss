@@ -93,16 +93,13 @@
         padding: 40% 0;
     }
     p.listInnerText::ng-deep p {
-        // white-space: normal;
-        // font-size: 10px;
-        // color: #4d4f5c;
-        // line-height: 1.4;
-        // text-align: justify;
-
         opacity: 0.8;
         padding-bottom: 5px;
         font-size: 12px;
         padding: 0;
+    }
+    p.listInnerText::ng-deep img {
+        display: none;
     }
     .textColor {
         --background: #f5f6fa;
