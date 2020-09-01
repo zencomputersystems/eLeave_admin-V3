@@ -1,12 +1,10 @@
-import { Component, OnInit, HostBinding, NgZone, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { DialogDeleteConfirmationComponent } from '../../admin-setup/role-management/dialog-delete-confirmation/dialog-delete-confirmation.component';
 import { EditModeDialogComponent } from '../../admin-setup/leave-setup/edit-mode-dialog/edit-mode-dialog.component';
-import { RoleApiService } from '../../admin-setup/role-management/role-api.service';
 import { FormControl, Validators } from '@angular/forms';
 import { SharedService } from '../../admin-setup/leave-setup/shared.service';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import { ClientApiService } from './client-api.service';
-import { googlemaps } from 'googlemaps';
 
 declare var google;
 

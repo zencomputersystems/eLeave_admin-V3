@@ -243,7 +243,7 @@
                                         <p style="padding-bottom: 5px;font-size: 12px;opacity: 0.8;padding: 0;">
                                             {{selectedDetails.DESCRIPTION}}
                                         </p>
-                                        <div
+                                        <div *ngIf="selectedDetails.ATTACHMENT !== ''"
                                             style="margin: 15px 0;font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;color: #a3a6b4;font-weight: bold;">
                                             <ion-row>
                                                 <ion-col>
@@ -293,11 +293,11 @@
                                         <ion-col style="color: #4d4f5c;">
                                             <p
                                                 style="display: inline;opacity: 0.8;font-size: 12px;font-weight: bold;margin-bottom: 0;">
-                                                {{selectedDetails.FULLNAME}}
+                                                {{item.FULLNAME}}
                                             </p>
                                             <p
                                                 style="float: right;padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;">
-                                                {{selectedDetails.CREATION_TS | date: 'MMM dd, yyyy'}}
+                                                {{item.CREATION_TS | date: 'MMM dd, yyyy'}}
                                             </p>
                                             <!-- <p
                                                 style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
@@ -305,7 +305,7 @@
                                             </p> -->
                                             <p class="listInnerText" [innerHTML]="item.MESSAGE">
                                             </p>
-                                            <div
+                                            <div *ngIf="item.ATTACHMENT !== ''"
                                                 style="margin: 15px 0;font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;color: #a3a6b4;font-weight: bold;">
                                                 <ion-row>
                                                     <ion-col>
@@ -359,7 +359,7 @@
                                             <p style="opacity: 0.8;padding-bottom: 5px;font-size: 12px;padding: 0;">
                                                 {{selectedDetails.DESCRIPTION}}
                                             </p>
-                                            <div
+                                            <div *ngIf="selectedDetails.ATTACHMENT !== ''"
                                                 style="margin: 15px 0;font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;color: #a3a6b4;font-weight: bold;">
                                                 <ion-row>
                                                     <ion-col>

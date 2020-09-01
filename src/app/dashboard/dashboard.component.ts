@@ -175,14 +175,6 @@ export class DashboardComponent implements OnInit {
   private _fileAttachment: any[] = [];
 
   /**
-   * form data from uploaded file
-   * @private
-   * @type {*}
-   * @memberof DashboardComponent
-   */
-  private _formValue: any;
-
-  /**
    *Creates an instance of DashboardComponent.
    * @param {MenuController} menu
    * @param {DashboardApiService} dashboardAPI
@@ -321,18 +313,6 @@ export class DashboardComponent implements OnInit {
       })
     }
     this.menu.close('createAnnouncementDetails');
-  }
-
-  /**
-   * upload image event
-   * @param {*} imgFile
-   * @memberof DashboardComponent
-   */
-  uploadAnnouncementImg(imgFile: any) {
-    const fileDetails = imgFile.item(0);
-    let formData = new FormData();
-    formData.append('file', fileDetails, fileDetails.name);
-    this._formValue = formData;
   }
 
   /**

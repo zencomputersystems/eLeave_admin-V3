@@ -137,11 +137,10 @@ export class AttendanceComponent implements OnInit {
 
     /**
      * get property details from requested role id
-     * @private
      * @type {*}
      * @memberof AttendanceComponent
      */
-    private _property: any;
+    public _property: any;
 
     /**
      * This property is to bind value of check all sign in check all status in checkbox
@@ -219,10 +218,6 @@ export class AttendanceComponent implements OnInit {
                     this.roleAPi.snackbarMsg(err.statusText, false);
                 }
                 this._filteredList = [];
-                //     let data = await this.roleAPi.get_role_profile_list().toPromise();
-                //     this.roleList = data;
-                //     this.roleListCheckAll = false;
-                //     this.roleListIsIndeterminate = false;
                 let data = await this.attendanceApi.get_attendance_list().toPromise();
                 this.roleList = data;
                 this.roleListCheckAll = false;
@@ -441,7 +436,6 @@ export class AttendanceComponent implements OnInit {
         }
         this.assignedNameList = this.assignedNameList.filter(item => item.isChecked !== true);
         this._filteredList = [];
-        // let list = await this.roleAPi.get_role_profile_list().toPromise();
         let list = await this.attendanceApi.get_attendance_list().toPromise();
         this.roleList = list;
         this.roleListCheckAll = false;
