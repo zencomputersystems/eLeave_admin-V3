@@ -249,7 +249,10 @@
                                                 <ion-col>
                                                     <p
                                                         style="color: #43425D;padding-bottom: 5px;font-size: 12px;padding: 0;">
-                                                        See Attachment
+                                                        See Attachment <a
+                                                            style="color: #7069d8;display: inline-flex;padding-left: 10px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
+                                                            [href]="url.link+selectedDetails.ATTACHMENT"
+                                                            download>{{selectedDetails.ATTACHMENT}}</a>
                                                     </p>
                                                     <img *ngIf="fileTypeOutput !== 'pdf'"
                                                         src="{{url.link + selectedDetails.ATTACHMENT}}"
@@ -311,7 +314,10 @@
                                                     <ion-col>
                                                         <p
                                                             style="color: #43425D;padding-bottom: 5px;font-size: 12px;padding: 0;">
-                                                            See Attachment
+                                                            See Attachment <a
+                                                                style="color: #7069d8;display: inline-flex;padding-left: 10px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
+                                                                [href]="url.link+item.ATTACHMENT"
+                                                                download>{{item.ATTACHMENT}}</a>
                                                         </p>
                                                         <img *ngIf="item.type !== 'pdf'"
                                                             src="{{url.link + item.ATTACHMENT}}" style="width: 100px;">
@@ -365,7 +371,10 @@
                                                     <ion-col>
                                                         <p
                                                             style="color: #43425D;padding-bottom: 5px;font-size: 12px;padding: 0;">
-                                                            See Attachment
+                                                            See Attachment <a
+                                                                style="color: #7069d8;display: inline-flex;padding-left: 10px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
+                                                                [href]="url.link+selectedDetails.ATTACHMENT"
+                                                                download>{{selectedDetails.ATTACHMENT}}</a>
                                                         </p>
                                                         <img *ngIf="fileTypeOutput !== 'pdf'"
                                                             src="{{url.link + selectedDetails.ATTACHMENT}}"

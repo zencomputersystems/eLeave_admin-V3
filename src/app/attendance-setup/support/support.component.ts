@@ -48,11 +48,9 @@ export class SupportComponent implements OnInit {
     ngOnInit() {
         this.supportApi.get_support_list().pipe(
             map(data => {
-                console.log(data)
                 this.suggestLength = data.suggestion.length;
                 this.requestLength = data.request.length;
                 let value = data.request.concat(data.suggestion);
-                console.log(value);
                 value.sort((a, b) => new Date(b.CREATION_TS).getTime() - new Date(a.CREATION_TS).getTime());
                 this.supportList = value;
                 for (let i = 0; i < this.supportList.length; i++) {
@@ -84,12 +82,10 @@ export class SupportComponent implements OnInit {
      */
     selectedMessage(i: number, data) {
         this.clickedIndex = i;
-        console.log(data)
         this.selectedDetails = data;
         let fileType = this.selectedDetails.ATTACHMENT.split('.');
         this.fileTypeOutput = fileType.pop();
         this.supportApi.get_support_conversation_id(data.SUPPORT_GUID).subscribe(data => {
-            console.log(data);
             this.conversationList = data;
             for (let i = 0; i < this.conversationList.length; i++) {
                 let type = this.conversationList[i].ATTACHMENT.split('.');
@@ -142,9 +138,7 @@ export class SupportComponent implements OnInit {
         const fileDetails = imgFile.item(0);
         let formData = new FormData();
         formData.append('file', fileDetails, fileDetails.name);
-        console.log(formData);
         this.apiService.post_file(formData).subscribe(res => {
-            console.log(res);
             this._fileName = res.filename;
         });
     }
@@ -162,12 +156,11 @@ export class SupportComponent implements OnInit {
             "message": this.message,
             "status": status
         }
-        console.log(data);
         this.supportApi.post_support_clarification(data).subscribe(res => {
-            console.log(res);
             this.clientApi.snackbarMsg('Your message has been submitted successfully', true);
             this.message = '';
             this._fileName = '';
+            this.selectedMessage(this.clickedIndex, this.selectedDetails);
         })
     }
 }
