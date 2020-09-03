@@ -51,4 +51,14 @@ export class SupportApiService {
         this.attendanceApiService.headerAuthorization();
         return this.attendanceApiService.postApi(data, '/support/admin/clarification');
     }
+
+    /**
+     * get personal basic user information
+     * @returns {Observable<any>}
+     * @memberof SupportApiService
+     */
+    get_user_info(): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.getApi('/api/user-info');
+    }
 }

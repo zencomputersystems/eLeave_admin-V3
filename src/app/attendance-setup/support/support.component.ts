@@ -30,7 +30,8 @@ export class SupportComponent implements OnInit {
     public conversationList: any;
     public message: any;
     public fileTypeOutput: string;
-    private _fileName: string;
+    public info: any;
+    private _fileName: string = '';
 
     /**
      *Creates an instance of SupportComponent.
@@ -46,6 +47,7 @@ export class SupportComponent implements OnInit {
      * @memberof SupportComponent
      */
     ngOnInit() {
+        this.supportApi.get_user_info().subscribe(info => this.info = info)
         this.supportApi.get_support_list().pipe(
             map(data => {
                 this.suggestLength = data.suggestion.length;
@@ -151,15 +153,19 @@ export class SupportComponent implements OnInit {
     replyMessage(status: string) {
         const data = {
             "supportId": this.selectedDetails.SUPPORT_GUID,
-            "userId": this.selectedDetails.USER_GUID,
-            "doc": [this._fileName],
+            "userId": this.info.userId,
+            "doc": this._fileName,
             "message": this.message,
             "status": status
         }
         this.supportApi.post_support_clarification(data).subscribe(res => {
-            this.clientApi.snackbarMsg('Your message has been submitted successfully', true);
-            this.message = '';
-            this._fileName = '';
+            if (res[0] != undefined) {
+                this.clientApi.snackbarMsg('Your message has been submitted successfully', true);
+                this.message = '';
+                this._fileName = '';
+            } else {
+                this.clientApi.snackbarMsg('Your message was not able to submit. Please refresh and try again', false);
+            }
             this.selectedMessage(this.clickedIndex, this.selectedDetails);
         })
     }
