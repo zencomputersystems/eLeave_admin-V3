@@ -92,9 +92,13 @@
         text-align: center;
         padding: 40% 0;
     }
+    p.listInnerText {
+        opacity: 0.8;
+        font-size: 12px;
+        padding: 0;
+    }
     p.listInnerText::ng-deep p {
         opacity: 0.8;
-        padding-bottom: 5px;
         font-size: 12px;
         padding: 0;
     }

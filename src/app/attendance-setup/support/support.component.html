@@ -183,8 +183,7 @@
                                             style="opacity: 0.8;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;">
                                             {{item.FULLNAME}}
                                         </p>
-                                        <p
-                                            style="padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
+                                        <p style="font-size: 12px;opacity: 0.8;padding: 0;">
                                             {{item.DESCRIPTION}}
                                         </p>
                                     </ion-col>
@@ -213,10 +212,6 @@
                                     style="margin-left: 15px;margin-bottom: 20px;--opacity:1;font-size: 10px;width: 100px;height: 30px;--background: #7069d8;color: white;--border-radius: 3px;text-transform: capitalize;">
                                     Suggestion
                                 </ion-button>
-                                <p
-                                    style="color: #4d4f5c;display: inline;opacity: 0.8;font-size: 15px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
-                                    {{selectedDetails.REQUEST_TYPE | titlecase}}
-                                </p>
                                 <ng-container *ngFor="let item of conversationList">
                                     <ion-item style="padding-left: 5px;" lines="none">
                                         <ng-container *ngIf="url">
@@ -247,26 +242,6 @@
                                             </p>
                                             <p class="listInnerText" [innerHTML]="item.MESSAGE">
                                             </p>
-                                            <div *ngIf="item.ATTACHMENT !== ''"
-                                                style="margin: 15px 0;font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;color: #a3a6b4;font-weight: bold;">
-                                                <ion-row>
-                                                    <ion-col>
-                                                        <p
-                                                            style="color: #43425D;padding-bottom: 5px;font-size: 12px;padding: 0;">
-                                                            See Attachment <a
-                                                                style="color: #7069d8;display: inline-flex;padding-left: 10px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
-                                                                [href]="url.link+item.ATTACHMENT"
-                                                                download>{{item.ATTACHMENT}}</a>
-                                                        </p>
-                                                        <img *ngIf="item.type !== 'pdf'"
-                                                            src="{{url.link + item.ATTACHMENT}}" style="width: 100px;">
-                                                        <pdf-viewer *ngIf="item.type === 'pdf'"
-                                                            [src]="url.link + item.ATTACHMENT"
-                                                            style="display: block;width: 100%;height: 100px;">
-                                                        </pdf-viewer>
-                                                    </ion-col>
-                                                </ion-row>
-                                            </div>
                                         </ion-col>
                                     </ion-item>
                                     <ion-item class="divider" lines="full"></ion-item>
@@ -301,30 +276,9 @@
                                                 style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;">
                                                 {{selectedDetails.TITLE}}
                                             </p>
-                                            <p style="padding-bottom: 5px;font-size: 12px;opacity: 0.8;padding: 0;">
+                                            <p style="font-size: 12px;opacity: 0.8;padding: 0;">
                                                 {{selectedDetails.DESCRIPTION}}
                                             </p>
-                                            <!-- <div *ngIf="selectedDetails.ATTACHMENT !== ''"
-                                            style="margin: 15px 0;font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;color: #a3a6b4;font-weight: bold;">
-                                            <ion-row>
-                                                <ion-col>
-                                                    <p
-                                                        style="color: #43425D;padding-bottom: 5px;font-size: 12px;padding: 0;">
-                                                        See Attachment <a
-                                                            style="color: #7069d8;display: inline-flex;padding-left: 10px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
-                                                            [href]="url.link+selectedDetails.ATTACHMENT"
-                                                            download>{{selectedDetails.ATTACHMENT}}</a>
-                                                    </p>
-                                                    <img *ngIf="fileTypeOutput !== 'pdf'"
-                                                        src="{{url.link + selectedDetails.ATTACHMENT}}"
-                                                        style="width: 100px;">
-                                                    <pdf-viewer *ngIf="fileTypeOutput === 'pdf'"
-                                                        [src]="url.link + selectedDetails.ATTACHMENT" style="display: block;width: 100%;
-                                                    height: 100px;">
-                                                    </pdf-viewer>
-                                                </ion-col>
-                                            </ion-row>
-                                        </div> -->
                                         </ion-col>
                                     </ion-item>
                                     <ion-item class="divider" lines="full"></ion-item>
@@ -445,7 +399,7 @@
                                                         *ngIf="url.details[j].PROFILE_PICTURE === null">
                                                         <img src="assets/icon/picture.png">
                                                     </ion-avatar>
-                                                </ng-container> 
+                                                </ng-container>
                                             </ng-container>
                                         </ng-container>
                                         <ion-col style="color: #4d4f5c;">
@@ -460,7 +414,7 @@
                                                 style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
                                                 {{selectedDetails.TITLE}}
                                             </p>
-                                            <p style="opacity: 0.8;padding-bottom: 5px;font-size: 12px;padding: 0;">
+                                            <p style="opacity: 0.8;font-size: 12px;padding: 0;">
                                                 {{selectedDetails.DESCRIPTION}}
                                             </p>
                                             <div *ngIf="selectedDetails.ATTACHMENT !== ''"
