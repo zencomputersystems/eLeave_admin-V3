@@ -961,6 +961,16 @@ export class EmployeeSetupComponent implements OnInit {
     }
 
     /**
+     * show alert on change tab
+     * @memberof EmployeeSetupComponent
+     */
+    showOthersEvent() {
+        if (this.modeValue === true) {
+            if (this.showOthers === true) { alert("Please toggle OFF edit mode to save before view other tab. Else the changing will be discarded") }
+        }
+    }
+
+    /**
      * toggle to change employee status (active/inactive)
      * @param {*} event
      * @param {string} name

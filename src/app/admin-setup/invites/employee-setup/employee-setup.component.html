@@ -887,7 +887,7 @@
                             </div>
                         </ion-card-header>
                         <ion-card-content style="padding-right: 0;" class="padding-content">
-                            <div (click)="showPersonal = true;showEmploy = false;showCalendar = false;showRole = false;showOthers=false"
+                            <div (click)="showOthersEvent();showPersonal = true;showEmploy = false;showCalendar = false;showRole = false;showOthers=false"
                                 style="cursor: pointer;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 PERSONAL DETAILS</div>
                             <div *ngIf="personalDetails && showPersonal">
@@ -1150,7 +1150,7 @@
                                     </ion-col>
                                 </ion-row>
                             </div>
-                            <div (click)="showEmploy = true;showCalendar = false;showRole = false;showPersonal = false;showOthers=false "
+                            <div (click)="showOthersEvent();showEmploy = true;showCalendar = false;showRole = false;showPersonal = false;showOthers=false "
                                 style="cursor: pointer;margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 EMPLOYMENT DETAILS</div>
                             <div *ngIf="employmentDetails && showEmploy">
@@ -1394,7 +1394,7 @@
                                 padding-right: 15px;">
                                 </ion-item>
                             </div>
-                            <div (click)="showCalendar = true;showRole = false; showEmploy = false;showPersonal = false; showOthers=false"
+                            <div (click)="showOthersEvent();showCalendar = true;showRole = false; showEmploy = false;showPersonal = false; showOthers=false"
                                 style="cursor: pointer;margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 CALENDAR, WORKING HOUR & LEAVE ENTITLEMENT</div>
                             <div *ngIf="showCalendar">
@@ -1508,7 +1508,7 @@
                                         Add New Leave Entitlement</p>
                                 </div>
                             </div>
-                            <div (click)="showRole = true; showCalendar = false; showEmploy = false;showPersonal = false;showOthers= false"
+                            <div (click)="showOthersEvent();showRole = true; showCalendar = false; showEmploy = false;showPersonal = false;showOthers= false"
                                 style="cursor: pointer;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 EMPLOYEE ROLE</div>
                             <div *ngIf="showRole">
