@@ -405,7 +405,7 @@ export class AddOneEmployeeComponent implements OnInit {
             }
         }, error => {
             this.showSmallSpinner = false;
-            this.leaveSetupService.openSnackBar(error.statusText, false);
+            this.leaveSetupService.openSnackBar(error.json().message.message, false);
         })
     }
 

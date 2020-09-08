@@ -189,14 +189,18 @@ leavetest6@zen.com.my,ZEN-00003,Test 3 ZEN,Test 3,000101-07-5682,9/7/2018,Female
      * @memberof BulkImportComponent
      */
     responseHandler(response: any) {
-        response.forEach(item => {
-            if (item.category == 'Success' && item.data.length != 0) {
-                this.leaveApi.openSnackBar('New employee profiles was created successfully', true);
-            }
-            if (item.data.length != 0 && item.category != 'Success') {
-                this.leaveApi.openSnackBar(item.message, false);
-            }
-        });
+        if (response.message !== undefined) {
+            this.leaveApi.openSnackBar(response.message.message, false);
+        } else {
+            response.forEach(item => {
+                if (item.category == 'Success' && item.data.length != 0) {
+                    this.leaveApi.openSnackBar('New employee profiles was created successfully', true);
+                }
+                if (item.data.length != 0 && item.category != 'Success') {
+                    this.leaveApi.openSnackBar(item.message, false);
+                }
+            });
+        }
         this.closeMenu.emit('true');
         this.ngOnInit();
         this.formData = new FormData();
