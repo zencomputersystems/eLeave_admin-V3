@@ -215,6 +215,8 @@ export class AddOneEmployeeComponent implements OnInit {
             id: new FormControl('', Validators.required),
             joinDate: new FormControl('', Validators.required),
             email: new FormControl('', Validators.required),
+            nric: new FormControl('', Validators.required),
+            dob: new FormControl('', Validators.required)
         });
         this.branchCtrl = new FormControl({ value: '', disabled: true });
         // this.divisionCtrl = new FormControl({ value: '', disabled: true });
@@ -376,7 +378,9 @@ export class AddOneEmployeeComponent implements OnInit {
             // "DIVISION": this.divisionCtrl.value,
             "DEPARTMENT": this.departmentCtrl.value,
             "COST_CENTRE": this.costCentreCtrl.value,
-            "JOIN_DATE": _moment(this.invitationForm.controls.joinDate.value).format('YYYY-MM-DD')
+            "JOIN_DATE": _moment(this.invitationForm.controls.joinDate.value).format('YYYY-MM-DD'),
+            "NRIC": this.invitationForm.controls.nric.value,
+            "DOB": _moment(this.invitationForm.controls.dob.value).format('YYYY-MM-DD'),
         }]
         this.create_user(data);
     }
@@ -429,6 +433,8 @@ export class AddOneEmployeeComponent implements OnInit {
                     empListItem.companyName = compInfo[0].NAME;
                     empListItem.joinDate = newEmpElement.JOIN_DATE;
                     empListItem.section = newEmpElement.SECTION;
+                    empListItem.dob = newEmpElement.DOB;
+                    empListItem.nric = newEmpElement.NRIC;
                     configPatch.root.employmentDetail.employeeId = empListItem.staffNumber;
                     configPatch.root.employmentDetail.companyId = empListItem.companyId;
                     configPatch.root.employmentDetail.department = empListItem.department;
@@ -439,6 +445,8 @@ export class AddOneEmployeeComponent implements OnInit {
                     configPatch.root.employmentDetail.section = empListItem.section;
                     configPatch.root.personalDetails.fullname = empListItem.employeeName;
                     configPatch.root.personalDetails.workEmailAddress = empListItem.email;
+                    configPatch.root.personalDetails.dob = empListItem.dob;
+                    configPatch.root.personalDetails.nric = empListItem.nric;
                     this.adminInvite.patch_admin_all_user_info(configPatch, empListItem.id).subscribe(ret => { });
                 }
             })

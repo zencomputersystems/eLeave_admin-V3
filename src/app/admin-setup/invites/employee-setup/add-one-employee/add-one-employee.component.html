@@ -198,62 +198,34 @@
                         Hired date is <strong>required</strong></mat-error>
                 </mat-form-field>
             </div>
-            <!-- &nbsp;&nbsp;
-            <div style="width: 40%;display: inline-block;">
-                <span style="font-size: 12px;color:#707070;padding-left: 3px;display: block">
-                    DESIGNATION </span>
-                <mat-form-field appearance="outline" style="width: 100%;padding-top: 1%;">
-                    <mat-label>Please enter designation</mat-label>
-                    <mat-select class="selectLeave" formControlName="designation" required>
-                        <mat-option *ngFor="let designationItem of designationList; let i=index"
-                            [value]="designationItem.DESIGNATION">
-                            <!-- (click)="getIndex(leave)" --
-                            {{designationItem.DESIGNATION}}</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="!invitationForm.designation">
-                        Designation is <strong>required</strong></mat-error>
-                </mat-form-field>
-            </div> -->
         </div>
 
-        <!-- <div style="display:block; white-space: nowrap;width: 100%;margin-left: 30px;">
-            <div style="width: 30%;display: inline-block;">
-                <span style="font-size: 12px;color:#707070;padding-left: 3px;display: block">
-                    EMAIL ADDRESS </span>
-                <mat-form-field appearance="outline" style="width: 100%">
-                    <mat-label>Please enter email address</mat-label>
-                    <input matInput formControlName="email" required>
-                    <mat-error *ngIf="!invitationForm.email">
-                        Email is <strong>required</strong></mat-error>
+        <div style="display:block; white-space: nowrap;width: 100%;margin-top: 5px;">
+            <div style="width: 50%;display: inline-block;">
+                <span style="font-size: 12px;color: #808495;display: block">
+                    NRIC </span>
+                <mat-form-field appearance="outline" style="width: 100%;font-size: 12px;">
+                    <mat-label>IC Number</mat-label>
+                    <input matInput formControlName="nric" required>
+                    <mat-error *ngIf="!invitationForm.nric">
+                        NRIC is <strong>required</strong></mat-error>
                 </mat-form-field>
             </div>
             &nbsp;&nbsp;
-            <div style="width: 31%;display: inline-block;">
-                <span style="font-size: 12px;color:#707070;padding-left: 3px;display: block">
-                    PERSONAL PHONE NUMBER </span>
-                <mat-form-field appearance="outline" style="width: 100%">
-                    <mat-label>Please enter phone number</mat-label>
-                    <input matInput formControlName="phone" required>
-                    <mat-error *ngIf="!invitationForm.phone">
-                        Phone number is <strong>required</strong></mat-error>
+            <div style="width: 45%;display: inline-block;">
+                <span style="font-size: 12px;color: #808495;display: block">
+                    BIRTHDATE </span>
+                <mat-form-field class="date" appearance="outline" style="width: 100%;font-size: 12px;">
+                    <mat-label>Birthdate</mat-label>
+                    <input class="dateInput" matInput [matDatepicker]="pickerdob" formControlName="dob" required>
+                    <img src="assets/icon/add_employee/icon_calendar@3x.png" style="width:11px;height:11px;cursor: pointer;position: absolute;
+                        right: 0;top: 10px;" (click)="pickerdob.open()">
+                    <mat-datepicker #pickerdob></mat-datepicker>
+                    <mat-error *ngIf="!invitationForm.dob">
+                        Birthdate is <strong>required</strong></mat-error>
                 </mat-form-field>
             </div>
-        </div> -->
-
-        <!-- <div style="text-align: right;padding-right: 7.5%;">
-            <ion-button fill="outline" style="font-size: 12px;height: 30px;width: 90px;background: white;"
-                color="primary" (click)="dialogAddOneEmployee.close()">
-                CANCEL
-            </ion-button>
-            <div style="width: 10px; display: inline-block"></div>
-            <ion-button style="font-size: 12px;height: 30px;width: 160px;" color="primary"
-                [disabled]="invitationForm.invalid" (click)="sendInvitation()">SEND INVITATION
-            </ion-button>
-            <div style="display: inline-block;margin-top: 10px;padding-left: 5px;vertical-align: middle;"
-                *ngIf="showSmallSpinner">
-                <ion-spinner name="lines-small" color="primary"></ion-spinner>
-            </div>
-        </div> -->
+        </div>
     </form>
 </div>
 
