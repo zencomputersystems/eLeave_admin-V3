@@ -2,7 +2,7 @@ import { WorkingHourApiService } from './../../leave-setup/working-hour/working-
 import { OnInit, Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from "@angular/core";
 import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { MenuController } from "@ionic/angular";
-import * as _moment from 'moment';
+const dayjs = require('dayjs');
 
 @Component({
   selector: 'app-working-hour-config',
@@ -162,10 +162,10 @@ export class WorkingHourConfigComponent implements OnInit {
     if (date !== null) {
       if (name == 'start') {
         let timeStart = this.timeReformat(date);
-        this._startTime = _moment.utc(timeStart, "HH:mm");
+        this._startTime = dayjs.utc(timeStart, "HH:mm");
       } else {
         let timeEnd = this.timeReformat(date);
-        this._endTime = _moment.utc(timeEnd, "HH:mm");
+        this._endTime = dayjs.utc(timeEnd, "HH:mm");
       }
       this.calculateTime(this._startTime, this._endTime);
     }
@@ -179,23 +179,23 @@ export class WorkingHourConfigComponent implements OnInit {
    */
   calculateTime(str, end) {
     if ((str && end) != undefined) {
-      const d = _moment.duration(end.diff(str));
-      const s = _moment.utc(+d).format('H:mm');
+      const d = dayjs.duration(end.diff(str));
+      const s = dayjs.utc(+d).format('H:mm');
       if (s == "9:00") {
         this.workingHourForm.patchValue(
           {
-            starthalfdayAMpicker: this.splitTime(_moment(str).format("HH:mm")),
-            endhalfdayAMpicker: this.splitTime(_moment(str).add(4, 'hours').format("HH:mm")),
-            starthalfdayPMpicker: this.splitTime(_moment(end).subtract(4, 'hours').format("HH:mm")),
-            endhalfdayPMpicker: this.splitTime(_moment(end).format("HH:mm")),
-            startQ1picker: this.splitTime(_moment(str).format("HH:mm")),
-            endQ1picker: this.splitTime(_moment(str).add(2, 'hours').format("HH:mm")),
-            startQ2picker: this.splitTime(_moment(str).add(2, 'hours').format("HH:mm")),
-            endQ2picker: this.splitTime(_moment(str).add(4, 'hours').format("HH:mm")),
-            startQ3picker: this.splitTime(_moment(end).subtract(4, 'hours').format("HH:mm")),
-            endQ3picker: this.splitTime(_moment(end).subtract(2, 'hours').format("HH:mm")),
-            startQ4picker: this.splitTime(_moment(end).subtract(2, 'hours').format("HH:mm")),
-            endQ4picker: this.splitTime(_moment(end).format("HH:mm"))
+            starthalfdayAMpicker: this.splitTime(dayjs(str).format("HH:mm")),
+            endhalfdayAMpicker: this.splitTime(dayjs(str).add(4, 'hours').format("HH:mm")),
+            starthalfdayPMpicker: this.splitTime(dayjs(end).subtract(4, 'hours').format("HH:mm")),
+            endhalfdayPMpicker: this.splitTime(dayjs(end).format("HH:mm")),
+            startQ1picker: this.splitTime(dayjs(str).format("HH:mm")),
+            endQ1picker: this.splitTime(dayjs(str).add(2, 'hours').format("HH:mm")),
+            startQ2picker: this.splitTime(dayjs(str).add(2, 'hours').format("HH:mm")),
+            endQ2picker: this.splitTime(dayjs(str).add(4, 'hours').format("HH:mm")),
+            startQ3picker: this.splitTime(dayjs(end).subtract(4, 'hours').format("HH:mm")),
+            endQ3picker: this.splitTime(dayjs(end).subtract(2, 'hours').format("HH:mm")),
+            startQ4picker: this.splitTime(dayjs(end).subtract(2, 'hours').format("HH:mm")),
+            endQ4picker: this.splitTime(dayjs(end).format("HH:mm"))
           });
       } else {
         this.workingHourForm.patchValue(

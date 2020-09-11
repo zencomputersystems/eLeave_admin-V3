@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import * as _moment from 'moment';
 import { EventInput } from '@fullcalendar/core';
 import { Validators, FormControl } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
@@ -14,7 +13,7 @@ import { EditModeDialogComponent } from '../edit-mode-dialog/edit-mode-dialog.co
 import { SharedService } from '../shared.service';
 import { WorkingHourApiService } from '../working-hour/working-hour-api.service';
 import { ConfirmationWindowComponent } from '../../../global/confirmation-window/confirmation-window.component';
-
+const dayjs = require('dayjs');
 /**
  * Manage holiday and rest day for employee
  * @export
@@ -504,8 +503,8 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     dateChanged(value, index) {
-        this.events[index].start = _moment(value).format('YYYY-MM-DD');
-        this.events[index].end = _moment(value).format('YYYY-MM-DD');
+        this.events[index].start = dayjs(value).format('YYYY-MM-DD');
+        this.events[index].end = dayjs(value).format('YYYY-MM-DD');
         this.events[index].day = this.getWeekDay(new Date(value));
     }
 
@@ -564,8 +563,8 @@ export class CalendarProfileComponent implements OnInit {
      */
     createHolidayList(dateIso: string, name: string, list: any) {
         list.push({
-            "start": _moment(dateIso).format('YYYY-MM-DD'),
-            "end": _moment(dateIso).format('YYYY-MM-DD'),
+            "start": dayjs(dateIso).format('YYYY-MM-DD'),
+            "end": dayjs(dateIso).format('YYYY-MM-DD'),
             "title": name,
             "holidayName": name,
             "day": this.getWeekDay(new Date(dateIso)),
@@ -579,8 +578,8 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     menuDateChanged(value, i) {
-        this.menuNewHoliday[i].start = _moment(value).format('YYYY-MM-DD');
-        this.menuNewHoliday[i].end = _moment(value).format('YYYY-MM-DD');
+        this.menuNewHoliday[i].start = dayjs(value).format('YYYY-MM-DD');
+        this.menuNewHoliday[i].end = dayjs(value).format('YYYY-MM-DD');
         this.menuNewHoliday[i].day = this.getWeekDay(new Date(value));
     }
 

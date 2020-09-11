@@ -1,11 +1,10 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { DashboardApiService } from './dashboard-api.service';
-import * as _moment from 'moment';
 import { MatDialog } from '@angular/material';
 import { DeleteCalendarConfirmationComponent } from '../admin-setup/leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
 import { TaskConfirmationDialogComponent } from './task-confirmation-dialog/task-confirmation-dialog.component';
-
+const dayjs = require('dayjs');
 /**
  * Dashboard page
  * @export
@@ -232,7 +231,7 @@ export class DashboardComponent implements OnInit {
     if (this.holidays.length != undefined) {
       for (let i = 0; i < this.holidays.length; i++) {
         this.holidays[i].day = this.getDayFromDate(new Date(this.holidays[i].start));
-        this.holidays[i].start = (_moment(this.holidays[i].start).format('DD MMM YYYY'));
+        this.holidays[i].start = (dayjs(this.holidays[i].start).format('DD MMM YYYY'));
       }
     }
   }
@@ -255,20 +254,20 @@ export class DashboardComponent implements OnInit {
     let nameList = await this.dashboardAPI.upcoming_item('upcoming-joiner').toPromise();
     this.joiners = nameList;
     for (let i = 0; i < this.joiners.length; i++) {
-      this.joiners[i].JOIN_DATE = (_moment(this.joiners[i].JOIN_DATE).format('DD MMM YYYY'))
+      this.joiners[i].JOIN_DATE = (dayjs(this.joiners[i].JOIN_DATE).format('DD MMM YYYY'))
     }
 
     let leaver = await this.dashboardAPI.upcoming_item('upcoming-leaver').toPromise();
     this.leaver = leaver;
     for (let i = 0; i < this.leaver.length; i++) {
-      this.leaver[i].RESIGNATION_DATE = (_moment(this.leaver[i].RESIGNATION_DATE).format('DD MMM YYYY'))
+      this.leaver[i].RESIGNATION_DATE = (dayjs(this.leaver[i].RESIGNATION_DATE).format('DD MMM YYYY'))
     }
 
     let birthday = await this.dashboardAPI.upcoming_item('upcoming-birthday').toPromise();
     this.birthdayList = birthday;
     this.year = (new Date()).getFullYear();
     for (let i = 0; i < this.birthdayList.length; i++) {
-      this.birthdayList[i].DOB = (_moment(this.birthdayList[i].DOB).format('DD MMM'))
+      this.birthdayList[i].DOB = (dayjs(this.birthdayList[i].DOB).format('DD MMM'))
     }
   }
 

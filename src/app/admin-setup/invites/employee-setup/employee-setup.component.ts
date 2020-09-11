@@ -4,7 +4,6 @@ import { CalendarProfileApiService } from './../../leave-setup/calendar-profile/
 import { Component, OnInit, HostBinding, Output, EventEmitter } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AdminInvitesApiService } from '../admin-invites-api.service';
-import * as _moment from 'moment';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
 import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { APP_DATE_FORMATS, AppDateAdapter } from '../../leave-setup/date.adapter';
@@ -16,9 +15,8 @@ import { SharedService } from '../../leave-setup/shared.service';
 import { getDataSet, reduce } from "iso3166-2-db";
 import { EventInput } from '@fullcalendar/core';
 import { PopoverController } from '@ionic/angular';
-import { SnackbarNotificationComponent } from '../../leave-setup/snackbar-notification/snackbar-notification.component';
 import { SideMenuNavigationComponent } from '../../../../../src/app/side-menu-navigation/side-menu-navigation.component';
-
+const dayjs = require('dayjs');
 /**
  *
  * Employee Setup Page
@@ -814,7 +812,7 @@ export class EmployeeSetupComponent implements OnInit {
         if (this.personalDetails.personalDetail != undefined) {
             this.birthOfDate = new FormControl((this.personalDetails.personalDetail.dob), Validators.required);
             if (this.personalDetails.personalDetail.dob !== '') {
-                this.personalDetails.personalDetail.dob = _moment(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
+                this.personalDetails.personalDetail.dob = dayjs(this.personalDetails.personalDetail.dob).format('DD-MM-YYYY');
             }
         } else {
             this.personalDetails.personalDetail = personal;
@@ -828,11 +826,11 @@ export class EmployeeSetupComponent implements OnInit {
     getEmploymentDetails() {
         if (this.employmentDetails.employmentDetail != undefined) {
             this.dateOfJoin = new FormControl((this.employmentDetails.employmentDetail.dateOfJoin), Validators.required);
-            this.employmentDetails.employmentDetail.dateOfJoin = _moment(this.employmentDetails.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
+            this.employmentDetails.employmentDetail.dateOfJoin = dayjs(this.employmentDetails.employmentDetail.dateOfJoin).format('DD-MM-YYYY');
             this.dateOfConfirm = new FormControl((this.employmentDetails.employmentDetail.dateOfConfirmation), Validators.required);
-            this.employmentDetails.employmentDetail.dateOfConfirmation = _moment(this.employmentDetails.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
+            this.employmentDetails.employmentDetail.dateOfConfirmation = dayjs(this.employmentDetails.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
             this.dateOfResignation = new FormControl((this.employmentDetails.employmentDetail.dateOfResignation), Validators.required);
-            this.employmentDetails.employmentDetail.dateOfResignation = _moment(this.employmentDetails.employmentDetail.dateOfResignation).format('DD-MM-YYYY');
+            this.employmentDetails.employmentDetail.dateOfResignation = dayjs(this.employmentDetails.employmentDetail.dateOfResignation).format('DD-MM-YYYY');
         } else {
             this.employmentDetails.employmentDetail = employment;
         }
@@ -1016,7 +1014,7 @@ export class EmployeeSetupComponent implements OnInit {
             if (result === 'Deactivate') {
                 let value = await this.inviteAPI.disable_user({
                     "user_guid": this.userId,
-                    "resign_date": _moment(new Date()).format('YYYY-MM-DD'),
+                    "resign_date": dayjs(new Date()).format('YYYY-MM-DD'),
                 }).toPromise();
                 if (value[0] != undefined) {
                     if (value[0].USER_GUID != undefined) {
@@ -1042,7 +1040,7 @@ export class EmployeeSetupComponent implements OnInit {
         if (this.personalDetails.personalDetail != undefined) {
             this.personalDetails.personalDetail.nric = (this.personalDetails.personalDetail.nric).toString();
             if (this.birthOfDate.value !== '') {
-                this.personalDetails.personalDetail.dob = _moment(this.birthOfDate.value).format('YYYY-MM-DD');
+                this.personalDetails.personalDetail.dob = dayjs(this.birthOfDate.value).format('YYYY-MM-DD');
             }
             this.personalDetails.personalDetail.gender = this.personalDetails.personalDetail.gender;
             this.personalDetails.personalDetail.maritalStatus = this.personalDetails.personalDetail.maritalStatus;
@@ -1071,9 +1069,9 @@ export class EmployeeSetupComponent implements OnInit {
         if (this.employmentDetails.employmentDetail != undefined) {
             this.employmentDetails.employmentDetail.employeeId = (this.employmentDetails.employmentDetail.employeeId).toString();
             this.employmentDetails.employmentDetail.incomeTaxNumber = (this.employmentDetails.employmentDetail.incomeTaxNumber).toString();
-            this.employmentDetails.employmentDetail.dateOfJoin = _moment(this.dateOfJoin.value).format('YYYY-MM-DD');
-            this.employmentDetails.employmentDetail.dateOfResignation = _moment(this.dateOfResignation.value).format('YYYY-MM-DD');
-            this.employmentDetails.employmentDetail.dateOfConfirmation = _moment(this.dateOfConfirm.value).format('YYYY-MM-DD');
+            this.employmentDetails.employmentDetail.dateOfJoin = dayjs(this.dateOfJoin.value).format('YYYY-MM-DD');
+            this.employmentDetails.employmentDetail.dateOfResignation = dayjs(this.dateOfResignation.value).format('YYYY-MM-DD');
+            this.employmentDetails.employmentDetail.dateOfConfirmation = dayjs(this.dateOfConfirm.value).format('YYYY-MM-DD');
             this.employmentDetails.employmentDetail.bankAccountNumber = (this.employmentDetails.employmentDetail.bankAccountNumber).toString();
             this.employmentDetails.employmentDetail.epfNumber = (this.employmentDetails.employmentDetail.epfNumber).toString();
             delete this.employmentDetails.employmentDetail["yearOfService"];
@@ -1404,8 +1402,8 @@ export class EmployeeSetupComponent implements OnInit {
      */
     createListHoliday(dateIso: string, name: string, list: any) {
         list.push({
-            "start": _moment(dateIso).format('YYYY-MM-DD'),
-            "end": _moment(dateIso).format('YYYY-MM-DD'),
+            "start": dayjs(dateIso).format('YYYY-MM-DD'),
+            "end": dayjs(dateIso).format('YYYY-MM-DD'),
             "title": name,
             "holidayName": name,
             "day": this.getWeekofDay(new Date(dateIso)),
@@ -1494,10 +1492,10 @@ export class EmployeeSetupComponent implements OnInit {
         if (date !== null) {
             if (name == 'start') {
                 let timeStart = this.timeReformat(date);
-                this._startTime = _moment.utc(timeStart, "HH:mm");
+                this._startTime = dayjs.utc(timeStart, "HH:mm");
             } else {
                 let timeEnd = this.timeReformat(date);
-                this._endTime = _moment.utc(timeEnd, "HH:mm");
+                this._endTime = dayjs.utc(timeEnd, "HH:mm");
             }
             this.esCalculateTime(this._startTime, this._endTime);
         }
@@ -1521,23 +1519,23 @@ export class EmployeeSetupComponent implements OnInit {
      */
     esCalculateTime(str, end) {
         if ((str && end) != undefined) {
-            const d = _moment.duration(end.diff(str));
-            const s = _moment.utc(+d).format('H:mm');
+            const d = dayjs.duration(end.diff(str));
+            const s = dayjs.utc(+d).format('H:mm');
             if (s == "9:00") {
                 this.workingHourForm.patchValue(
                     {
-                        starthalfdayAMpicker: this.splitTime(_moment(str).format("HH:mm")),
-                        endhalfdayAMpicker: this.splitTime(_moment(str).add(4, 'hours').format("HH:mm")),
-                        starthalfdayPMpicker: this.splitTime(_moment(end).subtract(4, 'hours').format("HH:mm")),
-                        endhalfdayPMpicker: this.splitTime(_moment(end).format("HH:mm")),
-                        startQ1picker: this.splitTime(_moment(str).format("HH:mm")),
-                        endQ1picker: this.splitTime(_moment(str).add(2, 'hours').format("HH:mm")),
-                        startQ2picker: this.splitTime(_moment(str).add(2, 'hours').format("HH:mm")),
-                        endQ2picker: this.splitTime(_moment(str).add(4, 'hours').format("HH:mm")),
-                        startQ3picker: this.splitTime(_moment(end).subtract(4, 'hours').format("HH:mm")),
-                        endQ3picker: this.splitTime(_moment(end).subtract(2, 'hours').format("HH:mm")),
-                        startQ4picker: this.splitTime(_moment(end).subtract(2, 'hours').format("HH:mm")),
-                        endQ4picker: this.splitTime(_moment(end).format("HH:mm"))
+                        starthalfdayAMpicker: this.splitTime(dayjs(str).format("HH:mm")),
+                        endhalfdayAMpicker: this.splitTime(dayjs(str).add(4, 'hours').format("HH:mm")),
+                        starthalfdayPMpicker: this.splitTime(dayjs(end).subtract(4, 'hours').format("HH:mm")),
+                        endhalfdayPMpicker: this.splitTime(dayjs(end).format("HH:mm")),
+                        startQ1picker: this.splitTime(dayjs(str).format("HH:mm")),
+                        endQ1picker: this.splitTime(dayjs(str).add(2, 'hours').format("HH:mm")),
+                        startQ2picker: this.splitTime(dayjs(str).add(2, 'hours').format("HH:mm")),
+                        endQ2picker: this.splitTime(dayjs(str).add(4, 'hours').format("HH:mm")),
+                        startQ3picker: this.splitTime(dayjs(end).subtract(4, 'hours').format("HH:mm")),
+                        endQ3picker: this.splitTime(dayjs(end).subtract(2, 'hours').format("HH:mm")),
+                        startQ4picker: this.splitTime(dayjs(end).subtract(2, 'hours').format("HH:mm")),
+                        endQ4picker: this.splitTime(dayjs(end).format("HH:mm"))
                     });
             } else {
                 this.workingHourForm.patchValue(

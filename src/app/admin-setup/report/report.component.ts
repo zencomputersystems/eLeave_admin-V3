@@ -9,10 +9,10 @@ import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-import * as _moment from 'moment';
 import { Platform } from '@ionic/angular';
 
 const { Parser } = require('json2csv');
+const dayjs = require('dayjs');
 
 /**
  * history report page
@@ -360,7 +360,7 @@ export class ReportComponent implements OnInit {
       const doc = new jsPDF('l', 'mm', 'a4');
       doc.setFontSize(9);
       doc.text(5, 7, title + ' - ' + this.groupKey[i]);
-      doc.text(5, 11, 'From ' + _moment(this.firstPicker.value).format('DD MMM YYYY') + ' to ' + _moment(this.secondPicker.value).format('DD MMM YYYY'));
+      doc.text(5, 11, 'From ' + dayjs(this.firstPicker.value).format('DD MMM YYYY') + ' to ' + dayjs(this.secondPicker.value).format('DD MMM YYYY'));
       doc.autoTable({
         headStyles: { fillColor: [67, 66, 93], fontSize: 7.5, minCellWidth: 2 },
         bodyStyles: { fontSize: 7.5, minCellWidth: 10 },

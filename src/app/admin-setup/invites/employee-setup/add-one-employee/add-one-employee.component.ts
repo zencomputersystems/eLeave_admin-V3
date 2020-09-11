@@ -2,7 +2,6 @@ import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { APIService } from '../../../../../../src/services/shared-service/api.service';
 import { AdminInvitesApiService } from '../../admin-invites-api.service';
-import * as _moment from 'moment';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../../../../../../src/app/admin-setup/leave-setup/date.adapter';
 import { LeaveApiService } from '../../../../../../src/app/admin-setup/leave-setup/leave-api.service';
@@ -10,6 +9,7 @@ import { startWith, map, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 const configPatch = require("./parseDataFormat.json");
+const dayjs = require('dayjs');
 
 /**
  * Add One Employee Page
@@ -378,9 +378,9 @@ export class AddOneEmployeeComponent implements OnInit {
             // "DIVISION": this.divisionCtrl.value,
             "DEPARTMENT": this.departmentCtrl.value,
             "COST_CENTRE": this.costCentreCtrl.value,
-            "JOIN_DATE": _moment(this.invitationForm.controls.joinDate.value).format('YYYY-MM-DD'),
+            "JOIN_DATE": dayjs(this.invitationForm.controls.joinDate.value).format('YYYY-MM-DD'),
             "NRIC": this.invitationForm.controls.nric.value,
-            "DOB": _moment(this.invitationForm.controls.dob.value).format('YYYY-MM-DD'),
+            "DOB": dayjs(this.invitationForm.controls.dob.value).format('YYYY-MM-DD'),
         }]
         this.create_user(data);
     }
