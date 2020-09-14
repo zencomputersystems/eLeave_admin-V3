@@ -165,13 +165,13 @@
                                     (click)="selectedMessage(i, item)">
                                     <ng-container *ngIf="url">
                                         <ng-container *ngFor="let list of url.details; let j= index">
-                                            <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID">
+                                            <ng-container *ngIf="list.USER_GUID == item.USER_GUID">
                                                 <ion-avatar slot="start"
-                                                    *ngIf="url.details[j].PROFILE_PICTURE !== null">
-                                                    <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
+                                                    *ngIf="list.PROFILE_PICTURE != null || list.PROFILE_PICTURE != undefined">
+                                                    <img src="{{url.link + list.PROFILE_PICTURE}}">
                                                 </ion-avatar>
                                                 <ion-avatar slot="start"
-                                                    *ngIf="url.details[j].PROFILE_PICTURE === null">
+                                                    *ngIf="list.PROFILE_PICTURE == null || list.PROFILE_PICTURE == undefined">
                                                     <img src="assets/icon/picture.png">
                                                 </ion-avatar>
                                             </ng-container>
@@ -218,11 +218,11 @@
                                             <!-- <ng-container *ngFor="let list of url.details; let j= index">
                                             <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID"> -->
                                             <ion-avatar slot="start" style="align-self: baseline;"
-                                                *ngIf="item.PROFILE_PICTURE !== ''">
+                                                *ngIf="item.PROFILE_PICTURE != undefined || item.PROFILE_PICTURE != null">
                                                 <img src="{{url.link + item.PROFILE_PICTURE}}">
                                             </ion-avatar>
                                             <ion-avatar slot="start" style="align-self: baseline;"
-                                                *ngIf="item.PROFILE_PICTURE === ''">
+                                                *ngIf="item.PROFILE_PICTURE == null || item.PROFILE_PICTURE == undefined">
                                                 <img src="assets/icon/picture.png">
                                             </ion-avatar>
                                             <!-- </ng-container>
@@ -251,14 +251,13 @@
                                     <ion-item style="padding-left: 5px;" lines="none">
                                         <ng-container *ngIf="url">
                                             <ng-container *ngFor="let list of url.details; let j= index">
-                                                <ng-container
-                                                    *ngIf="url.details[j].USER_GUID == selectedDetails.USER_GUID">
+                                                <ng-container *ngIf="list.USER_GUID == selectedDetails.USER_GUID">
                                                     <ion-avatar slot="start" style="align-self: baseline;"
-                                                        *ngIf="url.details[j].PROFILE_PICTURE !== null">
-                                                        <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
+                                                        *ngIf="list.PROFILE_PICTURE != null || list.PROFILE_PICTURE != undefined">
+                                                        <img src="{{url.link + list.PROFILE_PICTURE}}">
                                                     </ion-avatar>
                                                     <ion-avatar slot="start" style="align-self: baseline;"
-                                                        *ngIf="url.details[j].PROFILE_PICTURE === null">
+                                                        *ngIf="list.PROFILE_PICTURE == null || list.PROFILE_PICTURE == undefined">
                                                         <img src="assets/icon/picture.png">
                                                     </ion-avatar>
                                                 </ng-container>
@@ -336,11 +335,11 @@
                                             <!-- <ng-container *ngFor="let list of url.details; let j= index">
                                                 <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID"> -->
                                             <ion-avatar slot="start" style="align-self: baseline;"
-                                                *ngIf="item.PROFILE_PICTURE !== ''">
+                                                *ngIf="item.PROFILE_PICTURE != undefined || item.PROFILE_PICTURE != null">
                                                 <img src="{{url.link + item.PROFILE_PICTURE}}">
                                             </ion-avatar>
                                             <ion-avatar slot="start" style="align-self: baseline;"
-                                                *ngIf="item.PROFILE_PICTURE === undefined">
+                                                *ngIf="item.PROFILE_PICTURE == undefined || item.PROFILE_PICTURE == null">
                                                 <img src="assets/icon/picture.png">
                                             </ion-avatar>
                                             <!-- </ng-container>
@@ -397,14 +396,13 @@
                                     <ion-item style="padding-left: 5px;" lines="none">
                                         <ng-container *ngIf="url">
                                             <ng-container *ngFor="let list of url.details; let j= index">
-                                                <ng-container
-                                                    *ngIf="url.details[j].USER_GUID == selectedDetails.USER_GUID">
+                                                <ng-container *ngIf="list.USER_GUID == selectedDetails.USER_GUID">
                                                     <ion-avatar slot="start" style="align-self: baseline;"
-                                                        *ngIf="url.details[j].PROFILE_PICTURE !== null">
-                                                        <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
+                                                        *ngIf="list.PROFILE_PICTURE != null || list.PROFILE_PICTURE != undefined">
+                                                        <img src="{{url.link + list.PROFILE_PICTURE}}">
                                                     </ion-avatar>
                                                     <ion-avatar slot="start" style="align-self: baseline;"
-                                                        *ngIf="url.details[j].PROFILE_PICTURE === null">
+                                                        *ngIf="list.PROFILE_PICTURE == null || list.PROFILE_PICTURE == undefined">
                                                         <img src="assets/icon/picture.png">
                                                     </ion-avatar>
                                                 </ng-container>
