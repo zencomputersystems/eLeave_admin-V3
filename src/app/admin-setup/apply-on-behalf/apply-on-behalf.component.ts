@@ -263,14 +263,6 @@ export class ApplyOnBehalfComponent implements OnInit {
     public expand: boolean;
 
     /**
-     * Local private property to get number of day from a week
-     * eg: sunday-saturday is 0-6
-     * @private
-     * @type {number}
-     * @memberof ApplyOnBehalfComponent
-     */
-    private _weekDayNumber: number[] = [];
-    /**
      * Local private property for selected date array list
      * @private
      * @type {*}
@@ -679,7 +671,7 @@ export class ApplyOnBehalfComponent implements OnInit {
         } else {
             this._reformatDateFrom = dayjs(this.applyLeaveForm.value.firstPicker).format('YYYY-MM-DD HH:mm:ss');
             this._reformatDateTo = dayjs(this.applyLeaveForm.value.secondPicker).format('YYYY-MM-DD HH:mm:ss');
-            this.getWeekDays(this.applyLeaveForm.value.firstPicker, this.applyLeaveForm.value.secondPicker, this._weekDayNumber);
+            this.getWeekDays(this.applyLeaveForm.value.firstPicker, this.applyLeaveForm.value.secondPicker);
             this.dateSelection = this._dateArray;
             this.dayName = [];
             this._slot = []; this._selectedQuarterHour = []; this._firstForm = [];
@@ -760,17 +752,16 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @returns
      * @memberof ApplyOnBehalfComponent
      */
-    getWeekDays(first: Date, last: Date, dayNumber: number[]) {
+    getWeekDays(first: Date, last: Date) {
         if (first > last) return -1;
         var start = new Date(first.getTime());
         var end = new Date(last.getTime());
         this.daysCount = 0;
         this._dateArray = [];
         while (start <= end) {
-            if (!dayNumber.includes(start.getDay())) {
-                this.daysCount++;
-                this._dateArray.push(new Date(start));
-            }
+            this.daysCount++;
+            this._dateArray.push(new Date(start));
+
             start.setDate(start.getDate() + 1);
         }
         return [this.daysCount, this._dateArray];
