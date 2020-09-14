@@ -85,8 +85,10 @@ export class SupportComponent implements OnInit {
     selectedMessage(i: number, data) {
         this.clickedIndex = i;
         this.selectedDetails = data;
-        let fileType = this.selectedDetails.ATTACHMENT.split('.');
-        this.fileTypeOutput = fileType.pop();
+        if (this.selectedDetails.ATTACHMENT != undefined) {
+            let fileType = this.selectedDetails.ATTACHMENT.split('.');
+            this.fileTypeOutput = fileType.pop();
+        }
         this.supportApi.get_support_conversation_id(data.SUPPORT_GUID).subscribe(data => {
             this.conversationList = data;
             for (let i = 0; i < this.conversationList.length; i++) {
@@ -150,7 +152,33 @@ export class SupportComponent implements OnInit {
      * @param {string} status
      * @memberof SupportComponent
      */
-    replyMessage(status: string) {
+    async replyMessage(status: string) {
+        if (status === 'approved') {
+            const clockIn = {
+                "userGuid": this.info.userId,
+                "clockTime": new Date(this.selectedDetails.START_TIME).getTime(),
+                "jobType": "others",
+                "location": {
+                    "lat": null,
+                    "long": null,
+                    "name": null
+                },
+                "clientId": "none",
+                "projectId": "none",
+                "contractId": "none"
+            }
+            let clockInRes = await this.supportApi.post_clock_in(clockIn).toPromise();
+            const clockOut = {
+                "clockLogGuid": clockInRes[0].CLOCK_LOG_GUID,
+                "clockTime": new Date(this.selectedDetails.END_TIME).getTime(),
+                "location": {
+                    "lat": null,
+                    "long": null,
+                    "name": null
+                }
+            }
+            let clockOutRes = await this.supportApi.patch_clock_out(clockOut).toPromise();
+        }
         const data = {
             "supportId": this.selectedDetails.SUPPORT_GUID,
             "userId": this.info.userId,

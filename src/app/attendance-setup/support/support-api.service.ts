@@ -61,4 +61,26 @@ export class SupportApiService {
         this.attendanceApiService.headerAuthorization();
         return this.attendanceApiService.getApi('/api/user-info');
     }
+
+    /**
+     * patch clock out time in support 
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof SupportApiService
+     */
+    patch_clock_out(data): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.patchApi(data, '/api/clock');
+    }
+
+    /**
+     * post clock in time in support
+     * @param {*} data
+     * @returns {Observable<any>}
+     * @memberof SupportApiService
+     */
+    post_clock_in(data): Observable<any> {
+        this.attendanceApiService.headerAuthorization();
+        return this.attendanceApiService.postApi(data, '/api/clock');
+    }
 }

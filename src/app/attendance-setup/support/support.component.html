@@ -285,7 +285,6 @@
                                 </ng-container>
                                 <!----- message editor ----->
                                 <div style="margin: 10px 15px;">
-                                    <!-- position: absolute;bottom: 0;width: 46%; -->
                                     <p
                                         style="padding-bottom: 5px;font-size: 15px;color: #4d4f5c;font-weight: bold;opacity: 0.8;">
                                         Message
@@ -341,7 +340,7 @@
                                                 <img src="{{url.link + item.PROFILE_PICTURE}}">
                                             </ion-avatar>
                                             <ion-avatar slot="start" style="align-self: baseline;"
-                                                *ngIf="item.PROFILE_PICTURE === ''">
+                                                *ngIf="item.PROFILE_PICTURE === undefined">
                                                 <img src="assets/icon/picture.png">
                                             </ion-avatar>
                                             <!-- </ng-container>
@@ -358,6 +357,15 @@
                                             <p
                                                 style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
                                                 {{selectedDetails.TITLE}}
+                                            </p>
+                                            <p
+                                                style="display: inline;padding-right: 10px;padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
+                                                Start time: {{selectedDetails.START_TIME | date: 'dd MMM yyyy hh:mm a'}}
+                                            </p>
+                                            <p
+                                                style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;display: inline;">
+                                                End time:
+                                                {{selectedDetails.END_TIME | date: 'dd MMM yyyy hh:mm a'}}
                                             </p>
                                             <p class="listInnerText" [innerHTML]="item.MESSAGE">
                                             </p>
@@ -414,6 +422,15 @@
                                                 style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
                                                 {{selectedDetails.TITLE}}
                                             </p>
+                                            <p
+                                                style="display: inline;padding-right: 10px;padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
+                                                Start time: {{selectedDetails.START_TIME | date: 'dd MMM yyyy hh:mm a'}}
+                                            </p>
+                                            <p
+                                                style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;display: inline;">
+                                                End time:
+                                                {{selectedDetails.END_TIME | date: 'dd MMM yyyy hh:mm a'}}
+                                            </p>
                                             <p style="opacity: 0.8;font-size: 12px;padding: 0;">
                                                 {{selectedDetails.DESCRIPTION}}
                                             </p>
@@ -445,7 +462,6 @@
 
                                 <!----- message editor ----->
                                 <div style="margin: 10px 15px;">
-                                    <!-- position: absolute;bottom: 0;width: 46%; -->
                                     <p
                                         style="padding-bottom: 5px;font-size: 15px;color: #4d4f5c;font-weight: bold;opacity: 0.8;">
                                         Message
