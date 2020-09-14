@@ -259,7 +259,7 @@
                             </ng-container>
                         </ion-row>
                     </ng-container>
-                    <p *ngIf="announcements.length === 0"
+                    <p *ngIf="announcements && announcements.length === 0"
                         style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                         No latest annoucement</p>
                 </div>
@@ -320,7 +320,7 @@
                             </ng-container>
                         </ion-row>
                     </ng-container>
-                    <p *ngIf="announcements.length === 0"
+                    <p *ngIf="announcements && announcements.length === 0"
                         style="padding: 15px;color: rgb(77, 79, 92);font-size: 11px;line-height: 1.82;">
                         No latest annoucement</p>
                 </div>
