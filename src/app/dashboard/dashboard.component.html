@@ -1,6 +1,5 @@
 <!-- ------------------------------ show announcement menu -------------------------------- -->
-<ion-menu contentId="annMenuContent" side="end" type="overlay" menuId="viewAnnDetails"
-    (ionDidClose)="menuOpen=false">
+<ion-menu contentId="annMenuContent" side="end" type="overlay" menuId="viewAnnDetails" (ionDidClose)="menuOpen=false">
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
         <img style="margin: 17px;width: 20px;height:21px;float:left"
             src="assets/icon/dashboard/icon announcement@3x.png">
@@ -116,8 +115,7 @@
 <ion-router-outlet id="createAnnouncementContent"></ion-router-outlet>
 
 <!-- ------------------------------ show holiday menu -------------------------------- -->
-<ion-menu contentId="PHMenuContent" side="end" type="overlay" menuId="viewPHDetails"
-    (ionDidClose)="menuOpen=false">
+<ion-menu contentId="PHMenuContent" side="end" type="overlay" menuId="viewPHDetails" (ionDidClose)="menuOpen=false">
     <ion-header style="background-color:#43425d; color: #fcfcfc;">
         <img style="margin: 17px;width: 22px;height: 17px;float:left"
             src="assets/icon/dashboard/icon All Holidays@3x.png">
@@ -519,7 +517,8 @@
                                     Last Day</ion-col>
                             </ion-row>
                         </div>
-                        <div *ngIf="leaver !== undefined" style="max-height: 192px;overflow: auto;width: 100%;">
+                        <div *ngIf="leaver.length > 0 && leaver != undefined"
+                            style=" max-height: 192px;overflow: auto;width: 100%;">
                             <ion-list class="list" style="width: 100%;">
                                 <ion-row *ngFor="let item of leaver">
                                     <ion-col size="8.5"
@@ -577,7 +576,8 @@
                                 </ion-col>
                             </ion-row>
                         </div>
-                        <div *ngIf="birthdayList !== undefined" style="max-height: 192px;overflow: auto;width: 100%;">
+                        <div *ngIf="birthdayList != undefined && birthdayList.length > 0"
+                            style="max-height: 192px;overflow: auto;width: 100%;">
                             <ion-list class="list" style="width: 100%;">
                                 <ion-row *ngFor="let item of birthdayList">
                                     <ion-col size="9"
