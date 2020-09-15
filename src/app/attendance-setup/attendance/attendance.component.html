@@ -314,10 +314,10 @@
                 <ion-col *ngIf="mode == 'ON'"
                   style="max-width: 28px;align-self: center; min-width: fit-content; display: flex;">
                   <ion-checkbox mode="ios" style="width: 16px; height: 16px; margin-top: 1px;  margin-right: 5px;"
-                    *ngIf="mode == 'ON'" [(ngModel)]="roleListCheckAll" [indeterminate]="roleListIsIndeterminate"
+                    *ngIf="mode == 'ON'" [(ngModel)]="attenListCheckAll" [indeterminate]="attendanceListIsIndeterminate"
                     (click)="checkAllRoleListAssignedEmployees()">
                   </ion-checkbox>
-                  <div *ngIf="roleListIsIndeterminate || roleListCheckAll">
+                  <div *ngIf="attendanceListIsIndeterminate || attenListCheckAll">
                     <ion-icon name="more"
                       style="width: 18px; height: 18px; color: #7069d8; font-size: 16px; cursor: pointer;" mat-button
                       [matMenuTriggerFor]="menu">

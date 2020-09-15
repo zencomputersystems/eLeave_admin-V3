@@ -147,28 +147,14 @@ export class AttendanceComponent implements OnInit {
      * @type {boolean}
      * @memberof AttendanceComponent
      */
-    public roleListCheckAll: boolean;
+    public attenListCheckAll: boolean;
 
     /**
      * This property is to bind value of indetimate sign in check all status's checkbox
      * @type {boolean}
      * @memberof AttendanceComponent
      */
-    public roleListIsIndeterminate: boolean;
-
-    /**
-     * This property is to bind data of defult role
-     * @type {*}
-     * @memberof AttendanceComponent
-     */
-    public defaultRoleData: any;
-
-    /**
-     * This property is to bind data of default role in checkbox during creation
-     * @type {boolean}
-     * @memberof AttendanceComponent
-     */
-    public defaultProfileRole: boolean = false;
+    public attendanceListIsIndeterminate: boolean;
 
     /**
      * To check current role is existed or not during role profile creation
@@ -220,8 +206,8 @@ export class AttendanceComponent implements OnInit {
                 this._filteredList = [];
                 let data = await this.attendanceApi.get_attendance_list().toPromise();
                 this.roleList = data;
-                this.roleListCheckAll = false;
-                this.roleListIsIndeterminate = false;
+                this.attenListCheckAll = false;
+                this.attendanceListIsIndeterminate = false;
             }
         }
     }
@@ -388,7 +374,7 @@ export class AttendanceComponent implements OnInit {
     checkAllRoleListAssignedEmployees() {
         setTimeout(() => {
             this.assignedNameList.forEach(obj => {
-                obj.isChecked = this.roleListCheckAll;
+                obj.isChecked = this.attenListCheckAll;
             })
         });
     }
@@ -405,16 +391,16 @@ export class AttendanceComponent implements OnInit {
         });
         if (checked > 0 && checked < totalItems) {
             //If even one item is checked but not all
-            this.roleListIsIndeterminate = true;
-            this.roleListCheckAll = false;
+            this.attendanceListIsIndeterminate = true;
+            this.attenListCheckAll = false;
         } else if (checked == totalItems) {
             //If all are checked
-            this.roleListCheckAll = true;
-            this.roleListIsIndeterminate = false;
+            this.attenListCheckAll = true;
+            this.attendanceListIsIndeterminate = false;
         } else {
             //If none is checked
-            this.roleListIsIndeterminate = false;
-            this.roleListCheckAll = false;
+            this.attendanceListIsIndeterminate = false;
+            this.attenListCheckAll = false;
         }
     }
 
@@ -438,8 +424,8 @@ export class AttendanceComponent implements OnInit {
         this._filteredList = [];
         let list = await this.attendanceApi.get_attendance_list().toPromise();
         this.roleList = list;
-        this.roleListCheckAll = false;
-        this.roleListIsIndeterminate = false;
+        this.attenListCheckAll = false;
+        this.attendanceListIsIndeterminate = false;
     }
 
     /**
