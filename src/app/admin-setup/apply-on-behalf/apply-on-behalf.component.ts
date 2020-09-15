@@ -419,9 +419,9 @@ export class ApplyOnBehalfComponent implements OnInit {
                     return (value.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
                 }
             })
-            let company = this.employeeList.filter((items: any) => {
-                if (items.companyName != undefined) {
-                    return (items.companyName.toLowerCase().indexOf(text.toLowerCase()) > -1)
+            let company = this.employeeList.filter((list: any) => {
+                if (list.companyName != undefined) {
+                    return (list.companyName.toLowerCase().indexOf(text.toLowerCase()) > -1)
                 }
             })
             this.employeeList = require('lodash').uniqBy(name.concat(department).concat(company), 'id');

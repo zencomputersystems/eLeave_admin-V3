@@ -1,7 +1,7 @@
 import { roleDetails } from './../../role-management/role-details-data';
 import { WorkingHourApiService } from './../../leave-setup/working-hour/working-hour-api.service';
 import { CalendarProfileApiService } from './../../leave-setup/calendar-profile/calendar-profile-api.service';
-import { Component, OnInit, HostBinding, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AdminInvitesApiService } from '../admin-invites-api.service';
 import { EditModeDialogComponent } from '../../leave-setup/edit-mode-dialog/edit-mode-dialog.component';
@@ -14,7 +14,6 @@ import { personal, employment } from './employee-setup-data';
 import { SharedService } from '../../leave-setup/shared.service';
 import { getDataSet, reduce } from "iso3166-2-db";
 import { EventInput } from '@fullcalendar/core';
-import { PopoverController } from '@ionic/angular';
 import { SideMenuNavigationComponent } from '../../../../../src/app/side-menu-navigation/side-menu-navigation.component';
 const dayjs = require('dayjs');
 /**
@@ -482,7 +481,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @type {*}
      * @memberof EmployeeSetupComponent
      */
-    public workingHourForm: any;
+    public workingForm: any;
 
     /**
      * get the full day start time in utc format
@@ -635,20 +634,20 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     constructor(public inviteAPI: AdminInvitesApiService, public roleAPI: RoleApiService, private _sharedService: SharedService, private calendarProfileAPI: CalendarProfileApiService,
-        public employeeSetupPopover: PopoverController, private workingHourAPI: WorkingHourApiService, private sideMenuComponent: SideMenuNavigationComponent) {
+        private workingHourAPI: WorkingHourApiService, private sideMenuComponent: SideMenuNavigationComponent) {
         this.inviteAPI.apiService.get_profile_pic('all').subscribe(data => {
             this.url = data;
         });
 
-        this.workingHourForm = new FormGroup({
+        this.workingForm = new FormGroup({
             profileName: new FormControl('', Validators.required),
             description: new FormControl('', Validators.required),
             startpicker: new FormControl('', Validators.required),
             endpicker: new FormControl('', Validators.required),
-            starthalfdayAMpicker: new FormControl('', Validators.required),
-            endhalfdayAMpicker: new FormControl('', Validators.required),
-            starthalfdayPMpicker: new FormControl('', Validators.required),
-            endhalfdayPMpicker: new FormControl('', Validators.required),
+            startAMpicker: new FormControl('', Validators.required),
+            endAMpicker: new FormControl('', Validators.required),
+            startPMpicker: new FormControl('', Validators.required),
+            endPMpicker: new FormControl('', Validators.required),
             startQ1picker: new FormControl('', Validators.required),
             endQ1picker: new FormControl('', Validators.required),
             startQ2picker: new FormControl('', Validators.required),
@@ -672,7 +671,7 @@ export class EmployeeSetupComponent implements OnInit {
     async ngOnInit() {
         this.countrydata = reduce(getDataSet(), "en");
         this.calCountryList = Object.keys(this.countrydata).map(key => this.countrydata[key]);
-        this.calCountryList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+        this.calCountryList.sort((x, y) => (x.name > y.name) ? 1 : ((y.name > x.name) ? -1 : 0));
         this.newDayControl = this.calCountry = this.calRegion = new FormControl('');
         this.newProfileName = new FormControl('', Validators.required);
         this.getListPublicHolidays();
@@ -1054,9 +1053,9 @@ export class EmployeeSetupComponent implements OnInit {
                 this.getPersonalDetails();
                 this.isBlur = false;
             }
-            catch (error) {
+            catch (err) {
                 this.open = true;
-                this._sharedService.leaveApi.openSnackBar(JSON.parse(error._body).message[0].constraints.isNotEmpty, false);
+                this._sharedService.leaveApi.openSnackBar(JSON.parse(err._body).message[0].constraints.isNotEmpty, false);
             }
         }
     }
@@ -1173,15 +1172,15 @@ export class EmployeeSetupComponent implements OnInit {
      */
     filter(text: any) {
         if (text && text.trim() != '') {
-            let name = this.list.filter((item: any) => {
-                return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
+            let fullname = this.list.filter((list: any) => {
+                return (list.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
             let id = this.list.filter((item: any) => {
                 if (item.staffNumber != undefined) {
                     return (item.staffNumber.indexOf(text) > -1);
                 }
             })
-            this.list = require('lodash').uniqBy(name.concat(id), 'userId');
+            this.list = require('lodash').uniqBy(fullname.concat(id), 'userId');
         }
     }
 
@@ -1435,10 +1434,10 @@ export class EmployeeSetupComponent implements OnInit {
             delete holiday[i].day;
         }
         for (let j = 0; j < this.calRestDay.length; j++) {
-            let obj = {};
-            obj["fullname"] = (this.calRestDay[j]).toUpperCase();
-            obj["name"] = obj["fullname"].substring(0, 3);
-            this.selectedWeekday.push(obj);
+            let object = {};
+            object["fullname"] = (this.calRestDay[j]).toUpperCase();
+            object["name"] = object["fullname"].substring(0, 3);
+            this.selectedWeekday.push(object);
         }
     }
 
@@ -1484,17 +1483,17 @@ export class EmployeeSetupComponent implements OnInit {
 
     /**
       * full day on changed
-      * @param {*} date
-      * @param {string} name
+      * @param {*} d
+      * @param {string} value
       * @memberof WorkingHourComponent
       */
-    onChange(date, name: string) {
-        if (date !== null) {
-            if (name == 'start') {
-                let timeStart = this.timeReformat(date);
+    timeOnChange(d, value: string) {
+        if (d !== null) {
+            if (value == 'start') {
+                let timeStart = this.timeReformat(d);
                 this._startTime = dayjs.utc(timeStart, "HH:mm");
             } else {
-                let timeEnd = this.timeReformat(date);
+                let timeEnd = this.timeReformat(d);
                 this._endTime = dayjs.utc(timeEnd, "HH:mm");
             }
             this.esCalculateTime(this._startTime, this._endTime);
@@ -1522,28 +1521,28 @@ export class EmployeeSetupComponent implements OnInit {
             const d = dayjs.duration(end.diff(str));
             const s = dayjs.utc(+d).format('H:mm');
             if (s == "9:00") {
-                this.workingHourForm.patchValue(
+                this.workingForm.patchValue(
                     {
-                        starthalfdayAMpicker: this.splitTime(dayjs(str).format("HH:mm")),
-                        endhalfdayAMpicker: this.splitTime(dayjs(str).add(4, 'hours').format("HH:mm")),
-                        starthalfdayPMpicker: this.splitTime(dayjs(end).subtract(4, 'hours').format("HH:mm")),
-                        endhalfdayPMpicker: this.splitTime(dayjs(end).format("HH:mm")),
-                        startQ1picker: this.splitTime(dayjs(str).format("HH:mm")),
-                        endQ1picker: this.splitTime(dayjs(str).add(2, 'hours').format("HH:mm")),
-                        startQ2picker: this.splitTime(dayjs(str).add(2, 'hours').format("HH:mm")),
-                        endQ2picker: this.splitTime(dayjs(str).add(4, 'hours').format("HH:mm")),
-                        startQ3picker: this.splitTime(dayjs(end).subtract(4, 'hours').format("HH:mm")),
-                        endQ3picker: this.splitTime(dayjs(end).subtract(2, 'hours').format("HH:mm")),
-                        startQ4picker: this.splitTime(dayjs(end).subtract(2, 'hours').format("HH:mm")),
-                        endQ4picker: this.splitTime(dayjs(end).format("HH:mm"))
+                        startAMpicker: this.reformatTime(dayjs(str).format("HH:mm")),
+                        endAMpicker: this.reformatTime(dayjs(str).add(4, 'hours').format("HH:mm")),
+                        startPMpicker: this.reformatTime(dayjs(end).subtract(4, 'hours').format("HH:mm")),
+                        endPMpicker: this.reformatTime(dayjs(end).format("HH:mm")),
+                        startQ1picker: this.reformatTime(dayjs(str).format("HH:mm")),
+                        endQ1picker: this.reformatTime(dayjs(str).add(2, 'hours').format("HH:mm")),
+                        startQ2picker: this.reformatTime(dayjs(str).add(2, 'hours').format("HH:mm")),
+                        endQ2picker: this.reformatTime(dayjs(str).add(4, 'hours').format("HH:mm")),
+                        startQ3picker: this.reformatTime(dayjs(end).subtract(4, 'hours').format("HH:mm")),
+                        endQ3picker: this.reformatTime(dayjs(end).subtract(2, 'hours').format("HH:mm")),
+                        startQ4picker: this.reformatTime(dayjs(end).subtract(2, 'hours').format("HH:mm")),
+                        endQ4picker: this.reformatTime(dayjs(end).format("HH:mm"))
                     });
             } else {
-                this.workingHourForm.patchValue(
+                this.workingForm.patchValue(
                     {
-                        starthalfdayAMpicker: null,
-                        endhalfdayAMpicker: null,
-                        starthalfdayPMpicker: null,
-                        endhalfdayPMpicker: null,
+                        startAMpicker: null,
+                        endAMpicker: null,
+                        startPMpicker: null,
+                        endPMpicker: null,
                         startQ1picker: null,
                         endQ1picker: null,
                         startQ2picker: null,
@@ -1563,7 +1562,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @returns
      * @memberof WorkingHourComponent
      */
-    splitTime(time) {
+    reformatTime(time) {
         return {
             "hour": Number((time.split(':'))[0]), "minute": Number((time.split(':'))[1])
         }
@@ -1575,52 +1574,52 @@ export class EmployeeSetupComponent implements OnInit {
      */
     postWorkingHourSetup(evt) {
         this.showSmallSpinner = true;
-        this._data.code = this.workingHourForm.controls.profileName.value;
-        this._data.description = this.workingHourForm.controls.description.value;
+        this._data.code = this.workingForm.controls.profileName.value;
+        this._data.description = this.workingForm.controls.description.value;
         Object.assign(this._data, {
             property: {
                 fullday: {
-                    start_time: this.timeReformat(this.workingHourForm.controls.startpicker.value),
-                    end_time: this.timeReformat(this.workingHourForm.controls.endpicker.value)
+                    start_time: this.timeReformat(this.workingForm.controls.startpicker.value),
+                    end_time: this.timeReformat(this.workingForm.controls.endpicker.value)
                 },
                 halfday: {
                     AM: {
-                        start_time: this.timeReformat(this.workingHourForm.controls.starthalfdayAMpicker.value),
-                        end_time: this.timeReformat(this.workingHourForm.controls.endhalfdayAMpicker.value)
+                        start_time: this.timeReformat(this.workingForm.controls.startAMpicker.value),
+                        end_time: this.timeReformat(this.workingForm.controls.endAMpicker.value)
                     },
                     PM: {
-                        start_time: this.timeReformat(this.workingHourForm.controls.starthalfdayPMpicker.value),
-                        end_time: this.timeReformat(this.workingHourForm.controls.endhalfdayPMpicker.value)
+                        start_time: this.timeReformat(this.workingForm.controls.startPMpicker.value),
+                        end_time: this.timeReformat(this.workingForm.controls.endPMpicker.value)
                     }
                 },
                 quarterday: {
                     Q1: {
-                        start_time: this.timeReformat(this.workingHourForm.controls.startQ1picker.value),
-                        end_time: this.timeReformat(this.workingHourForm.controls.endQ1picker.value)
+                        start_time: this.timeReformat(this.workingForm.controls.startQ1picker.value),
+                        end_time: this.timeReformat(this.workingForm.controls.endQ1picker.value)
                     },
                     Q2: {
-                        start_time: this.timeReformat(this.workingHourForm.controls.startQ2picker.value),
-                        end_time: this.timeReformat(this.workingHourForm.controls.endQ2picker.value)
+                        start_time: this.timeReformat(this.workingForm.controls.startQ2picker.value),
+                        end_time: this.timeReformat(this.workingForm.controls.endQ2picker.value)
                     },
                     Q3: {
-                        start_time: this.timeReformat(this.workingHourForm.controls.startQ3picker.value),
-                        end_time: this.timeReformat(this.workingHourForm.controls.endQ3picker.value)
+                        start_time: this.timeReformat(this.workingForm.controls.startQ3picker.value),
+                        end_time: this.timeReformat(this.workingForm.controls.endQ3picker.value)
                     },
                     Q4: {
-                        start_time: this.timeReformat(this.workingHourForm.controls.startQ4picker.value),
-                        end_time: this.timeReformat(this.workingHourForm.controls.endQ4picker.value)
+                        start_time: this.timeReformat(this.workingForm.controls.startQ4picker.value),
+                        end_time: this.timeReformat(this.workingForm.controls.endQ4picker.value)
                     }
                 }
             }
         });
-        Object.keys(this._data.property.halfday).map(ampm => {
-            Object.keys(this._data.property.halfday[ampm]).map(startend => {
-                this._data.property.halfday[ampm][startend] = this._data.property.halfday[ampm][startend];
+        Object.keys(this._data.property.halfday).map(value => {
+            Object.keys(this._data.property.halfday[value]).map(data => {
+                this._data.property.halfday[value][data] = this._data.property.halfday[value][data];
             })
         });
-        Object.keys(this._data.property.quarterday).map(objKey => {
-            Object.keys(this._data.property.quarterday[objKey]).map(endstart => {
-                this._data.property.quarterday[objKey][endstart] = this._data.property.quarterday[objKey][endstart];
+        Object.keys(this._data.property.quarterday).map(keyObj => {
+            Object.keys(this._data.property.quarterday[keyObj]).map(startEnd => {
+                this._data.property.quarterday[keyObj][startEnd] = this._data.property.quarterday[keyObj][startEnd];
             })
         });
         this.esPatchWorkingHourSetup(this._data);

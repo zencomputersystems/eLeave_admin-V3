@@ -242,10 +242,10 @@ export class RoleListComponent implements OnInit {
      * @memberof RoleListComponent
      */
     async draggedUserId(i: number) {
-        if (this.checkDuplicateName(this._userList, this.assignedNameList[i].fullname) != 0) {
-            const indexes: number = this.checkDuplicateName(this._userList, this.assignedNameList[i].fullname);
-            if (!this._filteredList.includes(this._userList[indexes].userId)) {
-                await this._filteredList.push(this._userList[indexes].userId);
+        if (this.checkExisitingName(this._userList, this.assignedNameList[i].fullname) != 0) {
+            const index: number = this.checkExisitingName(this._userList, this.assignedNameList[i].fullname);
+            if (!this._filteredList.includes(this._userList[index].userId)) {
+                await this._filteredList.push(this._userList[index].userId);
             }
         }
     }
@@ -257,7 +257,7 @@ export class RoleListComponent implements OnInit {
      * @returns
      * @memberof RoleListComponent
      */
-    checkDuplicateName(list: any, obj: any) {
+    checkExisitingName(list: any, obj: any) {
         for (let j = 0; j < list.length; j++) {
             if (list[j].employeeName === obj) {
                 return j;
@@ -422,16 +422,16 @@ export class RoleListComponent implements OnInit {
      * @memberof RoleListComponent
      */
     checkRoleListAssignedEmployeeEvent() {
-        const totalItems = this.assignedNameList.length;
+        const total = this.assignedNameList.length;
         let checked = 0;
-        this.assignedNameList.map(obj => {
-            if (obj.isChecked) checked++;
+        this.assignedNameList.map(object => {
+            if (object.isChecked) checked++;
         });
-        if (checked > 0 && checked < totalItems) {
+        if (checked > 0 && checked < total) {
             //If even one item is checked but not all
             this.roleListIsIndeterminate = true;
             this.roleListCheckAll = false;
-        } else if (checked == totalItems) {
+        } else if (checked == total) {
             //If all are checked
             this.roleListCheckAll = true;
             this.roleListIsIndeterminate = false;

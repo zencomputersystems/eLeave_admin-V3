@@ -191,7 +191,7 @@ export class LeaveAdjustmentComponent implements OnInit {
         this.leaveSetupAPI.get_company_list().subscribe(list => this.company = list);
         this.leaveSetupAPI.get_admin_leavetype().subscribe(list => this.leavetypeList = list);
         this.reportApi.get_bundle_report('leave-adjustment').pipe(
-            map(data => data.sort((a, b) => new Date(b.adjustDate).getTime() - new Date(a.adjustDate).getTime()))
+            map(value => value.sort((x, y) => new Date(y.adjustDate).getTime() - new Date(x.adjustDate).getTime()))
         ).subscribe(data => this.history = data);
         this.apiService.get_user_profile_list().subscribe(list => this._userItems = list);
     }
