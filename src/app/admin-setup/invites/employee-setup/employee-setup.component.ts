@@ -789,8 +789,8 @@ export class EmployeeSetupComponent implements OnInit {
             this.getEmploymentDetails();
         })
         this._sharedService.leaveApi.get_entilement_details(this.userId).subscribe(data => {
+            this.addEntitlement = [];
             if (data.length > 0) {
-                this.addEntitlement = [];
                 for (let i = 0; i < data.length; i++) {
                     this.addEntitlement.push({ "leavetype": data[i].LEAVE_TYPE_GUID, "userLeaveEntitlement": data[i].USER_LEAVE_ENTITLEMENT_GUID, "balance": data[i].BALANCE_DAYS });
                 }
