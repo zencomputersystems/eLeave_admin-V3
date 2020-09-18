@@ -70,6 +70,8 @@
                 </ion-row>
             </div>
         </div>
+        <p *ngIf="history == undefined" style="padding: 15px;color: rgb(77, 79, 92);font-size: 12px;line-height: 1.82;">
+            No approval override history</p>
     </ion-content>
 </ion-menu>
 <ion-router-outlet id="approvalOverrideContent">
@@ -195,7 +197,8 @@
                                             <ion-label
                                                 style="opacity: 0.8;color:#43425d; font-weight: bold;;font-size: 12px;">
                                                 {{item.employeeName}} | </ion-label>
-                                            <ion-label [class]="hide-sm-up" style="font-size: 12px;">{{item.noOfDays}} day(s)</ion-label>
+                                            <ion-label [class]="hide-sm-up" style="font-size: 12px;">{{item.noOfDays}}
+                                                day(s)</ion-label>
                                         </div>
                                         <div style="display: flex;padding-top: 5px; flex-wrap: wrap;">
                                             <!-- <div style="display: inline-block;padding-right: 20px;"> -->

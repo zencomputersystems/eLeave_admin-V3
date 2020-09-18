@@ -121,6 +121,9 @@
                 </div>
             </div>
         </div>
+        <p *ngIf="history == undefined"
+            style="padding: 15px;color: rgb(77, 79, 92);font-size: 12px;line-height: 1.82;">
+            No leave adjustment history</p>
     </ion-content>
 </ion-menu>
 <ion-router-outlet id="leaveAdjustContent">
@@ -220,7 +223,7 @@
                                         style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
                                         <mat-label>Please select leave type</mat-label>
                                         <mat-select formControlName="leavetype" required>
-                                            <mat-option >None</mat-option>
+                                            <mat-option>None</mat-option>
                                             <mat-option *ngFor="let leavetype of leavetypeList"
                                                 [value]=leavetype.LEAVE_TYPE_GUID
                                                 (click)="enableDisableSubmitButton(); getLeaveEntitlement(leavetype.LEAVE_TYPE_GUID);">
@@ -385,7 +388,7 @@
                                             style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                                             {{item.designation}}</p>
                                     </ion-col>
-                                    <ion-col size="4" class="colOfLeave" 
+                                    <ion-col size="4" class="colOfLeave"
                                         style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                         {{item.leaveAbbr}}
                                     </ion-col>
@@ -482,7 +485,7 @@
                                             <ion-item-group
                                                 style="border-top: 1px solid #e2e2e2; margin-top: 5px; padding-top: 5px;">
                                                 <ion-row>ID : {{item.staffNumber}}</ion-row>
-                                                <ion-row >Entitlement: {{item.leaveAbbr}}</ion-row>
+                                                <ion-row>Entitlement: {{item.leaveAbbr}}</ion-row>
                                             </ion-item-group>
                                         </ion-grid>
                                     </ion-col>

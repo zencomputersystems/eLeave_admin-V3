@@ -49,26 +49,17 @@
                             style="margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                             1 persons</p>
                     </ion-col>
-                    <ion-col
-                        style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; flex: 1 1 30%; min-width: fit-content;">
-                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;font-size: 12px;"
-                            *ngFor="let date of item.date">
-                            <!-- Date: {{date | date: 'dd MMM yyyy'}}</ion-label> -->
-                            Date: {{date | date: 'dd MMM yyyy'}} </ion-label>
-                        <p
-                            style="margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                            {{item.dayType}}</p>
-                    </ion-col>
+                    <ion-row *ngFor="let date of item.date" style="width: 100%;">
+                        <ion-col
+                            style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; flex: 1 1 30%; min-width: fit-content;">
+                            <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;font-size: 12px;">
+                                Date: {{date | date: 'dd MMM yyyy'}} </ion-label>
+                            <p
+                                style="margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                {{item.dayType}}</p>
+                        </ion-col>
+                    </ion-row>
                 </ion-row>
-                <!-- <ion-row *ngFor="let date of item.date">
-                    <ion-col style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                        <ion-label style="color:#43425d; opacity: 0.8;font-weight: bold;font-size: 12px;">
-                            Date: {{date | date: 'dd MMM yyyy'}}</ion-label>
-                        <p
-                            style="margin: 0;color: #808495;font-size:12px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                            {{item.dayType}}</p>
-                    </ion-col>
-                </ion-row> -->
                 <div style="margin-left: 5px;"><img style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
                         src="assets/icon/leave_setup/icon_request@3x.png" (click)="expandCollapse(i)">
                     <p style="color: #43425d;opacity: 0.8;font-size: 11px;font-weight: bold;
@@ -85,6 +76,9 @@
                 </div>
             </div>
         </div>
+        <p *ngIf="reportDetails == undefined"
+            style="padding: 15px;color: rgb(77, 79, 92);font-size: 12px;line-height: 1.82;">
+            No apply on behalf history</p>
     </ion-content>
 </ion-menu>
 <ion-router-outlet id="applybehalfContent">

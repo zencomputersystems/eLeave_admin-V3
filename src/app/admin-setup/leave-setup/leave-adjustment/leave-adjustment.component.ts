@@ -388,11 +388,11 @@ export class LeaveAdjustmentComponent implements OnInit {
         });
     }
 
-     /**
-     * expand or collapse user list in history slide-in menu 
-     * @param {number} index
-     * @memberof LeaveAdjustmentComponent
-     */
+    /**
+    * expand or collapse user list in history slide-in menu 
+    * @param {number} index
+    * @memberof LeaveAdjustmentComponent
+    */
     expandCollapseHistory(index: number) {
         if (this.showList[index]) {
             this.showList.splice(index, 1, false);
@@ -423,6 +423,9 @@ export class LeaveAdjustmentComponent implements OnInit {
                     element.isChecked = false;
                 });
                 this.enableDisableSubmitButton();
+                this.reportApi.get_bundle_report('leave-adjustment').pipe(
+                    map(date => date.sort((a, b) => new Date(b.adjustDate).getTime() - new Date(a.adjustDate).getTime()))
+                ).subscribe(data => this.history = data);
             } else {
                 this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
             }
