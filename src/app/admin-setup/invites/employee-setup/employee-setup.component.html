@@ -1154,7 +1154,7 @@
                                 style="cursor: pointer;margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 EMPLOYMENT DETAILS</div>
                             <div *ngIf="employmentDetails && showEmploy">
-                                <app-add-one-employee [disabledEditMode]="mode === 'OFF'"
+                                <app-add-one-employee [disabledEditMode]="mode === 'OFF'" [individual]="false"
                                     [getDetails]="employmentDetails" (sendFormdata)="receiveData($event)">
                                 </app-add-one-employee>
                                 <ion-item class="divider" lines="full" style="padding-left: 15px;

@@ -194,6 +194,8 @@ export class AddOneEmployeeComponent implements OnInit {
      */
     public latestId: string;
 
+    public inIndividualTab: boolean;
+
     /**
      * create new option
      * @private
@@ -233,6 +235,9 @@ export class AddOneEmployeeComponent implements OnInit {
         this.leaveSetupService.get_company_list().subscribe(list => this.companyList = list);
         this.apiService.get_master_list('branch').subscribe(list => {
             this.branchList = list;
+            if (this.branchList.length == 0) {
+                this.branchList = [{ "BRANCH": "" }]
+            }
             this.filteredBranch = this.branchCtrl.valueChanges
                 .pipe(
                     startWith(''),
@@ -241,6 +246,9 @@ export class AddOneEmployeeComponent implements OnInit {
         });
         this.apiService.get_master_list('section').subscribe(list => {
             this.sectionList = list;
+            if (this.sectionList.length == 0) {
+                this.sectionList = [{ "SECTION": "" }]
+            }
             this.filteredSection = this.sectionCtrl.valueChanges
                 .pipe(
                     startWith(''),
@@ -293,6 +301,13 @@ export class AddOneEmployeeComponent implements OnInit {
                 this.costCentreCtrl.patchValue(this.getDetails.employmentDetail.costcentre);
             }
         }
+        if (changes.individual) {
+            if (changes.individual.currentValue == true) {
+                this.inIndividualTab = true;
+            } else {
+                this.inIndividualTab = false;
+            }
+        }
     }
 
     /**
@@ -302,6 +317,9 @@ export class AddOneEmployeeComponent implements OnInit {
     getValue() {
         this.apiService.get_master_list('department').subscribe(list => {
             this.departmentList = list;
+            if (this.departmentList.length == 0) {
+                this.departmentList = [{ "DEPARTMENT": "" }];
+            }
             this.filteredDepartment = this.departmentCtrl.valueChanges
                 .pipe(
                     startWith(''),
@@ -310,6 +328,9 @@ export class AddOneEmployeeComponent implements OnInit {
         });
         this.apiService.get_master_list('costcentre').subscribe(list => {
             this.costcentre = list;
+            if (this.costcentre.length == 0) {
+                this.costcentre = [{ "COSTCENTRE": "" }]
+            }
             this.filteredCostCentre = this.costCentreCtrl.valueChanges
                 .pipe(
                     startWith(''),
@@ -345,7 +366,12 @@ export class AddOneEmployeeComponent implements OnInit {
             list.push({ [key]: newState });
             control.setValue(newState);
         }
-        this.sendFormdata.emit([this.branchCtrl.value, this.sectionCtrl.value, this.departmentCtrl.value, this.costCentreCtrl.value]);
+        if (this.inIndividualTab == true) {
+            this.sendFormdata.emit([this.branchCtrl.value, this.sectionCtrl.value, this.departmentCtrl.value, this.costCentreCtrl.value]);
+        }
+        if (this.inIndividualTab == false) {
+            this.sendFormdata.emit([this.branchCtrl.value, this.sectionCtrl.value, this.departmentCtrl.value, this.costCentreCtrl.value, this.getDetails.employmentDetail.companyId]);
+        }
     }
 
     /**
@@ -359,7 +385,12 @@ export class AddOneEmployeeComponent implements OnInit {
             list.push({ [key]: value });
         }
         setTimeout(() => control.setValue(value));
-        this.sendFormdata.emit([this.branchCtrl.value, this.sectionCtrl.value, this.departmentCtrl.value, this.costCentreCtrl.value]);
+        if (this.inIndividualTab == true) {
+            this.sendFormdata.emit([this.branchCtrl.value, this.sectionCtrl.value, this.departmentCtrl.value, this.costCentreCtrl.value]);
+        }
+        if (this.inIndividualTab == false) {
+            this.sendFormdata.emit([this.branchCtrl.value, this.sectionCtrl.value, this.departmentCtrl.value, this.costCentreCtrl.value, this.getDetails.employmentDetail.companyId]);
+        }
     }
 
     /**
