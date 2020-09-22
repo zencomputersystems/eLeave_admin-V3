@@ -206,8 +206,8 @@
                                 Start time</mat-label>
                             <div style="margin-left: 18px;border: 0.5px solid #80808057;
                         padding: 4px;border-radius: 4px;">
-                                <ngb-timepicker class="ngbTime" formControlName="startAMpicker"
-                                    [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                                <ngb-timepicker class="ngbTime" formControlName="startAMpicker" [meridian]="meridian"
+                                    [spinners]="spinners"></ngb-timepicker>
                             </div>
                         </div>
                         <div style="display: inline-block;padding-bottom: 10px;">
@@ -216,8 +216,8 @@
                                 End time</mat-label>
                             <div style="margin-left: 10px;border: 0.5px solid #80808057;
                             padding: 4px;border-radius: 4px;">
-                                <ngb-timepicker class="ngbTime" formControlName="endAMpicker"
-                                    [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                                <ngb-timepicker class="ngbTime" formControlName="endAMpicker" [meridian]="meridian"
+                                    [spinners]="spinners"></ngb-timepicker>
                             </div>
                         </div>
                     </div>
@@ -231,8 +231,8 @@
                                 Start time</mat-label>
                             <div style="padding-bottom: 5px;border: 0.5px solid #80808057;
                                     padding: 4px;border-radius: 4px;">
-                                <ngb-timepicker class="ngbTime" formControlName="startPMpicker"
-                                    [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                                <ngb-timepicker class="ngbTime" formControlName="startPMpicker" [meridian]="meridian"
+                                    [spinners]="spinners"></ngb-timepicker>
                             </div>
                         </div>
                         <div style="display: inline-block;padding-bottom: 10px;">
@@ -241,8 +241,8 @@
                                 End time</mat-label>
                             <div style="margin-left: 10px;border: 0.5px solid #80808057;
                                         padding: 4px;border-radius: 4px;">
-                                <ngb-timepicker class="ngbTime" formControlName="endPMpicker"
-                                    [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                                <ngb-timepicker class="ngbTime" formControlName="endPMpicker" [meridian]="meridian"
+                                    [spinners]="spinners"></ngb-timepicker>
                             </div>
                         </div>
                     </div>
@@ -1277,8 +1277,11 @@
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
                                         <ion-label class="label">Date of Hired</ion-label>
                                         <p class="pText"
-                                            *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined">
+                                            *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined && employmentDetails.employmentDetail.dateOfJoin != 'Invalid date' && employmentDetails.employmentDetail.dateOfJoin != 'Invalid Date'">
                                             {{employmentDetails.employmentDetail.dateOfJoin}}</p>
+                                            <p class="pText"
+                                            *ngIf="mode === 'OFF' && employmentDetails.employmentDetail.dateOfJoin == 'Invalid date' || employmentDetails.employmentDetail.dateOfJoin == 'Invalid Date'">
+                                            N/A</p>
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
@@ -1294,8 +1297,11 @@
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
                                         <ion-label class="label">Date of Confirmation</ion-label>
                                         <p class="pText"
-                                            *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined">
+                                            *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined && employmentDetails.employmentDetail.dateOfConfirmation!='Invalid Date' && employmentDetails.employmentDetail.dateOfConfirmation!='Invalid date'">
                                             {{employmentDetails.employmentDetail.dateOfConfirmation}}</p>
+                                        <p class="pText"
+                                            *ngIf="mode === 'OFF' && employmentDetails.employmentDetail.dateOfConfirmation=='Invalid Date' || employmentDetails.employmentDetail.dateOfConfirmation=='Invalid date'">
+                                            N/A</p>
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
@@ -1304,14 +1310,19 @@
                                                 [formControl]="dateOfConfirm">
                                             <mat-datepicker-toggle matSuffix [for]="dateConfirm">
                                             </mat-datepicker-toggle>
-                                            <mat-datepicker #dateConfirm (closed)="isBlurEmployment = true"></mat-datepicker>
+                                            <mat-datepicker #dateConfirm (closed)="isBlurEmployment = true">
+                                            </mat-datepicker>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
                                         <ion-label class="label">Date of Resignation</ion-label>
                                         <p class="pText"
-                                            *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined">
+                                            *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined && employmentDetails.employmentDetail.dateOfResignation != 'Invalid Date' && employmentDetails.employmentDetail.dateOfResignation != 'Invalid date'">
                                             {{employmentDetails.employmentDetail.dateOfResignation}}
+                                        </p>
+                                        <p class="pText"
+                                            *ngIf="mode === 'OFF' && employmentDetails.employmentDetail.dateOfResignation == 'Invalid Date' || employmentDetails.employmentDetail.dateOfResignation == 'Invalid date'">
+                                            N/A
                                         </p>
                                         <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
@@ -1321,7 +1332,8 @@
                                                 [formControl]="dateOfResignation">
                                             <mat-datepicker-toggle matSuffix [for]="dateResign">
                                             </mat-datepicker-toggle>
-                                            <mat-datepicker #dateResign (closed)="isBlurEmployment = true"></mat-datepicker>
+                                            <mat-datepicker #dateResign (closed)="isBlurEmployment = true">
+                                            </mat-datepicker>
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
