@@ -376,59 +376,64 @@ export class ReportComponent implements OnInit {
               for (let j = 0; j < data.table.body[i].raw.leaveDetail.length; j++) {
                 if (data.row.index === i && data.section === 'body') {
                   if (title === 'Leave Entitlement Summary') {
-                    if (data.column.index === 4) {
-                      type += data.table.body[i].raw.leaveDetail[j].leaveTypeName + '\n';
-                      data.cell.text = type;
-                    }
-                    if (data.column.index === 5) {
-                      entitled += data.table.body[i].raw.leaveDetail[j].entitledDays + '\n';
-                      data.cell.text = entitled;
-                    }
-                    if (data.column.index === 6) {
-                      carried += data.table.body[i].raw.leaveDetail[j].carriedForward + '\n';
-                      data.cell.text = carried;
-                    }
-                    if (data.column.index === 7) {
-                      forfeited += data.table.body[i].raw.leaveDetail[j].forfeited + '\n';
-                      data.cell.text = forfeited;
-                    }
-                    if (data.column.index === 8) {
-                      taken += data.table.body[i].raw.leaveDetail[j].taken + '\n';
-                      data.cell.text = taken;
-                    }
-                    if (data.column.index === 9) {
-                      pending += data.table.body[i].raw.leaveDetail[j].pending + '\n';
-                      data.cell.text = pending;
-                    }
-                    if (data.column.index === 10) {
-                      balance += data.table.body[i].raw.leaveDetail[j].balance + '\n';
-                      data.cell.text = balance;
+                    switch (data.column.index) {
+                      case 4:
+                        type += data.table.body[i].raw.leaveDetail[j].leaveTypeName + '\n';
+                        data.cell.text = type.split('\n');
+                        data.cell.styles.cellWidth = 40;
+                        break;
+                      case 5:
+                        entitled += data.table.body[i].raw.leaveDetail[j].entitledDays + '\n';
+                        data.cell.text = entitled.split('\n');
+                        break;
+                      case 6:
+                        carried += data.table.body[i].raw.leaveDetail[j].carriedForward + '\n';
+                        data.cell.text = carried.split('\n');
+                        break;
+                      case 7:
+                        forfeited += data.table.body[i].raw.leaveDetail[j].forfeited + '\n';
+                        data.cell.text = forfeited.split('\n');
+                        break;
+                      case 8:
+                        taken += data.table.body[i].raw.leaveDetail[j].taken + '\n';
+                        data.cell.text = taken.split('\n');
+                        break;
+                      case 9:
+                        pending += data.table.body[i].raw.leaveDetail[j].pending + '\n';
+                        data.cell.text = pending.split('\n');
+                        break;
+                      case 10:
+                        balance += data.table.body[i].raw.leaveDetail[j].balance + '\n';
+                        data.cell.text = balance.split('\n');
+                        break;
                     }
                   }
                   if (title === 'Leave Taken History') {
-                    if (data.column.index === 3) {
-                      takenLeaveType += data.table.body[i].raw.leaveDetail[j].leaveTypeName + '\n';
-                      data.cell.text = takenLeaveType;
-                    }
-                    if (data.column.index === 4) {
-                      start += data.table.body[i].raw.leaveDetail[j].startDate + '\n';
-                      data.cell.text = start;
-                    }
-                    if (data.column.index === 5) {
-                      end += data.table.body[i].raw.leaveDetail[j].endDate + '\n';
-                      data.cell.text = end;
-                    }
-                    if (data.column.index === 6) {
-                      days += (data.table.body[i].raw.leaveDetail[j].noOfDays) + '\n';
-                      data.cell.text = days
-                    }
-                    if (data.column.index === 7) {
-                      approved += data.table.body[i].raw.leaveDetail[j].approveBy + '\n';
-                      data.cell.text = approved;
-                    }
-                    if (data.column.index === 8) {
-                      remark += data.table.body[i].raw.leaveDetail[j].remarks + '\n';
-                      data.cell.text = remark;
+                    switch (data.column.index) {
+                      case 3:
+                        takenLeaveType += data.table.body[i].raw.leaveDetail[j].leaveTypeName + '\n';
+                        data.cell.text = takenLeaveType.split('\n');
+                        break;
+                      case 4:
+                        start += data.table.body[i].raw.leaveDetail[j].startDate + '\n';
+                        data.cell.text = start.split('\n');
+                        break;
+                      case 5:
+                        end += data.table.body[i].raw.leaveDetail[j].endDate + '\n';
+                        data.cell.text = end.split('\n');
+                        break;
+                      case 6:
+                        days += data.table.body[i].raw.leaveDetail[j].noOfDays + '\n';
+                        data.cell.text = days.split('\n');
+                        break;
+                      case 7:
+                        approved += data.table.body[i].raw.leaveDetail[j].approveBy + '\n';
+                        data.cell.text = approved.split('\n');
+                        break;
+                      case 8:
+                        remark += data.table.body[i].raw.leaveDetail[j].remarks + '\n';
+                        data.cell.text = remark.split('\n');
+                        break;
                     }
                   }
                 }
@@ -703,6 +708,9 @@ export class ReportComponent implements OnInit {
         }
       }
       this.arrayDetails = this.groupValue[0];
+    }, error => {
+      this.showSpinner = false;
+      this.leaveAPI.openSnackBar('Report not ready yet', false);
     });
   }
 
@@ -756,24 +764,26 @@ export class ReportComponent implements OnInit {
       );
       this.arrayDetails = filteredEmployee;
     }
-    if (this.selects != 'leave-entitlement' && this.selects != 'leave-taken') {
+    if (this.selects != 'leave-entitlement' && this.selects != 'leave-taken' && this.selects != 'employee-master-list') {
       for (let i = this.arrayDetails.length - 1; i >= 0; --i) {
         if (!this._selectedLeaveTypesList.includes(this.arrayDetails[i].leaveTypeId)) {
           this.arrayDetails.splice(i, 1);
         }
       }
     } else {
-      for (let i = this.arrayDetails.length - 1; i >= 0; --i) {
-        for (let k = this.arrayDetails[i].leaveDetail.length - 1; k >= 0; --k) {
-          if (!this._selectedLeaveTypesList.includes(this.arrayDetails[i].leaveDetail[k].leaveTypeId)) {
-            this.arrayDetails[i].leaveDetail.splice(k, 1);
-            if (this.arrayDetails[i].leaveDetail.length == 0) {
-              this.arrayDetails.splice(i, 1);
+      if (this.selects != 'employee-master-list') {
+        for (let i = this.arrayDetails.length - 1; i >= 0; --i) {
+          for (let k = this.arrayDetails[i].leaveDetail.length - 1; k >= 0; --k) {
+            if (!this._selectedLeaveTypesList.includes(this.arrayDetails[i].leaveDetail[k].leaveTypeId)) {
+              this.arrayDetails[i].leaveDetail.splice(k, 1);
+              if (this.arrayDetails[i].leaveDetail.length == 0) {
+                this.arrayDetails.splice(i, 1);
+              }
             }
           }
-        }
-        if (this.arrayDetails[i].leaveDetail.length == 0) {
-          this.arrayDetails.splice(i, 1);
+          if (this.arrayDetails[i].leaveDetail.length == 0) {
+            this.arrayDetails.splice(i, 1);
+          }
         }
       }
     }
