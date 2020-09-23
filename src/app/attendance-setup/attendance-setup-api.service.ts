@@ -141,6 +141,11 @@ export class AttendanceSetupApiService {
         return this.getApiWithId('/api/admin/attendance/attendance-profile/', id);
     }
 
+    get_user_attendance(id): Observable<any> {
+        this.headerAuthorization();
+        return this.getApiWithId('/api/admin/attendance/user/', id);
+    }
+
     /**
      * update attendance profile details
      * @param {*} data

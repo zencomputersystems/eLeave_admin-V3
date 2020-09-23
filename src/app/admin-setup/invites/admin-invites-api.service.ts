@@ -179,4 +179,9 @@ export class AdminInvitesApiService {
         return this.apiService.getApi("/api/admin/user-info-details/recent-staff-id/" + tenantId);
     }
 
+    get_attendance_list(): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.getApi("/api/admin/attendance/attendance-profile");
+    }
+
 }
