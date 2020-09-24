@@ -45,6 +45,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { SharedService } from './shared.service';
 import { RouteDialogComponent } from './route-dialog/route-dialog.component';
 import { ConfirmationWindowComponent } from '../../global/confirmation-window/confirmation-window.component';
+import { NotificationRuleComponent } from './notification-rule/notification-rule.component';
 
 const routes: Routes = [
     {
@@ -92,6 +93,6 @@ const routes: Routes = [
          RouteDialogComponent],
     declarations: [CalendarProfileComponent, LeaveSetupComponent, SnackbarNotificationComponent, DeleteCalendarConfirmationComponent,
         ApplyOnBehalfComponent, ApprovalOverrideComponent, LeaveAdjustmentComponent, LeaveEntitlementByBatchComponent, WorkingHourComponent,
-        WorkingHourListComponent, EditModeDialogComponent, LeaveEntitlementComponent, RouteDialogComponent]
+        WorkingHourListComponent, EditModeDialogComponent, LeaveEntitlementComponent, RouteDialogComponent, NotificationRuleComponent]
 })
 export class LeaveSetupModule { }

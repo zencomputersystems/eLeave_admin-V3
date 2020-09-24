@@ -16,6 +16,7 @@ import { ApprovalOverrideComponent } from '../admin-setup/approval-override/appr
 import { LeaveEntitlementComponent } from '../admin-setup/leave-setup/leave-entitlement/leave-entitlement.component';
 import { ReportComponent } from '../admin-setup/report/report.component';
 import { PolicyListComponent } from '../admin-setup/leave-setup/general-leave-policy/policy-list/policy-list.component';
+import { NotificationRuleComponent } from '../admin-setup/leave-setup/notification-rule/notification-rule.component';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -34,7 +35,8 @@ export const sideMenuNavigationRoutes: Routes = [
                     { path: 'leave-entitlement-setup', component: LeaveEntitlementComponent },
                     { path: 'leave-adjustment', component: LeaveAdjustmentComponent },
                     { path: 'leave-entitlement-by-batch', component: LeaveEntitlementByBatchComponent },
-                    { path: 'general-leave-policy', component: PolicyListComponent }
+                    { path: 'general-leave-policy', component: PolicyListComponent },
+                    { path: 'notification-rule', component: NotificationRuleComponent }
                 ]
             },
             { path: 'employee-setup', component: EmployeeSetupComponent },

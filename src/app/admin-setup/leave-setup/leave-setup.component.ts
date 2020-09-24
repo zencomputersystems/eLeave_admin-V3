@@ -66,6 +66,10 @@ export class LeaveSetupComponent implements OnInit {
         {
             title: 'General Leave Policy',
             url: ['/administration/leave-setup/general-leave-policy'],
+        },
+        {
+            title: 'Email Notification Rule',
+            url: ['/administration/leave-setup/notification-rule'],
         }
     ];
 
