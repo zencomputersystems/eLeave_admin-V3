@@ -101,7 +101,7 @@
                                             <mat-option *ngFor="let item of filteredEntitlement"
                                                 [value]=item.leaveEntitlementId
                                                 (click)="checkEnableDisableButton()">
-                                                {{item.leaveType}}
+                                                {{item.leaveEntitlementCode}}
                                             </mat-option>
                                         </mat-select>
                                         <!-- <mat-error>Entitlement code is <strong>required</strong></mat-error> -->
