@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Platform } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
+import { AdminInvitesApiService } from '../../invites/admin-invites-api.service';
 import { LeaveApiService } from '../leave-api.service';
 import { LeaveEntitlementByBatchApiService } from '../leave-entitlement-by-batch/leave-entitlement-by-batch-api.service';
 
@@ -16,13 +16,6 @@ import { LeaveEntitlementByBatchApiService } from '../leave-entitlement-by-batch
     styleUrls: ['./notification-rule.component.scss'],
 })
 export class NotificationRuleComponent implements OnInit {
-
-    /**
-     * form group validation
-     * @type {*}
-     * @memberof NotificationRuleComponent
-     */
-    public entitlementBatch: any;
 
     /**
      * get company list from API
@@ -111,6 +104,33 @@ export class NotificationRuleComponent implements OnInit {
     public employeeList: any;
 
     /**
+     * header checkbox checked/unchecked
+     * @type {boolean}
+     * @memberof NotificationRuleComponent
+     */
+    public headCheckbox: boolean;
+
+    /**
+     * value of indeterminate in main checkbox
+     * @type {boolean}
+     * @memberof NotificationRuleComponent
+     */
+    public indeterminateVal: boolean;
+
+    /**
+     * hover value of show/hide checkbox
+     * @type {boolean}
+     * @memberof NotificationRuleComponent
+     */
+    public showCheckBox: boolean[] = [];
+
+    public menuNewEmail: any = [{ "email": '', "employeeName": '' }];
+
+    public menuEditEmail: any;
+
+    public selectedName: string;
+
+    /**
      * selected user from filtered user list
      * @private
      * @type {any[]}
@@ -141,14 +161,7 @@ export class NotificationRuleComponent implements OnInit {
      * @param {Platform} applyonbehalfPlatformApi
      * @memberof NotificationRuleComponent
      */
-    constructor(private leaveEntitlementAPI: LeaveEntitlementByBatchApiService, private leaveAPI: LeaveApiService, public applyonbehalfPlatformApi: Platform) {
-        this.entitlementBatch = new FormGroup({
-            tenant: new FormControl('', Validators.required),
-            department: new FormControl('', Validators.required),
-            leavetype: new FormControl('', Validators.required),
-            entitlement_code: new FormControl('', Validators.required)
-        })
-
+    constructor(private leaveEntitlementAPI: LeaveEntitlementByBatchApiService, private leaveAPI: LeaveApiService, public applyonbehalfPlatformApi: Platform, public menu: MenuController, private inviteApi: AdminInvitesApiService) {
         this.leaveEntitlementAPI.apiService.get_profile_pic('all').subscribe(data => {
             this.url = data;
         })
@@ -222,7 +235,7 @@ export class NotificationRuleComponent implements OnInit {
      * @memberof NotificationRuleComponent
      */
     checkEnableDisableButton() {
-        if (this.entitlementBatch.valid && (this.checkMain || this.indeterminate)) {
+        if ((this.checkMain || this.indeterminate) && (this.headCheckbox || this.indeterminateVal)) {
             this.disableSubmit = false;
         } else {
             this.disableSubmit = true;
@@ -294,13 +307,78 @@ export class NotificationRuleComponent implements OnInit {
     }
 
     /**
+     * mouse hover to show/hide checkbox
+     * @param {number} i
+     * @param {boolean} mouseIn
+     * @param {boolean} isChecked
+     * @memberof NotificationRuleComponent
+     */
+    hoverInOut(i: number, mouseIn: boolean, isChecked: boolean) {
+        if (this.headCheckbox || this.indeterminateVal) {
+            this.showCheckBox = [];
+            this.showCheckBox.push(...Array(this.employeeList.length).fill(true));
+        } else if (mouseIn && !isChecked && !this.indeterminateVal && !this.headCheckbox) {
+            this.showCheckBox.splice(i, 1, true);
+        } else {
+            this.showCheckBox.splice(0, this.showCheckBox.length);
+            this.showCheckBox.push(...Array(this.employeeList.length).fill(false));
+        }
+    }
+
+    /**
+     * check main checkbox to check all sub checkbox
+     * @memberof NotificationRuleComponent
+     */
+    headerCheckbox() {
+        this.showCheckBox.splice(0, this.showCheckBox.length);
+        setTimeout(() => {
+            this.employeeList.forEach(item => {
+                item.isChecked = this.headCheckbox;
+                if (item.isChecked) {
+                    this.showCheckBox.push(true);
+                } else {
+                    this.showCheckBox.push(false);
+                }
+                this.checkEnableDisableButton();
+            });
+        })
+    }
+
+    /**
+     * check sub checkbox to make changing in main checkbox (interminate/mainCheckBox)
+     * @memberof NotificationRuleComponent
+     */
+    contentCheckbox() {
+        const totalLength = this.employeeList.length;
+        let checkedValue = 0;
+        this.employeeList.map(item => {
+            if (item.isChecked) {
+                checkedValue++;
+                this.showCheckBox.push(true);
+                // this.getSelectedEmployee(item.userGuid, checkedValue);
+            }
+        });
+        if (checkedValue > 0 && checkedValue < totalLength) {
+            this.indeterminateVal = true;
+            this.headCheckbox = false;
+        } else if (checkedValue == totalLength) {
+            this.headCheckbox = true;
+            this.indeterminateVal = false;
+        } else {
+            this.indeterminateVal = false;
+            this.headCheckbox = false;
+        }
+        this.checkEnableDisableButton();
+    }
+
+    /**
      * get selected user from list
      * @memberof NotificationRuleComponent
      */
     checkedUserList() {
         this.filteredUser.forEach((element, i) => {
             if (element.isChecked) {
-                this._selected_User.push(this.filteredUser[i].userId);
+                this._selected_User.push(this.filteredUser[i].id);
             }
         });
     }
@@ -315,12 +393,15 @@ export class NotificationRuleComponent implements OnInit {
             let name = this.employeeList.filter((item: any) => {
                 return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
             })
+            let email = this.employeeList.filter((data: any) => {
+                return (data.email.toLowerCase().indexOf(text.toLowerCase()) > -1);
+            })
             let id = this.employeeList.filter((list: any) => {
                 if (list.staffNumber != undefined) {
                     return (list.staffNumber.indexOf(text) > -1)
                 }
             })
-            this.employeeList = require('lodash').uniqBy(name.concat(id), 'id');
+            this.employeeList = require('lodash').uniqBy(name.concat(id).concat(email), 'id');
         }
     }
 
@@ -337,45 +418,77 @@ export class NotificationRuleComponent implements OnInit {
         }
     }
 
+    createNameList() {
+        this.menuNewEmail.push({ "email": '', "employeeName": '' });
+    }
+
+    deleteEmail(index: number) {
+        this.menuNewEmail.splice(index, 1);
+
+    }
+
+    combineEvent() {
+        this.employeeList = this.menuNewEmail.concat(this.employeeList);
+        this.menuNewEmail = [{ "email": '', "employeeName": '' }];
+        console.log(this.employeeList)
+    }
+
+    // editEmailNotifier(item) {
+    //     console.log(item);
+    //     this.selectedName = item.employeeName;
+    //     this.menuEditEmail = item.notificationRule;
+    // }
+
 
     /**
      * post leave entitlement by batch
      * @memberof NotificationRuleComponent
      */
-    postLeaveEntitlement() {
+    postNotificationRule() {
         this.checkedUserList();
         this.showSmallSpinner = true;
-        const body = {
-            "userId": this._selected_User,
-            "leaveTypeId": this.entitlementBatch.controls.leavetype.value,
-            "leaveEntitlementId": this.entitlementBatch.controls.entitlement_code.value
-        };
-        this.leaveEntitlementAPI.post_leave_entitlement(body).subscribe(response => {
-            if (response.failedList.length != 0) {
-                this.leaveAPI.openSnackBar(response.failedList[0].status, false);
-            } else {
-                this.leaveAPI.openSnackBar('You have submitted successfully', true);
-                this.entitlementBatch.reset();
-                this.filteredUser = [];
+        const body = [];
+        for (let i = 0; i < this.employeeList.length; i++) {
+            if (this.employeeList[i].isChecked) {
+                body.push(this.employeeList[i].email);
             }
-            this.showSmallSpinner = false;
-            this.checkMain = false;
-            this.indeterminate = false;
-            this._selected_User = [];
-            this.filteredUser.forEach(element => {
-                element.isChecked = false;
-            });
-            this.checkEnableDisableButton();
-        }, err => {
-            this.leaveAPI.openSnackBar('Failed to submit request', false);
-            this.showSmallSpinner = false;
-            this.checkMain = false;
-            this.indeterminate = false;
-            this._selected_User = [];
-            this.filteredUser.forEach(element => {
-                element.isChecked = false;
-            });
-            this.checkEnableDisableButton();
-        });
+        }
+        console.log(body);
+        for (let j = 0; j < this._selected_User.length; j++) {
+            this.inviteApi.patch_user_info_notification(body, this._selected_User[j]).subscribe(data => {
+                console.log(data);
+                this.leaveAPI.openSnackBar('You have set notification rule successfully', true);
+                this.showSmallSpinner = false;
+                this.checkMain = false;
+                this.indeterminate = false;
+                this.headCheckbox = false;
+                this.indeterminateVal = false;
+                this._selected_User = [];
+                this.filteredUser.forEach(element => {
+                    element.isChecked = false;
+                });
+                this.employeeList.forEach(element => {
+                    element.isChecked = false;
+                });
+                this.checkEnableDisableButton();
+            }, error => {
+                console.log(error);
+                this.leaveAPI.openSnackBar('Sorry, error occured', false);
+                this.showSmallSpinner = false;
+                this.checkMain = false;
+                this.indeterminate = false;
+                this.headCheckbox = false;
+                this.indeterminateVal = false;
+                this._selected_User = [];
+                this.filteredUser.forEach(element => {
+                    element.isChecked = false;
+                });
+                this.employeeList.forEach(element => {
+                    element.isChecked = false;
+                });
+                this.checkEnableDisableButton();
+            })
+        }
+
     }
 }

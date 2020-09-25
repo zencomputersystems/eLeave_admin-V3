@@ -1,3 +1,59 @@
+<!------------ add external email menu ---------------->
+<ion-menu contentId="addEmailContent" side="end" type="overlay" menuId="addEmailDetails" class="calendar-profile-popup">
+    <ion-header style="background-color:#43425d; color: #fcfcfc;">
+        <img style="margin: 17px;width: 22px;height: 17px;float:left"
+            src="assets/icon/dashboard/icon All Holidays@3x.png">
+        <p style="line-height: 1.27;font-size: 11px;color: #fcfcfc;font-weight: bold;margin: 20px;">ADD NEW EXTERNAL
+            EMAIL
+        </p>
+    </ion-header>
+
+    <ion-content>
+        <p class="contentText">Add new external email address to get notify when selected employee/s has applied his/her
+            leave application.</p>
+        <ng-container *ngFor="let item of menuNewEmail; let i = index">
+            <ion-row style="width: 100%;">
+                <ion-col size="5" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                    <mat-form-field style="padding: 10px;width: 100%;font-size: 11px;color: #4d4f5c">
+                        <input matInput type="email" [(value)]="menuNewEmail[i].email"
+                            (input)=" menuNewEmail[i].email = $event.target.value;" placeholder="Email Address">
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="5" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                    <mat-form-field style="padding: 10px;width: 100%;font-size: 11px;color: #4d4f5c">
+                        <input matInput (input)=" menuNewEmail[i].employeeName = $event.target.value;"
+                            placeholder="Fullname" [(value)]="menuNewEmail[i].employeeName">
+                    </mat-form-field>
+                </ion-col>
+                <ion-col style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                    <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
+                        (click)="deleteEmail(i)">
+                </ion-col>
+                <ion-item class="divider" style="padding-left: 10px;padding-right: 10px;" lines="full"></ion-item>
+            </ion-row>
+        </ng-container>
+        <ion-row style="width: 100%;padding: 10px;">
+            <img style="cursor: pointer;;margin-right: 5px;margin-left: 2px;margin-top: 2px;width: 14px;height: 14px;float:left"
+                src="assets/icon/leave_setup/icon_request@3x.png" (click)="createNameList()">
+            <p style="color:#43425d; opacity: 0.8;font-weight: bold;font-size: 11px;margin-top: 3px;">
+                Add another new external email
+            </p>
+        </ion-row>
+
+        <div style="text-align: center;margin:30px">
+            <ion-button
+                style="--border-radius: 2px;font-size: 11px;height: 30px;width:124px;cursor: pointer;text-transform: none;"
+                color="primary" (click)="combineEvent(); menu.close('addEmailDetails')">
+                Add
+            </ion-button>
+        </div>
+    </ion-content>
+</ion-menu>
+<ion-router-outlet id="addEmailContent">
+</ion-router-outlet>
+
+<!-------------------- main page ---------------------->
 <ion-card>
     <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
         <div class="fullContainer">
@@ -33,46 +89,44 @@
                             </ion-row>
                         </div>
                         <div>
-                            <form [formGroup]="entitlementBatch">
-                                <div style="display: block;width: 100%;">
-                                    <span
-                                        style="padding-bottom: 5px;font-size: 12px;color:#808495;padding-left: 15px;display: block">
-                                        COMPANY LIST</span>
-                                    <mat-form-field appearance="outline"
-                                        style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
-                                        <mat-label>Please select company</mat-label>
-                                        <mat-select formControlName="tenant" required>
-                                            <mat-option>None</mat-option>
-                                            <mat-option *ngFor="let company of companyItems"
-                                                [value]=company.TENANT_COMPANY_GUID
-                                                (click)="companyClicked(company.TENANT_COMPANY_GUID);checkEnableDisableButton()">
-                                                {{company.NAME}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                                <div style="display: block;width: 100%;">
-                                    <span
-                                        style="padding-bottom: 5px;font-size: 12px;color:#808495;padding-left: 15px;display: block">
-                                        DEPARTMENT LIST</span>
-                                    <mat-form-field appearance="outline"
-                                        style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
-                                        <mat-label>Please select department</mat-label>
-                                        <mat-select formControlName="department" required>
-                                            <mat-option value="All"
-                                                (click)="departmentClicked('All');checkEnableDisableButton()">
-                                                All</mat-option>
-                                            <mat-option *ngFor="let department of departmentItems"
-                                                [value]=department.department
-                                                (click)="departmentClicked(department.department);checkEnableDisableButton()">
-                                                {{department.department}}
-                                            </mat-option>
-                                        </mat-select>
-                                        <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
+                            <div style="display: block;width: 100%;">
+                                <span
+                                    style="padding-bottom: 5px;font-size: 12px;color:#808495;padding-left: 15px;display: block">
+                                    COMPANY LIST</span>
+                                <mat-form-field appearance="outline"
+                                    style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
+                                    <mat-label>Please select company</mat-label>
+                                    <mat-select required>
+                                        <mat-option>None</mat-option>
+                                        <mat-option *ngFor="let company of companyItems"
+                                            [value]=company.TENANT_COMPANY_GUID
+                                            (click)="companyClicked(company.TENANT_COMPANY_GUID);checkEnableDisableButton()">
+                                            {{company.NAME}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div style="display: block;width: 100%;">
+                                <span
+                                    style="padding-bottom: 5px;font-size: 12px;color:#808495;padding-left: 15px;display: block">
+                                    DEPARTMENT LIST</span>
+                                <mat-form-field appearance="outline"
+                                    style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
+                                    <mat-label>Please select department</mat-label>
+                                    <mat-select required>
+                                        <mat-option value="All"
+                                            (click)="departmentClicked('All');checkEnableDisableButton()">
+                                            All</mat-option>
+                                        <mat-option *ngFor="let department of departmentItems"
+                                            [value]=department.department
+                                            (click)="departmentClicked(department.department);checkEnableDisableButton()">
+                                            {{department.department}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
                         margin-left: -50px;margin-top: -10px;"></ion-spinner>
-                                    </mat-form-field>
-                                </div>
-                            </form>
+                                </mat-form-field>
+                            </div>
                         </div>
                     </div>
                     <div class="assigned">
@@ -88,8 +142,13 @@
                                 <ion-col size="2">
                                     <ion-label style="font-size: 12px;">ID</ion-label>
                                 </ion-col>
-                                <ion-col size="6">
+                                <ion-col size="5">
                                     <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
+                                </ion-col>
+                                <ion-col size="2.5">
+                                    <ion-label style="font-size: 12px;">NOTIFY</ion-label>
+                                </ion-col>
+                                <ion-col>
                                 </ion-col>
                             </ion-row>
                         </div>
@@ -102,7 +161,7 @@
                                         [(ngModel)]="checkMain" [indeterminate]="indeterminate" (click)="checkEvent()">
                                     </ion-checkbox>
                                 </ion-col>
-                                <ion-col>
+                                <ion-col size="7">
                                     <ion-label style="font-size: 12px;">EMPLOYEE DETAILS</ion-label>
                                 </ion-col>
                             </ion-row>
@@ -126,12 +185,12 @@
                                                     (mouseout)="mouseInOutEvent(i, false, item.isChecked)"
                                                     *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
                                                     <img src="{{url.link + url.details[j].PROFILE_PICTURE}}"
-                                                        style="margin-left: 5px;"
+                                                        style="margin-left: -5px;"
                                                         [style.display]="hideAvatar[i] ? 'none' : 'block'">
                                                     <div class="checkboxOnAvatar"
                                                         [style.display]="hideAvatar[i] ? 'block' : 'none'">
                                                         <ion-checkbox mode="ios"
-                                                            style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                            style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -13px;"
                                                             [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
                                                         </ion-checkbox>
                                                     </div>
@@ -140,12 +199,12 @@
                                                     (mouseover)="mouseInOutEvent(i, true, item.isChecked)"
                                                     (mouseout)="mouseInOutEvent(i, false, item.isChecked)"
                                                     *ngIf="url && url.details[j].PROFILE_PICTURE === null">
-                                                    <img src="assets/icon/picture.png" style="margin-left: 5px;"
+                                                    <img src="assets/icon/picture.png" style="margin-left: -5px;"
                                                         [style.display]="hideAvatar[i] ? 'none' : 'block'">
                                                     <div class="checkboxOnAvatar"
                                                         [style.display]="hideAvatar[i] ? 'block' : 'none'">
                                                         <ion-checkbox mode="ios"
-                                                            style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                            style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -13px;"
                                                             [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
                                                         </ion-checkbox>
                                                     </div>
@@ -157,7 +216,7 @@
                                         style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                         {{item.staffNumber}}
                                     </ion-col>
-                                    <ion-col size="6"
+                                    <ion-col size="5"
                                         style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;">
                                         <ion-label style="color:#43425d; font-weight: bold;;font-size: 12px;">
                                             {{item.employeeName}}</ion-label>
@@ -165,6 +224,12 @@
                                             style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: pre-line;">
                                             {{item.designation}}</p>
                                     </ion-col>
+                                    <ion-col size="2.5" style="font-size: 12px;">email address</ion-col>
+                                    <!-- <ion-col align-self-center style="text-align: center;align-items: center;">
+                                        <img src="assets/icon/leave_setup/icon_edit@3x.png"
+                                            style="cursor: pointer;width: 11px;height:11px;display: inline-block;"
+                                            (click)="editEmailNotifier(item); menu.enable(false, 'addEmailDetails');">
+                                    </ion-col> -->
                                     <ion-item class="divider" lines="full"></ion-item>
                                 </ion-row>
                             </div>
@@ -183,12 +248,12 @@
                                                         (mouseout)="mouseInOutEvent(i, false, item.isChecked)"
                                                         *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
                                                         <img src="{{url.link + url.details[j].PROFILE_PICTURE}}"
-                                                            style="margin-left: 5px;"
+                                                            style="margin-left: -5px;"
                                                             [style.display]="hideAvatar[i] ? 'none' : 'block'">
                                                         <div class="checkboxOnAvatar"
                                                             [style.display]="hideAvatar[i] ? 'block' : 'none'">
                                                             <ion-checkbox mode="ios"
-                                                                style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                                style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -13px;"
                                                                 [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
                                                             </ion-checkbox>
                                                         </div>
@@ -197,12 +262,12 @@
                                                         (mouseover)="mouseInOutEvent(i, true, item.isChecked)"
                                                         (mouseout)="mouseInOutEvent(i, false, item.isChecked)"
                                                         *ngIf="url && url.details[j].PROFILE_PICTURE === null">
-                                                        <img src="assets/icon/picture.png" style="margin-left: 5px;"
+                                                        <img src="assets/icon/picture.png" style="margin-left: -5px;"
                                                             [style.display]="hideAvatar[i] ? 'none' : 'block'">
                                                         <div class="checkboxOnAvatar"
                                                             [style.display]="hideAvatar[i] ? 'block' : 'none'">
                                                             <ion-checkbox mode="ios"
-                                                                style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                                style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -13px;"
                                                                 [(ngModel)]="item.isChecked" (ionChange)="subEvent()">
                                                             </ion-checkbox>
                                                         </div>
@@ -210,7 +275,7 @@
                                                 </ng-container>
                                             </ng-container>
                                         </ion-col>
-                                        <ion-col class="colOfLeave">
+                                        <ion-col size="7" class="colOfLeave">
                                             <ion-grid style="font-size: 11px;">
                                                 <ion-item-group>
                                                     <ion-row style="font-weight: bold;">{{item.employeeName}}</ion-row>
@@ -220,8 +285,17 @@
                                                     style="border-top: 1px solid #e2e2e2; margin-top: 5px; padding-top: 5px;">
                                                     <ion-row>ID : {{item.staffNumber}}</ion-row>
                                                 </ion-item-group>
+                                                <ion-item-group
+                                                    style="border-top: 1px solid #e2e2e2; margin-top: 5px; padding-top: 5px;">
+                                                    <ion-row>EMAIL: email address</ion-row>
+                                                </ion-item-group>
                                             </ion-grid>
                                         </ion-col>
+                                        <!-- <ion-col align-self-center style="text-align: center;align-items: center;">
+                                            <img src="assets/icon/leave_setup/icon_edit@3x.png"
+                                                style="cursor: pointer;width: 11px;height:11px;display: inline-block;"
+                                                (click)="editEmailNotifier(item);menu.enable(false, 'addEmailDetails');">
+                                        </ion-col> -->
                                         <ion-item class="divider" lines="full"></ion-item>
                                     </div>
                                 </ion-row>
@@ -243,12 +317,13 @@
                             </ion-row>
                             <ion-row>
                                 <ion-col style="padding-top: 0;color: #808495;padding-bottom: 0;margin-bottom: 5px;">
-                                    Simply type their name or even by
-                                    ID number to get email notification from selected department/employee.
+                                    Simply type their name/ID number or even by email address to get email notification
+                                    from selected department/employee.
                                 </ion-col>
                             </ion-row>
                             <ion-row>
-                                <ion-searchbar mode="md" class="searchbar" placeholder="Search by Name or ID"
+                                <ion-searchbar mode="md" class="searchbar"
+                                    placeholder="Search by Name/ID or Work Email Address"
                                     (ionChange)="changeDetails($event.srcElement.value)">
                                 </ion-searchbar>
                             </ion-row>
@@ -259,7 +334,8 @@
                                 <ion-col size="1.5"
                                     style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
                                     <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
-                                        [(ngModel)]="checkMain" [indeterminate]="indeterminate" (click)="checkEvent()">
+                                        [(ngModel)]="headCheckbox" [indeterminate]="indeterminateVal"
+                                        (click)="headerCheckbox()">
                                     </ion-checkbox>
                                 </ion-col>
                                 <ion-col size="2">
@@ -267,6 +343,14 @@
                                 </ion-col>
                                 <ion-col size="6">
                                     <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
+                                </ion-col>
+                                <ion-col align-self-center>
+                                    <ion-icon class="addIcon" name="add-circle-outline"
+                                        (click)="menu.enable(true, 'addEmailDetails');menu.open('addEmailDetails');">
+                                    </ion-icon>
+                                    <ion-label style="font-size: 12px;color: #7069d8;font-weight: bold;position: absolute;
+                                                padding-left: 3px;">EMAIL
+                                    </ion-label>
                                 </ion-col>
                             </ion-row>
                         </div>
@@ -276,47 +360,76 @@
                                 <ion-col size="1.5"
                                     style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
                                     <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
-                                        [(ngModel)]="checkMain" [indeterminate]="indeterminate" (click)="checkEvent()">
+                                        [(ngModel)]="headCheckbox" [indeterminate]="indeterminateVal"
+                                        (click)="headerCheckbox()">
                                     </ion-checkbox>
                                 </ion-col>
                                 <ion-col>
                                     <ion-label style="font-size: 12px;">EMPLOYEE DETAILS</ion-label>
+                                </ion-col>
+                                <ion-col align-self-center>
+                                    <ion-icon class="addIcon" name="add-circle-outline"
+                                        (click)="menu.enable(true, 'addEmailDetails');menu.open('addEmailDetails');">
+                                    </ion-icon>
+                                    <ion-label style="font-size: 12px;color: #7069d8;font-weight: bold;position: absolute;
+                                    padding-left: 3px;">EMAIL
+                                    </ion-label>
                                 </ion-col>
                             </ion-row>
                         </div>
                         <div style="height: calc( 100% - 246px);overflow: auto;">
                             <ng-container>
                                 <ion-row class="detailsRow" *ngFor="let item of employeeList; let i=index">
-                                    <ion-col size="1.5" align-self-center class="selection-column"
-                                        style="padding-left: 15px;">
-                                        <div *ngIf="(this.applyonbehalfPlatformApi.platforms().includes('tablet' ||
-                                        'desktop'))">
+                                    <ion-col size="1.5" align-self-center style="padding-left: 15px;">
+                                        <ng-container *ngFor="let list of url.details; let j= index">
+                                            <ng-container *ngIf="url.details[j].USER_GUID == item.userId">
+                                                <ion-avatar class="avatar"
+                                                    (mouseover)="hoverInOut(i, true, item.isChecked)"
+                                                    (mouseout)="hoverInOut(i, false, item.isChecked)"
+                                                    *ngIf="url && url.details[j].PROFILE_PICTURE !== null">
+                                                    <img src="{{url.link + url.details[j].PROFILE_PICTURE}}"
+                                                        style="margin-left: -10px;"
+                                                        [style.display]="showCheckBox[i] ? 'none' : 'block'">
+                                                    <div class="avatar"
+                                                        [style.display]="showCheckBox[i] ? 'block' : 'none'">
+                                                        <ion-checkbox mode="ios"
+                                                            style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                            [(ngModel)]="item.isChecked"
+                                                            (ionChange)="contentCheckbox()">
+                                                        </ion-checkbox>
+                                                    </div>
+                                                </ion-avatar>
+                                                <ion-avatar class="avatar"
+                                                    (mouseover)="hoverInOut(i, true, item.isChecked)"
+                                                    (mouseout)="hoverInOut(i, false, item.isChecked)"
+                                                    *ngIf="url && url.details[j].PROFILE_PICTURE === null">
+                                                    <img src="assets/icon/picture.png" style="margin-left: -10px;"
+                                                        [style.display]="showCheckBox[i] ? 'none' : 'block'">
+                                                    <div class="avatar"
+                                                        [style.display]="showCheckBox[i] ? 'block' : 'none'">
+                                                        <ion-checkbox mode="ios"
+                                                            style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
+                                                            [(ngModel)]="item.isChecked"
+                                                            (ionChange)="contentCheckbox()">
+                                                        </ion-checkbox>
+                                                    </div>
+                                                </ion-avatar>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="item.userId === undefined">
                                             <ion-avatar class="avatar" (mouseover)="hoverInOut(i, true, item.isChecked)"
                                                 (mouseout)="hoverInOut(i, false, item.isChecked)">
-                                                <img src="assets/icon/evans.jpg" style="margin-left: 5px;"
+                                                <img src="assets/icon/picture.png" style="margin-left: -10px;"
                                                     [style.display]="showCheckBox[i] ? 'none' : 'block'">
-                                                <div class="checkboxOnAvatar"
+                                                <div class="avatar"
                                                     [style.display]="showCheckBox[i] ? 'block' : 'none'">
-                                                    <ion-checkbox mode="ios" class="ionCheckbox"
+                                                    <ion-checkbox mode="ios"
                                                         style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
                                                         [(ngModel)]="item.isChecked" (ionChange)="contentCheckbox()">
                                                     </ion-checkbox>
                                                 </div>
                                             </ion-avatar>
-
-                                        </div>
-                                        <div *ngIf="!(this.applyonbehalfPlatformApi.platforms().includes('tablet' ||
-                                        'desktop'))">
-                                            <ion-avatar class="avatar">
-                                                <div class="checkboxOnAvatar" style="display: block">
-                                                    <ion-checkbox mode="ios" class="ionCheckbox"
-                                                        style="width: 18px; height: 18px;position: absolute;margin-top: 7px;margin-left: -4px;"
-                                                        [(ngModel)]="item.isChecked" (ionChange)="contentCheckbox()">
-                                                    </ion-checkbox>
-                                                </div>
-                                            </ion-avatar>
-
-                                        </div>
+                                        </ng-container>
                                     </ion-col>
                                     <ion-col size="2" [class]="'hide-md-down'" style=" color: #7a8589; font-size: 13px;"
                                         align-self-center
@@ -330,6 +443,9 @@
                                         <p
                                             style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: pre-line;">
                                             {{item.designation}}</p>
+                                        <p
+                                            style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: pre-line;">
+                                            {{item.email}}</p>
                                         <p [class]="'hide-md-up'"
                                             style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                                             ID: {{item.staffNumber}}</p>
@@ -348,7 +464,7 @@
                         min-width: 200px;">
                             <ion-button
                                 style="--border-radius: 2px;font-size: 11px;height: 30px;width: 100%;background: white;text-transform: none;"
-                                color="primary" (click)="postLeaveEntitlement()" [disabled]="disableSubmit">
+                                color="primary" (click)="postNotificationRule()" [disabled]="disableSubmit">
                                 Submit <ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
                                 </ion-spinner>
                             </ion-button>
@@ -358,7 +474,7 @@
                         min-width: 200px;">
                         <ion-button
                             style="--border-radius: 2px;font-size: 11px;height: 30px;width: 100%;background: white;text-transform: none;"
-                            color="primary" (click)="postLeaveEntitlement()" [disabled]="disableSubmit">
+                            color="primary" (click)="postNotificationRule()" [disabled]="disableSubmit">
                             Submit <ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
                             </ion-spinner>
                         </ion-button>

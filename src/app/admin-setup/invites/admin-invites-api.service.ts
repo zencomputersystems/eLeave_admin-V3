@@ -92,6 +92,11 @@ export class AdminInvitesApiService {
         return this.apiService.patchApi(data, '/api/admin/user-info-details/all/' + id);
     }
 
+    patch_user_info_notification(data, id: string): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.patchApi(data, '/api/admin/user-info-details/notification-rule/' + id);
+    }
+
     /**
      * patch personal user info details
      * @param {*} data
