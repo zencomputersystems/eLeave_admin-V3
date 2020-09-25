@@ -57,5 +57,6 @@ export const employment = {
     "incomeTaxNumber": "",
     "bankAccountName": "",
     "bankAccountNumber": "",
+    "reportingToName": "",
     "yearOfService": ""
 }

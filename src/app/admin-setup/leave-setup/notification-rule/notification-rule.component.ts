@@ -81,13 +81,6 @@ export class NotificationRuleComponent implements OnInit {
     public showSpinner: boolean = false;
 
     /**
-     * show no result when user list is empty
-     * @type {boolean}
-     * @memberof NotificationRuleComponent
-     */
-    public showNoResult: boolean = false;
-
-    /**
      * show select to view paragraph
      * @type {boolean}
      * @memberof NotificationRuleComponent
@@ -175,9 +168,6 @@ export class NotificationRuleComponent implements OnInit {
         this.leaveAPI.get_company_list().subscribe(list => this.companyItems = list);
         this.leaveEntitlementAPI.get_user_list().subscribe(list => {
             this.employeeList = list;
-            console.log(this.employeeList)
-            // this.showSpinner = false;
-            // this.filterUser(this._user_Items, name);
         })
     }
 
@@ -187,11 +177,11 @@ export class NotificationRuleComponent implements OnInit {
      * @memberof NotificationRuleComponent
      */
     companyClicked(company_guid: string) {
-        // this.showSpinner = true;
+        this.showSpinner = true;
         this._company_GUID = company_guid;
         this.leaveAPI.get_company_details(company_guid).subscribe(item => {
             this.departmentItems = item.departmentList;
-            // this.showSpinner = false;
+            this.showSpinner = false;
         })
     }
 
@@ -212,7 +202,7 @@ export class NotificationRuleComponent implements OnInit {
     }
 
     /**
-     * get user list to filter from selected compant & department
+     * get user list to filter from selected company & department
      * @param {*} list
      * @param {string} name
      * @memberof NotificationRuleComponent
@@ -225,9 +215,6 @@ export class NotificationRuleComponent implements OnInit {
                 this.filteredUser[this.filteredUser.length - 1].isChecked = false;
             }
         }
-        if (this.filteredUser.length == 0) {
-            this.showNoResult = true;
-        } else { this.showNoResult = false; }
     }
 
     /**
@@ -430,7 +417,6 @@ export class NotificationRuleComponent implements OnInit {
     combineEvent() {
         this.employeeList = this.menuNewEmail.concat(this.employeeList);
         this.menuNewEmail = [{ "email": '', "employeeName": '' }];
-        console.log(this.employeeList)
     }
 
     // editEmailNotifier(item) {

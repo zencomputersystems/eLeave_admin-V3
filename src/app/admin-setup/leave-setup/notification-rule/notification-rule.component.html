@@ -27,8 +27,7 @@
                 </ion-col>
                 <ion-col style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                     <img src="assets/icon/leave_setup/icon_trash@3x.png"
-                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
-                        (click)="deleteEmail(i)">
+                        style="width: 11px;height:11px;display: inline-block;cursor: pointer;" (click)="deleteEmail(i)">
                 </ion-col>
                 <ion-item class="divider" style="padding-left: 10px;padding-right: 10px;" lines="full"></ion-item>
             </ion-row>
@@ -224,7 +223,8 @@
                                             style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: pre-line;">
                                             {{item.designation}}</p>
                                     </ion-col>
-                                    <ion-col size="2.5" style="font-size: 12px;">email address</ion-col>
+                                    <ion-col size="2.5" style="font-size: 12px;"
+                                        *ngFor="let data of item.notificationRule">{{data}}</ion-col>
                                     <!-- <ion-col align-self-center style="text-align: center;align-items: center;">
                                         <img src="assets/icon/leave_setup/icon_edit@3x.png"
                                             style="cursor: pointer;width: 11px;height:11px;display: inline-block;"
@@ -287,7 +287,8 @@
                                                 </ion-item-group>
                                                 <ion-item-group
                                                     style="border-top: 1px solid #e2e2e2; margin-top: 5px; padding-top: 5px;">
-                                                    <ion-row>EMAIL: email address</ion-row>
+                                                    <ion-row *ngFor="let data of item.notificationRule">NOTIFY: {{data}}
+                                                    </ion-row>
                                                 </ion-item-group>
                                             </ion-grid>
                                         </ion-col>
@@ -300,11 +301,6 @@
                                     </div>
                                 </ion-row>
                             </div>
-
-                        </div>
-                        <div *ngIf="showNoResult && !showSpinner" style="width: 100%; text-align:center;padding: 10px">
-                            <div class="search-icon" [inlineSVG]="'assets/icon/top_header/search.svg'"></div>
-                            <p style="font-size: 20px;color:#a3a6b4;opacity: 0.8;padding-top:10px ">No Results Found</p>
                         </div>
                     </div>
                     <div class="notify">
