@@ -263,7 +263,7 @@
                   </ion-col> -->
                   <ion-item class="divider" lines="full"></ion-item>
                 </ion-row>
-                  <p *ngIf="roleList && roleList.length === 0" class="messageText">
+                <p *ngIf="roleList && roleList.length === 0" class="messageText">
                   No profile has created yet</p>
               </ng-container>
 
@@ -433,6 +433,22 @@
                       [(ngModel)]="_property.office.geofence_filter">
                     </ion-checkbox>
                   </ion-item>
+                  <ion-item class="ionItem">
+                    <ion-label>Enable auto clock out</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="mode == 'OFF'"
+                      [(ngModel)]="_property.office.autoclockout_filter.value">
+                    </ion-checkbox>
+                  </ion-item>
+                  <mat-form-field appearance="outline" style="font-size: 11px; margin-left: 50px;">
+                    <mat-label>Auto clock out distance</mat-label>
+                    <mat-select [(ngModel)]="_property.office.autoclockout_filter.range"
+                      [disabled]="mode == 'OFF' || _property.office.autoclockout_filter.value == false" required>
+                      <mat-option [value]=500>500m</mat-option>
+                      <mat-option [value]=1000>1000m</mat-option>
+                      <mat-option [value]=1500>1500m</mat-option>
+                      <mat-option [value]=2000>2000m</mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </ion-list>
               </div>
 
@@ -500,6 +516,22 @@
                       [(ngModel)]="_property.site.geofence_filter">
                     </ion-checkbox>
                   </ion-item>
+                  <ion-item class="ionItem">
+                    <ion-label>Enable auto clock out</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="mode == 'OFF'"
+                      [(ngModel)]="_property.site.autoclockout_filter.value">
+                    </ion-checkbox>
+                  </ion-item>
+                  <mat-form-field appearance="outline" style="font-size: 11px; margin-left: 50px;">
+                    <mat-label>Auto clock out distance</mat-label>
+                    <mat-select [(ngModel)]="_property.site.autoclockout_filter.range"
+                      [disabled]="mode == 'OFF' || _property.site.autoclockout_filter.value == false" required>
+                      <mat-option [value]=500>500m</mat-option>
+                      <mat-option [value]=1000>1000m</mat-option>
+                      <mat-option [value]=1500>1500m</mat-option>
+                      <mat-option [value]=2000>2000m</mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </ion-list>
               </div>
             </div>
@@ -570,6 +602,22 @@
                       [(ngModel)]="_property.home.geofence_filter">
                     </ion-checkbox>
                   </ion-item>
+                  <ion-item class="ionItem">
+                    <ion-label>Enable auto clock out</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="mode == 'OFF'"
+                      [(ngModel)]="_property.home.autoclockout_filter.value">
+                    </ion-checkbox>
+                  </ion-item>
+                  <mat-form-field appearance="outline" style="font-size: 11px; margin-left: 50px;">
+                    <mat-label>Auto clock out distance</mat-label>
+                    <mat-select [(ngModel)]="_property.home.autoclockout_filter.range"
+                      [disabled]="mode == 'OFF' || _property.home.autoclockout_filter.value == false" required>
+                      <mat-option [value]=500>500m</mat-option>
+                      <mat-option [value]=1000>1000m</mat-option>
+                      <mat-option [value]=1500>1500m</mat-option>
+                      <mat-option [value]=2000>2000m</mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </ion-list>
 
 
@@ -638,6 +686,22 @@
                       [(ngModel)]="_property.others.geofence_filter">
                     </ion-checkbox>
                   </ion-item>
+                  <ion-item class="ionItem">
+                    <ion-label>Enable auto clock out</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="mode == 'OFF'"
+                      [(ngModel)]="_property.others.autoclockout_filter.value">
+                    </ion-checkbox>
+                  </ion-item>
+                  <mat-form-field appearance="outline" style="font-size: 11px; margin-left: 50px;">
+                    <mat-label>Auto clock out distance</mat-label>
+                    <mat-select [(ngModel)]="_property.others.autoclockout_filter.range"
+                      [disabled]="mode == 'OFF' || _property.others.autoclockout_filter.value == false" required>
+                      <mat-option [value]=500>500m</mat-option>
+                      <mat-option [value]=1000>1000m</mat-option>
+                      <mat-option [value]=1500>1500m</mat-option>
+                      <mat-option [value]=2000>2000m</mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </ion-list>
               </div>
             </div>
