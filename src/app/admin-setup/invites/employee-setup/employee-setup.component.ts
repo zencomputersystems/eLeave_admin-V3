@@ -628,9 +628,11 @@ export class EmployeeSetupComponent implements OnInit {
      */
     public open: boolean;
 
-    myControl = new FormControl();
-    options = [];
-    filteredOptions: Observable<string[]>;
+    public myControl = new FormControl();
+
+    public filteredOptions: Observable<string[]>;
+
+    private options: any[];
 
     /**
      *Creates an instance of EmployeeSetupComponent.
@@ -740,6 +742,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     async endPoint() {
+        this.options = [];
         let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
         this.showSpinner = false;
         this.list = data;
