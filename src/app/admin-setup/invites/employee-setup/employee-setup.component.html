@@ -1194,11 +1194,25 @@
                                         <p class="pText"
                                             *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined">
                                             {{employmentDetails.employmentDetail.reportingToName}}</p>
-                                        <mat-form-field
+                                        <!-- <mat-form-field
                                             *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
                                             class="matFormField">
                                             <input matInput placeholder="Reporting To" (blur)="isBlurEmployment = true"
                                                 [(ngModel)]="employmentDetails.employmentDetail.reportingTo">
+                                        </mat-form-field> -->
+                                        <mat-form-field
+                                            *ngIf="mode === 'ON' && employmentDetails.employmentDetail != undefined"
+                                            class="matFormField">
+                                            <input type="text" placeholder="Reporting To" matInput
+                                                [formControl]="myControl" [matAutocomplete]="auto"
+                                                (blur)="isBlurEmployment = true">
+                                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                                <mat-option *ngFor="let option of filteredOptions | async"
+                                                    [value]="option.name" style="font-size: 12px;"
+                                                    (click)="employmentDetails.employmentDetail.reportingTo = option.userId">
+                                                    {{option.name}}
+                                                </mat-option>
+                                            </mat-autocomplete>
                                         </mat-form-field>
                                     </ion-col>
                                 </ion-row>
@@ -1279,7 +1293,7 @@
                                         <p class="pText"
                                             *ngIf="mode === 'OFF' && employmentDetails.employmentDetail != undefined && employmentDetails.employmentDetail.dateOfJoin != 'Invalid date' && employmentDetails.employmentDetail.dateOfJoin != 'Invalid Date'">
                                             {{employmentDetails.employmentDetail.dateOfJoin}}</p>
-                                            <p class="pText"
+                                        <p class="pText"
                                             *ngIf="mode === 'OFF' && employmentDetails.employmentDetail.dateOfJoin == 'Invalid date' || employmentDetails.employmentDetail.dateOfJoin == 'Invalid Date'">
                                             N/A</p>
                                         <mat-form-field

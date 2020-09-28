@@ -15,6 +15,8 @@ import { SharedService } from '../../leave-setup/shared.service';
 import { getDataSet, reduce } from "iso3166-2-db";
 import { EventInput } from '@fullcalendar/core';
 import { SideMenuNavigationComponent } from '../../../../../src/app/side-menu-navigation/side-menu-navigation.component';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 const dayjs = require('dayjs');
 /**
  *
@@ -626,6 +628,10 @@ export class EmployeeSetupComponent implements OnInit {
      */
     public open: boolean;
 
+    myControl = new FormControl();
+    options = [];
+    filteredOptions: Observable<string[]>;
+
     /**
      *Creates an instance of EmployeeSetupComponent.
      * @param {AdminInvitesApiService} inviteAPI access invite API
@@ -743,6 +749,19 @@ export class EmployeeSetupComponent implements OnInit {
             totalItems: this.list.length
         }
         this.getUserId(this.list[0], 0, 1);
+        let dataList = this.list;
+        dataList.forEach(element => {
+            this.options.push({ "name": element.employeeName, "userId": element.userId });
+        });
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filter(value))
+        );
+    }
+
+    private _filter(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
     }
 
     /**
@@ -830,6 +849,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails.employmentDetail.dateOfConfirmation = dayjs(this.employmentDetails.employmentDetail.dateOfConfirmation).format('DD-MM-YYYY');
             this.dateOfResignation = new FormControl((this.employmentDetails.employmentDetail.dateOfResignation), Validators.required);
             this.employmentDetails.employmentDetail.dateOfResignation = dayjs(this.employmentDetails.employmentDetail.dateOfResignation).format('DD-MM-YYYY');
+            this.myControl.patchValue(this.employmentDetails.employmentDetail.reportingToName);
         } else {
             this.employmentDetails.employmentDetail = employment;
         }
@@ -1074,6 +1094,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails.employmentDetail.bankAccountNumber = (this.employmentDetails.employmentDetail.bankAccountNumber).toString();
             this.employmentDetails.employmentDetail.epfNumber = (this.employmentDetails.employmentDetail.epfNumber).toString();
             delete this.employmentDetails.employmentDetail["yearOfService"];
+            delete this.employmentDetails.employmentDetail["reportingToName"];
             // let resp = await this.inviteAPI.patch_admin_employment_user_info(this.employmentDetails.employmentDetail, this.id).toPromise();
             // this.employmentDetails.employmentDetail = resp;
             // this.getEmploymentDetails();
