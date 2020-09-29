@@ -3,6 +3,8 @@ import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { WorkingHourApiService } from "./working-hour-api.service";
 import { MenuController } from "@ionic/angular";
 const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc);
 
 /**
  * create or update working hour profile
@@ -192,11 +194,11 @@ export class WorkingHourComponent implements OnInit, OnChanges {
     onChange(date, name: string) {
         if (date !== null) {
             if (name == 'start') {
-                let timeStart = this.timeReformat(date);
-                this._startTime = dayjs.utc(timeStart, "HH:mm");
+                let timeStart = new Date().setHours(date.hour);
+                this._startTime = dayjs.utc(new Date(new Date(timeStart).setMinutes(date.minute)).setSeconds(0), "HH:mm");
             } else {
-                let timeEnd = this.timeReformat(date);
-                this._endTime = dayjs.utc(timeEnd, "HH:mm");
+                let timeEnd = new Date().setHours(date.hour);
+                this._endTime = dayjs.utc(new Date(new Date(timeEnd).setMinutes(date.minute)).setSeconds(0), "HH:mm");
             }
             this.calculateTime(this._startTime, this._endTime);
         }
@@ -210,23 +212,25 @@ export class WorkingHourComponent implements OnInit, OnChanges {
      */
     calculateTime(str, end) {
         if ((str && end) != undefined) {
-            const d = dayjs.duration(end.diff(str));
-            const s = dayjs.utc(+d).format('H:mm');
-            if (s == "9:00") {
+            let strTime = new Date(str);
+            let endTime = new Date(end);
+            const s = (endTime.getTime() - strTime.getTime()) / 1000 / 60;
+            const diff = Math.abs(Math.round(s));
+            if (diff === 540) {
                 this.workingHourForm.patchValue(
                     {
-                        starthalfdayAMpicker: this.splitTime(dayjs(str).format("HH:mm")),
-                        endhalfdayAMpicker: this.splitTime(dayjs(str).add(4, 'hours').format("HH:mm")),
-                        starthalfdayPMpicker: this.splitTime(dayjs(end).subtract(4, 'hours').format("HH:mm")),
-                        endhalfdayPMpicker: this.splitTime(dayjs(end).format("HH:mm")),
-                        startQ1picker: this.splitTime(dayjs(str).format("HH:mm")),
-                        endQ1picker: this.splitTime(dayjs(str).add(2, 'hours').format("HH:mm")),
-                        startQ2picker: this.splitTime(dayjs(str).add(2, 'hours').format("HH:mm")),
-                        endQ2picker: this.splitTime(dayjs(str).add(4, 'hours').format("HH:mm")),
-                        startQ3picker: this.splitTime(dayjs(end).subtract(4, 'hours').format("HH:mm")),
-                        endQ3picker: this.splitTime(dayjs(end).subtract(2, 'hours').format("HH:mm")),
-                        startQ4picker: this.splitTime(dayjs(end).subtract(2, 'hours').format("HH:mm")),
-                        endQ4picker: this.splitTime(dayjs(end).format("HH:mm"))
+                        starthalfdayAMpicker: this.splitTime(dayjs(new Date(str)).format("HH:mm")),
+                        endhalfdayAMpicker: this.splitTime(dayjs(new Date(str)).add(4, 'hours').format("HH:mm")),
+                        starthalfdayPMpicker: this.splitTime(dayjs(new Date(end)).subtract(4, 'hours').format("HH:mm")),
+                        endhalfdayPMpicker: this.splitTime(dayjs(new Date(end)).format("HH:mm")),
+                        startQ1picker: this.splitTime(dayjs(new Date(str)).format("HH:mm")),
+                        endQ1picker: this.splitTime(dayjs(new Date(str)).add(2, 'hours').format("HH:mm")),
+                        startQ2picker: this.splitTime(dayjs(new Date(str)).add(2, 'hours').format("HH:mm")),
+                        endQ2picker: this.splitTime(dayjs(new Date(str)).add(4, 'hours').format("HH:mm")),
+                        startQ3picker: this.splitTime(dayjs(new Date(end)).subtract(4, 'hours').format("HH:mm")),
+                        endQ3picker: this.splitTime(dayjs(new Date(end)).subtract(2, 'hours').format("HH:mm")),
+                        startQ4picker: this.splitTime(dayjs(new Date(end)).subtract(2, 'hours').format("HH:mm")),
+                        endQ4picker: this.splitTime(dayjs(new Date(end)).format("HH:mm"))
                     });
             } else {
                 this.workingHourForm.patchValue(
