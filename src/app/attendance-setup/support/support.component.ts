@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SupportApiService } from './support-api.service';
 import { map } from 'rxjs/operators';
-import { APIService } from '$admin-root/src/services/shared-service/api.service';
+import { APIService } from '../../../../src/services/shared-service/api.service';
 import { ClientApiService } from '../client/client-api.service';
 
 /**

@@ -257,7 +257,7 @@ export class RoleListComponent implements OnInit {
      * @returns
      * @memberof RoleListComponent
      */
-    checkExisitingName(list: any, obj: any) {
+    checkDuplicateName(list: any, obj: any) {
         for (let j = 0; j < list.length; j++) {
             if (list[j].userId === obj) {
                 return j;

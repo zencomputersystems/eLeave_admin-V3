@@ -15,7 +15,7 @@ import { SharedService } from '../../leave-setup/shared.service';
 import { getDataSet, reduce } from "iso3166-2-db";
 import { EventInput } from '@fullcalendar/core';
 import { SideMenuNavigationComponent } from '../../../../../src/app/side-menu-navigation/side-menu-navigation.component';
-import { AttendanceSetupApiService } from '$admin-root/src/app/attendance-setup/attendance-setup-api.service';
+import { AttendanceSetupApiService } from '../../../../../src/app/attendance-setup/attendance-setup-api.service';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -648,8 +648,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     constructor(public inviteAPI: AdminInvitesApiService, public roleAPI: RoleApiService, private _sharedService: SharedService, private calendarProfileAPI: CalendarProfileApiService,
-        public employeeSetupPopover: PopoverController, private workingHourAPI: WorkingHourApiService, private sideMenuComponent: SideMenuNavigationComponent, private attendanceApi: AttendanceSetupApiService) {
-        private workingHourAPI: WorkingHourApiService, private sideMenuComponent: SideMenuNavigationComponent) {
+        private workingHourAPI: WorkingHourApiService, private sideMenuComponent: SideMenuNavigationComponent, private attendanceApi: AttendanceSetupApiService) {
         this.inviteAPI.apiService.get_profile_pic('all').subscribe(data => {
             this.url = data;
         });

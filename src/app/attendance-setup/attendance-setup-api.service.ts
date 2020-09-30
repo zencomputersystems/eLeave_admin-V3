@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LocalStorageService } from 'angular-web-storage';
 import { environment } from '../../../src/environments/environment';
-import { AuthService } from '$admin-root/src/services/shared-service/auth.service';
+import { AuthService } from '../../../src/services/shared-service/auth.service';
 
 /**
  * API used in this admin folder 
