@@ -9,8 +9,7 @@
     </ion-header>
 
     <ion-content>
-        <p class="contentText">Add new external email address to get notify when selected employee/s has applied his/her
-            leave application.</p>
+        <p class="contentText">Add new external email address to get notification.</p>
         <ng-container *ngFor="let item of menuNewEmail; let i = index">
             <ion-row style="width: 100%;">
                 <ion-col size="5" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
@@ -64,7 +63,7 @@
                     Notification Rule
                 </ion-card-subtitle>
                 <ion-card-subtitle class="subtitle" style="font-size: 12px;">
-                    Manage selected employee to get email notification when other employee is on leave
+                    Manage selected employee to get email notification when related employee is on leave
                 </ion-card-subtitle>
             </div>
         </div>
@@ -215,7 +214,7 @@
                                         style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                         {{item.staffNumber}}
                                     </ion-col>
-                                    <ion-col size="5"
+                                    <ion-col size="4.5"
                                         style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;">
                                         <ion-label style="color:#43425d; font-weight: bold;;font-size: 12px;">
                                             {{item.employeeName}}</ion-label>
@@ -223,8 +222,12 @@
                                             style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: pre-line;">
                                             {{item.designation}}</p>
                                     </ion-col>
-                                    <ion-col size="2.5" style="font-size: 12px;"
-                                        *ngFor="let data of item.notificationRule">{{data}}</ion-col>
+                                    <ion-col size="3.5">
+                                        <ng-container *ngFor="let email of item.notificationRule">
+                                            <p class="text">{{email}}
+                                            </p>
+                                        </ng-container>
+                                    </ion-col>
                                     <!-- <ion-col align-self-center style="text-align: center;align-items: center;">
                                         <img src="assets/icon/leave_setup/icon_edit@3x.png"
                                             style="cursor: pointer;width: 11px;height:11px;display: inline-block;"
@@ -287,7 +290,11 @@
                                                 </ion-item-group>
                                                 <ion-item-group
                                                     style="border-top: 1px solid #e2e2e2; margin-top: 5px; padding-top: 5px;">
-                                                    <ion-row *ngFor="let data of item.notificationRule">NOTIFY: {{data}}
+                                                    <ion-row>NOTIFY:
+                                                        <ng-container *ngFor="let email of item.notificationRule">
+                                                            <p class="text">{{email}}
+                                                            </p>
+                                                        </ng-container>
                                                     </ion-row>
                                                 </ion-item-group>
                                             </ion-grid>
@@ -314,7 +321,7 @@
                             <ion-row>
                                 <ion-col style="padding-top: 0;color: #808495;padding-bottom: 0;margin-bottom: 5px;">
                                     Simply type their name/ID number or even by email address to get email notification
-                                    from selected department/employee.
+                                    from selected department/employee when he/she was approved to take leave.
                                 </ion-col>
                             </ion-row>
                             <ion-row>
