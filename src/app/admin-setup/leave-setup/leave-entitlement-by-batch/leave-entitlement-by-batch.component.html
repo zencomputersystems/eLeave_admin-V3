@@ -99,8 +99,7 @@
                                         <mat-select formControlName="entitlement_code" required>
                                             <mat-option>None</mat-option>
                                             <mat-option *ngFor="let item of filteredEntitlement"
-                                                [value]=item.leaveEntitlementId
-                                                (click)="checkEnableDisableButton()">
+                                                [value]=item.leaveEntitlementId (click)="checkEnableDisableButton()">
                                                 {{item.leaveEntitlementCode}}
                                             </mat-option>
                                         </mat-select>
@@ -132,8 +131,11 @@
                                 <ion-col size="2">
                                     <ion-label style="font-size: 12px;">ID</ion-label>
                                 </ion-col>
-                                <ion-col size="6">
+                                <ion-col size="4">
                                     <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-label style="font-size: 12px;">ENTITLEMENT</ion-label>
                                 </ion-col>
                             </ion-row>
                         </div>
@@ -213,13 +215,17 @@
                                         style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                         {{item.staffNumber}}
                                     </ion-col>
-                                    <ion-col size="6"
+                                    <ion-col size="4"
                                         style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;">
                                         <ion-label style="color:#43425d; font-weight: bold;;font-size: 12px;">
                                             {{item.employeeName}}</ion-label>
                                         <p
                                             style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: pre-line;">
                                             {{item.designation}}</p>
+                                    </ion-col>
+                                    <ion-col size="4"
+                                        style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                        {{item.leaveAbbr}}
                                     </ion-col>
                                     <ion-item class="divider" lines="full"></ion-item>
                                 </ion-row>
@@ -287,7 +293,7 @@
                                                 <ion-item-group
                                                     style="border-top: 1px solid #e2e2e2; margin-top: 5px; padding-top: 5px;">
                                                     <ion-row>ID : {{item.staffNumber}}</ion-row>
-                                                    <ion-row>Entitlement: {{item.entitlement}}</ion-row>
+                                                    <ion-row>Entitlement: {{item.leaveAbbr}}</ion-row>
                                                 </ion-item-group>
                                             </ion-grid>
                                         </ion-col>
