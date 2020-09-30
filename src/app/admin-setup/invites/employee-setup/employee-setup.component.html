@@ -1422,7 +1422,7 @@
                             </div>
                             <div (click)="showOthersEvent();showCalendar = true;showRole = false; showEmploy = false;showPersonal = false; showOthers=false"
                                 style="cursor: pointer;margin-top: 10px;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
-                                CALENDAR, WORKING HOUR & LEAVE ENTITLEMENT</div>
+                                CALENDAR, WORKING HOUR, ATTENDANCE & LEAVE ENTITLEMENT</div>
                             <div *ngIf="showCalendar">
                                 <div style="display: inline-block;">
                                     <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
@@ -1488,6 +1488,34 @@
                                                 [value]="item.working_hours_guid">
                                                 {{item.code}}</mat-option> -->
                                         </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                &nbsp;&nbsp;
+                                <div style="display: inline-block;">
+                                    <p style="padding-left: 15px;font-size: 12px;font-weight: bold;color: #808495;">
+                                        Assign Attendance Profile</p>
+                                    <mat-form-field appearance="outline"
+                                        style="font-size: 12px;width: 100%;padding-left: 15px;">
+                                        <mat-label>Select attendance profile</mat-label>
+                                        <mat-select (blur)="isBlurAssign = true" required [disabled]="mode === 'OFF'"
+                                            *ngIf="attendanceList && attendanceList.length > 0"
+                                            [(value)]="attendanceValue">
+                                            <mat-option *ngFor="let item of attendanceList; let j=index"
+                                                [value]="item.attendance_guid" class="profile-dropdown">
+                                                <div
+                                                    style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">
+                                                    {{item.code}}</div>
+                                                <!-- <div style="opacity: 0.8; color: #babdc7;margin-right: 5px;"
+                                                    *ngIf="item.isDefault">(Default)</div> -->
+                                            </mat-option>
+                                        </mat-select>
+                                        <!-- <mat-select (blur)="isBlurAssign = true" required [disabled]="mode === 'OFF'"
+                                            *ngIf="lengthWorkingList === 0" [(value)]="workingValue">
+                                            <mat-option
+                                                (click)="menuOpen = true;inviteAPI.menu.enable(true,
+                                                'addNewWorkingHourDetails');inviteAPI.menu.open('addNewWorkingHourDetails')">
+                                                Create New</mat-option>
+                                        </mat-select> -->
                                     </mat-form-field>
                                 </div>
                                 <div style="display: block;">

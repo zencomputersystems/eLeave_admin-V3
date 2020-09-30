@@ -1,0 +1,117 @@
+::ng-deep div.ql-tooltip.ql-editing {
+    left: 0 !important;
+}
+:host {
+    margin: auto;
+    width: 100%;
+    z-index: 0 !important;
+
+    ion-card {
+        height: calc(100% - 48px);
+        margin: 0;
+        top: 48px;
+        box-shadow: none;
+    }
+    .fullContainer {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 17px;
+    }
+    .right {
+        padding-left: 20px;
+        // padding-top: 4px;
+    }
+    .cardContent {
+        line-height: 1.25;
+        background: white;
+        height: calc(100% - 154px);
+        display: flex;
+        flex-direction: column;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .row {
+        display: flex;
+        flex-wrap: nowrap;
+        margin: 0;
+        max-height: 100%;
+        height: 100%;
+    }
+    .role {
+        max-height: 100%;
+        flex: 1 15%;
+        min-width: 200px;
+        overflow: auto;
+    }
+    .leave {
+        flex: 1 30%;
+        min-width: 200px;
+        margin-left: 10px;
+        min-width: 200px;
+        max-height: 100%;
+        // overflow-y: auto;
+        // height: calc(100% - 7px);
+    }
+    .message {
+        flex: 1 48%;
+        min-width: 200px;
+        margin-left: 10px;
+        min-width: 300px;
+        max-height: 100%;
+        overflow-y: auto;
+        // height: calc(100% - 7px);
+    }
+    .divider {
+        --min-height: none;
+        // padding-top: 1%;
+        // padding-bottom: 1%;
+        // width: 100%;
+    }
+    .round {
+        background-color: #f05858;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 15px;
+    }
+    .roundpurple {
+        background-color: #7069d8;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 15px;
+    }
+    .messageText {
+        font-size: 20px;
+        color: #43425d;
+        opacity: 0.3;
+        text-align: center;
+        padding: 40% 0;
+    }
+    p.listInnerText {
+        opacity: 0.8;
+        font-size: 12px;
+        padding: 0;
+    }
+    p.listInnerText::ng-deep p {
+        opacity: 0.8;
+        font-size: 12px;
+        padding: 0;
+    }
+    p.listInnerText::ng-deep img {
+        display: none;
+    }
+    .textColor {
+        --background: #f5f6fa;
+    }
+    .oriColor {
+        --background: white;
+    }
+    .textHover:hover {
+        --background: #f5f6fa;
+    }
+}

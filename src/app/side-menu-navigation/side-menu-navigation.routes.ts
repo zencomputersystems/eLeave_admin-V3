@@ -16,6 +16,9 @@ import { ApprovalOverrideComponent } from '../admin-setup/approval-override/appr
 import { LeaveEntitlementComponent } from '../admin-setup/leave-setup/leave-entitlement/leave-entitlement.component';
 import { ReportComponent } from '../admin-setup/report/report.component';
 import { PolicyListComponent } from '../admin-setup/leave-setup/general-leave-policy/policy-list/policy-list.component';
+import { AttendanceComponent } from '../attendance-setup/attendance/attendance.component';
+import { ClientComponent } from '../attendance-setup/client/client.component';
+import { SupportComponent } from '../attendance-setup/support/support.component';
 import { NotificationRuleComponent } from '../admin-setup/leave-setup/notification-rule/notification-rule.component';
 
 export const sideMenuNavigationRoutes: Routes = [
@@ -44,7 +47,10 @@ export const sideMenuNavigationRoutes: Routes = [
             { path: 'apply-on-behalf', component: ApplyOnBehalfComponent },
             { path: 'approval-override', component: ApprovalOverrideComponent },
             { path: 'year-end-closing', component: YearEndClosingComponent },
-            { path: 'report', component: ReportComponent }
+            { path: 'report', component: ReportComponent },
+            { path: 'attendance', component: AttendanceComponent },
+            { path: 'client', component: ClientComponent },
+            { path: 'support', component: SupportComponent }
         ]
     },
     // { path: '**', component: PageNotFoundComponent },

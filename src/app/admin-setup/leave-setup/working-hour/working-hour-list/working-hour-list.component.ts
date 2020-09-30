@@ -237,8 +237,8 @@ export class WorkingHourListComponent implements OnInit {
      * @memberof WorkingHourListComponent
      */
     async draggedUser(i: number) {
-        if (this.checkName(this._users, this.employeeList[i].fullname) != 0) {
-            const indexes = this.checkName(this._users, this.employeeList[i].fullname);
+        if (this.checkName(this._users, this.employeeList[i].user_guid) > -1) {
+            const indexes = this.checkName(this._users, this.employeeList[i].user_guid);
             if (!this._droppedUser.includes(this._users[indexes].userId)) {
                 await this._droppedUser.push(this._users[indexes].userId);
             }
@@ -254,7 +254,7 @@ export class WorkingHourListComponent implements OnInit {
      */
     checkName(arrayList: any, element: any) {
         for (let j = 0; j < arrayList.length; j++) {
-            if (arrayList[j].employeeName === element) {
+            if (arrayList[j].userId === element) {
                 return j;
             }
         }

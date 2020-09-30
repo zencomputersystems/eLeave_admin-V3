@@ -349,8 +349,8 @@ export class CalendarProfileComponent implements OnInit {
      * @memberof CalendarProfileComponent
      */
     async getDragUserId(i: number) {
-        if (this.checkNameExist(this._userList, this.assignedNames[i].fullname) != 0) {
-            const index: number = this.checkNameExist(this._userList, this.assignedNames[i].fullname);
+        if (this.checkNameExist(this._userList, this.assignedNames[i].user_guid) > -1) {
+            const index: number = this.checkNameExist(this._userList, this.assignedNames[i].user_guid);
             if (!this._employeeList.includes(this._userList[index].userId)) {
                 await this._employeeList.push(this._userList[index].userId);
             }
@@ -366,7 +366,7 @@ export class CalendarProfileComponent implements OnInit {
      */
     checkNameExist(array: any, obj: any) {
         for (let j = 0; j < array.length; j++) {
-            if (array[j].employeeName === obj) {
+            if (array[j].userId === obj) {
                 return j;
             }
         }

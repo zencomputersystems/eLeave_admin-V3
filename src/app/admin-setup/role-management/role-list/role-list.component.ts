@@ -242,10 +242,10 @@ export class RoleListComponent implements OnInit {
      * @memberof RoleListComponent
      */
     async draggedUserId(i: number) {
-        if (this.checkExisitingName(this._userList, this.assignedNameList[i].fullname) != 0) {
-            const index: number = this.checkExisitingName(this._userList, this.assignedNameList[i].fullname);
-            if (!this._filteredList.includes(this._userList[index].userId)) {
-                await this._filteredList.push(this._userList[index].userId);
+        if (this.checkDuplicateName(this._userList, this.assignedNameList[i].user_guid) > -1) {
+            const indexes: number = this.checkDuplicateName(this._userList, this.assignedNameList[i].user_guid);
+            if (!this._filteredList.includes(this._userList[indexes].userId)) {
+                await this._filteredList.push(this._userList[indexes].userId);
             }
         }
     }
@@ -259,7 +259,7 @@ export class RoleListComponent implements OnInit {
      */
     checkExisitingName(list: any, obj: any) {
         for (let j = 0; j < list.length; j++) {
-            if (list[j].employeeName === obj) {
+            if (list[j].userId === obj) {
                 return j;
             }
         }
@@ -382,7 +382,7 @@ export class RoleListComponent implements OnInit {
     delete(role_guid: string, role_name: string) {
         const dialogRef = this._sharedService.dialog.open(DialogDeleteConfirmationComponent, {
             disableClose: true,
-            data: { value: role_guid, name: role_name },
+            data: { value: role_guid, name: role_name, data: 'role' },
             height: "195px",
             width: "270px"
         });

@@ -15,6 +15,8 @@ import { SharedService } from '../../leave-setup/shared.service';
 import { getDataSet, reduce } from "iso3166-2-db";
 import { EventInput } from '@fullcalendar/core';
 import { SideMenuNavigationComponent } from '../../../../../src/app/side-menu-navigation/side-menu-navigation.component';
+import { AttendanceSetupApiService } from '$admin-root/src/app/attendance-setup/attendance-setup-api.service';
+
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 const dayjs = require('dayjs');
@@ -628,6 +630,10 @@ export class EmployeeSetupComponent implements OnInit {
      */
     public open: boolean;
 
+    public attendanceList: any;
+
+    public attendanceValue: any;
+
     public myControl = new FormControl();
 
     public filteredOptions: Observable<string[]>;
@@ -642,6 +648,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     constructor(public inviteAPI: AdminInvitesApiService, public roleAPI: RoleApiService, private _sharedService: SharedService, private calendarProfileAPI: CalendarProfileApiService,
+        public employeeSetupPopover: PopoverController, private workingHourAPI: WorkingHourApiService, private sideMenuComponent: SideMenuNavigationComponent, private attendanceApi: AttendanceSetupApiService) {
         private workingHourAPI: WorkingHourApiService, private sideMenuComponent: SideMenuNavigationComponent) {
         this.inviteAPI.apiService.get_profile_pic('all').subscribe(data => {
             this.url = data;
@@ -716,6 +723,10 @@ export class EmployeeSetupComponent implements OnInit {
         for (let i = 0; i < this.departmentList.length; i++) {
             this.departmentList[i]['checked'] = false;
         }
+        this.attendanceApi.get_attendance_list().subscribe(data => {
+            this.attendanceList = data;
+            console.log(data)
+        })
     }
 
     /**
@@ -822,6 +833,16 @@ export class EmployeeSetupComponent implements OnInit {
             this.calendarValue = data.calendarId;
             this.roleValue = data.roleId;
             this.workingValue = data.workingHoursId;
+        })
+        this.attendanceApi.get_user_attendance(this.userId).subscribe(data => {
+            for (let i = 0; i < this.attendanceList.length; i++) {
+                if (this.attendanceList[i].code === data.code) {
+                    this.attendanceValue = this.attendanceList[i].attendance_guid;
+                }
+            }
+            console.log(data);
+        }, error => {
+            this.attendanceValue = '';
         })
     }
 
@@ -1164,6 +1185,19 @@ export class EmployeeSetupComponent implements OnInit {
         } catch (err) {
             this.open = true;
             this._sharedService.leaveApi.openSnackBar("Failed to assign working hour profile", false);
+        }
+        try {
+            let attData = await this.attendanceApi.patch_user_attendance({
+                "user_guid": [this.userId],
+                "attendance_guid": this.attendanceValue
+            }).toPromise();
+            if (attData[0] == undefined) {
+                this.open = true;
+                this._sharedService.leaveApi.openSnackBar("Failed to assign attendance profile", false);
+            }
+        } catch (err) {
+            this.open = true;
+            this._sharedService.leaveApi.openSnackBar("Failed to assign attendance profile", false);
         }
         this.isBlurAssign = false;
     }

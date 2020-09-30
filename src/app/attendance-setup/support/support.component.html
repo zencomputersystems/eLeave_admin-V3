@@ -1,0 +1,503 @@
+<ion-card>
+    <ion-card-header style="border-radius: 2px;box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04);">
+        <div class="fullContainer">
+            <ion-item-group style="display: flex;">
+                <div class="left" style="min-width: fit-content;">
+                    <img src="assets/icon/attendance/icon_time_attendance.png" style="width:35px;height:33px">
+                </div>
+                <div class="right">
+                    <ion-card-subtitle style="color: #43425d;opacity: 0.8;font-weight: bold;font-size: 13px;">Support
+                        Center
+                    </ion-card-subtitle>
+                    <ion-card-subtitle class="subtitle" style="font-size: 12px;">
+                        Manage the request and suggestion of attendance from user
+                    </ion-card-subtitle>
+                </div>
+            </ion-item-group>
+        </div>
+    </ion-card-header>
+    <div style="width: 100%; height:100%; text-align: center; margin-top: -30px" *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;">
+        <div class="cardContent">
+            <ion-card-content style="max-height: 100%;height: 100%;">
+                <div class="row" style="flex-wrap: wrap; overflow-y: auto;" *ngIf="supportList">
+                    <div class="role">
+                        <!-- inbox -->
+                        <div
+                            style="font-size: 12px;width:100%;background: #43425D;padding: 10px;margin-bottom: 5px;color: white;font-weight: bold;">
+                            <ion-row>
+                                <ion-col size="11"
+                                    style="font-size: 12px;white-space: nowrap;
+                                              text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    Inbox</ion-col>
+                            </ion-row>
+                        </div>
+                        <div style="font-size: 12px;width:100%;padding: 10px;margin-bottom: 5px;color: #43425D;">
+                            <ion-row>
+                                <ion-col
+                                    style="opacity: 0.8;font-size: 12px;white-space: nowrap;
+                                              text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    All</ion-col>
+                                <ion-col
+                                    style="opacity: 0.8;font-size: 12px;white-space: nowrap;
+                                              text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;text-align: right;font-weight: bold;">
+                                    {{supportList.length}}</ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col
+                                    style="opacity: 0.8;font-size: 12px;white-space: nowrap;
+                                              text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    Requests</ion-col>
+                                <ion-col
+                                    style="font-size: 12px;white-space: nowrap;
+                                              text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;text-align: right;font-weight: bold;">
+                                    <div class="round"></div>
+                                    <span *ngIf="requestLength > 9" style="opacity: 0.8;">{{requestLength}}</span>
+                                    <span *ngIf="requestLength < 10" style="opacity: 0.8;">0{{requestLength}}</span>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col
+                                    style="opacity: 0.8;font-size: 12px;white-space: nowrap;
+                                              text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    Suggestions</ion-col>
+                                <ion-col
+                                    style="font-size: 12px;white-space: nowrap;
+                                              text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;text-align: right;font-weight: bold;">
+                                    <div class="roundpurple"></div>
+                                    <span *ngIf="suggestLength > 9" style="opacity: 0.8;">{{suggestLength}}</span>
+                                    <span *ngIf="suggestLength <10" style="opacity: 0.8;">0{{suggestLength}}</span>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <!-- request status -->
+                        <div
+                            style="font-size: 12px;width:100%;background: #43425D;padding: 10px;margin-bottom: 5px;color: white;font-weight: bold;">
+                            <ion-row>
+                                <ion-col
+                                    style="font-size: 12px;white-space: nowrap;
+                                          text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    Requests Status</ion-col>
+                            </ion-row>
+                        </div>
+                        <div
+                            style="font-size: 12px;width:100%;padding: 10px;margin-bottom: 5px;color: #43425D; opacity: 0.8">
+                            <ion-row>
+                                <ion-col
+                                    style="font-size: 12px;white-space: nowrap;
+                                          text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    Pending</ion-col>
+                                <ion-col
+                                    style="font-size: 12px;white-space: nowrap;
+                                              text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;text-align: right;font-weight: bold;">
+                                    <span *ngIf="pendingVal > 9">{{pendingVal}}</span>
+                                    <span *ngIf="pendingVal < 10 ">0{{pendingVal}}</span>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col
+                                    style="font-size: 12px;white-space: nowrap;
+                                          text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    Approved</ion-col>
+                                <ion-col
+                                    style="font-size: 12px;white-space: nowrap;
+                                              text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;text-align: right;font-weight: bold;">
+                                    <span *ngIf="approvedVal > 9">{{approvedVal}}</span>
+                                    <span *ngIf="approvedVal < 10 ">0{{approvedVal}}</span>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col
+                                    style="font-size: 12px;white-space: nowrap;
+                                          text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    Rejected</ion-col>
+                                <ion-col
+                                    style="font-size: 12px;white-space: nowrap;
+                                              text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;text-align: right;font-weight: bold;">
+                                    <span *ngIf="rejectedVal > 9">{{rejectedVal}}</span>
+                                    <span *ngIf="rejectedVal < 10 ">0{{rejectedVal}}</span>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <!-- suggestions status -->
+                        <div
+                            style="font-size: 12px;width:100%;background: #43425D;padding: 10px;margin-bottom: 5px;color: white;font-weight: bold;">
+                            <ion-row>
+                                <ion-col style="font-size: 12px;white-space: nowrap;
+                                      text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    Suggestions Status</ion-col>
+                            </ion-row>
+                        </div>
+                        <div
+                            style="font-size: 12px;width:100%;padding: 10px;margin-bottom: 5px;color: #43425D; opacity: 0.8">
+                            <ion-row>
+                                <ion-col style="font-size: 12px;white-space: nowrap;
+                                      text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                    All</ion-col>
+                                <ion-col
+                                    style="font-size: 12px;white-space: nowrap;
+                                              text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;text-align: right;font-weight: bold;">
+                                    <span *ngIf="suggestLength > 9">{{suggestLength}}</span>
+                                    <span *ngIf="suggestLength < 10">0{{suggestLength}}</span>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                    </div>
+                    <div class="leave">
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                            <ion-row>
+                                <ion-col>
+                                    <ion-searchbar mode="md" class="searchbar" placeholder="Search message or name here"
+                                        (ionChange)="changeDetails($event.srcElement.value)" style="padding-left: 0;">
+                                    </ion-searchbar>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <div style="overflow-y: auto;height: calc(100% - 91px);">
+                            <ng-container *ngFor="let item of supportList; let i = index">
+                                <ion-item lines="none" class="textHover"
+                                    [style.border-left]="item.REQUEST_TYPE === 'suggestions'? '5px solid #7069d8' : '5px solid #F05858' "
+                                    style="cursor: pointer;border-right: 1px solid #f5f6fa;" [ngClass]="{
+                                    'textColor': clickedIndex === i, 'oriColor': clickedIndex !== i}"
+                                    (click)="selectedMessage(i, item)">
+                                    <ng-container *ngIf="url">
+                                        <ng-container *ngFor="let list of url.details; let j= index">
+                                            <ng-container *ngIf="list.USER_GUID == item.USER_GUID">
+                                                <ion-avatar slot="start"
+                                                    *ngIf="list.PROFILE_PICTURE != null || list.PROFILE_PICTURE != undefined">
+                                                    <img src="{{url.link + list.PROFILE_PICTURE}}">
+                                                </ion-avatar>
+                                                <ion-avatar slot="start"
+                                                    *ngIf="list.PROFILE_PICTURE == null || list.PROFILE_PICTURE == undefined">
+                                                    <img src="assets/icon/picture.png">
+                                                </ion-avatar>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                    <ion-col
+                                        style="color: #4d4f5c;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                        <p
+                                            style="opacity: 0.8;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;">
+                                            {{item.FULLNAME}}
+                                        </p>
+                                        <p style="font-size: 12px;opacity: 0.8;padding: 0;">
+                                            {{item.DESCRIPTION}}
+                                        </p>
+                                    </ion-col>
+                                    <ion-col align-self-center style="padding-right: 15px;
+                                  display: flex;flex-flow: column nowrap;align-items: flex-end;">
+                                        <p
+                                            style="padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
+                                            {{item.CREATION_TS | date: 'MMM dd'}}
+                                        </p>
+                                    </ion-col>
+                                </ion-item>
+                                <ion-item class="divider" lines="full"></ion-item>
+                            </ng-container>
+                            <p *ngIf="supportList && supportList.length === 0" class="messageText">
+                                Nothing has arrived yet</p>
+                        </div>
+                    </div>
+                    <div class="message">
+                        <div class="messageText" *ngIf="clickedIndex == undefined">
+                            Select a message
+                        </div>
+                        <ng-container *ngIf="clickedIndex !== undefined">
+                            <!------------------------- suggestions ---------------------------------->
+                            <div *ngIf="selectedDetails.REQUEST_TYPE === 'suggestions'">
+                                <ion-button disabled=true
+                                    style="margin-left: 15px;margin-bottom: 20px;--opacity:1;font-size: 10px;width: 100px;height: 30px;--background: #7069d8;color: white;--border-radius: 3px;text-transform: capitalize;">
+                                    Suggestion
+                                </ion-button>
+                                <ng-container *ngFor="let item of conversationList">
+                                    <ion-item style="padding-left: 5px;" lines="none">
+                                        <ng-container *ngIf="url">
+                                            <!-- <ng-container *ngFor="let list of url.details; let j= index">
+                                            <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID"> -->
+                                            <ion-avatar slot="start" style="align-self: baseline;"
+                                                *ngIf="item.PROFILE_PICTURE != undefined || item.PROFILE_PICTURE != null">
+                                                <img src="{{url.link + item.PROFILE_PICTURE}}">
+                                            </ion-avatar>
+                                            <ion-avatar slot="start" style="align-self: baseline;"
+                                                *ngIf="item.PROFILE_PICTURE == null || item.PROFILE_PICTURE == undefined">
+                                                <img src="assets/icon/picture.png">
+                                            </ion-avatar>
+                                            <!-- </ng-container>
+                                        </ng-container> -->
+                                        </ng-container>
+                                        <ion-col style="color: #4d4f5c;">
+                                            <p style="display: inline;opacity: 0.8;font-size: 12px;font-weight: bold;">
+                                                {{item.FULLNAME}}
+                                            </p>
+                                            <p
+                                                style="float: right;padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;">
+                                                {{item.CREATION_TS | date: 'MMM dd, yyyy'}}
+                                            </p>
+                                            <p
+                                                style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
+                                                {{selectedDetails.TITLE}}
+                                            </p>
+                                            <p class="listInnerText" [innerHTML]="item.MESSAGE">
+                                            </p>
+                                        </ion-col>
+                                    </ion-item>
+                                    <ion-item class="divider" lines="full"></ion-item>
+                                </ng-container>
+
+                                <ng-container *ngIf="conversationList && conversationList.length === 0">
+                                    <ion-item style="padding-left: 5px;" lines="none">
+                                        <ng-container *ngIf="url">
+                                            <ng-container *ngFor="let list of url.details; let j= index">
+                                                <ng-container *ngIf="list.USER_GUID == selectedDetails.USER_GUID">
+                                                    <ion-avatar slot="start" style="align-self: baseline;"
+                                                        *ngIf="list.PROFILE_PICTURE != null || list.PROFILE_PICTURE != undefined">
+                                                        <img src="{{url.link + list.PROFILE_PICTURE}}">
+                                                    </ion-avatar>
+                                                    <ion-avatar slot="start" style="align-self: baseline;"
+                                                        *ngIf="list.PROFILE_PICTURE == null || list.PROFILE_PICTURE == undefined">
+                                                        <img src="assets/icon/picture.png">
+                                                    </ion-avatar>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ion-col style="color: #4D4F5C;">
+                                            <p style="display: inline;opacity: 0.8;font-size: 12px;font-weight: bold;">
+                                                {{selectedDetails.FULLNAME}}
+                                            </p>
+                                            <p
+                                                style="float: right;padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;">
+                                                {{selectedDetails.CREATION_TS | date: 'MMM dd, yyyy'}}
+                                            </p>
+                                            <p
+                                                style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;">
+                                                {{selectedDetails.TITLE}}
+                                            </p>
+                                            <p style="font-size: 12px;opacity: 0.8;padding: 0;">
+                                                {{selectedDetails.DESCRIPTION}}
+                                            </p>
+                                        </ion-col>
+                                    </ion-item>
+                                    <ion-item class="divider" lines="full"></ion-item>
+                                </ng-container>
+                                <!----- message editor ----->
+                                <div style="margin: 10px 15px;">
+                                    <p
+                                        style="padding-bottom: 5px;font-size: 15px;color: #4d4f5c;font-weight: bold;opacity: 0.8;">
+                                        Message
+                                    </p>
+                                    <p-editor [style]="{'height':'100px','border-radius': '4px',
+      'border': 'solid 1px #e8e9ec', 'font-size': '13px','color':'#43425d','opacity': '0.8'}" [(ngModel)]="message"
+                                        (change)="uploadFile($event.target.files)">
+                                        <p-header>
+                                            <span class="ql-formats">
+                                                <button class="ql-bold" aria-label="Bold"></button>
+                                                <button class="ql-list" value="bullet"></button>
+                                                <!-- <button class="ql-image" aria-label="Image"></button> -->
+                                                <!-- <button class="ql-link" aria-label="Insert Link"></button> -->
+                                            </span>
+                                            <span class="ql-formats">
+                                                <button class="ql-clean"></button>
+                                            </span>
+                                        </p-header>
+                                    </p-editor>
+
+                                    <ion-button
+                                        style="margin-top: 20px;--opacity:1;font-size: 10px;width: 140px;height: 30px;--background: #43425d;color: white;--border-radius: 3px;text-transform: capitalize;"
+                                        (click)="replyMessage('opened')">
+                                        Open</ion-button>
+                                    <ion-button
+                                        style="float: right;margin-top: 20px;--opacity:1;font-size: 10px;width: 140px;height: 30px;color: white;--border-radius: 3px;text-transform: capitalize;"
+                                        (click)="replyMessage('closed')">
+                                        Close</ion-button>
+                                    <ion-button
+                                        style="float: right;margin-top: 20px;--opacity:1;font-size: 10px;width: 140px;height: 30px;color: white;--border-radius: 3px;text-transform: capitalize;"
+                                        (click)="replyMessage('rejected')">
+                                        Reject</ion-button>
+                                </div>
+                            </div>
+
+                            <!------------------------- request ---------------------------------->
+                            <div *ngIf="selectedDetails.REQUEST_TYPE !== 'suggestions'">
+                                <ion-button disabled=true
+                                    style="margin-left: 15px;margin-bottom: 20px;--opacity:1;font-size: 10px;width: 100px;height: 30px;--background: #FF6565;color: white;--border-radius: 3px;text-transform: capitalize;">
+                                    Request
+                                </ion-button>
+                                <p
+                                    style="color: #4d4f5c;display: inline;opacity: 0.8;font-size: 15px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
+                                    {{selectedDetails.REQUEST_TYPE | titlecase}}
+                                </p>
+                                <ng-container *ngFor="let item of conversationList">
+                                    <ion-item style="padding-left: 5px;" lines="none">
+                                        <ng-container *ngIf="url">
+                                            <!-- <ng-container *ngFor="let list of url.details; let j= index">
+                                                <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID"> -->
+                                            <ion-avatar slot="start" style="align-self: baseline;"
+                                                *ngIf="item.PROFILE_PICTURE != undefined || item.PROFILE_PICTURE != null">
+                                                <img src="{{url.link + item.PROFILE_PICTURE}}">
+                                            </ion-avatar>
+                                            <ion-avatar slot="start" style="align-self: baseline;"
+                                                *ngIf="item.PROFILE_PICTURE == undefined || item.PROFILE_PICTURE == null">
+                                                <img src="assets/icon/picture.png">
+                                            </ion-avatar>
+                                            <!-- </ng-container>
+                                            </ng-container> -->
+                                        </ng-container>
+                                        <ion-col style="color: #4d4f5c;">
+                                            <p style="display: inline;opacity: 0.8;font-size: 12px;font-weight: bold;">
+                                                {{item.FULLNAME}}
+                                            </p>
+                                            <p
+                                                style="float: right;padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;">
+                                                {{item.CREATION_TS | date: 'MMM dd, yyyy'}}
+                                            </p>
+                                            <p
+                                                style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
+                                                {{selectedDetails.TITLE}}
+                                            </p>
+                                            <p
+                                                style="display: inline;padding-right: 10px;padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
+                                                Start time: {{selectedDetails.START_TIME | date: 'dd MMM yyyy hh:mm a'}}
+                                            </p>
+                                            <p
+                                                style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;display: inline;">
+                                                End time:
+                                                {{selectedDetails.END_TIME | date: 'dd MMM yyyy hh:mm a'}}
+                                            </p>
+                                            <p class="listInnerText" [innerHTML]="item.MESSAGE">
+                                            </p>
+                                            <div *ngIf="item.ATTACHMENT !== ''"
+                                                style="margin: 15px 0;font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;color: #a3a6b4;font-weight: bold;">
+                                                <ion-row>
+                                                    <ion-col>
+                                                        <p
+                                                            style="color: #43425D;padding-bottom: 5px;font-size: 12px;padding: 0;">
+                                                            See Attachment <a
+                                                                style="color: #7069d8;display: inline-flex;padding-left: 10px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
+                                                                [href]="url.link+item.ATTACHMENT"
+                                                                download>{{item.ATTACHMENT}}</a>
+                                                        </p>
+                                                        <img *ngIf="item.type !== 'pdf'"
+                                                            src="{{url.link + item.ATTACHMENT}}" style="width: 100px;">
+                                                        <pdf-viewer *ngIf="item.type === 'pdf'"
+                                                            [src]="url.link + item.ATTACHMENT"
+                                                            style="display: block;width: 100%;height: 100px;">
+                                                        </pdf-viewer>
+                                                    </ion-col>
+                                                </ion-row>
+                                            </div>
+                                        </ion-col>
+                                    </ion-item>
+                                    <ion-item class="divider" lines="full"></ion-item>
+                                </ng-container>
+                                <ng-container *ngIf="conversationList && conversationList.length === 0">
+                                    <ion-item style="padding-left: 5px;" lines="none">
+                                        <ng-container *ngIf="url">
+                                            <ng-container *ngFor="let list of url.details; let j= index">
+                                                <ng-container *ngIf="list.USER_GUID == selectedDetails.USER_GUID">
+                                                    <ion-avatar slot="start" style="align-self: baseline;"
+                                                        *ngIf="list.PROFILE_PICTURE != null || list.PROFILE_PICTURE != undefined">
+                                                        <img src="{{url.link + list.PROFILE_PICTURE}}">
+                                                    </ion-avatar>
+                                                    <ion-avatar slot="start" style="align-self: baseline;"
+                                                        *ngIf="list.PROFILE_PICTURE == null || list.PROFILE_PICTURE == undefined">
+                                                        <img src="assets/icon/picture.png">
+                                                    </ion-avatar>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ion-col style="color: #4d4f5c;">
+                                            <p style="display: inline;opacity: 0.8;font-size: 12px;font-weight: bold;">
+                                                {{selectedDetails.FULLNAME}}
+                                            </p>
+                                            <p
+                                                style="float: right;padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;">
+                                                {{selectedDetails.CREATION_TS | date: 'MMM dd, yyyy'}}
+                                            </p>
+                                            <p
+                                                style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
+                                                {{selectedDetails.TITLE}}
+                                            </p>
+                                            <p
+                                                style="display: inline;padding-right: 10px;padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
+                                                Start time: {{selectedDetails.START_TIME | date: 'dd MMM yyyy hh:mm a'}}
+                                            </p>
+                                            <p
+                                                style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;display: inline;">
+                                                End time:
+                                                {{selectedDetails.END_TIME | date: 'dd MMM yyyy hh:mm a'}}
+                                            </p>
+                                            <p style="opacity: 0.8;font-size: 12px;padding: 0;">
+                                                {{selectedDetails.DESCRIPTION}}
+                                            </p>
+                                            <div *ngIf="selectedDetails.ATTACHMENT !== ''"
+                                                style="margin: 15px 0;font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;color: #a3a6b4;font-weight: bold;">
+                                                <ion-row>
+                                                    <ion-col>
+                                                        <p
+                                                            style="color: #43425D;padding-bottom: 5px;font-size: 12px;padding: 0;">
+                                                            See Attachment <a
+                                                                style="color: #7069d8;display: inline-flex;padding-left: 10px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
+                                                                [href]="url.link+selectedDetails.ATTACHMENT"
+                                                                download>{{selectedDetails.ATTACHMENT}}</a>
+                                                        </p>
+                                                        <img *ngIf="fileTypeOutput !== 'pdf'"
+                                                            src="{{url.link + selectedDetails.ATTACHMENT}}"
+                                                            style="width: 100px;">
+                                                        <pdf-viewer *ngIf="fileTypeOutput === 'pdf'"
+                                                            [src]="url.link + selectedDetails.ATTACHMENT"
+                                                            style="display: block;width: 100%;height: 100px;">
+                                                        </pdf-viewer>
+                                                    </ion-col>
+                                                </ion-row>
+                                            </div>
+                                        </ion-col>
+                                    </ion-item>
+                                    <ion-item class="divider" lines="full"></ion-item>
+                                </ng-container>
+
+                                <!----- message editor ----->
+                                <div style="margin: 10px 15px;">
+                                    <p
+                                        style="padding-bottom: 5px;font-size: 15px;color: #4d4f5c;font-weight: bold;opacity: 0.8;">
+                                        Message
+                                    </p>
+                                    <p-editor [style]="{'height':'100px','border-radius': '4px',
+      'border': 'solid 1px #e8e9ec', 'font-size': '13px','color':'#43425d','opacity': '0.8'}" [(ngModel)]="message"
+                                        (change)="uploadFile($event.target.files)">
+                                        <p-header>
+                                            <span class="ql-formats">
+                                                <button class="ql-bold" aria-label="Bold"></button>
+                                                <button class="ql-list" value="bullet"></button>
+                                                <button class="ql-image" aria-label="Image"></button>
+                                                <!-- <button class="ql-link" aria-label="Insert Link"></button> -->
+                                            </span>
+                                            <span class="ql-formats">
+                                                <button class="ql-clean"></button>
+                                            </span>
+                                        </p-header>
+                                    </p-editor>
+
+                                    <ion-button
+                                        style="margin-top: 20px;--opacity:1;font-size: 10px;width: 140px;height: 30px;--background: #43425d;color: white;--border-radius: 3px;text-transform: capitalize;"
+                                        (click)="replyMessage('rejected')">
+                                        Reject</ion-button>
+                                    <ion-button
+                                        style="float: right;margin-top: 20px;--opacity:1;font-size: 10px;width: 140px;height: 30px;color: white;--border-radius: 3px;text-transform: capitalize;"
+                                        (click)="replyMessage('approved')">
+                                        Approve</ion-button>
+                                    <ion-button
+                                        style="float: right;margin-top: 20px;--opacity:1;font-size: 10px;width: 140px;height: 30px;color: white;--border-radius: 3px;text-transform: capitalize;"
+                                        (click)="replyMessage('clarify')">
+                                        Ask for clarification</ion-button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </ion-card-content>
+        </div>
+    </div>
+</ion-card>
