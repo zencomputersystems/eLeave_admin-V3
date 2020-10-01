@@ -184,7 +184,7 @@
                                             {{item.FULLNAME}}
                                         </p>
                                         <p style="font-size: 12px;opacity: 0.8;padding: 0;">
-                                            {{item.DESCRIPTION}}
+                                            {{item.TITLE}}
                                         </p>
                                     </ion-col>
                                     <ion-col align-self-center style="padding-right: 15px;
@@ -208,8 +208,8 @@
                         <ng-container *ngIf="clickedIndex !== undefined">
                             <!------------------------- suggestions ---------------------------------->
                             <div *ngIf="selectedDetails.REQUEST_TYPE === 'suggestions'">
-                                <ion-button disabled=true
-                                    style="margin-left: 15px;margin-bottom: 20px;--opacity:1;font-size: 10px;width: 100px;height: 30px;--background: #7069d8;color: white;--border-radius: 3px;text-transform: capitalize;">
+                                <ion-button
+                                    style="pointer-events: none;margin-left: 15px;margin-bottom: 20px;font-size: 10px;width: 100px;height: 30px;--background: #7069d8;color: white;--border-radius: 3px;text-transform: capitalize;">
                                     Suggestion
                                 </ion-button>
                                 <ng-container *ngFor="let item of conversationList">
@@ -321,8 +321,8 @@
 
                             <!------------------------- request ---------------------------------->
                             <div *ngIf="selectedDetails.REQUEST_TYPE !== 'suggestions'">
-                                <ion-button disabled=true
-                                    style="margin-left: 15px;margin-bottom: 20px;--opacity:1;font-size: 10px;width: 100px;height: 30px;--background: #FF6565;color: white;--border-radius: 3px;text-transform: capitalize;">
+                                <ion-button
+                                    style="pointer-events: none;margin-left: 15px;margin-bottom: 20px;font-size: 10px;width: 100px;height: 30px;--background: #FF6565;color: white;--border-radius: 3px;text-transform: capitalize;">
                                     Request
                                 </ion-button>
                                 <p
