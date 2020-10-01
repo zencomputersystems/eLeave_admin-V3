@@ -27,7 +27,7 @@ export class SupportApiService {
      */
     get_support_list(): Observable<any> {
         this.attendanceApiService.headerAuthorization();
-        return this.attendanceApiService.getApi('/support');
+        return this.attendanceApiService.getApi('/support/module/admin');
     }
 
     /**
