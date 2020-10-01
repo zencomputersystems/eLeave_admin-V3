@@ -474,7 +474,7 @@ display: inline-block;"> Add New Project</p>
                     </div>
                   </ion-col>
                   <ion-col align-self-center style="text-align: right;padding-right: 15px;">
-                    <ion-button disabled=true style="--opacity:1;font-size: 10px;width: 50px;height: 20px;">
+                    <ion-button style="font-size: 10px;width: 50px;height: 20px;pointer-events: none;">
                       {{client.ABBR}}
                     </ion-button>
                   </ion-col>
@@ -513,7 +513,7 @@ display: inline-block;"> Add New Project</p>
                   </ion-col>
                   <ion-col align-self-center *ngIf="mode == 'ON'" style="padding-right: 15px;
                     display: flex;flex-flow: column nowrap;align-items: flex-end;">
-                    <ion-button disabled=true style="--opacity: 1;font-size: 10px;width: 60px;height: 18px;">
+                    <ion-button style="pointer-events: none;font-size: 10px;width: 60px;height: 18px;">
                       {{client.ABBR}}
                     </ion-button>
                     <div>
@@ -558,8 +558,8 @@ display: inline-block;"> Add New Project</p>
                     </p>
                   </ion-col>
                   <ion-col align-self-center style="text-align: right;padding-right: 15px;">
-                    <ion-button disabled=true
-                      style="--opacity: 1;--background: var(--ion-color-project);font-size: 10px;width: 50px;height: 20px;">
+                    <ion-button
+                      style="pointer-events: none;--background: var(--ion-color-project);font-size: 10px;width: 50px;height: 20px;">
                       {{item.SOC_NO}}
                     </ion-button>
                   </ion-col>
@@ -590,8 +590,8 @@ display: inline-block;"> Add New Project</p>
                   </p>
                 </ion-col>
                 <ion-col align-self-center style="text-align: right;padding-right: 15px;">
-                  <ion-button disabled=true
-                    style="--opacity: 1;--background: var(--ion-color-contract);font-size: 10px;width: 50px;height: 20px;">
+                  <ion-button
+                    style="pointer-events: none;--background: var(--ion-color-contract);font-size: 10px;width: 50px;height: 20px;">
                     {{item.CONTRACT_NO}}
                   </ion-button>
                 </ion-col>
