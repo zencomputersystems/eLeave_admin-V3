@@ -1,34 +1,50 @@
 export const propertyFormat = {
     "office": {
-        "value": false,
-        "client_list": false,
-        "project_selection": false,
-        "contract_selection": false,
-        "activity_list": false,
-        "geofence_filter": false
+        "value": true,
+        "client_list": true,
+        "project_selection": true,
+        "contract_selection": true,
+        "activity_list": true,
+        "geofence_filter": false,
+        "autoclockout_filter": {
+            "value": false,
+            "range": 500
+        }
     },
     "site": {
-        "value": false,
-        "client_list": false,
-        "project_selection": false,
-        "contract_selection": false,
-        "activity_list": false,
-        "geofence_filter": false
+        "value": true,
+        "client_list": true,
+        "project_selection": true,
+        "contract_selection": true,
+        "activity_list": true,
+        "geofence_filter": false,
+        "autoclockout_filter": {
+            "value": false,
+            "range": 500
+        }
     },
     "home": {
-        "value": false,
-        "client_list": false,
-        "project_selection": false,
-        "contract_selection": false,
-        "activity_list": false,
-        "geofence_filter": false
+        "value": true,
+        "client_list": true,
+        "project_selection": true,
+        "contract_selection": true,
+        "activity_list": true,
+        "geofence_filter": false,
+        "autoclockout_filter": {
+            "value": false,
+            "range": 500
+        }
     },
     "others": {
-        "value": false,
-        "client_list": false,
-        "project_selection": false,
-        "contract_selection": false,
-        "activity_list": false,
-        "geofence_filter": false
+        "value": true,
+        "client_list": true,
+        "project_selection": true,
+        "contract_selection": true,
+        "activity_list": true,
+        "geofence_filter": false,
+        "autoclockout_filter": {
+            "value": false,
+            "range": 500
+        }
     }
 }

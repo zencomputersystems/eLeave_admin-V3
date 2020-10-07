@@ -6,6 +6,10 @@ import { SharedService } from '../../admin-setup/leave-setup/shared.service';
 import { RoleApiService } from '../../admin-setup/role-management/role-api.service';
 import { AttendanceSetupApiService } from '../attendance-setup-api.service';
 import { propertyFormat } from '../attendance-setup-data';
+import { WorkingHourApiService } from '../../admin-setup/leave-setup/working-hour/working-hour-api.service';
+import { PopoverController } from '@ionic/angular';
+import { ConfirmationWindowComponent } from '../../global/confirmation-window/confirmation-window.component';
+import { DeleteCalendarConfirmationComponent } from '../../admin-setup/leave-setup/delete-calendar-confirmation/delete-calendar-confirmation.component';
 
 @Component({
     selector: 'app-attendance',
@@ -164,12 +168,34 @@ export class AttendanceComponent implements OnInit {
     public showWarning: boolean = false;
 
     /**
+     * Bind profile list
+     * @private
+     * @type {*}
+     * @memberof AttendanceComponent
+     */
+    private defaultProfileList: any;
+
+    /**
+     * Bind data of default attendance profile
+     * @type {*}
+     * @memberof AttendanceComponent
+     */
+    public defaultProfileInfo: any;
+
+    /**
+    * set isDefaultProfile as default profile value (true/false)
+    * @type {boolean}
+    * @memberof AttendanceComponent
+    */
+    public isDefaultProfile: boolean = false;
+
+    /**
      *Creates an instance of AttendanceComponent.
      * @param {RoleApiService} roleAPi
      * @param {SharedService} _sharedService
      * @memberof AttendanceComponent
      */
-    constructor(private attendanceApi: AttendanceSetupApiService, private roleAPi: RoleApiService, public _sharedService: SharedService) {
+    constructor(private workingHrPopoverController: PopoverController, private attendanceApi: AttendanceSetupApiService, private roleAPi: RoleApiService, public _sharedService: SharedService, private workingHrApi: WorkingHourApiService) {
         this.newAttendanceName = new FormControl('', Validators.required);
         this.newAttendanceDescription = new FormControl('', Validators.required);
     }
@@ -250,6 +276,7 @@ export class AttendanceComponent implements OnInit {
      */
     async selectedProfile(item, index) {
         this.clickedIndex = index;
+        this.isDefaultProfile = item.isDefault;
         if (item !== undefined) {
             this.attendanceIdOutput = item.attendance_guid;
             let data = await this.attendanceApi.get_attendance_details(item.attendance_guid).toPromise();
@@ -294,8 +321,20 @@ export class AttendanceComponent implements OnInit {
         newData["property"] = propertyFormat;
         this.attendanceApi.post_attendance_profile(newData).subscribe(results => {
             if (results[0].ATTENDANCE_GUID != undefined) {
-                this.roleAPi.snackbarMsg('Attendance profile was created successfully', true);
-                this.ngOnInit();
+                if (this.isDefaultProfile) {
+                    this.workingHrApi.post_profile_default('attendance', results[0].ATTENDANCE_GUID).subscribe(
+                        data => {
+                            console.log(data)
+                            this.roleAPi.snackbarMsg('Attendance profile was created successfully', true);
+                            this.ngOnInit();
+                        }
+                    );
+                } else {
+                    this.roleAPi.snackbarMsg('Attendance profile was created successfully', true);
+                    this.ngOnInit();
+                }
+                this.newAttendanceName.reset();
+                this.newAttendanceDescription.reset();
             } else {
                 this.roleAPi.snackbarMsg('Failed to create attendance profile', false);
             }
@@ -341,16 +380,28 @@ export class AttendanceComponent implements OnInit {
      * @param {string} attendance_name
      * @memberof AttendanceComponent
      */
-    delete(attendance_guid: string, attendance_name: string) {
-        const dialogRef = this._sharedService.dialog.open(DialogDeleteConfirmationComponent, {
-            disableClose: true,
-            data: { value: attendance_guid, name: attendance_name, data: 'attendance' },
-            height: "195px",
-            width: "270px"
-        });
+    delete(details) {
+        this.isDefaultProfile = details.isDefault;
+        let dialogRef;
+
+        if (this.isDefaultProfile === false) {
+            dialogRef = this._sharedService.dialog.open(DialogDeleteConfirmationComponent, {
+                disableClose: true,
+                data: { value: details.attendance_guid, name: details.code, data: 'attendance' },
+                height: "195px",
+                width: "270px"
+            });
+        } else {
+            dialogRef = this._sharedService.dialog.open(DeleteCalendarConfirmationComponent, {
+                disableClose: true,
+                data: { name: details.code, value: details.attendance_guid, desc: ' attendance profile', isDefault: 'default profile' },
+                height: "250px",
+                width: "270px"
+            });
+        }
         dialogRef.afterClosed().subscribe(result => {
-            if (result === attendance_guid) {
-                this.attendanceApi.delete_attendance_profile(attendance_guid).subscribe(response => {
+            if (result === details.attendance_guid) {
+                this.attendanceApi.delete_attendance_profile(details.attendance_guid).subscribe(response => {
                     if (response[0] !== undefined) {
                         if (response[0].ATTENDANCE_GUID != undefined) {
                             this.ngOnInit();
@@ -432,15 +483,22 @@ export class AttendanceComponent implements OnInit {
      * Get list of role profle, selected profile and user list based on profile
      * @memberof AttendanceComponent
      */
-    refreshRoleList(index: number) {
-        this.attendanceApi.get_attendance_list().subscribe(data => {
-            this.roleList = data;
-            this.showSpinner = false;
-            this.clickedIndex = index;
-            this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);
-            if (this.roleList.length > 0) {
-                this.editAttendanceName.patchValue(this.roleList[this.clickedIndex].code);
-                this.editAttendanceDescription.patchValue(this.roleList[this.clickedIndex].description);
+    async refreshRoleList(index: number) {
+        let data = await this.attendanceApi.get_attendance_list().toPromise();
+        this.roleList = data;
+        this.showSpinner = false;
+        this.clickedIndex = index;
+        this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);
+        if (this.roleList.length > 0) {
+            this.editAttendanceName.patchValue(this.roleList[this.clickedIndex].code);
+            this.editAttendanceDescription.patchValue(this.roleList[this.clickedIndex].description);
+        }
+
+        this.defaultProfileList = await this.workingHrApi.get_default_profile().toPromise();
+        this.roleList.forEach(item => {
+            item.isDefault = (item.attendance_guid === this.defaultProfileList[0].ATTENDANCE_PROFILE_GUID) ? true : false;
+            if (item.attendance_guid === this.defaultProfileList[0].ATTENDANCE_PROFILE_GUID) {
+                this.defaultProfileInfo = item;
             }
         });
         this.roleAPi.get_user_list().subscribe(list => {
@@ -482,6 +540,36 @@ export class AttendanceComponent implements OnInit {
             this.ngOnInit();
         } else {
             this.filter(text);
+        }
+    }
+
+    /**
+     * Change default attendance profile
+     * @param {*} isDefault
+     * @memberof AttendanceComponent
+     */
+    async changeDefaultWHProfile(item) {
+        if (this.defaultProfileInfo !== {}) {
+            const confirmChangeDefault = await this.workingHrPopoverController.create({
+                component: ConfirmationWindowComponent,
+                componentProps: {
+                    type: 'attendance',
+                    currDefaultProfile: this.defaultProfileInfo,
+                    newDefaultProfile: item
+                },
+                cssClass: 'confirmation-popover'
+            });
+
+            confirmChangeDefault.onDidDismiss().then(ret => {
+                if (ret.data === true) {
+                    this.workingHrApi.post_profile_default('attendance', item.attendance_guid).subscribe(
+                        data => {
+                            this.refreshRoleList(0);
+                        }
+                    );
+                }
+            })
+            return await confirmChangeDefault.present();
         }
     }
 
