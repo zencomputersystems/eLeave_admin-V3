@@ -114,4 +114,19 @@
     .textHover:hover {
         --background: #f5f6fa;
     }
+    .backColor {
+        background-color: #f5f6fa;
+        border-left: 4px solid #43425d;
+        padding-left: 5px;
+    }
+    .noBackColor {
+        background-color: transparent;
+        padding-left: 9px;
+    }
+    .rowItem {
+        cursor: pointer;
+    }
+    .rowItem:hover {
+        background-color: #f5f6fa;
+    }
 }

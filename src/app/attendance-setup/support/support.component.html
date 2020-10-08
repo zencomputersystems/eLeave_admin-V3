@@ -22,7 +22,7 @@
     <div style="background: #f0f0f7;height: 100%;position: absolute;width: 100%;">
         <div class="cardContent">
             <ion-card-content style="max-height: 100%;height: 100%;">
-                <div class="row" style="flex-wrap: wrap; overflow-y: auto;" *ngIf="supportList">
+                <div class="row" style="flex-wrap: wrap; overflow-y: auto;" *ngIf="supportList && copySupportList">
                     <div class="role">
                         <!-- inbox -->
                         <div
@@ -34,8 +34,10 @@
                                     Inbox</ion-col>
                             </ion-row>
                         </div>
-                        <div style="font-size: 12px;width:100%;padding: 10px;margin-bottom: 5px;color: #43425D;">
-                            <ion-row>
+                        <div style="font-size: 12px;width:100%;margin-bottom: 5px;color: #43425D;">
+                            <ion-row class="rowItem"
+                                (click)="filterSupportList('all');clickedText='all';clickedIndex=null" [ngClass]="{
+                                'backColor': clickedText === 'all', 'noBackColor': clickedText !== 'all'}">
                                 <ion-col
                                     style="opacity: 0.8;font-size: 12px;white-space: nowrap;
                                               text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
@@ -43,9 +45,12 @@
                                 <ion-col
                                     style="opacity: 0.8;font-size: 12px;white-space: nowrap;
                                               text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;text-align: right;font-weight: bold;">
-                                    {{supportList.length}}</ion-col>
+                                    {{copySupportList.length}}</ion-col>
                             </ion-row>
-                            <ion-row>
+                            <ion-row class="rowItem"
+                                (click)="filterSupportList('request');clickedText='request';clickedIndex=null"
+                                [ngClass]="{
+                                'backColor': clickedText === 'request', 'noBackColor': clickedText !== 'request'}">
                                 <ion-col
                                     style="opacity: 0.8;font-size: 12px;white-space: nowrap;
                                               text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
@@ -58,7 +63,10 @@
                                     <span *ngIf="requestLength < 10" style="opacity: 0.8;">0{{requestLength}}</span>
                                 </ion-col>
                             </ion-row>
-                            <ion-row>
+                            <ion-row class="rowItem"
+                                (click)="filterSupportList('suggestion');clickedText='suggestion';clickedIndex=null"
+                                [ngClass]="{
+                                'backColor': clickedText === 'suggestion', 'noBackColor': clickedText !== 'suggestion'}">
                                 <ion-col
                                     style="opacity: 0.8;font-size: 12px;white-space: nowrap;
                                               text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
@@ -82,9 +90,11 @@
                                     Requests Status</ion-col>
                             </ion-row>
                         </div>
-                        <div
-                            style="font-size: 12px;width:100%;padding: 10px;margin-bottom: 5px;color: #43425D; opacity: 0.8">
-                            <ion-row>
+                        <div style="font-size: 12px;width:100%;margin-bottom: 5px;color: #43425D; opacity: 0.8">
+                            <ion-row class="rowItem"
+                                (click)="filterSupportList('pending');clickedText='pending';clickedIndex=null"
+                                [ngClass]="{
+                                'backColor': clickedText === 'pending', 'noBackColor': clickedText !== 'pending'}">
                                 <ion-col
                                     style="font-size: 12px;white-space: nowrap;
                                           text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
@@ -96,7 +106,10 @@
                                     <span *ngIf="pendingVal < 10 ">0{{pendingVal}}</span>
                                 </ion-col>
                             </ion-row>
-                            <ion-row>
+                            <ion-row class="rowItem"
+                                (click)="filterSupportList('approve');clickedText='approve';clickedIndex=null"
+                                [ngClass]="{
+                                'backColor': clickedText === 'approve', 'noBackColor': clickedText !== 'approve'}">
                                 <ion-col
                                     style="font-size: 12px;white-space: nowrap;
                                           text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
@@ -108,7 +121,9 @@
                                     <span *ngIf="approvedVal < 10 ">0{{approvedVal}}</span>
                                 </ion-col>
                             </ion-row>
-                            <ion-row>
+                            <ion-row class="rowItem"
+                                (click)="filterSupportList('reject');clickedText='reject';clickedIndex=null" [ngClass]="{
+                                'backColor': clickedText === 'reject', 'noBackColor': clickedText !== 'reject'}">
                                 <ion-col
                                     style="font-size: 12px;white-space: nowrap;
                                           text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
@@ -130,9 +145,11 @@
                                     Suggestions Status</ion-col>
                             </ion-row>
                         </div>
-                        <div
-                            style="font-size: 12px;width:100%;padding: 10px;margin-bottom: 5px;color: #43425D; opacity: 0.8">
-                            <ion-row>
+                        <div style="font-size: 12px;width:100%;margin-bottom: 5px;color: #43425D; opacity: 0.8">
+                            <ion-row class="rowItem"
+                                (click)="filterSupportList('allSuggestion');clickedText='allSuggestion';clickedIndex=null"
+                                [ngClass]="{
+                                'backColor': clickedText === 'allSuggestion', 'noBackColor': clickedText !== 'allSuggestion'}">
                                 <ion-col style="font-size: 12px;white-space: nowrap;
                                       text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
                                     All</ion-col>
@@ -177,7 +194,7 @@
                                             </ng-container>
                                         </ng-container>
                                     </ng-container>
-                                    <ion-col
+                                    <ion-col size="9"
                                         style="color: #4d4f5c;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                         <p
                                             style="opacity: 0.8;font-size: 12px;font-weight: bold;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;margin-bottom: 0;">
@@ -185,6 +202,14 @@
                                         </p>
                                         <p style="font-size: 12px;opacity: 0.8;padding: 0;">
                                             {{item.TITLE}}
+                                        </p>
+                                        <p style="font-size: 12px;opacity: 0.8;padding: 0;overflow: hidden;
+                                        text-overflow: ellipsis;">
+                                            {{item.DESCRIPTION}}
+                                        </p>
+                                        <p style="font-size: 12px;opacity: 0.8;padding: 0;"
+                                            *ngIf="item.STATUS != undefined">
+                                            <strong>Status: {{item.STATUS}}</strong>
                                         </p>
                                     </ion-col>
                                     <ion-col align-self-center style="padding-right: 15px;
@@ -202,10 +227,10 @@
                         </div>
                     </div>
                     <div class="message">
-                        <div class="messageText" *ngIf="clickedIndex == undefined">
+                        <div class="messageText" *ngIf="clickedIndex == undefined && clickedIndex == null">
                             Select a message
                         </div>
-                        <ng-container *ngIf="clickedIndex !== undefined">
+                        <ng-container *ngIf="clickedIndex !== undefined && clickedIndex !== null">
                             <!------------------------- suggestions ---------------------------------->
                             <div *ngIf="selectedDetails.REQUEST_TYPE === 'suggestions'">
                                 <ion-button

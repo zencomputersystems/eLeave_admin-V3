@@ -17,26 +17,138 @@ import { ClientApiService } from '../client/client-api.service';
 })
 export class SupportComponent implements OnInit {
 
+    /**
+     * all support message for this tenant
+     * @type {*}
+     * @memberof SupportComponent
+     */
     public supportList: any;
+
+    /**
+     * copy of all support message for this tenant
+     * @type {*}
+     * @memberof SupportComponent
+     */
+    public copySupportList: any;
+
+    /**
+     * total number of suggestion message from support list
+     * @type {number}
+     * @memberof SupportComponent
+     */
     public suggestLength: number;
+
+    /**
+     * total number of request message from support list
+     * @type {number}
+     * @memberof SupportComponent
+     */
     public requestLength: number;
+
+    /**
+     * total number of request pending message from support list
+     * @type {number}
+     * @memberof SupportComponent
+     */
     public pendingVal: number = 0;
+
+    /**
+     * total number of request approved message from support list
+     * @type {number}
+     * @memberof SupportComponent
+     */
     public approvedVal: number = 0;
+
+    /**
+     * total number of request rejected message from support list
+     * @type {number}
+     * @memberof SupportComponent
+     */
     public rejectedVal: number = 0;
+
+    /**
+     * show spinner when loading to this page
+     * @type {boolean}
+     * @memberof SupportComponent
+     */
     public showSpinner: boolean = true;
+
+    /**
+     * selected message index
+     * @type {number}
+     * @memberof SupportComponent
+     */
     public clickedIndex: number;
+
+    /**
+     * get all profile picture list
+     * @type {*}
+     * @memberof SupportComponent
+     */
     public url: any;
+
+    /**
+     * selected message details from support list
+     * @type {*}
+     * @memberof SupportComponent
+     */
     public selectedDetails: any;
+
+    /**
+     * selected message conversation get by supportId
+     * @type {*}
+     * @memberof SupportComponent
+     */
     public conversationList: any;
+
+    /**
+     * message ngmodel value from editor
+     * @type {*}
+     * @memberof SupportComponent
+     */
     public message: any;
+
+    /**
+     * attachment file type
+     * @type {string}
+     * @memberof SupportComponent
+     */
     public fileTypeOutput: string;
+
+    /**
+     * this logged in user info from API
+     * @type {*}
+     * @memberof SupportComponent
+     */
     public info: any;
+
+    /**
+     * selected menu text
+     * @type {string}
+     * @memberof SupportComponent
+     */
+    public clickedText: string = 'all';
+
+    /**
+     * get attachment name after POST
+     * @private
+     * @type {string}
+     * @memberof SupportComponent
+     */
     private _fileName: string = '';
+
+    /**
+     * filtered array list('all', 'suggestion', 'request',..) from selected menu
+     * @private
+     * @memberof SupportComponent
+     */
+    private filteredSupport = [];
 
     /**
      *Creates an instance of SupportComponent.
      * @param {SupportApiService} supportApi
      * @param {APIService} apiService
+     * @param {ClientApiService} clientApi
      * @memberof SupportComponent
      */
     constructor(private supportApi: SupportApiService, private apiService: APIService, private clientApi: ClientApiService) {
@@ -55,6 +167,7 @@ export class SupportComponent implements OnInit {
                 let value = data.request.concat(data.suggestion);
                 value.sort((a, b) => new Date(b.CREATION_TS).getTime() - new Date(a.CREATION_TS).getTime());
                 this.supportList = value;
+                this.copySupportList = this.supportList;
                 for (let i = 0; i < this.supportList.length; i++) {
                     if (this.supportList[i].STATUS != undefined) {
                         if (this.supportList[i].STATUS === 'pending') {
@@ -74,6 +187,70 @@ export class SupportComponent implements OnInit {
         this.apiService.get_profile_pic('all').subscribe(data => {
             this.url = data;
         });
+    }
+
+    /**
+     * filter support message according selected item
+     * @param {string} type
+     * @memberof SupportComponent
+     */
+    filterSupportList(type: string) {
+        this.supportList = this.copySupportList;
+        switch (type) {
+            case "all":
+                this.supportList = this.copySupportList;
+                break;
+
+            case "request":
+                this.filteredSupport = [];
+                for (let i = 0; i < this.supportList.length; i++) {
+                    if (this.supportList[i].REQUEST_TYPE != 'suggestions') {
+                        this.filteredSupport.push(this.supportList[i]);
+                    }
+                }
+                this.supportList = this.filteredSupport;
+                break;
+
+            case "suggestion":
+                this.filteredSupport = [];
+                for (let i = 0; i < this.supportList.length; i++) {
+                    if (this.supportList[i].REQUEST_TYPE == 'suggestions') {
+                        this.filteredSupport.push(this.supportList[i]);
+                    }
+                }
+                this.supportList = this.filteredSupport;
+                break;
+
+            case "pending":
+                this.filteredSupport = [];
+                for (let i = 0; i < this.supportList.length; i++) {
+                    if (this.supportList[i].STATUS === 'pending') {
+                        this.filteredSupport.push(this.supportList[i]);
+                    }
+                }
+                this.supportList = this.filteredSupport;
+                break;
+
+            case "approve":
+                this.filteredSupport = [];
+                for (let i = 0; i < this.supportList.length; i++) {
+                    if (this.supportList[i].STATUS === 'approved') {
+                        this.filteredSupport.push(this.supportList[i]);
+                    }
+                }
+                this.supportList = this.filteredSupport;
+                break;
+
+            case "reject":
+                this.filteredSupport = [];
+                for (let i = 0; i < this.supportList.length; i++) {
+                    if (this.supportList[i].STATUS === 'rejected') {
+                        this.filteredSupport.push(this.supportList[i]);
+                    }
+                }
+                this.supportList = this.filteredSupport;
+                break;
+        }
     }
 
     /**
