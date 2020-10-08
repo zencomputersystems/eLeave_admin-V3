@@ -684,6 +684,33 @@
                   </ion-item>
                 </ion-row>
                 <ion-row class="rowDetails">
+                  <ion-col align-self-center class="text configurationText">
+                    Allow applicant to apply leave less than number of day(s) stated below
+                  </ion-col>
+                  <ion-col align-self-center class="configurationTextGroup">
+                    <div style="height: 30px;">
+                      <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
+                        <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
+                          [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck"
+                          (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=true:entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=false">
+                        </ion-toggle>
+                      </div>
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === true">
+                        Allow</p>
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === false">
+                        Not Allowed</p>
+                    </div>
+                    <mat-form-field appearance="outline" style="height: 55px;
+                    font-size: 12px; width: -webkit-fill-available;color: #43425d;float:right">
+                      <input matInput
+                        [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.textValue"
+                        [disabled]="mainToggle === 'OFF'">
+                    </mat-form-field>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="rowDetails">
                   <ion-col align-self-center class="text" style="min-width: 100px; flex: 1;">
                     Apply Before
                   </ion-col>
@@ -736,35 +763,7 @@
                   <ion-item class="divider" lines="full">
                   </ion-item>
                 </ion-row>
-                <ion-row class="rowDetails">
-                  <ion-col align-self-center class="text configurationText">
-                    Allow applicant to apply leave less than number of day(s) stated above
-                  </ion-col>
-                  <ion-col align-self-center class="configurationTextGroup">
-                    <div style="height: 30px;">
-                      <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
-                        <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                          [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck"
-                          (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=true:entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=false">
-                        </ion-toggle>
-                      </div>
-                      <p class="settingText"
-                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === true">
-                        Allow</p>
-                      <p class="settingText"
-                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === false">
-                        Not Allowed</p>
-                    </div>
-                    <mat-form-field appearance="outline" style="height: 55px;
-                    font-size: 12px; width: -webkit-fill-available;color: #43425d;float:right">
-                      <input matInput
-                        [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.textValue"
-                        [disabled]="mainToggle === 'OFF'">
-                    </mat-form-field>
-                  </ion-col>
-                  <ion-item class="divider" lines="full">
-                  </ion-item>
-                </ion-row>
+
                 <ion-row class="rowDetails">
                   <ion-col align-self-center class="text">
                     Make short notice application as Emergency
@@ -787,6 +786,33 @@
                   </ion-col>
                   <ion-item class="divider" lines="full">
                   </ion-item>
+                </ion-row>
+                <ion-row class="rowDetails">
+                  <ion-col align-self-center class="text configurationText">
+                    Allow applicant to submit backdated leave after number of day(s) stated below
+                  </ion-col>
+                  <ion-col align-self-center class="configurationTextGroup">
+                    <div style="height: 30px;">
+                      <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
+                        <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
+                          [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck"
+                          (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = true: entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = false">
+                        </ion-toggle>
+                      </div>
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === true">
+                        Allow</p>
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === false">
+                        Not Allowed</p>
+                    </div>
+                    <mat-form-field appearance="outline" style="height: 55px;
+                    font-size: 12px; color: #43425d;float:right; width: -webkit-fill-available;">
+                      <input matInput
+                        [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.textValue"
+                        [disabled]="mainToggle === 'OFF'">
+                    </mat-form-field>
+                  </ion-col>
                 </ion-row>
                 <ion-row class="rowDetails">
                   <ion-col align-self-center class="text">
@@ -837,35 +863,6 @@
                     <p class="settingText"
                       *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === true">
                       Holiday, Rest Day</p>
-                  </ion-col>
-                  <ion-item class="divider" lines="full">
-                  </ion-item>
-                </ion-row>
-                <ion-row class="rowDetails">
-                  <ion-col align-self-center class="text configurationText">
-                    Allow applicant to submit backdated leave after number of day(s) stated above
-                  </ion-col>
-                  <ion-col align-self-center class="configurationTextGroup">
-                    <div style="height: 30px;">
-                      <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
-                        <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                          [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck"
-                          (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = true: entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = false">
-                        </ion-toggle>
-                      </div>
-                      <p class="settingText"
-                        *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === true">
-                        Allow</p>
-                      <p class="settingText"
-                        *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === false">
-                        Not Allowed</p>
-                    </div>
-                    <mat-form-field appearance="outline" style="height: 55px;
-                    font-size: 12px; color: #43425d;float:right; width: -webkit-fill-available;">
-                      <input matInput
-                        [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.textValue"
-                        [disabled]="mainToggle === 'OFF'">
-                    </mat-form-field>
                   </ion-col>
                   <ion-item class="divider" lines="full">
                   </ion-item>
@@ -933,7 +930,7 @@
                 </ion-row>
                 <ion-row class="rowDetails">
                   <ion-col align-self-center class="text">
-                    Allow to apply leave after
+                    Allow applicant to apply leave upon
                   </ion-col>
                   <ion-col align-self-center class="configurationCol">
                     <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
@@ -952,7 +949,7 @@
                 </ion-row>
                 <ion-row class="rowDetails">
                   <ion-col align-self-center class="text configurationText">
-                    Allow applicant to cancel leave after start/expired date
+                    Allow applicant to cancel leave after the application start/end date
                   </ion-col>
                   <ion-col align-self-center class="configurationTextGroup">
                     <div style="height: 30px;">
@@ -981,7 +978,7 @@
                 </ion-row>
                 <ion-row class="rowDetails">
                   <ion-col align-self-center class="text configurationText">
-                    Allow applicant to use previous year bring forward leave only
+                    Allow applicant to use carry forward leave from previous year only
                   </ion-col>
                   <ion-col align-self-center class="configurationTextGroup">
                     <div style="height: 30px;">
@@ -1351,6 +1348,34 @@
                   <ion-item class="divider" lines="full">
                   </ion-item>
                 </ion-row>
+                <ion-row class="rowDetails rowMobileDetails">
+                  <ion-col align-self-center class="text configurationText">
+                    Allow applicant to apply leave less than number of day(s) stated below
+                  </ion-col>
+                  <ion-col align-self-center class="configurationTextGroup">
+                    <div style="height: 30px;">
+                      <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
+                        <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
+                          [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck"
+                          (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=true:entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=false">
+                        </ion-toggle>
+                      </div>
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === true">
+                        Allow</p>
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === false">
+                        Not Allowed</p>
+                    </div>
+                    <mat-form-field appearance="outline" class="formField">
+                      <input matInput
+                        [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.textValue"
+                        [disabled]="mainToggle === 'OFF'">
+                    </mat-form-field>
+                  </ion-col>
+                  <ion-item class="divider" lines="full">
+                  </ion-item>
+                </ion-row>
                 <ion-row class="rowDetails rowMobileDetails" style="flex-flow: row wrap;">
                   <ion-col align-self-center class="text" style="flex:1 1 50%; min-width: 30px;">
                     Apply Before
@@ -1405,34 +1430,6 @@
                   </ion-item>
                 </ion-row>
                 <ion-row class="rowDetails rowMobileDetails">
-                  <ion-col align-self-center class="text configurationText">
-                    Allow applicant to apply leave less than number of day(s) stated above
-                  </ion-col>
-                  <ion-col align-self-center class="configurationTextGroup">
-                    <div style="height: 30px;">
-                      <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
-                        <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                          [checked]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck"
-                          (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=true:entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck=false">
-                        </ion-toggle>
-                      </div>
-                      <p class="settingText"
-                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === true">
-                        Allow</p>
-                      <p class="settingText"
-                        *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === false">
-                        Not Allowed</p>
-                    </div>
-                    <mat-form-field appearance="outline" class="formField">
-                      <input matInput
-                        [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.textValue"
-                        [disabled]="mainToggle === 'OFF'">
-                    </mat-form-field>
-                  </ion-col>
-                  <ion-item class="divider" lines="full">
-                  </ion-item>
-                </ion-row>
-                <ion-row class="rowDetails rowMobileDetails">
                   <ion-col align-self-center class="text">
                     Make short notice application as Emergency
                   </ion-col>
@@ -1451,6 +1448,34 @@
                         *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.markAsEmergency === false">
                         No</p>
                     </div>
+                  </ion-col>
+                  <ion-item class="divider" lines="full">
+                  </ion-item>
+                </ion-row>
+                <ion-row class="rowDetails rowMobileDetails">
+                  <ion-col align-self-center class="text configurationText">
+                    Allow applicant to submit backdated leave after number of day(s) stated below
+                  </ion-col>
+                  <ion-col align-self-center class="configurationTextGroup">
+                    <div style="height: 30px;">
+                      <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
+                        <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
+                          [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck"
+                          (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = true: entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = false">
+                        </ion-toggle>
+                      </div>
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === true">
+                        Allow</p>
+                      <p class="settingText"
+                        *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === false">
+                        Not Allowed</p>
+                    </div>
+                    <mat-form-field appearance="outline" class="configurationForm">
+                      <input matInput
+                        [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.textValue"
+                        [disabled]="mainToggle === 'OFF'">
+                    </mat-form-field>
                   </ion-col>
                   <ion-item class="divider" lines="full">
                   </ion-item>
@@ -1504,34 +1529,6 @@
                     <p class="settingText"
                       *ngIf="mainToggle === 'OFF' && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday === true && entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeRestDay === true">
                       Holiday, Rest Day</p>
-                  </ion-col>
-                  <ion-item class="divider" lines="full">
-                  </ion-item>
-                </ion-row>
-                <ion-row class="rowDetails rowMobileDetails">
-                  <ion-col align-self-center class="text configurationText">
-                    Allow applicant to submit backdated leave after number of day(s) stated above
-                  </ion-col>
-                  <ion-col align-self-center class="configurationTextGroup">
-                    <div style="height: 30px;">
-                      <div style="margin-top: -4px;float: right;" *ngIf="mainToggle === 'ON'">
-                        <ion-toggle style="zoom:0.70;--background: #ff6768;" mode="ios" color="secondary"
-                          [checked]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck"
-                          (ionChange)="$event.detail.checked === true?entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = true: entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck = false">
-                        </ion-toggle>
-                      </div>
-                      <p class="settingText"
-                        *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === true">
-                        Allow</p>
-                      <p class="settingText"
-                        *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === false">
-                        Not Allowed</p>
-                    </div>
-                    <mat-form-field appearance="outline" class="configurationForm">
-                      <input matInput
-                        [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.textValue"
-                        [disabled]="mainToggle === 'OFF'">
-                    </mat-form-field>
                   </ion-col>
                   <ion-item class="divider" lines="full">
                   </ion-item>
@@ -1599,7 +1596,7 @@
                 </ion-row>
                 <ion-row class="rowDetails rowMobileDetails">
                   <ion-col align-self-center class="text">
-                    Allow to apply leave after
+                    Allow applicant to apply leave upon
                   </ion-col>
                   <ion-col align-self-center class="configurationCol">
                     <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" class="formField">
@@ -1617,7 +1614,7 @@
                 </ion-row>
                 <ion-row class="rowDetails rowMobileDetails">
                   <ion-col align-self-center class="text configurationText">
-                    Allow applicant to cancel leave after start/expired date
+                    Allow applicant to cancel leave after the application start/end date
                   </ion-col>
                   <ion-col align-self-center class="configurationTextGroup">
                     <div style="height: 30px;">
@@ -1645,7 +1642,7 @@
                 </ion-row>
                 <ion-row class="rowDetails rowMobileDetails">
                   <ion-col align-self-center class="text configurationText">
-                    Allow applicant to use previous year bring forward leave only
+                    Allow applicant to use carry forward leave from previous year only
                   </ion-col>
                   <ion-col align-self-center class="configurationTextGroup">
                     <div style="height: 30px;">

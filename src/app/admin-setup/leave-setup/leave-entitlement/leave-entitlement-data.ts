@@ -9,21 +9,21 @@ export const entitlementData: any =
     "description": "",
     "leavetype_id": "",
     "property": {
-        "applyInAdvance": false,
+        "applyInAdvance": true,
         "applyNextYear": false,
         "claimEntitlement": false,
-        "applyFractionUnit": false,
+        "applyFractionUnit": true,
         "includeOtherLeaveType": "",
-        "attachmentRequired": false,
+        "attachmentRequired": true,
         "excludeDayType": {
-            "isExcludeHoliday": false,
-            "isExcludeRestDay": false
+            "isExcludeHoliday": true,
+            "isExcludeRestDay": true
         },
         "applyBeforeProperties": {
             "numberOfDays": 3,
             "isAllowShortNotice": {
                 "isCheck": false,
-                "textValue": "SHORT NOTICE APPLICATION"
+                "textValue": "Short Notice Application"
             },
             "excludeDayType": {
                 "isExcludeHoliday": false,
@@ -35,7 +35,7 @@ export const entitlementData: any =
             "numberOfDays": 0,
             "isAllowBackdated": {
                 "isCheck": false,
-                "textValue": "BACK DATE APPLICATION"
+                "textValue": "Back Date Application"
             },
             "excludeDayType": {
                 "isExcludeHoliday": false,
@@ -43,7 +43,7 @@ export const entitlementData: any =
             }
         },
         "isAllowAppliedMoreThanBalance": {
-            "isCheck": false,
+            "isCheck": true,
             "textValue": "UNPAID LEAVE"
         },
         "isAllowAfterJoinDate": {
@@ -52,11 +52,11 @@ export const entitlementData: any =
         },
         "isAllowLeaveCancelAfterDate": {
             "isCheck": false,
-            "textValue": "Leave cancellation"
+            "textValue": "Leave Cancellation"
         },
         "isLimitApplicationToCarryForward": {
             "isCheck": false,
-            "textValue": "Bring Forward Leave"
+            "textValue": "Carry Forward Leave"
         },
         "maxDayPerLeave": 0,
         "leaveEntitlementType": "Entitled in full",
@@ -67,7 +67,7 @@ export const entitlementData: any =
                 "serviceYearFrom": 0,
                 "serviceYearTo": 4,
                 "entitledDays": 14,
-                "carryForward": 3
+                "carryForward": 5
             }
         }
     }
