@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { MatSnackBar } from "@angular/material";
-import { APIService } from "../../../../src/services/shared-service/api.service";
-import { environment } from "../../../../src/environments/environment";
 import { SnackbarNotificationComponent } from "../../admin-setup/leave-setup/snackbar-notification/snackbar-notification.component";
 import { AttendanceSetupApiService } from "../attendance-setup-api.service";
 

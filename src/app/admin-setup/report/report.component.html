@@ -145,25 +145,31 @@
               <mat-form-field appearance="outline"
                 style="height: 55px;font-size: 12px;width: 100%;color: #43425d;opacity: 0.8;">
                 <mat-select [(value)]="selects" placeholder="Nothing Selected">
-                  <mat-option value="leave-entitlement">Leave Entitlement Summary</mat-option>
-                  <mat-option value="approval-override">Approval Override History</mat-option>
-                  <mat-option value="apply-on-behalf">Apply On Behalf History</mat-option>
-                  <!-- <mat-option value="entitlement-claim">Entitlement Claim History</mat-option> -->
-                  <mat-option value="leave-taken">Leave Taken History</mat-option>
-                  <mat-option value="leave-adjustment">Leave Adjustment History</mat-option>
-                  <mat-option value="leave-cancellation">Leave Cancellation History</mat-option>
-                  <mat-option value="leave-rejected">Leave Rejected History</mat-option>
-                  <mat-option value="leave-forfeited">Forfeited Leave History</mat-option>
-                  <mat-option value="employee-master-list">Employee Master List</mat-option>
+                  <mat-optgroup label="beeLeave">
+                    <mat-option value="leave-entitlement">Leave Entitlement Summary</mat-option>
+                    <mat-option value="approval-override">Approval Override History</mat-option>
+                    <mat-option value="apply-on-behalf">Apply On Behalf History</mat-option>
+                    <!-- <mat-option value="entitlement-claim">Entitlement Claim History</mat-option> -->
+                    <mat-option value="leave-taken">Leave Taken History</mat-option>
+                    <mat-option value="leave-adjustment">Leave Adjustment History</mat-option>
+                    <mat-option value="leave-cancellation">Leave Cancellation History</mat-option>
+                    <mat-option value="leave-rejected">Leave Rejected History</mat-option>
+                    <mat-option value="leave-forfeited">Forfeited Leave History</mat-option>
+                    <mat-option value="employee-master-list">Employee Master List</mat-option>
+                  </mat-optgroup>
+                  <mat-optgroup label="beeWhere">
+                    <mat-option value="attendance">Attendance History</mat-option>
+                    <mat-option value="activity">Activity History</mat-option>
+                  </mat-optgroup>
                 </mat-select>
               </mat-form-field>
             </div>
             <div
               style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
               <ion-row>
-                <ion-col size="10" style="font-size: 12px;white-space: nowrap;
+                <ion-col size="10" style="font-size: 12px;
                           text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                  LEAVE TYPES <p style="font-size: 11px;">Not required for Employee Master List</p>
+                  LEAVE TYPES <p style="font-size: 11px;">Not required for Employee Master List & beeWhere Report</p>
                 </ion-col>
               </ion-row>
             </div>
@@ -1557,6 +1563,137 @@
                   </ion-col>
                   <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                     {{item.status}}
+                  </ion-col>
+                </ion-row>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </ion-card-content>
+
+      <!-- attendance history -->
+      <ion-card-content *ngIf="selects == 'attendance' && clickedProduce==true"
+        style=" max-height: 100%;height: 100%;padding: 0;">
+        <div id="template" style="height: 100%;overflow-x: auto; overflow-y: hidden;">
+          <div
+            style="width:100%;background: #43425d;color:white;font-size: 12px;padding: 10px;border-radius: 4px 4px 0px 0px;min-width: fit-content;">
+            <mat-form-field appearance="outline" id="saveas"
+              style="font-size: 12px;width: 130px;color: #43425d;float: right;">
+              <mat-select placeholder="Save As">
+                <mat-option value="PDF"
+                  (click)="savePDF('Attendance History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Clock In Time', dataKey: 'clock_in_time' }, { header: 'Clock In Address', dataKey: 'clock_in_add' }, { header: 'Clock Out Time', dataKey: 'clock_out_time' }, { header: 'Clock Out Address', dataKey: 'clock_out_add' },{ header: 'Total Hours', dataKey: 'total_hrs' }])">
+                  PDF
+                </mat-option>
+                <mat-option value="CSV"
+                  (click)="saveCSV('Attendance History',['employeeNo', 'employeeName', 'attendance.clock_in_time', 'attendance.address_in', 'attendance.project_code_in', 'attendance.contract_code_in','attendance.clock_out_time', 'attendance.address_out','attendance.total_hrs']);">
+                  CSV
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <ion-row>
+              <ion-col style="font-weight: bold;white-space: nowrap; font-size: 14px;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                Attendance History - {{selectedName}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col style="padding-top: 0;color: white;padding-bottom: 0;margin-bottom: 20px;">
+                From <strong>{{firstPicker.value | date:'dd MMM yyyy' }}</strong> to
+                <strong>{{secondPicker.value | date:'dd MMM yyyy' }}</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row style="display: flex; flex-flow: row nowrap;">
+              <ion-col size="0.3" class="titleRow"
+                style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 26px;">
+                No</ion-col>
+              <ion-col size="1" class="titleRow"
+                style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 83px;">
+                Employee No</ion-col>
+              <ion-col size="2" class="titleRow"
+                style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 175px;">
+                Employee Name</ion-col>
+              <ion-col size="1"
+                style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 105px;">
+                Clock In Date</ion-col>
+              <ion-col size="3"
+                style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 132px;">
+                Clock In Time</ion-col>
+              <ion-col size="3"
+                style="text-align: left;display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 88px;">
+                Clock Out Time</ion-col>
+              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 95px;">
+                Total Hours</ion-col>
+            </ion-row>
+          </div>
+
+          <div class="content" style="min-width: fit-content;">
+            <!-- ngFor under this div -->
+            <ng-container *ngFor="let item of arrayDetails; let i=index; let odd=odd;">
+              <div style="padding: 10px;" [ngClass]="{ odd: odd }">
+                <ion-row style="display: flex; flex-flow: row nowrap;">
+                  <ion-col size="0.3" class="titleRow text" style="min-width: 26px;white-space: pre-line;">{{i + 1}}
+                  </ion-col>
+                  <ion-col size="1" class="titleRow text" style="min-width: 83px;white-space: pre-line;">
+                    {{item.employeeNo}}</ion-col>
+                  <ion-col size="2" class="text" style="text-align: left;white-space: pre-line;min-width: 175px;">
+                    {{item.employeeName}}
+                  </ion-col>
+                  <ion-col size="1" class="text" style="min-width: 105px;white-space: pre-line;">
+                    <div *ngFor="let value of item.attendance; let j=index" [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
+                      style="width: calc( 100% + 10px );border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
+                      <p class="text">{{value.clock_in_time | date:'yyyy-MM-dd'}}
+                      </p>
+                    </div>
+                  </ion-col>
+                  <ion-col size="3" style=" text-align: left;min-width: 132px;white-space: pre-line;">
+                    <div *ngFor="let value of item.attendance; let j=index" id="widgetParentDiv{{i}}{{j}}"
+                    [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
+                      style="width: calc( 100% + 10px );border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
+                      <p class="text">{{value.clock_in_time | date:'yyyy-MM-dd  HH:mm'}}
+                      </p>
+                      <p class="text" style="display: inline-block;">{{value.job_type_in }}
+                      </p>
+                      <ion-button *ngIf="value.project_code_in != null"
+                        style="pointer-events: none;--background: var(--ion-color-project);font-size: 10px;height: 18px;margin-top: 0;">
+                        {{value.project_code_in}}
+                      </ion-button>
+                      <ion-button *ngIf="value.contract_code_in != null"
+                        style="pointer-events: none;--background: var(--ion-color-contract);font-size: 10px;height: 18px;margin-top: 0;">
+                        {{value.contract_code_in}}
+                      </ion-button>
+                      <p class="text" style="width: calc(100% - 10px);">{{value.address_in }}
+                      </p>
+                      <!-- <ion-item class="divider" lines="full">
+                        </ion-item> -->
+                      <!-- </div> -->
+                    </div>
+                  </ion-col>
+                  <ion-col size="3" style="min-width: 88px;white-space: pre-line;">
+                    <div *ngFor="let value of item.attendance; let j=index" [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
+                      style="width: calc( 100% + 10px );border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
+                      <p class="text">{{value.clock_out_time | date:'yyyy-MM-dd  HH:mm'}}
+                      </p>
+                      <p class="text" style="width: calc(100% - 10px);">{{value.address_out }}
+                      </p>
+                      <!-- <ion-item class="divider" lines="full">
+                      </ion-item> -->
+                    </div>
+                  </ion-col>
+                  <ion-col size="1" class="titleRow" style="min-width: 95px;white-space: pre-line;">
+                    <div *ngFor="let value of item.attendance; let j=index" [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
+                      style="width: calc( 100% + 10px );border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
+                      <p class="titleRow text">{{value.total_hrs }}
+                      </p>
+                      <!-- <ion-item class="divider" lines="full">
+                      </ion-item> -->
+                    </div>
                   </ion-col>
                 </ion-row>
               </div>

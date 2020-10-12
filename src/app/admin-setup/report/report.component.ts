@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../leave-setup/date.adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { FormControl } from '@angular/forms';
@@ -312,6 +312,23 @@ export class ReportComponent implements OnInit {
    */
   private _selectedLeaveTypesList: string[] = [];
 
+  public divHeight = [];
+
+  @HostListener("window:resize") onResize() {
+    setTimeout(() => {
+      this.divHeight = [];
+      for (let i = 0; i < this.arrayDetails.length; i++) {
+        let subArray = [];
+        this.arrayDetails[i].attendance.forEach((element, index) => {
+          let item = document.getElementById('widgetParentDiv' + i + index);
+          item.style.height = null;
+          subArray.push(item.offsetHeight);
+        });
+        this.divHeight.push(subArray);
+      }
+    }, 500);
+  }
+
   /**
    *Creates an instance of ReportComponent.
    * @param {LeaveApiService} leaveAPI
@@ -320,7 +337,8 @@ export class ReportComponent implements OnInit {
    * @param {Platform} reportPlatform
    * @memberof ReportComponent
    */
-  constructor(private leaveAPI: LeaveApiService, private api: APIService, private reportAPI: ReportApiService, public reportPlatform: Platform) {
+  constructor(private leaveAPI: LeaveApiService, private api: APIService, private reportAPI: ReportApiService,
+    public reportPlatform: Platform) {
     this.api.get_profile_pic('all').subscribe(data => {
       this.url = data;
     })
@@ -440,6 +458,41 @@ export class ReportComponent implements OnInit {
               }
             }
           }
+          if (title === 'Attendance History') {
+            let clock_in_time = '', clock_in_date = '', clock_in_add = '', clock_out_time = '', clock_out_add = '', total_hrs = '';
+            for (let i = 0; i < data.table.body.length; i++) {
+              for (let j = 0; j < data.table.body[i].raw.attendance.length; j++) {
+                if (data.row.index === i && data.section === 'body') {
+                  if (title === 'Attendance History') {
+                    switch (data.column.index) {
+                      case 3:
+                        clock_in_time += dayjs(data.table.body[i].raw.attendance[j].clock_in_time).format('YYYY-MM-DD HH:mm') + '\n' + data.table.body[i].raw.attendance[j].job_type_in + ' ' + data.table.body[i].raw.attendance[j].project_code_in + ' ' + data.table.body[i].raw.attendance[j].contract_code_in + '\n' + '\n'  + '\n';
+                        data.cell.text = clock_in_time.split('\n');
+                        data.cell.styles.cellWidth = 30;
+                        break;
+                      case 4:
+                        clock_in_add += data.table.body[i].raw.attendance[j].address_in + '\n' + '\n' + '\n';
+                        data.cell.text = clock_in_add.split('\n');
+                        break;
+                      case 5:
+                        clock_out_time += dayjs(data.table.body[i].raw.attendance[j].clock_out_time).format('YYYY-MM-DD HH:mm') + '\n' + '\n' + '\n' ;
+                        data.cell.text = clock_out_time.split('\n');
+                        data.cell.styles.cellWidth = 30;
+                        break;
+                      case 6:
+                        clock_out_add += data.table.body[i].raw.attendance[j].address_out + '\n' + '\n' + '\n';
+                        data.cell.text = clock_out_add.split('\n');
+                        break;
+                      case 7:
+                        total_hrs += data.table.body[i].raw.attendance[j].total_hrs + '\n' + '\n' + '\n';
+                        data.cell.text = total_hrs.split('\n');
+                        break;
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       })
       let convertFileType = doc.output('blob');
@@ -459,7 +512,7 @@ export class ReportComponent implements OnInit {
   saveCSV(title: string, fields) {
     const zip = new JSZip();
     for (let i = 0; i < this.groupValue.length; i++) {
-      const json2csvParser = new Parser({ fields, unwind: ['leaveDetail', 'leaveDetail.leaveDetail'] });
+      const json2csvParser = new Parser({ fields, unwind: ['leaveDetail', 'leaveDetail.leaveDetail', 'attendance'] });
       const csv = json2csvParser.parse(this.groupValue[i]);
       const blob = new Blob([csv], { type: "text/plain" });
       zip.file(title + ' - ' + this.groupKey[i] + '.csv', blob, { base64: true });
@@ -681,38 +734,92 @@ export class ReportComponent implements OnInit {
         this._selectedLeaveTypesList.push(this.leaveTypes[i].LEAVE_TYPE_GUID);
       }
     }
-    this.reportAPI.get_bundle_report(this.selects).subscribe(value => {
-      this.tableDetails = value;
-      this.arrayDetails = [];
-      for (let i = 0; i < this.tableDetails.length; i++) {
-        if (this.selectedUserId.includes(this.tableDetails[i].userGuid)) {
-          this.arrayDetails.push(this.tableDetails[i]);
+
+    if (this.selects !== 'attendance' && this.selects !== 'activity') {
+      this.reportAPI.get_bundle_report(this.selects).subscribe(value => {
+        this.tableDetails = value;
+        this.arrayDetails = [];
+        for (let i = 0; i < this.tableDetails.length; i++) {
+          if (this.selectedUserId.includes(this.tableDetails[i].userGuid)) {
+            this.arrayDetails.push(this.tableDetails[i]);
+          }
         }
-      }
-      this.filter();
-      let data = require('lodash').groupBy(this.arrayDetails, groupName);
-      this.groupValue = Object.values(data);
-      this.groupKey = Object.keys(data);
-      this.groupValue.splice(0, 0, this.arrayDetails);
-      this.groupKey.splice(0, 0, 'All');
-      if (groupName === 'all') {
-        this.groupValue.splice(1, 1);
-        this.groupKey.splice(1, 1);
-      }
-      this.showSpinner = false;
-      this.clickedProduce = true;
-      this.selectedName = this.groupKey[0];
-      for (let j = 0; j < this.groupValue.length; j++) {
-        for (let i = 0; i < this.groupValue[j].length; i++) {
-          this.groupValue[j][i]["no"] = i + 1;
+        this.filter();
+        let data = require('lodash').groupBy(this.arrayDetails, groupName);
+        this.groupValue = Object.values(data);
+        this.groupKey = Object.keys(data);
+        this.groupValue.splice(0, 0, this.arrayDetails);
+        this.groupKey.splice(0, 0, 'All');
+        if (groupName === 'all') {
+          this.groupValue.splice(1, 1);
+          this.groupKey.splice(1, 1);
         }
-      }
-      this.arrayDetails = this.groupValue[0];
-    }, error => {
-      this.showSpinner = false;
-      this.leaveAPI.openSnackBar('Report not ready yet', false);
-    });
+        this.showSpinner = false;
+        this.clickedProduce = true;
+        this.selectedName = this.groupKey[0];
+        for (let j = 0; j < this.groupValue.length; j++) {
+          for (let i = 0; i < this.groupValue[j].length; i++) {
+            this.groupValue[j][i]["no"] = i + 1;
+          }
+        }
+        this.arrayDetails = this.groupValue[0];
+      }, error => {
+        this.showSpinner = false;
+        this.leaveAPI.openSnackBar('Report not ready yet', false);
+      });
+    }
+
+    if (this.selects == 'attendance') {
+      let stringOfNames = this.selectedUserId.toString();
+      let start = dayjs(this.firstPicker.value).format('YYYY-MM-DD');
+      let end = dayjs(this.secondPicker.value).format('YYYY-MM-DD');
+      console.log(start, end, stringOfNames);
+      this.reportAPI.get_attendance_report(start, end, stringOfNames).
+        subscribe(value => {
+          this.tableDetails = value;
+          this.arrayDetails = [];
+          for (let i = 0; i < this.tableDetails.length; i++) {
+            if (this.selectedUserId.includes(this.tableDetails[i].userGuid)) {
+              this.arrayDetails.push(this.tableDetails[i]);
+            }
+          }
+          // this.filter();
+          let data = require('lodash').groupBy(this.arrayDetails, groupName);
+          this.groupValue = Object.values(data);
+          this.groupKey = Object.keys(data);
+          this.groupValue.splice(0, 0, this.arrayDetails);
+          this.groupKey.splice(0, 0, 'All');
+          if (groupName === 'all') {
+            this.groupValue.splice(1, 1);
+            this.groupKey.splice(1, 1);
+          }
+          this.showSpinner = false;
+          this.clickedProduce = true;
+          this.selectedName = this.groupKey[0];
+          for (let j = 0; j < this.groupValue.length; j++) {
+            for (let i = 0; i < this.groupValue[j].length; i++) {
+              this.groupValue[j][i]["no"] = i + 1;
+            }
+          }
+          this.arrayDetails = this.groupValue[0];
+          console.log(this.arrayDetails);
+          setTimeout(() => {
+            this.divHeight = [];
+            for (let i = 0; i < this.arrayDetails.length; i++) {
+              let sub = [];
+              this.arrayDetails[i].attendance.forEach((element, index) => {
+                let a = document.getElementById('widgetParentDiv' + i + index);
+                sub.push(a.offsetHeight);
+              });
+              this.divHeight.push(sub);
+            }
+            console.log(this.divHeight);
+          }, 500);
+        })
+    }
+
   }
+
 
   /**
    * filter date range from selected table

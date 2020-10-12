@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { APIService } from '../../../../src/services/shared-service/api.service';
 import { Observable } from 'rxjs';
 import { MenuController } from '@ionic/angular';
+import { AttendanceSetupApiService } from '../../attendance-setup/attendance-setup-api.service';
 
 /**
  * report API
@@ -19,7 +20,7 @@ export class ReportApiService {
      * @param {MenuController} menu access menu controller
      * @memberof ReportApiService
      */
-    constructor(public apiService: APIService, public menu: MenuController) { }
+    constructor(public apiService: APIService, public menu: MenuController, public attendanceApi: AttendanceSetupApiService) { }
 
     /**
      * get individual reports
@@ -42,5 +43,18 @@ export class ReportApiService {
     get_bundle_report(reportType: string): Observable<any> {
         this.apiService.headerAuthorization();
         return this.apiService.getApi('/api/admin/report/' + reportType);
+    }
+
+    /**
+     * get attendance report from amscore API
+     * @param {*} start
+     * @param {*} end
+     * @param {*} userIds
+     * @returns {Observable<any>}
+     * @memberof ReportApiService
+     */
+    get_attendance_report(start, end, userIds): Observable<any> {
+        this.attendanceApi.headerAuthorization();
+        return this.attendanceApi.getApi('/report/attendance/' + start + '/' + end + '/' + userIds);
     }
 }
