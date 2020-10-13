@@ -289,6 +289,8 @@ export class ReportComponent implements OnInit {
    */
   public showGroupSelection: boolean = true;
 
+  public category: string;
+
   /**
    * leave taken details
    * @private
@@ -314,19 +316,55 @@ export class ReportComponent implements OnInit {
 
   public divHeight = [];
 
+  public completionH = [];
+
+  public project;
+
+  public contract;
+
+  public projectValue: string;
+
+  public contractValue: string;
+
   @HostListener("window:resize") onResize() {
-    setTimeout(() => {
-      this.divHeight = [];
-      for (let i = 0; i < this.arrayDetails.length; i++) {
-        let subArray = [];
-        this.arrayDetails[i].attendance.forEach((element, index) => {
-          let item = document.getElementById('widgetParentDiv' + i + index);
-          item.style.height = null;
-          subArray.push(item.offsetHeight);
-        });
-        this.divHeight.push(subArray);
-      }
-    }, 500);
+    if (this.selects === 'attendance') {
+      setTimeout(() => {
+        this.divHeight = [];
+        for (let i = 0; i < this.arrayDetails.length; i++) {
+          let sub = [];
+          this.arrayDetails[i].attendance.forEach((element, index) => {
+            let a = document.getElementById('clockInDiv' + i + index);
+            let b = document.getElementById('clockOutDiv' + i + index);
+            if (a.offsetHeight > b.offsetHeight) {
+              sub.push(a.offsetHeight);
+            }
+            else {
+              sub.push(b.offsetHeight);
+            }
+          });
+          this.divHeight.push(sub);
+        }
+      }, 500);
+    }
+    if (this.selects === 'activity') {
+      setTimeout(() => {
+        this.completionH = [];
+        for (let i = 0; i < this.arrayDetails.length; i++) {
+          let sub = [];
+          this.arrayDetails[i].activity.forEach((element, index) => {
+            let a = document.getElementById('completion' + i + index);
+            let b = document.getElementById('pending' + i + index);
+            if (a.offsetHeight > b.offsetHeight) {
+              sub.push(a.offsetHeight);
+            }
+            else {
+              sub.push(b.offsetHeight);
+            }
+          });
+          this.completionH.push(sub);
+        }
+      }, 500);
+    }
   }
 
   /**
@@ -363,6 +401,8 @@ export class ReportComponent implements OnInit {
     this.leaveAPI.get_company_list().subscribe(data => this.companyList = data);
     this.api.get_master_list('branch').subscribe(data => this.branchList = data);
     this.api.get_master_list('costcentre').subscribe(data => this.costcentre = data);
+    this.reportAPI.get_project_list().subscribe(list => this.project = list);
+    this.reportAPI.get_contract_list().subscribe(list => this.contract = list);
   }
 
 
@@ -463,29 +503,62 @@ export class ReportComponent implements OnInit {
             for (let i = 0; i < data.table.body.length; i++) {
               for (let j = 0; j < data.table.body[i].raw.attendance.length; j++) {
                 if (data.row.index === i && data.section === 'body') {
-                  if (title === 'Attendance History') {
+                  switch (data.column.index) {
+                    case 3:
+                      clock_in_time += dayjs(data.table.body[i].raw.attendance[j].clock_in_time).format('YYYY-MM-DD HH:mm') + '\n' + data.table.body[i].raw.attendance[j].job_type_in + ' ' + data.table.body[i].raw.attendance[j].project_code_in + ' ' + data.table.body[i].raw.attendance[j].contract_code_in + '\n' + '\n' + '\n';
+                      data.cell.text = clock_in_time.split('\n');
+                      data.cell.styles.cellWidth = 30;
+                      break;
+                    case 4:
+                      clock_in_add += data.table.body[i].raw.attendance[j].address_in + '\n' + '\n' + '\n';
+                      data.cell.text = clock_in_add.split('\n');
+                      break;
+                    case 5:
+                      clock_out_time += dayjs(data.table.body[i].raw.attendance[j].clock_out_time).format('YYYY-MM-DD HH:mm') + '\n' + '\n' + '\n';
+                      data.cell.text = clock_out_time.split('\n');
+                      data.cell.styles.cellWidth = 30;
+                      break;
+                    case 6:
+                      clock_out_add += data.table.body[i].raw.attendance[j].address_out + '\n' + '\n' + '\n';
+                      data.cell.text = clock_out_add.split('\n');
+                      break;
+                    case 7:
+                      total_hrs += data.table.body[i].raw.attendance[j].total_hrs + '\n' + '\n' + '\n';
+                      data.cell.text = total_hrs.split('\n');
+                      break;
+                  }
+                }
+              }
+            }
+          }
+          if (title === 'Activity History') {
+            let date = '', socOrContract = '', completion = '', pending = '';
+            for (let i = 0; i < data.table.body.length; i++) {
+              for (let j = 0; j < data.table.body[i].raw.activity.length; j++) {
+                for (let k = 0; k < data.table.body[i].raw.activity[j].completed.length; k++) {
+                  if (data.row.index === i && data.section === 'body') {
                     switch (data.column.index) {
                       case 3:
-                        clock_in_time += dayjs(data.table.body[i].raw.attendance[j].clock_in_time).format('YYYY-MM-DD HH:mm') + '\n' + data.table.body[i].raw.attendance[j].job_type_in + ' ' + data.table.body[i].raw.attendance[j].project_code_in + ' ' + data.table.body[i].raw.attendance[j].contract_code_in + '\n' + '\n'  + '\n';
-                        data.cell.text = clock_in_time.split('\n');
-                        data.cell.styles.cellWidth = 30;
+                        date += dayjs(data.table.body[i].raw.activity[j].date).format('YYYY-MM-DD') + '\n' + '\n';
+                        data.cell.text = date.split('\n');
                         break;
                       case 4:
-                        clock_in_add += data.table.body[i].raw.attendance[j].address_in + '\n' + '\n' + '\n';
-                        data.cell.text = clock_in_add.split('\n');
+                        socOrContract += data.table.body[i].raw.activity[j].project_code_in + ' ' + data.table.body[i].raw.activity[j].contract_code_in + '\n' + '\n';
+                        data.cell.text = socOrContract.split('\n');
                         break;
                       case 5:
-                        clock_out_time += dayjs(data.table.body[i].raw.attendance[j].clock_out_time).format('YYYY-MM-DD HH:mm') + '\n' + '\n' + '\n' ;
-                        data.cell.text = clock_out_time.split('\n');
-                        data.cell.styles.cellWidth = 30;
+                        completion += data.table.body[i].raw.activity[j].completed[k] + '\n' + '\n';
+                        data.cell.text = completion.split('\n');
                         break;
+                    }
+                  }
+                }
+                for (let l = 0; l < data.table.body[i].raw.activity[j].pending.length; l++) {
+                  if (data.row.index === i && data.section === 'body') {
+                    switch (data.column.index) {
                       case 6:
-                        clock_out_add += data.table.body[i].raw.attendance[j].address_out + '\n' + '\n' + '\n';
-                        data.cell.text = clock_out_add.split('\n');
-                        break;
-                      case 7:
-                        total_hrs += data.table.body[i].raw.attendance[j].total_hrs + '\n' + '\n' + '\n';
-                        data.cell.text = total_hrs.split('\n');
+                        pending += data.table.body[i].raw.activity[j].pending[l] + '\n' + '\n';
+                        data.cell.text = pending.split('\n');
                         break;
                     }
                   }
@@ -773,17 +846,11 @@ export class ReportComponent implements OnInit {
       let stringOfNames = this.selectedUserId.toString();
       let start = dayjs(this.firstPicker.value).format('YYYY-MM-DD');
       let end = dayjs(this.secondPicker.value).format('YYYY-MM-DD');
-      console.log(start, end, stringOfNames);
       this.reportAPI.get_attendance_report(start, end, stringOfNames).
         subscribe(value => {
           this.tableDetails = value;
           this.arrayDetails = [];
-          for (let i = 0; i < this.tableDetails.length; i++) {
-            if (this.selectedUserId.includes(this.tableDetails[i].userGuid)) {
-              this.arrayDetails.push(this.tableDetails[i]);
-            }
-          }
-          // this.filter();
+          this.arrayDetails = this.tableDetails;
           let data = require('lodash').groupBy(this.arrayDetails, groupName);
           this.groupValue = Object.values(data);
           this.groupKey = Object.keys(data);
@@ -802,21 +869,87 @@ export class ReportComponent implements OnInit {
             }
           }
           this.arrayDetails = this.groupValue[0];
-          console.log(this.arrayDetails);
           setTimeout(() => {
             this.divHeight = [];
             for (let i = 0; i < this.arrayDetails.length; i++) {
               let sub = [];
               this.arrayDetails[i].attendance.forEach((element, index) => {
-                let a = document.getElementById('widgetParentDiv' + i + index);
-                sub.push(a.offsetHeight);
+                let a = document.getElementById('clockInDiv' + i + index);
+                let b = document.getElementById('clockOutDiv' + i + index);
+                if (a.offsetHeight > b.offsetHeight) {
+                  sub.push(a.offsetHeight);
+                }
+                else {
+                  sub.push(b.offsetHeight);
+                }
               });
               this.divHeight.push(sub);
             }
-            console.log(this.divHeight);
           }, 500);
         })
     }
+
+    if (this.selects == 'activity') {
+      let stringOfNames;
+      if (this.category == 'user') {
+        stringOfNames = this.selectedUserId.toString();
+      }
+      if (this.category == 'contract') {
+        stringOfNames = this.contractValue.toString();
+      }
+      if (this.category == 'project') {
+        stringOfNames = this.projectValue.toString();
+      }
+      let start = dayjs(this.firstPicker.value).format('YYYY-MM-DD');
+      let end = dayjs(this.secondPicker.value).format('YYYY-MM-DD');
+      this.reportAPI.get_activity_report(start, end, this.category, stringOfNames).
+        subscribe(value => {
+          this.tableDetails = value;
+          this.arrayDetails = [];
+          for (let i = 0; i < this.tableDetails.length; i++) {
+            if (this.selectedUserId.includes(this.tableDetails[i].userGuid)) {
+              this.arrayDetails.push(this.tableDetails[i]);
+            }
+          }
+          let data = require('lodash').groupBy(this.arrayDetails, groupName);
+          this.groupValue = Object.values(data);
+          this.groupKey = Object.keys(data);
+          this.groupValue.splice(0, 0, this.arrayDetails);
+          this.groupKey.splice(0, 0, 'All');
+          if (groupName === 'all') {
+            this.groupValue.splice(1, 1);
+            this.groupKey.splice(1, 1);
+          }
+          this.showSpinner = false;
+          this.clickedProduce = true;
+          this.selectedName = this.groupKey[0];
+          for (let j = 0; j < this.groupValue.length; j++) {
+            for (let i = 0; i < this.groupValue[j].length; i++) {
+              this.groupValue[j][i]["no"] = i + 1;
+            }
+          }
+          this.arrayDetails = this.groupValue[0];
+          setTimeout(() => {
+            this.completionH = [];
+            for (let i = 0; i < this.arrayDetails.length; i++) {
+              let sub = [];
+              this.arrayDetails[i].activity.forEach((element, index) => {
+                let a = document.getElementById('completion' + i + index);
+                let b = document.getElementById('pending' + i + index);
+                if (a.offsetHeight > b.offsetHeight) {
+                  sub.push(a.offsetHeight);
+                }
+                else {
+                  sub.push(b.offsetHeight);
+                }
+              });
+              this.completionH.push(sub);
+            }
+          }, 500);
+        })
+    }
+
+
 
   }
 

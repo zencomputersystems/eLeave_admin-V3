@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SpinnerModule } from '../../../../src/library/spinner/spinner.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatDatepickerModule, MatInputModule } from '@angular/material';
+import { MatDialogModule, MatDatepickerModule, MatInputModule, MatRadioModule } from '@angular/material';
 import { ReportComponent } from './report.component';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { MatMenuModule } from '@angular/material/menu';
@@ -39,6 +39,7 @@ const routes: Routes = [
         InlineSVGModule,
         MatMenuModule,
         MatIconModule,
+        MatRadioModule,
         RouterModule.forChild(routes)
     ],
     providers: [],

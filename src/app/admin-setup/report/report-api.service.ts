@@ -46,7 +46,7 @@ export class ReportApiService {
     }
 
     /**
-     * get attendance report from amscore API
+     * get attendance report from amscore environment variable
      * @param {*} start
      * @param {*} end
      * @param {*} userIds
@@ -56,5 +56,39 @@ export class ReportApiService {
     get_attendance_report(start, end, userIds): Observable<any> {
         this.attendanceApi.headerAuthorization();
         return this.attendanceApi.getApi('/report/attendance/' + start + '/' + end + '/' + userIds);
+    }
+
+    /**
+     * get activity report from amscore environment variable
+     * @param {*} start
+     * @param {*} end
+     * @param {*} category
+     * @param {*} input
+     * @returns {Observable<any>}
+     * @memberof ReportApiService
+     */
+    get_activity_report(start, end, category, input): Observable<any> {
+        this.attendanceApi.headerAuthorization();
+        return this.attendanceApi.getApi('/report/activity/' + start + '/' + end + '/' + category + '/' + input);
+    }
+
+    /**
+     * get project list
+     * @returns {Observable<any>}
+     * @memberof ReportApiService
+     */
+    get_project_list(): Observable<any> {
+        this.attendanceApi.headerAuthorization();
+        return this.attendanceApi.getApi('/api/project');
+    }
+
+    /**
+     * get contract list
+     * @returns {Observable<any>}
+     * @memberof ReportApiService
+     */
+    get_contract_list(): Observable<any> {
+        this.attendanceApi.headerAuthorization();
+        return this.attendanceApi.getApi('/api/contract');
     }
 }
