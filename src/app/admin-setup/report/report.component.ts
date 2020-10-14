@@ -499,31 +499,43 @@ export class ReportComponent implements OnInit {
             }
           }
           if (title === 'Attendance History') {
-            let clock_in_time = '', clock_in_date = '', clock_in_add = '', clock_out_time = '', clock_out_add = '', total_hrs = '';
+            let clock_in_time = '', clock_in_add = '', jobType = '', soc_no = '', contract_no = '', clock_out_time = '', clock_out_add = '', total_hrs = '';
             for (let i = 0; i < data.table.body.length; i++) {
               for (let j = 0; j < data.table.body[i].raw.attendance.length; j++) {
                 if (data.row.index === i && data.section === 'body') {
                   switch (data.column.index) {
                     case 3:
-                      clock_in_time += dayjs(data.table.body[i].raw.attendance[j].clock_in_time).format('YYYY-MM-DD HH:mm') + '\n' + data.table.body[i].raw.attendance[j].job_type_in + ' ' + data.table.body[i].raw.attendance[j].project_code_in + ' ' + data.table.body[i].raw.attendance[j].contract_code_in + '\n' + '\n' + '\n';
+                      clock_in_time += dayjs(data.table.body[i].raw.attendance[j].clock_in_time).format('YYYY-MM-DD HH:mm') + '\n' + '\n';
                       data.cell.text = clock_in_time.split('\n');
                       data.cell.styles.cellWidth = 30;
                       break;
                     case 4:
-                      clock_in_add += data.table.body[i].raw.attendance[j].address_in + '\n' + '\n' + '\n';
+                      clock_in_add += data.table.body[i].raw.attendance[j].address_in + '\n' + '\n';
                       data.cell.text = clock_in_add.split('\n');
                       break;
                     case 5:
-                      clock_out_time += dayjs(data.table.body[i].raw.attendance[j].clock_out_time).format('YYYY-MM-DD HH:mm') + '\n' + '\n' + '\n';
+                      jobType += data.table.body[i].raw.attendance[j].job_type_in + '\n' + '\n';
+                      data.cell.text = jobType.split('\n');
+                      break;
+                    case 6:
+                      soc_no += data.table.body[i].raw.attendance[j].project_code_in + '\n' + '\n';
+                      data.cell.text = soc_no.split('\n');
+                      break;
+                    case 7:
+                      contract_no += data.table.body[i].raw.attendance[j].contract_code_in + '\n' + '\n';
+                      data.cell.text = contract_no.split('\n');
+                      break;
+                    case 8:
+                      clock_out_time += dayjs(data.table.body[i].raw.attendance[j].clock_out_time).format('YYYY-MM-DD HH:mm') + '\n' + '\n';
                       data.cell.text = clock_out_time.split('\n');
                       data.cell.styles.cellWidth = 30;
                       break;
-                    case 6:
-                      clock_out_add += data.table.body[i].raw.attendance[j].address_out + '\n' + '\n' + '\n';
+                    case 9:
+                      clock_out_add += data.table.body[i].raw.attendance[j].address_out + '\n' + '\n';
                       data.cell.text = clock_out_add.split('\n');
                       break;
-                    case 7:
-                      total_hrs += data.table.body[i].raw.attendance[j].total_hrs + '\n' + '\n' + '\n';
+                    case 10:
+                      total_hrs += data.table.body[i].raw.attendance[j].total_hrs + '\n' + '\n';
                       data.cell.text = total_hrs.split('\n');
                       break;
                   }
@@ -535,7 +547,55 @@ export class ReportComponent implements OnInit {
             let date = '', socOrContract = '', completion = '', pending = '';
             for (let i = 0; i < data.table.body.length; i++) {
               for (let j = 0; j < data.table.body[i].raw.activity.length; j++) {
-                for (let k = 0; k < data.table.body[i].raw.activity[j].completed.length; k++) {
+                if (data.table.body[i].raw.activity[j].completed.length > 0) {
+                  for (let k = 0; k < data.table.body[i].raw.activity[j].completed.length; k++) {
+                    if (data.table.body[i].raw.activity[j].pending.length > 0) {
+                      for (let l = 0; l < data.table.body[i].raw.activity[j].pending.length; l++) {
+                        if (data.row.index === i && data.section === 'body') {
+                          switch (data.column.index) {
+                            case 3:
+                              date += dayjs(data.table.body[i].raw.activity[j].date).format('YYYY-MM-DD') + '\n' + '\n';
+                              data.cell.text = date.split('\n');
+                              break;
+                            case 4:
+                              socOrContract += data.table.body[i].raw.activity[j].project_code_in + ' ' + data.table.body[i].raw.activity[j].contract_code_in + '\n' + '\n';
+                              data.cell.text = socOrContract.split('\n');
+                              break;
+                            case 5:
+                              completion += data.table.body[i].raw.activity[j].completed[k] + '\n' + '\n';
+                              data.cell.text = completion.split('\n');
+                              break;
+                            case 6:
+                              pending += data.table.body[i].raw.activity[j].pending[l] + '\n' + '\n';
+                              data.cell.text = pending.split('\n');
+                              break;
+                          }
+                        }
+                      }
+                    } else {
+                      if (data.row.index === i && data.section === 'body') {
+                        switch (data.column.index) {
+                          case 3:
+                            date += dayjs(data.table.body[i].raw.activity[j].date).format('YYYY-MM-DD') + '\n' + '\n';
+                            data.cell.text = date.split('\n');
+                            break;
+                          case 4:
+                            socOrContract += data.table.body[i].raw.activity[j].project_code_in + ' ' + data.table.body[i].raw.activity[j].contract_code_in + '\n' + '\n';
+                            data.cell.text = socOrContract.split('\n');
+                            break;
+                          case 5:
+                            completion += data.table.body[i].raw.activity[j].completed[k] + '\n' + '\n';
+                            data.cell.text = completion.split('\n');
+                            break;
+                          case 6:
+                            pending += '\n' + '\n';
+                            data.cell.text = pending.split('\n');
+                            break;
+                        }
+                      }
+                    }
+                  }
+                } else {
                   if (data.row.index === i && data.section === 'body') {
                     switch (data.column.index) {
                       case 3:
@@ -547,19 +607,23 @@ export class ReportComponent implements OnInit {
                         data.cell.text = socOrContract.split('\n');
                         break;
                       case 5:
-                        completion += data.table.body[i].raw.activity[j].completed[k] + '\n' + '\n';
+                        completion += '\n' + '\n';
                         data.cell.text = completion.split('\n');
                         break;
+                      // case 6:
+                      //   pending += data.table.body[i].raw.activity[j].pending[l] + ',';
+                      //   data.cell.text = pending.substring(0, pending.length - 1);
+                      //   break;
                     }
                   }
-                }
-                for (let l = 0; l < data.table.body[i].raw.activity[j].pending.length; l++) {
-                  if (data.row.index === i && data.section === 'body') {
-                    switch (data.column.index) {
-                      case 6:
-                        pending += data.table.body[i].raw.activity[j].pending[l] + '\n' + '\n';
-                        data.cell.text = pending.split('\n');
-                        break;
+                  for (let l = 0; l < data.table.body[i].raw.activity[j].pending.length; l++) {
+                    if (data.row.index === i && data.section === 'body') {
+                      switch (data.column.index) {
+                        case 6:
+                          pending += data.table.body[i].raw.activity[j].pending[l] + ',';
+                          data.cell.text = pending.substring(0, pending.length - 1);
+                          break;
+                      }
                     }
                   }
                 }
@@ -585,7 +649,7 @@ export class ReportComponent implements OnInit {
   saveCSV(title: string, fields) {
     const zip = new JSZip();
     for (let i = 0; i < this.groupValue.length; i++) {
-      const json2csvParser = new Parser({ fields, unwind: ['leaveDetail', 'leaveDetail.leaveDetail', 'attendance'] });
+      const json2csvParser = new Parser({ fields, unwind: ['leaveDetail', 'leaveDetail.leaveDetail', 'attendance', 'activity', 'activity.completed', 'activity.pending'] });
       const csv = json2csvParser.parse(this.groupValue[i]);
       const blob = new Blob([csv], { type: "text/plain" });
       zip.file(title + ' - ' + this.groupKey[i] + '.csv', blob, { base64: true });

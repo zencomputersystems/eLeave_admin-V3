@@ -178,7 +178,8 @@
               </ion-row>
             </div>
             <div style="overflow-y: auto;height: calc(100% - 13em)">
-              <ng-container *ngIf="selects !== 'activity'; else isActivity">
+              <ng-container
+                *ngIf="selects !== 'activity' && selects !== 'attendance' && selects !== 'employee-master-list' ">
                 <ion-item class="ionItem" lines="none">
                   <ion-label class="checkLabel">Select All</ion-label>
                   <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [(ngModel)]="isMain"
@@ -195,7 +196,7 @@
                   </ion-item>
                 </ion-list>
               </ng-container>
-              <ng-template #isActivity>
+              <ng-container *ngIf="selects === 'activity';">
                 <div style="margin: 15px;">
                   <mat-radio-group [(ngModel)]="category">
                     <!-- <mat-radio-button disableRipple="true" color="primary"
@@ -206,7 +207,8 @@
                       style="margin-bottom: 3px;display: block;color: #4d4f5c;font-size: 12px;" value="project">
                       <mat-form-field appearance="outline"
                         style="height: 50px;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;">
-                        <mat-select [(value)]="projectValue" placeholder="Project" multiple>
+                        <mat-label>Project</mat-label>
+                        <mat-select [(value)]="projectValue" multiple>
                           <mat-option *ngFor="let item of project" [value]="item.PROJECT_GUID">
                             {{item.SOC_NO}} - {{item.NAME}}</mat-option>
                         </mat-select>
@@ -216,7 +218,8 @@
                       style="margin-bottom: 3px;display: block;color: #4d4f5c;font-size: 12px;" value="contract">
                       <mat-form-field appearance="outline"
                         style="height: 50px;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;">
-                        <mat-select [(value)]="contractValue" placeholder="Contract" multiple>
+                        <mat-label>Contract</mat-label>
+                        <mat-select [(value)]="contractValue" multiple>
                           <mat-option *ngFor="let item of contract" [value]="item.CONTRACT_GUID">
                             {{item.CONTRACT_NO}} - {{item.NAME}}</mat-option>
                         </mat-select>
@@ -224,7 +227,12 @@
                     </mat-radio-button>
                   </mat-radio-group>
                 </div>
-              </ng-template>
+              </ng-container>
+              <ng-container *ngIf="selects === 'attendance' || selects === 'employee-master-list' ;">
+                <div style="margin: 15px;font-size: 12px;">
+                  No filter data needed
+                </div>
+              </ng-container>
             </div>
           </div>
           <div class="listEmployee">
@@ -506,8 +514,37 @@
                   (click)="savePDF('Leave Entitlement Summary', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Length of Service (Years)', dataKey: 'yearService' }, { header: 'Leave Type', dataKey: 'leaveType' }, { header: 'Entitlement (Days)', dataKey: 'entitledDays' }, { header: 'Carried Forward (Days)', dataKey: 'carriedForward' }, { header: 'Forfeited (Days)', dataKey: 'forfeited' }, { header: 'Taken (Days)', dataKey: 'taken' }, { header: 'Pending (Days)', dataKey: 'pending' }, { header: 'Balance (Days)', dataKey: 'balance' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV"
-                  (click)="saveCSV('Leave Entitlement Summary',['employeeNo', 'employeeName', 'yearService', 'leaveDetail.leaveTypeName', 'leaveDetail.entitledDays', 'leaveDetail.carriedForward', 'leaveDetail.forfeited', 'leaveDetail.taken', 'leaveDetail.pending', 'leaveDetail.balance']);">
+                <mat-option value="CSV" (click)="saveCSV('Leave Entitlement Summary',[{
+                    label: 'Employee No',
+                    value: 'employeeNo'
+                  }, {
+                    label: 'Employee Name',
+                    value: 'employeeName'
+                  }, {
+                    label: 'Length of Service (Years)',
+                    value: 'yearService'
+                  },{
+                    label: 'Leave Type',
+                    value: 'leaveDetail.leaveTypeName'
+                  },{
+                    label: 'Entitlement (Days)',
+                    value: 'leaveDetail.entitledDays'
+                  },{
+                    label: 'Carried Forward (Days)',
+                    value: 'leaveDetail.carriedForward'
+                  },{
+                    label: 'Forfeited (Days)',
+                    value: 'leaveDetail.forfeited'
+                  },{
+                    label: 'Taken (Days)',
+                    value: 'leaveDetail.taken'
+                  }, {
+                    label: 'Pending (Days)',
+                    value: 'leaveDetail.pending'
+                  },{
+                    label: 'Balance (Days)',
+                    value: 'leaveDetail.balance'
+                  }]);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -641,8 +678,40 @@
                   (click)="savePDF('Approval Override History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Application Date', dataKey: 'applicationDate' }, { header: 'Overriden By', dataKey: 'overrideBy' }, { header: 'Overriden Date', dataKey: 'overrideDate' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Status', dataKey: 'status' }, { header: 'Remarks', dataKey: 'remarks' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV"
-                  (click)="saveCSV('Approval Override History',['employeeNo', 'employeeName', 'leaveTypeName', 'applicationDate', 'overrideBy', 'overrideDate', 'startDate', 'endDate', 'noOfDays', 'status']);">
+                <mat-option value="CSV" (click)="saveCSV('Approval Override History',[{
+                    label: 'Employee No',
+                    value: 'employeeNo'
+                  },{
+                    label: 'Employee Name',
+                    value: 'employeeName'
+                  },{
+                    label: 'Leave Type',
+                    value: 'leaveTypeName'
+                  },{
+                    label: 'Application Date',
+                    value: 'applicationDate'
+                  },{
+                    label: 'Overriden By',
+                    value: 'overrideBy'
+                  },{
+                    label: 'Overriden Date',
+                    value: 'overrideDate'
+                  }, {
+                    label: 'Start Date',
+                    value: 'startDate'
+                  },{
+                    label: 'End Date',
+                    value: 'endDate'
+                  },{
+                    label: 'No Of Days',
+                    value: 'noOfDays'
+                  }, {
+                    label: 'Status',
+                    value: 'status'
+                  }, {
+                    label: 'Remarks',
+                    value: 'remarks'
+                  }]);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -756,8 +825,43 @@
                   (click)="savePDF('Apply On Behalf History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Length of Service (Years)', dataKey: 'yearService' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Application Date', dataKey: 'applicationDate' }, { header: 'Date Confirmed', dataKey: 'confirmedDate' }, { header: 'Applied By', dataKey: 'appliedBy' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Status', dataKey: 'status' }, { header: 'Remarks', dataKey: 'remarks' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV"
-                  (click)="saveCSV('Apply On Behalf History',['employeeName', 'yearService', 'leaveTypeName', 'applicationDate', 'confirmedDate', 'appliedBy', 'startDate', 'endDate', 'noOfDays', 'status', 'remarks']);">
+                <mat-option value="CSV" (click)="saveCSV('Apply On Behalf History',[{
+                  label: 'Employee No',
+                  value: 'employeeNo'
+                },{
+                    label: 'Employee Name',
+                    value: 'employeeName'
+                  },{
+                    label: 'Length of Service (Years)',
+                    value: 'yearService'
+                  },{
+                    label: 'Leave Type',
+                    value: 'leaveTypeName'
+                  },{
+                    label: 'Application Date',
+                    value: 'applicationDate'
+                  },{
+                    label: 'Date Confirmed',
+                    value: 'confirmedDate'
+                  }, {
+                    label: 'Applied By',
+                    value: 'appliedBy'
+                  }, {
+                    label: 'Start Date',
+                    value: 'startDate'
+                  }, {
+                    label: 'End Date',
+                    value: 'endDate'
+                  },{
+                    label: 'No Of Days',
+                    value: 'noOfDays'
+                  }, {
+                    label: 'Status',
+                    value: 'status'
+                  }, {
+                    label: 'Remarks',
+                    value: 'remarks'
+                  }]);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -993,8 +1097,31 @@
                   (click)="savePDF('Leave Taken History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveType' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Approved By', dataKey: 'approveBy' }, { header: 'Remarks', dataKey: 'remarks' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV"
-                  (click)="saveCSV('Leave Taken History',['employeeNo', 'employeeName', 'leaveDetail.leaveTypeName', 'leaveDetail.startDate', 'leaveDetail.endDate', 'leaveDetail.noOfDays', 'leaveDetail.approveBy', 'leaveDetail.remarks']);">
+                <mat-option value="CSV" (click)="saveCSV('Leave Taken History',[{
+                    label: 'Employee No',
+                    value: 'employeeNo'
+                  },{
+                    label: 'Employee Name',
+                    value: 'employeeName'
+                  },{
+                    label: 'Leave Type',
+                    value: 'leaveDetail.leaveTypeName'
+                  },{
+                    label: 'Start Date',
+                    value: 'leaveDetail.startDate'
+                  }, {
+                    label: 'End Date',
+                    value: 'leaveDetail.endDate'
+                  }, {
+                    label: 'No Of Days',
+                    value: 'leaveDetail.noOfDays'
+                  },{
+                    label: 'Approved By',
+                    value: 'leaveDetail.approveBy'
+                  }, {
+                    label: 'Remarks',
+                    value: 'leaveDetail.remarks'
+                  }]);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1110,11 +1237,31 @@
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
                 <mat-option value="PDF"
-                  (click)="savePDF('Leave Adjustment History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Adjustment', dataKey: 'adjustment' }, { header: 'Adjusted By', dataKey: 'adjustBy' }, { header: 'Adjustment Date', dataKey: 'adjustDate' }, { header: 'Remarks', dataKey: 'remarks' }])">
+                  (click)="savePDF('Leave Adjustment History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Adjustment Days', dataKey: 'adjustment' }, { header: 'Adjusted By', dataKey: 'adjustBy' }, { header: 'Adjustment Date', dataKey: 'adjustDate' }, { header: 'Remarks', dataKey: 'remarks' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV"
-                  (click)="saveCSV('Leave Adjustment History',['employeeNo', 'employeeName', 'leaveTypeName', 'adjustment', 'adjustBy', 'adjustDate', 'remarks']);">
+                <mat-option value="CSV" (click)="saveCSV('Leave Adjustment History',[{
+                    label: 'Employee No',
+                    value: 'employeeNo'
+                  },{
+                    label: 'Employee Name',
+                    value: 'employeeName'
+                  },{
+                    label: 'Leave Type',
+                    value: 'leaveTypeName'
+                  },{
+                    label: 'Adjustment Days',
+                    value: 'adjustment'
+                  },{
+                    label: 'Adjusted By',
+                    value: 'adjustBy'
+                  },{
+                    label: 'Adjustment Date',
+                    value: 'adjustDate'
+                  },{
+                    label: 'Remarks',
+                    value: 'remarks'
+                  }]);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1150,7 +1297,7 @@
               <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 175px;">
-                Adjustment</ion-col>
+                Adjustment Days</ion-col>
               <ion-col size="1.5" class="titleRow" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 175px;">
@@ -1210,8 +1357,34 @@
                   (click)="savePDF('Leave Cancellation History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Cancelled By', dataKey: 'cancelBy' }, { header: 'Leave Remarks', dataKey: 'leaveRemarks' }, { header: 'Cancellation Remarks', dataKey: 'cancelRemarks' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV"
-                  (click)="saveCSV('Leave Cancellation History',['employeeName', 'leaveTypeName', 'startDate', 'endDate', 'noOfDays', 'cancelBy', 'leaveRemarks', 'cancelRemarks']);">
+                <mat-option value="CSV" (click)="saveCSV('Leave Cancellation History',[{
+                    label: 'Employee No',
+                    value: 'employeeNo'
+                  }, {
+                    label: 'Employee Name',
+                    value: 'employeeName'
+                  }, {
+                    label: 'Leave Type',
+                    value: 'leaveTypeName'
+                  }, {
+                    label: 'Start Date',
+                    value: 'startDate'
+                  }, {
+                    label: 'End Date',
+                    value: 'endDate'
+                  }, {
+                    label: 'No Of Days',
+                    value: 'noOfDays'
+                  },{
+                    label: 'Cancelled By',
+                    value: 'cancelBy'
+                  }, {
+                    label: 'Leave Remarks',
+                    value: 'leaveRemarks'
+                  },{
+                    label: 'Cancellation Remarks',
+                    value: 'cancelRemarks'
+                  }]);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1313,11 +1486,37 @@
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
                 <mat-option value="PDF"
-                  (click)="savePDF('Leave Rejected History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Rejected By', dataKey: 'rejectBy' }, { header: 'Leave Remarks', dataKey: 'remarks' }, { header: 'Rejection Remarks', dataKey: '' }])">
+                  (click)="savePDF('Leave Rejected History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Rejected By', dataKey: 'rejectBy' }, { header: 'Leave Remarks', dataKey: 'leaveRemarks' }, { header: 'Rejection Remarks', dataKey: 'rejectRemarks' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV"
-                  (click)="saveCSV('Leave Rejected History',['employeeName', 'leaveTypeName', 'startDate', 'endDate', 'noOfDays', 'rejectBy', 'remarks']);">
+                <mat-option value="CSV" (click)="saveCSV('Leave Rejected History',[{
+                    label: 'Employee No',
+                    value: 'employeeNo'
+                  },{
+                    label: 'Employee Name',
+                    value: 'employeeName'
+                  },{
+                    label: 'Leave Type',
+                    value: 'leaveTypeName'
+                  },{
+                    label: 'Start Date',
+                    value: 'startDate'
+                  }, {
+                    label: 'End Date',
+                    value: 'endDate'
+                  },{
+                    label: 'No Of Days',
+                    value: 'noOfDays'
+                  },{
+                    label: 'Rejected By',
+                    value: 'rejectBy'
+                  },{
+                    label: 'Leave Remarks',
+                    value: 'leaveRemarks'
+                  },{
+                    label: 'Rejection Remarks',
+                    value: 'rejectRemarks'
+                  }]);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1422,8 +1621,19 @@
                   (click)="savePDF('Forfeited Leave History', [{ header: 'No', dataKey: 'no' },{ header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'No. Of Days Forfeited', dataKey: 'noOfDays' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV"
-                  (click)="saveCSV('Forfeited Leave History',['employeeNo', 'employeeName', 'leaveTypeName', 'noOfDays']);">
+                <mat-option value="CSV" (click)="saveCSV('Forfeited Leave History',[{
+                    label: 'Employee No',
+                    value: 'employeeNo'
+                  }, {
+                    label: 'Employee Name',
+                    value: 'employeeName'
+                  }, {
+                    label: 'Leave Type',
+                    value: 'leaveTypeName'
+                  }, {
+                    label: 'No. Of Days Forfeited',
+                    value: 'noOfDays'
+                  }]);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1497,11 +1707,43 @@
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
                 <mat-option value="PDF"
-                  (click)="savePDF('Employee Master List', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Company Name', dataKey: 'companyName' }, { header: 'Department', dataKey: 'department' }, { header: 'Designation', dataKey: '' }, { header: 'Email', dataKey: 'email' }, { header: 'Approver', dataKey: 'approver' }, { header: 'Joining Date', dataKey: 'joinDate' }, { header: 'Confirmed Date', dataKey: 'confirmDate' }, { header: 'Resigned Date', dataKey: 'resignDate' }, { header: 'Status', dataKey: 'status' }])">
+                  (click)="savePDF('Employee Master List', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Company Name', dataKey: 'companyName' }, { header: 'Department', dataKey: 'department' }, { header: 'Designation', dataKey: 'designation' }, { header: 'Email', dataKey: 'email' }, { header: 'Approver', dataKey: 'approver' }, { header: 'Joining Date', dataKey: 'joinDate' }, { header: 'Confirmed Date', dataKey: 'confirmDate' }, { header: 'Resigned Date', dataKey: 'resignDate' }, { header: 'Status', dataKey: 'status' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV"
-                  (click)="saveCSV('Employee Master List',['employeeName', 'companyName', 'department', 'email', 'approver', 'joinDate', 'confirmDate', 'resignDate', 'status']);">
+                <mat-option value="CSV" (click)="saveCSV('Employee Master List',[{
+                    label: 'Employee No',
+                    value: 'employeeNo'
+                  },{
+                    label: 'Employee Name',
+                    value: 'employeeName'
+                  }, {
+                    label: 'Company Name',
+                    value: 'companyName'
+                  },{
+                    label: 'Department',
+                    value: 'department'
+                  }, {
+                    label: 'Designation',
+                    value: 'designation'
+                  },{
+                    label: 'Email',
+                    value: 'email'
+                  }, {
+                    label: 'Approver',
+                    value: 'approver'
+                  }, {
+                    label: 'Joining Date',
+                    value: 'joinDate'
+                  },{
+                    label: 'Confirmed Date',
+                    value: 'confirmDate'
+                  }, {
+                    label: 'Resigned Date',
+                    value: 'resignDate'
+                  }, {
+                    label: 'Status',
+                    value: 'status'
+                  }]);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1617,11 +1859,40 @@
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
                 <mat-option value="PDF"
-                  (click)="savePDF('Attendance History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Clock In Time', dataKey: 'clock_in_time' }, { header: 'Clock In Address', dataKey: 'clock_in_add' }, { header: 'Clock Out Time', dataKey: 'clock_out_time' }, { header: 'Clock Out Address', dataKey: 'clock_out_add' },{ header: 'Total Hours', dataKey: 'total_hrs' }])">
+                  (click)="savePDF('Attendance History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Clock In Time', dataKey: 'clock_in_time' }, { header: 'Clock In Address', dataKey: 'clock_in_add' },{ header: 'Job Type', dataKey: 'jobType' },{ header: 'SOC No.', dataKey: 'soc_no' },{ header: 'Contract No.', dataKey: 'contract_no' }, { header: 'Clock Out Time', dataKey: 'clock_out_time' }, { header: 'Clock Out Address', dataKey: 'clock_out_add' },{ header: 'Total Hours', dataKey: 'total_hrs' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV"
-                  (click)="saveCSV('Attendance History',['employeeNo', 'employeeName', 'attendance.clock_in_time', 'attendance.address_in', 'attendance.project_code_in', 'attendance.contract_code_in','attendance.clock_out_time', 'attendance.address_out','attendance.total_hrs']);">
+                <mat-option value="CSV" (click)="saveCSV('Attendance History',[{
+                    label: 'Employee No',
+                    value: 'employeeNo'
+                  },{
+                    label: 'Employee Name',
+                    value: 'employeeName'
+                  },{
+                    label: 'Clock In Time',
+                    value: 'attendance.clock_in_time'
+                  },{
+                    label: 'Clock In Address',
+                    value: 'attendance.address_in'
+                  },{
+                    label: 'Job Type',
+                    value: 'attendance.job_type_in'
+                  }, {
+                    label: 'SOC No.',
+                    value: 'attendance.project_code_in'
+                  },{
+                    label: 'Contract No.',
+                    value: 'attendance.contract_code_in'
+                  }, {
+                    label: 'Clock Out Time',
+                    value: 'attendance.clock_out_time'
+                  },{
+                    label: 'Clock Out Address',
+                    value: 'attendance.address_out'
+                  }, {
+                    label: 'Total Hours',
+                    value: 'attendance.total_hrs'
+                  }]);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1756,11 +2027,31 @@
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
                 <mat-option value="PDF"
-                  (click)="savePDF('Activity History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Date', dataKey: 'date' }, { header: 'SOC No. / Contract No.', dataKey: 'socOrContract' }, { header: 'Activity Completion', dataKey: 'completion' }, { header: 'Activity Pending', dataKey: 'pending' }])">
+                  (click)="savePDF('Activity History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Date', dataKey: 'date' }, { header: 'SOC No. / Contract No.', dataKey: 'socOrContract' }, { header: 'Task Completed', dataKey: 'completion' }, { header: 'Task Pending', dataKey: 'pending' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV"
-                  (click)="saveCSV('Activity History',['employeeNo', 'employeeName', 'activity.clock_in_time', 'activity.address_in', 'activity.project_code_in', 'activity.contract_code_in','activity.clock_out_time', 'activity.address_out','activity.total_hrs']);">
+                <mat-option value="CSV" (click)="saveCSV('Activity History',[{
+                    label: 'Employee No',
+                    value: 'employeeNo'
+                  }, {
+                    label: 'Employee Name',
+                    value: 'employeeName'
+                  }, {
+                    label: 'Date',
+                    value: 'activity.date'
+                  }, { 
+                    label: 'SOC No.',
+                    value: 'activity.project_code_in'
+                  }, { 
+                    label: 'Contract No.',
+                    value: 'activity.contract_code_in'
+                  }, {
+                    label: 'Task Completed',
+                    value: 'activity.completed'
+                  },{
+                    label: 'Task Pending',
+                    value: 'activity.pending'
+              }]);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1811,11 +2102,11 @@
               <ion-col size="2.5"
                 style="text-align: left;display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 132px;">
-                Activity Completion</ion-col>
+                Task Completed</ion-col>
               <ion-col size="2.5"
                 style="text-align: left;display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 88px;">
-                Activity Pending</ion-col>
+                Task Pending</ion-col>
             </ion-row>
           </div>
 
