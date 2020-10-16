@@ -419,13 +419,6 @@ export class NotificationRuleComponent implements OnInit {
         this.menuNewEmail = [{ "email": '', "employeeName": '' }];
     }
 
-    // editEmailNotifier(item) {
-    //     console.log(item);
-    //     this.selectedName = item.employeeName;
-    //     this.menuEditEmail = item.notificationRule;
-    // }
-
-
     /**
      * post leave entitlement by batch
      * @memberof NotificationRuleComponent
@@ -439,10 +432,8 @@ export class NotificationRuleComponent implements OnInit {
                 body.push(this.employeeList[i].email);
             }
         }
-        console.log(body);
         for (let j = 0; j < this._selected_User.length; j++) {
             this.inviteApi.patch_user_info_notification(body, this._selected_User[j]).subscribe(data => {
-                console.log(data);
                 this.leaveAPI.openSnackBar('You have set notification rule successfully', true);
                 this.showSmallSpinner = false;
                 this.checkMain = false;
@@ -451,14 +442,19 @@ export class NotificationRuleComponent implements OnInit {
                 this.indeterminateVal = false;
                 this._selected_User = [];
                 this.filteredUser.forEach(element => {
+                    if (element.isChecked) {
+                        element.notificationRule = data.email;
+                    }
+                });
+                this.filteredUser.forEach(element => {
                     element.isChecked = false;
                 });
                 this.employeeList.forEach(element => {
                     element.isChecked = false;
                 });
+
                 this.checkEnableDisableButton();
             }, error => {
-                console.log(error);
                 this.leaveAPI.openSnackBar('Sorry, error occured', false);
                 this.showSmallSpinner = false;
                 this.checkMain = false;
