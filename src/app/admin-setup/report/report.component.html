@@ -1707,7 +1707,7 @@
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
                 <mat-option value="PDF"
-                  (click)="savePDF('Employee Master List', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Company Name', dataKey: 'companyName' }, { header: 'Department', dataKey: 'department' }, { header: 'Designation', dataKey: 'designation' }, { header: 'Email', dataKey: 'email' }, { header: 'Approver', dataKey: 'approver' }, { header: 'Joining Date', dataKey: 'joinDate' }, { header: 'Confirmed Date', dataKey: 'confirmDate' }, { header: 'Resigned Date', dataKey: 'resignDate' }, { header: 'Status', dataKey: 'status' }])">
+                  (click)="savePDF('Employee Master List', [{ header: 'No', dataKey: 'no' },{ header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Company Name', dataKey: 'companyName' }, { header: 'Department', dataKey: 'department' }, { header: 'Designation', dataKey: 'designation' }, { header: 'Email', dataKey: 'email' }, { header: 'Approver', dataKey: 'approver' }, { header: 'Joining Date', dataKey: 'joinDate' }, { header: 'Confirmed Date', dataKey: 'confirmDate' }, { header: 'Resigned Date', dataKey: 'resignDate' }, { header: 'Status', dataKey: 'status' }])">
                   PDF
                 </mat-option>
                 <mat-option value="CSV" (click)="saveCSV('Employee Master List',[{
@@ -1772,19 +1772,19 @@
               -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
               5px;min-width: 175px;">
                 Company Name</ion-col>
-              <ion-col size="1.2" class="titleRow" style="display: -webkit-box;
+              <ion-col size="1.2" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 125px;">
                 Department</ion-col>
-              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+              <ion-col size="1" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 88px;">
                 Designation</ion-col>
-              <ion-col size="1.2" class="titleRow" style="display: -webkit-box;
+              <ion-col size="1.2" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 125px;">
                 Email</ion-col>
-              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+              <ion-col size="1" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 88px;">
                 Approver</ion-col>
@@ -1821,13 +1821,13 @@
                   <ion-col size="1.5" class="text" style="min-width: 175px; white-space: pre-line;">
                     {{item.companyName}}
                   </ion-col>
-                  <ion-col size="1.2" class="titleRow text" style="min-width: 125px; white-space: pre-line;">
+                  <ion-col size="1.2" class="text" style="min-width: 125px; white-space: pre-line;">
                     {{item.department}}</ion-col>
-                  <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
+                  <ion-col size="1" class="text" style="min-width: 88px; white-space: pre-line;">
                     {{item.designation}}</ion-col>
-                  <ion-col size="1.2" class="titleRow text" style="min-width: 125px; white-space: pre-line;">
+                  <ion-col size="1.2" class="text" style="min-width: 125px; white-space: pre-line;">
                     {{item.email}}</ion-col>
-                  <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
+                  <ion-col size="1" class="text" style="min-width: 88px; white-space: pre-line;">
                     {{item.approver}}
                   </ion-col>
                   <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
@@ -1858,8 +1858,18 @@
             <mat-form-field appearance="outline" id="saveas"
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
-                <mat-option value="PDF"
-                  (click)="savePDF('Attendance History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee No', dataKey: 'employeeNo' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Clock In Time', dataKey: 'clock_in_time' }, { header: 'Clock In Address', dataKey: 'clock_in_add' },{ header: 'Job Type', dataKey: 'jobType' },{ header: 'SOC No.', dataKey: 'soc_no' },{ header: 'Contract No.', dataKey: 'contract_no' }, { header: 'Clock Out Time', dataKey: 'clock_out_time' }, { header: 'Clock Out Address', dataKey: 'clock_out_add' },{ header: 'Total Hours', dataKey: 'total_hrs' }])">
+                <mat-option value="PDF" (click)="savePDF('Attendance History', [
+                  { header: 'No', dataKey: 'no' }, 
+                  { header: 'Employee No', dataKey: 'employeeNo' }, 
+                  { header: 'Employee Name', dataKey: 'employeeName' }, 
+                  { header: 'Clock In Time', dataKey: 'clock_in_time' }, 
+                  { header: 'Clock In Address', dataKey: 'address_in' },
+                  { header: 'Job Type', dataKey: 'job_type_in' },
+                  { header: 'SOC No.', dataKey: 'project_code_in' },
+                  { header: 'Contract No.', dataKey: 'contract_code_in' }, 
+                  { header: 'Clock Out Time', dataKey: 'clock_out_time' }, 
+                  { header: 'Clock Out Address', dataKey: 'address_out' },
+                  { header: 'Total Hours', dataKey: 'total_hrs' }])">
                   PDF
                 </mat-option>
                 <mat-option value="CSV" (click)="saveCSV('Attendance History',[{

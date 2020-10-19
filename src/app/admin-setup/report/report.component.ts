@@ -289,6 +289,11 @@ export class ReportComponent implements OnInit {
    */
   public showGroupSelection: boolean = true;
 
+  /**
+   * filter category in API
+   * @type {string}
+   * @memberof ReportComponent
+   */
   public category: string;
 
   /**
@@ -314,16 +319,42 @@ export class ReportComponent implements OnInit {
    */
   private _selectedLeaveTypesList: string[] = [];
 
+  /**
+   * set height for attendance preview table
+   * @memberof ReportComponent
+   */
   public divHeight = [];
 
+  /**
+   * set height for activity preview table 
+   * @memberof ReportComponent
+   */
   public completionH = [];
 
+  /**
+   * get all project list
+   * @memberof ReportComponent
+   */
   public project;
 
+  /**
+   * get all contract list
+   * @memberof ReportComponent
+   */
   public contract;
 
+  /**
+   * selected project name to filter in API
+   * @type {string}
+   * @memberof ReportComponent
+   */
   public projectValue: string;
 
+  /**
+   * selected contract name to filter in API
+   * @type {string}
+   * @memberof ReportComponent
+   */
   public contractValue: string;
 
   @HostListener("window:resize") onResize() {
@@ -421,7 +452,7 @@ export class ReportComponent implements OnInit {
       doc.text(5, 11, 'From ' + dayjs(this.firstPicker.value).format('DD MMM YYYY') + ' to ' + dayjs(this.secondPicker.value).format('DD MMM YYYY'));
       doc.autoTable({
         headStyles: { fillColor: [67, 66, 93], fontSize: 7.5, minCellWidth: 2 },
-        bodyStyles: { fontSize: 7.5, minCellWidth: 10 },
+        bodyStyles: { fontSize: 7.5, minCellWidth: 10, overflow: 'ellipsize' },
         margin: { top: 13, left: 5, right: 5, bottom: 5 },
         showHead: 'everyPage',
         body: this.groupValue[i],
@@ -504,14 +535,17 @@ export class ReportComponent implements OnInit {
               for (let j = 0; j < data.table.body[i].raw.attendance.length; j++) {
                 if (data.row.index === i && data.section === 'body') {
                   switch (data.column.index) {
+                    case 2:
+                      data.cell.styles.cellWidth = 35;
+                      break;
                     case 3:
                       clock_in_time += dayjs(data.table.body[i].raw.attendance[j].clock_in_time).format('YYYY-MM-DD HH:mm') + '\n' + '\n';
-                      data.cell.text = clock_in_time.split('\n');
+                      data.row.cells[3].text = clock_in_time.split('\n');
                       data.cell.styles.cellWidth = 30;
                       break;
                     case 4:
                       clock_in_add += data.table.body[i].raw.attendance[j].address_in + '\n' + '\n';
-                      data.cell.text = clock_in_add.split('\n');
+                      data.row.cells[4].text = clock_in_add.split('\n');
                       break;
                     case 5:
                       jobType += data.table.body[i].raw.attendance[j].job_type_in + '\n' + '\n';
@@ -621,7 +655,7 @@ export class ReportComponent implements OnInit {
                       switch (data.column.index) {
                         case 6:
                           pending += data.table.body[i].raw.activity[j].pending[l] + ',';
-                          data.cell.text = pending.substring(0, pending.length - 1);
+                          data.cell.text = pending;
                           break;
                       }
                     }
