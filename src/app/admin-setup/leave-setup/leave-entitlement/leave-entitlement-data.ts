@@ -23,7 +23,7 @@ export const entitlementData: any =
             "numberOfDays": 3,
             "isAllowShortNotice": {
                 "isCheck": false,
-                "textValue": "Short Notice Application"
+                "textValue": "SHORT NOTICE APPLICATION"
             },
             "excludeDayType": {
                 "isExcludeHoliday": false,
@@ -35,7 +35,7 @@ export const entitlementData: any =
             "numberOfDays": 0,
             "isAllowBackdated": {
                 "isCheck": false,
-                "textValue": "Back Date Application"
+                "textValue": "BACK DATED APPLICATION"
             },
             "excludeDayType": {
                 "isExcludeHoliday": false,
@@ -52,11 +52,11 @@ export const entitlementData: any =
         },
         "isAllowLeaveCancelAfterDate": {
             "isCheck": false,
-            "textValue": "Leave Cancellation"
+            "textValue": "LEAVE CANCELLATION"
         },
         "isLimitApplicationToCarryForward": {
             "isCheck": false,
-            "textValue": "Carry Forward Leave"
+            "textValue": "CARRY FORWARD LEAVE"
         },
         "maxDayPerLeave": 0,
         "leaveEntitlementType": "Entitled in full",

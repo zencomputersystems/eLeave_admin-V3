@@ -455,26 +455,42 @@ display: inline-block;"> Add New Project</p>
                       (click)="selectedProfile(client, i)">
                       {{client.NAME}}
                     </p>
-                    <p
+                    <!-- <p
                       style="padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
                       <img src="assets/icon/attendance/path_563@2x.png" style="width:12px;height:12px;display: inline-block;
                         margin-right: 5px;">
-                    </p>
-                    <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;
+                    </p> -->
+                    <div [class]="'hide-sm-down'">
+                      <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;
                         margin-right: 10px;">
-                      No. Of Projects: <p
-                        style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
-                        {{client.PROJECT_DATA.length}}</p>
+                        No. Of Projects: <p
+                          style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
+                          {{client.PROJECT_DATA.length}}</p>
+                      </div>
+                      <div
+                        style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;">
+                        No. Of Contracts: <p
+                          style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
+                          {{client.CONTRACT_DATA.length}}</p>
+                      </div>
                     </div>
-                    <div
-                      style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;">
-                      No. Of Contracts: <p
-                        style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
-                        {{client.CONTRACT_DATA.length}}</p>
+                    <div [class]="'hide-sm-up'">
+                      <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;
+                      margin-right: 10px;">
+                        No. Of Projects: <p
+                          style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
+                          {{client.PROJECT_DATA.length}}</p>
+                      </div>
+                      <div
+                        style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
+                        No. Of Contracts: <p
+                          style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
+                          {{client.CONTRACT_DATA.length}}</p>
+                      </div>
                     </div>
                   </ion-col>
                   <ion-col align-self-center style="text-align: right;padding-right: 15px;">
-                    <ion-button style="font-size: 10px;width: 50px;height: 20px;pointer-events: none;">
+                    <ion-button style="font-size: 10px;height: 20px;pointer-events: none;">
                       {{client.ABBR}}
                     </ion-button>
                   </ion-col>
@@ -493,27 +509,49 @@ display: inline-block;"> Add New Project</p>
                       (click)="selectedProfile(client, i)">
                       {{client.NAME}}
                     </p>
-                    <p
+                    <!-- <p
                       style="padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
                       <img src="assets/icon/attendance/path_563@2x.png" style="width:12px;height:12px;display: inline-block;
                         margin-right: 5px;">
-                    </p>
+                    </p> -->
                     <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;
                         margin-right: 10px;">
                       No. Of Projects: <p
                         style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
                         {{client.PROJECT_DATA.length}}</p>
                     </div>
-                    <div
-                      style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;">
-                      No. Of Contracts: <p
-                        style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
-                        {{client.CONTRACT_DATA.length}}</p>
+                    <div [class]="'hide-sm-down'">
+                      <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;
+                        margin-right: 10px;">
+                        No. Of Projects: <p
+                          style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
+                          {{client.PROJECT_DATA.length}}</p>
+                      </div>
+                      <div
+                        style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;display: inline-block;">
+                        No. Of Contracts: <p
+                          style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
+                          {{client.CONTRACT_DATA.length}}</p>
+                      </div>
+                    </div>
+                    <div [class]="'hide-sm-up'">
+                      <div style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;
+                      margin-right: 10px;">
+                        No. Of Projects: <p
+                          style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
+                          {{client.PROJECT_DATA.length}}</p>
+                      </div>
+                      <div
+                        style="font-size: 10px;color: #4d4f5c;padding: 0;overflow: hidden;white-space: pre-line;text-overflow: ellipsis;">
+                        No. Of Contracts: <p
+                          style="display: inline;font-size: 10px;color: #4d4f5c;padding: 0;font-weight: bold;">
+                          {{client.CONTRACT_DATA.length}}</p>
+                      </div>
                     </div>
                   </ion-col>
                   <ion-col align-self-center *ngIf="mode == 'ON'" style="padding-right: 15px;
                     display: flex;flex-flow: column nowrap;align-items: flex-end;">
-                    <ion-button style="pointer-events: none;font-size: 10px;width: 60px;height: 18px;">
+                    <ion-button style="pointer-events: none;font-size: 10px;height: 18px;">
                       {{client.ABBR}}
                     </ion-button>
                     <div>
@@ -559,7 +597,7 @@ display: inline-block;"> Add New Project</p>
                   </ion-col>
                   <ion-col align-self-center style="text-align: right;padding-right: 15px;">
                     <ion-button
-                      style="pointer-events: none;--background: var(--ion-color-project);font-size: 10px;width: 50px;height: 20px;">
+                      style="pointer-events: none;--background: var(--ion-color-project);font-size: 10px;height: 20px;">
                       {{item.SOC_NO}}
                     </ion-button>
                   </ion-col>
@@ -591,7 +629,7 @@ display: inline-block;"> Add New Project</p>
                 </ion-col>
                 <ion-col align-self-center style="text-align: right;padding-right: 15px;">
                   <ion-button
-                    style="pointer-events: none;--background: var(--ion-color-contract);font-size: 10px;width: 50px;height: 20px;">
+                    style="pointer-events: none;--background: var(--ion-color-contract);font-size: 10px;height: 20px;">
                     {{item.CONTRACT_NO}}
                   </ion-button>
                 </ion-col>
