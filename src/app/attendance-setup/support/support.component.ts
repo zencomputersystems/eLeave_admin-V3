@@ -250,6 +250,16 @@ export class SupportComponent implements OnInit {
                 }
                 this.supportList = this.filteredSupport;
                 break;
+
+            case "allSuggestion":
+                this.filteredSupport = [];
+                for (let i = 0; i < this.supportList.length; i++) {
+                    if (this.supportList[i].REQUEST_TYPE == 'suggestions') {
+                        this.filteredSupport.push(this.supportList[i]);
+                    }
+                }
+                this.supportList = this.filteredSupport;
+                break;
         }
     }
 
