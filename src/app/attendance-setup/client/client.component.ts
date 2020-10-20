@@ -325,6 +325,11 @@ export class ClientComponent implements OnInit {
                 "name": "",
                 "code": "",
                 "description": ""
+            }];
+            this.newLocation = [{
+                "latitude": "",
+                "longitude": "",
+                "address": ""
             }]
         }, error => {
             this.clientApi.snackbarMsg('Failed to create new client profile', false);
