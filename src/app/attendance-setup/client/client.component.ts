@@ -108,6 +108,12 @@ export class ClientComponent implements OnInit {
         "description": ""
     }]
 
+    public newLocation = [{
+        "latitude": "",
+        "longitude": "",
+        "address": ""
+    }]
+
     public filteredLocation: string[];
 
     public newFilteredLocation: string[];
@@ -219,7 +225,7 @@ export class ClientComponent implements OnInit {
      */
     async selectedProfile(item, index) {
         this.clickedIndex = index;
-        if(item !== undefined){
+        if (item !== undefined) {
             this.clientId = item.CLIENT_GUID;
             this.project = item.PROJECT_DATA;
             this.contract = item.CONTRACT_DATA;
@@ -296,13 +302,7 @@ export class ClientComponent implements OnInit {
         const postBody = {
             "name": this.newClientName,
             "abbr": this.newClientAbbr,
-            "location": [
-                {
-                    "lat": this.latitude,
-                    "long": this.longitude,
-                    "address": this.currentAddress
-                }
-            ],
+            "location": this.newLocation,
             "project": this.newProject,
             "contract": this.newContract
         }
@@ -321,7 +321,7 @@ export class ClientComponent implements OnInit {
                 "code": "",
                 "description": ""
             }];
-            this.newContract = [{ 
+            this.newContract = [{
                 "name": "",
                 "code": "",
                 "description": ""
@@ -408,8 +408,10 @@ export class ClientComponent implements OnInit {
     getNewLocationCoordinate(address: string, index: number) {
         this.clientApi.get_search_type_location(address, 'address').subscribe(
             detail => {
-                this.latitude = detail.results[0].geometry.location.lat;
-                this.longitude = detail.results[0].geometry.location.lng;
+                // this.latitude = detail.results[0].geometry.location.lat;
+                // this.longitude = detail.results[0].geometry.location.lng;
+                this.newLocation[index].latitude = detail.results[0].geometry.location.lat;
+                this.newLocation[index].longitude = detail.results[0].geometry.location.lng;
             }
         )
     }
@@ -469,6 +471,34 @@ export class ClientComponent implements OnInit {
             this.newContract.splice(index, 1);
         }
     }
+
+    addNewLocation(type: string) {
+        if (type === 'edit') {
+            this.location.push({
+                "LOCATION_GUID": "",
+                "LATITUDE": null,
+                "LONGITUDE": null,
+                "ADDRESS": ""
+            })
+        } else {
+            this.newLocation.push({
+                "latitude": "",
+                "longitude": "",
+                "address": ""
+            })
+        }
+    }
+
+    deleteLocation(index, type: string) {
+        if (type === 'edit') {
+            if (this.location[index].LOCATION_GUID != '') {
+                this.locationDeleted.push({ "id": this.location[index].LOCATION_GUID });
+            }
+            this.location.splice(index, 1);
+        } else {
+            this.newLocation.splice(index, 1);
+        }
+    }
     saveEditClient() {
         // project
         for (let i = 0; i < this.project.length; i++) {
@@ -514,7 +544,7 @@ export class ClientComponent implements OnInit {
             }
         }
 
-        //location (feature: check if can add more location 19/8/2020)
+        //location 
         for (let i = 0; i < this.location.length; i++) {
             if (this.location[i].LOCATION_GUID !== '') {
                 const location =

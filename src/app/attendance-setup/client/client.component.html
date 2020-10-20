@@ -147,28 +147,43 @@ display: inline-block;"> Add New Project</p>
               </div>
               <p style="margin-bottom: 0;font-size: 12px; color: #808495;font-weight: bold;">
                 LOCATION</p>
-              <ion-row style="display: flex;">
-                <ion-col style="flex: 21;padding-left: 0;">
-                  <mat-form-field appearance="outline" class="locationFormField"
-                    style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
-                    <mat-label>Location</mat-label>
-                    <input matInput type="text" [matAutocomplete]="auto" [(ngModel)]="currentAddress"
-                      (keyup)="getNewSearchLocation($event.srcElement.value)">
-                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                      <mat-option *ngFor="let option of newFilteredLocation" [value]="option.description"
-                        style="font-size: 12px;color:#43425d;opacity: 0.8;"
-                        (click)="getNewLocationCoordinate(option.description, i)">
-                        {{option.description}}
-                      </mat-option>
-                    </mat-autocomplete>
-                  </mat-form-field>
-                </ion-col>
-              </ion-row>
+              <ng-container *ngFor="let item of newLocation; let i=index">
+                <ion-row style="display: flex;">
+                  <ion-col style="flex: 21;padding-left: 0;">
+                    <mat-form-field appearance="outline" class="locationFormField"
+                      style="display: block;font-size: 12px;color:#43425d;opacity: 0.8;">
+                      <mat-label>Location</mat-label>
+                      <input matInput type="text" [matAutocomplete]="auto" [(ngModel)]="item.address"
+                        (keyup)="getNewSearchLocation($event.srcElement.value)">
+                      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of newFilteredLocation" [value]="option.description"
+                          style="font-size: 12px;color:#43425d;opacity: 0.8;"
+                          (click)="getNewLocationCoordinate(option.description, i)">
+                          {{option.description}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </ion-col>
+                  <ion-col align-self-center style="text-align: right;">
+                    <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
+                      (click)="deleteLocation(i, 'new')">
+                  </ion-col>
+                </ion-row>
 
-              <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="zoom">
-                <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
-                  (dragEnd)="markerDragEnd($event)"></agm-marker>
-              </agm-map>
+                <agm-map style="width: 92%;" [latitude]="item.latitude" [longitude]="item.longitude" [scrollwheel]="true" [zoom]="zoom">
+                  <agm-marker [latitude]="item.latitude" [longitude]="item.longitude" [markerDraggable]="true"
+                    (dragEnd)="markerDragEnd($event)"></agm-marker>
+                </agm-map>
+              </ng-container>
+              <div><img (click)="addNewLocation('new')"
+                  style="display: inline-block;cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
+                  src="assets/icon/leave_setup/icon_request@3x.png">
+                <p style="color: #808495;font-size: 11px;font-weight: bold;
+display: inline-block;"> Add New Location</p>
+                <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;">
+                </ion-item>
+              </div>
             </div>
           </div>
           <div style="text-align: center;margin-top: 20px;">
@@ -357,12 +372,25 @@ display: inline-block;"> Add New Project</p>
                       </mat-autocomplete>
                     </mat-form-field>
                   </ion-col>
+                  <ion-col align-self-center style="text-align: right;">
+                    <img src="assets/icon/leave_setup/icon_trash@3x.png"
+                      style="width: 11px;height:11px;display: inline-block;cursor: pointer;"
+                      (click)="deleteLocation(i, 'edit')">
+                  </ion-col>
                 </ion-row>
-                <agm-map [latitude]="item.LATITUDE" [longitude]="item.LONGITUDE" [scrollwheel]="true" [zoom]="zoom">
+                <agm-map style="width: 92%;" [latitude]="item.LATITUDE" [longitude]="item.LONGITUDE" [scrollwheel]="true" [zoom]="zoom">
                   <agm-marker [latitude]="item.LATITUDE" [longitude]="item.LONGITUDE" [markerDraggable]="true"
                     (dragEnd)="markerDragEndEdit($event, i)"></agm-marker>
                 </agm-map>
               </ng-container>
+              <div><img (click)="addNewLocation('edit')"
+                style="display: inline-block;cursor: pointer;margin-right: 6px;width: 14px;height: 14px;"
+                src="assets/icon/leave_setup/icon_request@3x.png">
+              <p style="color: #808495;font-size: 11px;font-weight: bold;
+display: inline-block;"> Add New Location</p>
+              <ion-item class="divider" lines="full" style="padding-top: 0;padding-bottom: 3%;">
+              </ion-item>
+            </div>
             </div>
           </div>
           <div style="text-align: center;margin-top: 20px;">
