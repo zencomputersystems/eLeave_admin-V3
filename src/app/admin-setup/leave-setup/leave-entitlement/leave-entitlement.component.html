@@ -496,7 +496,7 @@
                     </ion-col>
                     <ion-col class="colEditIcon" align-self-center>
                       <img class="iconImg" src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mainToggle === 'ON'"
-                        (click)="clickedHeaderIndex=j;entitlementTypeNew = type.leaveTypeId;abbr = type.ABBR;name= type.name;sharedService.menu.open('editLeaveTypeDetails'); sharedService.menu.enable(false, 'createNewTypeDetails');sharedService.menu.enable(true,'editLeaveTypeDetails')">
+                        (click)="clickedHeaderIndex=j;getProfileDetails(leaveEntitlement[clickedHeaderIndex][0].leaveEntitlementId);entitlementTypeNew = type.leaveTypeId;abbr = type.ABBR;name= type.name;sharedService.menu.open('editLeaveTypeDetails'); sharedService.menu.enable(false, 'createNewTypeDetails');sharedService.menu.enable(true,'editLeaveTypeDetails')">
                     </ion-col>
                   </ion-row>
                 </div>
@@ -1170,7 +1170,7 @@
                     </ion-col>
                     <ion-col class="colEditIcon" align-self-center>
                       <img src="assets/icon/leave_setup/icon_edit@3x.png" *ngIf="mainToggle === 'ON'" class="iconImg"
-                        (click)="clickedHeaderIndex=j;entitlementTypeNew = type.leaveTypeId;abbr = type.ABBR;name= type.name;sharedService.menu.open('editLeaveTypeDetails'); sharedService.menu.enable(false, 'createNewTypeDetails');sharedService.menu.enable(true,'editLeaveTypeDetails')">
+                        (click)="clickedHeaderIndex=j;getProfileDetails(leaveEntitlement[clickedHeaderIndex][0].leaveEntitlementId);entitlementTypeNew = type.leaveTypeId;abbr = type.ABBR;name= type.name;sharedService.menu.open('editLeaveTypeDetails'); sharedService.menu.enable(false, 'createNewTypeDetails');sharedService.menu.enable(true,'editLeaveTypeDetails')">
                     </ion-col>
                   </ion-row>
                 </div>
