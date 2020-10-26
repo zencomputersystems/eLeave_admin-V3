@@ -449,7 +449,7 @@ export class ReportComponent implements OnInit {
       const doc = new jsPDF('l', 'mm', 'a4');
       doc.setFontSize(9);
       doc.text(5, 7, title + ' - ' + this.groupKey[i]);
-      doc.text(5, 11, 'From ' + dayjs(this.firstPicker.value).format('DD MMM YYYY') + ' to ' + dayjs(this.secondPicker.value).format('DD MMM YYYY'));
+      if (title !== 'Employee Master List') { doc.text(5, 11, 'From ' + dayjs(this.firstPicker.value).format('DD MMM YYYY') + ' to ' + dayjs(this.secondPicker.value).format('DD MMM YYYY')); }
       doc.autoTable({
         headStyles: { fillColor: [67, 66, 93], fontSize: 7.5, minCellWidth: 2 },
         bodyStyles: { fontSize: 7.5, minCellWidth: 10, overflow: 'ellipsize' },
@@ -1096,12 +1096,12 @@ export class ReportComponent implements OnInit {
       );
       this.arrayDetails = selectedMembers;
     }
-    if (this.selects == 'employee-master-list') {
-      let filteredEmployee = this.arrayDetails.filter(
-        items => new Date(items.joinDate) >= this.firstPicker.value && new Date(items.joinDate) <= this.secondPicker.value
-      );
-      this.arrayDetails = filteredEmployee;
-    }
+    // if (this.selects == 'employee-master-list') {
+    //   let filteredEmployee = this.arrayDetails.filter(
+    //     items => new Date(items.joinDate) >= this.firstPicker.value && new Date(items.joinDate) <= this.secondPicker.value
+    //   );
+    //   this.arrayDetails = filteredEmployee;
+    // }
     if (this.selects != 'leave-entitlement' && this.selects != 'leave-taken' && this.selects != 'employee-master-list') {
       for (let i = this.arrayDetails.length - 1; i >= 0; --i) {
         if (!this._selectedLeaveTypesList.includes(this.arrayDetails[i].leaveTypeId)) {
