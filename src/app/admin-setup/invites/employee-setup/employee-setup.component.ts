@@ -1042,7 +1042,7 @@ export class EmployeeSetupComponent implements OnInit {
                     this._sharedService.leaveApi.openSnackBar(name + ' become Active', true);
                 }
                 catch (err) {
-                    this._sharedService.leaveApi.openSnackBar(JSON.parse(err._body).message[0].constraints.isNotEmpty, false);
+                    this._sharedService.leaveApi.openSnackBar(Object.values(JSON.parse(err._body).message[0].constraints)[0], false);
                 }
             }
         } else {
@@ -1098,7 +1098,9 @@ export class EmployeeSetupComponent implements OnInit {
             }
             catch (err) {
                 this.open = true;
-                this._sharedService.leaveApi.openSnackBar(JSON.parse(err._body).message[0].constraints.isNotEmpty, false);
+                if (Object.values(JSON.parse(err._body).message[0].constraints)[0] === 'emailAddress should not be empty') {
+                    this._sharedService.leaveApi.openSnackBar('one email address is required', false);
+                } else { this._sharedService.leaveApi.openSnackBar(Object.values(JSON.parse(err._body).message[0].constraints)[0], false); }
             }
         }
     }
@@ -1135,7 +1137,7 @@ export class EmployeeSetupComponent implements OnInit {
             }
             catch (error) {
                 this.open = true;
-                this._sharedService.leaveApi.openSnackBar(JSON.parse(error._body).message[0].constraints.isNotEmpty, false);
+                this._sharedService.leaveApi.openSnackBar(Object.values(JSON.parse(error._body).message[0].constraints)[0], false);
             }
         }
     }

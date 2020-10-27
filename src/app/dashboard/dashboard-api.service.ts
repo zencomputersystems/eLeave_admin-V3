@@ -108,7 +108,7 @@ export class DashboardApiService {
      * @param {string} msg
      * @memberof DashboardApiService
      */
-    snackbarMessage(msg: string, value: boolean) {
+    snackbarMessage(msg: any, value: boolean) {
         this.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 5000,
             verticalPosition: "top",

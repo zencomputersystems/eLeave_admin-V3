@@ -298,7 +298,7 @@ export class DashboardComponent implements OnInit {
         }
         this.title = ''; this.message = ''; this.checked = false; this._fileAttachment = [];
       }, error => {
-        this.dashboardAPI.snackbarMessage(JSON.parse(error._body).message[0].constraints.isNotEmpty, false);
+        this.dashboardAPI.snackbarMessage(Object.values(JSON.parse(error._body).message[0].constraints)[0], false);
       });
     } else {
       data["announcementId"] = this.announcementId;
@@ -308,7 +308,7 @@ export class DashboardComponent implements OnInit {
           this.dashboardAPI.snackbarMessage('Announcement was updated successfully', true);
         }
       }, error => {
-        this.dashboardAPI.snackbarMessage(JSON.parse(error._body).message[0].constraints.isNotEmpty, false);
+        this.dashboardAPI.snackbarMessage(Object.values(JSON.parse(error._body).message[0].constraints)[0], false);
       })
     }
     this.menu.close('createAnnouncementDetails');

@@ -180,7 +180,7 @@ export class LeaveApiService {
     * @param {string} message
     * @memberof LeaveApiService
     */
-    openSnackBar(message: string, val: boolean) {
+    openSnackBar(message: any, val: boolean) {
         this.snackBarRef = this.snackBar.openFromComponent(SnackbarNotificationComponent, {
             duration: 5000,
             verticalPosition: "top",
