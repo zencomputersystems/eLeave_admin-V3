@@ -14,10 +14,12 @@
                     (click)="file.click();">
                     Choose File
                 </ion-button>
-                <ion-button *ngIf="showUploadButton" (click)="onSubmit();"
+                <ion-button *ngIf="showUploadButton" (click)="onSubmit();" [disabled]="showSmallSpinner"
                     style="font-size: 9px;height: 26px;width: 80px;text-transform: none;" color="primary">
                     Upload File
+                    <ion-spinner name="lines-small" style="color:white" *ngIf="showSmallSpinner"></ion-spinner>
                 </ion-button>
+
                 <span style="padding-top: 5px;display: block;font-size: 12px;color: #808495;">{{fileName}}</span>
                 <input style="display:none" #file name="file" type="file" accept=".csv" (change)="openFile($event)"
                     (click)="file.value = null" value="">

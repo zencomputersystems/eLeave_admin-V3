@@ -15,7 +15,6 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { SpinnerModule } from '../../../../src/library/spinner/spinner.module';
 import { DeleteListConfirmationComponent } from './delete-list-confirmation/delete-list-confirmation.component';
 import { MatDialogModule, MatButtonModule, MatMenuModule, MatDatepickerModule } from '@angular/material';
-import { DateDialogComponent } from './date-dialog/date-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FileDropModule } from 'ngx-file-drop';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -26,6 +25,7 @@ import { AddOneEmployeeComponent } from './employee-setup/add-one-employee/add-o
 import { OthesInformationTabComponent } from './employee-setup/othes-information-tab/othes-information-tab.component';
 import { NgbModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { UploadConfirmationComponent } from './employee-setup/bulk-import/upload-confirmation/upload-confirmation.component';
 
 const routes: Routes = [
     {
@@ -62,10 +62,9 @@ const routes: Routes = [
         NgxMaterialTimepickerModule,
         RouterModule.forChild(routes)
     ],
-    entryComponents: [DeleteListConfirmationComponent, DateDialogComponent,
+    entryComponents: [DeleteListConfirmationComponent, UploadConfirmationComponent,
         ChangeStatusConfimationComponent],
-    declarations: [EmployeeSetupComponent, DeleteListConfirmationComponent,
-        DateDialogComponent, BulkImportComponent, AddOneEmployeeComponent,
+    declarations: [EmployeeSetupComponent, UploadConfirmationComponent, DeleteListConfirmationComponent, BulkImportComponent, AddOneEmployeeComponent,
         ChangeStatusConfimationComponent, OthesInformationTabComponent]
 })
 export class AdminInvitesModule { }

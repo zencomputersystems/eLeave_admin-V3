@@ -6,6 +6,8 @@ import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry 
 import { LocalStorageService } from 'angular-web-storage';
 import { LeaveApiService } from '../../../../../../src/app/admin-setup/leave-setup/leave-api.service';
 import { environment } from 'src/environments/environment';
+import { MatDialog } from '@angular/material';
+import { UploadConfirmationComponent } from './upload-confirmation/upload-confirmation.component';
 
 /**
  * Bulk Import Page
@@ -62,6 +64,13 @@ export class BulkImportComponent implements OnInit {
     public chooseFileButton: boolean = true;
 
     /**
+     * button small spinner
+     * @type {boolean}
+     * @memberof BulkImportComponent
+     */
+    public showSmallSpinner: boolean = false;
+
+    /**
      * emit output to close menu
      * @memberof BulkImportComponent
      */
@@ -85,7 +94,7 @@ export class BulkImportComponent implements OnInit {
      * @param {LeaveApiService} leaveApi
      * @memberof BulkImportComponent
      */
-    constructor(private fb: FormBuilder, private local: LocalStorageService, private leaveApi: LeaveApiService) {
+    constructor(private fb: FormBuilder, private local: LocalStorageService, private leaveApi: LeaveApiService, public dialog: MatDialog) {
     }
 
     /**
@@ -166,6 +175,7 @@ leavetest6@zen.com.my,ZEN-00003,Test 3 ZEN,Test 3,000101-07-5682,9/7/2018,Female
      * @memberof BulkImportComponent
      */
     onSubmit() {
+        this.showSmallSpinner = true;
         this.formData.append('file', new Blob([(this.fileform.get('file').value)], { type: 'text/csv' }), this.fileName);
         const queryHeaders = new Headers();
         queryHeaders.append('Authorization', 'JWT ' + JSON.parse(this.local.get('access_token')));
@@ -194,13 +204,20 @@ leavetest6@zen.com.my,ZEN-00003,Test 3 ZEN,Test 3,000101-07-5682,9/7/2018,Female
         } else {
             response.forEach(item => {
                 if (item.category == 'Success' && item.data.length != 0) {
-                    this.leaveApi.openSnackBar('New employee profiles was created successfully', true);
+                    this.leaveApi.openSnackBar(item.data.length + ' New employee profiles was created successfully', true);
                 }
                 if (item.data.length != 0 && item.category != 'Success') {
-                    this.leaveApi.openSnackBar(item.message, false);
+                    this.dialog.open(UploadConfirmationComponent, {
+                        disableClose: true,
+                        data: item,
+                        height: "270px",
+                        width: "440px",
+                        panelClass: 'custom-dialog-container'
+                    });
                 }
             });
         }
+        this.showSmallSpinner = false;
         this.closeMenu.emit('true');
         this.ngOnInit();
         this.formData = new FormData();
