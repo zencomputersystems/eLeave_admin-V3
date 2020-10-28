@@ -503,6 +503,9 @@
                 <div style="margin-bottom: 10px;" *ngIf="leaveContent[j] == true">
                   <ion-row *ngFor="let item of leaveEntitlement[j]; let i=index" style="padding-left: 10px;">
                     <ion-col style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                      <div *ngIf="mainToggle === 'ON'"
+                        [style.display]="clickedIndex === i && clickedHeaderIndex === j ?'':'none' "
+                        style="float: right;color: #4d4f5c;font-style: italic;">Editing...</div>
                       <p class="textHover" style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space:
                         pre-line;margin-bottom: 0;"
                         [ngClass]="{'textColor': clickedIndex === i && clickedHeaderIndex === j, 'oriColor': clickedIndex !== i || clickedHeaderIndex !== j}"
@@ -1177,6 +1180,9 @@
                 <div style="margin-bottom: 10px;" *ngIf="leaveContent[j] == true">
                   <ion-row *ngFor="let item of leaveEntitlement[j]; let i=index" style="padding-left: 10px;">
                     <ion-col style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                      <div *ngIf="mainToggle === 'ON'"
+                        [style.display]="clickedIndex === i && clickedHeaderIndex === j ?'':'none' "
+                        style="float: right;color: #4d4f5c;font-style: italic;">Editing...</div>
                       <p class="textHover" style="cursor: pointer;font-size: 12px;font-weight: bold;overflow: hidden;white-space:
                         pre-line;margin-bottom: 0;"
                         [ngClass]="{'textColor': clickedIndex === i && clickedHeaderIndex === j, 'oriColor': clickedIndex !== i || clickedHeaderIndex !== j}"
