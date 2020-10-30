@@ -332,6 +332,7 @@ export class ClientComponent implements OnInit {
                 "address": ""
             }]
         }, error => {
+            this.showSmallSpinner = false;
             this.clientApi.snackbarMsg('Failed to create new client profile', false);
         })
     }
@@ -413,8 +414,6 @@ export class ClientComponent implements OnInit {
     getNewLocationCoordinate(address: string, index: number) {
         this.clientApi.get_search_type_location(address, 'address').subscribe(
             detail => {
-                // this.latitude = detail.results[0].geometry.location.lat;
-                // this.longitude = detail.results[0].geometry.location.lng;
                 this.newLocation[index].latitude = detail.results[0].geometry.location.lat;
                 this.newLocation[index].longitude = detail.results[0].geometry.location.lng;
             }
@@ -506,70 +505,85 @@ export class ClientComponent implements OnInit {
     }
     saveEditClient() {
         // project
-        for (let i = 0; i < this.project.length; i++) {
-            if (this.project[i].PROJECT_GUID !== '') {
-                const project = {
-                    "projectId": this.project[i].PROJECT_GUID,
-                    "clientId": this.clientId,
-                    "name": this.project[i].NAME,
-                    "socNo": this.project[i].SOC_NO,
-                    "description": this.project[i].DESCRIPTION
+        if (this.project.length > 0) {
+            for (let i = 0; i < this.project.length; i++) {
+                if (this.project[i].PROJECT_GUID !== '') {
+                    const project = {
+                        "projectId": this.project[i].PROJECT_GUID,
+                        "clientId": this.clientId,
+                        "name": this.project[i].NAME,
+                        "socNo": this.project[i].SOC_NO,
+                        "description": this.project[i].DESCRIPTION
+                    }
+                    this.patchProject.push(project);
+                } else {
+                    const newproject = {
+                        "clientId": this.clientId,
+                        "name": this.project[i].NAME,
+                        "socNo": this.project[i].SOC_NO,
+                        "description": this.project[i].DESCRIPTION
+                    }
+                    this.postProject.push(newproject);
                 }
-                this.patchProject.push(project);
-            } else {
-                const newproject = {
-                    "clientId": this.clientId,
-                    "name": this.project[i].NAME,
-                    "socNo": this.project[i].SOC_NO,
-                    "description": this.project[i].DESCRIPTION
-                }
-                this.postProject.push(newproject);
             }
+        } else {
+            this.patchProject = [];
+            this.postProject = [];
         }
 
         // contract
-        for (let i = 0; i < this.contract.length; i++) {
-            if (this.contract[i].CONTRACT_GUID !== '') {
-                const contract = {
-                    "contractId": this.contract[i].CONTRACT_GUID,
-                    "clientId": this.clientId,
-                    "name": this.contract[i].NAME,
-                    "contractNo": this.contract[i].CONTRACT_NO,
-                    "description": this.contract[i].DESCRIPTION
+        if (this.contract.length > 0) {
+            for (let i = 0; i < this.contract.length; i++) {
+                if (this.contract[i].CONTRACT_GUID !== '') {
+                    const contract = {
+                        "contractId": this.contract[i].CONTRACT_GUID,
+                        "clientId": this.clientId,
+                        "name": this.contract[i].NAME,
+                        "contractNo": this.contract[i].CONTRACT_NO,
+                        "description": this.contract[i].DESCRIPTION
+                    }
+                    this.patchContract.push(contract);
+                } else {
+                    const newcontract = {
+                        "clientId": this.clientId,
+                        "name": this.contract[i].NAME,
+                        "contractNo": this.contract[i].CONTRACT_NO,
+                        "description": this.contract[i].DESCRIPTION
+                    }
+                    this.postContract.push(newcontract);
                 }
-                this.patchContract.push(contract);
-            } else {
-                const newcontract = {
-                    "clientId": this.clientId,
-                    "name": this.contract[i].NAME,
-                    "contractNo": this.contract[i].CONTRACT_NO,
-                    "description": this.contract[i].DESCRIPTION
-                }
-                this.postContract.push(newcontract);
             }
+        } else {
+            this.patchContract = [];
+            this.postContract = [];
         }
 
         //location 
-        for (let i = 0; i < this.location.length; i++) {
-            if (this.location[i].LOCATION_GUID !== '') {
-                const location =
-                {
-                    "locationId": this.location[i].LOCATION_GUID,
-                    "clientId": this.clientId,
-                    "latitude": (this.location[i].LATITUDE).toString(),
-                    "longitude": (this.location[i].LONGITUDE).toString(),
-                    "address": this.location[i].ADDRESS
+        if (this.location.length > 0) {
+            for (let i = 0; i < this.location.length; i++) {
+                if (this.location[i].LOCATION_GUID !== '') {
+                    const location =
+                    {
+                        "locationId": this.location[i].LOCATION_GUID,
+                        "clientId": this.clientId,
+                        "latitude": (this.location[i].LATITUDE).toString(),
+                        "longitude": (this.location[i].LONGITUDE).toString(),
+                        "address": this.location[i].ADDRESS
+                    }
+                    this.patchLocation.push(location);
+                } else {
+                    const newLocation = {
+                        "clientId": this.clientId,
+                        "latitude": (this.location[i].LATITUDE).toString(),
+                        "longitude": (this.location[i].LONGITUDE).toString(),
+                        "address": this.location[i].ADDRESS
+                    }
+                    this.postLocation.push(newLocation);
                 }
-                this.patchLocation.push(location);
-            } else {
-                const newLocation = {
-                    "clientId": this.clientId,
-                    "latitude": (this.location[i].LATITUDE).toString(),
-                    "longitude": (this.location[i].LONGITUDE).toString(),
-                    "address": this.location[i].ADDRESS
-                }
-                this.postLocation.push(newLocation);
             }
+        } else {
+            this.patchLocation = [];
+            this.postLocation = [];
         }
 
         const patchData = {

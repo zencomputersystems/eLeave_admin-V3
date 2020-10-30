@@ -138,7 +138,7 @@ export class SideMenuNavigationComponent implements OnInit {
       icon: 'icon_calendar@3x.png'
     },
     {
-      title: 'Client Profile',
+      title: 'Client Setup',
       url: '/administration/client',
       icon: 'icon_persons@3x.png'
     },
