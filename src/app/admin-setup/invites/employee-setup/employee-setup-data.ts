@@ -23,12 +23,36 @@ export const personal = {
     "city": "",
     "state": "",
     "country": "",
-    "emergencyContact": [],
-    "education": [],
-    "certification": [],
+    "emergencyContact": [{
+        "contacts": {
+            "contactName": "",
+            "contactRelationship": "",
+            "contactNumber": ""
+        }
+    }],
+    "education": [{
+        "educationDetail": {
+            "qualificationLevel": "",
+            "major": "",
+            "university": "",
+            "year": ""
+        }
+    }],
+    "certification": [{
+        "certificationName": "",
+        "certificationEnrollYear": "",
+        "certificationGraduateYear": "",
+        "certificationAttachment": ""
+    }],
     "family": {
-        "spouse": [],
-        "child": []
+        "spouse": [{
+            "spouseName": "",
+            "spouseIdentificationNumber": ""
+        }],
+        "child": [{
+            "childName": "",
+            "childIdentificationNumber": ""
+        }]
     }
 }
 
