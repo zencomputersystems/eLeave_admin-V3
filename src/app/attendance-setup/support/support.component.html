@@ -240,18 +240,18 @@
                                 <ng-container *ngFor="let item of conversationList">
                                     <ion-item style="padding-left: 5px;" lines="none">
                                         <ng-container *ngIf="url">
-                                            <!-- <ng-container *ngFor="let list of url.details; let j= index">
-                                            <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID"> -->
-                                            <ion-avatar slot="start" style="align-self: baseline;"
-                                                *ngIf="item.PROFILE_PICTURE != undefined || item.PROFILE_PICTURE != null">
-                                                <img src="{{url.link + item.PROFILE_PICTURE}}">
-                                            </ion-avatar>
-                                            <ion-avatar slot="start" style="align-self: baseline;"
-                                                *ngIf="item.PROFILE_PICTURE == null || item.PROFILE_PICTURE == undefined">
-                                                <img src="assets/icon/picture.png">
-                                            </ion-avatar>
-                                            <!-- </ng-container>
-                                        </ng-container> -->
+                                            <ng-container *ngFor="let list of url.details; let j= index">
+                                                <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID">
+                                                    <ion-avatar slot="start" style="align-self: baseline;"
+                                                        *ngIf="url.details[j].PROFILE_PICTURE != undefined || url.details[j].PROFILE_PICTURE != null">
+                                                        <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
+                                                    </ion-avatar>
+                                                    <ion-avatar slot="start" style="align-self: baseline;"
+                                                        *ngIf="url.details[j].PROFILE_PICTURE == null || url.details[j].PROFILE_PICTURE == undefined">
+                                                        <img src="assets/icon/picture.png">
+                                                    </ion-avatar>
+                                                </ng-container>
+                                            </ng-container>
                                         </ng-container>
                                         <ion-col style="color: #4d4f5c;">
                                             <p style="display: inline;opacity: 0.8;font-size: 12px;font-weight: bold;">
@@ -261,9 +261,13 @@
                                                 style="float: right;padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;">
                                                 {{item.CREATION_TS | date: 'MMM dd, yyyy'}}
                                             </p>
-                                            <p
+                                            <p *ngIf="item.TITLE != undefined"
                                                 style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
-                                                {{selectedDetails.TITLE}}
+                                                {{item.TITLE}}
+                                            </p>
+                                            <p *ngIf="item.DESCRIPTION != undefined"
+                                                style="font-size: 12px;opacity: 0.8;padding: 0;">
+                                                {{item.DESCRIPTION}}
                                             </p>
                                             <p class="listInnerText" [innerHTML]="item.MESSAGE">
                                             </p>
@@ -332,7 +336,7 @@
                                     <ion-button
                                         style="margin-top: 20px;--opacity:1;font-size: 10px;width: 140px;height: 30px;--background: #43425d;color: white;--border-radius: 3px;text-transform: capitalize;"
                                         (click)="replyMessage('opened')">
-                                        Open</ion-button>
+                                        Update</ion-button>
                                     <ion-button
                                         style="float: right;margin-top: 20px;--opacity:1;font-size: 10px;width: 140px;height: 30px;color: white;--border-radius: 3px;text-transform: capitalize;"
                                         (click)="replyMessage('closed')">
@@ -357,18 +361,18 @@
                                 <ng-container *ngFor="let item of conversationList">
                                     <ion-item style="padding-left: 5px;" lines="none">
                                         <ng-container *ngIf="url">
-                                            <!-- <ng-container *ngFor="let list of url.details; let j= index">
-                                                <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID"> -->
-                                            <ion-avatar slot="start" style="align-self: baseline;"
-                                                *ngIf="item.PROFILE_PICTURE != undefined || item.PROFILE_PICTURE != null">
-                                                <img src="{{url.link + item.PROFILE_PICTURE}}">
-                                            </ion-avatar>
-                                            <ion-avatar slot="start" style="align-self: baseline;"
-                                                *ngIf="item.PROFILE_PICTURE == undefined || item.PROFILE_PICTURE == null">
-                                                <img src="assets/icon/picture.png">
-                                            </ion-avatar>
-                                            <!-- </ng-container>
-                                            </ng-container> -->
+                                            <ng-container *ngFor="let list of url.details; let j= index">
+                                                <ng-container *ngIf="url.details[j].USER_GUID == item.USER_GUID">
+                                                    <ion-avatar slot="start" style="align-self: baseline;"
+                                                        *ngIf="url.details[j].PROFILE_PICTURE != undefined || url.details[j].PROFILE_PICTURE != null">
+                                                        <img src="{{url.link + url.details[j].PROFILE_PICTURE}}">
+                                                    </ion-avatar>
+                                                    <ion-avatar slot="start" style="align-self: baseline;"
+                                                        *ngIf="url.details[j].PROFILE_PICTURE == null || url.details[j].PROFILE_PICTURE == undefined">
+                                                        <img src="assets/icon/picture.png">
+                                                    </ion-avatar>
+                                                </ng-container>
+                                            </ng-container>
                                         </ng-container>
                                         <ion-col style="color: #4d4f5c;">
                                             <p style="display: inline;opacity: 0.8;font-size: 12px;font-weight: bold;">
@@ -378,18 +382,22 @@
                                                 style="float: right;padding-bottom: 5px;font-size: 11px;color: #4d4f5c;opacity:0.8;padding: 0;">
                                                 {{item.CREATION_TS | date: 'MMM dd, yyyy'}}
                                             </p>
-                                            <p
+                                            <p *ngIf="item.TITLE != undefined"
                                                 style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
-                                                {{selectedDetails.TITLE}}
+                                                {{item.TITLE}}
                                             </p>
-                                            <p
+                                            <p *ngIf="item.START_TIME != undefined"
                                                 style="display: inline;padding-right: 10px;padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;">
-                                                Start time: {{selectedDetails.START_TIME | date: 'dd MMM yyyy hh:mm a'}}
+                                                Start time: {{item.START_TIME | date: 'dd MMM yyyy hh:mm a'}}
                                             </p>
-                                            <p
+                                            <p *ngIf="item.END_TIME != undefined"
                                                 style="padding-bottom: 5px;padding-top: 5px;font-size: 12px;font-weight: bold;color: #4D4F5C;display: inline;">
                                                 End time:
-                                                {{selectedDetails.END_TIME | date: 'dd MMM yyyy hh:mm a'}}
+                                                {{item.END_TIME | date: 'dd MMM yyyy hh:mm a'}}
+                                            </p>
+                                            <p *ngIf="item.DESCRIPTION != undefined"
+                                                style="opacity: 0.8;font-size: 12px;padding: 0;">
+                                                {{item.DESCRIPTION}}
                                             </p>
                                             <p class="listInnerText" [innerHTML]="item.MESSAGE">
                                             </p>
