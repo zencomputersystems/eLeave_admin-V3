@@ -173,7 +173,7 @@ display: inline-block;"> Add New Project</p>
 
                 <agm-map style="width: 92%;" [latitude]="item.latitude" [longitude]="item.longitude" [scrollwheel]="true" [zoom]="zoom">
                   <agm-marker [latitude]="item.latitude" [longitude]="item.longitude" [markerDraggable]="true"
-                    (dragEnd)="markerDragEnd($event)"></agm-marker>
+                    (dragEnd)="markerDragEnd($event, i)"></agm-marker>
                 </agm-map>
               </ng-container>
               <div><img (click)="addNewLocation('new')"
@@ -425,7 +425,7 @@ display: inline-block;"> Add New Location</p>
             Management
           </ion-card-subtitle>
           <ion-card-subtitle class="subtitle" style="font-size: 12px;">
-            Create the client profile with project and contract under the location
+            Create the client profile details with project, contract and the location
           </ion-card-subtitle>
         </div>
       </ion-item-group>

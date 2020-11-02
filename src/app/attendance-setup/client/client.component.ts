@@ -186,19 +186,20 @@ export class ClientComponent implements OnInit {
      * @param {MouseEvent} $event
      * @memberof ClientComponent
      */
-    markerDragEnd($event: MouseEvent) {
+    markerDragEnd($event: MouseEvent, index:number) {
         this.latitude = $event.coords.lat;
         this.longitude = $event.coords.lng;
-        this.getAddress(this.latitude, this.longitude);
+        this.getAddress(this.latitude, this.longitude, index);
     }
 
-    getAddress(latitude, longitude, index?: number) {
+    getAddress(latitude, longitude, index: number) {
         this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
             if (status === 'OK') {
                 if (results[0]) {
                     this.zoom = 12;
                     if (this.createNew === true) {
-                        this.currentAddress = results[0].formatted_address;
+                        // this.currentAddress = results[0].formatted_address;
+                        this.newLocation[index].address = results[0].formatted_address;
                     } else {
                         if (index !== undefined) {
                             this.location[index].ADDRESS = results[0].formatted_address;
