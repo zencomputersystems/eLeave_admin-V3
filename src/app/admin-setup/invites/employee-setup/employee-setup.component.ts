@@ -774,7 +774,7 @@ export class EmployeeSetupComponent implements OnInit {
 
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase();
-        return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+        return this.options.filter(option => option.name.toLowerCase().includes(filterValue));
     }
 
     /**
