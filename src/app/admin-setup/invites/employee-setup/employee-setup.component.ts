@@ -761,7 +761,7 @@ export class EmployeeSetupComponent implements OnInit {
             currentPage: 1,
             totalItems: this.list.length
         }
-        this.getUserId(this.list[0], 0, 1);
+        this.getUserId(this.list[this.clickedIndex], this.clickedIndex, this.config.currentPage);
         let dataList = this.list;
         dataList.forEach(element => {
             this.options.push({ "name": element.employeeName, "userId": element.userId });
