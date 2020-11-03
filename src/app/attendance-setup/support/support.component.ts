@@ -278,13 +278,14 @@ export class SupportComponent implements OnInit {
         }
         this.supportApi.get_support_conversation_id(data.SUPPORT_GUID).subscribe(data => {
             this.conversationList = data;
+            this.conversationList.sort((a, b) => new Date(a.CREATION_TS).getTime() - new Date(b.CREATION_TS).getTime());
             if (this.selectedDetails != undefined) {
                 this.conversationList.unshift(this.selectedDetails);
             }
             for (let i = 0; i < this.conversationList.length; i++) {
-                    let type = this.conversationList[i].ATTACHMENT.split('.');
-                    this.conversationList[i]["type"] = type.pop();
-                }
+                let type = this.conversationList[i].ATTACHMENT.split('.');
+                this.conversationList[i]["type"] = type.pop();
+            }
         })
     }
 
