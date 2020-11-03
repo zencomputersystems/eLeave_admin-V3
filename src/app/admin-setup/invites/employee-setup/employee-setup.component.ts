@@ -690,7 +690,7 @@ export class EmployeeSetupComponent implements OnInit {
         this.newProfileName = new FormControl('', Validators.required);
         this.getListPublicHolidays();
         this.displayWorkingHour = true;
-        this.endPoint();
+        this.endPoint(1, 0);
         let defaultProfileList = await this.workingHourAPI.get_default_profile().toPromise();
         let roleData = await this.roleAPI.get_role_profile_list().toPromise();
         this.roleList = roleData;
@@ -751,17 +751,23 @@ export class EmployeeSetupComponent implements OnInit {
      * Get user profile list from API
      * @memberof EmployeeSetupComponent
      */
-    async endPoint() {
+    async endPoint(pageNumber: number, indexes: number, isOff?: boolean) {
         this.options = [];
         let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
         this.showSpinner = false;
         this.list = data;
         this.config = {
             itemsPerPage: Number(this.itemsPerPage),
-            currentPage: 1,
+            currentPage: pageNumber,
             totalItems: this.list.length
         }
-        this.getUserId(this.list[this.clickedIndex], this.clickedIndex, this.config.currentPage);
+        if (isOff) {
+            let index = this.clickedIndex - ((this.config.currentPage - 1) * Number(this.itemsPerPage));
+            this.getUserId(this.list[this.clickedIndex], index, this.config.currentPage);
+        } else {
+            this.clickedIndex = indexes;
+            this.getUserId(this.list[this.clickedIndex], indexes, pageNumber);
+        }
         let dataList = this.list;
         dataList.forEach(element => {
             this.options.push({ "name": element.employeeName, "userId": element.userId });
@@ -987,7 +993,7 @@ export class EmployeeSetupComponent implements OnInit {
             if (this.isBlurRole === true) {
                 await this.assignRole();
             }
-            await this.endPoint();
+            await this.endPoint(this.config.currentPage, this.clickedIndex, true);
             if (this.open === true) {
                 this._sharedService.leaveApi.snackBarRef.afterDismissed().subscribe(info => {
                     this._sharedService.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
@@ -1036,7 +1042,8 @@ export class EmployeeSetupComponent implements OnInit {
                     }).toPromise();
                     let list = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
                     this.list = list;
-                    this.getUserId(this.list[this.clickedIndex], this.clickedIndex, this.config.currentPage);
+                    let index = this.clickedIndex - ((this.config.currentPage - 1) * Number(this.itemsPerPage));
+                    this.getUserId(this.list[this.clickedIndex], index, this.config.currentPage);
                     this.mode = 'ON';
                     this.modeValue = true;
                     this._sharedService.leaveApi.openSnackBar(name + ' become Active', true);
@@ -1284,7 +1291,7 @@ export class EmployeeSetupComponent implements OnInit {
      */
     changeDetails(text: any) {
         if (text.srcElement.value === '') {
-            this.endPoint();
+            this.endPoint(1, 0);
             this.active = false;
             this.inactive = false;
         } else {
@@ -1401,7 +1408,7 @@ export class EmployeeSetupComponent implements OnInit {
             if (result[0] != undefined) {
                 if (result[0].USER_GUID != undefined) {
                     this._sharedService.leaveApi.openSnackBar('Selected employee profile was deleted', true);
-                    this.endPoint();
+                    this.endPoint(1, 0);
                 }
             } else {
                 this._sharedService.leaveApi.openSnackBar('Failed to delete employee profile', false);

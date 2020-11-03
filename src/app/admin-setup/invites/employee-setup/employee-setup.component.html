@@ -28,10 +28,10 @@
             <div>
                 <app-add-one-employee *ngIf="individualButton === true" [individual]="individualButton === true"
                     [disabledEditMode]="false" (closeMenu)="inviteAPI.menu.close('addNewEmployeeDetails');
-                    endPoint();">
+                    endPoint(1, 0);">
                 </app-add-one-employee>
                 <app-bulk-import *ngIf="bulkButton === true" (closeMenu)="inviteAPI.menu.close('addNewEmployeeDetails');
-                endPoint();"></app-bulk-import>
+                endPoint(1, 0);"></app-bulk-import>
             </div>
         </div>
     </ion-content>
@@ -767,7 +767,7 @@
                                                 page: </div>
                                             <mat-form-field style="width: 50px;text-align: center;font-size: 8px;">
                                                 <mat-select [(ngModel)]="itemsPerPage" (selectionChange)="config = {
-                                                    itemsPerPage: this.itemsPerPage,
+                                                    itemsPerPage: itemsPerPage,
                                                     currentPage: 1
                                                 }" style="font-size: 12px;">
                                                     <mat-option value="10">10</mat-option>
@@ -807,7 +807,7 @@
                                                 page: </div>
                                             <mat-form-field style="width: 50px;text-align: center;font-size: 8px;">
                                                 <mat-select [(ngModel)]="itemsPerPage" (selectionChange)="config = {
-                                                    itemsPerPage: this.itemsPerPage,
+                                                    itemsPerPage: itemsPerPage,
                                                     currentPage: 1
                                                 }" style="font-size: 12px;">
                                                     <mat-option value="10">10</mat-option>
