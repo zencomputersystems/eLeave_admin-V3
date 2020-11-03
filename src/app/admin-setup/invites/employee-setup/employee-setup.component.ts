@@ -1154,13 +1154,19 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {*} event
      * @memberof EmployeeSetupComponent
      */
-    value(event) {
+    async valueOutput(event) {
         this.personalDetails.personalDetail.emergencyContact = event[0];
-        this.personalDetails.personalDetail.family.spouse = event[1];
-        this.personalDetails.personalDetail.family.child = event[2];
+        if (this.personalDetails.personalDetail.family != "") {
+            this.personalDetails.personalDetail.family.spouse = event[1];
+            this.personalDetails.personalDetail.family.child = event[2];
+        } else {
+            this.personalDetails.personalDetail.family = {};
+            this.personalDetails.personalDetail.family.spouse = event[1];
+            this.personalDetails.personalDetail.family.child = event[2];
+        }
         this.personalDetails.personalDetail.education = event[3];
         this.personalDetails.personalDetail.certification = event[4];
-        this.patchPersonalDetails();
+        await this.patchPersonalDetails();
     }
 
     /**

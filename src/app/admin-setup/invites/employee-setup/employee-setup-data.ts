@@ -24,19 +24,15 @@ export const personal = {
     "state": "",
     "country": "",
     "emergencyContact": [{
-        "contacts": {
-            "contactName": "",
-            "contactRelationship": "",
-            "contactNumber": ""
-        }
+        "contactName": "",
+        "contactRelationship": "",
+        "contactNumber": ""
     }],
     "education": [{
-        "educationDetail": {
-            "qualificationLevel": "",
-            "major": "",
-            "university": "",
-            "year": ""
-        }
+        "qualificationLevel": "",
+        "major": "",
+        "university": "",
+        "year": ""
     }],
     "certification": [{
         "certificationName": "",

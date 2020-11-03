@@ -32,7 +32,7 @@ export class OthesInformationTabComponent implements OnInit {
    * emit changed details 
    * @memberof OthesInformationTabComponent
    */
-  @Output() personal = new EventEmitter();
+  @Output() personalOutput = new EventEmitter();
 
   /**
    * emergency contact items
@@ -121,6 +121,13 @@ export class OthesInformationTabComponent implements OnInit {
     }
     else if (!(this.details.personalDetail.education instanceof Array) && this.details.personalDetail.education !== undefined) {
       this.eduList.push(this.details.personalDetail.education);
+    } else if (this.details.personalDetail.education == '' || this.details.personalDetail.education == undefined) {
+      this.eduList.push({
+        "qualificationLevel": "",
+        "major": "",
+        "university": "",
+        "year": ""
+      });
     } else {
       this.eduList = this.details.personalDetail.education;
     }
@@ -135,7 +142,7 @@ export class OthesInformationTabComponent implements OnInit {
     if (changes.mode != undefined) {
       this.mode = changes.mode.currentValue;
       if (changes.mode.previousValue === 'ON' && changes.mode.currentValue === 'OFF') {
-        this.personal.emit([this.removeItems, this.spouseItems, this.childItems, this.eduList, this.awards]);
+        this.personalOutput.emit([this.removeItems, this.spouseItems, this.childItems, this.eduList, this.awards]);
       }
     }
     if (changes.details != undefined) {
@@ -154,6 +161,13 @@ export class OthesInformationTabComponent implements OnInit {
     else if (!(this.details.personalDetail.emergencyContact instanceof Array) && this.details.personalDetail.emergencyContact !== undefined) {
       this.removeItems.push(this.details.personalDetail.emergencyContact);
     }
+    else if (this.details.personalDetail.emergencyContact == '' || this.details.personalDetail.emergencyContact == undefined) {
+      this.removeItems.push({
+        "contactName": "",
+        "contactRelationship": "",
+        "contactNumber": ""
+      });
+    }
     else {
       this.removeItems = this.details.personalDetail.emergencyContact;
     }
@@ -170,6 +184,11 @@ export class OthesInformationTabComponent implements OnInit {
       }
       else if (!(this.details.personalDetail.family.spouse instanceof Array) && this.details.personalDetail.family.spouse !== undefined) {
         this.spouseItems.push(this.details.personalDetail.family.spouse);
+      } else if (this.details.personalDetail.family == '' || this.details.personalDetail.family == undefined) {
+        this.spouseItems.push({
+          "spouseName": "",
+          "spouseIdentificationNumber": ""
+        });
       } else {
         this.spouseItems = this.details.personalDetail.family.spouse;
       }
@@ -188,6 +207,11 @@ export class OthesInformationTabComponent implements OnInit {
       }
       else if (!(this.details.personalDetail.family.child instanceof Array) && this.details.personalDetail.family.child !== undefined) {
         this.childItems.push(this.details.personalDetail.family.child);
+      } else if (this.details.personalDetail.family.child == undefined) {
+        this.childItems.push({
+          "childName": "",
+          "childIdentificationNumber": ""
+        });
       } else {
         this.childItems = this.details.personalDetail.family.child;
       }
@@ -204,6 +228,13 @@ export class OthesInformationTabComponent implements OnInit {
     }
     else if (!(this.details.personalDetail.certification instanceof Array) && this.details.personalDetail.certification !== undefined) {
       this.awards.push(this.details.personalDetail.certification);
+    } else if (this.details.personalDetail.certification == "" || this.details.personalDetail.certification == undefined) {
+      this.awards.push({
+        "certificationName": "",
+        "certificationEnrollYear": "",
+        "certificationGraduateYear": "",
+        "certificationAttachment": ""
+      });
     } else {
       this.awards = this.details.personalDetail.certification;
     }
@@ -277,7 +308,6 @@ export class OthesInformationTabComponent implements OnInit {
     this.apiService.post_file(formData).subscribe(res =>
       this.awards[i].certificationAttachment = res.filename);
   }
-
 }
 
 

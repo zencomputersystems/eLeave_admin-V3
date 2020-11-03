@@ -1604,7 +1604,7 @@
                                 style="cursor: pointer;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 EMERGENCY CONTACT, FAMILY INFORMATION, EDUCATION & CERTIFICATION</div>
                             <div *ngIf="showOthers">
-                                <app-othes-information-tab (personal)="value($event)" [details]="personalDetails"
+                                <app-othes-information-tab (personalOutput)="valueOutput($event)" [details]="personalDetails"
                                     [mode]="mode">
                                 </app-othes-information-tab>
                             </div>
