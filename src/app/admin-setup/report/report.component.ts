@@ -919,6 +919,7 @@ export class ReportComponent implements OnInit {
         let data = require('lodash').groupBy(this.arrayDetails, groupName);
         this.groupValue = Object.values(data);
         this.groupKey = Object.keys(data);
+        this.groupKey.sort();
         this.groupValue.splice(0, 0, this.arrayDetails);
         this.groupKey.splice(0, 0, 'All');
         if (groupName === 'all') {
@@ -952,6 +953,7 @@ export class ReportComponent implements OnInit {
           let data = require('lodash').groupBy(this.arrayDetails, groupName);
           this.groupValue = Object.values(data);
           this.groupKey = Object.keys(data);
+          this.groupKey.sort();
           this.groupValue.splice(0, 0, this.arrayDetails);
           this.groupKey.splice(0, 0, 'All');
           if (groupName === 'all') {
@@ -1012,6 +1014,7 @@ export class ReportComponent implements OnInit {
           let data = require('lodash').groupBy(this.arrayDetails, groupName);
           this.groupValue = Object.values(data);
           this.groupKey = Object.keys(data);
+          this.groupKey.sort();
           this.groupValue.splice(0, 0, this.arrayDetails);
           this.groupKey.splice(0, 0, 'All');
           if (groupName === 'all') {
