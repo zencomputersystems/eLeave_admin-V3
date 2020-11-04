@@ -333,23 +333,23 @@ export class SideMenuNavigationComponent implements OnInit {
     let details = await this.roleService.get_role_details_profile(value.roleId).toPromise();
     console.log(details);
     this.sharedService.emitRoleDetails(details, value.employeeDepartment);
-    if (details.property.allowLeaveManagement.allowApplyOnBehalf.value === false) {
-      this.appPages[4].show = false;
-    }
-    if (details.property.allowLeaveManagement.allowApprovalOverride.value === false) {
-      this.appPages[5].show = false;
-    }
-    if (details.property.allowLeaveSetup.allowYearEndClosingSetup.value === false) {
-      this.appPages[6].show = false;
-    }
     if (details.property.allowLeaveSetup.allowLeaveTypeSetup.value === false) {
       this.appPages[1].show = false;
     }
     if (details.property.allowProfileManagement.allowViewProfile.value === false) {
       this.appPages[2].show = false;
     }
-    if (details.property.allowViewReport.value === false) {
+    if (details.property.allowLeaveManagement.allowApplyOnBehalf.value === false) {
+      this.appPages[5].show = false;
+    }
+    if (details.property.allowLeaveManagement.allowApprovalOverride.value === false) {
+      this.appPages[6].show = false;
+    }
+    if (details.property.allowLeaveSetup.allowYearEndClosingSetup.value === false) {
       this.appPages[7].show = false;
+    }
+    if (details.property.allowViewReport.value === false) {
+      this.appPages[8].show = false;
     }
   }
 
