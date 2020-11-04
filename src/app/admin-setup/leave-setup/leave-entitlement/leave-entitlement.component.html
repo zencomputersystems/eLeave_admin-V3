@@ -705,7 +705,7 @@
                         *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <mat-form-field appearance="outline" style="height: 55px;
+                    <mat-form-field appearance="outline" [style.display]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck? '' : 'none' " style="height: 55px;
                     font-size: 12px; width: -webkit-fill-available;color: #43425d;float:right">
                       <input matInput
                         [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.textValue"
@@ -713,7 +713,8 @@
                     </mat-form-field>
                   </ion-col>
                 </ion-row>
-                <ion-row class="rowDetails">
+                <ion-row class="rowDetails"
+                  [style.display]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck? '' : 'none' ">
                   <ion-col align-self-center class="text" style="min-width: 100px; flex: 1;">
                     Apply Before
                   </ion-col>
@@ -737,10 +738,10 @@
                   </ion-col>
                 </ion-row>
                 <ion-row class="rowDetails">
-                  <ion-col align-self-center class="text configurationText">
+                  <ion-col align-self-center class="text configurationText" [style.display]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck? '' : 'none' ">
                     Exclude Day Type
                   </ion-col>
-                  <ion-col align-self-center class="alignConfiguration configurationTextGroup">
+                  <ion-col align-self-center class="alignConfiguration configurationTextGroup" [style.display]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck? '' : 'none' ">
                     <div class="checkboxDiv" *ngIf="mainToggle === 'ON'">
                       <mat-checkbox [disableRipple]=true
                         (change)="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday = $event.checked"
@@ -809,7 +810,7 @@
                         *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <mat-form-field appearance="outline" style="height: 55px;
+                    <mat-form-field appearance="outline" [style.display]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck? '' : 'none' " style="height: 55px;
                     font-size: 12px; color: #43425d;float:right; width: -webkit-fill-available;">
                       <input matInput
                         [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.textValue"
@@ -817,7 +818,7 @@
                     </mat-form-field>
                   </ion-col>
                 </ion-row>
-                <ion-row class="rowDetails">
+                <ion-row class="rowDetails" [style.display]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck? '' : 'none' ">
                   <ion-col align-self-center class="text">
                     Apply within
                   </ion-col>
@@ -841,10 +842,10 @@
                   </ion-col>
                 </ion-row>
                 <ion-row class="rowDetails">
-                  <ion-col align-self-center class="text" style="flex: 1; min-width: 100px;">
+                  <ion-col align-self-center class="text" style="flex: 1; min-width: 100px;" [style.display]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck? '' : 'none' ">
                     Exclude Day Type
                   </ion-col>
-                  <ion-col align-self-center class="alignConfiguration configurationTextGroup">
+                  <ion-col align-self-center class="alignConfiguration configurationTextGroup" [style.display]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck? '' : 'none' ">
                     <div class="checkboxDiv" *ngIf="mainToggle === 'ON'">
                       <mat-checkbox [disableRipple]=true
                         (change)="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday = $event.checked"
@@ -889,7 +890,7 @@
                         *ngIf="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <div style="text-align: right;">
+                    <div style="text-align: right;" [style.display]="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck ? '' : 'none' ">
                       <p style="font-size: 11px;color: #43425d;opacity:0.8;padding-right: 10px;display: inline;">
                         Convert to :</p>
                       <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
@@ -969,7 +970,7 @@
                         *ngIf="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <mat-form-field appearance="outline" style="height: 55px;
+                    <mat-form-field appearance="outline" [style.display]="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck ? '' : 'none' " style="height: 55px;
                     font-size: 12px; width: -webkit-fill-available;color: #43425d;float:right">
                       <input matInput
                         [(ngModel)]="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.textValue"
@@ -998,7 +999,7 @@
                         *ngIf="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <mat-form-field appearance="outline" class="configurationForm">
+                    <mat-form-field appearance="outline" class="configurationForm" [style.display]="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck? '':'none'">
                       <input matInput
                         [(ngModel)]="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.textValue"
                         [disabled]="mainToggle === 'OFF'">
@@ -1373,7 +1374,7 @@
                         *ngIf="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <mat-form-field appearance="outline" class="formField">
+                    <mat-form-field appearance="outline" class="formField" [style.display]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck? '' : 'none' ">
                       <input matInput
                         [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.textValue"
                         [disabled]="mainToggle === 'OFF'">
@@ -1382,7 +1383,7 @@
                   <ion-item class="divider" lines="full">
                   </ion-item>
                 </ion-row>
-                <ion-row class="rowDetails rowMobileDetails" style="flex-flow: row wrap;">
+                <ion-row class="rowDetails rowMobileDetails" style="flex-flow: row wrap;" [style.display]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck? '' : 'none' ">
                   <ion-col align-self-center class="text" style="flex:1 1 50%; min-width: 30px;">
                     Apply Before
                   </ion-col>
@@ -1406,10 +1407,10 @@
                   </ion-col>
                 </ion-row>
                 <ion-row class="rowDetails rowMobileDetails">
-                  <ion-col align-self-center class="text configurationText">
+                  <ion-col align-self-center class="text configurationText" [style.display]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck? '' : 'none' ">
                     Exclude Day Type
                   </ion-col>
-                  <ion-col align-self-center class="alignConfiguration configurationTextGroup">
+                  <ion-col align-self-center class="alignConfiguration configurationTextGroup" [style.display]="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.isAllowShortNotice.isCheck? '' : 'none' ">
                     <div class="checkboxDiv" *ngIf="mainToggle === 'ON'">
                       <mat-checkbox [disableRipple]=true
                         (change)="entitlementDetails.PROPERTIES_XML.applyBeforeProperties.excludeDayType.isExcludeHoliday = $event.checked"
@@ -1477,7 +1478,7 @@
                         *ngIf="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <mat-form-field appearance="outline" class="configurationForm">
+                    <mat-form-field appearance="outline" class="configurationForm" [style.display]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck? '' : 'none' ">
                       <input matInput
                         [(ngModel)]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.textValue"
                         [disabled]="mainToggle === 'OFF'">
@@ -1486,7 +1487,7 @@
                   <ion-item class="divider" lines="full">
                   </ion-item>
                 </ion-row>
-                <ion-row class="rowDetails rowMobileDetails" style="flex-flow: row wrap">
+                <ion-row class="rowDetails rowMobileDetails" style="flex-flow: row wrap" [style.display]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck? '' : 'none' ">
                   <ion-col align-self-center class="text">
                     Apply within
                   </ion-col>
@@ -1510,10 +1511,10 @@
                   </ion-col>
                 </ion-row>
                 <ion-row class="rowDetails rowMobileDetails">
-                  <ion-col align-self-center class="text configurationText">
+                  <ion-col align-self-center class="text configurationText" [style.display]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck? '' : 'none' ">
                     Exclude Day Type
                   </ion-col>
-                  <ion-col align-self-center class="alignConfiguration configurationTextGroup">
+                  <ion-col align-self-center class="alignConfiguration configurationTextGroup" [style.display]="entitlementDetails.PROPERTIES_XML.applyWithinProperties.isAllowBackdated.isCheck? '' : 'none' ">
                     <div class="checkboxDiv" *ngIf="mainToggle === 'ON'">
                       <mat-checkbox [disableRipple]=true
                         (change)="entitlementDetails.PROPERTIES_XML.applyWithinProperties.excludeDayType.isExcludeHoliday = $event.checked"
@@ -1558,7 +1559,7 @@
                         *ngIf="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <div style="text-align: right;">
+                    <div style="text-align: right;" [style.display]="entitlementDetails.PROPERTIES_XML.isAllowAppliedMoreThanBalance.isCheck ? '' : 'none' ">
                       <p style="font-size: 11px;color: #43425d;opacity:0.8;padding-right: 10px;display: inline;">
                         Convert to :</p>
                       <mat-form-field appearance="outline" *ngIf="mainToggle === 'ON'" style="height: 55px;
@@ -1637,7 +1638,7 @@
                         *ngIf="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <mat-form-field appearance="outline" class="formField">
+                    <mat-form-field appearance="outline" class="formField" [style.display]="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.isCheck ? '' : 'none' ">
                       <input matInput
                         [(ngModel)]="entitlementDetails.PROPERTIES_XML.isAllowLeaveCancelAfterDate.textValue"
                         [disabled]="mainToggle === 'OFF'">
@@ -1665,7 +1666,7 @@
                         *ngIf="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck === false">
                         Not Allowed</p>
                     </div>
-                    <mat-form-field appearance="outline" class="formField">
+                    <mat-form-field appearance="outline" class="formField" [style.display]="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.isCheck? '':'none'">
                       <input matInput
                         [(ngModel)]="entitlementDetails.PROPERTIES_XML.isLimitApplicationToCarryForward.textValue"
                         [disabled]="mainToggle === 'OFF'">
