@@ -1122,9 +1122,9 @@ export class ReportComponent implements OnInit {
               }
             }
           }
-          if (this.arrayDetails[i].leaveDetail.length == 0) {
-            this.arrayDetails.splice(i, 1);
-          }
+          // if (this.arrayDetails[i].leaveDetail.length == 0) {
+          //   this.arrayDetails.splice(i, 1);
+          // }
         }
       }
     }
