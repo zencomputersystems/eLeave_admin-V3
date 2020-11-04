@@ -24,6 +24,13 @@ export interface ISideMenu {
    * @memberof ISideMenu
    */
   icon: string;
+
+  /**
+   * show/hide menu 
+   * @type {boolean}
+   * @memberof ISideMenu
+   */
+  show: boolean;
 }
 
 import { Component, OnInit } from '@angular/core';
@@ -32,6 +39,8 @@ import { APIService } from '../../../src/services/shared-service/api.service';
 import { filter } from 'rxjs/operators';
 import { SharedService } from '../admin-setup/leave-setup/shared.service';
 import { RouteDialogComponent } from '../admin-setup/leave-setup/route-dialog/route-dialog.component';
+import { RoleApiService } from '../admin-setup/role-management/role-api.service';
+
 /**
  * Side Menu Navigation Component
  * @export
@@ -95,63 +104,86 @@ export class SideMenuNavigationComponent implements OnInit {
     {
       title: 'Dashboard',
       url: '/administration/dashboard',
-      icon: 'icon_dashboard@3x.png'
+      icon: 'icon_dashboard@3x.png',
+      show: true
     },
     {
       title: 'Leave Setup',
       url: '/administration/leave-setup',
-      icon: 'icon_calendar@3x.png'
+      icon: 'icon_calendar@3x.png',
+      show: true
     },
     {
       title: 'Employee Setup',
       url: '/administration/employee-setup',
-      icon: 'icon_persons@3x.png'
+      icon: 'icon_persons@3x.png',
+      show: true
     },
     {
       title: 'Role Management',
       url: '/administration/role-management',
-      icon: 'icon_setting@3x.png'
+      icon: 'icon_setting@3x.png',
+      show: true
+    },
+    {
+      title: '',
+      url: '',
+      icon: '',
+      show: true
     },
     {
       title: 'Apply on Behalf',
       url: '/administration/apply-on-behalf',
-      icon: 'icon_customers@3x.png'
+      icon: 'icon_customers@3x.png',
+      show: true
     },
     {
       title: 'Approval Override',
       url: '/administration/approval-override',
-      icon: 'icon_persons@3x.png'
+      icon: 'icon_persons@3x.png',
+      show: true
     },
     {
       title: 'Year End Closing',
       url: '/administration/year-end-closing',
-      icon: 'icon_calendar@3x.png'
+      icon: 'icon_calendar@3x.png',
+      show: true
     },
     {
       title: 'Reports',
       url: '/administration/report',
-      icon: 'icon_reports@3x.png'
+      icon: 'icon_reports@3x.png',
+      show: true
+    },
+    {
+      title: '',
+      url: '',
+      icon: '',
+      show: true
     },
     {
       title: 'Attendance Setup',
       url: '/administration/attendance',
-      icon: 'icon_calendar@3x.png'
+      icon: 'icon_calendar@3x.png',
+      show: true
     },
     {
       title: 'Client Setup',
       url: '/administration/client',
-      icon: 'icon_persons@3x.png'
+      icon: 'icon_persons@3x.png',
+      show: true
     },
     {
       title: 'Support Center',
       url: '/administration/support',
-      icon: 'icon_chat-room@2x.png'
+      icon: 'icon_chat-room@2x.png',
+      show: true
     }
   ];
 
   public image: string = "assets/icon/beesuite.png";
 
-  public imageName:string;
+  public imageName: string;
 
   /** 
    * This method used to get return value from property list
@@ -190,7 +222,7 @@ export class SideMenuNavigationComponent implements OnInit {
    * @param {SharedService} sharedService
    * @memberof SideMenuNavigationComponent
    */
-  constructor(private router: Router, private apiService: APIService, public sharedService: SharedService
+  constructor(private router: Router, private apiService: APIService, private roleService: RoleApiService, public sharedService: SharedService
   ) {
     this.imageName = this.image.substring(this.image.lastIndexOf('/') + 1).split('.')[0];
     router.events
@@ -200,6 +232,7 @@ export class SideMenuNavigationComponent implements OnInit {
         this.apiService.get_profile_pic('personal').subscribe(data => {
           this.url = data;
         })
+        this.getRoleData();
       });
 
     sharedService.changeEmitted$.subscribe(
@@ -214,12 +247,9 @@ export class SideMenuNavigationComponent implements OnInit {
    * Get active route
    * @memberof SideMenuNavigationComponent
    */
-  ngOnInit() {
+  async ngOnInit() {
     this.getRoute(this.router.url);
     this.openAtBeginning();
-    this.apiService.get_personal_details().subscribe(data => {
-      this.list = data;
-    });
   }
 
   /**
@@ -227,7 +257,7 @@ export class SideMenuNavigationComponent implements OnInit {
    * @param {*} URL
    * @memberof SideMenuNavigationComponent
    */
-  getRoute(URL) {
+  async getRoute(URL) {
     if (URL.split("/").length == 4) {
       const url = URL.split('/');
       const lastSegment = url.pop();
@@ -296,6 +326,33 @@ export class SideMenuNavigationComponent implements OnInit {
     }, 10);
   }
 
+  async getRoleData() {
+    let data = await this.apiService.get_personal_details().toPromise();
+    this.list = data;
+    let value = await this.apiService.get_user_profile_details(this.list.userId).toPromise();
+    let details = await this.roleService.get_role_details_profile(value.roleId).toPromise();
+    console.log(details);
+    this.sharedService.emitRoleDetails(details, value.employeeDepartment);
+    if (details.property.allowLeaveManagement.allowApplyOnBehalf.value === false) {
+      this.appPages[4].show = false;
+    }
+    if (details.property.allowLeaveManagement.allowApprovalOverride.value === false) {
+      this.appPages[5].show = false;
+    }
+    if (details.property.allowLeaveSetup.allowYearEndClosingSetup.value === false) {
+      this.appPages[6].show = false;
+    }
+    if (details.property.allowLeaveSetup.allowLeaveTypeSetup.value === false) {
+      this.appPages[1].show = false;
+    }
+    if (details.property.allowProfileManagement.allowViewProfile.value === false) {
+      this.appPages[2].show = false;
+    }
+    if (details.property.allowViewReport.value === false) {
+      this.appPages[7].show = false;
+    }
+  }
+
   /**
    * This method is used to route to Login page after clicked logout button
    * @param {*} event
@@ -318,11 +375,11 @@ export class SideMenuNavigationComponent implements OnInit {
     }
   }
 
-  routeTo(){
+  routeTo() {
     this.router.navigate(['/main'])
-  .then(() => {
-    location.reload();
-  });
+      .then(() => {
+        location.reload();
+      });
   }
 
 }

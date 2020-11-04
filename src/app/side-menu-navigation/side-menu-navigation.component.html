@@ -17,17 +17,16 @@
         </ion-avatar>
         <p style="display:flex; justify-content: center; color: #f9fafc;font-size: 15px;">{{imageName}}</p>
         <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index"
+            [style.display]="p.show ? '' : 'none'">
             <ion-item class="items" lines="none" (click)="activeUrl(appPages[i].url)"
               [class.background-highlight]="activeRoute === appPages[i].url">
-              <!-- <div class="my-icon" aria-label="My icon" [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div> -->
-              <img style="width: 16px;" src="assets/icon/sidebar_menus/{{p.icon}}">
+              <img style="width: 16px;" src="assets/icon/sidebar_menus/{{p.icon}}"
+                [style.display]="p.icon==''? 'none':''">
               <ion-label [class.text-color]="activeRoute === appPages[i].url ">
                 {{p.title}}
               </ion-label>
             </ion-item>
-            <ion-item lines="none" *ngIf="i == 3"></ion-item>
-            <ion-item lines="none" *ngIf="i == 7"></ion-item>
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
@@ -48,16 +47,14 @@
           <img src="assets/icon/beesuite.png">
         </ion-avatar>
         <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index"
+            [style.display]="p.show ? '' : 'none'">
             <ion-item class="items" no-padding lines="none" style="display: block;--inner-padding-end: 0;"
               [class.background-highlight-icon]="activeRoute === appPages[i].url "
               [class.first-highlight]="router.url === appPages[i].url" (click)="activeUrl(appPages[i].url)">
-              <!-- <div class="my-icon-menu" aria-label="My icon" style="align-items: center; width: 100%;"
-                [inlineSVG]="'assets/icon/sidebar_menus/' + p.icon"></div> -->
-              <img style="margin: 0 auto; width: 16px;" src="assets/icon/sidebar_menus/{{p.icon}}">
+              <img style="margin: 0 auto; width: 16px;" src="assets/icon/sidebar_menus/{{p.icon}}"
+                [style.display]="p.icon==''? 'none':''">
             </ion-item>
-            <ion-item no-padding lines="none" *ngIf="i == 3"></ion-item>
-            <ion-item no-padding lines="none" *ngIf="i == 7"></ion-item>
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
