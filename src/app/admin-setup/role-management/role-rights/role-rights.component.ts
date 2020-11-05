@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { LocalStorageService } from 'angular-web-storage';
 import { RoleApiService } from '../role-api.service';
 import { options } from '../role-details-data';
 
@@ -109,9 +110,10 @@ export class RoleRightsComponent implements OnInit {
     /**
      *Creates an instance of RoleRightsComponent.
      * @param {RoleApiService} roleAPi
+     * @param {LocalStorageService} local
      * @memberof RoleRightsComponent
      */
-    constructor(private roleAPi: RoleApiService) {
+    constructor(private roleAPi: RoleApiService, public local: LocalStorageService) {
         this.viewReportList = options;
     }
 

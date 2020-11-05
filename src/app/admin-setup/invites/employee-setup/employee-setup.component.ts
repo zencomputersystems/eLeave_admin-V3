@@ -19,6 +19,7 @@ import { AttendanceSetupApiService } from '../../../../../src/app/attendance-set
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { NavigationEnd, Router } from '@angular/router';
 const dayjs = require('dayjs');
 /**
  *
@@ -640,6 +641,12 @@ export class EmployeeSetupComponent implements OnInit {
 
     private options: any[];
 
+    public emittedRole: any;
+
+    public emittedDepartment: any;
+
+    public hideEditmode: boolean = false;
+
     /**
      *Creates an instance of EmployeeSetupComponent.
      * @param {AdminInvitesApiService} inviteAPI access invite API
@@ -647,7 +654,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {SharedService} _sharedService
      * @memberof EmployeeSetupComponent
      */
-    constructor(public inviteAPI: AdminInvitesApiService, public roleAPI: RoleApiService, private _sharedService: SharedService, private calendarProfileAPI: CalendarProfileApiService,
+    constructor(private router: Router, public inviteAPI: AdminInvitesApiService, public roleAPI: RoleApiService, private _sharedService: SharedService, private calendarProfileAPI: CalendarProfileApiService,
         private workingHourAPI: WorkingHourApiService, private sideMenuComponent: SideMenuNavigationComponent, private attendanceApi: AttendanceSetupApiService) {
         this.inviteAPI.apiService.get_profile_pic('all').subscribe(data => {
             this.url = data;
@@ -676,6 +683,16 @@ export class EmployeeSetupComponent implements OnInit {
             roleName: new FormControl('', Validators.required),
             roleDescription: new FormControl('', Validators.required),
         });
+
+        _sharedService.roleDataEmitted$.subscribe(
+            data => {
+                this.emittedRole = data;
+                this.hideEditmode = false;
+                if (this.emittedRole.property.allowProfileManagement.allowEditProfile.value === false) {
+                    this.hideEditmode = true;
+                }
+            });
+
     }
 
     /**
@@ -690,6 +707,8 @@ export class EmployeeSetupComponent implements OnInit {
         this.newProfileName = new FormControl('', Validators.required);
         this.getListPublicHolidays();
         this.displayWorkingHour = true;
+        let data = await this.attendanceApi.get_attendance_list().toPromise();
+        this.attendanceList = data;
         this.endPoint(1, 0);
         let defaultProfileList = await this.workingHourAPI.get_default_profile().toPromise();
         let roleData = await this.roleAPI.get_role_profile_list().toPromise();
@@ -722,10 +741,6 @@ export class EmployeeSetupComponent implements OnInit {
         for (let i = 0; i < this.departmentList.length; i++) {
             this.departmentList[i]['checked'] = false;
         }
-        this.attendanceApi.get_attendance_list().subscribe(data => {
-            this.attendanceList = data;
-            console.log(data)
-        })
     }
 
     /**
@@ -756,26 +771,39 @@ export class EmployeeSetupComponent implements OnInit {
         let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
         this.showSpinner = false;
         this.list = data;
-        this.config = {
-            itemsPerPage: Number(this.itemsPerPage),
-            currentPage: pageNumber,
-            totalItems: this.list.length
-        }
-        if (isOff) {
-            let index = this.clickedIndex - ((this.config.currentPage - 1) * Number(this.itemsPerPage));
-            this.getUserId(this.list[this.clickedIndex], index, this.config.currentPage);
-        } else {
-            this.clickedIndex = indexes;
-            this.getUserId(this.list[this.clickedIndex], indexes, pageNumber);
-        }
-        let dataList = this.list;
-        dataList.forEach(element => {
-            this.options.push({ "name": element.employeeName, "userId": element.userId });
-        });
-        this.filteredOptions = this.myControl.valueChanges.pipe(
-            startWith(''),
-            map(value => this._filter(value))
-        );
+        this._sharedService.departmentEmitted$.subscribe(
+            depart => {
+                this.emittedDepartment = depart;
+                if (this.emittedRole.property.allowProfileManagement.allowViewProfile.value && this.emittedRole.property.allowProfileManagement.allowViewProfile.level == 'Department') {
+                    let arraySameDepartment = [];
+                    this.list.forEach(element => {
+                        if (this.emittedDepartment === element.department) {
+                            arraySameDepartment.push(element);
+                        }
+                    });
+                    this.list = arraySameDepartment;
+                }
+                this.config = {
+                    itemsPerPage: Number(this.itemsPerPage),
+                    currentPage: pageNumber,
+                    totalItems: this.list.length
+                }
+                if (isOff) {
+                    let index = this.clickedIndex - ((this.config.currentPage - 1) * Number(this.itemsPerPage));
+                    this.getUserId(this.list[this.clickedIndex], index, this.config.currentPage);
+                } else {
+                    this.clickedIndex = indexes;
+                    this.getUserId(this.list[this.clickedIndex], indexes, pageNumber);
+                }
+                let dataList = this.list;
+                dataList.forEach(element => {
+                    this.options.push({ "name": element.employeeName, "userId": element.userId });
+                });
+                this.filteredOptions = this.myControl.valueChanges.pipe(
+                    startWith(''),
+                    map(value => this._filter(value))
+                );
+            });
     }
 
     private _filter(value: string): string[] {
@@ -830,7 +858,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.addEntitlement = [];
             if (data.length > 0) {
                 for (let i = 0; i < data.length; i++) {
-                    this.addEntitlement.push({ "leavetype": data[i].LEAVE_TYPE_GUID, "userLeaveEntitlement": data[i].USER_LEAVE_ENTITLEMENT_GUID, "balance": data[i].BALANCE_DAYS });
+                    this.addEntitlement.push({ "leavetype": data[i].LEAVE_TYPE_GUID, "entitlementId": data[i].ENTITLEMENT_GUID, "userLeaveEntitlement": data[i].USER_LEAVE_ENTITLEMENT_GUID, "balance": data[i].BALANCE_DAYS });
                 }
             }
         })
@@ -845,7 +873,6 @@ export class EmployeeSetupComponent implements OnInit {
                     this.attendanceValue = this.attendanceList[i].attendance_guid;
                 }
             }
-            console.log(data);
         }, error => {
             this.attendanceValue = '';
         })
@@ -919,7 +946,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     spliceEntitlement(index: number, leaveTypeId: string, val) {
-        this.addEntitlement.splice(index, 1, { "leavetype": leaveTypeId, "userLeaveEntitlement": val[val.length - 1].USER_LEAVE_ENTITLEMENT_GUID, "balance": val[val.length - 1].BALANCE_DAYS });
+        this.addEntitlement.splice(index, 1, { "leavetype": leaveTypeId, "entitlementId": val[val.length - 1].ENTITLEMENT_GUID, "userLeaveEntitlement": val[val.length - 1].USER_LEAVE_ENTITLEMENT_GUID, "balance": val[val.length - 1].BALANCE_DAYS });
     }
 
     /**
@@ -942,7 +969,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     addNewEntitlement() {
-        this.addEntitlement.push({ "leavetype": "", "userLeaveEntitlement": "", "balance": 0 });
+        this.addEntitlement.push({ "leavetype": "", "entitlementId": '', "userLeaveEntitlement": "", "balance": 0 });
     }
 
     /**
@@ -1105,10 +1132,9 @@ export class EmployeeSetupComponent implements OnInit {
             }
             catch (err) {
                 this.open = true;
-                if (Object.values(JSON.parse(err._body).message[0].constraints)[0] === 'emailAddress should not be empty') {
-                    this._sharedService.leaveApi.openSnackBar('one email address is required', false);
-                } else { this._sharedService.leaveApi.openSnackBar(Object.values(JSON.parse(err._body).message[0].constraints)[0], false); }
+                this._sharedService.leaveApi.openSnackBar(Object.values(JSON.parse(err._body).message[0].constraints)[0], false);
             }
+
         }
     }
 

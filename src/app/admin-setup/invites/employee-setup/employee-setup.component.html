@@ -578,7 +578,8 @@
                         Create and manage user profile details</ion-card-subtitle>
                 </div>
             </ion-item-group>
-            <div style="margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
+            <div [style.display]="hideEditmode ? 'none' : '' "
+                style="margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
                 <p
                     style="margin-top: 16px;opacity: 0.8;font-size: 12px;font-weight: bold;color: #43425d;display: inline-block;padding-right: 10px;">
                     Edit Mode: {{mode}}</p>
@@ -849,7 +850,8 @@
                                             </ion-avatar>
                                         </ng-container>
                                     </ng-container>
-                                    <img src="assets/icon/add_employee/camera@3x.png" style="width: 26px;height:26px;position: absolute;
+                                    <img [style.display]="hideEditmode ? 'none' : '' "
+                                        src="assets/icon/add_employee/camera@3x.png" style="width: 26px;height:26px;position: absolute;
                                     top: 60px;left: 55px;cursor:pointer" (click)="file.click();">
                                     <input style="display:none" #file name="file" type="file"
                                         (change)="submitProfilePic($event.target.files)">
@@ -866,7 +868,7 @@
                                     </ion-card-subtitle>
                                 </div>
                             </div>
-                            <div
+                            <div [style.display]="hideEditmode ? 'none' : '' "
                                 style="margin-right: 33px; margin-left: auto; padding-left: 5px; line-height: initial;">
                                 <p style="color: #43425d;opacity:0.8;font-size: 12px;font-weight: bold;">Employee Status
                                 </p>
@@ -940,7 +942,7 @@
                                             *ngIf="mode === 'ON' && personalDetails.personalDetail != undefined"
                                             class="matFormField">
                                             <input matInput placeholder="Personal Email Address" (blur)="isBlur = true"
-                                                [(ngModel)]="personalDetails.personalDetail.emailAddress" required>
+                                                [(ngModel)]="personalDetails.personalDetail.emailAddress">
                                         </mat-form-field>
                                     </ion-col>
                                     <ion-col style="flex: 1 1 30%; min-width: 150px;">
@@ -1529,10 +1531,10 @@
                                             style="font-size: 12px;flex: 2 1 40%; min-width: 150px;">
                                             <mat-label>Select leave entitlement</mat-label>
                                             <mat-select (blur)="isBlurAssign = true" required
-                                                [disabled]="mode === 'OFF'" [(value)]="addEntitlement[i].leavetype"
+                                                [disabled]="mode === 'OFF'" [(value)]="addEntitlement[i].entitlementId"
                                                 (selectionChange)="changeLeaveEntitlement(addEntitlement, entitlement.userLeaveEntitlement)">
                                                 <mat-option *ngFor="let item of entitlementList; let j=index"
-                                                    [value]="item.leaveTypeId"
+                                                    [value]="item.leaveEntitlementId"
                                                     (click)="getLeaveTypeEntitlementId(item.leaveTypeId, item.leaveEntitlementId, i)">
                                                     {{item.leaveType}} - {{item.leaveEntitlementCode}}</mat-option>
                                             </mat-select>
@@ -1546,7 +1548,7 @@
                                         <div style="flex:1;"></div>
                                         &nbsp;&nbsp; &nbsp;&nbsp;
                                         <div style="padding-top:15px;">
-                                            <img *ngIf="mode === 'ON' && i !== 0"
+                                            <img *ngIf="mode === 'ON'"
                                                 style="cursor: pointer;width: 11px;height: 11px;display: inline-block;"
                                                 src="assets/icon/leave_setup/icon_trash@3x.png"
                                                 (click)="deleteEntitlement(i)">
@@ -1604,8 +1606,8 @@
                                 style="cursor: pointer;margin-bottom: 10px;font-size: 12px;width:100%;background: #f5f6fa;padding: 15px;padding-left: 15px;color: #a3a6b4;font-weight: bold;">
                                 EMERGENCY CONTACT, FAMILY INFORMATION, EDUCATION & CERTIFICATION</div>
                             <div *ngIf="showOthers">
-                                <app-othes-information-tab (personalOutput)="valueOutput($event)" [details]="personalDetails"
-                                    [mode]="mode">
+                                <app-othes-information-tab (personalOutput)="valueOutput($event)"
+                                    [details]="personalDetails" [mode]="mode">
                                 </app-othes-information-tab>
                             </div>
                         </ion-card-content>

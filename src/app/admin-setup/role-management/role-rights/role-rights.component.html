@@ -152,7 +152,7 @@
         <ion-row>
             <ion-col size="10" style="font-size: 12px;white-space: nowrap;
         text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                PROFILE MANAGEMENT</ion-col>
+                EMPLOYEE SETUP</ion-col>
         </ion-row>
     </div>
     <div style="overflow-y: auto;height: calc(100% - 62px);">
@@ -215,7 +215,7 @@
                         Option is <strong>required</strong></mat-hint>
                 </mat-form-field>
             </ion-list>
-            <ion-list lines="none" class="ionItem"
+            <ion-list lines="none" class="ionItem" [style.display]="local.get('loginType')=='local'?'':'none'"
                 style="padding-bottom: 10px;padding-top: 0px;padding-left: 18px;white-space: nowrap;">
                 <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="editMode == 'OFF'"
                     [(ngModel)]="profileDetails.property.allowProfileManagement.allowChangePassword.value"
@@ -269,7 +269,7 @@
             <ion-row>
                 <ion-col size="10" style="font-size: 12px;white-space: nowrap;
     text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
-                    CALENDAR</ion-col>
+                    USER CALENDAR</ion-col>
             </ion-row>
         </div>
 
