@@ -924,16 +924,17 @@ export class EmployeeSetupComponent implements OnInit {
             "userId": [this.userId], "leaveTypeId": leaveTypeId, "leaveEntitlementId": leaveEntitlementId
         }
         let res = await this._sharedService.leaveApi.post_leave_entitlement(data).toPromise();
-        if (res.successList.length != 0) {
-            let val = await this._sharedService.leaveApi.get_entilement_details(this.userId).toPromise();
-            for (let i = 0; i < val.length; i++) {
-                if (val[i].USER_LEAVE_ENTITLEMENT_GUID == this.userLeaveEntitled && this.remove === true) {
-                    let remove = await this.inviteAPI.delete_user_leave_entitlement(this.userLeaveEntitled).toPromise();
-                    this.spliceEntitlement(i, leaveTypeId, val);
-                }
-                if (this.remove === false) {
-                    this.spliceEntitlement(index, leaveTypeId, val);
-                }
+        if (res.failedList.length != 0) {
+            this._sharedService.leaveApi.openSnackBar(res.failedList[0].status, false);
+        }
+        let val = await this._sharedService.leaveApi.get_entilement_details(this.userId).toPromise();
+        for (let i = 0; i < val.length; i++) {
+            if (val[i].USER_LEAVE_ENTITLEMENT_GUID == this.userLeaveEntitled && this.remove === true) {
+                let remove = await this.inviteAPI.delete_user_leave_entitlement(this.userLeaveEntitled).toPromise();
+                this.spliceEntitlement(i, leaveTypeId, val);
+            }
+            if (this.remove === false) {
+                this.spliceEntitlement(index, leaveTypeId, val);
             }
         }
     }
