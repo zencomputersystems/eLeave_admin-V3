@@ -1531,12 +1531,23 @@
                                             style="font-size: 12px;flex: 2 1 40%; min-width: 150px;">
                                             <mat-label>Select leave entitlement</mat-label>
                                             <mat-select (blur)="isBlurAssign = true" required
-                                                [disabled]="mode === 'OFF'" [(value)]="addEntitlement[i].entitlementId"
-                                                (selectionChange)="changeLeaveEntitlement(addEntitlement, entitlement.userLeaveEntitlement)">
-                                                <mat-option *ngFor="let item of entitlementList; let j=index"
-                                                    [value]="item.leaveEntitlementId"
-                                                    (click)="getLeaveTypeEntitlementId(item.leaveTypeId, item.leaveEntitlementId, i)">
-                                                    {{item.leaveType}} - {{item.leaveEntitlementCode}}</mat-option>
+                                                [disabled]="mode === 'OFF' || entitlement.leavetype !== ''"
+                                                [(value)]="addEntitlement[i].entitlementId">
+                                                <ng-container *ngIf="entitlement.leavetype !== ''">
+                                                    <mat-option *ngFor="let item of entitlementList; let j=index"
+                                                        [value]="item.leaveEntitlementId"
+                                                        (click)="getLeaveTypeEntitlementId(item.leaveTypeId, item.leaveEntitlementId, i)">
+                                                        {{item.leaveType}} - {{item.leaveEntitlementCode}}</mat-option>
+                                                </ng-container>
+                                                <ng-container *ngIf="entitlement.leavetype == ''">
+                                                    <mat-option
+                                                        *ngFor="let item of filteredEntitlementList; let j=index"
+                                                        [value]="item.leaveEntitlementId"
+                                                        (click)="getLeaveTypeEntitlementId(item.leaveTypeId, item.leaveEntitlementId, i)">
+                                                        {{item.leaveType}} - {{item.leaveEntitlementCode}}</mat-option>
+                                                    <mat-option *ngIf="filteredEntitlementList.length < 1">
+                                                        No option for leave entitlement</mat-option>
+                                                </ng-container>
                                             </mat-select>
                                         </mat-form-field>
                                         &nbsp;&nbsp;
@@ -1555,8 +1566,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngIf="mode === 'ON'" style="padding-left: 15px;padding-bottom: 15px;
-                                margin-top: -15px;"><img
+                                <div *ngIf="mode === 'ON'" style="padding-left: 15px;padding-bottom: 15px;"><img
                                         style="cursor: pointer;margin-right: 6px;width: 14px;height: 14px;display: inline-block;"
                                         src="assets/icon/leave_setup/icon_request@3x.png" (click)="addNewEntitlement()">
                                     <p style="cursor: pointer;color: #808495;font-size: 11px;font-weight: bold;display: inline-block;"

@@ -158,6 +158,13 @@ export class EmployeeSetupComponent implements OnInit {
     public entitlementList: any;
 
     /**
+     * filtered entitlement list
+     * @type {*}
+     * @memberof EmployeeSetupComponent
+     */
+    public filteredEntitlementList: any;
+
+    /**
      * get selected id
      * @type {string}
      * @memberof EmployeeSetupComponent
@@ -346,20 +353,6 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     public showLessDepartment: boolean = false;
-
-    /**
-     * need to remove exsiting leave entitlement or vice versa
-     * @type {boolean}
-     * @memberof EmployeeSetupComponent
-     */
-    public remove: boolean;
-
-    /**
-     * clicked user leave entitlement id
-     * @type {string}
-     * @memberof EmployeeSetupComponent
-     */
-    public userLeaveEntitled: string;
 
     /**
      * get url of profile picture
@@ -709,6 +702,8 @@ export class EmployeeSetupComponent implements OnInit {
         this.displayWorkingHour = true;
         let data = await this.attendanceApi.get_attendance_list().toPromise();
         this.attendanceList = data;
+        let entitlement = await this._sharedService.leaveApi.get_leavetype_entitlement().toPromise();
+        this.entitlementList = entitlement;
         this.endPoint(1, 0);
         let defaultProfileList = await this.workingHourAPI.get_default_profile().toPromise();
         let roleData = await this.roleAPI.get_role_profile_list().toPromise();
@@ -729,8 +724,7 @@ export class EmployeeSetupComponent implements OnInit {
             whItem.isDefault = (whItem.working_hours_guid === defaultProfileList[0].WORKING_HOURS_PROFILE_GUID) ? true : false;
         });
         this.lengthWorkingList = this.workingList.length;
-        let entitlement = await this._sharedService.leaveApi.get_leavetype_entitlement().toPromise();
-        this.entitlementList = entitlement;
+
         let company = await this._sharedService.leaveApi.get_company_list().toPromise();
         this.companyList = company;
         for (let i = 0; i < this.companyList.length; i++) {
@@ -854,14 +848,7 @@ export class EmployeeSetupComponent implements OnInit {
             this.employmentDetails = data;
             this.getEmploymentDetails();
         })
-        this._sharedService.leaveApi.get_entilement_details(this.userId).subscribe(data => {
-            this.addEntitlement = [];
-            if (data.length > 0) {
-                for (let i = 0; i < data.length; i++) {
-                    this.addEntitlement.push({ "leavetype": data[i].LEAVE_TYPE_GUID, "entitlementId": data[i].ENTITLEMENT_GUID, "userLeaveEntitlement": data[i].USER_LEAVE_ENTITLEMENT_GUID, "balance": data[i].BALANCE_DAYS });
-                }
-            }
-        })
+        this.getLeaveEntitlement();
         this.inviteAPI.apiService.get_user_profile_details(this.userId).subscribe(data => {
             this.calendarValue = data.calendarId;
             this.roleValue = data.roleId;
@@ -927,42 +914,7 @@ export class EmployeeSetupComponent implements OnInit {
         if (res.failedList.length != 0) {
             this._sharedService.leaveApi.openSnackBar(res.failedList[0].status, false);
         }
-        let val = await this._sharedService.leaveApi.get_entilement_details(this.userId).toPromise();
-        for (let i = 0; i < val.length; i++) {
-            if (val[i].USER_LEAVE_ENTITLEMENT_GUID == this.userLeaveEntitled && this.remove === true) {
-                let remove = await this.inviteAPI.delete_user_leave_entitlement(this.userLeaveEntitled).toPromise();
-                this.spliceEntitlement(i, leaveTypeId, val);
-            }
-            if (this.remove === false) {
-                this.spliceEntitlement(index, leaveTypeId, val);
-            }
-        }
-    }
-
-    /**
-     * splice method
-     * @param {number} index
-     * @param {string} leaveTypeId
-     * @param {*} val
-     * @memberof EmployeeSetupComponent
-     */
-    spliceEntitlement(index: number, leaveTypeId: string, val) {
-        this.addEntitlement.splice(index, 1, { "leavetype": leaveTypeId, "entitlementId": val[val.length - 1].ENTITLEMENT_GUID, "userLeaveEntitlement": val[val.length - 1].USER_LEAVE_ENTITLEMENT_GUID, "balance": val[val.length - 1].BALANCE_DAYS });
-    }
-
-    /**
-     * change selection detection
-     * @param {*} list
-     * @param {string} userEntitled
-     * @memberof EmployeeSetupComponent
-     */
-    async changeLeaveEntitlement(list, userEntitled: string) {
-        if (list[list.length - 1].balance == 0) {
-            this.remove = false;
-        } else {
-            this.remove = true;
-            this.userLeaveEntitled = userEntitled;
-        }
+        this.getLeaveEntitlement();
     }
 
     /**
@@ -979,15 +931,42 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     async deleteEntitlement(index: number) {
-        let response = await this.inviteAPI.delete_user_leave_entitlement(this.addEntitlement[index].userLeaveEntitlement).toPromise();
-        if (response[0] != undefined) {
-            if (response[0].USER_GUID != undefined) {
-                this._sharedService.leaveApi.openSnackBar('Selected leave entitlement was deleted', true);
-                this.addEntitlement.splice(index, 1);
+        if (this.addEntitlement[index].userLeaveEntitlement != '') {
+            let response = await this.inviteAPI.delete_user_leave_entitlement(this.addEntitlement[index].userLeaveEntitlement).toPromise();
+            if (response[0] != undefined) {
+                if (response[0].USER_GUID != undefined) {
+                    this.addEntitlement.splice(index, 1);
+                    this.getLeaveEntitlement();
+                    this._sharedService.leaveApi.openSnackBar('Selected leave entitlement was deleted', true);
+                }
+            } else {
+                this._sharedService.leaveApi.openSnackBar('Leave entitlement was failed to delete', false);
             }
         } else {
-            this._sharedService.leaveApi.openSnackBar('Leave entitlement was failed to delete', false);
+            this.addEntitlement.splice(index, 1);
         }
+    }
+
+    /**
+     * latest user's leave entitlement list
+     * @memberof EmployeeSetupComponent
+     */
+    async getLeaveEntitlement() {
+        let val = await this._sharedService.leaveApi.get_entilement_details(this.userId).toPromise();
+        this.addEntitlement = [];
+        let initEntitlementList = [];
+        initEntitlementList = this.entitlementList.slice();
+        if (val.length > 0) {
+            for (let i = 0; i < val.length; i++) {
+                this.addEntitlement.push({ "leavetype": val[i].LEAVE_TYPE_GUID, "entitlementId": val[i].ENTITLEMENT_GUID, "userLeaveEntitlement": val[i].USER_LEAVE_ENTITLEMENT_GUID, "balance": val[i].BALANCE_DAYS });
+                for (let j = initEntitlementList.length - 1; j >= 0; --j) {
+                    if (initEntitlementList[j].leaveTypeId.indexOf(this.addEntitlement[i].leavetype) > -1) {
+                        initEntitlementList.splice(j, 1);
+                    }
+                }
+            }
+        }
+        this.filteredEntitlementList = initEntitlementList;
     }
 
     /**
