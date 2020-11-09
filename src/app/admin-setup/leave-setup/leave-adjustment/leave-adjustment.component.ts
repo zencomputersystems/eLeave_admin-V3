@@ -248,6 +248,7 @@ export class LeaveAdjustmentComponent implements OnInit {
         for (let j = 0; j < data.length; j++) {
             if (data[j].LEAVE_TYPE_GUID === leavetypeGUID) {
                 this.filteredUserItems[i].leaveAbbr = data[j].ENTITLED_DAYS;
+                this.filteredUserItems[i].adjustment = data[j].ADJUSTMENT_DAYS;
             }
         }
     }
