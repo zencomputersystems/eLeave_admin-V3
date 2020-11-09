@@ -20,9 +20,9 @@
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i=index"
             [style.display]="p.show ? '' : 'none'">
             <ion-item class="items" lines="none" (click)="activeUrl(appPages[i].url)"
-              [class.background-highlight]="activeRoute === appPages[i].url">
-              <img style="width: 16px;" src="assets/icon/sidebar_menus/{{p.icon}}"
-                [style.display]="p.icon==''? 'none':''">
+              [class.background-highlight]="activeRoute === appPages[i].url"
+              [style.cursor]="appPages[i].url===''?'auto':'pointer'">
+              <img style="width: 16px;" *ngIf="p.icon !== ''" src="assets/icon/sidebar_menus/{{p.icon}}">
               <ion-label [class.text-color]="activeRoute === appPages[i].url ">
                 {{p.title}}
               </ion-label>
@@ -51,9 +51,10 @@
             [style.display]="p.show ? '' : 'none'">
             <ion-item class="items" no-padding lines="none" style="display: block;--inner-padding-end: 0;"
               [class.background-highlight-icon]="activeRoute === appPages[i].url "
+              [style.cursor]="appPages[i].url===''?'auto':'pointer'"
               [class.first-highlight]="router.url === appPages[i].url" (click)="activeUrl(appPages[i].url)">
-              <img style="margin: 0 auto; width: 16px;" src="assets/icon/sidebar_menus/{{p.icon}}"
-                [style.display]="p.icon==''? 'none':''">
+              <img style="margin: 0 auto; width: 16px;" *ngIf="p.icon !== ''"
+                src="assets/icon/sidebar_menus/{{p.icon}}">
             </ion-item>
           </ion-menu-toggle>
         </ion-list>

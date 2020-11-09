@@ -324,7 +324,11 @@ export class EmployeeSetupComponent implements OnInit {
      * @type {*}
      * @memberof EmployeeSetupComponent
      */
-    public config: any;
+    public config: any = {
+        itemsPerPage: 10,
+        currentPage: 1,
+        totalItems: 0
+    };
 
     /**
      * show all company list
