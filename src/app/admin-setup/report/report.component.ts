@@ -917,9 +917,13 @@ export class ReportComponent implements OnInit {
         }
         this.filter();
         let data = require('lodash').groupBy(this.arrayDetails, groupName);
+        const ordered = {};
+        Object.keys(data).sort().forEach(function (key) {
+          ordered[key] = data[key];
+        });
         this.groupValue = Object.values(data);
         this.groupKey = Object.keys(data);
-        this.groupKey.sort();
+
         this.groupValue.splice(0, 0, this.arrayDetails);
         this.groupKey.splice(0, 0, 'All');
         if (groupName === 'all') {
@@ -951,9 +955,12 @@ export class ReportComponent implements OnInit {
           this.arrayDetails = [];
           this.arrayDetails = this.tableDetails;
           let data = require('lodash').groupBy(this.arrayDetails, groupName);
+          const ordered = {};
+          Object.keys(data).sort().forEach(function (key) {
+            ordered[key] = data[key];
+          });
           this.groupValue = Object.values(data);
           this.groupKey = Object.keys(data);
-          this.groupKey.sort();
           this.groupValue.splice(0, 0, this.arrayDetails);
           this.groupKey.splice(0, 0, 'All');
           if (groupName === 'all') {
@@ -1012,9 +1019,12 @@ export class ReportComponent implements OnInit {
             }
           }
           let data = require('lodash').groupBy(this.arrayDetails, groupName);
+          const ordered = {};
+          Object.keys(data).sort().forEach(function (key) {
+            ordered[key] = data[key];
+          });
           this.groupValue = Object.values(data);
           this.groupKey = Object.keys(data);
-          this.groupKey.sort();
           this.groupValue.splice(0, 0, this.arrayDetails);
           this.groupKey.splice(0, 0, 'All');
           if (groupName === 'all') {
