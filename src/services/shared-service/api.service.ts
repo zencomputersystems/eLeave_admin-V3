@@ -140,6 +140,16 @@ export class APIService {
     }
 
     /**
+     * get login user profile
+     * @returns {Observable<any>}
+     * @memberof APIService
+     */
+    get_personal_user_profile_details(): Observable<any> {
+        this.headerAuthorization();
+        return this.getApi('/api/userprofile');
+    }
+
+    /**
      * get user profile list
      * @param {string} userId
      * @returns {Observable<any>}

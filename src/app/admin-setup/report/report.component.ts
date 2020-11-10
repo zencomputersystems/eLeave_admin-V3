@@ -10,6 +10,7 @@ import 'jspdf-autotable';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { Platform } from '@ionic/angular';
+import { RoleApiService } from '../role-management/role-api.service';
 
 const { Parser } = require('json2csv');
 const dayjs = require('dayjs');
@@ -357,6 +358,20 @@ export class ReportComponent implements OnInit {
    */
   public contractValue: string;
 
+  /**
+   * personal user profile data
+   * @type {*}
+   * @memberof ReportComponent
+   */
+  public userProfile: any;
+
+  /**
+   * role profile details
+   * @type {*}
+   * @memberof ReportComponent
+   */
+  public roleProfileDetails: any;
+
   @HostListener("window:resize") onResize() {
     if (this.selects === 'attendance') {
       setTimeout(() => {
@@ -407,7 +422,7 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   constructor(private leaveAPI: LeaveApiService, private api: APIService, private reportAPI: ReportApiService,
-    public reportPlatform: Platform) {
+    public reportPlatform: Platform, private roleService: RoleApiService) {
     this.api.get_profile_pic('all').subscribe(data => {
       this.url = data;
     })
@@ -417,7 +432,7 @@ export class ReportComponent implements OnInit {
    * initial report
    * @memberof ReportComponent
    */
-  ngOnInit() {
+  async ngOnInit() {
     const f = new Date(new Date().getFullYear(), 0, 1);
     const l = new Date(new Date().getFullYear(), 11, 31);
     this.firstPicker = new FormControl(f);
@@ -428,6 +443,8 @@ export class ReportComponent implements OnInit {
         this.leaveTypes[i]["isChecked"] = false;
       }
     });
+    let personal = await this.api.get_personal_user_profile_details().toPromise();
+    this.userProfile = personal;
     this.userNameList();
     this.leaveAPI.get_company_list().subscribe(data => this.companyList = data);
     this.api.get_master_list('branch').subscribe(data => this.branchList = data);
@@ -697,50 +714,61 @@ export class ReportComponent implements OnInit {
    * get all user list
    * @memberof ReportComponent
    */
-  userNameList() {
+  async userNameList() {
     this.filterSpinner = true;
-    this.api.get_user_profile_list().subscribe(list => {
-      this.userList = list;
-      for (let i = 0; i < this.userList.length; i++) {
-        this.userList[i]["isChecked"] = false;
-      }
-      if (this._character != null) {
-        this.filterSearchbar(this._character);
-      }
-      if (this.companyId != null) {
-        let company = this.userList.filter((item: any) => {
-          if (item.companyId !== null) {
-            return (item.companyId.toLowerCase().indexOf(this.companyId.toLowerCase()) > -1);
-          }
-        })
-        this.userList = company;
-      }
-      if (this.departmentName != null) {
-        let department = this.userList.filter((item: any) => {
-          if (item.department !== null) {
-            return (item.department.toLowerCase().indexOf(this.departmentName.toLowerCase()) > -1);
-          }
-        })
-        this.userList = department;
-      }
-      if (this.branchName != null) {
-        let branch = this.userList.filter((object: any) => {
-          if (object.branch !== null) {
-            return (object.branch.toLowerCase().indexOf(this.branchName.toLowerCase()) > -1);
-          }
-        })
-        this.userList = branch;
-      }
-      if (this.costCentreName != null) {
-        let costCentre = this.userList.filter((costCentreItem: any) => {
-          if (costCentreItem.costcentre !== null) {
-            return (costCentreItem.costcentre.toLowerCase().indexOf(this.costCentreName.toLowerCase()) > -1);
-          }
-        })
-        this.userList = costCentre;
-      }
-      this.filterSpinner = false;
-    });
+    let roleDetails = await this.roleService.get_role_details_profile(this.userProfile.roleId).toPromise();
+    this.roleProfileDetails = roleDetails;
+    let list = await this.api.get_user_profile_list().toPromise();
+    this.userList = list;
+    if (this.roleProfileDetails.property.allowViewReport.value && this.roleProfileDetails.property.allowViewReport.level === 'Department') {
+      let arraySameDepartment = [];
+      this.userList.forEach(element => {
+        if (this.userProfile.employeeDepartment === element.department) {
+          arraySameDepartment.push(element);
+        }
+      });
+      this.userList = arraySameDepartment;
+    }
+
+    for (let i = 0; i < this.userList.length; i++) {
+      this.userList[i]["isChecked"] = false;
+    }
+    if (this._character != null) {
+      this.filterSearchbar(this._character);
+    }
+    if (this.companyId != null) {
+      let company = this.userList.filter((item: any) => {
+        if (item.companyId !== null) {
+          return (item.companyId.toLowerCase().indexOf(this.companyId.toLowerCase()) > -1);
+        }
+      })
+      this.userList = company;
+    }
+    if (this.departmentName != null) {
+      let department = this.userList.filter((item: any) => {
+        if (item.department !== null) {
+          return (item.department.toLowerCase().indexOf(this.departmentName.toLowerCase()) > -1);
+        }
+      })
+      this.userList = department;
+    }
+    if (this.branchName != null) {
+      let branch = this.userList.filter((object: any) => {
+        if (object.branch !== null) {
+          return (object.branch.toLowerCase().indexOf(this.branchName.toLowerCase()) > -1);
+        }
+      })
+      this.userList = branch;
+    }
+    if (this.costCentreName != null) {
+      let costCentre = this.userList.filter((costCentreItem: any) => {
+        if (costCentreItem.costcentre !== null) {
+          return (costCentreItem.costcentre.toLowerCase().indexOf(this.costCentreName.toLowerCase()) > -1);
+        }
+      })
+      this.userList = costCentre;
+    }
+    this.filterSpinner = false;
   }
 
   /**
