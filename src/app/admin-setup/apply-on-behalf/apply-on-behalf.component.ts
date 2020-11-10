@@ -8,6 +8,7 @@ import { LeaveApiService } from '../leave-setup/leave-api.service';
 import { ReportApiService } from '../report/report-api.service';
 import { APIService } from '../../../../src/services/shared-service/api.service';
 import { map } from 'rxjs/operators';
+import { RoleApiService } from '../role-management/role-api.service';
 const dayjs = require('dayjs');
 
 /**
@@ -262,6 +263,10 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     public expand: boolean;
 
+    public userProfile: any;
+
+    public roleDetails: any;
+
     /**
      * Local private property for selected date array list
      * @private
@@ -318,12 +323,13 @@ export class ApplyOnBehalfComponent implements OnInit {
     /**
      *Creates an instance of ApplyOnBehalfComponent.
      * @param {LeaveApiService} leaveAPI
+     * @param {RoleApiService} roleApi
      * @param {ReportApiService} reportApi
-     * @param {Platform} applyonbehalfPlatformApi 
+     * @param {Platform} applyonbehalfPlatformApi
      * @param {APIService} apiService
      * @memberof ApplyOnBehalfComponent
      */
-    constructor(private leaveAPI: LeaveApiService, public reportApi: ReportApiService, public applyonbehalfPlatformApi: Platform, private apiService: APIService) {
+    constructor(private leaveAPI: LeaveApiService, private roleApi: RoleApiService, public reportApi: ReportApiService, public applyonbehalfPlatformApi: Platform, private apiService: APIService) {
         this.applyLeaveForm = new FormGroup({
             leaveTypes: new FormControl({ value: '', disabled: true }, Validators.required),
             firstPicker: new FormControl({ value: '', disabled: true }, Validators.required),
@@ -339,14 +345,25 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     async ngOnInit() {
         this.showSpinner = true;
-        (this.applyonbehalfPlatformApi.platforms().includes('tablet' || 'desktop')) ? console.log('is tab & web') : console.log('mobile app');
         this.leaveAPI.get_admin_leavetype().subscribe(leave => {
             this.leaveTypes = leave;
         })
-        this.reportApi.get_bundle_report('leave-entitlement').subscribe(data => {
-            this.employeeList = data;
-            this.showSpinner = false;
-        })
+        let personal = await this.apiService.get_personal_user_profile_details().toPromise();
+        this.userProfile = personal;
+        let roleDetails = await this.roleApi.get_role_details_profile(this.userProfile.roleId).toPromise();
+        this.roleDetails = roleDetails;
+        let data = await this.apiService.get_user_profile_list().toPromise();
+        this.employeeList = data;
+        if (this.roleDetails.property.allowLeaveManagement.allowApplyOnBehalf.value && this.roleDetails.property.allowLeaveManagement.allowApplyOnBehalf.level === 'Department') {
+            let filterDepartment = [];
+            this.employeeList.forEach(item => {
+                if (this.userProfile.employeeDepartment === item.department) {
+                    filterDepartment.push(item);
+                }
+            });
+            this.employeeList = filterDepartment;
+        }
+        this.showSpinner = false;
     }
 
     /**
@@ -489,7 +506,7 @@ export class ApplyOnBehalfComponent implements OnInit {
             if (item.isChecked) {
                 checkedValue++;
                 this.showCheckBox.push(true);
-                this.getSelectedEmployee(item.userGuid, checkedValue);
+                this.getSelectedEmployee(item.userId, checkedValue);
             }
         });
         if (checkedValue > 0 && checkedValue < totalLength) {
@@ -513,7 +530,7 @@ export class ApplyOnBehalfComponent implements OnInit {
      */
     async addEntitlementBal(leaveTypeGuid: string) {
         for (let i = 0; i < this.employeeList.length; i++) {
-            let details = await this.leaveAPI.get_entilement_details(this.employeeList[i].userGuid).toPromise();
+            let details = await this.leaveAPI.get_entilement_details(this.employeeList[i].userId).toPromise();
             for (let j = 0; j < details.length; j++) {
                 if (details[j].LEAVE_TYPE_GUID === leaveTypeGuid) {
                     this.employeeList[i]["entitled"] = details[j].ENTITLED_DAYS;
@@ -628,10 +645,9 @@ export class ApplyOnBehalfComponent implements OnInit {
             }
             this._arrayDateSlot.push(remainingFullDay);
         }
-        console.log(this._arrayDateSlot);
         for (let i = 0; i < this.employeeList.length; i++) {
             if (this.employeeList[i].isChecked) {
-                this._employeeId.push(this.employeeList[i].userGuid);
+                this._employeeId.push(this.employeeList[i].userId);
             }
         }
     }

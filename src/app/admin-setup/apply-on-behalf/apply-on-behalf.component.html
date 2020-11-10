@@ -217,7 +217,7 @@
                                     <ion-col size="1" [class]="'hide-md-down'" style=" color: #7a8589; font-size: 13px;"
                                         align-self-center
                                         style="color: #808495; font-size: 12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                        {{item.employeeNo}}
+                                        {{item.staffNumber}}
                                     </ion-col>
                                     <ion-col size="4"
                                         style="white-space: pre-line;overflow: hidden;text-overflow: ellipsis;">
@@ -228,33 +228,33 @@
                                             {{item.designation}}</p>
                                         <p [class]="'hide-md-up'"
                                             style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                                            ID: {{item.employeeNo}}</p>
+                                            ID: {{item.staffNumber}}</p>
                                     </ion-col>
                                     <ion-col size="2.3" align-self-center [class]="'hide-md-down'"
-                                        *ngIf="!applyLeaveForm.controls.leaveTypes.valid" style="color: #808495; font-size: 11px;white-space: pre-line;overflow:
-                                    hidden;text-overflow: ellipsis; color: #7a8589; font-size: 13px;">
-                                        {{item.abbr}}
+                                        *ngIf="!applyLeaveForm.controls.leaveTypes.valid" style="color: #808495;;white-space: pre-line;overflow:
+                                    hidden;text-overflow: ellipsis; color: #7a8589; font-size: 12px;">
+                                        {{item.leaveAbbr}}
                                     </ion-col>
                                     <ion-col size="4.6" align-self-center [class]="'hide-md-up'"
                                         *ngIf="!applyLeaveForm.controls.leaveTypes.valid" style="color: #808495; font-size: 11px;white-space: pre-line;overflow:
-                                    hidden;text-overflow: ellipsis; color: #7a8589; font-size: 13px;">
-                                        {{item.abbr}}
+                                    hidden;text-overflow: ellipsis; color: #7a8589; font-size: 12px;">
+                                        {{item.leaveAbbr}}
                                     </ion-col>
                                     <ion-col size="2.3" align-self-center
-                                        *ngIf="applyLeaveForm.controls.leaveTypes.valid" [class]="'hide-md-down'" style="text-align: center;color: #808495; font-size: 11px;white-space:
-                                    nowrap;overflow: hidden;text-overflow: ellipsis; color: #7a8589; font-size: 13px;">
+                                        *ngIf="applyLeaveForm.controls.leaveTypes.valid" [class]="'hide-md-down'" style="text-align: center;color: #808495;white-space:
+                                    nowrap;overflow: hidden;text-overflow: ellipsis; color: #7a8589; font-size: 12px;">
                                         {{item.entitled}}
                                     </ion-col>
                                     <ion-col size="4.6" align-self-center
                                         *ngIf="applyLeaveForm.controls.leaveTypes.valid" [class]="'hide-md-up'"
                                         style="text-align: center;color: #808495; font-size: 11px;white-space:
-                                    pre-line;overflow: hidden;text-overflow: ellipsis; color: #7a8589; font-size: 13px;">
+                                    pre-line;overflow: hidden;text-overflow: ellipsis; color: #7a8589; font-size: 12px;">
                                         <div style="font-weight: bold;">{{item.entitled}} day(s)</div>
                                         <div>Balance: {{item.balance}}</div>
                                         <!-- </div> -->
                                     </ion-col>
                                     <ion-col size="2.3" align-self-center [class]="'hide-md-down'"
-                                        style="color: #7a8589; font-size: 13px; text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                        style="color: #7a8589; font-size: 12px; text-align: center;color: #808495; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                         {{item.balance}}
                                     </ion-col>
                                     <ion-col></ion-col>
