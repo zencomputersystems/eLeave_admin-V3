@@ -19,7 +19,7 @@ import { AttendanceSetupApiService } from '../../../../../src/app/attendance-set
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 const dayjs = require('dayjs');
 /**
  *
@@ -640,9 +640,9 @@ export class EmployeeSetupComponent implements OnInit {
 
     public emittedRole: any;
 
-    public emittedDepartment: any;
-
     public hideEditmode: boolean = false;
+
+    public userProfile: any;
 
     /**
      *Creates an instance of EmployeeSetupComponent.
@@ -680,15 +680,6 @@ export class EmployeeSetupComponent implements OnInit {
             roleName: new FormControl('', Validators.required),
             roleDescription: new FormControl('', Validators.required),
         });
-
-        _sharedService.roleDataEmitted$.subscribe(
-            data => {
-                this.emittedRole = data;
-                this.hideEditmode = false;
-                if (this.emittedRole.property.allowProfileManagement.allowEditProfile.value === false) {
-                    this.hideEditmode = true;
-                }
-            });
 
     }
 
@@ -766,42 +757,46 @@ export class EmployeeSetupComponent implements OnInit {
      */
     async endPoint(pageNumber: number, indexes: number, isOff?: boolean) {
         this.options = [];
+        let personal = await this.inviteAPI.apiService.get_personal_user_profile_details().toPromise();
+        this.userProfile = personal;
+        let roleDetails = await this.roleAPI.get_role_details_profile(this.userProfile.roleId).toPromise();
+        this.emittedRole = roleDetails;
         let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
         this.showSpinner = false;
         this.list = data;
-        this._sharedService.departmentEmitted$.subscribe(
-            depart => {
-                this.emittedDepartment = depart;
-                if (this.emittedRole.property.allowProfileManagement.allowViewProfile.value && this.emittedRole.property.allowProfileManagement.allowViewProfile.level == 'Department') {
-                    let arraySameDepartment = [];
-                    this.list.forEach(element => {
-                        if (this.emittedDepartment === element.department) {
-                            arraySameDepartment.push(element);
-                        }
-                    });
-                    this.list = arraySameDepartment;
+        this.hideEditmode = false;
+        if (this.emittedRole.property.allowProfileManagement.allowEditProfile.value === false) {
+            this.hideEditmode = true;
+        }
+        if (this.emittedRole.property.allowProfileManagement.allowViewProfile.value && this.emittedRole.property.allowProfileManagement.allowViewProfile.level == 'Department') {
+            let filterDepartment = [];
+            this.list.forEach(item => {
+                if (this.userProfile.employeeDepartment === item.department) {
+                    filterDepartment.push(item);
                 }
-                this.config = {
-                    itemsPerPage: Number(this.itemsPerPage),
-                    currentPage: pageNumber,
-                    totalItems: this.list.length
-                }
-                if (isOff) {
-                    let index = this.clickedIndex - ((this.config.currentPage - 1) * Number(this.itemsPerPage));
-                    this.getUserId(this.list[this.clickedIndex], index, this.config.currentPage);
-                } else {
-                    this.clickedIndex = indexes;
-                    this.getUserId(this.list[this.clickedIndex], indexes, pageNumber);
-                }
-                let dataList = this.list;
-                dataList.forEach(element => {
-                    this.options.push({ "name": element.employeeName, "userId": element.userId });
-                });
-                this.filteredOptions = this.myControl.valueChanges.pipe(
-                    startWith(''),
-                    map(value => this._filter(value))
-                );
             });
+            this.list = filterDepartment;
+        }
+        this.config = {
+            itemsPerPage: Number(this.itemsPerPage),
+            currentPage: pageNumber,
+            totalItems: this.list.length
+        }
+        if (isOff) {
+            let index = this.clickedIndex - ((this.config.currentPage - 1) * Number(this.itemsPerPage));
+            this.getUserId(this.list[this.clickedIndex], index, this.config.currentPage);
+        } else {
+            this.clickedIndex = indexes;
+            this.getUserId(this.list[this.clickedIndex], indexes, pageNumber);
+        }
+        let dataList = this.list;
+        dataList.forEach(element => {
+            this.options.push({ "name": element.employeeName, "userId": element.userId });
+        });
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filter(value))
+        );
     }
 
     private _filter(value: string): string[] {
