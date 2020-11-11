@@ -25,33 +25,6 @@ export class SharedService {
      */
     changeEmitted$ = this.emitChangeSource.asObservable();
 
-
-    /**
-     * role data sources
-     * @private
-     * @memberof SharedService
-     */
-    private emitRoleData = new Subject<any>();
-
-    /**
-     * department sources
-     * @private
-     * @memberof SharedService
-     */
-    private emitDepartment = new Subject<any>();
-
-    /**
-     * Observable role streams
-     * @memberof SharedService
-     */
-    roleDataEmitted$ = this.emitRoleData.asObservable();
-
-    /**
-     * Observable department streams
-     * @memberof SharedService
-     */
-    departmentEmitted$ = this.emitDepartment.asObservable();
-
     /**
      *Creates an instance of SharedService.
      * @param {MenuController} menu ionic menu event
@@ -68,15 +41,5 @@ export class SharedService {
      */
     emitChange(change: any) {
         this.emitChangeSource.next(change);
-    }
-
-    /**
-     * emit role data
-     * @param {*} data
-     * @memberof SharedService
-     */
-    emitRoleDetails(data: any, department: string) {
-        this.emitRoleData.next(data);
-        this.emitDepartment.next(department);
     }
 }

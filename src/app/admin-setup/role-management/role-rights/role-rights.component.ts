@@ -100,6 +100,18 @@ export class RoleRightsComponent implements OnInit {
     public reportKey = [];
 
     /**
+     * checked value of attendance setup
+     * @memberof RoleRightsComponent
+     */
+    public attendanceKey = [];
+
+    /**
+     * checked value of client setup
+     * @memberof RoleRightsComponent
+     */
+    public clientKey = [];
+
+    /**
      * code, description, property to send to API
      * @private
      * @type {*}
@@ -165,6 +177,8 @@ export class RoleRightsComponent implements OnInit {
         this.profileMngtKey = Object.keys(this.profileDetails.property.allowProfileManagement).map(value => this.profileDetails.property.allowProfileManagement[value]);
         this.calendarKey.push(this.profileDetails.property.allowViewCalendar);
         this.reportKey.push(this.profileDetails.property.allowViewReport);
+        this.attendanceKey.push(this.profileDetails.property.allowAttendanceSetup);
+        this.clientKey.push(this.profileDetails.property.allowClientSetup);
         this.callCheckEvent();
     }
 
@@ -178,6 +192,8 @@ export class RoleRightsComponent implements OnInit {
         this.checkEvent(this.leaveMngtKey, 1);
         this.checkEvent(this.calendarKey);
         this.checkEvent(this.profileMngtKey, 2);
+        this.checkEvent(this.attendanceKey);
+        this.checkEvent(this.clientKey);
     }
 
     /**
@@ -241,42 +257,6 @@ export class RoleRightsComponent implements OnInit {
             }
             this._body = {};
         });
-    }
-
-    /**
-     * set the value to default (checkbox value to false, level to empty)
-     * @memberof RoleRightsComponent
-     */
-    defaultValue() {
-        this.profileDetails.property.allowLeaveSetup.allowLeaveTypeSetup.value = false;
-        this.profileDetails.property.allowLeaveSetup.allowLeaveEntitlementSetup.value = false;
-        this.profileDetails.property.allowLeaveSetup.allowApprovalGroupSetup.value = false;
-        this.profileDetails.property.allowLeaveSetup.allowYearEndClosingSetup.value = false;
-        this.profileDetails.property.allowViewReport.value = false;
-        this.profileDetails.property.allowViewReport.level = '';
-        this.profileDetails.property.allowViewCalendar.value = false;
-        this.profileDetails.property.allowViewCalendar.level = '';
-        this.profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.value = false;
-        this.profileDetails.property.allowLeaveManagement.allowLeaveAdjustmant.level = '';
-        this.profileDetails.property.allowLeaveManagement.allowApplyOnBehalf.value = false;
-        this.profileDetails.property.allowLeaveManagement.allowApplyOnBehalf.level = '';
-        this.profileDetails.property.allowLeaveManagement.allowApprovalOverride.value = false;
-        this.profileDetails.property.allowLeaveManagement.allowApprovalOverride.level = '';
-    }
-
-    /**
-     * set the value to default (checkbox value to false, level to empty)
-     * @memberof RoleRightsComponent
-     */
-    defaultProfileMngt() {
-        this.profileDetails.property.allowProfileManagement.allowViewProfile.value = false;
-        this.profileDetails.property.allowProfileManagement.allowViewProfile.level = '';
-        this.profileDetails.property.allowProfileManagement.allowEditProfile.value = false;
-        this.profileDetails.property.allowProfileManagement.allowEditProfile.level = '';
-        this.profileDetails.property.allowProfileManagement.allowChangePassword.value = false;
-        this.profileDetails.property.allowProfileManagement.allowChangePassword.level = '';
-        this.profileDetails.property.allowProfileManagement.allowProfileAdmin.value = false;
-        this.profileDetails.property.allowProfileManagement.allowProfileAdmin.level = '';
     }
 
 }

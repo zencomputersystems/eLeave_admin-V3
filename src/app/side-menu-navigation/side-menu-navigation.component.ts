@@ -331,7 +331,6 @@ export class SideMenuNavigationComponent implements OnInit {
     this.list = data;
     let value = await this.apiService.get_user_profile_details(this.list.userId).toPromise();
     let details = await this.roleService.get_role_details_profile(value.roleId).toPromise();
-    this.sharedService.emitRoleDetails(details, value.employeeDepartment);
     if (details.property.allowLeaveSetup.allowLeaveTypeSetup.value === false) {
       this.appPages[1].show = false;
     }

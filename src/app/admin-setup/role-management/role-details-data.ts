@@ -97,6 +97,12 @@ export const roleDetails: any = {
                 "value": false,
                 "level": ""
             }
+        },
+        "allowClientSetup": {
+            "value": false
+        },
+        "allowAttendanceSetup": {
+            "value": false
         }
     }
 }
