@@ -349,6 +349,12 @@ export class SideMenuNavigationComponent implements OnInit {
     if (details.property.allowViewReport.value === false) {
       this.appPages[8].show = false;
     }
+    if (details.property.allowAttendanceSetup.value === false) {
+      this.appPages[10].show = false;
+    }
+    if (details.property.allowClientSetup.value === false) {
+      this.appPages[11].show = false;
+    }
   }
 
   /**
