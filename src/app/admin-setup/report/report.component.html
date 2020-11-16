@@ -1889,6 +1889,9 @@
                   },{
                     label: 'Job Type',
                     value: 'attendance.job_type_in'
+                  },{
+                    label: 'Client Name',
+                    value: 'attendance.client_name'
                   }, {
                     label: 'SOC No.',
                     value: 'attendance.project_code_in'
@@ -1989,7 +1992,8 @@
                       style="width: calc( 100% + 10px );margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
                       <p class="text">{{value.clock_in_time | date:'yyyy-MM-dd  HH:mm'}}
                       </p>
-                      <p class="text" style="display: inline-block;">{{value.job_type_in }}
+                      <p class="text" style="display: inline-block;">{{value.job_type_in }} <span
+                          *ngIf="value.client_name!= null">({{value.client_name}})</span>
                       </p>
                       <ion-button *ngIf="value.project_code_in != null"
                         style="pointer-events: none;--background: var(--ion-color-project);font-size: 10px;height: 18px;margin-top: 0;">

@@ -565,8 +565,13 @@ export class ReportComponent implements OnInit {
                       data.row.cells[4].text = clock_in_add.split('\n');
                       break;
                     case 5:
-                      jobType += data.table.body[i].raw.attendance[j].job_type_in + '\n' + '\n';
+                      if (data.table.body[i].raw.attendance[j].client_name != null) {
+                        jobType += data.table.body[i].raw.attendance[j].job_type_in + ' (' + data.table.body[i].raw.attendance[j].client_name + ')' + '\n' + '\n';
+                      } else {
+                        jobType += data.table.body[i].raw.attendance[j].job_type_in + '\n' + '\n';
+                      }
                       data.cell.text = jobType.split('\n');
+                      data.cell.styles.cellWidth = 30;
                       break;
                     case 6:
                       soc_no += data.table.body[i].raw.attendance[j].project_code_in + '\n' + '\n';
