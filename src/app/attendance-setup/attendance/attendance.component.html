@@ -440,6 +440,12 @@
                       [(ngModel)]="_property.office.geofence_filter">
                     </ion-checkbox>
                   </ion-item>
+                  <ion-item class="ionItem">
+                    <ion-label>Require location for clock in</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="mode == 'OFF'"
+                      [(ngModel)]="_property.office.clockLocation">
+                    </ion-checkbox>
+                  </ion-item>
                   <!-- <ion-item class="ionItem">
                     <ion-label>Enable auto clock out</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="mode == 'OFF'"
@@ -521,6 +527,12 @@
                     <ion-label>Enable geofence filter</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="mode == 'OFF'"
                       [(ngModel)]="_property.site.geofence_filter">
+                    </ion-checkbox>
+                  </ion-item>
+                  <ion-item class="ionItem">
+                    <ion-label>Require location for clock in</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="mode == 'OFF'"
+                      [(ngModel)]="_property.site.clockLocation">
                     </ion-checkbox>
                   </ion-item>
                   <!-- <ion-item class="ionItem">
@@ -609,6 +621,12 @@
                       [(ngModel)]="_property.home.geofence_filter">
                     </ion-checkbox>
                   </ion-item>
+                  <ion-item class="ionItem">
+                    <ion-label>Require location for clock in</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="mode == 'OFF'"
+                      [(ngModel)]="_property.home.clockLocation">
+                    </ion-checkbox>
+                  </ion-item>
                   <!-- <ion-item class="ionItem">
                     <ion-label>Enable auto clock out</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="mode == 'OFF'"
@@ -691,6 +709,12 @@
                     <ion-label>Enable geofence filter</ion-label>
                     <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="mode == 'OFF'"
                       [(ngModel)]="_property.others.geofence_filter">
+                    </ion-checkbox>
+                  </ion-item>
+                  <ion-item class="ionItem">
+                    <ion-label>Require location for clock in</ion-label>
+                    <ion-checkbox class="ionCheckbox" slot="start" mode="ios" [disabled]="mode == 'OFF'"
+                      [(ngModel)]="_property.others.clockLocation">
                     </ion-checkbox>
                   </ion-item>
                   <!-- <ion-item class="ionItem">
