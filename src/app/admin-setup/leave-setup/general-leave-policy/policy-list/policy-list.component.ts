@@ -98,6 +98,11 @@ export class PolicyListComponent implements OnInit {
         this.editName = new FormControl('', Validators.required);
         this.sharedService.leaveApi.get_company_list().subscribe(data => {
             this.companyName = data;
+            this.companyName.sort(function (a, b) {
+                var x = a.NAME.toLowerCase();
+                var y = b.NAME.toLowerCase();
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
             if (this.companyName.length !== 0) {
                 this.clickedPolicy(this.companyName[0], 0);
             }
@@ -131,6 +136,11 @@ export class PolicyListComponent implements OnInit {
                 // users.push(list[j].employeeName); 
             }
             this.companyName[i]["employee"] = users.length;
+            users.sort(function (a, b) {
+                var x = a.employeeName.toLowerCase();
+                var y = b.employeeName.toLowerCase();
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
             this.companyName[i]["employeeName"] = users;
         }
     }

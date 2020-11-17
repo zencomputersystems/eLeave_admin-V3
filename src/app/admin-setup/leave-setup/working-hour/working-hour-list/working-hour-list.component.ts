@@ -145,9 +145,8 @@ export class WorkingHourListComponent implements OnInit {
      * @memberof WorkingHourListComponent
      */
     async ngOnInit() {
-        // this.refreshList();
-
         this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
+        this.sortProfileName();
         this.defaultProfileList = await this.workingHrAPI.get_default_profile().toPromise();
         this.list.forEach(item => {
             item.isDefault = (item.working_hours_guid === this.defaultProfileList[0].WORKING_HOURS_PROFILE_GUID) ? true : false;
@@ -174,6 +173,11 @@ export class WorkingHourListComponent implements OnInit {
         this.isDefaultProfile = list.isDefault;
         this.workingHrAPI.get_assigned_working_profile_user(list.working_hours_guid).subscribe(response => {
             this.employeeList = response;
+            this.employeeList.sort(function (a, b) {
+                var x = a.fullname.toLowerCase();
+                var y = b.fullname.toLowerCase();
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
             for (let j = 0; j < this.employeeList.length; j++) {
                 this.employeeList[j]["content"] = this.employeeList[j].fullname;
                 this.employeeList[j]["effectAllowed"] = "move";
@@ -227,8 +231,21 @@ export class WorkingHourListComponent implements OnInit {
                 this.isCheckAll = false;
                 this.isIndeterminateState = false;
                 this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
+                this.sortProfileName();
             }
         }
+    }
+
+    /**
+     * sort a-z
+     * @memberof WorkingHourListComponent
+     */
+    sortProfileName() {
+        this.list.sort(function (a, b) {
+            var x = a.code.toLowerCase();
+            var y = b.code.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
     }
 
     /**
@@ -366,6 +383,7 @@ export class WorkingHourListComponent implements OnInit {
         this.isIndeterminateState = false;
         this._droppedUser = [];
         this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
+        this.sortProfileName();
     }
 
     /**
@@ -404,6 +422,7 @@ export class WorkingHourListComponent implements OnInit {
      */
     async refreshList() {
         this.list = await this.workingHrAPI.get_working_hours_profile_list().toPromise();
+        this.sortProfileName();
         this.defaultProfileList = await this.workingHrAPI.get_default_profile().toPromise();
         this.list.forEach(item => {
             item.isDefault = (item.working_hours_guid === this.defaultProfileList[0].WORKING_HOURS_PROFILE_GUID) ? true : false;

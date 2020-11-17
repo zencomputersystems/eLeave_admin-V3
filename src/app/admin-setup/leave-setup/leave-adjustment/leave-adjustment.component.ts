@@ -356,6 +356,11 @@ export class LeaveAdjustmentComponent implements OnInit {
         }
         if (this.filteredUserItems.length > 0) {
             this.showNoResult = false;
+            this.filteredUserItems.sort(function (a, b) {
+                var x = a.employeeName.toLowerCase();
+                var y = b.employeeName.toLowerCase();
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
         } else {
             this.showNoResult = true;
         }

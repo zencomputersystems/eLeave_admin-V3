@@ -232,6 +232,7 @@ export class AttendanceComponent implements OnInit {
                 this._filteredList = [];
                 let data = await this.attendanceApi.get_attendance_list().toPromise();
                 this.roleList = data;
+                this.sortProfileName();
                 this.attenListCheckAll = false;
                 this.attendanceListIsIndeterminate = false;
             }
@@ -283,6 +284,11 @@ export class AttendanceComponent implements OnInit {
             this._property = data.property;
             let list = await this.attendanceApi.get_attendance_user_list(item.attendance_guid).toPromise();
             this.assignedNameList = list;
+            this.assignedNameList.sort(function (a, b) {
+                var x = a.fullname.toLowerCase();
+                var y = b.fullname.toLowerCase();
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
             for (let j = 0; j < this.assignedNameList.length; j++) {
                 this.assignedNameList[j]["content"] = this.assignedNameList[j].fullname;
                 this.assignedNameList[j]["effectAllowed"] = "move";
@@ -475,6 +481,7 @@ export class AttendanceComponent implements OnInit {
         this._filteredList = [];
         let list = await this.attendanceApi.get_attendance_list().toPromise();
         this.roleList = list;
+        this.sortProfileName();
         this.attenListCheckAll = false;
         this.attendanceListIsIndeterminate = false;
     }
@@ -486,6 +493,7 @@ export class AttendanceComponent implements OnInit {
     async refreshRoleList(index: number) {
         let data = await this.attendanceApi.get_attendance_list().toPromise();
         this.roleList = data;
+        this.sortProfileName();
         this.showSpinner = false;
         this.clickedIndex = index;
         this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);
@@ -503,6 +511,18 @@ export class AttendanceComponent implements OnInit {
         });
         this.roleAPi.get_user_list().subscribe(list => {
             this._userList = list;
+        });
+    }
+
+    /**
+     * sort a-z
+     * @memberof AttendanceComponent
+     */
+    sortProfileName() {
+        this.roleList.sort(function (a, b) {
+            var x = a.code.toLowerCase();
+            var y = b.code.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
         });
     }
 

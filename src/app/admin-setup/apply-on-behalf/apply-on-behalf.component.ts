@@ -354,6 +354,11 @@ export class ApplyOnBehalfComponent implements OnInit {
         this.roleDetails = roleDetails;
         let data = await this.apiService.get_user_profile_list().toPromise();
         this.employeeList = data;
+        this.employeeList.sort(function (a, b) {
+            var x = a.employeeName.toLowerCase();
+            var y = b.employeeName.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
         if (this.roleDetails.property.allowLeaveManagement.allowApplyOnBehalf.value && this.roleDetails.property.allowLeaveManagement.allowApplyOnBehalf.level === 'Department') {
             let filterDepartment = [];
             this.employeeList.forEach(item => {

@@ -168,6 +168,11 @@ export class NotificationRuleComponent implements OnInit {
         this.leaveAPI.get_company_list().subscribe(list => this.companyItems = list);
         this.leaveEntitlementAPI.get_user_list().subscribe(list => {
             this.employeeList = list;
+            this.employeeList.sort(function (a, b) {
+                var x = a.employeeName.toLowerCase();
+                var y = b.employeeName.toLowerCase();
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
         })
     }
 
@@ -196,6 +201,11 @@ export class NotificationRuleComponent implements OnInit {
         this.showSelectToView = false;
         this.leaveEntitlementAPI.get_user_list().subscribe(list => {
             this._user_Items = list;
+            this._user_Items.sort(function (a, b) {
+                var x = a.employeeName.toLowerCase();
+                var y = b.employeeName.toLowerCase();
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
             this.showSpinner = false;
             this.filterUser(this._user_Items, name);
         })

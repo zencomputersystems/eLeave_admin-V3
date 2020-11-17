@@ -345,6 +345,11 @@ export class ClientComponent implements OnInit {
     refreshRoleList() {
         this.clientApi.get_client_profile_list().subscribe(data => {
             this.clientList = data;
+            this.clientList.sort(function (a, b) {
+                var x = a.NAME.toLowerCase();
+                var y = b.NAME.toLowerCase();
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
             this.showSpinner = false;
             this.clickedIndex = 0;
             this.selectedProfile(this.clientList[this.clickedIndex], this.clickedIndex);

@@ -398,6 +398,11 @@ export class CalendarProfileComponent implements OnInit {
                 this._employeeList = [];
                 this.getAssignedList();
                 this.profileList = await this.calendarProfileAPI.get_calendar_profile_list().toPromise();
+                this.profileList.sort(function (a, b) {
+                    var x = a.code.toLowerCase();
+                    var y = b.code.toLowerCase();
+                    return x < y ? -1 : x > y ? 1 : 0;
+                });
             }
         }
     }
@@ -410,6 +415,11 @@ export class CalendarProfileComponent implements OnInit {
         this.calendarProfileAPI.get_calendar_profile_list().subscribe(
             (data: any[]) => {
                 this.profileList = Object.assign(data);
+                this.profileList.sort(function (a, b) {
+                    var x = a.code.toLowerCase();
+                    var y = b.code.toLowerCase();
+                    return x < y ? -1 : x > y ? 1 : 0;
+                });
                 this.selectProfile(this.profileList[0], this.clickedIndex);
                 this.getAssignedList();
                 this.getDefaultProfile();
@@ -488,6 +498,11 @@ export class CalendarProfileComponent implements OnInit {
         }
         let namelist = await this.calendarProfileAPI.get_assigned_employee_list(this.profileList[index].calendar_guid).toPromise();
         this.assignedNames = namelist;
+        this.assignedNames.sort(function (a, b) {
+            var x = a.fullname.toLowerCase();
+            var y = b.fullname.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
         for (let i = 0; i < this.assignedNames.length; i++) {
             this.assignedNames[i]["content"] = this.assignedNames[i].fullname;
             this.assignedNames[i]["effectAllowed"] = "copyMove";
@@ -817,6 +832,12 @@ export class CalendarProfileComponent implements OnInit {
         this._employeeList = [];
         this.getAssignedList();
         this.profileList = await this.calendarProfileAPI.get_calendar_profile_list().toPromise();
+        this.profileList.sort(function (a, b) {
+            var x = a.code.toLowerCase();
+            var y = b.code.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
+
     }
 
     /**

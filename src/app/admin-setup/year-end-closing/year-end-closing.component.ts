@@ -112,6 +112,11 @@ export class YearEndClosingComponent implements OnInit {
     try {
       this.pendingList = await this.yearEndApi.get_approval_override_list().toPromise();
       this.companyName = await this.leaveApi.get_company_list().toPromise();
+      this.companyName.sort(function (a, b) {
+        var x = a.NAME.toLowerCase();
+        var y = b.NAME.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
       this.clickedCompany(this.companyName[0], 0);
       this.labelCompany = this.companyName[0].NAME;
       this.showSpinner = false;

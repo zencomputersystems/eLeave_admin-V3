@@ -725,6 +725,11 @@ export class ReportComponent implements OnInit {
     this.roleProfileDetails = roleDetails;
     let list = await this.api.get_user_profile_list().toPromise();
     this.userList = list;
+    this.userList.sort(function (a, b) {
+      var x = a.employeeName.toLowerCase();
+      var y = b.employeeName.toLowerCase();
+      return x < y ? -1 : x > y ? 1 : 0;
+    });
     if (this.roleProfileDetails.property.allowViewReport.value && this.roleProfileDetails.property.allowViewReport.level === 'Department') {
       let arraySameDepartment = [];
       this.userList.forEach(element => {

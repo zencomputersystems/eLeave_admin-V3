@@ -227,7 +227,14 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
         }
         if (this.filteredUser.length == 0) {
             this.showNoResult = true;
-        } else { this.showNoResult = false; }
+        } else {
+            this.showNoResult = false;
+            this.filteredUser.sort(function (a, b) {
+                var x = a.employeeName.toLowerCase();
+                var y = b.employeeName.toLowerCase();
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
+        }
     }
 
     /**

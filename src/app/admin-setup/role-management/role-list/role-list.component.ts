@@ -230,6 +230,7 @@ export class RoleListComponent implements OnInit {
                 this._filteredList = [];
                 let data = await this.roleAPi.get_role_profile_list().toPromise();
                 this.roleList = data;
+                this.sortRoleName();
                 this.roleListCheckAll = false;
                 this.roleListIsIndeterminate = false;
             }
@@ -279,6 +280,11 @@ export class RoleListComponent implements OnInit {
         this._property = data.property;
         let list = await this.roleAPi.get_assigned_user_profile(item.role_guid).toPromise();
         this.assignedNameList = list;
+        this.assignedNameList.sort(function (a, b) {
+            var x = a.fullname.toLowerCase();
+            var y = b.fullname.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
         for (let j = 0; j < this.assignedNameList.length; j++) {
             this.assignedNameList[j]["content"] = this.assignedNameList[j].fullname;
             this.assignedNameList[j]["effectAllowed"] = "move";
@@ -462,8 +468,17 @@ export class RoleListComponent implements OnInit {
         this._filteredList = [];
         let list = await this.roleAPi.get_role_profile_list().toPromise();
         this.roleList = list;
+        this.sortRoleName();
         this.roleListCheckAll = false;
         this.roleListIsIndeterminate = false;
+    }
+
+    sortRoleName() {
+        this.roleList.sort(function (a, b) {
+            var x = a.code.toLowerCase();
+            var y = b.code.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
     }
 
     /**
@@ -524,6 +539,7 @@ export class RoleListComponent implements OnInit {
     refreshRoleList() {
         this.roleAPi.get_role_profile_list().subscribe(data => {
             this.roleList = data;
+            this.sortRoleName();
             this.showSpinner = false;
             this.clickedIndex = 0;
             this.selectedProfile(this.roleList[this.clickedIndex], this.clickedIndex);

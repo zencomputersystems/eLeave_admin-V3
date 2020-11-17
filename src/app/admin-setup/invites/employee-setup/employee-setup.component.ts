@@ -764,6 +764,7 @@ export class EmployeeSetupComponent implements OnInit {
         let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
         this.showSpinner = false;
         this.list = data;
+        this.sortName(true, -1, 1);
         this.hideEditmode = false;
         if (this.emittedRole.property.allowProfileManagement.allowEditProfile.value === false) {
             this.hideEditmode = true;
