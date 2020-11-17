@@ -176,6 +176,18 @@ export class LeaveApiService {
     }
 
     /**
+     * adjust number of days for certain leave type(eg: AL) as RL
+     * only leave type that allowed entitlement claim (based on leave entitlement setup)
+     * @param {*} leaveData
+     * @returns {Observable<any>}
+     * @memberof LeaveApiService
+     */
+    post_entitlement_claim(leaveData): Observable<any> {
+        this.apiService.headerAuthorization();
+        return this.apiService.postApi(leaveData, '/api/leave-entitlement/entitlement-claim');
+    }
+
+    /**
     * Show message of pass or fail after post data
     * @param {string} message
     * @memberof LeaveApiService

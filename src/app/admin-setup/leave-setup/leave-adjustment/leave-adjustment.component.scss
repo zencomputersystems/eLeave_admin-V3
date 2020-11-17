@@ -34,6 +34,15 @@
     opacity: 0.8;
     margin: 0 auto;
   }
+  .calendar-icon {
+    fill: #a5a4bf;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: 0;
+    top: 10px;
+  }
 
   // new
   ion-card {
@@ -91,9 +100,7 @@
     opacity: 0.8;
   }
 
-
   @media screen and (min-width: 576px) {
-
     .leave-adjustment-popup {
       --width: 600px;
     }
@@ -103,9 +110,74 @@
     .leave-adjustmnet-table {
       margin: 15px 0;
     }
-    
+
     .leave-adjustment-popup {
       --width: 304px;
+    }
+  }
+
+  ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+
+  // mat tab
+  ::ng-deep .mat-tab-header {
+    // margin-top: -13px;
+    // margin-left: -16px;
+    // margin-right: -16px;
+    border: none;
+    width: fit-content;
+    border-radius: 4px;
+  }
+  ::ng-deep .mat-tab-label {
+    height: 35px !important;
+    // color: #a5a4bf;
+    // font-weight: bold;
+    font-size: 11px;
+    // margin-left: -20px;
+    color: #ffffff;
+    width: 200px;
+    padding: 0px 0px 0px 20px;
+    opacity: 1;
+  }
+  ::ng-deep .mat-tab-labels {
+    background: #43425d; //#f5f6fa;
+  }
+  ::ng-deep .mat-tab-label.mat-tab-label-active {
+    // color: #7069d8;
+    // font-weight: bold;
+    font-size: 11px;
+    background: #7069d8;
+    color: #ffffff;
+    padding: 0px 0px 0px 20px;
+    width: 200px;
+  }
+  ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
+  .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: transparent;
+  }
+
+  ::ng-deep .mat-tab-label-content {
+    padding: 0 60px;
+  }
+
+  ::ng-deep .mat-tab-label-container {
+    height: 30px;
+    align-items: center;
+  }
+
+  ::ng-deep {
+    .mobileView-tab {
+      .mat-tab-header {
+        width: -webkit-fill-available;
+      }
+
+      .mat-tab-label {
+        width: 100%;
+      }
+      .mat-tab-label-content {
+        padding: 0px;
+      }
     }
   }
 }

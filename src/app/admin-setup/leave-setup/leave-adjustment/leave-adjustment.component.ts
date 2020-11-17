@@ -1,9 +1,14 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
 import { LeaveApiService } from "../leave-api.service";
 import { APIService } from "../../../../../src/services/shared-service/api.service";
 import { ReportApiService } from "../../report/report-api.service";
 import { map } from "rxjs/operators";
+import { LeaveEntitlementApiService } from "../leave-entitlement/leave-entitlement-api.service";
+import { DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { AppDateAdapter, APP_DATE_FORMATS } from "../date.adapter";
+const dayjs = require('dayjs');
+
 /**
  * leave adjusment page
  * @export
@@ -14,6 +19,9 @@ import { map } from "rxjs/operators";
     selector: 'app-leave-adjustment',
     templateUrl: './leave-adjustment.component.html',
     styleUrls: ['./leave-adjustment.component.scss'],
+    providers: [
+        { provide: DateAdapter, useClass: AppDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }]
 })
 export class LeaveAdjustmentComponent implements OnInit {
 
@@ -23,6 +31,13 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @memberof LeaveAdjustmentComponent
      */
     public adjustmentForm: any;
+
+    /**
+     * RL validation group
+     * @type {*}
+     * @memberof LeaveAdjustmentComponent
+     */
+    public replacementForm: any;
 
     /**
      * company list from API
@@ -131,6 +146,17 @@ export class LeaveAdjustmentComponent implements OnInit {
     public history: any;
 
     /**
+     * set as replacement leave adjustment
+     * @type {boolean}
+     * @memberof LeaveAdjustmentComponent
+     */
+    public isRL: boolean = false;
+
+    public entitlementLeaveType: any;
+
+    public datepicker: any;
+
+    /**
      * selected company guid
      * @private
      * @type {string}
@@ -162,14 +188,21 @@ export class LeaveAdjustmentComponent implements OnInit {
      */
     private _numberOfDays: number;
 
+    private _leavetypeEntitilment: any;
+
+    private _allowedClaimUserList: any = [];
+
+    private filteredClaimUserList: any = [];
+
     /**
      *Creates an instance of LeaveAdjustmentComponent.
      * @param {LeaveApiService} leaveSetupAPI
      * @param {APIService} apiService
      * @param {ReportApiService} reportApi
+     * @param {LeaveEntitlementApiService} leaveEntitlementApi
      * @memberof LeaveAdjustmentComponent
      */
-    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService, public reportApi: ReportApiService) {
+    constructor(private leaveSetupAPI: LeaveApiService, private apiService: APIService, public reportApi: ReportApiService, private leaveEntitlementApi: LeaveEntitlementApiService) {
         this.adjustmentForm = new FormGroup({
             company: new FormControl('', Validators.required),
             department: new FormControl('', Validators.required),
@@ -178,6 +211,18 @@ export class LeaveAdjustmentComponent implements OnInit {
             noOfDay: new FormControl('', Validators.required),
             symbol: new FormControl('add', Validators.required)
         })
+
+        this.replacementForm = new FormGroup({
+            company: new FormControl('', Validators.required),
+            department: new FormControl('', Validators.required),
+            reason: new FormControl('', Validators.required),
+            noOfDay: new FormControl('', Validators.required),
+            symbol: new FormControl('add', Validators.required)
+        })
+
+        this.entitlementLeaveType = new FormArray([], Validators.required);
+        this.datepicker = new FormArray([], Validators.required);
+
         this.apiService.get_profile_pic('all').subscribe(data => {
             this.url = data;
         })
@@ -187,13 +232,37 @@ export class LeaveAdjustmentComponent implements OnInit {
      * get initial list from API
      * @memberof LeaveAdjustmentComponent
      */
-    ngOnInit() {
-        this.leaveSetupAPI.get_company_list().subscribe(list => this.company = list);
-        this.leaveSetupAPI.get_admin_leavetype().subscribe(list => this.leavetypeList = list);
+    async ngOnInit() {
+        let list = await this.leaveSetupAPI.get_company_list().toPromise();
+        this.company = list;
+        let data = await this.leaveSetupAPI.get_admin_leavetype().toPromise();
+        this.leavetypeList = data;
         this.reportApi.get_bundle_report('leave-adjustment').pipe(
             map(value => value.sort((x, y) => new Date(y.adjustDate).getTime() - new Date(x.adjustDate).getTime()))
         ).subscribe(data => this.history = data);
-        this.apiService.get_user_profile_list().subscribe(list => this._userItems = list);
+        let userlist = await this.apiService.get_user_profile_list().toPromise();
+        this._userItems = userlist;
+        let allEntitlementList = await this.leaveSetupAPI.get_leavetype_entitlement().toPromise();
+        this._leavetypeEntitilment = allEntitlementList;
+        this._allowedClaimUserList = [];
+        for (let i = 0; i < this._leavetypeEntitilment.length; i++) {
+            let data = await this.leaveEntitlementApi.get_leavetype_entitlement_id(this._leavetypeEntitilment[i].leaveEntitlementId).toPromise();
+            if (data.PROPERTIES_XML.claimEntitlement) {
+                this._allowedClaimUserList.push(this._leavetypeEntitilment[i]);
+            }
+        }
+        for (let i = 0; i < this._userItems.length; i++) {
+            this._userItems[i]["claimLeaveType"] = [];
+            this._allowedClaimUserList.forEach(element => {
+                element.userAttach.forEach(item => {
+                    if (item.guid.indexOf(this._userItems[i].userId) > -1) {
+                        this.filteredClaimUserList.push(this._userItems[i]);
+                        this.filteredClaimUserList[this.filteredClaimUserList.length - 1].claimLeaveType.push({ "leaveTypeId": element.leaveTypeId, "leaveType": element.leaveType });
+                    }
+                });
+            });
+        }
+        this.filteredClaimUserList = require('lodash').uniq(this.filteredClaimUserList);
     }
 
     /**
@@ -220,10 +289,12 @@ export class LeaveAdjustmentComponent implements OnInit {
         // let list = await this.apiService.get_user_profile_list().toPromise();
         // this._userItems = list;
         this.showCheckbox.push(false);
-        for (let i = 0; i < this._userItems.length; i++) {
-            this._userItems[i].isChecked = false;
+        if (this.isRL === false) {
+            this.filterUserList(this._userItems, name);
         }
-        this.filterUserList(this._userItems, name);
+        else {
+            this.filterUserList(this.filteredClaimUserList, name);
+        }
     }
 
     /**
@@ -251,6 +322,26 @@ export class LeaveAdjustmentComponent implements OnInit {
                 this.filteredUserItems[i].adjustment = data[j].ADJUSTMENT_DAYS;
             }
         }
+    }
+
+    // splice same index value 
+    selectedLeaveType(leavetypeGuid: string, index: number) {
+        const found = this.entitlementLeaveType.controls.some((el, i) => {
+            if (el.userId === this.filteredUserItems[index].userId) {
+                this.entitlementLeaveType.controls.splice(i, 1)
+            }
+        });
+        if (!found) this.entitlementLeaveType.controls.push({ "leaveTypeId": leavetypeGuid, "userId": this.filteredUserItems[index].userId });
+    }
+
+    // splice same index value 
+    selectedDate(event, indexes: number) {
+        const foundDate = this.datepicker.controls.some((element, i) => {
+            if (element.userId === this.filteredUserItems[indexes].userId) {
+                this.datepicker.controls.splice(i, 1)
+            }
+        });
+        if (!foundDate) this.datepicker.controls.push({ "date": event.value, "userId": this.filteredUserItems[indexes].userId });
     }
 
     /**
@@ -291,8 +382,6 @@ export class LeaveAdjustmentComponent implements OnInit {
                 this.filteredUserItems.push(userList[i]);
                 this.showSpinner = false;
             }
-            // if (userList[i].department === name && userList[i].department !== 'All' || name === 'All') {
-            //     this.filteredUserItems.push(userList[i]);
         }
     }
 
@@ -301,10 +390,18 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @memberof LeaveAdjustmentComponent
      */
     enableDisableSubmitButton() {
-        if (this.adjustmentForm.valid && (this.mainCheckBox || this.indeterminate)) {
-            this.disableSubmitButton = false;
+        if (this.isRL === false) {
+            if (this.adjustmentForm.valid && (this.mainCheckBox || this.indeterminate)) {
+                this.disableSubmitButton = false;
+            } else {
+                this.disableSubmitButton = true;
+            }
         } else {
-            this.disableSubmitButton = true;
+            if (this.replacementForm.valid && (this.mainCheckBox || this.indeterminate)) {
+                this.disableSubmitButton = false;
+            } else {
+                this.disableSubmitButton = true;
+            }
         }
     }
 
@@ -377,10 +474,18 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @memberof LeaveAdjustmentComponent
      */
     getCheckedUser() {
-        if (this.adjustmentForm.controls.symbol.value === 'remove') {
-            this._numberOfDays = -this.adjustmentForm.controls.noOfDay.value;
+        if (this.isRL === false) {
+            if (this.adjustmentForm.controls.symbol.value === 'remove') {
+                this._numberOfDays = -this.adjustmentForm.controls.noOfDay.value;
+            } else {
+                this._numberOfDays = this.adjustmentForm.controls.noOfDay.value;
+            }
         } else {
-            this._numberOfDays = this.adjustmentForm.controls.noOfDay.value;
+            if (this.replacementForm.controls.symbol.value === 'remove') {
+                this._numberOfDays = -this.replacementForm.controls.noOfDay.value;
+            } else {
+                this._numberOfDays = this.replacementForm.controls.noOfDay.value;
+            }
         }
         this.filteredUserItems.forEach((element, i) => {
             if (element.isChecked) {
@@ -402,44 +507,96 @@ export class LeaveAdjustmentComponent implements OnInit {
         }
     }
 
+    onTabChanged(title) {
+        if (title.index === 1) {
+            this.isRL = true;
+        } else {
+            this.isRL = false;
+        }
+        this.adjustmentForm.patchValue({
+            department: '',
+        });
+        this.filteredUserItems = [];
+        this.mainCheckBox = false;
+        this.indeterminate = false;
+    }
+
     /**
      * patch the leave adjustment day to API
      * @memberof LeaveAdjustmentComponent
      */
     patchLeaveNumber() {
         this.getCheckedUser();
-        const data = {
-            "leaveTypeId": this.adjustmentForm.controls.leavetype.value,
-            "noOfDays": this._numberOfDays,
-            "userId": this._selectedUser,
-            "reason": this.adjustmentForm.controls.reason.value
-        };
-        this.leaveSetupAPI.patch_leave_adjustment(data).subscribe(response => {
-            if (response.successList.length != 0) {
-                this.leaveSetupAPI.openSnackBar('You have submitted successfully', true);
+        if (this.isRL === false) {
+            const data = {
+                "leaveTypeId": this.adjustmentForm.controls.leavetype.value,
+                "noOfDays": this._numberOfDays,
+                "userId": this._selectedUser,
+                "reason": this.adjustmentForm.controls.reason.value
+            };
+            this.leaveSetupAPI.patch_leave_adjustment(data).subscribe(response => {
+                if (response.successList.length != 0) {
+                    this.leaveSetupAPI.openSnackBar('You have submitted successfully', true);
+                    this.showSmallSpinner = false;
+                    this.filteredUserItems = [];
+                    this._selectedUser = [];
+                    this.filteredUserItems.forEach(element => {
+                        element.isChecked = false;
+                    });
+                    this.enableDisableSubmitButton();
+                    this.reportApi.get_bundle_report('leave-adjustment').pipe(
+                        map(date => date.sort((a, b) => new Date(b.adjustDate).getTime() - new Date(a.adjustDate).getTime()))
+                    ).subscribe(data => this.history = data);
+                } else {
+                    this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
+                }
+            }, error => {
                 this.showSmallSpinner = false;
                 this.filteredUserItems = [];
                 this._selectedUser = [];
-                this.filteredUserItems.forEach(element => {
-                    element.isChecked = false;
+                this.filteredUserItems.forEach(el => {
+                    el.isChecked = false;
                 });
                 this.enableDisableSubmitButton();
-                this.reportApi.get_bundle_report('leave-adjustment').pipe(
-                    map(date => date.sort((a, b) => new Date(b.adjustDate).getTime() - new Date(a.adjustDate).getTime()))
-                ).subscribe(data => this.history = data);
-            } else {
                 this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
-            }
-        }, error => {
-            this.showSmallSpinner = false;
-            this.filteredUserItems = [];
-            this._selectedUser = [];
-            this.filteredUserItems.forEach(el => {
-                el.isChecked = false;
             });
-            this.enableDisableSubmitButton();
-            this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
-        });
+        } else {
+            this.entitlementLeaveType.controls.filter(o1 => this.datepicker.controls.some(o2 => {
+                if (o1.userId === o2.userId) {
+                    o1["expiredDate"] = dayjs(o2.date).format('YYYY-MM-DD');
+                    o1["noOfDays"] = this._numberOfDays;
+                    o1["reason"] = this.replacementForm.controls.reason.value
+                }
+            }));
+            this.leaveSetupAPI.post_entitlement_claim({ "data": this.entitlementLeaveType.controls }).
+                subscribe(res => {
+                    if (res.data.length != 0) {
+                        this.leaveSetupAPI.openSnackBar('You have submitted successfully', true);
+                        this.filteredUserItems = [];
+                        this._selectedUser = [];
+                        this.filteredUserItems.forEach(element => {
+                            element.isChecked = false;
+                        });
+                        this.enableDisableSubmitButton();
+                    } else {
+                        this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
+                    }
+                    this.showSmallSpinner = false;
+                    this.entitlementLeaveType.controls = [];
+                    this.datepicker.controls = [];
+                }, fail => {
+                    this.showSmallSpinner = false;
+                    this.entitlementLeaveType.controls = [];
+                    this.datepicker.controls = [];
+                    this.filteredUserItems = [];
+                    this._selectedUser = [];
+                    this.filteredUserItems.forEach(el => {
+                        el.isChecked = false;
+                    });
+                    this.enableDisableSubmitButton();
+                    this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
+                })
+        }
     }
 
 

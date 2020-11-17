@@ -164,8 +164,15 @@
             <ion-card-content>
                 <div class="row" style="flex-flow: row wrap;">
                     <div style="flex: 1; min-width: 250px;">
-                        <div style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
-                                    padding-top: 1px;margin-bottom: 10px;color: #a3a6b4;font-weight: bold;">
+                        <mat-tab-group selectedIndex="0" (selectedTabChange)="onTabChanged($event)">
+                            <mat-tab label="Leave Adjustment">
+                            </mat-tab>
+                            <mat-tab label="Entitlement Claim">
+                            </mat-tab>
+                        </mat-tab-group>
+                        <div
+                            style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-bottom: 1px;
+                                    padding-top: 1px;margin-bottom: 10px;margin-top:10px;color: #a3a6b4;font-weight: bold;">
                             <ion-row>
                                 <ion-col align-self-center style="padding: 10px;">
                                     DETAILS
@@ -173,7 +180,7 @@
                             </ion-row>
                         </div>
                         <div>
-                            <form [formGroup]="adjustmentForm">
+                            <form [formGroup]="adjustmentForm" *ngIf="isRL===false">
                                 <div style="display: block;width: 100%;">
                                     <span
                                         style="padding-bottom: 5px;font-size: 12px;color:#808495;padding-left: 15px;display: block">
@@ -282,13 +289,104 @@
                                     </mat-form-field>
                                 </div>
                             </form>
+                            <form [formGroup]="replacementForm" *ngIf="isRL===true">
+                                <div style="display: block;width: 100%;">
+                                    <span
+                                        style="padding-bottom: 5px;font-size: 12px;color:#808495;padding-left: 15px;display: block">
+                                        COMPANY LIST</span>
+                                    <mat-form-field appearance="outline"
+                                        style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
+                                        <mat-label>Please select company</mat-label>
+                                        <mat-select formControlName="company" required>
+                                            <mat-option>None</mat-option>
+                                            <mat-option *ngFor="let company of company"
+                                                [value]=company.TENANT_COMPANY_GUID
+                                                (click)="companySelected(company.TENANT_COMPANY_GUID);enableDisableSubmitButton()">
+                                                {{company.NAME}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <!-- <mat-error>Company tenant is <strong>required</strong></mat-error> -->
+                                    </mat-form-field>
+                                </div>
+                                <div style="display: block;width: 100%;">
+                                    <span
+                                        style="padding-bottom: 5px;font-size: 12px;color:#808495;padding-left: 15px;display: block">
+                                        DEPARTMENT LIST</span>
+                                    <mat-form-field appearance="outline"
+                                        style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
+                                        <mat-label>Please select department</mat-label>
+                                        <mat-select formControlName="department" required>
+                                            <mat-option value="All"
+                                                (click)="departmentSelected('All');enableDisableSubmitButton()">
+                                                All</mat-option>
+                                            <mat-option *ngFor="let department of department"
+                                                [value]=department.department
+                                                (click)="departmentSelected(department.department);enableDisableSubmitButton()">
+                                                {{department.department}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
+                                                margin-left: -50px;margin-top: -10px;"></ion-spinner>
+                                        <!-- <mat-error>Department is <strong>required</strong></mat-error> -->
+                                    </mat-form-field>
+                                </div>
+                                <div style="display: block;width: 100%;">
+                                    <div style="width: 40%;display: inline-block;">
+                                        <span
+                                            style="padding-bottom: 5px;font-size: 12px;color:#808495;padding-left: 15px;display: block">
+                                            NO OF DAY</span>
+                                        <mat-form-field appearance="outline"
+                                            style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;">
+                                            <mat-label>Symbol</mat-label>
+                                            <mat-select formControlName="symbol" required>
+                                                <mat-select-trigger>
+                                                    <mat-icon style="position: absolute;margin-top: -8px;">
+                                                        <i
+                                                            class="material-icons">{{replacementForm.controls.symbol.value}}</i>
+                                                    </mat-icon>
+                                                </mat-select-trigger>
+                                                <mat-option value="add" (click)="enableDisableSubmitButton()">
+                                                    <mat-icon><i class="material-icons" style="display: flex;">add</i>
+                                                    </mat-icon>
+                                                </mat-option>
+                                                <mat-option value="remove" (click)="enableDisableSubmitButton()">
+                                                    <mat-icon><i class="material-icons"
+                                                            style="display: flex;">remove</i></mat-icon>
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div style="width: 60%;display: inline-block;">
+                                        <mat-form-field appearance="outline"
+                                            style="height: 55px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
+                                            <mat-label>Number of days</mat-label>
+                                            <input type="number" matInput formControlName="noOfDay" required
+                                                (input)="enableDisableSubmitButton()">
+                                            <!-- <mat-error>No of day is <strong>required</strong></mat-error> -->
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div style="display: block;width: 100%;">
+                                    <span
+                                        style="display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;">
+                                        REASON</span>
+                                    <mat-form-field appearance="outline"
+                                        style="height: 130px;display: block;font-size: 12px;width: 100%;color:#43425d;opacity: 0.8;padding-left: 15px;padding-right: 15px;">
+                                        <mat-label>Please enter reason</mat-label>
+                                        <textarea matInput formControlName="reason" required
+                                            (input)="enableDisableSubmitButton()"
+                                            style="height: 100px;resize: none;"></textarea>
+                                        <!-- <mat-error>Reason is <strong>required</strong></mat-error> -->
+                                    </mat-form-field>
+                                </div>
+                            </form>
                         </div>
                         <div [class]="'hide-sm-down'"
                             style="margin: 0 auto;padding: 15px;padding-top: 0;text-align: center;">
                             <ion-button
                                 style="--border-radius: 2px;font-size: 11px;height: 30px;width: 100%;background: white;text-transform: none;"
                                 color="primary"
-                                (click)="patchLeaveNumber();adjustmentForm.reset();showSmallSpinner = true;mainCheckBox=false;indeterminate=false;"
+                                (click)="patchLeaveNumber();adjustmentForm.reset();replacementForm.reset();showSmallSpinner = true;mainCheckBox=false;indeterminate=false;"
                                 [disabled]="disableSubmitButton">
                                 Submit<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
                                 </ion-spinner>
@@ -298,7 +396,7 @@
                     <div class="leave-adjustmnet-table" style="flex: 2; margin-left: 10px;">
                         <div [class]="'hide-sm-down'">
                             <div
-                                style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                                style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;margin-top: 40px;">
                                 <ion-row nowrap>
                                     <ion-col size="1.5"
                                         style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
@@ -313,11 +411,17 @@
                                     <ion-col size="4">
                                         <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
                                     </ion-col>
-                                    <ion-col size="2.5" style="text-align: center;">
+                                    <ion-col size="2.5" style="text-align: center;" *ngIf="isRL===false">
                                         <ion-label style="font-size: 12px;">ENTITLEMENT</ion-label>
                                     </ion-col>
-                                    <ion-col size="2.5" style="text-align: center;">
+                                    <ion-col size="2.5" style="text-align: center;" *ngIf="isRL===true">
+                                        <ion-label style="font-size: 12px;">ENTITLEMENT CLAIM</ion-label>
+                                    </ion-col>
+                                    <ion-col size="2.5" style="text-align: center;" *ngIf="isRL===false">
                                         <ion-label style="font-size: 12px;">ADJUSTMENT</ion-label>
+                                    </ion-col>
+                                    <ion-col size="2.5" style="text-align: center;" *ngIf="isRL===true">
+                                        <ion-label style="font-size: 12px;">EXPIRY DATE</ion-label>
                                     </ion-col>
                                 </ion-row>
                             </div>
@@ -390,18 +494,48 @@
                                             style="color: #808495;font-size:11px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                                             {{item.designation}}</p>
                                     </ion-col>
-                                    <ion-col size="2.5" class="colOfLeave"
+                                    <ion-col size="2.5" class="colOfLeave" *ngIf="isRL===false"
                                         style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                         {{item.leaveAbbr}}
                                     </ion-col>
-                                    <ion-col size="2.5" *ngIf="item.adjustment > 0" class="colOfLeave"
+                                    <ion-col size="2.5" class="colOfLeave" *ngIf="isRL===true"
+                                        style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                        <mat-form-field appearance="outline" class="entitlementclaim"
+                                            style="padding: 10px;width: 100%;padding-bottom: 0;">
+                                            <mat-label>Claim leave type</mat-label>
+                                            <mat-select required>
+                                                <mat-option>None</mat-option>
+                                                <mat-option *ngFor="let leavetype of item.claimLeaveType"
+                                                    [value]=leavetype.leaveTypeId
+                                                    (click)="enableDisableSubmitButton(); selectedLeaveType(leavetype.leaveTypeId, i);">
+                                                    {{leavetype.leaveType}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <!-- <mat-error>Leave type is <strong>required</strong></mat-error> -->
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col size="2.5" *ngIf="item.adjustment > 0 && isRL===false" class="colOfLeave"
                                         style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                         +{{item.adjustment}}
                                     </ion-col>
-                                    <ion-col size="2.5" *ngIf="item.adjustment < 0 || item.adjustment === 0"
+                                    <ion-col size="2.5"
+                                        *ngIf="isRL===false && (item.adjustment < 0 || item.adjustment === 0)"
                                         class="colOfLeave"
                                         style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                         {{item.adjustment}}
+                                    </ion-col>
+                                    <ion-col size="2.5" *ngIf="isRL===true" class="colOfLeave"
+                                        style="text-align: center;color: #808495; font-size: 11px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                        <mat-form-field class="expirydate"
+                                            style="padding: 10px; padding-bottom:0; width: 100%;" appearance="outline">
+                                            <mat-label>Expiry date</mat-label>
+                                            <input matInput [matDatepicker]="picker"
+                                                (dateChange)="selectedDate($event, i)" required>
+                                            <div class="calendar-icon" [inlineSVG]="'assets/icon/option/calendar.svg'"
+                                                (click)="picker.open()">
+                                            </div>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
                                     </ion-col>
                                     <ion-item class="divider" lines="full"></ion-item>
                                 </ion-row>
@@ -522,7 +656,7 @@
                     <ion-button
                         style="--border-radius: 2px;font-size: 11px;height: 30px;width: 100%;background: white;text-transform: none;"
                         color="primary"
-                        (click)="patchLeaveNumber();adjustmentForm.reset();showSmallSpinner = true;mainCheckBox=false;indeterminate=false;"
+                        (click)="patchLeaveNumber();adjustmentForm.reset();replacementForm.reset();showSmallSpinner = true;mainCheckBox=false;indeterminate=false;"
                         [disabled]="disableSubmitButton">
                         Submit<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
                         </ion-spinner>
