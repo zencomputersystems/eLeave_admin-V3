@@ -19,10 +19,10 @@ export class ApprovalOverrideApiService {
      *Creates an instance of ApprovalOverrideApiService.
      * @param {APIService} apiService
      * @param {LeaveApiService} leaveAPI
-     * @param {MatSnackBar} snackbar show dialog snackbar message dispatched
+     * @param {MatSnackBar} snackbar
      * @memberof ApprovalOverrideApiService
      */
-    constructor(private apiService: APIService, private leaveAPI: LeaveApiService, public snackbar: MatSnackBar) { }
+    constructor(public apiService: APIService, private leaveAPI: LeaveApiService, public snackbar: MatSnackBar) { }
 
     /**
      * Get all the pending leave application list

@@ -5,6 +5,7 @@ import { MenuController } from '@ionic/angular';
 import { ReportApiService } from '../report/report-api.service';
 import { Platform } from '@ionic/angular';
 import { map } from 'rxjs/operators';
+import { RoleApiService } from '../role-management/role-api.service';
 
 /**
  * override approval for pending leave applciation 
@@ -97,13 +98,29 @@ export class ApprovalOverrideComponent implements OnInit {
     public history: any;
 
     /**
-     *Creates an instance of ApprovalOverrideComponent.
-     * @param {ApprovalOverrideApiService} approvalOverrideAPI
-     * @param {MenuController} menu
-     * @param {ReportApiService} reportApi
+     * user profile details
+     * @type {*}
      * @memberof ApprovalOverrideComponent
      */
-    constructor(private approvalOverrideAPI: ApprovalOverrideApiService, private menu: MenuController, private reportApi: ReportApiService, public approvalOverridePlatform: Platform) {
+    public userProfile: any;
+
+    /**
+     * role profile details
+     * @type {*}
+     * @memberof ApprovalOverrideComponent
+     */
+    public roleDetails: any;
+
+    /**
+     *Creates an instance of ApprovalOverrideComponent.
+     * @param {ApprovalOverrideApiService} approvalOverrideAPI
+     * @param {RoleApiService} roleApi
+     * @param {MenuController} menu
+     * @param {ReportApiService} reportApi
+     * @param {Platform} approvalOverridePlatform
+     * @memberof ApprovalOverrideComponent
+     */
+    constructor(private approvalOverrideAPI: ApprovalOverrideApiService, private roleApi: RoleApiService, private menu: MenuController, private reportApi: ReportApiService, public approvalOverridePlatform: Platform) {
         this.approvalForm = new FormGroup({
             remark: new FormControl('', Validators.required),
             radio: new FormControl('', Validators.required)
@@ -116,8 +133,21 @@ export class ApprovalOverrideComponent implements OnInit {
      */
     async ngOnInit() {
         try {
+            let personal = await this.approvalOverrideAPI.apiService.get_personal_user_profile_details().toPromise();
+            this.userProfile = personal;
+            let roleDetails = await this.roleApi.get_role_details_profile(this.userProfile.roleId).toPromise();
+            this.roleDetails = roleDetails;
             let pending = await this.approvalOverrideAPI.get_approval_override_list().toPromise();
             this.pendingList = pending;
+            if (this.roleDetails.property.allowLeaveManagement.allowApprovalOverride.value && this.roleDetails.property.allowLeaveManagement.allowApprovalOverride.level === 'Department') {
+                let filterDepartment = [];
+                this.pendingList.forEach(item => {
+                    if (this.userProfile.employeeDepartment === item.departmentName) {
+                        filterDepartment.push(item);
+                    }
+                });
+                this.pendingList = filterDepartment;
+            }
             this.innerSpinner = false;
             for (let i = 0; i < this.pendingList.length; i++) {
                 this.pendingList[i]["isChecked"] = false;
@@ -126,8 +156,6 @@ export class ApprovalOverrideComponent implements OnInit {
         } catch (error) {
             this.innerSpinner = false;
         }
-
-
     }
 
     /**
