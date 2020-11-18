@@ -58,14 +58,14 @@ export class DashboardComponent implements OnInit {
    * @type {*}
    * @memberof DashboardComponent
    */
-  public joiners: any;
+  public joiners: any = [];
 
   /**
    * get leaver list
    * @type {*}
    * @memberof DashboardComponent
    */
-  public leaver: any;
+  public leaver: any = [];
 
   /**
    * show all holiday 
