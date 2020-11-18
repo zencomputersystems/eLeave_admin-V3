@@ -1868,6 +1868,7 @@
                   { header: 'Contract No.', dataKey: 'contract_code_in' }, 
                   { header: 'Clock Out Time', dataKey: 'clock_out_time' }, 
                   { header: 'Clock Out Address', dataKey: 'address_out' },
+                  { header: 'Duration', dataKey: 'hours' },
                   { header: 'Total Hours', dataKey: 'total_hrs' }])">
                   PDF
                 </mat-option>
@@ -1904,6 +1905,9 @@
                   },{
                     label: 'Clock Out Address',
                     value: 'attendance.address_out'
+                  }, {
+                    label: 'Duration',
+                    value: 'attendance.hours'
                   }, {
                     label: 'Total Hours',
                     value: 'attendance.total_hrs'
@@ -1951,14 +1955,18 @@
                 style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 105px;">
                 Clock In Date</ion-col>
-              <ion-col size="3"
+              <ion-col size="2.5"
                 style="text-align: left;display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 132px;">
                 Clock In Time</ion-col>
-              <ion-col size="3"
+              <ion-col size="2.5"
                 style="text-align: left;display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 88px;">
                 Clock Out Time</ion-col>
+              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+            -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
+            5px;min-width: 95px;">
+                Duration</ion-col>
               <ion-col size="1" class="titleRow" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 95px;">
@@ -1986,7 +1994,7 @@
                       </p>
                     </div>
                   </ion-col>
-                  <ion-col size="3" style=" text-align: left;min-width: 132px;white-space: pre-line;">
+                  <ion-col size="2.5" style=" text-align: left;min-width: 132px;white-space: pre-line;">
                     <div *ngFor="let value of item.attendance; let j=index" id="clockInDiv{{i}}{{j}}"
                       [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
                       style="width: calc( 100% + 10px );margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
@@ -2007,7 +2015,7 @@
                       </p>
                     </div>
                   </ion-col>
-                  <ion-col size="3" style="min-width: 88px;white-space: pre-line;">
+                  <ion-col size="2.5" style="min-width: 88px;white-space: pre-line;">
                     <div *ngFor="let value of item.attendance; let j=index" id="clockOutDiv{{i}}{{j}}"
                       [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
                       style="width: calc( 100% + 10px );margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
@@ -2021,8 +2029,15 @@
                     <div *ngFor="let value of item.attendance; let j=index"
                       [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
                       style="width: calc( 100% + 10px );margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
-
-                      <p class="titleRow text">{{value.total_hrs }}
+                      <p class="titleRow text">{{value.hours}}
+                      </p>
+                    </div>
+                  </ion-col>
+                  <ion-col size="1" class="titleRow" style="min-width: 95px;white-space: pre-line;">
+                    <div *ngFor="let value of item.attendance; let j=index"
+                      [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
+                      style="width: calc( 100% + 10px );margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
+                      <p class="titleRow text">{{value.total_hrs}}
                       </p>
                     </div>
                   </ion-col>

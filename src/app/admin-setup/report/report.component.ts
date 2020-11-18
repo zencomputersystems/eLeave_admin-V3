@@ -547,7 +547,7 @@ export class ReportComponent implements OnInit {
             }
           }
           if (title === 'Attendance History') {
-            let clock_in_time = '', clock_in_add = '', jobType = '', soc_no = '', contract_no = '', clock_out_time = '', clock_out_add = '', total_hrs = '';
+            let clock_in_time = '', clock_in_add = '', jobType = '', soc_no = '', contract_no = '', clock_out_time = '', clock_out_add = '', total_hrs = '', hours = '';
             for (let i = 0; i < data.table.body.length; i++) {
               for (let j = 0; j < data.table.body[i].raw.attendance.length; j++) {
                 if (data.row.index === i && data.section === 'body') {
@@ -591,6 +591,10 @@ export class ReportComponent implements OnInit {
                       data.cell.text = clock_out_add.split('\n');
                       break;
                     case 10:
+                      hours += data.table.body[i].raw.attendance[j].hours + '\n' + '\n';
+                      data.cell.text = hours.split('\n');
+                      break;
+                    case 11:
                       total_hrs += data.table.body[i].raw.attendance[j].total_hrs + '\n' + '\n';
                       data.cell.text = total_hrs.split('\n');
                       break;
@@ -992,6 +996,15 @@ export class ReportComponent implements OnInit {
           this.tableDetails = value;
           this.arrayDetails = [];
           this.arrayDetails = this.tableDetails;
+          this.arrayDetails.forEach(element => {
+            element.attendance.sort(function (a, b) {
+              var x = dayjs(new Date(a.clock_in_time)).format('YYYY-MM-DD');
+              var y = dayjs(new Date(b.clock_in_time)).format('YYYY-MM-DD');
+              if (x === y) {
+                b.total_hrs = '';
+              }
+            });
+          });
           let data = require('lodash').groupBy(this.arrayDetails, groupName);
           const ordered = {};
           Object.keys(data).sort().forEach(function (key) {
