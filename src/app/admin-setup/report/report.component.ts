@@ -477,7 +477,7 @@ export class ReportComponent implements OnInit {
         didParseCell: (data) => {
           if (title === 'Leave Entitlement Summary' || title === 'Leave Taken History') {
             let type = '', start = '', end = '', days = '', approved = '', remark = '', takenLeaveType = '',
-              entitled = '', carried = '', forfeited = '', taken = '', pending = '', balance = '';
+              entitled = '', adjusted = '', carried = '', forfeited = '', taken = '', pending = '', balance = '';
             for (let i = 0; i < data.table.body.length; i++) {
               for (let j = 0; j < data.table.body[i].raw.leaveDetail.length; j++) {
                 if (data.row.index === i && data.section === 'body') {
@@ -493,22 +493,26 @@ export class ReportComponent implements OnInit {
                         data.cell.text = entitled.split('\n');
                         break;
                       case 6:
+                        adjusted += data.table.body[i].raw.leaveDetail[j].adjusted + '\n';
+                        data.cell.text = adjusted.split('\n');
+                        break;
+                      case 7:
                         carried += data.table.body[i].raw.leaveDetail[j].carriedForward + '\n';
                         data.cell.text = carried.split('\n');
                         break;
-                      case 7:
+                      case 8:
                         forfeited += data.table.body[i].raw.leaveDetail[j].forfeited + '\n';
                         data.cell.text = forfeited.split('\n');
                         break;
-                      case 8:
+                      case 9:
                         taken += data.table.body[i].raw.leaveDetail[j].taken + '\n';
                         data.cell.text = taken.split('\n');
                         break;
-                      case 9:
+                      case 10:
                         pending += data.table.body[i].raw.leaveDetail[j].pending + '\n';
                         data.cell.text = pending.split('\n');
                         break;
-                      case 10:
+                      case 11:
                         balance += data.table.body[i].raw.leaveDetail[j].balance + '\n';
                         data.cell.text = balance.split('\n');
                         break;
