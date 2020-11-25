@@ -331,7 +331,10 @@
               </div>
             </div>
           </div>
-          <div style="text-align: center;margin-top: 20px;">
+          <div style="text-align: center;margin-top: 20px;margin-bottom: 20px;">
+            <ion-button fill="outline" class="buttonStyle" (click)="sharedService.menu.close('editLeaveTypeDetails')">
+              Cancel
+            </ion-button>
             <ion-button class="buttonStyle" color="primary" (click)="saveCreateProfile(); showSmallSpinner=true">
               Save<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">
               </ion-spinner>
@@ -420,6 +423,9 @@
             </ng-container>
           </div>
           <div style="text-align: center;">
+            <ion-button fill="outline" class="buttonStyle" (click)="sharedService.menu.close('editLeaveTypeDetails')">
+              Cancel
+            </ion-button>
             <ion-button class="buttonStyle" color="primary" (click)="createProfile('clone');showSmallSpinner=true"
               [disabled]="cloneProfileId == null">
               Add<ion-spinner *ngIf="showSmallSpinner" name="lines-small" style="color: white;">

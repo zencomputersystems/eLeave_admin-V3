@@ -277,6 +277,9 @@
     text-align: right;
     padding-right: 20px;
   }
+  .button-outline {
+    --border-width: 1px;
+  }
   .buttonStyle {
     --border-radius: 2px;
     font-size: 11px;
