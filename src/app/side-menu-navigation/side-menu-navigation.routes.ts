@@ -20,6 +20,7 @@ import { AttendanceComponent } from '../attendance-setup/attendance/attendance.c
 import { ClientComponent } from '../attendance-setup/client/client.component';
 import { SupportComponent } from '../attendance-setup/support/support.component';
 import { NotificationRuleComponent } from '../admin-setup/leave-setup/notification-rule/notification-rule.component';
+import { ImportAttendanceComponent } from '../attendance-setup/import-attendance/import-attendance.component';
 
 export const sideMenuNavigationRoutes: Routes = [
     {
@@ -50,7 +51,8 @@ export const sideMenuNavigationRoutes: Routes = [
             { path: 'report', component: ReportComponent },
             { path: 'attendance', component: AttendanceComponent },
             { path: 'client', component: ClientComponent },
-            { path: 'support', component: SupportComponent }
+            { path: 'support', component: SupportComponent },
+            { path: 'import', component: ImportAttendanceComponent }
         ]
     },
     // { path: '**', component: PageNotFoundComponent },

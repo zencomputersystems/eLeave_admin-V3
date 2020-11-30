@@ -23,6 +23,8 @@ import { AgmCoreModule } from '@agm/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SupportComponent } from './support/support.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ImportAttendanceComponent } from './import-attendance/import-attendance.component';
+import { FileDropModule } from 'ngx-file-drop';
 
 @NgModule({
   imports: [
@@ -50,12 +52,13 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     InlineSVGModule,
     MatAutocompleteModule,
     PdfViewerModule,
+    FileDropModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC8vs7sealRJ2NkmPHBeR_ig1gjV7cznOo',
       libraries: ['places']
     })
   ],
-  declarations: [AttendanceComponent, ClientComponent, SupportComponent],
+  declarations: [AttendanceComponent, ClientComponent, SupportComponent, ImportAttendanceComponent],
   entryComponents: []
 })
 export class AttendanceSetupModule { }

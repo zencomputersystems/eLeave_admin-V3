@@ -178,6 +178,12 @@ export class SideMenuNavigationComponent implements OnInit {
       url: '/administration/support',
       icon: 'icon_chat-room@2x.png',
       show: true
+    },
+    {
+      title: 'Import/Logs',
+      url: '/administration/import',
+      icon: 'icon_chat-room@2x.png',
+      show: true
     }
   ];
 
@@ -336,6 +342,7 @@ export class SideMenuNavigationComponent implements OnInit {
     }
     if (details.property.allowProfileManagement.allowViewProfile.value === false) {
       this.appPages[2].show = false;
+      this.appPages[13].show = false;
     }
     if (details.property.allowLeaveManagement.allowApplyOnBehalf.value === false) {
       this.appPages[5].show = false;
