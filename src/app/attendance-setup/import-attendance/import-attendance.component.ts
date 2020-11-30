@@ -221,4 +221,31 @@ export class ImportAttendanceComponent implements OnInit {
         this.chooseFileButton = true;
         this.showUploadButton = false;
     }
+
+    /**
+     *  filter csv filename
+     * @param {*} text
+     * @memberof ImportAttendanceComponent
+     */
+    async filter(text: any) {
+        if (text && text.trim() != '') {
+            let name = this.logList.filter((item: any) => {
+                return (item.FILENAME.toLowerCase().indexOf(text.toLowerCase()) > -1);
+            })
+            this.logList = name;
+        }
+    }
+
+    /**
+     * To filter entered text
+     * @param {*} text
+     * @memberof ImportAttendanceComponent
+     */
+    changeDetails(text: any) {
+        if (text === '') {
+            this.ngOnInit();
+        } else {
+            this.filter(text);
+        }
+    }
 }
