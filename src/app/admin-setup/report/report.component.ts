@@ -566,7 +566,7 @@ export class ReportComponent implements OnInit {
                       case 3:
                         date += dayjs(data.table.body[i].raw.attendance[j].date).format('YYYY-MM-DD') + '\n' + '\n';
                         data.row.cells[3].text = date.split('\n');
-                        data.cell.styles.cellWidth = 28;
+                        data.cell.styles.cellWidth = 20;
                         break;
                       case 4:
                         if (data.table.body[i].raw.attendance[j].attendance[k].clock_in_time != null) {
