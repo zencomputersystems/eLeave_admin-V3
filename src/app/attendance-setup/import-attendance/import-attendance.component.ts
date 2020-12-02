@@ -208,11 +208,9 @@ export class ImportAttendanceComponent implements OnInit {
         if (response.message !== undefined) {
             this.importAttendanceApi.snackbarMsg(response.message, false);
         } else {
-            response.forEach(item => {
-                if (item.length > 0) {
-                    this.importAttendanceApi.snackbarMsg(item.length + ' Attendance record was uploaded successfully', true);
-                }
-            });
+            if (response.length > 0) {
+                this.importAttendanceApi.snackbarMsg(response.length + ' Attendance record was uploaded successfully', true);
+            }
         }
         this.showSmallSpinner = false;
         this.ngOnInit();
