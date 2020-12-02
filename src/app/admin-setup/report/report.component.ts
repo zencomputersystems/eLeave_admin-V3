@@ -379,14 +379,16 @@ export class ReportComponent implements OnInit {
         for (let i = 0; i < this.arrayDetails.length; i++) {
           let sub = [];
           this.arrayDetails[i].attendance.forEach((element, index) => {
-            let a = document.getElementById('clockInDiv' + i + index);
-            let b = document.getElementById('clockOutDiv' + i + index);
-            if (a.offsetHeight > b.offsetHeight) {
-              sub.push(a.offsetHeight);
-            }
-            else {
-              sub.push(b.offsetHeight);
-            }
+            element.attendance.forEach((item, nestedIndex) => {
+              let a = document.getElementById('clockInDiv' + i + index + nestedIndex);
+              // let b = document.getElementById('clockOutDiv' + i + index + nestedIndex);
+              // if (a.offsetHeight > b.offsetHeight) {
+                sub.push(a.scrollHeight);
+              // }
+              // else {
+              //   sub.push(b.offsetHeight);
+              // }
+            });
           });
           this.divHeight.push(sub);
         }
@@ -551,57 +553,118 @@ export class ReportComponent implements OnInit {
             }
           }
           if (title === 'Attendance History') {
-            let clock_in_time = '', clock_in_add = '', jobType = '', soc_no = '', contract_no = '', clock_out_time = '', clock_out_add = '', total_hrs = '', hours = '';
+            let date = '', clock_in_time = '', clock_in_add = '', jobType = '', soc_no = '', contract_no = '',
+              clock_out_time = '', clock_out_add = '', total_hours = '', hours = '', problem = '', source = '';
             for (let i = 0; i < data.table.body.length; i++) {
               for (let j = 0; j < data.table.body[i].raw.attendance.length; j++) {
-                if (data.row.index === i && data.section === 'body') {
-                  switch (data.column.index) {
-                    case 2:
-                      data.cell.styles.cellWidth = 35;
-                      break;
-                    case 3:
-                      clock_in_time += dayjs(data.table.body[i].raw.attendance[j].clock_in_time).format('YYYY-MM-DD HH:mm') + '\n' + '\n';
-                      data.row.cells[3].text = clock_in_time.split('\n');
-                      data.cell.styles.cellWidth = 30;
-                      break;
-                    case 4:
-                      clock_in_add += data.table.body[i].raw.attendance[j].address_in + '\n' + '\n';
-                      data.row.cells[4].text = clock_in_add.split('\n');
-                      break;
-                    case 5:
-                      if (data.table.body[i].raw.attendance[j].client_name != null) {
-                        jobType += data.table.body[i].raw.attendance[j].job_type_in + ' (' + data.table.body[i].raw.attendance[j].client_name + ')' + '\n' + '\n';
-                      } else {
-                        jobType += data.table.body[i].raw.attendance[j].job_type_in + '\n' + '\n';
-                      }
-                      data.cell.text = jobType.split('\n');
-                      data.cell.styles.cellWidth = 30;
-                      break;
-                    case 6:
-                      soc_no += data.table.body[i].raw.attendance[j].project_code_in + '\n' + '\n';
-                      data.cell.text = soc_no.split('\n');
-                      break;
-                    case 7:
-                      contract_no += data.table.body[i].raw.attendance[j].contract_code_in + '\n' + '\n';
-                      data.cell.text = contract_no.split('\n');
-                      break;
-                    case 8:
-                      clock_out_time += dayjs(data.table.body[i].raw.attendance[j].clock_out_time).format('YYYY-MM-DD HH:mm') + '\n' + '\n';
-                      data.cell.text = clock_out_time.split('\n');
-                      data.cell.styles.cellWidth = 30;
-                      break;
-                    case 9:
-                      clock_out_add += data.table.body[i].raw.attendance[j].address_out + '\n' + '\n';
-                      data.cell.text = clock_out_add.split('\n');
-                      break;
-                    case 10:
-                      hours += data.table.body[i].raw.attendance[j].hours + '\n' + '\n';
-                      data.cell.text = hours.split('\n');
-                      break;
-                    case 11:
-                      total_hrs += data.table.body[i].raw.attendance[j].total_hrs + '\n' + '\n';
-                      data.cell.text = total_hrs.split('\n');
-                      break;
+                for (let k = 0; k < data.table.body[i].raw.attendance[j].attendance.length; k++) {
+                  if (data.row.index === i && data.section === 'body') {
+                    switch (data.column.index) {
+                      case 2:
+                        data.cell.styles.cellWidth = 35;
+                        break;
+                      case 3:
+                        date += dayjs(data.table.body[i].raw.attendance[j].date).format('YYYY-MM-DD') + '\n' + '\n';
+                        data.row.cells[3].text = date.split('\n');
+                        data.cell.styles.cellWidth = 28;
+                        break;
+                      case 4:
+                        if (data.table.body[i].raw.attendance[j].attendance[k].clock_in_time != null) {
+                          clock_in_time += dayjs(data.table.body[i].raw.attendance[j].attendance[k].clock_in_time).format('YYYY-MM-DD HH:mm') + '\n' + '\n';
+                        } else { clock_in_time += 'N/A' + '\n' + '\n'; }
+                        data.row.cells[4].text = clock_in_time.split('\n');
+                        data.cell.styles.cellWidth = 30;
+                        break;
+                      case 5:
+                        if (data.table.body[i].raw.attendance[j].attendance[k].address_in != null) {
+                          clock_in_add += data.table.body[i].raw.attendance[j].attendance[k].address_in + '\n' + '\n';
+                        }
+                        else { clock_in_add += 'N/A' + '\n' + '\n'; }
+                        data.row.cells[5].text = clock_in_add.split('\n');
+                        break;
+                      case 6:
+                        if (data.table.body[i].raw.attendance[j].attendance[k].job_type_in != null && data.table.body[i].raw.attendance[j].attendance[k].client_name != null) {
+                          jobType += data.table.body[i].raw.attendance[j].attendance[k].job_type_in + ' (' + data.table.body[i].raw.attendance[j].attendance[k].client_name + ')' + '\n' + '\n';
+                        } else if (data.table.body[i].raw.attendance[j].attendance[k].job_type_in != null && data.table.body[i].raw.attendance[j].attendance[k].client_name == null) {
+                          jobType += data.table.body[i].raw.attendance[j].attendance[k].job_type_in + '\n' + '\n';
+                        } else if (data.table.body[i].raw.attendance[j].attendance[k].job_type_in == null && data.table.body[i].raw.attendance[j].attendance[k].client_name == null) {
+                          jobType += 'N/A' + '\n' + '\n';
+                        } else {
+                          jobType += ' (' + data.table.body[i].raw.attendance[j].attendance[k].client_name + ')' + '\n' + '\n';
+                        }
+                        data.cell.text = jobType.split('\n');
+                        data.cell.styles.cellWidth = 30;
+                        break;
+                      case 7:
+                        if (data.table.body[i].raw.attendance[j].attendance[k].project_code_in != null) {
+                          soc_no += data.table.body[i].raw.attendance[j].attendance[k].project_code_in + '\n' + '\n';
+                        } else {
+                          soc_no += 'N/A' + '\n' + '\n';
+                        }
+                        data.cell.text = soc_no.split('\n');
+                        break;
+                      case 8:
+                        if (data.table.body[i].raw.attendance[j].attendance[k].contract_code_in != null) {
+                          contract_no += data.table.body[i].raw.attendance[j].attendance[k].contract_code_in + '\n' + '\n';
+                        }
+                        else {
+                          contract_no += 'N/A' + '\n' + '\n';
+                        }
+                        data.cell.text = contract_no.split('\n');
+                        break;
+                      case 9:
+                        if (data.table.body[i].raw.attendance[j].attendance[k].clock_out_time != null) {
+                          clock_out_time += dayjs(data.table.body[i].raw.attendance[j].attendance[k].clock_out_time).format('YYYY-MM-DD HH:mm') + '\n' + '\n';
+                        }
+                        else { clock_out_time += 'N/A' + '\n' + '\n'; }
+                        data.cell.text = clock_out_time.split('\n');
+                        data.cell.styles.cellWidth = 30;
+                        break;
+                      case 10:
+                        if (data.table.body[i].raw.attendance[j].attendance[k].address_out != null) {
+                          clock_out_add += data.table.body[i].raw.attendance[j].attendance[k].address_out + '\n' + '\n';
+                        }
+                        else {
+                          clock_out_add += 'N/A' + '\n' + '\n';
+                        }
+                        data.cell.text = clock_out_add.split('\n');
+                        break;
+                      case 11:
+                        if (data.table.body[i].raw.attendance[j].attendance[k].hours != null) {
+                          hours += data.table.body[i].raw.attendance[j].attendance[k].hours + '\n' + '\n';
+                        }
+                        else {
+                          hours += 'N/A' + '\n' + '\n';
+                        }
+                        data.cell.text = hours.split('\n');
+                        break;
+                      case 12:
+                        if (data.table.body[i].raw.attendance[j].total_hours != null) {
+                          total_hours += data.table.body[i].raw.attendance[j].total_hours + '\n' + '\n';
+                        }
+                        else {
+                          total_hours += 'N/A' + '\n' + '\n';
+                        }
+                        data.cell.text = total_hours.split('\n');
+                        break;
+                      case 13:
+                        if (data.table.body[i].raw.attendance[j].problem != null) {
+                          problem += data.table.body[i].raw.attendance[j].problem + '\n' + '\n';
+                        } else {
+                          problem += 'N/A' + '\n' + '\n';
+                        }
+                        data.cell.text = problem.split('\n');
+                        break;
+                      case 14:
+                        if (data.table.body[i].raw.attendance[j].attendance[k].source != null) {
+                          source += data.table.body[i].raw.attendance[j].attendance[k].source + '\n' + '\n';
+                        }
+                        else {
+                          source += 'N/A' + '\n' + '\n';
+                        }
+                        data.cell.text = source.split('\n');
+                        break;
+                    }
                   }
                 }
               }
@@ -713,7 +776,7 @@ export class ReportComponent implements OnInit {
   saveCSV(title: string, fields) {
     const zip = new JSZip();
     for (let i = 0; i < this.groupValue.length; i++) {
-      const json2csvParser = new Parser({ fields, unwind: ['leaveDetail', 'leaveDetail.leaveDetail', 'attendance', 'activity', 'activity.completed', 'activity.pending'] });
+      const json2csvParser = new Parser({ fields, unwind: ['leaveDetail', 'leaveDetail.leaveDetail', 'attendance', 'attendance.attendance', 'activity', 'activity.completed', 'activity.pending'] });
       const csv = json2csvParser.parse(this.groupValue[i]);
       const blob = new Blob([csv], { type: "text/plain" });
       zip.file(title + ' - ' + this.groupKey[i] + '.csv', blob, { base64: true });
@@ -910,6 +973,26 @@ export class ReportComponent implements OnInit {
   }
 
   /**
+   * select current month when select attendance report
+   * @param {*} event
+   * @memberof ReportComponent
+   */
+  getSelectionChanged(event) {
+    if (event.value === 'attendance') {
+      const first = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+      const dayInAMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 0).getDate();
+      const last = new Date(new Date().getFullYear(), new Date().getMonth(), dayInAMonth);
+      this.firstPicker = new FormControl(first);
+      this.secondPicker = new FormControl(last);
+    } else {
+      const f = new Date(new Date().getFullYear(), 0, 1);
+      const l = new Date(new Date().getFullYear(), 11, 31);
+      this.firstPicker = new FormControl(f);
+      this.secondPicker = new FormControl(l);
+    }
+  }
+
+  /**
    * check sub checkbox to make changing in main checkbox (interminate)
    * @memberof ReportComponent
    */
@@ -1000,15 +1083,6 @@ export class ReportComponent implements OnInit {
           this.tableDetails = value;
           this.arrayDetails = [];
           this.arrayDetails = this.tableDetails;
-          this.arrayDetails.forEach(element => {
-            element.attendance.sort(function (a, b) {
-              var x = dayjs(new Date(a.clock_in_time)).format('YYYY-MM-DD');
-              var y = dayjs(new Date(b.clock_in_time)).format('YYYY-MM-DD');
-              if (x === y) {
-                b.total_hrs = '';
-              }
-            });
-          });
           let data = require('lodash').groupBy(this.arrayDetails, groupName);
           const ordered = {};
           Object.keys(data).sort().forEach(function (key) {
@@ -1036,16 +1110,19 @@ export class ReportComponent implements OnInit {
             for (let i = 0; i < this.arrayDetails.length; i++) {
               let sub = [];
               this.arrayDetails[i].attendance.forEach((element, index) => {
-                let a = document.getElementById('clockInDiv' + i + index);
-                let b = document.getElementById('clockOutDiv' + i + index);
-                if (a.offsetHeight > b.offsetHeight) {
-                  sub.push(a.offsetHeight);
-                }
-                else {
-                  sub.push(b.offsetHeight);
-                }
+                element.attendance.forEach((item, nestedIndex) => {
+                  let a = document.getElementById('clockInDiv' + i + index + nestedIndex);
+                  // let b = document.getElementById('clockOutDiv' + i + index + nestedIndex);
+                  // if (a.offsetHeight > b.offsetHeight) {
+                    sub.push(a.scrollHeight);
+                  // }
+                  // else {
+                  //   sub.push(b.offsetHeight);
+                  // }
+                });
               });
               this.divHeight.push(sub);
+              console.log(this.divHeight)
             }
           }, 500);
         })
