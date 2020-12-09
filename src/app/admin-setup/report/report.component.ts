@@ -383,7 +383,7 @@ export class ReportComponent implements OnInit {
               let a = document.getElementById('clockInDiv' + i + index + nestedIndex);
               // let b = document.getElementById('clockOutDiv' + i + index + nestedIndex);
               // if (a.offsetHeight > b.offsetHeight) {
-                sub.push(a.scrollHeight);
+              sub.push(a.scrollHeight);
               // }
               // else {
               //   sub.push(b.offsetHeight);
@@ -1114,7 +1114,7 @@ export class ReportComponent implements OnInit {
                   let a = document.getElementById('clockInDiv' + i + index + nestedIndex);
                   // let b = document.getElementById('clockOutDiv' + i + index + nestedIndex);
                   // if (a.offsetHeight > b.offsetHeight) {
-                    sub.push(a.scrollHeight);
+                  sub.push(a.scrollHeight);
                   // }
                   // else {
                   //   sub.push(b.offsetHeight);
@@ -1125,6 +1125,9 @@ export class ReportComponent implements OnInit {
               console.log(this.divHeight)
             }
           }, 500);
+        }, error => {
+          this.showSpinner = false;
+          this.leaveAPI.openSnackBar('Failed to produce report', false);
         })
     }
 
@@ -1189,6 +1192,9 @@ export class ReportComponent implements OnInit {
               this.completionH.push(sub);
             }
           }, 500);
+        }, error => {
+          this.showSpinner = false;
+          this.leaveAPI.openSnackBar('Failed to produce report', false);
         })
     }
 

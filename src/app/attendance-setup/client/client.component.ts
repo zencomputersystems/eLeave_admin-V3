@@ -391,7 +391,7 @@ export class ClientComponent implements OnInit {
     }
 
     getLocationCoordinate(address: string, index: number) {
-        this.clientApi.get_search_type_location(address, 'address').subscribe(
+        this.clientApi.get_search_type_location(address.replace(/\s/g, ''), 'address').subscribe(
             detail => {
                 console.log(detail.results[0].geometry.location);
                 this.location[index].LATITUDE = detail.results[0].geometry.location.lat;
@@ -418,7 +418,7 @@ export class ClientComponent implements OnInit {
      * @memberof ClientComponent
      */
     getNewLocationCoordinate(address: string, index: number) {
-        this.clientApi.get_search_type_location(address, 'address').subscribe(
+        this.clientApi.get_search_type_location(address.replace(/\s/g, ''), 'address').subscribe(
             detail => {
                 this.newLocation[index].latitude = detail.results[0].geometry.location.lat;
                 this.newLocation[index].longitude = detail.results[0].geometry.location.lng;
