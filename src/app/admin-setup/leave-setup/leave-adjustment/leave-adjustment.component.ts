@@ -543,11 +543,11 @@ export class LeaveAdjustmentComponent implements OnInit {
                 if (response.successList.length != 0) {
                     this.leaveSetupAPI.openSnackBar('You have submitted successfully', true);
                     this.showSmallSpinner = false;
-                    this.filteredUserItems = [];
-                    this._selectedUser = [];
                     this.filteredUserItems.forEach(element => {
                         element.isChecked = false;
                     });
+                    this.filteredUserItems = [];
+                    this._selectedUser = [];
                     this.enableDisableSubmitButton();
                     this.reportApi.get_bundle_report('leave-adjustment').pipe(
                         map(date => date.sort((a, b) => new Date(b.adjustDate).getTime() - new Date(a.adjustDate).getTime()))
@@ -557,11 +557,11 @@ export class LeaveAdjustmentComponent implements OnInit {
                 }
             }, error => {
                 this.showSmallSpinner = false;
-                this.filteredUserItems = [];
-                this._selectedUser = [];
                 this.filteredUserItems.forEach(el => {
                     el.isChecked = false;
                 });
+                this.filteredUserItems = [];
+                this._selectedUser = [];
                 this.enableDisableSubmitButton();
                 this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
             });
@@ -577,11 +577,11 @@ export class LeaveAdjustmentComponent implements OnInit {
                 subscribe(res => {
                     if (res.data.length != 0) {
                         this.leaveSetupAPI.openSnackBar('You have submitted successfully', true);
-                        this.filteredUserItems = [];
-                        this._selectedUser = [];
                         this.filteredUserItems.forEach(element => {
                             element.isChecked = false;
                         });
+                        this.filteredUserItems = [];
+                        this._selectedUser = [];
                         this.enableDisableSubmitButton();
                     } else {
                         this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
@@ -593,11 +593,11 @@ export class LeaveAdjustmentComponent implements OnInit {
                     this.showSmallSpinner = false;
                     this.entitlementLeaveType.controls = [];
                     this.datepicker.controls = [];
-                    this.filteredUserItems = [];
-                    this._selectedUser = [];
                     this.filteredUserItems.forEach(el => {
                         el.isChecked = false;
                     });
+                    this.filteredUserItems = [];
+                    this._selectedUser = [];
                     this.enableDisableSubmitButton();
                     this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
                 })
