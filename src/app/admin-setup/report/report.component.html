@@ -150,7 +150,7 @@
                     <mat-option value="leave-entitlement">Leave Entitlement Summary</mat-option>
                     <mat-option value="approval-override">Approval Override History</mat-option>
                     <mat-option value="apply-on-behalf">Apply On Behalf History</mat-option>
-                    <!-- <mat-option value="entitlement-claim">Entitlement Claim History</mat-option> -->
+                    <mat-option value="entitlement-claim">Entitlement Claim History</mat-option>
                     <mat-option value="leave-taken">Leave Taken History</mat-option>
                     <mat-option value="leave-adjustment">Leave Adjustment History</mat-option>
                     <mat-option value="leave-cancellation">Leave Cancellation History</mat-option>
@@ -1010,10 +1010,41 @@
             <mat-form-field id="saveas" appearance="outline"
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
-                <mat-option value="PDF" (click)="savePDF()">
+                <mat-option value="PDF"
+                  (click)="savePDF('Apply On Behalf History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Application Date', dataKey: 'applyDate' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Status', dataKey: 'status' }, { header: 'Request Remarks', dataKey: 'requestRemarks' }, { header: 'Final Approval Remarks', dataKey: 'finalApproveRemarks' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV">
+                <mat-option value="CSV" (click)="saveCSV('Apply On Behalf History',[{
+                  label: 'Employee No',
+                  value: 'employeeNo'
+                },{
+                    label: 'Employee Name',
+                    value: 'employeeName'
+                  },{
+                    label: 'Leave Type',
+                    value: 'leaveTypeName'
+                  },{
+                    label: 'Application Date',
+                    value: 'applyDate'
+                  }, {
+                    label: 'Start Date',
+                    value: 'startDate'
+                  }, {
+                    label: 'End Date',
+                    value: 'endDate'
+                  },{
+                    label: 'No Of Days',
+                    value: 'noOfDays'
+                  }, {
+                    label: 'Status',
+                    value: 'status'
+                  }, {
+                    label: 'Request Remarks',
+                    value: 'requestRemarks'
+                  }, {
+                    label: 'Final Approval Remarks',
+                    value: 'finalApproveRemarks'
+                  }]);">
                   CSV
                 </mat-option>
               </mat-select>
@@ -1042,7 +1073,7 @@
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 132px;">
                 Leave Type</ion-col>
-              <ion-col size="1" class="titleRow" style="text-align: left;display: -webkit-box;
+              <ion-col size="1" class="titleRow" style="display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 88px;">
                 Application Date</ion-col>
@@ -1087,17 +1118,26 @@
                   <ion-col size="1" class="text" style="min-width: 132px; white-space: pre-line;">
                     {{item.leaveTypeName}}</ion-col>
                   <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
-                    {{item.applyDate}}</ion-col>
+                    {{item.applyDate | date:'yyyy-MM-dd'}}</ion-col>
                   <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
-                    {{item.startDate}}</ion-col>
+                    {{item.startDate | date:'yyyy-MM-dd'}}</ion-col>
                   <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
-                    {{item.endDate}}</ion-col>
+                    {{item.endDate | date:'yyyy-MM-dd'}}</ion-col>
                   <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                     {{item.noOfDays}}</ion-col>
-                  <ion-col size="1" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
+                  <ion-col *ngIf="item.status != null" size="1" class="titleRow text"
+                    style="min-width: 88px; white-space: pre-line;">
                     {{item.status}}</ion-col>
-                  <ion-col size="1.5" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
+                  <ion-col *ngIf="item.status == null" size="1" class="titleRow text"
+                    style="min-width: 88px; white-space: pre-line;">
+                    N/A</ion-col>
+                  <ion-col *ngIf="item.requestRemarks != null" size="1.5" class="titleRow text"
+                    style="min-width: 88px; white-space: pre-line;">
                     {{item.requestRemarks}}
+                  </ion-col>
+                  <ion-col *ngIf="item.requestRemarks == null" size="1.5" class="titleRow text"
+                    style="min-width: 88px; white-space: pre-line;">
+                    N/A
                   </ion-col>
                   <ion-col size="1.5" class="titleRow text" style="min-width: 88px; white-space: pre-line;">
                     {{item.finalApproveRemarks}}
