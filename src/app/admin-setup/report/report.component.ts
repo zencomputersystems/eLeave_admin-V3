@@ -1083,7 +1083,7 @@ export class ReportComponent implements OnInit {
         "enddate": end,
         "userid": stringOfNames
       };
-      this.reportAPI.post_attendance_report(postData, start, end, stringOfNames).
+      this.reportAPI.post_attendance_report(postData).
         subscribe(value => {
           this.tableDetails = value;
           this.arrayDetails = [];
