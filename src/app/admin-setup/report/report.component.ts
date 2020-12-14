@@ -1078,7 +1078,12 @@ export class ReportComponent implements OnInit {
       let stringOfNames = this.selectedUserId.toString();
       let start = dayjs(this.firstPicker.value).format('YYYY-MM-DD');
       let end = dayjs(this.secondPicker.value).format('YYYY-MM-DD');
-      this.reportAPI.get_attendance_report(start, end, stringOfNames).
+      let postData = {
+        "startdate": start,
+        "enddate": end,
+        "userid": stringOfNames
+      };
+      this.reportAPI.post_attendance_report(postData, start, end, stringOfNames).
         subscribe(value => {
           this.tableDetails = value;
           this.arrayDetails = [];

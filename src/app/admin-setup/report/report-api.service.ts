@@ -53,9 +53,9 @@ export class ReportApiService {
      * @returns {Observable<any>}
      * @memberof ReportApiService
      */
-    get_attendance_report(start, end, userIds): Observable<any> {
+    post_attendance_report(data, start, end, userIds): Observable<any> {
         this.attendanceApi.headerAuthorization();
-        return this.attendanceApi.getApi('/report/attendance/' + start + '/' + end + '/' + userIds);
+        return this.attendanceApi.postApi(data, '/report/attendance/' + start + '/' + end + '/' + userIds);
     }
 
     /**
