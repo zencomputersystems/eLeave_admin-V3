@@ -1297,7 +1297,7 @@
                     <ng-container *ngFor="let leaveItems of item.leaveDetail">
                       <a *ngIf="leaveItems.attachment !== null || leaveItems.attachment !== ''"
                         style="color: #7069d8;display: block;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
-                        [href]="item.link+item.attachment" download>{{leaveItems.attachment}}</a>
+                        [href]="item.link+leaveItems.attachment" download>{{leaveItems.attachment}}</a>
                       <p class="text" *ngIf="leaveItems.attachment === null || leaveItems.attachment === ''"><br> </p>
                     </ng-container>
                   </ion-col>
