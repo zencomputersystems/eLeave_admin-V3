@@ -250,6 +250,13 @@ export class ApplyOnBehalfComponent implements OnInit {
     public employeeList: any;
 
     /**
+     * user list from employee data
+     * @type {*}
+     * @memberof ApplyOnBehalfComponent
+     */
+    public employeeData: any;
+
+    /**
      * uploaded file response from API
      * @type {*}
      * @memberof ApplyOnBehalfComponent
@@ -353,21 +360,22 @@ export class ApplyOnBehalfComponent implements OnInit {
         let roleDetails = await this.roleApi.get_role_details_profile(this.userProfile.roleId).toPromise();
         this.roleDetails = roleDetails;
         let data = await this.apiService.get_user_profile_list().toPromise();
-        this.employeeList = data;
-        this.employeeList.sort(function (a, b) {
+        this.employeeData = data;
+        this.employeeData.sort(function (a, b) {
             var x = a.employeeName.toLowerCase();
             var y = b.employeeName.toLowerCase();
             return x < y ? -1 : x > y ? 1 : 0;
         });
         if (this.roleDetails.property.allowLeaveManagement.allowApplyOnBehalf.value && this.roleDetails.property.allowLeaveManagement.allowApplyOnBehalf.level === 'Department') {
             let filterDepartment = [];
-            this.employeeList.forEach(item => {
+            this.employeeData.forEach(item => {
                 if (this.userProfile.employeeDepartment === item.department) {
                     filterDepartment.push(item);
                 }
             });
-            this.employeeList = filterDepartment;
+            this.employeeData = filterDepartment;
         }
+        this.changeDetails('');
         this.showSpinner = false;
     }
 
@@ -429,27 +437,15 @@ export class ApplyOnBehalfComponent implements OnInit {
     }
 
     /**
-     * Filter text key in from searchbar 
-     * @param {*} text
+     * filter employee name from searchbar 
+     * @param {*} searchKeyword
+     * @param {*} data
+     * @param {*} arg
+     * @returns
      * @memberof ApplyOnBehalfComponent
      */
-    async filter(text: any) {
-        if (text && text.trim() != '') {
-            let name = this.employeeList.filter((item: any) => {
-                return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
-            })
-            let department = this.employeeList.filter((value: any) => {
-                if (value.department != undefined) {
-                    return (value.department.toLowerCase().indexOf(text.toLowerCase()) > -1);
-                }
-            })
-            let company = this.employeeList.filter((list: any) => {
-                if (list.companyName != undefined) {
-                    return (list.companyName.toLowerCase().indexOf(text.toLowerCase()) > -1)
-                }
-            })
-            this.employeeList = require('lodash').uniqBy(name.concat(department).concat(company), 'id');
-        }
+    filerSearch(searchKeyword, data, arg) {
+        return data.filter(itm => new RegExp(searchKeyword, 'i').test(itm[arg]));
     }
 
     /**
@@ -458,11 +454,10 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     changeDetails(text: any) {
-        if (text === '') {
-            this.ngOnInit();
-        } else {
-            this.filter(text);
-        }
+        this.employeeList = this.employeeData;
+        this.employeeList = (text.length > 0) ?
+            this.filerSearch(text, this.employeeList, 'employeeName') :
+            this.employeeList;
     }
 
     /**
@@ -475,12 +470,12 @@ export class ApplyOnBehalfComponent implements OnInit {
     hoverInOut(i: number, mouseIn: boolean, isChecked: boolean) {
         if (this.headCheckbox || this.indeterminateVal) {
             this.showCheckBox = [];
-            this.showCheckBox.push(...Array(this.employeeList.length).fill(true));
+            this.showCheckBox.push(...Array(this.employeeData.length).fill(true));
         } else if (mouseIn && !isChecked && !this.indeterminateVal && !this.headCheckbox) {
             this.showCheckBox.splice(i, 1, true);
         } else {
             this.showCheckBox.splice(0, this.showCheckBox.length);
-            this.showCheckBox.push(...Array(this.employeeList.length).fill(false));
+            this.showCheckBox.push(...Array(this.employeeData.length).fill(false));
         }
     }
 
@@ -491,7 +486,7 @@ export class ApplyOnBehalfComponent implements OnInit {
     headerCheckbox() {
         this.showCheckBox.splice(0, this.showCheckBox.length);
         setTimeout(() => {
-            this.employeeList.forEach(item => {
+            this.employeeData.forEach(item => {
                 item.isChecked = this.headCheckbox;
                 if (item.isChecked) {
                     this.showCheckBox.push(true);
@@ -507,9 +502,9 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     contentCheckbox() {
-        const totalLength = this.employeeList.length;
+        const totalLength = this.employeeData.length;
         let checkedValue = 0;
-        this.employeeList.map(item => {
+        this.employeeData.map(item => {
             if (item.isChecked) {
                 checkedValue++;
                 this.showCheckBox.push(true);
@@ -536,12 +531,12 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     async addEntitlementBal(leaveTypeGuid: string) {
-        for (let i = 0; i < this.employeeList.length; i++) {
-            let details = await this.leaveAPI.get_entilement_details(this.employeeList[i].userId).toPromise();
+        for (let i = 0; i < this.employeeData.length; i++) {
+            let details = await this.leaveAPI.get_entilement_details(this.employeeData[i].userId).toPromise();
             for (let j = 0; j < details.length; j++) {
                 if (details[j].LEAVE_TYPE_GUID === leaveTypeGuid) {
-                    this.employeeList[i]["entitled"] = details[j].ENTITLED_DAYS;
-                    this.employeeList[i]["balance"] = details[j].BALANCE_DAYS;
+                    this.employeeData[i]["entitled"] = details[j].ENTITLED_DAYS;
+                    this.employeeData[i]["balance"] = details[j].BALANCE_DAYS;
                 }
             }
         }
@@ -618,7 +613,10 @@ export class ApplyOnBehalfComponent implements OnInit {
                 if (JSON.parse(response._body)[0].valid === true) {
                     this.leaveAPI.openSnackBar('You have submitted successfully', true);
                 }
-            }, err => this.leaveAPI.openSnackBar('Failed to submit leave application', false));
+            }, err => {
+                this.clearArrayList();
+                this.leaveAPI.openSnackBar('Failed to submit leave application', false)
+            });
     }
 
     /**
@@ -652,9 +650,9 @@ export class ApplyOnBehalfComponent implements OnInit {
             }
             this._arrayDateSlot.push(remainingFullDay);
         }
-        for (let i = 0; i < this.employeeList.length; i++) {
-            if (this.employeeList[i].isChecked) {
-                this._employeeId.push(this.employeeList[i].userId);
+        for (let i = 0; i < this.employeeData.length; i++) {
+            if (this.employeeData[i].isChecked) {
+                this._employeeId.push(this.employeeData[i].userId);
             }
         }
     }
@@ -676,6 +674,9 @@ export class ApplyOnBehalfComponent implements OnInit {
         this.dateSelection = [];
         this.showCheckBox = [];
         this.uploadedFile = null;
+        this.employeeData.forEach(el => {
+            el.isChecked = false;
+        });
         this.headCheckbox = false;
         this.indeterminateVal = false;
         document.querySelector('ion-searchbar').getInputElement().then((searchInput) => {
@@ -861,9 +862,9 @@ export class ApplyOnBehalfComponent implements OnInit {
      * @memberof ApplyOnBehalfComponent
      */
     showCheckedUser() {
-        for (let i = this.employeeList.length - 1; i >= 0; --i) {
-            if (this.employeeList[i].isChecked == false || this.employeeList[i].isChecked == undefined) {
-                this.employeeList.splice(i, 1);
+        for (let i = this.employeeData.length - 1; i >= 0; --i) {
+            if (this.employeeData[i].isChecked == false || this.employeeData[i].isChecked == undefined) {
+                this.employeeData.splice(i, 1);
             }
         }
     }

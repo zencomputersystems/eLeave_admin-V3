@@ -542,19 +542,19 @@ export class LeaveAdjustmentComponent implements OnInit {
             this.leaveSetupAPI.patch_leave_adjustment(data).subscribe(response => {
                 if (response.successList.length != 0) {
                     this.leaveSetupAPI.openSnackBar('You have submitted successfully', true);
-                    this.showSmallSpinner = false;
-                    this.filteredUserItems.forEach(element => {
-                        element.isChecked = false;
-                    });
-                    this.filteredUserItems = [];
-                    this._selectedUser = [];
-                    this.enableDisableSubmitButton();
                     this.reportApi.get_bundle_report('leave-adjustment').pipe(
                         map(date => date.sort((a, b) => new Date(b.adjustDate).getTime() - new Date(a.adjustDate).getTime()))
                     ).subscribe(data => this.history = data);
                 } else {
                     this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
                 }
+                this.showSmallSpinner = false;
+                this.filteredUserItems.forEach(element => {
+                    element.isChecked = false;
+                });
+                this.filteredUserItems = [];
+                this._selectedUser = [];
+                this.enableDisableSubmitButton();
             }, error => {
                 this.showSmallSpinner = false;
                 this.filteredUserItems.forEach(el => {
@@ -577,18 +577,18 @@ export class LeaveAdjustmentComponent implements OnInit {
                 subscribe(res => {
                     if (res.data.length != 0) {
                         this.leaveSetupAPI.openSnackBar('You have submitted successfully', true);
-                        this.filteredUserItems.forEach(element => {
-                            element.isChecked = false;
-                        });
-                        this.filteredUserItems = [];
-                        this._selectedUser = [];
-                        this.enableDisableSubmitButton();
                     } else {
                         this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
                     }
                     this.showSmallSpinner = false;
                     this.entitlementLeaveType.controls = [];
                     this.datepicker.controls = [];
+                    this.filteredUserItems.forEach(element => {
+                        element.isChecked = false;
+                    });
+                    this.filteredUserItems = [];
+                    this._selectedUser = [];
+                    this.enableDisableSubmitButton();
                 }, fail => {
                     this.showSmallSpinner = false;
                     this.entitlementLeaveType.controls = [];
