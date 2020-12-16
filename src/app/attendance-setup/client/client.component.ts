@@ -16,11 +16,18 @@ declare var google;
 export class ClientComponent implements OnInit {
 
     /**
-        * Role items get from API
-        * @type {*}
-        * @memberof ClientComponent
-        */
+     * Filtered client list
+     * @type {*}
+     * @memberof ClientComponent
+     */
     public clientList: any;
+
+    /**
+     * Client items get from API
+     * @type {*}
+     * @memberof ClientComponent
+     */
+    public clientData: any;
 
     /**
      * Show loading spinner
@@ -186,7 +193,7 @@ export class ClientComponent implements OnInit {
      * @param {MouseEvent} $event
      * @memberof ClientComponent
      */
-    markerDragEnd($event: MouseEvent, index:number) {
+    markerDragEnd($event: MouseEvent, index: number) {
         this.latitude = $event.coords.lat;
         this.longitude = $event.coords.lng;
         this.getAddress(this.latitude, this.longitude, index);
@@ -344,26 +351,29 @@ export class ClientComponent implements OnInit {
      */
     refreshRoleList() {
         this.clientApi.get_client_profile_list().subscribe(data => {
-            this.clientList = data;
-            this.clientList.sort(function (a, b) {
+            this.clientData = data;
+            this.clientData.sort(function (a, b) {
                 var x = a.NAME.toLowerCase();
                 var y = b.NAME.toLowerCase();
                 return x < y ? -1 : x > y ? 1 : 0;
             });
             this.showSpinner = false;
             this.clickedIndex = 0;
-            this.selectedProfile(this.clientList[this.clickedIndex], this.clickedIndex);
+            this.selectedProfile(this.clientData[this.clickedIndex], this.clickedIndex);
+            this.changeDetails('');
         });
     }
 
-    async filter(text: any) {
-        if (text && text.trim() != '') {
-            this.clientList = this.clientList.filter((items: any) => {
-                if (items.NAME != undefined) {
-                    return (items.NAME.toLowerCase().indexOf(text.toLowerCase()) > -1)
-                }
-            })
-        }
+    /**
+     * filter employee name from searchbar 
+     * @param {*} searchKeyword
+     * @param {*} data
+     * @param {*} arg
+     * @returns
+     * @memberof ClientComponent
+     */
+    filerSearch(searchKeyword, data, arg) {
+        return data.filter(itm => new RegExp(searchKeyword, 'i').test(itm[arg]));
     }
 
     /**
@@ -372,11 +382,10 @@ export class ClientComponent implements OnInit {
      * @memberof ClientComponent
      */
     changeDetails(text: any) {
-        if (text === '') {
-            this.ngOnInit();
-        } else {
-            this.filter(text);
-        }
+        this.clientList = this.clientData;
+        this.clientList = (text.length > 0) ?
+            this.filerSearch(text, this.clientList, 'NAME') :
+            this.clientList;
     }
 
     /**

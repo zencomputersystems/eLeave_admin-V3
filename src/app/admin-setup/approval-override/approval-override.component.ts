@@ -91,6 +91,13 @@ export class ApprovalOverrideComponent implements OnInit {
     public pendingList: any = [];
 
     /**
+     * pending list from API
+     * @type {*}
+     * @memberof ApprovalOverrideComponent
+     */
+    public pendingData: any = [];
+
+    /**
      * approval-override history data
      * @type {*}
      * @memberof ApprovalOverrideComponent
@@ -138,24 +145,37 @@ export class ApprovalOverrideComponent implements OnInit {
             let roleDetails = await this.roleApi.get_role_details_profile(this.userProfile.roleId).toPromise();
             this.roleDetails = roleDetails;
             let pending = await this.approvalOverrideAPI.get_approval_override_list().toPromise();
-            this.pendingList = pending;
+            this.pendingData = pending;
             if (this.roleDetails.property.allowLeaveManagement.allowApprovalOverride.value && this.roleDetails.property.allowLeaveManagement.allowApprovalOverride.level === 'Department') {
                 let filterDepartment = [];
-                this.pendingList.forEach(item => {
+                this.pendingData.forEach(item => {
                     if (this.userProfile.employeeDepartment === item.departmentName) {
                         filterDepartment.push(item);
                     }
                 });
-                this.pendingList = filterDepartment;
+                this.pendingData = filterDepartment;
             }
             this.innerSpinner = false;
-            for (let i = 0; i < this.pendingList.length; i++) {
-                this.pendingList[i]["isChecked"] = false;
+            for (let i = 0; i < this.pendingData.length; i++) {
+                this.pendingData[i]["isChecked"] = false;
                 this.displayCheckbox.push(false);
             }
+            this.changeDetails('');
         } catch (error) {
             this.innerSpinner = false;
         }
+    }
+
+    /**
+     * filter employee name from searchbar 
+     * @param {*} searchKeyword
+     * @param {*} data
+     * @param {*} arg
+     * @returns
+     * @memberof ApprovalOverrideComponent
+     */
+    filerSearch(searchKeyword, data, arg) {
+        return data.filter(itm => new RegExp(searchKeyword, 'i').test(itm[arg]));
     }
 
     /**
@@ -164,37 +184,10 @@ export class ApprovalOverrideComponent implements OnInit {
      * @memberof ApprovalOverrideComponent
      */
     changeDetails(text: any) {
-        this.innerSpinner = true;
-        if (text === '') {
-            this.ngOnInit();
-        } else {
-            this.filter(text);
-        }
-    }
-
-    /**
-     * Filter text key in from searchbar 
-     * @param {*} text
-     * @memberof ApprovalOverrideComponent
-     */
-    async filter(text: any) {
-        if (text && text.trim() != '') {
-            let username = this.pendingList.filter((user: any) => {
-                return (user.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
-            })
-            let departmentName = this.pendingList.filter((department: any) => {
-                if (department.departmentName != undefined) {
-                    return (department.departmentName.toLowerCase().indexOf(text.toLowerCase()) > -1);
-                }
-            })
-            let companyName = this.pendingList.filter((company: any) => {
-                if (company.companyName != undefined) {
-                    return (company.companyName.toLowerCase().indexOf(text.toLowerCase()) > -1)
-                }
-            })
-            this.innerSpinner = false;
-            this.pendingList = require('lodash').uniqBy(username.concat(departmentName).concat(companyName), 'leaveTransactionId');
-        }
+        this.pendingList = this.pendingData;
+        this.pendingList = (text.length > 0) ?
+            this.filerSearch(text, this.pendingList, 'employeeName') :
+            this.pendingList;
     }
 
     /**
@@ -207,7 +200,7 @@ export class ApprovalOverrideComponent implements OnInit {
             if (value.value === '') {
                 this.innerSpinner = true;
                 this.approvalOverrideAPI.get_approval_override_list().subscribe(pending => {
-                    this.pendingList = pending;
+                    this.pendingData = pending;
                     this.innerSpinner = false;
                     this.getPendingNewList(statusName);
                 });
@@ -223,10 +216,10 @@ export class ApprovalOverrideComponent implements OnInit {
      * @memberof ApprovalOverrideComponent
      */
     getPendingNewList(statusName: string) {
-        let statusList = this.pendingList.filter((status: any) => {
-            return (status.status.toLowerCase().indexOf(statusName.toLowerCase()) > -1)
-        })
-        this.pendingList = statusList;
+        this.pendingList = this.pendingData;
+        this.pendingList = (statusName.length > 0) ?
+            this.filerSearch(statusName, this.pendingList, 'status') :
+            this.pendingList;
     }
 
     /**
@@ -249,7 +242,7 @@ export class ApprovalOverrideComponent implements OnInit {
     mainEvent() {
         this.displayCheckbox.splice(0, this.displayCheckbox.length);
         setTimeout(() => {
-            this.pendingList.forEach(item => {
+            this.pendingData.forEach(item => {
                 item.isChecked = this.mainCheckbox;
                 if (item.isChecked) {
                     this.displayCheckbox.push(true);
@@ -266,9 +259,9 @@ export class ApprovalOverrideComponent implements OnInit {
      * @memberof ApprovalOverrideComponent
      */
     subEvent() {
-        const total = this.pendingList.length;
+        const total = this.pendingData.length;
         let checkedItem = 0;
-        this.pendingList.map(item => {
+        this.pendingData.map(item => {
             if (item.isChecked) {
                 checkedItem++;
                 this.displayCheckbox.push(true);
@@ -297,12 +290,12 @@ export class ApprovalOverrideComponent implements OnInit {
     mouseEvent(value: boolean, index: number, isChecked: boolean) {
         if (this.mainCheckbox || this.indeterminate) {
             this.displayCheckbox = [];
-            this.displayCheckbox.push(...Array(this.pendingList.length).fill(true));
+            this.displayCheckbox.push(...Array(this.pendingData.length).fill(true));
         } else if (value && !isChecked && !this.indeterminate && !this.mainCheckbox) {
             this.displayCheckbox.splice(index, 1, true);
         } else {
             this.displayCheckbox.splice(0, this.displayCheckbox.length);
-            this.displayCheckbox.push(...Array(this.pendingList.length).fill(false));
+            this.displayCheckbox.push(...Array(this.pendingData.length).fill(false));
         }
     }
 
@@ -324,9 +317,9 @@ export class ApprovalOverrideComponent implements OnInit {
      */
     patchStatus() {
         this.showSmallSpinner = true;
-        this.pendingList.forEach((element, i) => {
+        this.pendingData.forEach((element, i) => {
             if (element.isChecked) {
-                this.leaveTransactionGUID.push(this.pendingList[i].leaveTransactionId);
+                this.leaveTransactionGUID.push(this.pendingData[i].leaveTransactionId);
             }
         });
         const body = {
