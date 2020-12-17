@@ -607,8 +607,8 @@
                                 <ion-item-group
                                     style="display: flex; flex:2; justify-content: flex-end; min-width: 170px;">
                                     <ion-searchbar style="display: contents; height: 40px;
-                                        margin-top: 4px; " placeholder="Filter by Name or ID"
-                                        (ionChange)="changeDetails($event)">
+                                        margin-top: 4px; " placeholder="Filter by Employee Name"
+                                        (ionChange)="changeDetails($event.srcElement.value)">
                                     </ion-searchbar>
                                     <!-- <ion-button fill="clear" class="filter-search-button">
                                         <div style="width: 17px;height: 17px;fill: #a5a4bf;opacity: 0.8;cursor: pointer;" 

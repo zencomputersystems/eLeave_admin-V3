@@ -53,6 +53,13 @@ export class EmployeeSetupComponent implements OnInit {
     public list: any;
 
     /**
+     * user list from API
+     * @type {*}
+     * @memberof EmployeeSetupComponent
+     */
+    public listFromUser: any;
+
+    /**
      * Show spinner during loading
      * @type {boolean}
      * @memberof EmployeeSetupComponent
@@ -763,7 +770,7 @@ export class EmployeeSetupComponent implements OnInit {
         this.emittedRole = roleDetails;
         let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
         this.showSpinner = false;
-        this.list = data;
+        this.listFromUser = data;
         this.sortName(true, -1, 1);
         this.hideEditmode = false;
         if (this.emittedRole.property.allowProfileManagement.allowEditProfile.value === false) {
@@ -771,26 +778,26 @@ export class EmployeeSetupComponent implements OnInit {
         }
         if (this.emittedRole.property.allowProfileManagement.allowViewProfile.value && this.emittedRole.property.allowProfileManagement.allowViewProfile.level == 'Department') {
             let filterDepartment = [];
-            this.list.forEach(item => {
+            this.listFromUser.forEach(item => {
                 if (this.userProfile.employeeDepartment === item.department) {
                     filterDepartment.push(item);
                 }
             });
-            this.list = filterDepartment;
+            this.listFromUser = filterDepartment;
         }
         this.config = {
             itemsPerPage: Number(this.itemsPerPage),
             currentPage: pageNumber,
-            totalItems: this.list.length
+            totalItems: this.listFromUser.length
         }
         if (isOff) {
             let index = this.clickedIndex - ((this.config.currentPage - 1) * Number(this.itemsPerPage));
-            this.getUserId(this.list[this.clickedIndex], index, this.config.currentPage);
+            this.getUserId(this.listFromUser[this.clickedIndex], index, this.config.currentPage);
         } else {
             this.clickedIndex = indexes;
-            this.getUserId(this.list[this.clickedIndex], indexes, pageNumber);
+            this.getUserId(this.listFromUser[this.clickedIndex], indexes, pageNumber);
         }
-        let dataList = this.list;
+        let dataList = this.listFromUser;
         dataList.forEach(element => {
             this.options.push({ "name": element.employeeName, "userId": element.userId });
         });
@@ -798,6 +805,7 @@ export class EmployeeSetupComponent implements OnInit {
             startWith(''),
             map(value => this._filter(value))
         );
+        this.changeDetails('');
     }
 
     private _filter(value: string): string[] {
@@ -1048,9 +1056,9 @@ export class EmployeeSetupComponent implements OnInit {
                         "calendarId": this.calendarValue
                     }).toPromise();
                     let list = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
-                    this.list = list;
+                    this.listFromUser = list;
                     let index = this.clickedIndex - ((this.config.currentPage - 1) * Number(this.itemsPerPage));
-                    this.getUserId(this.list[this.clickedIndex], index, this.config.currentPage);
+                    this.getUserId(this.listFromUser[this.clickedIndex], index, this.config.currentPage);
                     this.mode = 'ON';
                     this.modeValue = true;
                     this._sharedService.leaveApi.openSnackBar(name + ' become Active', true);
@@ -1077,7 +1085,7 @@ export class EmployeeSetupComponent implements OnInit {
                         this.employeeStatus = 'Inactive';
                         this.status = false;
                         let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
-                        this.list = data;
+                        this.listFromUser = data;
                         this._sharedService.leaveApi.openSnackBar(name + ' become Inactive', true);
                     }
                 }
@@ -1244,25 +1252,6 @@ export class EmployeeSetupComponent implements OnInit {
     }
 
     /**
-     * Filter text key in from searchbar 
-     * @param {*} text
-     * @memberof EmployeeSetupComponent
-     */
-    filter(text: any) {
-        if (text && text.trim() != '') {
-            let fullname = this.list.filter((list: any) => {
-                return (list.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
-            })
-            let id = this.list.filter((item: any) => {
-                if (item.staffNumber != undefined) {
-                    return (item.staffNumber.indexOf(text) > -1);
-                }
-            })
-            this.list = require('lodash').uniqBy(fullname.concat(id), 'userId');
-        }
-    }
-
-    /**
      * Sort Name column after clicked arrow up or down icon
      * @param {boolean} booleanValue
      * @param {number} ascValue
@@ -1271,8 +1260,8 @@ export class EmployeeSetupComponent implements OnInit {
      */
     sortName(booleanValue: boolean, ascValue: number, desValue: number) {
         this.arrowDownName = booleanValue;
-        this.list = this.list.slice(0);
-        this.list.sort(function (a, b) {
+        this.listFromUser = this.listFromUser.slice(0);
+        this.listFromUser.sort(function (a, b) {
             var x = a.employeeName.toLowerCase();
             var y = b.employeeName.toLowerCase();
             return x < y ? ascValue : x > y ? desValue : 0;
@@ -1288,8 +1277,8 @@ export class EmployeeSetupComponent implements OnInit {
      */
     sortId(value: boolean, asc: number, des: number) {
         this.arrowDownId = value;
-        this.list = this.list.slice(0);
-        this.list.sort(function (a, b) {
+        this.listFromUser = this.listFromUser.slice(0);
+        this.listFromUser.sort(function (a, b) {
             var x = a.staffNumber;
             var y = b.staffNumber;
             return x < y ? asc : x > y ? des : 0;
@@ -1297,17 +1286,30 @@ export class EmployeeSetupComponent implements OnInit {
     }
 
     /**
+     * filter employee name from searchbar 
+     * @param {*} searchKeyword
+     * @param {*} data
+     * @param {*} arg
+     * @returns
+     * @memberof ApplyOnBehalfComponent
+     */
+    filerSearch(searchKeyword, data, arg) {
+        return data.filter(itm => new RegExp(searchKeyword, 'i').test(itm[arg]));
+    }
+
+    /**
      * To filter entered text
      * @param {*} text
-     * @memberof EmployeeSetupComponent
+     * @memberof ApplyOnBehalfComponent
      */
     changeDetails(text: any) {
-        if (text.srcElement.value === '') {
-            this.endPoint(1, 0);
+        this.list = this.listFromUser;
+        this.list = (text.length > 0) ?
+            this.filerSearch(text, this.list, 'employeeName') :
+            this.list;
+        if (text === '') {
             this.active = false;
             this.inactive = false;
-        } else {
-            this.filter(text.srcElement.value);
         }
     }
 
@@ -1349,19 +1351,19 @@ export class EmployeeSetupComponent implements OnInit {
      */
     async filterValue() {
         let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
-        this.list = data;
+        this.listFromUser = data;
 
         if (this.active == true) {
-            this.statusFiltered('Active', this.list);
+            this.statusFiltered('Active', this.listFromUser);
         }
         if (this.inactive == true) {
-            this.statusFiltered('Inactive', this.list);
+            this.statusFiltered('Inactive', this.listFromUser);
         }
         for (let i = 0; i < this._selectedCompany.length; i++) {
-            this.companyFiltered(this._selectedCompany[i], this.list);
+            this.companyFiltered(this._selectedCompany[i], this.listFromUser);
         }
         for (let i = 0; i < this._selectedDepartment.length; i++) {
-            this.departmentFiltered(this._selectedDepartment[i], this.list);
+            this.departmentFiltered(this._selectedDepartment[i], this.listFromUser);
         }
     }
 
@@ -1372,7 +1374,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     statusFiltered(text: string, list) {
-        this.list = list.filter((item: any) => {
+        this.listFromUser = list.filter((item: any) => {
             return (item.status.indexOf(text) > -1);
         })
     }
@@ -1384,7 +1386,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     companyFiltered(companyId: string, items: any) {
-        this.list = items.filter((item: any) => {
+        this.listFromUser = items.filter((item: any) => {
             return (item.companyId.toUpperCase().indexOf(companyId.toUpperCase()) > -1);
         })
     }
@@ -1396,7 +1398,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     departmentFiltered(departmentName: string, list) {
-        this.list = list.filter((item: any) => {
+        this.listFromUser = list.filter((item: any) => {
             return (item.department.toLowerCase().indexOf(departmentName.toLowerCase()) > -1);
         })
     }

@@ -96,6 +96,8 @@ export class NotificationRuleComponent implements OnInit {
 
     public employeeList: any;
 
+    public employeeData: any;
+
     /**
      * header checkbox checked/unchecked
      * @type {boolean}
@@ -167,12 +169,13 @@ export class NotificationRuleComponent implements OnInit {
     ngOnInit() {
         this.leaveAPI.get_company_list().subscribe(list => this.companyItems = list);
         this.leaveEntitlementAPI.get_user_list().subscribe(list => {
-            this.employeeList = list;
-            this.employeeList.sort(function (a, b) {
+            this.employeeData = list;
+            this.employeeData.sort(function (a, b) {
                 var x = a.employeeName.toLowerCase();
                 var y = b.employeeName.toLowerCase();
                 return x < y ? -1 : x > y ? 1 : 0;
             });
+            this.changeDetails('');
         })
     }
 
@@ -313,12 +316,12 @@ export class NotificationRuleComponent implements OnInit {
     hoverInOut(i: number, mouseIn: boolean, isChecked: boolean) {
         if (this.headCheckbox || this.indeterminateVal) {
             this.showCheckBox = [];
-            this.showCheckBox.push(...Array(this.employeeList.length).fill(true));
+            this.showCheckBox.push(...Array(this.employeeData.length).fill(true));
         } else if (mouseIn && !isChecked && !this.indeterminateVal && !this.headCheckbox) {
             this.showCheckBox.splice(i, 1, true);
         } else {
             this.showCheckBox.splice(0, this.showCheckBox.length);
-            this.showCheckBox.push(...Array(this.employeeList.length).fill(false));
+            this.showCheckBox.push(...Array(this.employeeData.length).fill(false));
         }
     }
 
@@ -329,7 +332,7 @@ export class NotificationRuleComponent implements OnInit {
     headerCheckbox() {
         this.showCheckBox.splice(0, this.showCheckBox.length);
         setTimeout(() => {
-            this.employeeList.forEach(item => {
+            this.employeeData.forEach(item => {
                 item.isChecked = this.headCheckbox;
                 if (item.isChecked) {
                     this.showCheckBox.push(true);
@@ -346,9 +349,9 @@ export class NotificationRuleComponent implements OnInit {
      * @memberof NotificationRuleComponent
      */
     contentCheckbox() {
-        const totalLength = this.employeeList.length;
+        const totalLength = this.employeeData.length;
         let checkedValue = 0;
-        this.employeeList.map(item => {
+        this.employeeData.map(item => {
             if (item.isChecked) {
                 checkedValue++;
                 this.showCheckBox.push(true);
@@ -385,21 +388,46 @@ export class NotificationRuleComponent implements OnInit {
      * @param {*} text
      * @memberof NotificationRuleComponent
      */
-    async filter(text: any) {
-        if (text && text.trim() != '') {
-            let name = this.employeeList.filter((item: any) => {
-                return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
-            })
-            let email = this.employeeList.filter((data: any) => {
-                return (data.email.toLowerCase().indexOf(text.toLowerCase()) > -1);
-            })
-            let id = this.employeeList.filter((list: any) => {
-                if (list.staffNumber != undefined) {
-                    return (list.staffNumber.indexOf(text) > -1)
-                }
-            })
-            this.employeeList = require('lodash').uniqBy(name.concat(id).concat(email), 'id');
-        }
+    // async filter(text: any) {
+    //     if (text && text.trim() != '') {
+    //         let name = this.employeeList.filter((item: any) => {
+    //             return (item.employeeName.toLowerCase().indexOf(text.toLowerCase()) > -1);
+    //         })
+    //         let email = this.employeeList.filter((data: any) => {
+    //             return (data.email.toLowerCase().indexOf(text.toLowerCase()) > -1);
+    //         })
+    //         let id = this.employeeList.filter((list: any) => {
+    //             if (list.staffNumber != undefined) {
+    //                 return (list.staffNumber.indexOf(text) > -1)
+    //             }
+    //         })
+    //         this.employeeList = require('lodash').uniqBy(name.concat(id).concat(email), 'id');
+    //     }
+    // }
+
+    // /**
+    //  * To filter entered text
+    //  * @param {*} text
+    //  * @memberof NotificationRuleComponent
+    //  */
+    // changeDetails(text: any) {
+    //     if (text === '') {
+    //         this.ngOnInit();
+    //     } else {
+    //         this.filter(text);
+    //     }
+    // }
+
+    /**
+     * filter employee name from searchbar 
+     * @param {*} searchKeyword
+     * @param {*} data
+     * @param {*} arg
+     * @returns
+     * @memberof NotificationRuleComponent
+     */
+    filerSearch(searchKeyword, data, arg) {
+        return data.filter(itm => new RegExp(searchKeyword, 'i').test(itm[arg]));
     }
 
     /**
@@ -408,11 +436,10 @@ export class NotificationRuleComponent implements OnInit {
      * @memberof NotificationRuleComponent
      */
     changeDetails(text: any) {
-        if (text === '') {
-            this.ngOnInit();
-        } else {
-            this.filter(text);
-        }
+        this.employeeList = this.employeeData;
+        this.employeeList = (text.length > 0) ?
+            this.filerSearch(text, this.employeeList, 'employeeName') :
+            this.employeeList;
     }
 
     createNameList() {
@@ -425,8 +452,9 @@ export class NotificationRuleComponent implements OnInit {
     }
 
     combineEvent() {
-        this.employeeList = this.menuNewEmail.concat(this.employeeList);
+        this.employeeData = this.menuNewEmail.concat(this.employeeData);
         this.menuNewEmail = [{ "email": '', "employeeName": '' }];
+        this.changeDetails('');
     }
 
     /**
@@ -437,9 +465,9 @@ export class NotificationRuleComponent implements OnInit {
         this.checkedUserList();
         this.showSmallSpinner = true;
         const body = [];
-        for (let i = 0; i < this.employeeList.length; i++) {
-            if (this.employeeList[i].isChecked) {
-                body.push(this.employeeList[i].email);
+        for (let i = 0; i < this.employeeData.length; i++) {
+            if (this.employeeData[i].isChecked) {
+                body.push(this.employeeData[i].email);
             }
         }
         for (let j = 0; j < this._selected_User.length; j++) {
@@ -459,7 +487,7 @@ export class NotificationRuleComponent implements OnInit {
                 this.filteredUser.forEach(element => {
                     element.isChecked = false;
                 });
-                this.employeeList.forEach(element => {
+                this.employeeData.forEach(element => {
                     element.isChecked = false;
                 });
 
@@ -475,7 +503,7 @@ export class NotificationRuleComponent implements OnInit {
                 this.filteredUser.forEach(element => {
                     element.isChecked = false;
                 });
-                this.employeeList.forEach(element => {
+                this.employeeData.forEach(element => {
                     element.isChecked = false;
                 });
                 this.checkEnableDisableButton();

@@ -80,6 +80,13 @@ export class ImportAttendanceComponent implements OnInit {
     public logList: any;
 
     /**
+     * log data from API
+     * @type {*}
+     * @memberof ImportAttendanceComponent
+     */
+    public data:any;
+
+    /**
      * Return value of filename from imported document
      * @readonly
      * @type {string}
@@ -104,10 +111,12 @@ export class ImportAttendanceComponent implements OnInit {
             file: ''
         });
         this.importAttendanceApi.get_log().subscribe(list => {
-            this.logList = list;
+            this.data = list;
             this.showSpinner = false;
+            this.changeDetails('');
         }, error => {
-            this.logList = [];
+            this.data = [];
+            this.changeDetails('');
             this.showSpinner = false;
         })
     }
@@ -221,17 +230,15 @@ export class ImportAttendanceComponent implements OnInit {
     }
 
     /**
-     *  filter csv filename
-     * @param {*} text
+     * filter file name from searchbar 
+     * @param {*} searchKeyword
+     * @param {*} data
+     * @param {*} arg
+     * @returns
      * @memberof ImportAttendanceComponent
      */
-    async filter(text: any) {
-        if (text && text.trim() != '') {
-            let name = this.logList.filter((item: any) => {
-                return (item.FILENAME.toLowerCase().indexOf(text.toLowerCase()) > -1);
-            })
-            this.logList = name;
-        }
+    filerSearch(searchKeyword, data, arg) {
+        return data.filter(itm => new RegExp(searchKeyword, 'i').test(itm[arg]));
     }
 
     /**
@@ -240,10 +247,9 @@ export class ImportAttendanceComponent implements OnInit {
      * @memberof ImportAttendanceComponent
      */
     changeDetails(text: any) {
-        if (text === '') {
-            this.ngOnInit();
-        } else {
-            this.filter(text);
-        }
+        this.logList = this.data;
+        this.logList = (text.length > 0) ?
+            this.filerSearch(text, this.logList, 'FILENAME') :
+            this.logList;
     }
 }

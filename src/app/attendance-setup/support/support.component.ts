@@ -24,6 +24,8 @@ export class SupportComponent implements OnInit {
      */
     public supportList: any;
 
+    public data: any;
+
     /**
      * copy of all support message for this tenant
      * @type {*}
@@ -166,22 +168,23 @@ export class SupportComponent implements OnInit {
                 this.requestLength = data.request.length;
                 let value = data.request.concat(data.suggestion);
                 value.sort((a, b) => new Date(b.CREATION_TS).getTime() - new Date(a.CREATION_TS).getTime());
-                this.supportList = value;
-                this.copySupportList = this.supportList;
-                for (let i = 0; i < this.supportList.length; i++) {
-                    if (this.supportList[i].STATUS != undefined) {
-                        if (this.supportList[i].STATUS === 'pending') {
+                this.data = value;
+                this.copySupportList = this.data;
+                for (let i = 0; i < this.data.length; i++) {
+                    if (this.data[i].STATUS != undefined) {
+                        if (this.data[i].STATUS === 'pending') {
                             this.pendingVal++
                         }
-                        if (this.supportList[i].STATUS === 'approved') {
+                        if (this.data[i].STATUS === 'approved') {
                             this.approvedVal++
                         }
-                        if (this.supportList[i].STATUS === 'rejected') {
+                        if (this.data[i].STATUS === 'rejected') {
                             this.rejectedVal++
                         }
                     }
                 }
                 this.showSpinner = false;
+                this.changeDetails('');
             })
         ).subscribe(list => { })
         this.apiService.get_profile_pic('all').subscribe(data => {
@@ -195,72 +198,73 @@ export class SupportComponent implements OnInit {
      * @memberof SupportComponent
      */
     filterSupportList(type: string) {
-        this.supportList = this.copySupportList;
+        this.data = this.copySupportList;
         switch (type) {
             case "all":
-                this.supportList = this.copySupportList;
+                this.data = this.copySupportList;
                 break;
 
             case "request":
                 this.filteredSupport = [];
-                for (let i = 0; i < this.supportList.length; i++) {
-                    if (this.supportList[i].REQUEST_TYPE != 'suggestions') {
-                        this.filteredSupport.push(this.supportList[i]);
+                for (let i = 0; i < this.data.length; i++) {
+                    if (this.data[i].REQUEST_TYPE != 'suggestions') {
+                        this.filteredSupport.push(this.data[i]);
                     }
                 }
-                this.supportList = this.filteredSupport;
+                this.data = this.filteredSupport;
                 break;
 
             case "suggestion":
                 this.filteredSupport = [];
-                for (let i = 0; i < this.supportList.length; i++) {
-                    if (this.supportList[i].REQUEST_TYPE == 'suggestions') {
-                        this.filteredSupport.push(this.supportList[i]);
+                for (let i = 0; i < this.data.length; i++) {
+                    if (this.data[i].REQUEST_TYPE == 'suggestions') {
+                        this.filteredSupport.push(this.data[i]);
                     }
                 }
-                this.supportList = this.filteredSupport;
+                this.data = this.filteredSupport;
                 break;
 
             case "pending":
                 this.filteredSupport = [];
-                for (let i = 0; i < this.supportList.length; i++) {
-                    if (this.supportList[i].STATUS === 'pending') {
-                        this.filteredSupport.push(this.supportList[i]);
+                for (let i = 0; i < this.data.length; i++) {
+                    if (this.data[i].STATUS === 'pending') {
+                        this.filteredSupport.push(this.data[i]);
                     }
                 }
-                this.supportList = this.filteredSupport;
+                this.data = this.filteredSupport;
                 break;
 
             case "approve":
                 this.filteredSupport = [];
-                for (let i = 0; i < this.supportList.length; i++) {
-                    if (this.supportList[i].STATUS === 'approved') {
-                        this.filteredSupport.push(this.supportList[i]);
+                for (let i = 0; i < this.data.length; i++) {
+                    if (this.data[i].STATUS === 'approved') {
+                        this.filteredSupport.push(this.data[i]);
                     }
                 }
-                this.supportList = this.filteredSupport;
+                this.data = this.filteredSupport;
                 break;
 
             case "reject":
                 this.filteredSupport = [];
-                for (let i = 0; i < this.supportList.length; i++) {
-                    if (this.supportList[i].STATUS === 'rejected') {
-                        this.filteredSupport.push(this.supportList[i]);
+                for (let i = 0; i < this.data.length; i++) {
+                    if (this.data[i].STATUS === 'rejected') {
+                        this.filteredSupport.push(this.data[i]);
                     }
                 }
-                this.supportList = this.filteredSupport;
+                this.data = this.filteredSupport;
                 break;
 
             case "allSuggestion":
                 this.filteredSupport = [];
-                for (let i = 0; i < this.supportList.length; i++) {
-                    if (this.supportList[i].REQUEST_TYPE == 'suggestions') {
-                        this.filteredSupport.push(this.supportList[i]);
+                for (let i = 0; i < this.data.length; i++) {
+                    if (this.data[i].REQUEST_TYPE == 'suggestions') {
+                        this.filteredSupport.push(this.data[i]);
                     }
                 }
-                this.supportList = this.filteredSupport;
+                this.data = this.filteredSupport;
                 break;
         }
+        this.changeDetails('');
     }
 
     /**
@@ -290,25 +294,15 @@ export class SupportComponent implements OnInit {
     }
 
     /**
-     * filter the keyup text from searchbar
-     * @param {*} text
+     * filter employee name from searchbar 
+     * @param {*} searchKeyword
+     * @param {*} data
+     * @param {*} arg
+     * @returns
      * @memberof SupportComponent
      */
-    async filter(text: any) {
-        if (text && text.trim() != '') {
-            let description = this.supportList.filter((items: any) => {
-                if (items.DESCRIPTION != undefined) {
-                    return (items.DESCRIPTION.toLowerCase().indexOf(text.toLowerCase()) > -1)
-                }
-            })
-
-            let name = this.supportList.filter((items: any) => {
-                if (items.FULLNAME != undefined) {
-                    return (items.FULLNAME.toLowerCase().indexOf(text.toLowerCase()) > -1)
-                }
-            })
-            this.supportList = require('lodash').uniqBy(name.concat(description), 'SUPPORT_GUID');
-        }
+    filerSearch(searchKeyword, data, arg) {
+        return data.filter(itm => new RegExp(searchKeyword, 'i').test(itm[arg]));
     }
 
     /**
@@ -316,12 +310,11 @@ export class SupportComponent implements OnInit {
      * @param {*} text
      * @memberof SupportComponent
      */
-    changeDetails(value: any) {
-        if (value === '') {
-            this.ngOnInit();
-        } else {
-            this.filter(value);
-        }
+    changeDetails(text: any) {
+        this.supportList = this.data;
+        this.supportList = (text.length > 0) ?
+            this.filerSearch(text, this.supportList, 'FULLNAME') :
+            this.supportList;
     }
 
     /**
