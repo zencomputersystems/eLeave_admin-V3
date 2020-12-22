@@ -197,7 +197,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @type {number}
      * @memberof EmployeeSetupComponent
      */
-    public clickedIndex: number = 0;
+    public clickedIndex: string;
 
     /**
      * calendar guid
@@ -706,7 +706,7 @@ export class EmployeeSetupComponent implements OnInit {
         this.attendanceList = data;
         let entitlement = await this._sharedService.leaveApi.get_leavetype_entitlement().toPromise();
         this.entitlementList = entitlement;
-        this.endPoint(1, 0);
+        this.endPoint(1);
         let defaultProfileList = await this.workingHourAPI.get_default_profile().toPromise();
         let roleData = await this.roleAPI.get_role_profile_list().toPromise();
         this.roleList = roleData;
@@ -762,7 +762,7 @@ export class EmployeeSetupComponent implements OnInit {
      * Get user profile list from API
      * @memberof EmployeeSetupComponent
      */
-    async endPoint(pageNumber: number, indexes: number, isOff?: boolean) {
+    async endPoint(pageNumber: number, isOff?: boolean) {
         this.options = [];
         let personal = await this.inviteAPI.apiService.get_personal_user_profile_details().toPromise();
         this.userProfile = personal;
@@ -791,11 +791,14 @@ export class EmployeeSetupComponent implements OnInit {
             totalItems: this.listFromUser.length
         }
         if (isOff) {
-            let index = this.clickedIndex - ((this.config.currentPage - 1) * Number(this.itemsPerPage));
-            this.getUserId(this.listFromUser[this.clickedIndex], index, this.config.currentPage);
+            // let index = this.clickedIndex - ((this.config.currentPage - 1) * Number(this.itemsPerPage));
+            let index = this.listFromUser.findIndex(x => x.userId === this.clickedIndex);
+            this.getUserId(this.listFromUser[index]);
         } else {
-            this.clickedIndex = indexes;
-            this.getUserId(this.listFromUser[this.clickedIndex], indexes, pageNumber);
+            // this.clickedIndex = indexes;
+            this.clickedIndex = this.listFromUser[0].userId;
+            let index = this.listFromUser.findIndex(x => x.userId === this.clickedIndex);
+            this.getUserId(this.listFromUser[index]);
         }
         let dataList = this.listFromUser;
         dataList.forEach(element => {
@@ -834,8 +837,12 @@ export class EmployeeSetupComponent implements OnInit {
      * @param {number} p
      * @memberof EmployeeSetupComponent
      */
-    getUserId(item: any, index: number, p: number) {
-        this.clickedIndex = ((p - 1) * Number(this.itemsPerPage)) + index;
+    getUserId(item: any) {
+        // this.clickedIndex = ((p - 1) * Number(this.itemsPerPage)) + index;
+        this.clickedIndex = item.userId;
+        let index = (this.listFromUser.findIndex(x => x.userId === this.clickedIndex)) + 1;
+        let divideOfTen = index / 10;
+        this.config.currentPage = Math.ceil(divideOfTen);
         this.employeeStatus = item.status;
         if (this.employeeStatus == 'Active') {
             this.status = true;
@@ -1008,7 +1015,7 @@ export class EmployeeSetupComponent implements OnInit {
             if (this.isBlurRole === true) {
                 await this.assignRole();
             }
-            await this.endPoint(this.config.currentPage, this.clickedIndex, true);
+            await this.endPoint(this.config.currentPage, true);
             if (this.open === true) {
                 this._sharedService.leaveApi.snackBarRef.afterDismissed().subscribe(info => {
                     this._sharedService.leaveApi.openSnackBar('Edit mode disabled. Good job!', true);
@@ -1057,8 +1064,9 @@ export class EmployeeSetupComponent implements OnInit {
                     }).toPromise();
                     let list = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
                     this.listFromUser = list;
-                    let index = this.clickedIndex - ((this.config.currentPage - 1) * Number(this.itemsPerPage));
-                    this.getUserId(this.listFromUser[this.clickedIndex], index, this.config.currentPage);
+                    // let index = this.clickedIndex - ((this.config.currentPage - 1) * Number(this.itemsPerPage));
+                    let index = this.listFromUser.findIndex(x => x.userId === this.clickedIndex);
+                    this.getUserId(this.listFromUser[index]);
                     this.mode = 'ON';
                     this.modeValue = true;
                     this._sharedService.leaveApi.openSnackBar(name + ' become Active', true);
@@ -1422,7 +1430,7 @@ export class EmployeeSetupComponent implements OnInit {
             if (result[0] != undefined) {
                 if (result[0].USER_GUID != undefined) {
                     this._sharedService.leaveApi.openSnackBar('Selected employee profile was deleted', true);
-                    this.endPoint(1, 0);
+                    this.endPoint(1);
                 }
             } else {
                 this._sharedService.leaveApi.openSnackBar('Failed to delete employee profile', false);

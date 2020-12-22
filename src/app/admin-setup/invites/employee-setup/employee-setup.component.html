@@ -28,10 +28,10 @@
             <div>
                 <app-add-one-employee *ngIf="individualButton === true" [individual]="individualButton === true"
                     [disabledEditMode]="false" (closeMenu)="inviteAPI.menu.close('addNewEmployeeDetails');
-                    endPoint(1, 0);">
+                    endPoint(1);">
                 </app-add-one-employee>
                 <app-bulk-import *ngIf="bulkButton === true" (closeMenu)="inviteAPI.menu.close('addNewEmployeeDetails');
-                endPoint(1, 0);"></app-bulk-import>
+                endPoint(1);"></app-bulk-import>
             </div>
         </div>
     </ion-content>
@@ -685,7 +685,7 @@
                                         <ion-col class="colOfLeave">
                                             <p class="textHover" (click)="getUserId(item, i, config.currentPage)"
                                                 [ngClass]="{
-                                                'textColor': clickedIndex === ((config.currentPage-1)*itemsPerPage)+i , 'oriColor': clickedIndex !== ((config.currentPage-1)*itemsPerPage)+i}"
+                                                'textColor': clickedIndex === item.userId , 'oriColor': clickedIndex !== item.userId}"
                                                 style="font-weight: bold; font-size: 12px;cursor: pointer;white-space: pre-line;">
                                                 {{item.employeeName}}</p>
                                             <p style="color: #808495;font-size:11px;white-space: pre-line;">
@@ -725,7 +725,7 @@
                                         <ion-col class="colOfLeave" style="flex: 4;">
                                             <p class="textHover" (click)="getUserId(item, i, config.currentPage)"
                                                 [ngClass]="{
-                                                'textColor': clickedIndex === ((config.currentPage-1)*itemsPerPage)+i , 'oriColor': clickedIndex !== ((config.currentPage-1)*itemsPerPage)+i}"
+                                                'textColor': clickedIndex === item.userId , 'oriColor': clickedIndex !== item.userId}"
                                                 style="font-weight: bold; font-size: 12px;cursor: pointer;white-space: pre-line;">
                                                 {{item.employeeName}}</p>
                                             <p style="color: #808495;font-size:11px;white-space: pre-line;">
