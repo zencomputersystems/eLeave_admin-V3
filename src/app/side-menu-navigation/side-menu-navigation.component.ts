@@ -344,6 +344,9 @@ export class SideMenuNavigationComponent implements OnInit {
       this.appPages[2].show = false;
       this.appPages[13].show = false;
     }
+    if (details.property.allowProfileManagement.allowProfileAdmin.value === false) {
+      this.appPages[3].show = false;
+    }
     if (details.property.allowLeaveManagement.allowApplyOnBehalf.value === false) {
       this.appPages[5].show = false;
     }
