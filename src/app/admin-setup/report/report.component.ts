@@ -321,12 +321,6 @@ export class ReportComponent implements OnInit {
   private _selectedLeaveTypesList: string[] = [];
 
   /**
-   * set height for attendance preview table
-   * @memberof ReportComponent
-   */
-  public divHeight = [];
-
-  /**
    * set height for activity preview table 
    * @memberof ReportComponent
    */
@@ -373,27 +367,6 @@ export class ReportComponent implements OnInit {
   public roleProfileDetails: any;
 
   @HostListener("window:resize") onResize() {
-    if (this.selects === 'attendance') {
-      setTimeout(() => {
-        this.divHeight = [];
-        for (let i = 0; i < this.arrayDetails.length; i++) {
-          let sub = [];
-          this.arrayDetails[i].attendance.forEach((element, index) => {
-            element.attendance.forEach((item, nestedIndex) => {
-              let a = document.getElementById('clockInDiv' + i + index + nestedIndex);
-              // let b = document.getElementById('clockOutDiv' + i + index + nestedIndex);
-              // if (a.offsetHeight > b.offsetHeight) {
-              sub.push(a.scrollHeight);
-              // }
-              // else {
-              //   sub.push(b.offsetHeight);
-              // }
-            });
-          });
-          this.divHeight.push(sub);
-        }
-      }, 500);
-    }
     if (this.selects === 'activity') {
       setTimeout(() => {
         this.completionH = [];
@@ -1110,26 +1083,6 @@ export class ReportComponent implements OnInit {
             }
           }
           this.arrayDetails = this.groupValue[0];
-          setTimeout(() => {
-            this.divHeight = [];
-            for (let i = 0; i < this.arrayDetails.length; i++) {
-              let sub = [];
-              this.arrayDetails[i].attendance.forEach((element, index) => {
-                element.attendance.forEach((item, nestedIndex) => {
-                  let a = document.getElementById('clockInDiv' + i + index + nestedIndex);
-                  // let b = document.getElementById('clockOutDiv' + i + index + nestedIndex);
-                  // if (a.offsetHeight > b.offsetHeight) {
-                  sub.push(a.scrollHeight);
-                  // }
-                  // else {
-                  //   sub.push(b.offsetHeight);
-                  // }
-                });
-              });
-              this.divHeight.push(sub);
-              console.log(this.divHeight)
-            }
-          }, 500);
         }, error => {
           this.showSpinner = false;
           this.leaveAPI.openSnackBar('Failed to produce report', false);

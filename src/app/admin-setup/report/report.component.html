@@ -475,8 +475,7 @@
                 none;flex:2; min-width: 180px;" color="primary"
                 [disabled]="selects == null || selectedUserId.length == 0" [matMenuTriggerFor]="menu">
                 Produce Report
-                <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="position: absolute;
-                margin-left: 60px;color: white;"></ion-spinner>
+                <ion-spinner name="lines-small" *ngIf="showSpinner" color="primary" style="color: white;"></ion-spinner>
                 <mat-icon style="position: absolute;right: 0;margin-right: 20px;">arrow_drop_down</mat-icon>
               </ion-button>
               <mat-menu #menu="matMenu" yPosition="above" xPosition="after">
@@ -2048,12 +2047,14 @@
               <div style="margin-left:5px;height: 15px;width: 15px;background-color: var(--ion-color-project);">
               </div>
               <div style="color: white;font-size: 12px;padding-left: 15px;">
-                <span> SOC No</span></div>
+                <span> SOC No</span>
+              </div>
             </ion-row>
             <ion-row style="margin-bottom: 10px;">
               <div style="margin-left:5px;height: 15px;width: 15px;background-color: var(--ion-color-contract);"></div>
               <div style="color: white;font-size: 12px;padding-left: 15px;">
-                <span> Contract No</span></div>
+                <span> Contract No</span>
+              </div>
             </ion-row>
             <ion-row style="display: flex; flex-flow: row nowrap;">
               <ion-col size="0.3" class="titleRow"
@@ -2080,19 +2081,19 @@
                 style="text-align: left;display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;min-width: 88px;">
                 Clock Out Time</ion-col>
-              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+              <ion-col size="1" style="text-align: left;display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 95px;">
                 Duration</ion-col>
-              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+              <ion-col size="1" style="text-align: left;display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 95px;">
                 Total Hours</ion-col>
-              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+              <ion-col size="1" style="text-align: left;display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 95px;">
                 Problem</ion-col>
-              <ion-col size="1" class="titleRow" style="display: -webkit-box;
+              <ion-col size="1" style="text-align: left;display: -webkit-box;
             -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;padding-bottom: 0;margin-bottom:
             5px;min-width: 95px;">
                 Source</ion-col>
@@ -2103,6 +2104,8 @@
             <!-- ngFor under this div -->
             <ng-container *ngFor="let item of arrayDetails; let i=index; let odd=odd;">
               <div style="padding: 10px;" [ngClass]="{ odd: odd }">
+
+                <!-- try new ion row 23 dec 2020 -->
                 <ion-row style="display: flex; flex-flow: row nowrap;">
                   <ion-col size="0.3" class="titleRow text" style="min-width: 26px;white-space: pre-line;">{{i + 1}}
                   </ion-col>
@@ -2111,117 +2114,78 @@
                   <ion-col size="1.5" class="text" style="text-align: left;white-space: pre-line;min-width: 175px;">
                     {{item.employeeName}}
                   </ion-col>
-                  <ion-col size="1" class="text" style="min-width: 105px;white-space: pre-line;">
-                    <div *ngFor="let value of item.attendance; let j=index">
-                      <!-- <div *ngIf="value.attendance.length === 0"
-                        [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
-                        style="width: calc( 100% + 10px );margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
-                        <p class="text">{{value.date | date:'yyyy-MM-dd'}}
-                        </p>
-                      </div> -->
-                      <!-- <ng-container *ngIf="value.attendance.length > 0"> -->
-                      <div *ngFor="let data of value.attendance; let k=index"
-                        [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
-                        style="width: calc( 100% + 10px );margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
-                        <p class="text">{{value.date | date:'yyyy-MM-dd'}}
-                        </p>
-                      </div>
-                      <!-- </ng-container> -->
-                    </div>
-
-                  </ion-col>
-                  <ion-col size="2" style=" text-align: left;min-width: 132px;white-space: pre-line;">
-                    <div *ngFor="let value of item.attendance; let j=index">
-                      <div *ngFor="let data of value.attendance; let k=index" id="clockInDiv{{i}}{{j}}{{k}}"
-                        [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
-                        style="width: calc( 100% + 10px );margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
-                        <p *ngIf="data.clock_in_time != null" class="text">
-                          {{data.clock_in_time | date:'yyyy-MM-dd  HH:mm'}}
-                        </p>
-                        <p *ngIf="data.job_type_in != null" class="text" style="display: inline-block;">
-                          {{data.job_type_in }} <span *ngIf="data.client_name!= null">({{data.client_name}})</span>
-                        </p>
-                        <ion-button *ngIf="data.project_code_in != null"
-                          style="pointer-events: none;--background: var(--ion-color-project);font-size: 10px;height: 18px;margin-top: 0;">
-                          {{data.project_code_in}}
-                        </ion-button>
-                        <ion-button *ngIf="data.contract_code_in != null"
-                          style="pointer-events: none;--background: var(--ion-color-contract);font-size: 10px;height: 18px;margin-top: 0;">
-                          {{data.contract_code_in}}
-                        </ion-button>
-                        <p *ngIf="data.address_in != null" class="text" style="width: calc(100% - 10px);">
-                          {{data.address_in }}
-                        </p>
-                        <p *ngIf="data.address_in == null && data.contract_code_in == null && data.project_code_in == null && data.job_type_in == null && data.client_name == null && data.clock_in_time == null"
-                          class="text">N/A
-                        </p>
-                      </div>
-                    </div>
-                  </ion-col>
-                  <ion-col size="2" style="min-width: 88px;white-space: pre-line;">
-                    <div *ngFor="let value of item.attendance; let j=index">
-                      <div *ngFor="let data of value.attendance; let k=index"
-                        [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''" id="clockOutDiv{{i}}{{j}}{{k}}"
-                        style="width: calc( 100% + 10px );margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
-                        <p class="text" *ngIf="data.clock_out_time != null">
-                          {{data.clock_out_time | date:'yyyy-MM-dd  HH:mm'}}
-                        </p>
-                        <p class="text" *ngIf="data.address_out != null" style="width: calc(100% - 10px);">
-                          {{data.address_out }}
-                        </p>
-                        <p class="text" *ngIf="data.address_out == null && data.clock_out_time == null">N/A
-                        </p>
-                      </div>
-                    </div>
-                  </ion-col>
-                  <ion-col size="1" class="titleRow" style="min-width: 95px;white-space: pre-line;">
-                    <div *ngFor="let value of item.attendance; let j=index">
-                      <div *ngFor="let data of value.attendance; let k=index"
-                        [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
-                        style="width: calc( 100% + 10px );margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
-                        <p class="titleRow text" *ngIf="data.hours != null">{{data.hours}}
-                        </p>
-                        <p class="titleRow text" *ngIf="data.hours == null">N/A
-                        </p>
-                      </div>
-                    </div>
-                  </ion-col>
-                  <ion-col size="1" class="titleRow" style="min-width: 95px;white-space: pre-line;">
-                    <div *ngFor="let value of item.attendance; let j=index">
-                      <div *ngFor="let data of value.attendance; let k=index"
-                        [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
-                        style="width: calc( 100% + 10px );margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
-                        <p class="text" *ngIf="value.total_hours !== null && (value.attendance.length-1) == k">
-                          {{value.total_hours}}
-                        </p>
-                        <p class="text" *ngIf="value.total_hours == null">N/A
-                        </p>
-                      </div>
-                    </div>
-                  </ion-col>
-                  <ion-col size="1" class="titleRow" style="min-width: 95px;white-space: pre-line;">
-                    <div *ngFor="let value of item.attendance; let j=index">
-                      <div *ngFor="let data of value.attendance; let k=index"
-                        [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
-                        style="width: calc( 100% + 10px );margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
-                        <p class="text" *ngIf="value.problem !== null">{{value.problem}}
-                        </p>
-                        <p class="text" *ngIf="value.problem == null">N/A
-                        </p>
-                      </div>
-                    </div>
-                  </ion-col>
-                  <ion-col size="1" class="titleRow" style="min-width: 95px;white-space: pre-line;">
-                    <div *ngFor="let value of item.attendance; let j=index">
-                      <div *ngFor="let data of value.attendance; let k=index"
-                        [style.height.px]="divHeight[i] != null ? divHeight[i][j]: ''"
-                        style="width: calc( 100% + 10px );margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
-                        <p class="titleRow text" *ngIf="data.source !== null">{{data.source}}
-                        </p>
-                        <p class="titleRow text" *ngIf="data.source == null">N/A
-                        </p>
-                      </div>
-                    </div>
+                  <ion-col size="9" class="text" style="min-width: 105px;white-space: pre-line;">
+                    <ion-row *ngFor="let value of item.attendance; let j=index" style="width: 100%;">
+                      <ion-row *ngFor="let data of value.attendance; let k=index" style="width: 100%;">
+                        <ion-col size="1.4"
+                          style="padding:0;margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
+                          {{value.date | date:'yyyy-MM-dd'}}
+                        </ion-col>
+                        <ion-col size="2.75"
+                          style="padding:0;margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
+                          <p *ngIf="data.clock_in_time != null" class="text">
+                            {{data.clock_in_time | date:'yyyy-MM-dd HH:mm'}}
+                          </p>
+                          <p *ngIf="data.job_type_in != null" class="text" style="display: inline-block;">
+                            {{data.job_type_in }} <span *ngIf="data.client_name!= null">({{data.client_name}})</span>
+                          </p>
+                          <ion-button *ngIf="data.project_code_in != null"
+                            style="pointer-events: none;--background: var(--ion-color-project);font-size: 10px;height: 18px;margin-top: 0;">
+                            {{data.project_code_in}}
+                          </ion-button>
+                          <ion-button *ngIf="data.contract_code_in != null"
+                            style="pointer-events: none;--background: var(--ion-color-contract);font-size: 10px;height: 18px;margin-top: 0;">
+                            {{data.contract_code_in}}
+                          </ion-button>
+                          <p *ngIf="data.address_in != null" class="text" style="width: calc(100% - 10px);">
+                            {{data.address_in }}
+                          </p>
+                          <p *ngIf="data.address_in == null && data.contract_code_in == null && data.project_code_in == null && data.job_type_in == null && data.client_name == null && data.clock_in_time == null"
+                            class="text">N/A
+                          </p>
+                        </ion-col>
+                        <ion-col size="2.73"
+                          style="padding:0;margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
+                          <p class="text" *ngIf="data.clock_out_time != null">
+                            {{data.clock_out_time | date:'yyyy-MM-dd HH:mm'}}
+                          </p>
+                          <p class="text" *ngIf="data.address_out != null" style="width: calc(100% - 10px);">
+                            {{data.address_out }}
+                          </p>
+                          <p class="text" *ngIf="data.address_out == null && data.clock_out_time == null">N/A
+                          </p>
+                        </ion-col>
+                        <ion-col size="1.37"
+                          style="padding:0;margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
+                          <p class="text" *ngIf="data.hours != null">{{data.hours}}
+                          </p>
+                          <p class="text" *ngIf="data.hours == null">N/A
+                          </p>
+                        </ion-col>
+                        <ion-col size="1.37"
+                          style="padding:0;margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
+                          <p class="text" *ngIf="value.total_hours !== null && (value.attendance.length-1) == k">
+                            {{value.total_hours}}
+                          </p>
+                          <p class="text" *ngIf="value.total_hours == null">N/A
+                          </p>
+                        </ion-col>
+                        <ion-col size="1.37"
+                          style="padding:0;margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
+                          <p class="text" *ngIf="value.problem !== null">{{value.problem}}
+                          </p>
+                          <p class="text" *ngIf="value.problem == null">N/A
+                          </p>
+                        </ion-col>
+                        <ion-col size="1"
+                          style="padding:0;margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
+                          <p class="text" *ngIf="data.source !== null">{{data.source}}
+                          </p>
+                          <p class="text" *ngIf="data.source == null">N/A
+                          </p>
+                        </ion-col>
+                      </ion-row>
+                    </ion-row>
                   </ion-col>
                 </ion-row>
               </div>
@@ -2288,12 +2252,14 @@
               <div style="margin-left:5px;height: 15px;width: 15px;background-color: var(--ion-color-project);">
               </div>
               <div style="color: white;font-size: 12px;padding-left: 15px;">
-                <span> SOC No</span></div>
+                <span> SOC No</span>
+              </div>
             </ion-row>
             <ion-row style="margin-bottom: 10px;">
               <div style="margin-left:5px;height: 15px;width: 15px;background-color: var(--ion-color-contract);"></div>
               <div style="color: white;font-size: 12px;padding-left: 15px;">
-                <span> Contract No</span></div>
+                <span> Contract No</span>
+              </div>
             </ion-row>
             <ion-row style="display: flex; flex-flow: row nowrap;">
               <ion-col size="0.3" class="titleRow"
