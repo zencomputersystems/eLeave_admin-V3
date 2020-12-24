@@ -377,7 +377,7 @@ export class LeaveAdjustmentComponent implements OnInit {
     /**
      * To filter entered text
      * @param {*} text
-     * @memberof ApplyOnBehalfComponent
+     * @memberof LeaveAdjustmentComponent
      */
     changeDetails(text: any) {
         this.filteredUserItems = this.duplicateFiltered;
@@ -392,7 +392,7 @@ export class LeaveAdjustmentComponent implements OnInit {
      * @param {*} data
      * @param {*} arg
      * @returns
-     * @memberof ApplyOnBehalfComponent
+     * @memberof LeaveAdjustmentComponent
      */
     filerSearch(searchKeyword, data, arg) {
         return data.filter(itm => new RegExp(searchKeyword, 'i').test(itm[arg]));

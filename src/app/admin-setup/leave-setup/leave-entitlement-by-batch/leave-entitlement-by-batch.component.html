@@ -119,39 +119,85 @@
                         </div>
                     </div>
                     <div class="assigned">
-                        <div [class]="'hide-sm-down'"
-                            style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
-                            <ion-row nowrap>
-                                <ion-col size="1.5"
-                                    style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
-                                    <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
-                                        [(ngModel)]="checkMain" [indeterminate]="indeterminate" (click)="checkEvent()">
-                                    </ion-checkbox>
-                                </ion-col>
-                                <ion-col size="2">
-                                    <ion-label style="font-size: 12px;">ID</ion-label>
-                                </ion-col>
-                                <ion-col size="4">
-                                    <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
-                                </ion-col>
-                                <ion-col size="4">
-                                    <ion-label style="font-size: 12px;">ENTITLEMENT</ion-label>
-                                </ion-col>
-                            </ion-row>
+                        <div [class]="'hide-sm-down'">
+                            <div
+                                style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 15px;color: #a5a4bf;">
+                                <ion-row>
+                                    <ion-col style="font-weight: bold;white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                        EMPLOYEE LIST</ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col
+                                        style="padding-top: 0;color: #808495;padding-bottom: 0;margin-bottom: 5px;">
+                                        Simply type their name to assign leave entitlement for them -
+                                        as individual or whole department.
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-searchbar mode="md" class="searchbar" placeholder="Search by Employee Name"
+                                        (ionChange)="changeDetails($event.srcElement.value)">
+                                    </ion-searchbar>
+                                </ion-row>
+                            </div>
+                            <div
+                                style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                                <ion-row nowrap>
+                                    <ion-col size="1.5"
+                                        style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
+                                        <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
+                                            [(ngModel)]="checkMain" [indeterminate]="indeterminate"
+                                            (click)="checkEvent()">
+                                        </ion-checkbox>
+                                    </ion-col>
+                                    <ion-col size="2">
+                                        <ion-label style="font-size: 12px;">ID</ion-label>
+                                    </ion-col>
+                                    <ion-col size="4">
+                                        <ion-label style="font-size: 12px;">EMPLOYEE NAME</ion-label>
+                                    </ion-col>
+                                    <ion-col size="4">
+                                        <ion-label style="font-size: 12px;">ENTITLEMENT</ion-label>
+                                    </ion-col>
+                                </ion-row>
+                            </div>
                         </div>
-                        <div [class]="'hide-sm-up'"
-                            style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
-                            <ion-row nowrap>
-                                <ion-col size="1.5"
-                                    style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
-                                    <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
-                                        [(ngModel)]="checkMain" [indeterminate]="indeterminate" (click)="checkEvent()">
-                                    </ion-checkbox>
-                                </ion-col>
-                                <ion-col>
-                                    <ion-label style="font-size: 12px;">EMPLOYEE DETAILS</ion-label>
-                                </ion-col>
-                            </ion-row>
+                        <div [class]="'hide-sm-up'">
+                            <div
+                                style="font-size: 12px;width:100%;background: #f5f6fa;padding: 10px;margin-bottom: 15px;color: #a5a4bf;">
+                                <ion-row>
+                                    <ion-col style="font-weight: bold;white-space: nowrap;
+                                text-overflow: ellipsis;overflow: hidden;padding-bottom: 0;margin-bottom: 5px;">
+                                        EMPLOYEE LIST</ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col
+                                        style="padding-top: 0;color: #808495;padding-bottom: 0;margin-bottom: 5px;">
+                                        Simply type their name to assign leave entitlement for them -
+                                        as individual or whole department.
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-searchbar mode="md" class="searchbar" placeholder="Search by Employee Name"
+                                        (ionChange)="changeDetails($event.srcElement.value)">
+                                    </ion-searchbar>
+                                </ion-row>
+                            </div>
+                            <div
+                                style="font-size: 12px;width:100%;background: #f5f6fa;padding-left: 5px;padding-top: 1px;margin-bottom: 5px;color: #a3a6b4;font-weight: bold;">
+                                <ion-row nowrap>
+                                    <ion-col size="1.5"
+                                        style="text-align: center;padding-left: 10px;padding-right: 30px;text-overflow: initial;">
+                                        <ion-checkbox mode="ios" style="width: 18px; height: 18px;margin-top: 6px;"
+                                            [(ngModel)]="checkMain" [indeterminate]="indeterminate"
+                                            (click)="checkEvent()">
+                                        </ion-checkbox>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-label style="font-size: 12px;">EMPLOYEE DETAILS</ion-label>
+                                    </ion-col>
+                                </ion-row>
+                            </div>
                         </div>
                         <div style="width: 100%; height: calc(100% - 46px); text-align: center; margin-top: -30px"
                             *ngIf="showSpinner">

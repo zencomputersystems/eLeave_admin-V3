@@ -59,6 +59,13 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
     public filteredUser: any[] = [];
 
     /**
+     * copy users list after selected company & department
+     * @type {*}
+     * @memberof LeaveEntitlementByBatchComponent
+     */
+    public duplicateFilteredUser: any;
+
+    /**
      * enable/disable the submit button
      * @type {boolean}
      * @memberof LeaveEntitlementByBatchComponent
@@ -202,6 +209,7 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
      */
     departmentClicked(name: string) {
         this.filteredUser = [];
+        this.duplicateFilteredUser = [];
         this.showSpinner = true;
         this.showSelectToView = false;
         this.leaveEntitlementAPI.get_user_list().subscribe(list => {
@@ -220,21 +228,46 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
     filterUser(list: any, name: string) {
         for (let i = 0; i < list.length; i++) {
             if (list[i].department === name && list[i].companyId === this._company_GUID && name !== 'All' || name === 'All') {
-                this.filteredUser.push(list[i]);
+                this.duplicateFilteredUser.push(list[i]);
                 this.hideAvatar.push(false);
-                this.filteredUser[this.filteredUser.length - 1].isChecked = false;
+                this.duplicateFilteredUser[this.duplicateFilteredUser.length - 1].isChecked = false;
             }
         }
-        if (this.filteredUser.length == 0) {
+        if (this.duplicateFilteredUser.length == 0) {
             this.showNoResult = true;
         } else {
             this.showNoResult = false;
-            this.filteredUser.sort(function (a, b) {
+            this.duplicateFilteredUser.sort(function (a, b) {
                 var x = a.employeeName.toLowerCase();
                 var y = b.employeeName.toLowerCase();
                 return x < y ? -1 : x > y ? 1 : 0;
             });
+            this.changeDetails('');
         }
+    }
+
+    /**
+     * To filter entered text
+     * @param {*} text
+     * @memberof LeaveEntitlementByBatchComponent
+     */
+    changeDetails(text: any) {
+        this.filteredUser = this.duplicateFilteredUser;
+        this.filteredUser = (text.length > 0) ?
+            this.filerSearch(text, this.filteredUser, 'employeeName') :
+            this.filteredUser;
+    }
+
+    /**
+     * filter employee name from searchbar 
+     * @param {*} searchKeyword
+     * @param {*} data
+     * @param {*} arg
+     * @returns
+     * @memberof LeaveEntitlementByBatchComponent
+     */
+    filerSearch(searchKeyword, data, arg) {
+        return data.filter(itm => new RegExp(searchKeyword, 'i').test(itm[arg]));
     }
 
     /**
@@ -360,6 +393,7 @@ export class LeaveEntitlementByBatchComponent implements OnInit {
                 this.leaveAPI.openSnackBar('You have submitted successfully', true);
                 this.entitlementBatch.reset();
                 this.filteredUser = [];
+                this.duplicateFilteredUser = [];
                 this.filteredEntitlement = [];
             }
             this.showSmallSpinner = false;
