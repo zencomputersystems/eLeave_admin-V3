@@ -67,6 +67,12 @@ export class LeaveAdjustmentComponent implements OnInit {
      */
     public filteredUserItems: any[] = [];
 
+    /**
+     * duplicate list after select company & department
+     * @type {*}
+     * @memberof LeaveAdjustmentComponent
+     */
+    public duplicateFiltered: any;
 
     /**
      * enable/disable submit button according required item
@@ -284,6 +290,7 @@ export class LeaveAdjustmentComponent implements OnInit {
      */
     async departmentSelected(name) {
         this.filteredUserItems = [];
+        this.duplicateFiltered = [];
         this.showSelectToView = false;
         this.showSpinner = true;
         // let list = await this.apiService.get_user_profile_list().toPromise();
@@ -354,16 +361,41 @@ export class LeaveAdjustmentComponent implements OnInit {
         for (let i = 0; i < userList.length; i++) {
             this.filterByDepartment(userList, name, i);
         }
-        if (this.filteredUserItems.length > 0) {
+        if (this.duplicateFiltered.length > 0) {
             this.showNoResult = false;
-            this.filteredUserItems.sort(function (a, b) {
+            this.duplicateFiltered.sort(function (a, b) {
                 var x = a.employeeName.toLowerCase();
                 var y = b.employeeName.toLowerCase();
                 return x < y ? -1 : x > y ? 1 : 0;
             });
+            this.changeDetails('');
         } else {
             this.showNoResult = true;
         }
+    }
+
+    /**
+     * To filter entered text
+     * @param {*} text
+     * @memberof ApplyOnBehalfComponent
+     */
+    changeDetails(text: any) {
+        this.filteredUserItems = this.duplicateFiltered;
+        this.filteredUserItems = (text.length > 0) ?
+            this.filerSearch(text, this.filteredUserItems, 'employeeName') :
+            this.filteredUserItems;
+    }
+
+    /**
+     * filter employee name from searchbar 
+     * @param {*} searchKeyword
+     * @param {*} data
+     * @param {*} arg
+     * @returns
+     * @memberof ApplyOnBehalfComponent
+     */
+    filerSearch(searchKeyword, data, arg) {
+        return data.filter(itm => new RegExp(searchKeyword, 'i').test(itm[arg]));
     }
 
 
@@ -377,14 +409,14 @@ export class LeaveAdjustmentComponent implements OnInit {
     filterByDepartment(userList: any, name: string, i: number) {
         if (userList[i].companyId === this._companyGUID) {
             if (name !== 'All') {
-                this.filteredUserItems = userList.filter((item: any) => {
+                this.duplicateFiltered = userList.filter((item: any) => {
                     if (item.department != null) {
                         return (item.department.toLowerCase().indexOf(name.toLowerCase()) > -1);
                     }
                 })
                 this.showSpinner = false;
             } else {
-                this.filteredUserItems.push(userList[i]);
+                this.duplicateFiltered.push(userList[i]);
                 this.showSpinner = false;
             }
         }
@@ -522,6 +554,7 @@ export class LeaveAdjustmentComponent implements OnInit {
             department: '',
         });
         this.filteredUserItems = [];
+        this.duplicateFiltered = [];
         this.mainCheckBox = false;
         this.indeterminate = false;
     }
@@ -553,6 +586,7 @@ export class LeaveAdjustmentComponent implements OnInit {
                     element.isChecked = false;
                 });
                 this.filteredUserItems = [];
+                this.duplicateFiltered = [];
                 this._selectedUser = [];
                 this.enableDisableSubmitButton();
             }, error => {
@@ -561,6 +595,7 @@ export class LeaveAdjustmentComponent implements OnInit {
                     el.isChecked = false;
                 });
                 this.filteredUserItems = [];
+                this.duplicateFiltered = [];
                 this._selectedUser = [];
                 this.enableDisableSubmitButton();
                 this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
@@ -587,6 +622,7 @@ export class LeaveAdjustmentComponent implements OnInit {
                         element.isChecked = false;
                     });
                     this.filteredUserItems = [];
+                    this.duplicateFiltered = [];
                     this._selectedUser = [];
                     this.enableDisableSubmitButton();
                 }, fail => {
@@ -597,6 +633,7 @@ export class LeaveAdjustmentComponent implements OnInit {
                         el.isChecked = false;
                     });
                     this.filteredUserItems = [];
+                    this.duplicateFiltered = [];
                     this._selectedUser = [];
                     this.enableDisableSubmitButton();
                     this.leaveSetupAPI.openSnackBar('Failed to submit request', false);
