@@ -7,7 +7,13 @@
         <ul>
             <li *ngFor="let item of data"
                 style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;">
-                {{item.Name}} (Staff ID: {{item.EmployeeCode}}) - <strong>Reason: {{item.message}}</strong>
+                {{item.Name}} (Staff ID: {{item.EmployeeCode}})
+                <br>
+                <strong>Att_Time:</strong> {{item.Att_Time}}  
+                <br>
+                <strong>Dev_ID:</strong> {{item.Dev_ID}}
+                <br>
+                <strong>Reason:</strong> {{item.message}}
             </li>
         </ul>
     </div>

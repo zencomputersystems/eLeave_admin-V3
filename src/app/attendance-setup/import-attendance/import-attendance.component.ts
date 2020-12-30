@@ -221,7 +221,7 @@ export class ImportAttendanceComponent implements OnInit {
             this.dialog.open(UploadAttendanceConfirmationComponent, {
                 disableClose: true,
                 data: response[1],
-                height: "270px",
+                height: "366px",
                 width: "440px",
                 panelClass: 'custom-dialog-container'
             });
