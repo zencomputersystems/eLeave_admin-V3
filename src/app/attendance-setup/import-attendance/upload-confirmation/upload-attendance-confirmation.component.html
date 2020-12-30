@@ -1,0 +1,20 @@
+<div class="title">Failed to import this user's attendance</div>
+<div style="text-align: left;padding-left: 40px;padding-right: 40px;margin-bottom: 20px;">
+    <p style="color: #43425d;line-height: 1.25;font-size: 12px;">Here
+        are the user's attendance we could not imported successfully: </p>
+
+    <div style="display: block;margin-left: 10px;">
+        <ul>
+            <li *ngFor="let item of data"
+                style="margin: 0;margin-bottom: 5px;color: #43425d;line-height: 1.25;font-size: 12px;">
+                {{item.Name}} (Staff ID: {{item.EmployeeCode}}) - <strong>Reason: {{item.message}}</strong>
+            </li>
+        </ul>
+    </div>
+    <p style="color: #43425d;line-height: 1.25;font-size: 12px; margin-top: 16px;">
+        After you're done checking, do correction in CSV table, import for unsuccessful user attendance again.</p>
+</div>
+<div mat-dialog-actions style="display: block; text-align: center;font-size: 11px;">
+    <button mat-flat-button color="primary" style="color:white;border-radius: 2px;
+        width: 136px;height: 30px;line-height: 30px;font-size: 11px;" (click)="close()">Alright, I understand</button>
+</div>

@@ -8,6 +8,7 @@ import { FileSystemDirectoryEntry, FileSystemFileEntry, UploadEvent, UploadFile 
 import { ClientApiService } from '../client/client-api.service';
 import { map } from 'rxjs/operators';
 import { ImportAttendanceApiService } from './import-attendance.service';
+import { UploadAttendanceConfirmationComponent } from './upload-confirmation/upload-attendance-confirmation.component';
 
 @Component({
     selector: 'app-import-attendance',
@@ -84,7 +85,7 @@ export class ImportAttendanceComponent implements OnInit {
      * @type {*}
      * @memberof ImportAttendanceComponent
      */
-    public data:any;
+    public data: any;
 
     /**
      * Return value of filename from imported document
@@ -214,12 +215,16 @@ export class ImportAttendanceComponent implements OnInit {
      * @memberof ImportAttendanceComponent
      */
     responseHandler(response: any) {
-        if (response.message !== undefined) {
-            this.importAttendanceApi.snackbarMsg(response.message, false);
+        if (response[0].length > 0 && response[1].length == 0) {
+            this.importAttendanceApi.snackbarMsg(response[0].length + ' Attendance record was uploaded successfully', true);
         } else {
-            if (response.length > 0) {
-                this.importAttendanceApi.snackbarMsg(response.length + ' Attendance record was uploaded successfully', true);
-            }
+            this.dialog.open(UploadAttendanceConfirmationComponent, {
+                disableClose: true,
+                data: response[1],
+                height: "270px",
+                width: "440px",
+                panelClass: 'custom-dialog-container'
+            });
         }
         this.showSmallSpinner = false;
         this.ngOnInit();

@@ -8,7 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { SpinnerModule } from '../../../src/library/spinner/spinner.module';
-import { MatTooltipModule, MatDialogModule, MatRadioModule, MatMenuModule, MatSelectModule } from '@angular/material';
+import { MatTooltipModule, MatDialogModule, MatRadioModule, MatMenuModule, MatSelectModule, MatButtonModule } from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
 import { BrowserModule } from '@angular/platform-browser';
 import { EditorModule } from 'primeng/editor';
@@ -25,6 +25,7 @@ import { SupportComponent } from './support/support.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ImportAttendanceComponent } from './import-attendance/import-attendance.component';
 import { FileDropModule } from 'ngx-file-drop';
+import { UploadAttendanceConfirmationComponent } from './import-attendance/upload-confirmation/upload-attendance-confirmation.component';
 
 @NgModule({
   imports: [
@@ -53,13 +54,14 @@ import { FileDropModule } from 'ngx-file-drop';
     MatAutocompleteModule,
     PdfViewerModule,
     FileDropModule,
+    MatButtonModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC8vs7sealRJ2NkmPHBeR_ig1gjV7cznOo',
       libraries: ['places']
     })
   ],
-  declarations: [AttendanceComponent, ClientComponent, SupportComponent, ImportAttendanceComponent],
-  entryComponents: []
+  declarations: [AttendanceComponent, ClientComponent, SupportComponent, ImportAttendanceComponent, UploadAttendanceConfirmationComponent],
+  entryComponents: [UploadAttendanceConfirmationComponent]
 })
 export class AttendanceSetupModule { }
 
