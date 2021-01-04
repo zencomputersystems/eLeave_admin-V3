@@ -65,7 +65,7 @@ export class YearEndClosingComponent implements OnInit {
    * @type {number}
    * @memberof YearEndClosingComponent
    */
-  public pendingTotal: number;
+  public pendingTotal: any;
 
   /**
    * index selected
@@ -135,7 +135,8 @@ export class YearEndClosingComponent implements OnInit {
     this.companyId = item.TENANT_COMPANY_GUID;
     this.showSmallSpinner = true;
     this.clickedIndex = index;
-    this.pendingTotal = await this.yearEndApi.get_approval_override_by_company(item.TENANT_COMPANY_GUID).toPromise();
+    this.pendingTotal = await this.yearEndApi.get_approval_override_by_company(item.TENANT_COMPANY_GUID).toPromise();  
+    this.pendingTotal = this.pendingTotal.filter(val => val.status.includes('PENDING'));
     this.labelCompany = item.NAME;
     let list = await this.yearEndApi.get_company_year_end().toPromise();
     this.policy = list;
