@@ -111,7 +111,9 @@ export class ImportAttendanceComponent implements OnInit {
         this.fileform = this.fb.group({
             file: ''
         });
-        this.importAttendanceApi.get_log().subscribe(list => {
+        this.importAttendanceApi.get_log().pipe(
+            map(value => value.sort((x, y) => new Date(y.CREATION_TS).getTime() - new Date(x.CREATION_TS).getTime()))
+        ).subscribe(list => {
             this.data = list;
             this.showSpinner = false;
             this.changeDetails('');
