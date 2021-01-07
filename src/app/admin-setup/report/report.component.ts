@@ -1183,7 +1183,11 @@ export class ReportComponent implements OnInit {
         m => {
           m.leaveDetail.filter(
             details => {
-              if (new Date(details.startDate) >= this.firstPicker.value && new Date(details.endDate) <= this.secondPicker.value) {
+              const start = new Date(details.startDate);
+              const end = new Date(details.endDate);
+              const c = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 0, 0, 0);
+              const d = new Date(end.getFullYear(), end.getMonth(), end.getDate(), 0, 0, 0);
+              if (c >= this.firstPicker.value && d <= this.secondPicker.value) {
                 this._newLeaveDetails.push(details);
               }
             })
@@ -1228,9 +1232,9 @@ export class ReportComponent implements OnInit {
               }
             }
           }
-          // if (this.arrayDetails[i].leaveDetail.length == 0) {
-          //   this.arrayDetails.splice(i, 1);
-          // }
+          if (this.arrayDetails[i].leaveDetail.length == 0) {
+            this.arrayDetails.splice(i, 1);
+          }
         }
       }
     }
