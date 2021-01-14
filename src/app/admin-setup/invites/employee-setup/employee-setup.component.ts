@@ -1274,6 +1274,7 @@ export class EmployeeSetupComponent implements OnInit {
             var y = b.employeeName.toLowerCase();
             return x < y ? ascValue : x > y ? desValue : 0;
         });
+        this.changeDetails('');
     }
 
     /**
@@ -1291,6 +1292,7 @@ export class EmployeeSetupComponent implements OnInit {
             var y = b.staffNumber;
             return x < y ? asc : x > y ? des : 0;
         });
+        this.changeDetails('');
     }
 
     /**
