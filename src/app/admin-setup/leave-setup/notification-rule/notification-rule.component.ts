@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { MenuController, Platform } from '@ionic/angular';
 import { AdminInvitesApiService } from '../../invites/admin-invites-api.service';
 import { LeaveApiService } from '../leave-api.service';
 import { LeaveEntitlementByBatchApiService } from '../leave-entitlement-by-batch/leave-entitlement-by-batch-api.service';
+import { SubmitConfirmationComponent } from './submit-confirmation/submit-confirmation.component';
 
 /**
  * setup of email notification rule
@@ -154,9 +156,12 @@ export class NotificationRuleComponent implements OnInit {
      * @param {LeaveEntitlementByBatchApiService} leaveEntitlementAPI
      * @param {LeaveApiService} leaveAPI
      * @param {Platform} applyonbehalfPlatformApi
+     * @param {MenuController} menu
+     * @param {AdminInvitesApiService} inviteApi
+     * @param {MatDialog} dialog
      * @memberof NotificationRuleComponent
      */
-    constructor(private leaveEntitlementAPI: LeaveEntitlementByBatchApiService, private leaveAPI: LeaveApiService, public applyonbehalfPlatformApi: Platform, public menu: MenuController, private inviteApi: AdminInvitesApiService) {
+    constructor(private leaveEntitlementAPI: LeaveEntitlementByBatchApiService, private leaveAPI: LeaveApiService, public applyonbehalfPlatformApi: Platform, public menu: MenuController, private inviteApi: AdminInvitesApiService, public dialog: MatDialog) {
         this.leaveEntitlementAPI.apiService.get_profile_pic('all').subscribe(data => {
             this.url = data;
         })
@@ -465,50 +470,61 @@ export class NotificationRuleComponent implements OnInit {
         this.checkedUserList();
         this.showSmallSpinner = true;
         const body = [];
-        for (let i = 0; i < this.employeeData.length; i++) {
-            if (this.employeeData[i].isChecked) {
-                body.push(this.employeeData[i].email);
-            }
-        }
-        for (let j = 0; j < this._selected_User.length; j++) {
-            this.inviteApi.patch_user_info_notification(body, this._selected_User[j]).subscribe(data => {
-                this.leaveAPI.openSnackBar('You have set notification rule successfully', true);
-                this.showSmallSpinner = false;
-                this.checkMain = false;
-                this.indeterminate = false;
-                this.headCheckbox = false;
-                this.indeterminateVal = false;
-                this._selected_User = [];
-                this.filteredUser.forEach(element => {
-                    if (element.isChecked) {
-                        element.notificationRule = data.email;
+        const dialog = this.dialog.open(SubmitConfirmationComponent, {
+            disableClose: true,
+            data: 'confirm',
+            height: "240px",
+            width: "320px"
+        });
+        dialog.afterClosed().subscribe(result => {
+            if (result === 'confirm') {
+                for (let i = 0; i < this.employeeData.length; i++) {
+                    if (this.employeeData[i].isChecked) {
+                        body.push(this.employeeData[i].email);
                     }
-                });
-                this.filteredUser.forEach(element => {
-                    element.isChecked = false;
-                });
-                this.employeeData.forEach(element => {
-                    element.isChecked = false;
-                });
+                }
+                for (let j = 0; j < this._selected_User.length; j++) {
+                    this.inviteApi.patch_user_info_notification(body, this._selected_User[j]).subscribe(data => {
+                        this.leaveAPI.openSnackBar('You have set notification rule successfully', true);
+                        this.showSmallSpinner = false;
+                        this.checkMain = false;
+                        this.indeterminate = false;
+                        this.headCheckbox = false;
+                        this.indeterminateVal = false;
+                        this._selected_User = [];
+                        this.filteredUser.forEach(element => {
+                            if (element.isChecked) {
+                                element.notificationRule = data.email;
+                            }
+                        });
+                        this.filteredUser.forEach(element => {
+                            element.isChecked = false;
+                        });
+                        this.employeeData.forEach(element => {
+                            element.isChecked = false;
+                        });
 
-                this.checkEnableDisableButton();
-            }, error => {
-                this.leaveAPI.openSnackBar('Sorry, error occured', false);
+                        this.checkEnableDisableButton();
+                    }, error => {
+                        this.leaveAPI.openSnackBar('Sorry, error occured', false);
+                        this.showSmallSpinner = false;
+                        this.checkMain = false;
+                        this.indeterminate = false;
+                        this.headCheckbox = false;
+                        this.indeterminateVal = false;
+                        this._selected_User = [];
+                        this.filteredUser.forEach(element => {
+                            element.isChecked = false;
+                        });
+                        this.employeeData.forEach(element => {
+                            element.isChecked = false;
+                        });
+                        this.checkEnableDisableButton();
+                    })
+                }
+            } else {
                 this.showSmallSpinner = false;
-                this.checkMain = false;
-                this.indeterminate = false;
-                this.headCheckbox = false;
-                this.indeterminateVal = false;
-                this._selected_User = [];
-                this.filteredUser.forEach(element => {
-                    element.isChecked = false;
-                });
-                this.employeeData.forEach(element => {
-                    element.isChecked = false;
-                });
-                this.checkEnableDisableButton();
-            })
-        }
-
+            }
+        });
     }
 }

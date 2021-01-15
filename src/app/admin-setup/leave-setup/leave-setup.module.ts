@@ -46,6 +46,7 @@ import { SharedService } from './shared.service';
 import { RouteDialogComponent } from './route-dialog/route-dialog.component';
 import { ConfirmationWindowComponent } from '../../global/confirmation-window/confirmation-window.component';
 import { NotificationRuleComponent } from './notification-rule/notification-rule.component';
+import { SubmitConfirmationComponent } from './notification-rule/submit-confirmation/submit-confirmation.component';
 
 const routes: Routes = [
     {
@@ -90,9 +91,9 @@ const routes: Routes = [
     ],
     providers: [AssignCalendarTreeviewService, SharedService],
     entryComponents: [SnackbarNotificationComponent, DeleteCalendarConfirmationComponent, EditModeDialogComponent, ConfirmationWindowComponent,
-         RouteDialogComponent],
+         RouteDialogComponent, SubmitConfirmationComponent],
     declarations: [CalendarProfileComponent, LeaveSetupComponent, SnackbarNotificationComponent, DeleteCalendarConfirmationComponent,
         ApplyOnBehalfComponent, ApprovalOverrideComponent, LeaveAdjustmentComponent, LeaveEntitlementByBatchComponent, WorkingHourComponent,
-        WorkingHourListComponent, EditModeDialogComponent, LeaveEntitlementComponent, RouteDialogComponent, NotificationRuleComponent]
+        WorkingHourListComponent, EditModeDialogComponent, LeaveEntitlementComponent, RouteDialogComponent, NotificationRuleComponent, SubmitConfirmationComponent]
 })
 export class LeaveSetupModule { }

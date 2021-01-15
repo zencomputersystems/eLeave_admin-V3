@@ -1,0 +1,14 @@
+<div class="title">Note</div>
+<div style="text-align: left;padding-left: 40px;padding-right: 40px;margin-bottom: 20px;">
+    <p style="color: #43425d;line-height: 1.25;font-size: 12px;margin-bottom: 16px;">
+        Please noted that original notify list will be replaced by this update.<br><br>
+        <strong>Make sure you select all the notifier before submit.</strong>
+    </p>
+</div>
+<div mat-dialog-actions style="display: block; text-align: center;font-size: 11px;">
+    <button mat-stroked-button (click)="close()" color="primary" style="border-radius: 2px;
+    width: 88px;height: 30px;line-height: 30px;border-color: #7069d8;">Cancel</button>
+    &nbsp;&nbsp;
+    <button mat-flat-button color="primary" [mat-dialog-close]="data" style="color:white;border-radius: 2px;
+        width: 136px;height: 30px;line-height: 30px;font-size: 11px;">Confirm</button>
+</div>
