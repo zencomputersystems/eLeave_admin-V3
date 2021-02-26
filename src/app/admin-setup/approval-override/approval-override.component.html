@@ -115,13 +115,13 @@
                             </ion-row>
                             <ion-row>
                                 <ion-col style="padding-top: 0;color: #808495;padding-bottom: 0;margin-bottom: 5px;">
-                                    You can override leave status for employee. Simply type their name and change their leave application- as individual or whole
+                                    You can override leave status for employee. Simply type their name and change their
+                                    leave application- as individual or whole
                                     department.
                                 </ion-col>
                             </ion-row>
                             <ion-row>
-                                <ion-searchbar mode="md" class="searchbar"
-                                    placeholder="Search by Employee Name"
+                                <ion-searchbar mode="md" class="searchbar" placeholder="Search by Employee Name"
                                     (ionChange)="changeDetails($event.srcElement.value)">
                                 </ion-searchbar>
                             </ion-row>
@@ -202,14 +202,21 @@
                                         <div style="display: flex;padding-top: 5px; flex-wrap: wrap;">
                                             <!-- <div style="display: inline-block;padding-right: 20px;"> -->
                                             <p class="leave-application-details">
-                                                <span style="font-weight: bold;">ID:</span> {{item.staffNumber}}</p>
-                                            <p class="leave-application-details">
+                                                <span style="font-weight: bold;">ID:</span> {{item.staffNumber}}
+                                            </p>
+                                            <p class="leave-application-details" *ngIf="item.timeSlot == null">
                                                 <span style="font-weight: bold;">Leave Type:</span>
-                                                {{item.leaveTypeAbbr}}</p>
+                                                {{item.leaveTypeAbbr}}
+                                            </p>
+                                            <p class="leave-application-details" *ngIf="item.timeSlot != null">
+                                                <span style="font-weight: bold;">Leave Type:</span>
+                                                {{item.leaveTypeAbbr}} - {{item.timeSlot}}
+                                            </p>
                                             <!-- </div>
                                             <div style="display: inline-block;padding-right: 20px;"> -->
                                             <p class="leave-application-details">
-                                                <span style="font-weight: bold;">Status:</span> {{item.status}}</p>
+                                                <span style="font-weight: bold;">Status:</span> {{item.status}}
+                                            </p>
                                             <p class="leave-application-details">
                                                 <span style="font-weight: bold;">Date Applied:</span>
                                                 {{item.dateApplied | date: 'yyyy-MM-dd'}}
