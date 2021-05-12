@@ -1360,20 +1360,21 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     async filterValue() {
-        let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
-        this.listFromUser = data;
+        // let data = await this.inviteAPI.apiService.get_user_profile_list().toPromise();
+        // this.listFromUser = data;
+        this.list = this.listFromUser;
 
         if (this.active == true) {
-            this.statusFiltered('Active', this.listFromUser);
+            this.statusFiltered('Active', this.list);
         }
         if (this.inactive == true) {
-            this.statusFiltered('Inactive', this.listFromUser);
+            this.statusFiltered('Inactive', this.list);
         }
         for (let i = 0; i < this._selectedCompany.length; i++) {
-            this.companyFiltered(this._selectedCompany[i], this.listFromUser);
+            this.companyFiltered(this._selectedCompany[i], this.list);
         }
         for (let i = 0; i < this._selectedDepartment.length; i++) {
-            this.departmentFiltered(this._selectedDepartment[i], this.listFromUser);
+            this.departmentFiltered(this._selectedDepartment[i], this.list);
         }
     }
 
@@ -1384,7 +1385,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     statusFiltered(text: string, list) {
-        this.listFromUser = list.filter((item: any) => {
+        this.list = list.filter((item: any) => {
             return (item.status.indexOf(text) > -1);
         })
     }
@@ -1396,7 +1397,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     companyFiltered(companyId: string, items: any) {
-        this.listFromUser = items.filter((item: any) => {
+        this.list = items.filter((item: any) => {
             return (item.companyId.toUpperCase().indexOf(companyId.toUpperCase()) > -1);
         })
     }
@@ -1408,7 +1409,7 @@ export class EmployeeSetupComponent implements OnInit {
      * @memberof EmployeeSetupComponent
      */
     departmentFiltered(departmentName: string, list) {
-        this.listFromUser = list.filter((item: any) => {
+        this.list = list.filter((item: any) => {
             return (item.department.toLowerCase().indexOf(departmentName.toLowerCase()) > -1);
         })
     }
