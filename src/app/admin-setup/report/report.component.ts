@@ -643,6 +643,43 @@ export class ReportComponent implements OnInit {
               }
             }
           }
+          if (title === 'Total Working Hours History') {
+            let date = '', clock_in_time = '', clock_out_time = '', total_hours = '';
+            for (let i = 0; i < data.table.body.length; i++) {
+              for (let j = 0; j < data.table.body[i].raw.attendance.length; j++) {
+                if (data.row.index === i && data.section === 'body') {
+                  switch (data.column.index) {
+                    case 3:
+                      date += dayjs(data.table.body[i].raw.attendance[j].date).format('YYYY-MM-DD') + '\n' + '\n';
+                      data.row.cells[3].text = date.split('\n');
+                      break;
+                    case 4:
+                      if (data.table.body[i].raw.attendance[j].attendance[0].clock_in_time != null) {
+                        clock_in_time += dayjs(data.table.body[i].raw.attendance[j].attendance[0].clock_in_time).format('YYYY-MM-DD HH:mm') + '\n' + '\n';
+                      } else { clock_in_time += 'N/A' + '\n' + '\n'; }
+                      data.row.cells[4].text = clock_in_time.split('\n');
+                      break;
+                    case 5:
+                      if (data.table.body[i].raw.attendance[j].attendance[data.table.body[i].raw.attendance[j].attendance.length - 1].clock_out_time != null) {
+                        clock_out_time += dayjs(data.table.body[i].raw.attendance[j].attendance[data.table.body[i].raw.attendance[j].attendance.length - 1].clock_out_time).format('YYYY-MM-DD HH:mm') + '\n' + '\n';
+                      }
+                      else { clock_out_time += 'N/A' + '\n' + '\n'; }
+                      data.cell.text = clock_out_time.split('\n');
+                      break;
+                    case 6:
+                      if (data.table.body[i].raw.attendance[j].total_hours != null) {
+                        total_hours += data.table.body[i].raw.attendance[j].total_hours + '\n' + '\n';
+                      }
+                      else {
+                        total_hours += 'N/A' + '\n' + '\n';
+                      }
+                      data.cell.text = total_hours.split('\n');
+                      break;
+                  }
+                }
+              }
+            }
+          }
           if (title === 'Activity History') {
             let date = '', socOrContract = '', completion = '', pending = '';
             for (let i = 0; i < data.table.body.length; i++) {
@@ -951,7 +988,7 @@ export class ReportComponent implements OnInit {
    * @memberof ReportComponent
    */
   getSelectionChanged(event) {
-    if (event.value === 'attendance') {
+    if (event.value === 'attendance' || event.value === 'total-hour') {
       const first = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
       const dayInAMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 0).getDate();
       const last = new Date(new Date().getFullYear(), new Date().getMonth(), dayInAMonth);
@@ -1008,7 +1045,7 @@ export class ReportComponent implements OnInit {
       }
     }
 
-    if (this.selects !== 'attendance' && this.selects !== 'activity') {
+    if (this.selects !== 'attendance' && this.selects !== 'total-hour' && this.selects !== 'activity') {
       this.reportAPI.get_bundle_report(this.selects).subscribe(value => {
         this.tableDetails = value;
         this.arrayDetails = [];
@@ -1048,6 +1085,48 @@ export class ReportComponent implements OnInit {
     }
 
     if (this.selects == 'attendance') {
+      let stringOfNames = this.selectedUserId.toString();
+      let start = dayjs(this.firstPicker.value).format('YYYY-MM-DD');
+      let end = dayjs(this.secondPicker.value).format('YYYY-MM-DD');
+      let postData = {
+        "startdate": start,
+        "enddate": end,
+        "userid": stringOfNames
+      };
+      this.reportAPI.post_attendance_report(postData).
+        subscribe(value => {
+          this.tableDetails = value;
+          this.arrayDetails = [];
+          this.arrayDetails = this.tableDetails;
+          let data = require('lodash').groupBy(this.arrayDetails, groupName);
+          const ordered = {};
+          Object.keys(data).sort().forEach(function (key) {
+            ordered[key] = data[key];
+          });
+          this.groupValue = Object.values(data);
+          this.groupKey = Object.keys(data);
+          this.groupValue.splice(0, 0, this.arrayDetails);
+          this.groupKey.splice(0, 0, 'All');
+          if (groupName === 'all') {
+            this.groupValue.splice(1, 1);
+            this.groupKey.splice(1, 1);
+          }
+          this.showSpinner = false;
+          this.clickedProduce = true;
+          this.selectedName = this.groupKey[0];
+          for (let j = 0; j < this.groupValue.length; j++) {
+            for (let i = 0; i < this.groupValue[j].length; i++) {
+              this.groupValue[j][i]["no"] = i + 1;
+            }
+          }
+          this.arrayDetails = this.groupValue[0];
+        }, error => {
+          this.showSpinner = false;
+          this.leaveAPI.openSnackBar('Failed to produce report', false);
+        })
+    }
+
+    if (this.selects == 'total-hour') {
       let stringOfNames = this.selectedUserId.toString();
       let start = dayjs(this.firstPicker.value).format('YYYY-MM-DD');
       let end = dayjs(this.secondPicker.value).format('YYYY-MM-DD');
