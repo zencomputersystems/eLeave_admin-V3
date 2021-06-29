@@ -644,7 +644,7 @@ export class ReportComponent implements OnInit {
             }
           }
           if (title === 'Total Working Hours History') {
-            let date = '', clock_in_time = '', clock_out_time = '', total_hours = '';
+            let date = '', clock_in_time = '', clock_out_time = '', total_hours = '', problem = '';
             for (let i = 0; i < data.table.body.length; i++) {
               for (let j = 0; j < data.table.body[i].raw.attendance.length; j++) {
                 if (data.row.index === i && data.section === 'body') {
@@ -674,6 +674,14 @@ export class ReportComponent implements OnInit {
                         total_hours += 'N/A' + '\n' + '\n';
                       }
                       data.cell.text = total_hours.split('\n');
+                      break;
+                    case 7:
+                      if (data.table.body[i].raw.attendance[j].problem != null) {
+                        problem += data.table.body[i].raw.attendance[j].problem + '\n' + '\n';
+                      } else {
+                        problem += 'N/A' + '\n' + '\n';
+                      }
+                      data.cell.text = problem.split('\n');
                       break;
                   }
                 }
