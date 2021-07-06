@@ -217,7 +217,10 @@ export class ImportAttendanceComponent implements OnInit {
      * @memberof ImportAttendanceComponent
      */
     responseHandler(response: any) {
-        if (response[0].length > 0 && response[1].length == 0) {
+        if (response.message != undefined) {
+            this.importAttendanceApi.snackbarMsg(response.message + '. Please avoid duplicate data and try again.', false);
+        }
+        else if (response[0].length > 0 && response[1].length == 0) {
             this.importAttendanceApi.snackbarMsg(response[0].length + ' Attendance record was uploaded successfully', true);
         } else {
             this.dialog.open(UploadAttendanceConfirmationComponent, {
