@@ -2319,17 +2319,17 @@
                       <ion-col size="2.75"
                         style="padding:0;margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
                         <p class="text">
-                          {{value.attendance[0].clock_in_time | date:'yyyy-MM-dd HH:mm'}}
+                          {{value.first_clock_in | date:'yyyy-MM-dd HH:mm'}}
                         </p>
-                        <p class="text" *ngIf="value.attendance[0].clock_in_time == null">N/A
+                        <p class="text" *ngIf="value.first_clock_in == null">N/A
                         </p>
                       </ion-col>
                       <ion-col size="2.73"
                         style="padding:0;margin-bottom: 5px;border-bottom: 0.5px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));">
                         <p class="text">
-                          {{value.attendance[value.attendance.length-1].clock_out_time | date:'yyyy-MM-dd HH:mm'}}
+                          {{value.last_clock_out | date:'yyyy-MM-dd HH:mm'}}
                         </p>
-                        <p class="text" *ngIf="value.attendance[value.attendance.length-1].clock_out_time == null">N/A
+                        <p class="text" *ngIf="value.last_clock_out == null">N/A
                         </p>
                       </ion-col>
                       <ion-col size="1.37"
