@@ -1012,10 +1012,10 @@
               style="font-size: 12px;width: 130px;color: #43425d;float: right;">
               <mat-select placeholder="Save As">
                 <mat-option value="PDF"
-                  (click)="savePDF('Apply On Behalf History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Application Date', dataKey: 'applyDate' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Status', dataKey: 'status' }, { header: 'Request Remarks', dataKey: 'requestRemarks' }, { header: 'Final Approval Remarks', dataKey: 'finalApproveRemarks' }])">
+                  (click)="savePDF('Entitlement Claim History', [{ header: 'No', dataKey: 'no' }, { header: 'Employee Name', dataKey: 'employeeName' }, { header: 'Leave Type', dataKey: 'leaveTypeName' }, { header: 'Application Date', dataKey: 'applyDate' }, { header: 'Start Date', dataKey: 'startDate' }, { header: 'End Date', dataKey: 'endDate' }, { header: 'No Of Days', dataKey: 'noOfDays' }, { header: 'Status', dataKey: 'status' }, { header: 'Request Remarks', dataKey: 'requestRemarks' }, { header: 'Final Approval Remarks', dataKey: 'finalApproveRemarks' }])">
                   PDF
                 </mat-option>
-                <mat-option value="CSV" (click)="saveCSV('Apply On Behalf History',[{
+                <mat-option value="CSV" (click)="saveCSV('Entitlement Claim History',[{
                   label: 'Employee No',
                   value: 'employeeNo'
                 },{
